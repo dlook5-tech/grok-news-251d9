@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grok News</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f0e8; color: #1a1a1a; min-height: 100vh; display: flex; flex-direction: column; }
+  header { background: #1a1a1a; color: #f5f0e8; padding: 24px 32px 0; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+  .logo { font-size: 2rem; font-weight: 700; font-style: italic; }
+  .tagline { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #bbb; margin-bottom: 16px; }
+  .date { font-size: 0.85rem; color: #ccc; }
+  nav { display: flex; gap: 0; margin: 0 -32px; padding: 0 32px; }
+  nav a { color: #ccc; text-decoration: none; padding: 10px 16px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s; }
+  nav a:hover { color: #fff; }
+  nav a.active { color: #fff; border-bottom: 2px solid #fff; }
+  main { flex: 1; max-width: 720px; width: 100%; margin: 0 auto; padding: 32px 24px; }
+  .section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 8px; }
+  h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; line-height: 1.2; }
+  .subtitle { color: #666; font-size: 0.95rem; margin-bottom: 24px; line-height: 1.5; }
+  .story { border: 1px solid #ddd; border-radius: 8px; margin-bottom: 12px; background: #fff; overflow: hidden; }
+  .story-header { padding: 16px 20px; cursor: pointer; display: flex; align-items: flex-start; gap: 12px; font-weight: 600; font-size: 0.95rem; line-height: 1.4; user-select: none; }
+  .story-header:hover { background: #fafafa; }
+  .arrow { flex-shrink: 0; transition: transform 0.2s; font-size: 0.7rem; margin-top: 4px; }
+  .story.open .arrow { transform: rotate(90deg); }
+  .story-body { display: none; padding: 0 20px 20px 44px; }
+  .story.open .story-body { display: block; }
+  .perspective { margin-bottom: 16px; line-height: 1.6; font-size: 0.9rem; }
+  .perspective:last-child { margin-bottom: 0; }
+  .label-conservative { color: #c0392b; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-democrat { color: #2980b9; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-thirdparty { color: #555; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .handle { font-weight: 600; }
+  .handle a { color: inherit; text-decoration: none; }
+  .handle a:hover { text-decoration: underline; }
+  .honesty { font-size: 0.75rem; color: #999; margin-left: 4px; }
+  .single-post .post-handle { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+  .single-post .post-handle a { color: #1a1a1a; text-decoration: none; }
+  .single-post .post-handle a:hover { text-decoration: underline; }
+  .view-post { display: inline-block; color: #2980b9; font-size: 0.8rem; text-decoration: none; margin-bottom: 8px; }
+  .view-post:hover { text-decoration: underline; }
+  .post-stats { font-size: 0.8rem; color: #888; margin-bottom: 8px; }
+  .post-body { font-size: 0.9rem; line-height: 1.6; color: #333; }
+  .footnote-item { font-size: 0.85rem; line-height: 1.5; color: #555; margin-bottom: 8px; }
+  .history-date { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: #888; letter-spacing: 0.5px; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #ddd; }
+  footer { text-align: center; padding: 32px; font-size: 0.8rem; color: #999; border-top: 1px solid #ddd; }
+  footer strong { color: #666; }
+  .last-updated { text-align: center; font-size: 0.7rem; color: #aaa; margin-top: 24px; }
+  @media (max-width: 600px) { header { padding: 16px 16px 0; } nav { margin: 0 -16px; padding: 0 8px; overflow-x: auto; } nav a { padding: 10px; font-size: 0.75rem; white-space: nowrap; } main { padding: 20px 16px; } .logo { font-size: 1.5rem; } h1 { font-size: 1.4rem; } }
+</style>
+</head>
+<body>
+<header><div class="header-top"><div><div class="logo">Grok News</div><div class="tagline">Independent · Accurate · Essential</div></div><div class="date" id="currentDate"></div></div><nav id="nav"></nav></header>
+<main id="content"></main>
+<footer>© 2026 <strong>Grok News</strong> — Independent · Accurate · Essential</footer>
+<script>
+var NEWS_DATA={lastUpdated:"2026-03-31T12:00:00Z",world:{title:"Top World Story of the Day",subtitle:"Today's top story with a conservative view, Democrat view, and third-party view. Click to expand.",stories:[{headline:"Iran conflict escalates — Isfahan strike, Strait of Hormuz closed, Russia feeding Iran targeting intel",perspectives:[{label:"Conservative",handle:"@PoliticalCow",url:"https://x.com/PoliticalCow",text:"U.S. bunker-busters may have triggered a chain reaction through Iran's underground missile tunnels, potentially destroying a massive chunk of their ballistic missile arsenal.",honesty:"8/10",footnoteId:1},{label:"Democrat",handle:"@ChrisMurphyCT",url:"https://x.com/ChrisMurphyCT",text:"Trump's war with Iran is already incompetent — Iran has closed the Strait of Hormuz collapsing the global economy.",honesty:"7/10",footnoteId:2},{label:"Third Party",handle:"@FurkanGozukara",url:"https://x.com/FurkanGozukara",text:"Bombshell: former U.S. diplomat confirms Russia is actively providing targeting intelligence to Iran to strike American military facilities.",honesty:"6/10",footnoteId:3}],footnotes:["1. Presented as speculation based on Iran's own propaganda videos. Logical but unverified.","2. Correctly identifies the Strait closure and real economic risks. Direct blame adds spin.","3. Claims a former diplomat as source but provides no evidence. Plausible but unverifiable."]}]},business:{title:"Top Business Story of the Day",subtitle:"Markets, money, and what's moving business today. Click to expand.",stories:[{headline:"Markets surge on Iran peace hopes — Dow +1125, S&P +2.9%, Nasdaq +3.8%",handle:"@VantagePointHQx",url:"https://x.com/VantagePointHQx",stats:"",body:"Dow +1125 pts, S&P 500 +2.9%, Nasdaq +3.8%. Reports that Iran's president may be open to peace sparked a major relief rally to close out Q1."}]},sports:{title:"Top Sports Story of the Day",subtitle:"What's happening in sports right now. Click to expand.",stories:[{headline:"Italy eliminated from 2026 World Cup by Bosnia — third consecutive miss",handle:"@PopBase",url:"https://x.com/PopBase",stats:"688K+ views",body:"Italy will not be going to the 2026 World Cup after losing to Bosnia — the third consecutive World Cup the Azzurri have failed to qualify for."}]},elon:{title:"Elon's Posts Today",subtitle:"What Elon is posting and reacting to on X today. Click to expand.",stories:[{headline:"Elon reacts to Claude Code source leak — codebase being rewritten in Rust",handle:"@elonmusk",url:"https://x.com/elonmusk",stats:"",body:"Elon replied Banger to a viral thread about an Anthropic insider leaking the Claude Code source via a .map file commit."}]},allin:{title:"Business & Investor Perspectives",subtitle:"Straight talk from investors and entrepreneurs. Click to expand.",stories:[{headline:"Chamath Palihapitiya explains why he left the Democrat Party",handle:"@WallStreetApes",url:"https://x.com/WallStreetApes",stats:"",body:"Chamath describes his gradual shift starting with Charlottesville coverage — realizing mainstream media portrayal didn't match the raw footage."}]},top:{title:"#1 Tweet of the Day",subtitle:"The single biggest viral post on X today. Click to expand.",stories:[{headline:"BTS SWIM debuts #1 on Billboard Hot 100",handle:"@bts_bighit",url:"https://x.com/bts_bighit",stats:"",body:"BTS celebrates a first-week #1 debut on the Billboard Hot 100 with their new single SWIM."}]},history:[{date:"March 29, 2026",stories:[{headline:"No Kings protest reactions continue",perspectives:[{label:"Conservative",handle:"@brithume",text:"Protests were a coordinated flop.",honesty:"9/10"},{label:"Democrat",handle:"@TheDemocrats",text:"Nationwide rallies showed real opposition.",honesty:"8/10"},{label:"Third Party",handle:"@elonmusk",text:"Performative protests distract from real progress.",honesty:"10/10"}]},{headline:"Iran conflict on day 30+",perspectives:[{label:"Conservative",handle:"@Telegraph",text:"Trump and Israel taking decisive action.",honesty:"9/10"},{label:"Democrat",handle:"@AJEnglish",text:"Escalation risks wider war.",honesty:"8/10"},{label:"Third Party",handle:"@elonmusk",text:"Avoid endless wars.",honesty:"9/10"}]},{headline:"Partial DHS/TSA shutdown chaos",perspectives:[{label:"Conservative",handle:"@Andreafreedom76",text:"Democrats blocking funding.",honesty:"9/10"},{label:"Democrat",handle:"@ClyneJoseph",text:"Republicans rejecting bills to pay TSA workers.",honesty:"8/10"},{label:"Third Party",handle:"@elonmusk",text:"Shutdown theater wastes time.",honesty:"10/10"}]},{headline:"Senate stalls on SAVE America Act",perspectives:[{label:"Conservative",handle:"@RepNancyMace",text:"Senate must pass SAVE Act now.",honesty:"9/10"},{label:"Democrat",handle:"@danielsgoldman",text:"Bill would disenfranchise eligible voters.",honesty:"6/10"},{label:"Third Party",handle:"@elonmusk",text:"Failing to pass SAVE is an act of high treason.",honesty:"8/10"}]},{headline:"Landmark rulings against Meta, Google over harm to young people",perspectives:[{label:"Conservative",handle:"@MorePerfectUS",text:"Big Tech held accountable for harming kids.",honesty:"9/10"},{label:"Democrat",handle:"@CNN",text:"Verdicts prove platforms damaged youth mental health.",honesty:"9/10"},{label:"Third Party",handle:"@elonmusk",text:"Free speech does not mean harming children.",honesty:"9/10"}]}]}]};
+var TABS=[{id:"world",label:"World"},{id:"business",label:"Business"},{id:"sports",label:"Sports"},{id:"elon",label:"Elon"},{id:"allin",label:"All-In"},{id:"top",label:"#1 Tweet"},{id:"history",label:"History"}];
+var activeTab="world";
+function formatDate(){var d=new Date(),a=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],m=["January","February","March","April","May","June","July","August","September","October","November","December"];return a[d.getDay()]+", "+m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();}
+function todayLabel(){var d=new Date(),m=["January","February","March","April","May","June","July","August","September","October","November","December"];return m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();}
+function renderNav(){var n=document.getElementById("nav");n.innerHTML=TABS.map(function(t){return '<a data-tab="'+t.id+'" class="'+(t.id===activeTab?"active":"")+'">'+t.label+"</a>";}).join("");n.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){activeTab=a.dataset.tab;renderNav();renderContent();});});}
+function acc(h,inner){var id="s"+Math.random().toString(36).substr(2,9);return '<div class="story" id="'+id+'"><div class="story-header" onclick="document.getElementById(\''+id+'\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>'+h+'</span></div><div class="story-body">'+inner+"</div></div>";}
+function renderWorld(s){return s.perspectives.map(function(p){var c=p.label==="Conservative"?"label-conservative":p.label==="Democrat"?"label-democrat":"label-thirdparty";var sup=p.footnoteId?"<sup>"+p.footnoteId+"</sup>":"";return '<div class="perspective"><span class="'+c+'">'+p.label+'</span> <span class="handle"><a href="'+(p.url||"#")+'" target="_blank">'+p.handle+"</a></span> &mdash; "+p.text+' <span class="honesty">honesty '+p.honesty+sup+"</span></div>";}).join("");}
+function renderFN(s){if(!s.footnotes||!s.footnotes.length)return"";var inner=s.footnotes.map(function(f){return '<div class="footnote-item">'+f+"</div>";}).join("");return acc("Honesty footnotes",'<div class="footnotes">'+inner+"</div>");}
+function renderPost(s){var st=s.stats?'<div class="post-stats">'+s.stats+"</div>":"";return '<div class="single-post"><div class="post-handle"><a href="'+s.url+'" target="_blank">'+s.handle+'</a></div><a class="view-post" href="'+s.url+'" target="_blank">View post</a>'+st+'<div class="post-body">'+s.body+"</div></div>";}
+function renderContent(){var el=document.getElementById("content"),today=todayLabel();if(activeTab==="history"){var h='<div class="section-label">History</div><h1>History</h1><p class="subtitle">Past daily stories. Click any to expand.</p>';NEWS_DATA.history.forEach(function(day){h+='<div class="history-date">'+day.date+"</div>";day.stories.forEach(function(s){h+=s.perspectives?acc(s.headline,renderWorld(s)):acc(s.headline,renderPost(s));});});h+=renderLU();el.innerHTML=h;return;}if(activeTab==="world"){var d=NEWS_DATA.world,h='<div class="section-label">World &mdash; '+today+"</div><h1>"+d.title+'</h1><p class="subtitle">'+d.subtitle+"</p>";d.stories.forEach(function(s){h+=acc(s.headline,renderWorld(s));h+=renderFN(s);});h+=renderLU();el.innerHTML=h;return;}var labels={business:"Business",sports:"Sports",elon:"Elon",allin:"All-In",top:"#1 Tweet"},d=NEWS_DATA[activeTab],h='<div class="section-label">'+labels[activeTab]+" &mdash; "+today+"</div><h1>"+d.title+'</h1><p class="subtitle">'+d.subtitle+"</p>";d.stories.forEach(function(s){h+=acc(s.headline,renderPost(s));});h+=renderLU();el.innerHTML=h;}
+function renderLU(){return '<div class="last-updated">Last updated: '+new Date(NEWS_DATA.lastUpdated).toLocaleString()+"</div>";}
+document.getElementById("currentDate").textContent=formatDate();renderNav();renderContent();
+</script>
+</body>
+</html>
