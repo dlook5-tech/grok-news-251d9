@@ -66,9 +66,9 @@
 </style>
 </head>
 <body>
-<header><div class="header-top"><div><div class="logo">Grok News</div><div class="tagline">Independent &middot; Accurate &middot; Essential</div></div><div class="date" id="currentDate"></div></div><nav id="nav"></nav></header>
+<header><div class="header-top"><div><div class="logo">Grok News</div><div class="tagline">AI Curated Citizen Journalism (Honesty Scored)</div></div><div class="date" id="currentDate"></div></div><nav id="nav"></nav></header>
 <main id="content"></main>
-<footer>&copy; 2026 <strong>Grok News</strong> &mdash; Independent &middot; Accurate &middot; Essential</footer>
+<footer>&copy; 2026 <strong>Grok News</strong> &mdash; AI Curated Citizen Journalism (Honesty Scored)</footer>
 <script>
 var NEWS_DATA = {
   lastUpdated: "2026-04-01T15:00:00Z",
@@ -109,7 +109,7 @@ var NEWS_DATA = {
   },
   elon: {
     title: "Elon's Best Banger",
-    subtitle: "Elon's top post or reply in the last 3 hours. Click to expand.",
+    subtitle: "He doesn\u2019t have 238M followers for nothing \u2014 Elon\u2019s top post or reply in the last 3 hours. Click to expand.",
     stories: [{
       headline: "Elon announces X algorithm will go fully open source in 7 days \u2014 including ad recommendation code",
       handle: "@elonmusk", url: "https://x.com/elonmusk/status/2010062264976736482",
@@ -122,7 +122,7 @@ var NEWS_DATA = {
   },
   allin: {
     title: "$age",
-    subtitle: "Billion-dollar wisdom \u2014 the best post from Andreessen, Naval, Chamath, Sacks, Friedberg, Calacanis, Jensen Huang, and friends. Click to expand.",
+    subtitle: "Billion-dollar wisdom \u2014 the best post from Andreessen, Naval, Chamath, Sacks, Friedberg, Jensen Huang, and friends. Click to expand.",
     stories: [{
       headline: "David Sacks wraps up as White House AI/Crypto Czar \u2014 joins PCAST alongside Andreessen, Jensen Huang, Zuckerberg",
       handle: "@davidsacks47", url: "https://x.com/davidsacks47",
@@ -143,6 +143,19 @@ var NEWS_DATA = {
       honesty: "10/10",
       footnotes: [
         "1. Pure entertainment \u2014 Ryanair's prank was real and widely covered. The engagement numbers are approximate but consistent with the viral scale reported by multiple outlets."
+      ]
+    }]
+  },
+  msm: {
+    title: "Not in MSM",
+    subtitle: "The biggest story mainstream media is purposely ignoring. Click to expand.",
+    stories: [{
+      headline: "DOGE uncovers $170B in duplicate federal payments \u2014 zero coverage from major networks",
+      handle: "@ABORINGDYSTOPIA", url: "https://x.com/ABORINGDYSTOPIA",
+      body: "The Department of Government Efficiency has identified approximately $170 billion in duplicate and erroneous federal payments across multiple agencies, according to internal audit documents shared on X. Despite the scale of the finding, no major broadcast network (ABC, NBC, CBS, CNN, MSNBC) has run a segment on the report. Independent journalists and X accounts have been the primary source of coverage. Critics argue MSM silence reflects institutional bias against validating DOGE\u2019s mission.",
+      honesty: "7/10",
+      footnotes: [
+        "1. The $170B figure comes from DOGE\u2019s own reporting and has not been independently audited. The claim of zero MSM coverage is largely accurate for broadcast TV, though some print outlets have covered aspects. The story is legitimately underreported relative to its scale."
       ]
     }]
   },
@@ -206,7 +219,8 @@ var TABS = [
   { id: "allin", label: "$age" },
   { id: "top", label: "#1 Pop" },
   { id: "history", label: "History" },
-  { id: "submit", label: "Post Your Fav" }
+  { id: "msm", label: "Not in MSM" },
+  { id: "submit", label: "Post/Replace" }
 ];
 var activeTab = "world";
 
@@ -261,7 +275,7 @@ function renderContent() {
   if (activeTab === "submit") {
     var h = '<div class="section-label">Submit &mdash; ' + today + '</div>' +
       '<h1>Post Your Favorite Tweet</h1>' +
-      '<p class="subtitle">Share a post for Grok to consider. If multiple readers submit the same post, it gets featured in the next 3-hour refresh.</p>' +
+      '<p class="subtitle">Share a post for Grok to consider. If Grok thinks it\u2019s a better post, it will replace, or post below.</p>' +
       '<div class="story" style="padding:24px 20px;"><form class="submit-form" id="submitForm" onsubmit="handleSubmit(event)">' +
       '<label>X / Twitter Link</label><input type="url" id="submitUrl" placeholder="https://x.com/username/status/..." />' +
       '<label>Why should Grok feature this?</label><textarea id="submitNote" rows="3" placeholder="Tell us why this post matters..."></textarea>' +
@@ -284,7 +298,7 @@ function renderContent() {
   }
 
   // All other tabs
-  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop" };
+  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", msm: "Not in MSM" };
   var d = NEWS_DATA[activeTab];
   var h = '<div class="section-label">' + labels[activeTab] + ' &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
   d.stories.forEach(function(s) {
