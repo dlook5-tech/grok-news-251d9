@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grok News</title>
+<title>Expresso News</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f0e8; color: #1a1a1a; min-height: 100vh; display: flex; flex-direction: column; }
@@ -66,12 +66,12 @@
 </style>
 </head>
 <body>
-<header><div class="header-top"><div><div class="logo">Grok News</div><div class="tagline">AI Curated Citizen Journalism (Honesty Scored)</div></div><div class="date" id="currentDate"></div></div><nav id="nav"></nav></header>
+<header><div class="header-top"><div><div class="logo">Expresso News</div><div class="tagline">AI CURATED X Posts (w/ HONESTY SCORE 1-10)</div></div><div class="date" id="currentDate"></div></div><nav id="nav"></nav></header>
 <main id="content"></main>
-<footer>&copy; 2026 <strong>Grok News</strong> &mdash; AI Curated Citizen Journalism (Honesty Scored)</footer>
+<footer>&copy; 2026 <strong>Expresso News</strong> &mdash; AI CURATED X Posts (w/ HONESTY SCORE 1-10)</footer>
 <script>
 var NEWS_DATA = {
-  lastUpdated: "2026-04-01T23:39:00Z",
+  lastUpdated: "2026-04-02T02:15:00Z",
   world: {
     title: "Top World Story of the Day",
     subtitle: "Today's top story with a conservative view, Democrat view, and third-party view. Click on summary to link directly to actual X post.",
@@ -102,9 +102,15 @@ var NEWS_DATA = {
     title: "Top Sports Story of the Day",
     subtitle: "What's happening in sports right now. Click to expand.",
     stories: [{
-      headline: "USMNT loses to Portugal 2-0 in final World Cup warm-up \u2014 second straight loss raises concerns ahead of home tournament",
+      headline: "Rams WR Puka Nacua checks into rehab, attorney confirms to The California Post",
+      handle: "@AdamSchefter", url: "https://x.com/AdamSchefter/status/2039485945020318113", stats: "2.1M views \u00b7 16K likes \u00b7 2K reposts",
+      body: "ESPN\u2019s Adam Schefter reports that Los Angeles Rams wide receiver Puka Nacua has checked into rehab, according to his attorney Levi McCathern who told The California Post. Nacua, 24, was a breakout star in 2023 setting NFL rookie receiving records. No further details on the nature of his treatment have been disclosed. The NFL community has responded with an outpouring of support."
+    }],
+    earlier: [{
+      headline: "USMNT loses to Portugal 2-0 in final World Cup warm-up \u2014 second straight loss raises concerns",
       handle: "@USMNT", url: "https://x.com/USMNT/status/2039338674853220756", stats: "387K views \u00b7 923 likes",
-      body: "The U.S. Men\u2019s National Team fell 2-0 to Portugal, following a 5-2 thrashing by Belgium. Two consecutive losses in the final international break before this summer\u2019s World Cup on home soil are raising serious concerns about the team\u2019s readiness. The USMNT now sets its sights on the 2026 FIFA World Cup."
+      body: "The U.S. Men\u2019s National Team fell 2-0 to Portugal, following a 5-2 thrashing by Belgium. Two consecutive losses in the final international break before this summer\u2019s World Cup on home soil are raising serious concerns about the team\u2019s readiness.",
+      time: "3:00 PM"
     }]
   },
   elon: {
@@ -198,7 +204,7 @@ var NEWS_DATA = {
         { label: "Third Party", handle: "@elonmusk", text: "Shutdown theater wastes time; both sides need competent governance.", honesty: "10/10" }
       ]},
       { headline: "Senate stalls on SAVE America Act (proof of citizenship + voter ID)", perspectives: [
-        { label: "Conservative", handle: "@RepNancyMace", text: "Senate must pass SAVE Act now to secure elections.", honesty: "9/10" },
+        { label: "Conservative", handle: "@RepNancyMace", text: "Senate must pass SAVe Act now to secure elections.", honesty: "9/10" },
         { label: "Democrat", handle: "@danielsgoldman", text: "Bill would disenfranchise eligible voters.", honesty: "6/10" },
         { label: "Third Party", handle: "@elonmusk", text: "Failing to pass SAVE is an act of high treason against the American people.", honesty: "8/10" }
       ]},
@@ -275,12 +281,12 @@ function renderContent() {
   if (activeTab === "submit") {
     var h = '<div class="section-label">Submit &mdash; ' + today + '</div>' +
       '<h1>Post Your Favorite Tweet</h1>' +
-      '<p class="subtitle">Share a post for Grok to consider. If Grok thinks it\u2019s a better post, it will replace, or post below.</p>' +
+      '<p class="subtitle">Share a post for Expresso to consider. If Expresso thinks it\u2019s a better post, it will replace, or post below.</p>' +
       '<div class="story" style="padding:24px 20px;"><form class="submit-form" id="submitForm" onsubmit="handleSubmit(event)">' +
       '<label>X / Twitter Link</label><input type="url" id="submitUrl" placeholder="https://x.com/username/status/..." />' +
-      '<label>Why should Grok feature this?</label><textarea id="submitNote" rows="3" placeholder="Tell us why this post matters..."></textarea>' +
+      '<label>Why should Expresso feature this?</label><textarea id="submitNote" rows="3" placeholder="Tell us why this post matters..."></textarea>' +
       '<label>Or paste a screenshot URL</label><input type="url" id="submitScreenshot" placeholder="https://imgur.com/..." />' +
-      '<button type="submit" class="submit-btn">Submit for Grok</button></form>' +
+      '<button type="submit" class="submit-btn">Submit for Expresso</button></form>' +
       '<div id="submitConfirm" style="display:none;margin-top:16px;padding:12px 16px;background:#e8f5e9;border-radius:6px;color:#2e7d32;font-size:0.9rem;font-weight:600;"></div></div>' +
       '<div style="margin-top:20px;"><h2 style="font-size:1.1rem;margin-bottom:12px;">Reader Submissions</h2><div id="submissionsList"></div></div>';
     el.innerHTML = h;
@@ -292,6 +298,15 @@ function renderContent() {
     var d = NEWS_DATA.world;
     var h = '<div class="section-label">World &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
     d.stories.forEach(function(s) { h += acc(s.headline, renderWorldStory(s)); h += renderFootnotes(s.footnotes); });
+    if (d.earlier && d.earlier.length) {
+      h += '<div style="margin-top:24px;padding-top:16px;border-top:2px solid #e0e0e0;"><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:12px;">Earlier Today</div>';
+      d.earlier.forEach(function(s) {
+        var timeTag = s.time ? '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(' + s.time + ')</span>' : '';
+        h += s.perspectives ? acc(s.headline + timeTag, renderWorldStory(s)) : acc(s.headline + timeTag, renderSinglePost(s));
+        if (s.footnotes) h += renderFootnotes(s.footnotes);
+      });
+      h += '</div>';
+    }
     h += renderLastUpdated();
     el.innerHTML = h;
     return;
@@ -305,6 +320,14 @@ function renderContent() {
     h += acc(s.headline, renderSinglePost(s));
     if (s.footnotes) h += renderFootnotes(s.footnotes);
   });
+  if (d.earlier && d.earlier.length) {
+    h += '<div style="margin-top:24px;padding-top:16px;border-top:2px solid #e0e0e0;"><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:12px;">Earlier Today</div>';
+    d.earlier.forEach(function(s) {
+      var timeTag = s.time ? '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(' + s.time + ')</span>' : '';
+      h += acc(s.headline + timeTag, renderSinglePost(s));
+    });
+    h += '</div>';
+  }
   h += renderLastUpdated();
   el.innerHTML = h;
 }
@@ -325,7 +348,7 @@ function handleSubmit(e) {
   document.getElementById('submitForm').reset();
   var c = document.getElementById('submitConfirm');
   c.style.display = 'block';
-  c.textContent = found ? 'Upvoted! Posts with multiple votes get featured by Grok.' : 'Submitted! If others submit the same post, it gets featured.';
+  c.textContent = found ? 'Upvoted! Posts with multiple votes get featured by Expresso.' : 'Submitted! If others submit the same post, it gets featured.';
   renderSubmissions();
 }
 
