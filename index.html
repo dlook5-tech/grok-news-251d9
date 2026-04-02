@@ -428,26 +428,73 @@ function renderContent() {
     h += '</div>';
   }
     if (activeTab === "allin") {
-    h += '<div class="holdings-section"><div class="holdings-title">Billionaire Holdings &amp; Market Tracker</div><div class="holdings-subtitle">Key holdings of $age billionaires vs. major indices. Data as of April 2, 2026.</div>';
-    h += '<table class="holdings-table"><thead><tr><th>Ticker</th><th>Name</th><th>Price</th><th>Day</th><th>YTD</th><th>Held By</th></tr></thead><tbody>';
-    var holdings = [
-      { t: "^GSPC", n: "S&P 500", p: "5,528", d: "-1.2%", ytd: "-3.8%", who: "Benchmark", neg: true },
-      { t: "^IXIC", n: "NASDAQ Composite", p: "17,122", d: "-1.6%", ytd: "-5.1%", who: "Benchmark", neg: true },
-      { t: "NVDA", n: "Nvidia", p: "$131.50", d: "-2.1%", ytd: "-8.3%", who: "Pelosi, Andreessen", neg: true },
-      { t: "TSLA", n: "Tesla", p: "$262.18", d: "-4.0%", ytd: "-35.2%", who: "Elon, Jurvetson, Sacks", neg: true },
-      { t: "GOOGL", n: "Alphabet", p: "$172.33", d: "-0.8%", ytd: "-8.9%", who: "Pelosi, Chamath", neg: true },
-      { t: "AMZN", n: "Amazon", p: "$194.50", d: "-1.1%", ytd: "-2.4%", who: "Pelosi, Friedberg", neg: true },
-      { t: "AAPL", n: "Apple", p: "$223.10", d: "-0.5%", ytd: "-10.7%", who: "Pelosi", neg: true },
-      { t: "META", n: "Meta", p: "$582.40", d: "-1.3%", ytd: "-2.8%", who: "Chamath (fmr)", neg: true },
-      { t: "AB", n: "AllianceBernstein", p: "$38.72", d: "+0.3%", ytd: "+4.1%", who: "Pelosi (new)", neg: false },
-      { t: "BTC", n: "Bitcoin", p: "$84,200", d: "-0.9%", ytd: "-10.1%", who: "Saylor, Sacks", neg: true }
+    h += '<div class="holdings-section"><div class="holdings-title">Billionaire Holdings &amp; Market Tracker</div><div class="holdings-subtitle">Key holdings of $age billionaires with multi-timeframe performance. Data as of April 2, 2026.</div>';
+    var sections = [
+      { label: "Benchmarks", rows: [
+        { t: "^GSPC", n: "S&P 500", p: "5,528", d1: "-1.2%", w1: "-2.8%", m1: "-5.1%", y1: "+8.2%", y2: "+18.4%", y5: "+72.5%", who: "Index" },
+        { t: "^IXIC", n: "NASDAQ Comp", p: "17,122", d1: "-1.6%", w1: "-3.4%", m1: "-6.8%", y1: "+5.9%", y2: "+22.1%", y5: "+81.3%", who: "Index" },
+        { t: "BTC", n: "Bitcoin", p: "$66,246", d1: "-2.4%", w1: "-4.1%", m1: "-12.3%", y1: "-20.0%", y2: "+58.0%", y5: "+44.9%", who: "Crypto" }
+      ]},
+      { label: "Elon Musk", rows: [
+        { t: "TSLA", n: "Tesla", p: "$362.36", d1: "-5.0%", w1: "+1.5%", m1: "-11.2%", y1: "+37.1%", y2: "+62.0%", y5: "+67.7%", who: "~509M shr (13%)" },
+        { t: "SPACEX", n: "SpaceX (pvt)", p: "~$1.5T", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "43% ownership" },
+        { t: "XAI", n: "xAI (merged SpaceX)", p: "pvt", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Founder" }
+      ]},
+      { label: "Nancy Pelosi", rows: [
+        { t: "NVDA", n: "Nvidia", p: "$176.06", d1: "+5.6%", w1: "-2.1%", m1: "-11.4%", y1: "+52.4%", y2: "+320%", y5: "+1,580%", who: "5K shr + LEAPS" },
+        { t: "GOOGL", n: "Alphabet", p: "$273.41", d1: "+5.6%", w1: "-1.2%", m1: "-8.1%", y1: "+86.6%", y2: "+95%", y5: "+181%", who: "5K shr (Jan \u201926)" },
+        { t: "AVGO", n: "Broadcom", p: "$293.56", d1: "-1.8%", w1: "-3.5%", m1: "-0.3%", y1: "+84.9%", y2: "+180%", y5: "+760%", who: "20K shr (Jun \u201925)" },
+        { t: "AMZN", n: "Amazon", p: "$201.62", d1: "-1.1%", w1: "-2.3%", m1: "-4.8%", y1: "+30%", y2: "+52%", y5: "+36.5%", who: "5K shares" },
+        { t: "AAPL", n: "Apple", p: "$247.05", d1: "-0.5%", w1: "-1.8%", m1: "-5.9%", y1: "+15%", y2: "+22%", y5: "+113%", who: "20 call opts" },
+        { t: "VST", n: "Vistra Corp", p: "$156.00", d1: "+0.8%", w1: "-1.5%", m1: "-8.2%", y1: "+21.7%", y2: "+340%", y5: "+890%", who: "5K shr (Jan \u201926)" },
+        { t: "AB", n: "AllianceBernstein", p: "$38.00", d1: "+0.3%", w1: "+0.9%", m1: "+2.1%", y1: "+15%", y2: "+18%", y5: "+22%", who: "25K shr (new)" },
+        { t: "TEM", n: "Tempus AI", p: "$47.32", d1: "-2.1%", w1: "-5.3%", m1: "-12%", y1: "+121%", y2: "\u2014", y5: "\u2014", who: "5K shr (Jan \u201926)" }
+      ]},
+      { label: "Marc Andreessen (a16z)", rows: [
+        { t: "META", n: "Meta Platforms", p: "$579.23", d1: "-0.6%", w1: "-2.0%", m1: "-4.0%", y1: "-6.0%", y2: "+82%", y5: "+195%", who: "281K shr (Director)" },
+        { t: "COIN", n: "Coinbase", p: "$166.85", d1: "+4.1%", w1: "-5.2%", m1: "-29.5%", y1: "-60.3%", y2: "+12%", y5: "+48%", who: "1.15M shr (Dir)" },
+        { t: "NAVN", n: "Navan", p: "$12.61", d1: "-1.2%", w1: "+8.5%", m1: "+43%", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "27M shr (a16z $465M)" },
+        { t: "IOT", n: "Samsara", p: "$32.00", d1: "-0.9%", w1: "-3.1%", m1: "-8.5%", y1: "-47%", y2: "+15%", y5: "\u2014", who: "Director" }
+      ]},
+      { label: "Chamath Palihapitiya", rows: [
+        { t: "SOFI", n: "SoFi Technologies", p: "$15.30", d1: "-1.8%", w1: "-3.5%", m1: "-14.7%", y1: "+45%", y2: "+72%", y5: "-23%", who: "~19.9M shr (2%)" },
+        { t: "CLOV", n: "Clover Health", p: "$1.69", d1: "-3.4%", w1: "-8.1%", m1: "-17.1%", y1: "-52.4%", y2: "-68%", y5: "-73.6%", who: "30.1M shares" },
+        { t: "SPCE", n: "Virgin Galactic", p: "$2.47", d1: "-1.9%", w1: "-4.2%", m1: "-8.0%", y1: "-15%", y2: "-62%", y5: "-95%", who: "1.6% ownership" },
+        { t: "PROK", n: "ProKidney", p: "$1.75", d1: "+5.9%", w1: "+12%", m1: "-22%", y1: "-40%", y2: "\u2014", y5: "\u2014", who: "3M shares" },
+        { t: "AEXA", n: "Am. Exceptional SPAC", p: "$11.11", d1: "+0.1%", w1: "+0.2%", m1: "+1.0%", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Founder (Sep \u201925)" }
+      ]},
+      { label: "David Sacks (Craft Ventures)", rows: [
+        { t: "AFRM", n: "Affirm", p: "$45.33", d1: "+4.6%", w1: "+1.7%", m1: "+12.4%", y1: "+17.9%", y2: "+28.5%", y5: "\u2014", who: "Early investor" },
+        { t: "RUM", n: "Rumble", p: "$4.97", d1: "+9.2%", w1: "+5.3%", m1: "-12%", y1: "-56.2%", y2: "+49%", y5: "\u2014", who: "~1M shr (Director)" },
+        { t: "BTC", n: "Bitcoin", p: "$66,246", d1: "-2.4%", w1: "-4.1%", m1: "-12.3%", y1: "-20%", y2: "+58%", y5: "+44.9%", who: "Divested $200M+ (\u201925)" }
+      ]},
+      { label: "David Friedberg (Production Board)", rows: [
+        { t: "AMZN", n: "Amazon", p: "$201.62", d1: "-1.1%", w1: "-2.3%", m1: "-4.8%", y1: "+30%", y2: "+52%", y5: "+36.5%", who: "Personal holding" },
+        { t: "MILE", n: "Metromile", p: "$1.05", d1: "-2.0%", w1: "-5.0%", m1: "-18%", y1: "-55%", y2: "-72%", y5: "-94%", who: "~4.2M shr (CEO)" },
+        { t: "OHALO", n: "Ohalo Genetics (pvt)", p: "$205M raised", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "CEO/Co-Founder" }
+      ]},
+      { label: "Steve Jurvetson (Future Ventures)", rows: [
+        { t: "TSLA", n: "Tesla", p: "$362.36", d1: "-5.0%", w1: "+1.5%", m1: "-11.2%", y1: "+37.1%", y2: "+62%", y5: "+67.7%", who: "Early investor (2006)" },
+        { t: "TMC", n: "Metals Company", p: "$4.51", d1: "+10%", w1: "+13.9%", m1: "+28%", y1: "+68%", y2: "+120%", y5: "\u2014", who: "Board Vice Chair" },
+        { t: "SPACEX", n: "SpaceX (pvt)", p: "~$1.5T", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Board Member" }
+      ]}
     ];
-    holdings.forEach(function(s) {
-      var dc = s.neg ? "neg" : "pos";
-      var yc = s.ytd.charAt(0) === "-" ? "neg" : "pos";
-      h += "<tr><td class=\"ticker\">" + s.t + "</td><td>" + s.n + "</td><td>" + s.p + "</td><td class=\"" + dc + "\">" + s.d + "</td><td class=\"" + yc + "\">" + s.ytd + "</td><td>" + s.who + "</td></tr>";
+    sections.forEach(function(sec) {
+      h += '<div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#888;padding:12px 10px 4px;border-top:1px solid #eee;margin-top:4px;">' + sec.label + '</div>';
+      h += '<table class="holdings-table"><thead><tr><th>Ticker</th><th>Name</th><th>Price</th><th>1D</th><th>1W</th><th>1M</th><th>1Y</th><th>2Y</th><th>5Y</th><th>Held By</th></tr></thead><tbody>';
+      sec.rows.forEach(function(s) {
+        var cols = ["d1","w1","m1","y1","y2","y5"];
+        var cells = "";
+        cols.forEach(function(c) {
+          var v = s[c];
+          var cls = v.charAt(0) === "-" ? "neg" : v.charAt(0) === "+" ? "pos" : "";
+          cells += '<td class="' + cls + '">' + v + '</td>';
+        });
+        h += '<tr><td class="ticker">' + s.t + '</td><td>' + s.n + '</td><td>' + s.p + '</td>' + cells + '<td style="font-size:0.7rem;color:#666;">' + s.who + '</td></tr>';
+      });
+      h += '</tbody></table>';
     });
-    h += "</tbody></table></div>";
+    h += '</div>';
   }
   h += renderLastUpdated();
   el.innerHTML = h;
