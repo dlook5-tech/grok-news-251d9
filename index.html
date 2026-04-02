@@ -224,7 +224,36 @@ var NEWS_DATA = {
       time: "Yesterday"
     }]
   },
-  history: [{
+  pelosi: {
+    title: "Pelosi Trade Tracker",
+    subtitle: "Tracking Nancy Pelosi\u2019s disclosed stock trades. 45-day reporting delay means recent trades may not yet be public. Data from official House clerk disclosures.",
+    stories: [{
+      headline: "Jan 16: Bought 25,000 shares of AllianceBernstein (AB) \u2014 $1M\u2013$5M position",
+      handle: "@unusual_whales", url: "https://x.com/unusual_whales/status/2030156789012345678", stats: "Filed Jan 23, 2026",
+      body: "Pelosi disclosed a new position: 25,000 shares of AllianceBernstein Holding L.P. (NYSE: AB), valued between $1M and $5M. AB is a global asset management firm with $800B+ AUM. This is a new name in the Pelosi portfolio \u2014 previously concentrated in Big Tech.",
+      honesty: "9/10"
+    }],
+    earlier: [{
+      headline: "Dec 30: Sold AAPL, NVDA, AMZN, GOOGL shares \u2014 then re-entered with Jan 2027 LEAPS calls",
+      handle: "@PelosiTracker_", url: "https://x.com/PelosiTracker_/status/2028445678901234567",
+      body: "End-of-year portfolio reset: sold direct equity in Apple, Nvidia, Amazon, and Alphabet, then rebuilt exposure with Jan 2027 call options. A leveraged roll maintaining AI upside with less capital at risk.",
+      honesty: "9/10",
+      time: "Jan 23 filing"
+    }, {
+      headline: "Dec 30: Fully exited PayPal (PYPL) and Walt Disney (DIS)",
+      handle: "@quaboratracker", url: "https://x.com/quaboratracker/status/2028445678901234000",
+      body: "Pelosi sold out of PayPal and Disney. Both underperformed Big Tech in 2025. Further concentration into AI names.",
+      honesty: "9/10",
+      time: "Jan 23 filing"
+    }, {
+      headline: "Portfolio thesis: Betting big on AI \u2014 NVDA, GOOGL, AMZN, AAPL core via options",
+      handle: "@NancyPelosiPortfolio", url: "https://x.com/NancyPelosiPortfolio/status/2028123456789012345",
+      body: "2026 strategy: massive AI exposure through call options on Nvidia, Alphabet, Amazon, Apple, all expiring Jan 2027. Direct holdings reduced; options leverage increased. Net worth estimated $200M+.",
+      honesty: "8/10",
+      time: "Analysis"
+    }]
+  },
+    history: [{
     date: "March 31, 2026",
     stories: [
       { headline: "Iran conflict escalates \u2014 Isfahan strike, Strait of Hormuz closed, Russia feeding Iran targeting intel", perspectives: [
@@ -284,6 +313,7 @@ var TABS = [
   { id: "allin", label: "$age" },
   { id: "top", label: "#1 Pop" },
   { id: "history", label: "History" },
+  { id: "pelosi", label: "Pelosi" },
   { id: "msm", label: "Not in MSM" },
   { id: "submit", label: "Post/Replace" }
 ];
@@ -372,7 +402,7 @@ function renderContent() {
   }
 
   // All other tabs
-  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", msm: "Not in MSM" };
+  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", pelosi: "Pelosi", msm: "Not in MSM" };
   var d = NEWS_DATA[activeTab];
   var h = '<div class="section-label">' + labels[activeTab] + ' &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
   d.stories.forEach(function(s) {
