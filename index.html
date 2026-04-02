@@ -372,29 +372,7 @@ function renderContent() {
       h += '<div class="history-date">' + day.date + '</div>';
       day.stories.forEach(function(s) { h += s.perspectives ? acc(s.headline, renderWorldStory(s)) : acc(s.headline, renderSinglePost(s)); });
     });
-      if (activeTab === "allin") {
-    h += '<div class="holdings-section"><div class="holdings-title">Billionaire Holdings &amp; Market Tracker</div><div class="holdings-subtitle">Key holdings of $age billionaires vs. major indices. Data as of April 2, 2026.</div>';
-    h += '<table class="holdings-table"><thead><tr><th>Ticker</th><th>Name</th><th>Price</th><th>Day</th><th>YTD</th><th>Held By</th></tr></thead><tbody>';
-    var holdings = [
-      { t: "^GSPC", n: "S&P 500", p: "5,528", d: "-1.2%", ytd: "-3.8%", who: "Benchmark", neg: true },
-      { t: "^IXIC", n: "NASDAQ Composite", p: "17,122", d: "-1.6%", ytd: "-5.1%", who: "Benchmark", neg: true },
-      { t: "NVDA", n: "Nvidia", p: "$131.50", d: "-2.1%", ytd: "-8.3%", who: "Pelosi, Andreessen", neg: true },
-      { t: "TSLA", n: "Tesla", p: "$262.18", d: "-4.0%", ytd: "-35.2%", who: "Elon, Jurvetson, Sacks", neg: true },
-      { t: "GOOGL", n: "Alphabet", p: "$172.33", d: "-0.8%", ytd: "-8.9%", who: "Pelosi, Chamath", neg: true },
-      { t: "AMZN", n: "Amazon", p: "$194.50", d: "-1.1%", ytd: "-2.4%", who: "Pelosi, Friedberg", neg: true },
-      { t: "AAPL", n: "Apple", p: "$223.10", d: "-0.5%", ytd: "-10.7%", who: "Pelosi", neg: true },
-      { t: "META", n: "Meta", p: "$582.40", d: "-1.3%", ytd: "-2.8%", who: "Chamath (fmr)", neg: true },
-      { t: "AB", n: "AllianceBernstein", p: "$38.72", d: "+0.3%", ytd: "+4.1%", who: "Pelosi (new)", neg: false },
-      { t: "BTC", n: "Bitcoin", p: "$84,200", d: "-0.9%", ytd: "-10.1%", who: "Saylor, Sacks", neg: true }
-    ];
-    holdings.forEach(function(s) {
-      var dc = s.neg ? "neg" : "pos";
-      var yc = s.ytd.charAt(0) === "-" ? "neg" : "pos";
-      h += "<tr><td class=\"ticker\">" + s.t + "</td><td>" + s.n + "</td><td>" + s.p + "</td><td class=\"" + dc + "\">" + s.d + "</td><td class=\"" + yc + "\">" + s.ytd + "</td><td>" + s.who + "</td></tr>";
-    });
-    h += "</tbody></table></div>";
-  }
-  h += renderLastUpdated();
+      h += renderLastUpdated();
     el.innerHTML = h;
     return;
   }
@@ -448,6 +426,28 @@ function renderContent() {
       h += acc(s.headline + timeTag, renderSinglePost(s));
     });
     h += '</div>';
+  }
+    if (activeTab === "allin") {
+    h += '<div class="holdings-section"><div class="holdings-title">Billionaire Holdings &amp; Market Tracker</div><div class="holdings-subtitle">Key holdings of $age billionaires vs. major indices. Data as of April 2, 2026.</div>';
+    h += '<table class="holdings-table"><thead><tr><th>Ticker</th><th>Name</th><th>Price</th><th>Day</th><th>YTD</th><th>Held By</th></tr></thead><tbody>';
+    var holdings = [
+      { t: "^GSPC", n: "S&P 500", p: "5,528", d: "-1.2%", ytd: "-3.8%", who: "Benchmark", neg: true },
+      { t: "^IXIC", n: "NASDAQ Composite", p: "17,122", d: "-1.6%", ytd: "-5.1%", who: "Benchmark", neg: true },
+      { t: "NVDA", n: "Nvidia", p: "$131.50", d: "-2.1%", ytd: "-8.3%", who: "Pelosi, Andreessen", neg: true },
+      { t: "TSLA", n: "Tesla", p: "$262.18", d: "-4.0%", ytd: "-35.2%", who: "Elon, Jurvetson, Sacks", neg: true },
+      { t: "GOOGL", n: "Alphabet", p: "$172.33", d: "-0.8%", ytd: "-8.9%", who: "Pelosi, Chamath", neg: true },
+      { t: "AMZN", n: "Amazon", p: "$194.50", d: "-1.1%", ytd: "-2.4%", who: "Pelosi, Friedberg", neg: true },
+      { t: "AAPL", n: "Apple", p: "$223.10", d: "-0.5%", ytd: "-10.7%", who: "Pelosi", neg: true },
+      { t: "META", n: "Meta", p: "$582.40", d: "-1.3%", ytd: "-2.8%", who: "Chamath (fmr)", neg: true },
+      { t: "AB", n: "AllianceBernstein", p: "$38.72", d: "+0.3%", ytd: "+4.1%", who: "Pelosi (new)", neg: false },
+      { t: "BTC", n: "Bitcoin", p: "$84,200", d: "-0.9%", ytd: "-10.1%", who: "Saylor, Sacks", neg: true }
+    ];
+    holdings.forEach(function(s) {
+      var dc = s.neg ? "neg" : "pos";
+      var yc = s.ytd.charAt(0) === "-" ? "neg" : "pos";
+      h += "<tr><td class=\"ticker\">" + s.t + "</td><td>" + s.n + "</td><td>" + s.p + "</td><td class=\"" + dc + "\">" + s.d + "</td><td class=\"" + yc + "\">" + s.ytd + "</td><td>" + s.who + "</td></tr>";
+    });
+    h += "</tbody></table></div>";
   }
   h += renderLastUpdated();
   el.innerHTML = h;
