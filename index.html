@@ -331,11 +331,11 @@ var TABS = [
   { id: "sports", label: "Sports" },
   { id: "elon", label: "Elon" },
   { id: "allin", label: "$age" },
-  { id: "top", label: "#1 Pop" },
-  { id: "history", label: "History" },
-  { id: "pelosi", label: "Pelosi" },
   { id: "msm", label: "Not in MSM" },
-  { id: "submit", label: "Post/Replace" }
+  { id: "top", label: "#1 Pop" },
+  { id: "pelosi", label: "Pelosi" },
+  { id: "submit", label: "Post/Replace" },
+  { id: "history", label: "History" }
 ];
 var activeTab = "world";
 
@@ -510,23 +510,23 @@ function renderContent() {
     h += '</div>';
   }
     if (activeTab === "pelosi") {
-    h += '<div class="holdings-section"><div class="holdings-title">Pelosi Portfolio &amp; Trade Log</div><div class="holdings-subtitle"><span class="trade-tag tag-buy">BOUGHT</span> = new/added &nbsp; <span class="trade-tag tag-sell">SOLD</span> = exited/reduced &nbsp; <span class="trade-tag tag-options">OPTIONS</span> = LEAPS/calls &nbsp; <span class="trade-tag tag-hold">HOLD</span> = unchanged. Source: House clerk disclosures.</div>';
+    h += '<div class="holdings-section"><div class="holdings-title">Pelosi Portfolio &amp; Trade Log</div><div class="holdings-subtitle"><span class="trade-tag tag-hold">HOLD</span> = currently owns &nbsp; <span class="trade-tag tag-options">OPTIONS</span> = LEAPS calls (bullish bets, exp Jan 2027) &nbsp; <span class="trade-tag tag-buy">BOUGHT</span> = new position &nbsp; <span class="trade-tag tag-sell">SOLD</span> = exited/reduced. Source: House clerk disclosures, 45-day reporting delay.</div>';
     h += '<table class="holdings-table"><thead><tr><th>Ticker</th><th>Company</th><th>Action</th><th>Date</th><th>Price</th><th>1D</th><th>1M</th><th>1Y</th><th>Details</th></tr></thead><tbody>';
     var ptrades = [
-      { t: "AB", n: "AllianceBernstein", act: "buy", date: "Jan 16", p: "$38.00", d1: "+0.3%", m1: "+2.1%", y1: "+15%", info: "25K shares ($1\u20135M)" },
-      { t: "NVDA", n: "Nvidia", act: "options", date: "Dec 30", p: "$176.06", d1: "+5.6%", m1: "-11.4%", y1: "+52.4%", info: "Jan \u201927 LEAPS calls" },
-      { t: "GOOGL", n: "Alphabet", act: "options", date: "Dec 30", p: "$273.41", d1: "+5.6%", m1: "-8.1%", y1: "+86.6%", info: "Jan \u201927 LEAPS calls" },
-      { t: "AMZN", n: "Amazon", act: "options", date: "Dec 30", p: "$201.62", d1: "-1.1%", m1: "-4.8%", y1: "+30%", info: "Jan \u201927 LEAPS calls" },
-      { t: "AAPL", n: "Apple", act: "options", date: "Dec 30", p: "$247.05", d1: "-0.5%", m1: "-5.9%", y1: "+15%", info: "20 call options" },
-      { t: "VST", n: "Vistra Corp", act: "buy", date: "Jan 16", p: "$156.00", d1: "+0.8%", m1: "-8.2%", y1: "+21.7%", info: "5K shares (energy/AI)" },
-      { t: "TEM", n: "Tempus AI", act: "buy", date: "Jan 16", p: "$47.32", d1: "-2.1%", m1: "-12%", y1: "+121%", info: "5K shares (health AI)" },
-      { t: "AVGO", n: "Broadcom", act: "buy", date: "Jun \u201925", p: "$293.56", d1: "-1.8%", m1: "-0.3%", y1: "+84.9%", info: "20K shares exercised" },
-      { t: "NVDA", n: "Nvidia", act: "sell", date: "Dec 30", p: "$176.06", d1: "+5.6%", m1: "-11.4%", y1: "+52.4%", info: "Sold direct shares" },
-      { t: "GOOGL", n: "Alphabet", act: "sell", date: "Dec 30", p: "$273.41", d1: "+5.6%", m1: "-8.1%", y1: "+86.6%", info: "Sold direct shares" },
-      { t: "AMZN", n: "Amazon", act: "sell", date: "Dec 30", p: "$201.62", d1: "-1.1%", m1: "-4.8%", y1: "+30%", info: "Sold direct shares" },
-      { t: "AAPL", n: "Apple", act: "sell", date: "Dec 30", p: "$247.05", d1: "-0.5%", m1: "-5.9%", y1: "+15%", info: "Sold direct shares" },
-      { t: "PYPL", n: "PayPal", act: "sell", date: "Dec 30", p: "$68.50", d1: "-0.8%", m1: "-6.2%", y1: "-12%", info: "Full exit" },
-      { t: "DIS", n: "Walt Disney", act: "sell", date: "Dec 30", p: "$112.40", d1: "+0.4%", m1: "-3.1%", y1: "+5%", info: "Full exit" }
+      { t: "AB", n: "AllianceBernstein", act: "hold", date: "Jan 16", p: "$38.00", d1: "+0.3%", m1: "+2.1%", y1: "+15%", info: "HOLDS 25K shares ($1\u20135M)" },
+      { t: "VST", n: "Vistra Corp", act: "hold", date: "Jan 16", p: "$156.00", d1: "+0.8%", m1: "-8.2%", y1: "+21.7%", info: "HOLDS 5K shares (energy/AI)" },
+      { t: "TEM", n: "Tempus AI", act: "hold", date: "Jan 16", p: "$47.32", d1: "-2.1%", m1: "-12%", y1: "+121%", info: "HOLDS 5K shares (health AI)" },
+      { t: "AVGO", n: "Broadcom", act: "hold", date: "Jun \u201925", p: "$293.56", d1: "-1.8%", m1: "-0.3%", y1: "+84.9%", info: "HOLDS 20K shares exercised" },
+      { t: "NVDA", n: "Nvidia", act: "options", date: "Dec 30", p: "$176.06", d1: "+5.6%", m1: "-11.4%", y1: "+52.4%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
+      { t: "GOOGL", n: "Alphabet", act: "options", date: "Dec 30", p: "$273.41", d1: "+5.6%", m1: "-8.1%", y1: "+86.6%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
+      { t: "AMZN", n: "Amazon", act: "options", date: "Dec 30", p: "$201.62", d1: "-1.1%", m1: "-4.8%", y1: "+30%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
+      { t: "AAPL", n: "Apple", act: "options", date: "Dec 30", p: "$247.05", d1: "-0.5%", m1: "-5.9%", y1: "+15%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
+      { t: "NVDA", n: "Nvidia", act: "sell", date: "Dec 30", p: "$176.06", d1: "+5.6%", m1: "-11.4%", y1: "+52.4%", info: "Sold direct shares (replaced w/ options)" },
+      { t: "GOOGL", n: "Alphabet", act: "sell", date: "Dec 30", p: "$273.41", d1: "+5.6%", m1: "-8.1%", y1: "+86.6%", info: "Sold direct shares (replaced w/ options)" },
+      { t: "AMZN", n: "Amazon", act: "sell", date: "Dec 30", p: "$201.62", d1: "-1.1%", m1: "-4.8%", y1: "+30%", info: "Sold direct shares (replaced w/ options)" },
+      { t: "AAPL", n: "Apple", act: "sell", date: "Dec 30", p: "$247.05", d1: "-0.5%", m1: "-5.9%", y1: "+15%", info: "Sold direct shares (replaced w/ options)" },
+      { t: "PYPL", n: "PayPal", act: "sell", date: "Dec 30", p: "$68.50", d1: "-0.8%", m1: "-6.2%", y1: "-12%", info: "Full exit \u2014 no longer held" },
+      { t: "DIS", n: "Walt Disney", act: "sell", date: "Dec 30", p: "$112.40", d1: "+0.4%", m1: "-3.1%", y1: "+5%", info: "Full exit \u2014 no longer held" }
     ];
     ptrades.forEach(function(t) {
       var rc = t.act === "buy" ? "row-buy" : t.act === "sell" ? "row-sell" : "row-hold";
