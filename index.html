@@ -406,7 +406,8 @@ function renderContent() {
   if (activeTab === "world") {
     var d = NEWS_DATA.world;
     var h = '<div class="section-label">World &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
-    d.stories.forEach(function(s) { h += acc(s.headline, renderWorldStory(s)); h += renderFootnotes(s.footnotes); });
+    var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
+    d.stories.forEach(function(s) { var pt = '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(Posted ' + postedTime + ')</span>'; h += acc(s.headline + pt, renderWorldStory(s)); h += renderFootnotes(s.footnotes); });
     if (d.earlier && d.earlier.length) {
       h += '<div style="margin-top:24px;padding-top:16px;border-top:2px solid #e0e0e0;"><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:12px;">Earlier Today</div>';
       d.earlier.forEach(function(s) {
@@ -425,8 +426,10 @@ function renderContent() {
   var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", pelosi: "Pelosi", msm: "Not in MSM" };
   var d = NEWS_DATA[activeTab];
   var h = '<div class="section-label">' + labels[activeTab] + ' &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
+  var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
   d.stories.forEach(function(s) {
-    h += acc(s.headline, renderSinglePost(s));
+    var pt = '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(Posted ' + postedTime + ')</span>';
+    h += acc(s.headline + pt, renderSinglePost(s));
     if (s.footnotes) h += renderFootnotes(s.footnotes);
   });
   if (d.earlier && d.earlier.length) {
