@@ -260,6 +260,24 @@ var NEWS_DATA = {
       time: "8:00 AM"
     }]
   },
+  recipe: {
+    title: "Recipe of the Day",
+    subtitle: "The most viral, loved, and talked-about recipe post on X right now. If nothing tops it, it stays.",
+    stories: [{
+      headline: "Irish Beer Cheese Gnocchi Soup \u2014 Guinness + cheddar + gnocchi = comfort in a bowl",
+      handle: "@nexta_tv", url: "https://x.com/nexta_tv/status/2034759319816634862", stats: "285K views \u00b7 4.1K likes \u00b7 170 reposts",
+      honesty: "9/10",
+      body: "This creamy Irish beer cheese soup with gnocchi has gone viral across X and TikTok. Made with Guinness stout, sharp cheddar, gnocchi, and fresh sage. The video recipe has been saved and shared hundreds of thousands of times.",
+      time: ""
+    }],
+    earlier: [{
+      headline: "Turkish Pistachio Baklava Sweet \u2014 the dessert everyone is fighting over the origin of",
+      handle: "@DailyTurkic", url: "https://x.com/DailyTurkic/status/2027070593682522156", stats: "285K views \u00b7 4.1K likes",
+      honesty: "8/10",
+      body: "A viral post about a Turkish pistachio-filled pastry sparked a massive debate about food origins. The video has been viewed nearly 300K times.",
+      time: "Feb 26"
+    }]
+  },
   history: [{
     date: "March 31, 2026",
     stories: [
@@ -286,7 +304,8 @@ var TABS = [
   { id: "msm", label: "Not in MSM" },
   { id: "top", label: "#1 Pop" },
   { id: "pelosi", label: "Pelosi" },
-  { id: "submit", label: "Post/Replace" },
+  { id: "recipe", label: "Recipe" },
+      { id: "submit", label: "Post/Replace" },
   { id: "history", label: "History" }
 ];
 var activeTab = "world";
@@ -375,7 +394,7 @@ function renderContent() {
   }
 
   // All other tabs
-  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", pelosi: "Pelosi", msm: "Not in MSM" };
+  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", pelosi: "Pelosi", recipe: "Recipe of the Day", msm: "Not in MSM" };
   var d = NEWS_DATA[activeTab];
   var h = '<div class="section-label">' + labels[activeTab] + ' &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
   var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
