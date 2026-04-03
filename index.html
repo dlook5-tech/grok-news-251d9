@@ -85,7 +85,7 @@
   @media (max-width: 600px) { header { padding: 16px 16px 0; } nav { margin: 0 -16px; padding: 0 8px; overflow-x: auto; } nav a { padding: 10px 8px; font-size: 0.7rem; white-space: nowrap; } main { padding: 20px 16px; } .logo { font-size: 1.5rem; } h1 { font-size: 1.4rem; } }
 
   .story.honesty-note { background: transparent; border: 1px solid #ddd; padding: 8px 16px; margin-bottom: 8px; opacity: 0.6; font-size: 0.8rem; }
-  .story.honesty-note summary { font-size: 0.8rem; color: #999; font-weight: 400; }
+  .story.honesty-note .story-header { font-size: 0.8rem; color: #999; font-weight: 400; }
   .story.honesty-note .post-body { font-size: 0.78rem; color: #888; }
   </style>
 </head>
@@ -162,10 +162,10 @@ var NEWS_DATA = {
       body: "Cowherd agrees with NFL execs that the Steelers lack offensive identity. Compares them to a small-town bully with a barbed wire tattoo who is afraid to leave his hometown.",
       time: "11:52 AM"
     },{
-      headline: "Court TV: Full bodycam breakdown ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Tiger handcuffed, hydrocodone in pocket, pleads not guilty",
+      headline: "Court TV: Full bodycam breakdown ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Tiger handcuffed, hydrocodone in pocket, pleads not guilty",
       handle: "@CourtTV", url: "https://x.com/CourtTV/status/2039717184298004978", stats: "420K views",
       honesty: "9/10",
-      body: "Court TV aired full bodycam footage of Tiger WoodsÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ arrest. SUV flipped on its side, field sobriety tests failed, hydrocodone pills in pocket. Woods pleaded not guilty to DUI charges.",
+      body: "Court TV aired full bodycam footage of Tiger WoodsÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ arrest. SUV flipped on its side, field sobriety tests failed, hydrocodone pills in pocket. Woods pleaded not guilty to DUI charges.",
       time: "Yesterday"
     }]
   },
@@ -552,7 +552,7 @@ document.getElementById("currentDate").textContent = formatDate();
 renderNav();
 renderContent();
 
-  function styleHonestyNotes() { document.querySelectorAll(".story").forEach(function(el) { var txt = el.querySelector("summary"); if (txt && txt.textContent.indexOf("Honesty") > -1) { el.classList.add("honesty-note"); } }); }
+  function styleHonestyNotes() { document.querySelectorAll(".story").forEach(function(el) { var txt = el.querySelector(".story-header"); if (txt && txt.textContent.indexOf("Honesty") > -1) { el.classList.add("honesty-note"); } }); }
   var _origRC = renderContent; renderContent = function() { _origRC(); styleHonestyNotes(); }; styleHonestyNotes();
 </script>
 </body>
