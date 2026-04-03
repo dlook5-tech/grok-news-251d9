@@ -3,6 +3,568 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eXpressO News</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f0e8; color: #1a1a1a; min-height: 100vh; display: flex; flex-direction: column; }
+  header { background: #1a1a1a; color: #f5f0e8; padding: 24px 32px 0; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+  .logo { font-size: 2rem; font-weight: 700; font-style: italic; }
+  .tagline { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #bbb; margin-bottom: 16px; }
+  .date { font-size: 0.85rem; color: #ccc; }
+  nav { display: flex; gap: 0; margin: 0 -32px; padding: 0 32px; flex-wrap: wrap; }
+  nav a { color: #ccc; text-decoration: none; padding: 10px 14px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s; }
+  nav a:hover { color: #fff; }
+  nav a.active { color: #fff; border-bottom: 2px solid #fff; }
+  main { flex: 1; max-width: 720px; width: 100%; margin: 0 auto; padding: 32px 24px; }
+  .section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 8px; }
+  h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; line-height: 1.2; }
+  .subtitle { color: #666; font-size: 0.95rem; margin-bottom: 24px; line-height: 1.5; }
+  .story { border: 1px solid #ddd; border-radius: 8px; margin-bottom: 12px; background: #fff; overflow: hidden; }
+  .story-header { padding: 16px 20px; cursor: pointer; display: flex; align-items: flex-start; gap: 12px; font-weight: 600; font-size: 0.95rem; line-height: 1.4; user-select: none; }
+  .story-header:hover { background: #fafafa; }
+  .arrow { flex-shrink: 0; transition: transform 0.2s; font-size: 0.7rem; margin-top: 4px; }
+  .story.open .arrow { transform: rotate(90deg); }
+  .story-body { display: none; padding: 0 20px 20px 44px; }
+  .story.open .story-body { display: block; }
+  .perspective { margin-bottom: 16px; line-height: 1.6; font-size: 0.9rem; }
+  .perspective:last-child { margin-bottom: 0; }
+  .label-conservative { color: #c0392b; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-democrat { color: #2980b9; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-thirdparty { color: #555; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-elon { color: #e67e22; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-sage { color: #8e44ad; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-pop { color: #e74c3c; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .handle { font-weight: 600; }
+  .perspective-link { text-decoration: none; color: inherit; display: block; border-radius: 6px; transition: background 0.15s; }
+  .perspective-link:hover { background: #f0f0f0; }
+  .perspective-link:hover .handle { text-decoration: underline; }
+  .handle a { color: inherit; text-decoration: none; }
+  .handle a:hover { text-decoration: underline; }
+  .honesty { font-size: 0.75rem; color: #999; margin-left: 4px; }
+  .single-post .post-handle { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+  .single-post .post-handle a { color: #1a1a1a; text-decoration: none; }
+  .single-post .post-handle a:hover { text-decoration: underline; }
+  .view-post { display: inline-block; color: #2980b9; font-size: 0.8rem; text-decoration: none; margin-bottom: 8px; }
+  .view-post:hover { text-decoration: underline; }
+  .post-stats { font-size: 0.8rem; color: #888; margin-bottom: 8px; }
+  .post-body { font-size: 0.9rem; line-height: 1.6; color: #333; }
+  .footnote-item { font-size: 0.85rem; line-height: 1.5; color: #555; margin-bottom: 8px; }
+  .history-date { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: #888; letter-spacing: 0.5px; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #ddd; }
+  .history-date:first-child { margin-top: 0; }
+  footer { text-align: center; padding: 32px; font-size: 0.8rem; color: #999; border-top: 1px solid #ddd; }
+  footer strong { color: #666; }
+  .last-updated { text-align: center; font-size: 0.7rem; color: #aaa; margin-top: 24px; }
+  .holdings-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 16px 0; }
+  .holdings-table th { text-align: left; padding: 8px 10px; border-bottom: 2px solid #1a1a1a; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #666; }
+  .holdings-table td { padding: 8px 10px; border-bottom: 1px solid #eee; }
+  .holdings-table tr:hover { background: #fafafa; }
+  .pos { color: #27ae60; font-weight: 600; }
+  .neg { color: #c0392b; font-weight: 600; }
+  .ticker { font-weight: 700; font-family: monospace; }
+  .holdings-section { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-top: 24px; }
+  .holdings-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+  .holdings-subtitle { font-size: 0.8rem; color: #888; margin-bottom: 16px; }
+  .row-buy { background: #e8f5e9; }
+  .row-buy:hover { background: #c8e6c9 !important; }
+  .row-sell { background: #ffebee; }
+  .row-sell:hover { background: #ffcdd2 !important; }
+  .row-hold { background: #fff; }
+  .trade-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+  .tag-buy { background: #27ae60; color: #fff; }
+  .tag-sell { background: #c0392b; color: #fff; }
+  .tag-hold { background: #f0f0f0; color: #666; }
+  .tag-options { background: #8e44ad; color: #fff; }
+  .submit-form input, .submit-form textarea { width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:6px; font-size:0.9rem; margin-bottom:16px; font-family:inherit; }
+  .submit-form textarea { resize:vertical; }
+  .submit-form label { display:block; font-weight:600; font-size:0.85rem; margin-bottom:6px; }
+  .submit-btn { background:#1a1a1a; color:#f5f0e8; border:none; padding:12px 28px; border-radius:6px; font-size:0.9rem; font-weight:600; cursor:pointer; font-family:inherit; }
+  .submit-btn:hover { background:#333; }
+  .vote-featured { background:#c0392b; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:700; margin-left:8px; }
+  .vote-pending { background:#ddd; color:#666; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; margin-left:8px; }
+  @media (max-width: 600px) { header { padding: 16px 16px 0; } nav { margin: 0 -16px; padding: 0 8px; overflow-x: auto; } nav a { padding: 10px 8px; font-size: 0.7rem; white-space: nowrap; } main { padding: 20px 16px; } .logo { font-size: 1.5rem; } h1 { font-size: 1.4rem; } }
+</style>
+</head>
+<body>
+<header><div class="header-top"><div><div class="logo">e<svg viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;width:0.85em;height:0.85em;fill:#f5f0e8;margin:0 -1px;" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"></path></svg>press<svg viewBox="0 0 42 42" style="display:inline-block;vertical-align:middle;width:1em;height:1em;fill:#f5f0e8;margin:0 -2px;" aria-hidden="true"><path clip-rule="evenodd" d="M8 0C3.582 0 0 3.582 0 8v26c0 4.418 3.582 8 8 8h26c4.418 0 8-3.582 8-8V8c0-4.418-3.582-8-8-8H8zm19.997 17.35l-11.1 8.19 15.9-15.963v.015L37.391 5c-.082.117-.165.23-.248.345-3.49 4.804-5.194 7.153-3.826 13.03l-.009-.008c.943 4.001-.065 8.438-3.322 11.693-4.106 4.107-10.677 5.02-16.087 1.324l3.772-1.745c3.454 1.355 7.232.76 9.947-1.954 2.716-2.714 3.325-6.666 1.96-9.956-.259-.623-1.037-.78-1.58-.378zm-13.292-2.574c-3.314 3.31-3.983 9.047-.1 12.755l-.003.003L4 37c.663-.913 1.485-1.776 2.306-2.639l.04-.042c2.346-2.464 4.67-4.906 3.25-8.357-1.903-4.622-.795-10.038 2.73-13.56 3.664-3.66 9.06-4.583 13.568-2.729.998.37 1.867.897 2.545 1.387l-3.764 1.737c-3.505-1.47-7.52-.47-9.97 1.98z" fill-rule="evenodd"></path></svg> News</div><div class="tagline">Grok Curated Tweets Scored 1-10 for Honesty</div></div><div class="date" id="currentDate"></div></div><nav id="nav"></nav></header>
+<main id="content"></main>
+<footer>&copy; 2026 <strong>eXpressO News</strong> &mdash; Grok Curated Tweets Scored 1-10 for Honesty</footer>
+<script>
+var NEWS_DATA = {
+  lastUpdated: "2026-04-02T22:00:00Z",
+  world: {
+    title: "Top World Story of the Day",
+    subtitle: "Today\u2019s top story with a conservative view, Democrat view, and third-party view. Click on summary to link directly to actual X post.",
+    stories: [{
+      headline: "Liberation Day 1-year anniversary \u2014 tariffs struck down by Supreme Court 6-3, $166B in refunds owed, Democrats call it \u2018complete failure\u2019",
+      perspectives: [
+        { label: "Conservative", handle: "@overton_news", url: "https://x.com/overton_news/status/2024865034594050328", text: "Trump pulled out his Reciprocal Tariff chart to explain tariffs imposed on each country. White House says 20+ trade deals signed, trillions in manufacturing investment secured.", honesty: "6/10", footnoteId: 1 },
+        { label: "Democrat", handle: "@Bloomberg", url: "https://x.com/business/status/2038865656502722568", text: "Hakeem Jeffries: \u2018Liberation Day was a complete and total failure.\u2019 Factories employ 89K fewer people. Foreign investment below 10-year average.", honesty: "7/10", footnoteId: 2 },
+        { label: "Third Party", handle: "@Reuters", url: "https://x.com/Reuters/status/2033105929340629187", text: "Supreme Court struck tariffs down 6-3 as unconstitutional. Government owes $166B in refunds to 330K+ businesses. Supply chains shifted to Vietnam.", honesty: "9/10", footnoteId: 3 }
+      ],
+      footnotes: [
+        "1. White House claims partially true \u2014 trade deals signed but manufacturing jobs declined 89K. Cherry-picks positive data.",
+        "2. Jeffries\u2019 framing is editorial but backed by BLS data and FDI figures.",
+        "3. Reuters most balanced. Supreme Court ruling, $166B refunds, and Vietnam supply chain shift all confirmed."
+      ]
+    }],
+    earlier: [{
+      headline: "Trump says he is \u2018absolutely\u2019 considering withdrawing U.S. from NATO",
+      perspectives: [
+        { label: "Conservative", handle: "@SaturnWorldNews", url: "https://x.com/SaturnWorldNews/status/2039336490275389788", text: "U.S. strongly considering exit from NATO.", honesty: "7/10", footnoteId: 1 },
+        { label: "Democrat", handle: "@RpsAgainstTrump", url: "https://x.com/RpsAgainstTrump/status/2039425556169605206", text: "This is abandoning our allies while cozying up to dictators.", honesty: "7/10", footnoteId: 2 },
+        { label: "Third Party", handle: "@FaytuksNetwork", url: "https://x.com/FaytuksNetwork/status/2039380380516548704", text: "Rubio co-authored the law that prevents unilateral NATO withdrawal.", honesty: "9/10", footnoteId: 3 }
+      ],
+      footnotes: ["1. Accurately quotes Trump.", "2. Reports Ukraine weapons threat.", "3. Rubio tweet verified."],
+      time: "8:36 AM"
+    }]
+  },
+  business: {
+    title: "Top Business Story of the Day",
+    subtitle: "Markets, money, and what\u2019s moving business today. Click to expand.",
+    stories: [{
+      headline: "Markets whipsaw on Liberation Day anniversary \u2014 Dow drops 600 then recovers, oil surges to $110 on Iran tensions",
+      handle: "@CNBC", url: "https://x.com/CNBC/status/2039692970895528261", stats: "15K views",
+      body: "Dow declined 61 points to 46,505 after being down 600+ intraday. S&P +0.11%, Nasdaq +0.18%. Oil surged nearly 10% to $110/barrel. Markets briefly recovered on Iran/Oman cooperation signals. Asian markets hammered \u2014 South Korea Kospi dropped 4.47%.",
+      honesty: "7/10"
+    }],
+    earlier: [{
+      headline: "Tesla reports 358,000 Q1 deliveries \u2014 misses expectations, stock drops 4%",
+      handle: "@CNBC", url: "https://x.com/CNBC/status/2039692970895528261", stats: "11K views",
+      body: "Tesla delivered 358K vehicles in Q1, below consensus of 365K. Energy storage fell 38% QoQ.",
+      honesty: "8/10",
+      time: "8:36 AM"
+    }]
+  },
+  sports: {
+    title: "Top Sports Story of the Day",
+    subtitle: "Today\u2019s biggest sports moment. Click to expand.",
+    stories: [{
+      headline: "Tiger Woods DUI bodycam released \u2014 handcuffed after field sobriety tests, hydrocodone found, stepping away from golf",
+      handle: "@AwfulAnnouncing", url: "https://x.com/awfulannouncing/status/2039356671894405234", stats: "1.2M views",
+      honesty: "8/10",
+      body: "Police released bodycam of Tiger Woods\u2019 March 27 DUI arrest on Jupiter Island, FL. Woods: \u2018I looked down at my phone and boom.\u2019 Two hydrocodone pills found in pocket. Blew triple-zeroes for alcohol but refused urine test. Pleaded not guilty. Stepping away from golf for treatment. Judge approved treatment outside U.S."
+    }],
+    earlier: [{
+      headline: "Stephen A. Smith: \u2018You\u2019re lucky you didn\u2019t kill somebody\u2019 \u2014 goes off on Tiger Woods DUI history",
+      handle: "@AwfulAnnouncing", url: "https://x.com/awfulannouncing/status/2039356671894405234", stats: "890K views",
+      honesty: "8/10",
+      body: "Stephen A: \u2018Bump your statements! We don\u2019t care. What we care to hear is that we don\u2019t have to worry about you behind the wheel inebriated. You\u2019re lucky you didn\u2019t kill somebody.\u2019 Ripped Tiger for repeat DUI incidents in 2017, 2021, and 2026.",
+      time: "3:00 PM"
+    },{
+      headline: "Colin Cowherd: Steelers are like a small-town bully \u2014 terrified to leave home",
+      handle: "@TheHerd", url: "https://x.com/TheHerd/status/2039778103807840267", stats: "129.8K views \u00b7 309 likes \u00b7 18 reposts",
+      honesty: "7/10",
+      body: "Cowherd agrees with NFL execs that the Steelers lack offensive identity. Compares them to a small-town bully with a barbed wire tattoo who is afraid to leave his hometown.",
+      time: "11:52 AM"
+    },{
+      headline: "Court TV: Full bodycam breakdown ÃÂ¢ÃÂÃÂ Tiger handcuffed, hydrocodone in pocket, pleads not guilty",
+      handle: "@CourtTV", url: "https://x.com/CourtTV/status/2039717184298004978", stats: "420K views",
+      honesty: "9/10",
+      body: "Court TV aired full bodycam footage of Tiger WoodsÃÂ¢ÃÂÃÂ arrest. SUV flipped on its side, field sobriety tests failed, hydrocodone pills in pocket. Woods pleaded not guilty to DUI charges.",
+      time: "Yesterday"
+    }]
+  },
+  elon: {
+    title: "Elon\u2019s Latest",
+    subtitle: "What\u2019s Elon posting? His most engaging recent X post.",
+    stories: [{
+      headline: "Elon says $134B OpenAI case winnings will all go to charity \u2014 jury trial April 28",
+      handle: "@elonmusk", url: "https://x.com/elonmusk/status/2033681871557824740", stats: "2.1M views",
+      honesty: "7/10",
+      body: "Musk says if he wins vs OpenAI, every dollar of $134B goes to charity. Jury trial set April 28. Meanwhile X Money with 557M users launching this month \u2014 potentially rivaling Venmo, Cash App, and PayPal combined."
+    }],
+    earlier: [{
+      headline: "Elon reacts to California Medicaid fraud",
+      handle: "@elonmusk", url: "https://x.com/elonmusk/status/1976774208031220212", stats: "1.8M views",
+      honesty: "6/10",
+      body: "Highlights ongoing fraud investigations in California Medicaid system.",
+      time: "8:00 AM"
+    }]
+  },
+  allin: {
+    title: "$age Insider",
+    subtitle: "Billion-dollar wisdom \u2014 what the tech billionaires are posting. Click to expand.",
+    stories: [{
+      headline: "Andreessen praises Sacks as \u2018credit to our nation\u2019 \u2014 calls for more private sector leaders in government",
+      handle: "@pmarca", url: "https://x.com/pmarca/status/1995279872588226593", stats: "890K views",
+      honesty: "7/10",
+      body: "Andreessen: \u2018David Sacks is a throwback to the era of American greatness \u2014 selfless private sector citizens volunteering for government service. He is a credit to our nation.\u2019 a16z Big Ideas 2026: financial services rebuilding infrastructure layer with AI."
+    }],
+    earlier: [{
+      headline: "Chamath teases SPAC return \u2014 \u2018Should I launch a SPAC?\u2019",
+      handle: "@chamath", url: "https://x.com/chamath/status/2010038234638946432", stats: "340K views",
+      honesty: "6/10",
+      body: "Chamath floats the idea of returning to SPACs.",
+      time: "Yesterday"
+    }]
+  },
+  top: {
+    title: "#1 Pop",
+    subtitle: "The single most viral post on X right now.",
+    stories: [{
+      headline: "Artemis II astronauts go for translunar injection burn \u2014 first humans heading to Moon in 53 years",
+      handle: "@brookeofstars", url: "https://x.com/brookeofstars/status/2039762807961325970", stats: "4.2M views",
+      honesty: "9/10",
+      body: "Day 2 of Artemis II. NASA gave \u2018go\u2019 for 6-minute TLI burn committing crew to lunar flyby. Glover first person of color, Koch first woman, Hansen first non-American beyond LEO. Splashdown April 10 off San Diego."
+    }],
+    earlier: [{
+      headline: "Artemis II launches \u2014 historic moon mission begins from Kennedy Space Center",
+      handle: "@SpaceIntel101", url: "https://x.com/SpaceIntel101/status/2038374747780608059", stats: "6.8M views",
+      honesty: "10/10",
+      body: "Liftoff at 6:35 PM EDT April 1. First crewed mission beyond LEO in 50+ years.",
+      time: "Yesterday"
+    }]
+  },
+  pelosi: {
+    title: "Pelosi Trade Tracker",
+    subtitle: "Tracking Nancy Pelosi\u2019s disclosed stock trades. 45-day reporting delay means recent trades may not yet be public. Data from official House clerk disclosures.",
+    stories: [{
+      headline: "Jan 16: Bought 25,000 shares of AllianceBernstein (AB) \u2014 $1M\u2013$5M position",
+      handle: "@PelosiTracker", url: "https://x.com/pelositracker/status/2015809201298350295", stats: "320K views",
+      honesty: "8/10",
+      body: "Pelosi\u2019s latest disclosed trade: 25,000 shares of AllianceBernstein at ~$38/share. Also bought VST (Vistra, energy/AI) and TEM (Tempus AI, health AI) same day."
+    }],
+    earlier: [{
+      headline: "Dec 30: Sold AAPL, NVDA, AMZN, GOOGL shares \u2014 then re-entered with Jan 2027 LEAPS calls",
+      handle: "@PelosiTracker", url: "https://x.com/pelositracker/status/2015809201298350295", stats: "890K views",
+      honesty: "8/10",
+      body: "Sold direct shares in all four mega-caps, then bought 20 LEAPS call options each expiring Jan 2027. Bullish bets with leverage.",
+      time: "Jan 23 filing"
+    },{
+      headline: "Dec 30: Fully exited PayPal (PYPL) and Walt Disney (DIS)",
+      handle: "@PelosiTracker", url: "https://x.com/pelositracker/status/2015809201298350295", stats: "210K views",
+      honesty: "8/10",
+      body: "Full exits from both positions. No new positions opened in either.",
+      time: "Jan 23 filing"
+    },{
+      headline: "Portfolio thesis: Betting big on AI \u2014 NVDA, GOOGL, AMZN, AAPL core via options",
+      handle: "@pelositracker", url: "https://x.com/pelositracker/status/2015810232006701234", stats: "450K views",
+      honesty: "8/10",
+      body: "Strategy clear: maintain massive AI exposure through call options, all expiring Jan 2027. Net worth estimated at $200M+.",
+      time: "Analysis"
+    }]
+  },
+  msm: {
+    title: "Not in MSM",
+    subtitle: "Stories mainstream media is underreporting or ignoring. Click to expand.",
+    stories: [{
+      headline: "Supreme Court struck down Liberation Day tariffs 6-3 as unconstitutional \u2014 $166B in refunds owed but MSM barely covers the scale",
+      handle: "@DonaldDavhie", url: "https://x.com/DonaldDavhie/status/2008865897222463594", stats: "120K views",
+      honesty: "8/10",
+      body: "While mainstream media covers the Liberation Day anniversary, the full scope of the Supreme Court ruling is underreported: the government owes $166 billion in refunds to over 330,000 businesses. The ruling found tariffs unconstitutional under the International Emergency Economic Powers Act. Manufacturing employment actually declined 89,000 jobs since tariffs took effect \u2014 the opposite of what was promised."
+    }],
+    earlier: [{
+      headline: "Q1 2026 startup funding hit $297 billion \u2014 highest quarterly total ever, driven by AI mega-deals",
+      handle: "@DonaldDavhie", url: "https://x.com/DonaldDavhie/status/2008865897222463594", stats: "89K views",
+      honesty: "9/10",
+      body: "Record startup funding barely covered by mainstream outlets focused on tariff/war stories.",
+      time: "8:00 AM"
+    }]
+  },
+  recipe: {
+    title: "Recipe of the Day",
+    subtitle: "The most viral, loved, and talked-about recipe post on X right now. If nothing tops it, it stays.",
+    stories: [{
+      headline: "Irish Beer Cheese Gnocchi Soup \u2014 Guinness + cheddar + gnocchi = comfort in a bowl",
+      handle: "@nexta_tv", url: "https://x.com/nexta_tv/status/2034759319816634862", stats: "285K views \u00b7 4.1K likes \u00b7 170 reposts",
+      honesty: "9/10",
+      body: "This creamy Irish beer cheese soup with gnocchi has gone viral across X and TikTok. Made with Guinness stout, sharp cheddar, gnocchi, and fresh sage. The video recipe has been saved and shared hundreds of thousands of times.",
+      time: ""
+    }],
+    earlier: [{
+      headline: "Turkish Pistachio Baklava Sweet \u2014 the dessert everyone is fighting over the origin of",
+      handle: "@DailyTurkic", url: "https://x.com/DailyTurkic/status/2027070593682522156", stats: "285K views \u00b7 4.1K likes",
+      honesty: "8/10",
+      body: "A viral post about a Turkish pistachio-filled pastry sparked a massive debate about food origins. The video has been viewed nearly 300K times.",
+      time: "Feb 26"
+    }]
+  },
+  history: [{
+    date: "March 31, 2026",
+    stories: [
+      { headline: "Iran conflict escalates \u2014 Isfahan strike, Strait of Hormuz closed", perspectives: [
+        { label: "Conservative", handle: "@PoliticalCow", text: "U.S. bunker-busters may have triggered a chain reaction through Iran\u2019s underground missile tunnels.", honesty: "8/10" },
+        { label: "Democrat", handle: "@ChrisMurphyCT", text: "Trump\u2019s war with Iran is already incompetent \u2014 Iran has closed the Strait of Hormuz.", honesty: "7/10" },
+        { label: "Third Party", handle: "@FurkanGozukara", text: "Former U.S. diplomat confirms Russia providing targeting intelligence to Iran.", honesty: "6/10" }
+      ]},
+      { headline: "Markets surge on Iran peace hopes \u2014 Dow +1,125, S&P +2.9%, Nasdaq +3.8%", perspectives: [
+        { label: "Conservative", handle: "@VantagePointHQx", text: "Major relief rally as reports surface Iran may be open to ending the war.", honesty: "9/10" },
+        { label: "Democrat", handle: "@MarketWatch", text: "One good day doesn\u2019t erase weeks of war-driven losses.", honesty: "8/10" },
+        { label: "Third Party", handle: "@elonmusk", text: "Markets respond to peace. Always have, always will.", honesty: "9/10" }
+      ]}
+    ]
+  }]
+};
+
+var TABS = [
+  { id: "world", label: "World" },
+  { id: "business", label: "Business" },
+  { id: "sports", label: "Sports" },
+  { id: "elon", label: "Elon" },
+  { id: "allin", label: "$age" },
+  { id: "msm", label: "Not in MSM" },
+  { id: "top", label: "#1 Pop" },
+  { id: "pelosi", label: "Pelosi" },
+  { id: "recipe", label: "Recipe" },
+      { id: "submit", label: "Post/Replace" },
+  { id: "history", label: "History" }
+];
+var activeTab = "world";
+
+function formatDate() { var d = new Date(), days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; return days[d.getDay()] + ", " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(); }
+function todayLabel() { var d = new Date(), months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; return months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(); }
+
+function renderNav() {
+  var nav = document.getElementById("nav");
+  nav.innerHTML = TABS.map(function(t) { return '<a data-tab="' + t.id + '" class="' + (t.id === activeTab ? 'active' : '') + '">' + t.label + '</a>'; }).join("");
+  nav.querySelectorAll("a").forEach(function(a) { a.addEventListener("click", function() { activeTab = a.dataset.tab; renderNav(); renderContent(); }); });
+}
+
+function acc(h, inner) {
+  var id = "s" + Math.random().toString(36).substr(2, 9);
+  return '<div class="story" id="' + id + '"><div class="story-header" onclick="document.getElementById(\'' + id + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>' + h + '</span></div><div class="story-body">' + inner + '</div></div>';
+}
+
+function renderWorldStory(s) {
+  return s.perspectives.map(function(p) {
+    var c = p.label === "Conservative" ? "label-conservative" : p.label === "Democrat" ? "label-democrat" : "label-thirdparty";
+    var sup = p.footnoteId ? '<sup>' + p.footnoteId + '</sup>' : '';
+    return '<a href="' + (p.url || '#') + '" target="_blank" class="perspective-link"><div class="perspective"><span class="' + c + '">' + p.label + '</span> <span class="handle">' + p.handle + '</span> &mdash; ' + p.text + ' <span class="honesty">honesty ' + p.honesty + sup + '</span></div></a>';
+  }).join("");
+}
+
+function renderFootnotes(footnotes) {
+  if (!footnotes || !footnotes.length) return '';
+  var inner = footnotes.map(function(f) { return '<div class="footnote-item">' + f + '</div>'; }).join("");
+  return acc("Honesty footnotes", '<div class="footnotes">' + inner + '</div>');
+}
+
+function renderSinglePost(s) {
+  var stats = s.stats ? '<div class="post-stats">' + s.stats + '</div>' : '';
+  var honesty = s.honesty ? ' <span class="honesty">honesty ' + s.honesty + '</span>' : '';
+  return '<div class="single-post"><div class="post-handle"><a href="' + s.url + '" target="_blank">' + s.handle + '</a>' + honesty + '</div><a class="view-post" href="' + s.url + '" target="_blank">View post</a>' + stats + '<div class="post-body">' + s.body + '</div></div>';
+}
+
+function renderContent() {
+  var el = document.getElementById("content"), today = todayLabel();
+
+  if (activeTab === "history") {
+    var h = '<div class="section-label">History</div><h1>History</h1><p class="subtitle">All stories posted each day, grouped by date. Click any to expand.</p>';
+    NEWS_DATA.history.forEach(function(day) {
+      h += '<div class="history-date">' + day.date + '</div>';
+      day.stories.forEach(function(s) { h += s.perspectives ? acc(s.headline, renderWorldStory(s)) : acc(s.headline, renderSinglePost(s)); });
+    });
+      h += renderLastUpdated();
+    el.innerHTML = h;
+    return;
+  }
+
+  if (activeTab === "submit") {
+    var h = '<div class="section-label">Submit &mdash; ' + today + '</div>' +
+      '<h1>Post Your Favorite Tweet</h1>' +
+      '<p class="subtitle">Share a post for Expresso to consider. If Expresso thinks it\u2019s a better post, it will replace, or post below.</p>' +
+      '<div class="story" style="padding:24px 20px;"><form class="submit-form" id="submitForm" onsubmit="handleSubmit(event)">' +
+      '<label>X / Twitter Link</label><input type="url" id="submitUrl" placeholder="https://x.com/username/status/..." />' +
+      '<label>Why should Expresso feature this?</label><textarea id="submitNote" rows="3" placeholder="Tell us why this post matters..."></textarea>' +
+      '<label>Or paste a screenshot URL</label><input type="url" id="submitScreenshot" placeholder="https://imgur.com/..." />' +
+      '<button type="submit" class="submit-btn">Submit for Expresso</button></form>' +
+      '<div id="submitConfirm" style="display:none;margin-top:16px;padding:12px 16px;background:#e8f5e9;border-radius:6px;color:#2e7d32;font-size:0.9rem;font-weight:600;"></div></div>' +
+      '<div style="margin-top:20px;"><h2 style="font-size:1.1rem;margin-bottom:12px;">Reader Submissions</h2><div id="submissionsList"></div></div>';
+    el.innerHTML = h;
+    renderSubmissions();
+    return;
+  }
+
+  if (activeTab === "world") {
+    var d = NEWS_DATA.world;
+    var h = '<div class="section-label">World &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
+    var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
+    d.stories.forEach(function(s) { var pt = '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(Posted ' + postedTime + ')</span>'; h += acc(s.headline + pt, renderWorldStory(s)); h += renderFootnotes(s.footnotes); });
+    if (d.earlier && d.earlier.length) {
+      h += '<div style="margin-top:24px;padding-top:16px;border-top:2px solid #e0e0e0;"><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:12px;">Earlier Today</div>';
+      d.earlier.forEach(function(s) {
+        var timeTag = s.time ? '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(' + s.time + ')</span>' : '';
+        h += s.perspectives ? acc(s.headline + timeTag, renderWorldStory(s)) : acc(s.headline + timeTag, renderSinglePost(s));
+        if (s.footnotes) h += renderFootnotes(s.footnotes);
+      });
+      h += '</div>';
+    }
+    h += renderLastUpdated();
+    el.innerHTML = h;
+    return;
+  }
+
+  // All other tabs
+  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", pelosi: "Pelosi", recipe: "Recipe of the Day", msm: "Not in MSM" };
+  var d = NEWS_DATA[activeTab];
+  var h = '<div class="section-label">' + labels[activeTab] + ' &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
+  var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
+  d.stories.forEach(function(s) {
+    var pt = '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(Posted ' + postedTime + ')</span>';
+    h += acc(s.headline + pt, renderSinglePost(s));
+    if (s.footnotes) h += renderFootnotes(s.footnotes);
+  });
+  if (d.earlier && d.earlier.length) {
+    h += '<div style="margin-top:24px;padding-top:16px;border-top:2px solid #e0e0e0;"><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:12px;">Earlier Today</div>';
+    d.earlier.forEach(function(s) {
+      var timeTag = s.time ? '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(' + s.time + ')</span>' : '';
+      h += acc(s.headline + timeTag, renderSinglePost(s));
+    });
+    h += '</div>';
+  }
+    if (activeTab === "allin") {
+    h += '<div class="holdings-section"><div class="holdings-title">Billionaire Holdings &amp; Market Tracker</div><div class="holdings-subtitle">Key holdings of $age billionaires with multi-timeframe performance. Data as of April 2, 2026.</div>';
+    var sections = [
+      { label: "Benchmarks", rows: [
+        { t: "^GSPC", n: "S&P 500", p: "5,528", d1: "-1.2%", w1: "-2.8%", m1: "-5.1%", y1: "+8.2%", y2: "+18.4%", y5: "+72.5%", who: "Index" },
+        { t: "^IXIC", n: "NASDAQ Comp", p: "17,122", d1: "-1.6%", w1: "-3.4%", m1: "-6.8%", y1: "+5.9%", y2: "+22.1%", y5: "+81.3%", who: "Index" },
+        { t: "BTC", n: "Bitcoin", p: "$66,246", d1: "-2.4%", w1: "-4.1%", m1: "-12.3%", y1: "-20.0%", y2: "+58.0%", y5: "+44.9%", who: "Crypto" }
+      ]},
+      { label: "Elon Musk", rows: [
+        { t: "TSLA", n: "Tesla", p: "$362.36", d1: "-5.0%", w1: "+1.5%", m1: "-11.2%", y1: "+37.1%", y2: "+62.0%", y5: "+67.7%", who: "~509M shr (13%)" },
+        { t: "SPACEX", n: "SpaceX (pvt)", p: "~$1.5T", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "43% ownership" },
+        { t: "XAI", n: "xAI (merged SpaceX)", p: "pvt", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Founder" }
+      ]},
+      { label: "Nancy Pelosi", rows: [
+        { t: "NVDA", n: "Nvidia", p: "$176.06", d1: "+5.6%", w1: "-2.1%", m1: "-11.4%", y1: "+52.4%", y2: "+320%", y5: "+1,580%", who: "5K shr + LEAPS" },
+        { t: "GOOGL", n: "Alphabet", p: "$273.41", d1: "+5.6%", w1: "-1.2%", m1: "-8.1%", y1: "+86.6%", y2: "+95%", y5: "+181%", who: "5K shr (Jan \u201926)" },
+        { t: "AVGO", n: "Broadcom", p: "$293.56", d1: "-1.8%", w1: "-3.5%", m1: "-0.3%", y1: "+84.9%", y2: "+180%", y5: "+760%", who: "20K shr (Jun \u201925)" },
+        { t: "AMZN", n: "Amazon", p: "$201.62", d1: "-1.1%", w1: "-2.3%", m1: "-4.8%", y1: "+30%", y2: "+52%", y5: "+36.5%", who: "5K shares" },
+        { t: "AAPL", n: "Apple", p: "$247.05", d1: "-0.5%", w1: "-1.8%", m1: "-5.9%", y1: "+15%", y2: "+22%", y5: "+113%", who: "20 call opts" },
+        { t: "VST", n: "Vistra Corp", p: "$156.00", d1: "+0.8%", w1: "-1.5%", m1: "-8.2%", y1: "+21.7%", y2: "+340%", y5: "+890%", who: "5K shr (Jan \u201926)" },
+        { t: "AB", n: "AllianceBernstein", p: "$38.00", d1: "+0.3%", w1: "+0.9%", m1: "+2.1%", y1: "+15%", y2: "+18%", y5: "+22%", who: "25K shr (new)" },
+        { t: "TEM", n: "Tempus AI", p: "$47.32", d1: "-2.1%", w1: "-5.3%", m1: "-12%", y1: "+121%", y2: "\u2014", y5: "\u2014", who: "5K shr (Jan \u201926)" }
+      ]},
+      { label: "Marc Andreessen (a16z)", rows: [
+        { t: "META", n: "Meta Platforms", p: "$579.23", d1: "-0.6%", w1: "-2.0%", m1: "-4.0%", y1: "-6.0%", y2: "+82%", y5: "+195%", who: "281K shr (Director)" },
+        { t: "COIN", n: "Coinbase", p: "$166.85", d1: "+4.1%", w1: "-5.2%", m1: "-29.5%", y1: "-60.3%", y2: "+12%", y5: "+48%", who: "1.15M shr (Dir)" },
+        { t: "NAVN", n: "Navan", p: "$12.61", d1: "-1.2%", w1: "+8.5%", m1: "+43%", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "27M shr (a16z $465M)" },
+        { t: "IOT", n: "Samsara", p: "$32.00", d1: "-0.9%", w1: "-3.1%", m1: "-8.5%", y1: "-47%", y2: "+15%", y5: "\u2014", who: "Director" }
+      ]},
+      { label: "Chamath Palihapitiya", rows: [
+        { t: "SOFI", n: "SoFi Technologies", p: "$15.30", d1: "-1.8%", w1: "-3.5%", m1: "-14.7%", y1: "+45%", y2: "+72%", y5: "-23%", who: "~19.9M shr (2%)" },
+        { t: "CLOV", n: "Clover Health", p: "$1.69", d1: "-3.4%", w1: "-8.1%", m1: "-17.1%", y1: "-52.4%", y2: "-68%", y5: "-73.6%", who: "30.1M shares" },
+        { t: "SPCE", n: "Virgin Galactic", p: "$2.47", d1: "-1.9%", w1: "-4.2%", m1: "-8.0%", y1: "-15%", y2: "-62%", y5: "-95%", who: "1.6% ownership" },
+        { t: "PROK", n: "ProKidney", p: "$1.75", d1: "+5.9%", w1: "+12%", m1: "-22%", y1: "-40%", y2: "\u2014", y5: "\u2014", who: "3M shares" },
+        { t: "AEXA", n: "Am. Exceptional SPAC", p: "$11.11", d1: "+0.1%", w1: "+0.2%", m1: "+1.0%", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Founder (Sep \u201925)" }
+      ]},
+      { label: "David Sacks (Craft Ventures)", rows: [
+        { t: "AFRM", n: "Affirm", p: "$45.33", d1: "+4.6%", w1: "+1.7%", m1: "+12.4%", y1: "+17.9%", y2: "+28.5%", y5: "\u2014", who: "Early investor" },
+        { t: "RUM", n: "Rumble", p: "$4.97", d1: "+9.2%", w1: "+5.3%", m1: "-12%", y1: "-56.2%", y2: "+49%", y5: "\u2014", who: "~1M shr (Director)" },
+        { t: "BTC", n: "Bitcoin", p: "$66,246", d1: "-2.4%", w1: "-4.1%", m1: "-12.3%", y1: "-20%", y2: "+58%", y5: "+44.9%", who: "Divested $200M+ (\u201925)" }
+      ]},
+      { label: "David Friedberg (Production Board)", rows: [
+        { t: "AMZN", n: "Amazon", p: "$201.62", d1: "-1.1%", w1: "-2.3%", m1: "-4.8%", y1: "+30%", y2: "+52%", y5: "+36.5%", who: "Personal holding" },
+        { t: "MILE", n: "Metromile", p: "$1.05", d1: "-2.0%", w1: "-5.0%", m1: "-18%", y1: "-55%", y2: "-72%", y5: "-94%", who: "~4.2M shr (CEO)" },
+        { t: "OHALO", n: "Ohalo Genetics (pvt)", p: "$205M raised", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "CEO/Co-Founder" }
+      ]},
+      { label: "Steve Jurvetson (Future Ventures)", rows: [
+        { t: "TSLA", n: "Tesla", p: "$362.36", d1: "-5.0%", w1: "+1.5%", m1: "-11.2%", y1: "+37.1%", y2: "+62%", y5: "+67.7%", who: "Early investor (2006)" },
+        { t: "TMC", n: "Metals Company", p: "$4.51", d1: "+10%", w1: "+13.9%", m1: "+28%", y1: "+68%", y2: "+120%", y5: "\u2014", who: "Board Vice Chair" },
+        { t: "SPACEX", n: "SpaceX (pvt)", p: "~$1.5T", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Board Member" }
+      ]}
+    ];
+    sections.forEach(function(sec) {
+      h += '<div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#888;padding:12px 10px 4px;border-top:1px solid #eee;margin-top:4px;">' + sec.label + '</div>';
+      h += '<table class="holdings-table"><thead><tr><th>Ticker</th><th>Name</th><th>Price</th><th>1D</th><th>1W</th><th>1M</th><th>1Y</th><th>2Y</th><th>5Y</th><th>Held By</th></tr></thead><tbody>';
+      sec.rows.forEach(function(s) {
+        var cols = ["d1","w1","m1","y1","y2","y5"];
+        var cells = "";
+        cols.forEach(function(c) {
+          var v = s[c];
+          var cls = v.charAt(0) === "-" ? "neg" : v.charAt(0) === "+" ? "pos" : "";
+          cells += '<td class="' + cls + '">' + v + '</td>';
+        });
+        h += '<tr><td class="ticker">' + s.t + '</td><td>' + s.n + '</td><td>' + s.p + '</td>' + cells + '<td style="font-size:0.7rem;color:#666;">' + s.who + '</td></tr>';
+      });
+      h += '</tbody></table>';
+    });
+    h += '</div>';
+  }
+    if (activeTab === "pelosi") {
+    h += '<div class="holdings-section"><div class="holdings-title">Pelosi Portfolio &amp; Trade Log</div><div class="holdings-subtitle"><span class="trade-tag tag-hold">HOLD</span> = currently owns &nbsp; <span class="trade-tag tag-options">OPTIONS</span> = LEAPS calls (bullish bets, exp Jan 2027) &nbsp; <span class="trade-tag tag-buy">BOUGHT</span> = new position &nbsp; <span class="trade-tag tag-sell">SOLD</span> = exited/reduced. Source: House clerk disclosures, 45-day reporting delay.</div>';
+    h += '<table class="holdings-table"><thead><tr><th>Ticker</th><th>Company</th><th>Action</th><th>Date</th><th>Price</th><th>1D</th><th>1M</th><th>1Y</th><th>Details</th></tr></thead><tbody>';
+    var ptrades = [
+      { t: "AB", n: "AllianceBernstein", act: "hold", date: "Jan 16", p: "$38.00", d1: "+0.3%", m1: "+2.1%", y1: "+15%", info: "HOLDS 25K shares ($1\u20135M)" },
+      { t: "VST", n: "Vistra Corp", act: "hold", date: "Jan 16", p: "$156.00", d1: "+0.8%", m1: "-8.2%", y1: "+21.7%", info: "HOLDS 5K shares (energy/AI)" },
+      { t: "TEM", n: "Tempus AI", act: "hold", date: "Jan 16", p: "$47.32", d1: "-2.1%", m1: "-12%", y1: "+121%", info: "HOLDS 5K shares (health AI)" },
+      { t: "AVGO", n: "Broadcom", act: "hold", date: "Jun \u201925", p: "$293.56", d1: "-1.8%", m1: "-0.3%", y1: "+84.9%", info: "HOLDS 20K shares exercised" },
+      { t: "NVDA", n: "Nvidia", act: "options", date: "Dec 30", p: "$176.06", d1: "+5.6%", m1: "-11.4%", y1: "+52.4%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
+      { t: "GOOGL", n: "Alphabet", act: "options", date: "Dec 30", p: "$273.41", d1: "+5.6%", m1: "-8.1%", y1: "+86.6%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
+      { t: "AMZN", n: "Amazon", act: "options", date: "Dec 30", p: "$201.62", d1: "-1.1%", m1: "-4.8%", y1: "+30%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
+      { t: "AAPL", n: "Apple", act: "options", date: "Dec 30", p: "$247.05", d1: "-0.5%", m1: "-5.9%", y1: "+15%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
+      { t: "NVDA", n: "Nvidia", act: "sell", date: "Dec 30", p: "$176.06", d1: "+5.6%", m1: "-11.4%", y1: "+52.4%", info: "Sold direct shares (replaced w/ options)" },
+      { t: "GOOGL", n: "Alphabet", act: "sell", date: "Dec 30", p: "$273.41", d1: "+5.6%", m1: "-8.1%", y1: "+86.6%", info: "Sold direct shares (replaced w/ options)" },
+      { t: "AMZN", n: "Amazon", act: "sell", date: "Dec 30", p: "$201.62", d1: "-1.1%", m1: "-4.8%", y1: "+30%", info: "Sold direct shares (replaced w/ options)" },
+      { t: "AAPL", n: "Apple", act: "sell", date: "Dec 30", p: "$247.05", d1: "-0.5%", m1: "-5.9%", y1: "+15%", info: "Sold direct shares (replaced w/ options)" },
+      { t: "PYPL", n: "PayPal", act: "sell", date: "Dec 30", p: "$68.50", d1: "-0.8%", m1: "-6.2%", y1: "-12%", info: "Full exit \u2014 no longer held" },
+      { t: "DIS", n: "Walt Disney", act: "sell", date: "Dec 30", p: "$112.40", d1: "+0.4%", m1: "-3.1%", y1: "+5%", info: "Full exit \u2014 no longer held" }
+    ];
+    ptrades.forEach(function(t) {
+      var rc = t.act === "buy" ? "row-buy" : t.act === "sell" ? "row-sell" : "row-hold";
+      var tag = t.act === "buy" ? "tag-buy" : t.act === "sell" ? "tag-sell" : t.act === "options" ? "tag-options" : "tag-hold";
+      var label = t.act.toUpperCase();
+      var d1c = t.d1.charAt(0) === "-" ? "neg" : t.d1.charAt(0) === "+" ? "pos" : "";
+      var m1c = t.m1.charAt(0) === "-" ? "neg" : t.m1.charAt(0) === "+" ? "pos" : "";
+      var y1c = t.y1.charAt(0) === "-" ? "neg" : t.y1.charAt(0) === "+" ? "pos" : "";
+      h += '<tr class="' + rc + '"><td class="ticker">' + t.t + '</td><td>' + t.n + '</td><td><span class="trade-tag ' + tag + '">' + label + '</span></td><td>' + t.date + '</td><td>' + t.p + '</td><td class="' + d1c + '">' + t.d1 + '</td><td class="' + m1c + '">' + t.m1 + '</td><td class="' + y1c + '">' + t.y1 + '</td><td style="font-size:0.7rem;color:#666;">' + t.info + '</td></tr>';
+    });
+    h += '</tbody></table></div>';
+  }
+  h += renderLastUpdated();
+  el.innerHTML = h;
+}
+
+// Submissions
+var submissions = [];
+try { submissions = JSON.parse(localStorage.getItem('grokSubs') || '[]'); } catch(e) {}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  var url = document.getElementById('submitUrl').value.trim();
+  var note = document.getElementById('submitNote').value.trim();
+  if (!url && !note) return;
+  var found = false;
+  submissions.forEach(function(s) { if (url && s.url === url) { s.votes++; if (note) s.notes.push(note); found = true; } });
+  if (!found) submissions.push({ url: url, notes: note ? [note] : [], votes: 1, timestamp: new Date().toISOString() });
+  try { localStorage.setItem('grokSubs', JSON.stringify(submissions)); } catch(e) {}
+  document.getElementById('submitForm').reset();
+  var c = document.getElementById('submitConfirm');
+  c.style.display = 'block';
+  c.textContent = found ? 'Upvoted! Posts with multiple votes get featured by Expresso.' : 'Submitted! If others submit the same post, it gets featured.';
+  renderSubmissions();
+}
+
+function renderSubmissions() {
+  var list = document.getElementById('submissionsList');
+  if (!list) return;
+  var sorted = submissions.slice().sort(function(a, b) { return b.votes - a.votes; });
+  if (!sorted.length) { list.innerHTML = '<p style="color:#999;font-size:0.85rem;">No submissions yet. Be the first!</p>'; return; }
+  list.innerHTML = sorted.map(function(s) {
+    var handle = '';
+    try { handle = '@' + new URL(s.url).pathname.split('/')[1]; } catch(e) {}
+    var badge = s.votes > 1 ? '<span class="vote-featured">' + s.votes + ' votes \u2014 FEATURED</span>' : '<span class="vote-pending">1 vote</span>';
+    return '<div class="story" style="padding:14px 20px;margin-bottom:8px;"><div style="font-weight:600;font-size:0.9rem;">' +
+      (s.url ? '<a href="' + s.url + '" target="_blank" style="color:#2980b9;text-decoration:none;">' + (handle || s.url) + '</a>' : 'No link') + badge +
+      '</div>' + (s.notes.length ? '<div style="font-size:0.85rem;color:#555;margin-top:6px;">' + s.notes[0] + '</div>' : '') +
+      '<div style="font-size:0.7rem;color:#aaa;margin-top:4px;">' + new Date(s.timestamp).toLocaleString() + '</div></div>';
+  }).join('');
+}
+
+function renderLastUpdated() { return '<div class="last-updated">Last updated: ' + new Date(NEWS_DATA.lastUpdated).toLocaleString() + '</div>'; }
+
+document.getElementById("currentDate").textContent = formatDate();
+renderNav();
+renderContent();
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Expresso News</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
