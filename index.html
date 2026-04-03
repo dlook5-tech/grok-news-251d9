@@ -95,23 +95,40 @@
 <footer>&copy; 2026 <strong>eXpressO News</strong> &mdash; Grok Curated Tweets Scored 1-10 for Honesty</footer>
 <script>
 var NEWS_DATA = {
-  lastUpdated: "2026-04-02T22:00:00Z",
+  lastUpdated: "4/3/2026, 12:00:00 PM",
   world: {
     title: "Top World Story of the Day",
     subtitle: "Today\u2019s top story with a conservative view, Democrat view, and third-party view. Click on summary to link directly to actual X post.",
-    stories: [{
-      headline: "Liberation Day 1-year anniversary \u2014 tariffs struck down by Supreme Court 6-3, $166B in refunds owed, Democrats call it \u2018complete failure\u2019",
-      perspectives: [
-        { label: "Conservative", handle: "@overton_news", url: "https://x.com/overton_news/status/2024865034594050328", text: "Trump pulled out his Reciprocal Tariff chart to explain tariffs imposed on each country. White House says 20+ trade deals signed, trillions in manufacturing investment secured.", honesty: "6/10", footnoteId: 1 },
-        { label: "Democrat", handle: "@Bloomberg", url: "https://x.com/business/status/2038865656502722568", text: "Hakeem Jeffries: \u2018Liberation Day was a complete and total failure.\u2019 Factories employ 89K fewer people. Foreign investment below 10-year average.", honesty: "7/10", footnoteId: 2 },
-        { label: "Third Party", handle: "@Reuters", url: "https://x.com/Reuters/status/2033105929340629187", text: "Supreme Court struck tariffs down 6-3 as unconstitutional. Government owes $166B in refunds to 330K+ businesses. Supply chains shifted to Vietnam.", honesty: "9/10", footnoteId: 3 }
+    stories: [
+        {
+          headline: "US-Iran crisis escalates — American F-15 shot down, Iran claims it struck rescue helicopter",
+          handle: "@ScottJenningsKY",
+          url: "https://x.com/ScottJenningsKY/status/2040085862633898169",
+          honesty: "7/10",
+          notes: "Conservative perspective. Frames incident as Trump’s decisive action. Opinion-heavy but core facts accurate.",
+          body: "Conservative view: ‘Europe ought to send Trump an Edible Arrangement — Iran showed it could reach most of Europe with long-range missiles and Trump eliminated the threat.’ (Posted 12:00 PM)"
+        },
+        {
+          headline: "BREAKING: American fighter jet shot down by Iran — search and rescue underway",
+          handle: "@ABC",
+          url: "https://x.com/ABC/status/2040081702446362902",
+          honesty: "8/10",
+          notes: "ABC News reports facts with official source attribution.",
+          body: "Democrat view: ‘An American fighter jet appears to have been shot down by Iran. A search and rescue is underway, a U.S. official said.’ (Posted 11:45 AM)"
+        },
+        {
+          headline: "JUST IN: Iran says it struck US helicopter on search & rescue mission for downed F-15 pilot",
+          handle: "@BRICSinfo",
+          url: "https://x.com/BRICSinfo/status/2040085984281256418",
+          honesty: "6/10",
+          notes: "Reports Iran’s claim without independent verification.",
+          body: "Independent view: BRICS News highlights Iran’s direct claim of striking the US helicopter. 7k+ likes, rapid spread. (Posted 12:00 PM)"
+        },
+        {
+          headline: "Honesty footnotes",
+          body: "1. Jennings opinion framing is strong but factual basis accurate. 2. ABC straightforward breaking news. 3. BRICSinfo aggregates claim without verification."
+        }
       ],
-      footnotes: [
-        "1. White House claims partially true \u2014 trade deals signed but manufacturing jobs declined 89K. Cherry-picks positive data.",
-        "2. Jeffries\u2019 framing is editorial but backed by BLS data and FDI figures.",
-        "3. Reuters most balanced. Supreme Court ruling, $166B refunds, and Vietnam supply chain shift all confirmed."
-      ]
-    }],
     earlier: [{
       headline: "Trump says he is \u2018absolutely\u2019 considering withdrawing U.S. from NATO",
       perspectives: [
@@ -126,12 +143,20 @@ var NEWS_DATA = {
   business: {
     title: "Top Business Story of the Day",
     subtitle: "Markets, money, and what\u2019s moving business today. Click to expand.",
-    stories: [{
-      headline: "Markets whipsaw on Liberation Day anniversary \u2014 Dow drops 600 then recovers, oil surges to $110 on Iran tensions",
-      handle: "@CNBC", url: "https://x.com/CNBC/status/2039692970895528261", stats: "15K views",
-      body: "Dow declined 61 points to 46,505 after being down 600+ intraday. S&P +0.11%, Nasdaq +0.18%. Oil surged nearly 10% to $110/barrel. Markets briefly recovered on Iran/Oman cooperation signals. Asian markets hammered \u2014 South Korea Kospi dropped 4.47%.",
-      honesty: "7/10"
-    }],
+    stories: [
+        {
+          headline: "Bitcoin surges past $67,000 as crypto momentum builds amid Trump crypto-bill rumors",
+          handle: "@AshCrypto",
+          url: "https://x.com/AshCrypto/status/2039976992833954187",
+          honesty: "7/10",
+          notes: "Price data verifiable. Bullish framing but not misleading.",
+          body: "Bitcoin breaks above $67k with chart proof. Strong market momentum alongside Trump crypto-bill rumors. (Posted 10:00 AM)"
+        },
+        {
+          headline: "Honesty footnotes",
+          body: "1. Price data accurate and on-chain verifiable. Trump crypto bill connection is speculative."
+        }
+      ],
     earlier: [{
       headline: "Tesla reports 358,000 Q1 deliveries \u2014 misses expectations, stock drops 4%",
       handle: "@CNBC", url: "https://x.com/CNBC/status/2039692970895528261", stats: "11K views",
@@ -143,12 +168,20 @@ var NEWS_DATA = {
   sports: {
     title: "Top Sports Story of the Day",
     subtitle: "Today\u2019s biggest sports moment. Click to expand.",
-    stories: [{
-      headline: "Tiger Woods DUI bodycam released \u2014 handcuffed after field sobriety tests, hydrocodone found, stepping away from golf",
-      handle: "@AwfulAnnouncing", url: "https://x.com/awfulannouncing/status/2039356671894405234", stats: "1.2M views",
-      honesty: "8/10",
-      body: "Police released bodycam of Tiger Woods\u2019 March 27 DUI arrest on Jupiter Island, FL. Woods: \u2018I looked down at my phone and boom.\u2019 Two hydrocodone pills found in pocket. Blew triple-zeroes for alcohol but refused urine test. Pleaded not guilty. Stepping away from golf for treatment. Judge approved treatment outside U.S."
-    }],
+    stories: [
+        {
+          headline: "Atlanta Braves score most runs this season — RBI from every starter for first time since 2001",
+          handle: "@MLB",
+          url: "https://x.com/MLB/status/2039926066786054528",
+          honesty: "9/10",
+          notes: "Official MLB account. Stats verifiable from box score.",
+          body: "Historic offensive performance — every Braves starter recorded an RBI for the first time since 2001. (Posted 9:00 AM)"
+        },
+        {
+          headline: "Honesty footnotes",
+          body: "1. Official MLB source. Stats verifiable per baseball records."
+        }
+      ],
     earlier: [{
       headline: "Stephen A. Smith: \u2018You\u2019re lucky you didn\u2019t kill somebody\u2019 \u2014 goes off on Tiger Woods DUI history",
       handle: "@AwfulAnnouncing", url: "https://x.com/awfulannouncing/status/2039356671894405234", stats: "890K views",
@@ -162,22 +195,26 @@ var NEWS_DATA = {
       body: "Cowherd agrees with NFL execs that the Steelers lack offensive identity. Compares them to a small-town bully with a barbed wire tattoo who is afraid to leave his hometown.",
       time: "11:52 AM"
     },{
-      headline: "Court TV: Full bodycam breakdown ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Tiger handcuffed, hydrocodone in pocket, pleads not guilty",
+      headline: "Court TV: Full bodycam breakdown ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Tiger handcuffed, hydrocodone in pocket, pleads not guilty",
       handle: "@CourtTV", url: "https://x.com/CourtTV/status/2039717184298004978", stats: "420K views",
       honesty: "9/10",
-      body: "Court TV aired full bodycam footage of Tiger WoodsÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ arrest. SUV flipped on its side, field sobriety tests failed, hydrocodone pills in pocket. Woods pleaded not guilty to DUI charges.",
+      body: "Court TV aired full bodycam footage of Tiger WoodsÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ arrest. SUV flipped on its side, field sobriety tests failed, hydrocodone pills in pocket. Woods pleaded not guilty to DUI charges.",
       time: "Yesterday"
     }]
   },
   elon: {
     title: "Elon\u2019s Latest",
     subtitle: "What\u2019s Elon posting? His most engaging recent X post.",
-    stories: [{
-      headline: "Elon says $134B OpenAI case winnings will all go to charity \u2014 jury trial April 28",
-      handle: "@elonmusk", url: "https://x.com/elonmusk/status/2033681871557824740", stats: "2.1M views",
-      honesty: "7/10",
-      body: "Musk says if he wins vs OpenAI, every dollar of $134B goes to charity. Jury trial set April 28. Meanwhile X Money with 557M users launching this month \u2014 potentially rivaling Venmo, Cash App, and PayPal combined."
-    }],
+    stories: [
+        {
+          headline: "Elon: ‘Upgrades, upgrades …’ — showcases Grok Imagine Quality Mode (33k likes, 5M+ views)",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2040044771511849147",
+          honesty: "8/10",
+          notes: "Showcases real AI product improvement. Engagement numbers verifiable.",
+          body: "Elon quotes a user showcasing Grok Imagine’s Quality Mode with dramatic AI-generated images. His highest-engagement post today. (Posted 11:00 AM)"
+        }
+      ],
     earlier: [{
       headline: "Elon reacts to California Medicaid fraud",
       handle: "@elonmusk", url: "https://x.com/elonmusk/status/1976774208031220212", stats: "1.8M views",
@@ -189,12 +226,20 @@ var NEWS_DATA = {
   allin: {
     title: "$age Insider",
     subtitle: "Billion-dollar wisdom \u2014 what the tech billionaires are posting. Click to expand.",
-    stories: [{
-      headline: "Andreessen praises Sacks as \u2018credit to our nation\u2019 \u2014 calls for more private sector leaders in government",
-      handle: "@pmarca", url: "https://x.com/pmarca/status/1995279872588226593", stats: "890K views",
-      honesty: "7/10",
-      body: "Andreessen: \u2018David Sacks is a throwback to the era of American greatness \u2014 selfless private sector citizens volunteering for government service. He is a credit to our nation.\u2019 a16z Big Ideas 2026: financial services rebuilding infrastructure layer with AI."
-    }],
+    stories: [
+        {
+          headline: "Marc Andreessen: ‘Quantum computing is going to work. It’s all happening.’",
+          handle: "@pmarca",
+          url: "https://x.com/pmarca/status/2039946820139565407",
+          honesty: "6/10",
+          notes: "Opinion-based optimism. No specific evidence cited.",
+          body: "Andreessen enthuses about America achieving superintelligence and quantum computing breakthroughs. Highest engagement among tech billionaire posts today. (Posted 9:30 AM)"
+        },
+        {
+          headline: "Honesty footnotes",
+          body: "1. Pure opinion expressing optimism. No misleading claims but no evidence either."
+        }
+      ],
     earlier: [{
       headline: "Chamath teases SPAC return \u2014 \u2018Should I launch a SPAC?\u2019",
       handle: "@chamath", url: "https://x.com/chamath/status/2010038234638946432", stats: "340K views",
@@ -206,12 +251,16 @@ var NEWS_DATA = {
   top: {
     title: "#1 Pop",
     subtitle: "The single most viral post on X right now.",
-    stories: [{
-      headline: "Artemis II astronauts go for translunar injection burn \u2014 first humans heading to Moon in 53 years",
-      handle: "@brookeofstars", url: "https://x.com/brookeofstars/status/2039762807961325970", stats: "4.2M views",
-      honesty: "9/10",
-      body: "Day 2 of Artemis II. NASA gave \u2018go\u2019 for 6-minute TLI burn committing crew to lunar flyby. Glover first person of color, Koch first woman, Hansen first non-American beyond LEO. Splashdown April 10 off San Diego."
-    }],
+    stories: [
+        {
+          headline: "Iran says it struck US helicopter on rescue mission for downed F-15 pilot — most viral post on X",
+          handle: "@BRICSinfo",
+          url: "https://x.com/BRICSinfo/status/2040085984281256418",
+          honesty: "6/10",
+          notes: "Aggregator relaying Iran claim. 7k+ likes, rapid viral spread.",
+          body: "Breaking geopolitical update that exploded in engagement — the single most viral post on X today. (Posted 12:00 PM)"
+        }
+      ],
     earlier: [{
       headline: "Artemis II launches \u2014 historic moon mission begins from Kennedy Space Center",
       handle: "@SpaceIntel101", url: "https://x.com/SpaceIntel101/status/2038374747780608059", stats: "6.8M views",
@@ -252,12 +301,20 @@ var NEWS_DATA = {
   msm: {
     title: "Not in MSM",
     subtitle: "Stories mainstream media is underreporting or ignoring. Click to expand.",
-    stories: [{
-      headline: "Supreme Court struck down Liberation Day tariffs 6-3 as unconstitutional \u2014 $166B in refunds owed but MSM barely covers the scale",
-      handle: "@DonaldDavhie", url: "https://x.com/DonaldDavhie/status/2008865897222463594", stats: "120K views",
-      honesty: "8/10",
-      body: "While mainstream media covers the Liberation Day anniversary, the full scope of the Supreme Court ruling is underreported: the government owes $166 billion in refunds to over 330,000 businesses. The ruling found tariffs unconstitutional under the International Emergency Economic Powers Act. Manufacturing employment actually declined 89,000 jobs since tariffs took effect \u2014 the opposite of what was promised."
-    }],
+    stories: [
+        {
+          headline: "Claude AI launches Microsoft 365 connectors on every plan — Outlook, OneDrive, SharePoint",
+          handle: "@claudeai",
+          url: "https://x.com/claudeai/status/2040086268562842097",
+          honesty: "9/10",
+          notes: "Official product announcement. Factual, verifiable feature launch.",
+          body: "Anthropic announces full Microsoft 365 integration on any plan. Major enterprise AI leap that mainstream media hasn’t covered. (Posted 12:00 PM)"
+        },
+        {
+          headline: "Honesty footnotes",
+          body: "1. Official company announcement. Feature claims verifiable."
+        }
+      ],
     earlier: [{
       headline: "Q1 2026 startup funding hit $297 billion \u2014 highest quarterly total ever, driven by AI mega-deals",
       handle: "@DonaldDavhie", url: "https://x.com/DonaldDavhie/status/2008865897222463594", stats: "89K views",
@@ -317,7 +374,27 @@ var TABS = [
 var activeTab = "world";
 
 function formatDate() { var d = new Date(), days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; return days[d.getDay()] + ", " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(); }
-function todayLabel() { var d = new Date(), months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; return months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(); }
+function todayLabel() { var d = new Date(), months = ["January","February","March","April","May","June","July","August","September","October","November","December",
+    {
+      title: "Local News",
+      subtitle: "Top local story for your area. Auto-detected by location.",
+      stories: [
+        {
+          headline: "SoCal weekend: OC Japan Fair, beach festivals, Passion Play & Easter fun in Orange County",
+          handle: "@knxnews",
+          url: "https://x.com/knxnews/status/2039862950559625293",
+          honesty: "8/10",
+          notes: "Local news outlet. Factual event listings.",
+          body: "KNX highlights Orange County happenings including OC Japan Fair and Easter weekend events. (Posted 8:00 AM)"
+        },
+        {
+          headline: "Honesty footnotes",
+          body: "1. Event listings are factual and verifiable."
+        }
+      ],
+      earlier: []
+    }
+  ]; return months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(); }
 
 function renderNav() {
   var nav = document.getElementById("nav");
@@ -418,7 +495,7 @@ function renderContent() {
     h += '</div>';
   }
     if (activeTab === "allin") {
-    h += '<div class="holdings-section"><div class="holdings-title">Billionaire Holdings &amp; Market Tracker</div><div class="holdings-subtitle">Key holdings of $age billionaires with multi-timeframe performance. Data as of April 2, 2026.</div>';
+    h += '<div class="holdings-section"><div class="holdings-title">Billionaire Holdings &amp; Market Tracker</div><div class="holdings-subtitle">Key holdings of $age billionaires with multi-timeframe performance. Data as of April 3, 2026.</div>';
     var sections = [
       { label: "Benchmarks", rows: [
         { t: "^GSPC", n: "S&P 500", p: "5,528", d1: "-1.2%", w1: "-2.8%", m1: "-5.1%", y1: "+8.2%", y2: "+18.4%", y5: "+72.5%", who: "Index" },
@@ -554,6 +631,20 @@ renderContent();
 
   function styleHonestyNotes() { document.querySelectorAll(".story").forEach(function(el) { var txt = el.querySelector(".story-header"); if (txt && txt.textContent.indexOf("Honesty") > -1) { el.classList.add("honesty-note"); } }); }
   var _origRC = renderContent; renderContent = function() { _origRC(); styleHonestyNotes(); }; styleHonestyNotes();
+
+  // Auto-detect visitor location for LOCAL tab
+  (function() {
+    fetch('https://ipapi.co/json/').then(function(r) { return r.json(); }).then(function(data) {
+      if (data.city) {
+        var localTab = NEWS_DATA[NEWS_DATA.length - 1];
+        if (localTab && localTab.title === 'Local News') {
+          localTab.title = 'Local: ' + data.city;
+          localTab.subtitle = 'Top local story near ' + data.city + ', ' + data.region + '.';
+        }
+        renderNav();
+      }
+    }).catch(function() {});
+  })();
 </script>
 </body>
 </html>
