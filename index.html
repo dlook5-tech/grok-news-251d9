@@ -392,7 +392,7 @@ function acc(h, inner) {
 }
 
 function renderWorldStory(s) {
-  return s.perspectives.map(function(p) {
+  if (!s.perspectives) return ""; return s.perspectives.map(function(p) {
     var c = p.label === "Conservative" ? "label-conservative" : p.label === "Democrat" ? "label-democrat" : "label-thirdparty";
     var sup = p.footnoteId ? '<sup>' + p.footnoteId + '</sup>' : '';
     return '<a href="' + (p.url || '#') + '" target="_blank" class="perspective-link"><div class="perspective"><span class="' + c + '">' + p.label + '</span> <span class="handle">' + p.handle + '</span> &mdash; ' + p.text + ' <span class="honesty">honesty ' + p.honesty + sup + '</span></div></a>';
