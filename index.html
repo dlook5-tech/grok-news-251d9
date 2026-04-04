@@ -49,7 +49,7 @@
   .view-post:hover { text-decoration: underline; }
   .post-stats { font-size: 0.8rem; color: #888; margin-bottom: 8px; }
   .post-body { font-size: 0.9rem; line-height: 1.6; color: #333; }
-  .footnote-item { font-size: 0.85rem; line-height: 1.5; color: #555; margin-bottom: 8px; }
+  .footnote-item { font-size: 0.7rem; line-height: 1.3; color: #bbb; margin-bottom: 3px; }
   .history-date { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: #888; letter-spacing: 0.5px; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #ddd; }
   .history-date:first-child { margin-top: 0; }
   footer { text-align: center; padding: 32px; font-size: 0.8rem; color: #999; border-top: 1px solid #ddd; }
@@ -88,7 +88,14 @@
   .story.honesty-note .story-header { font-size: 0.8rem; color: #999; font-weight: 400; }
   .story.honesty-note .post-body { font-size: 0.78rem; color: #888; }
   
-  .footnotes { background: #f9f9f9; border: 1px solid #eee; border-radius: 4px; padding: 6px 12px; margin-top: 4px; }
+  .footnotes { background: #f9f9f9; border: 1px solid #eee; border-radius: 4px; padding: 6px 10px; margin-top: 2px; }
+  .footnote-card { border: 1px solid #eee; border-radius: 6px; margin-bottom: 8px; background: #fafafa; overflow: hidden; }
+  .footnote-card .story-header { padding: 6px 12px; font-weight: 400; font-size: 0.75rem; color: #bbb; gap: 8px; }
+  .footnote-card .story-header:hover { background: #f5f5f5; }
+  .footnote-card .arrow { font-size: 0.55rem; margin-top: 2px; }
+  .footnote-card .story-body { padding: 0 12px 8px 28px; display: none; }
+  .footnote-card.open .story-body { display: block; }
+  .footnote-card.open .arrow { transform: rotate(90deg); }
   .footnote-item { font-size: 0.7rem; line-height: 1.3; color: #bbb; margin-bottom: 3px; }
   .footnote-item:last-child { margin-bottom: 0; }
 </style>
@@ -419,7 +426,8 @@ function renderWorldStory(s) {
 function renderFootnotes(footnotes) {
   if (!footnotes || !footnotes.length) return '';
   var inner = footnotes.map(function(f) { return '<div class="footnote-item">' + f + '</div>'; }).join("");
-  return acc("Honesty footnotes", '<div class="footnotes">' + inner + '</div>');
+  var id = "fn" + Math.random().toString(36).substr(2, 9);
+  return '<div class="footnote-card" id="' + id + '"><div class="story-header" onclick="document.getElementById(\'' + id + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>Honesty footnotes</span></div><div class="story-body"><div class="footnotes">' + inner + '</div></div></div>';
 }
 
 function renderSinglePost(s) {
@@ -478,7 +486,7 @@ function renderContent() {
   }
 
   // All other tabs
-  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", pelosi: "Pelosi", recipe: "Recipe of the Day", msm: "Not in MSM", local: "Local" };
+  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", pelosi: "Pelosi", recipe: "Recipe", recipe: "Recipe of the Day", msm: "Not in MSM", local: "Local" };
   var d = NEWS_DATA[activeTab];
   var h = '<div class="section-label">' + labels[activeTab] + ' &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
   var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
