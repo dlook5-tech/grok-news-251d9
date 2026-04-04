@@ -204,7 +204,8 @@ var NEWS_DATA = {
           url: "https://x.com/elonmusk/status/2040044771511849147",
           honesty: "8/10",
           notes: "Showcases real AI product improvement. Engagement numbers verifiable.",
-          body: "Elon quotes a user showcasing Grok Imagine’s Quality Mode with dramatic AI-generated images. His highest-engagement post today. (Posted 11:00 AM)"
+          body: "Elon quotes a user showcasing Grok Imagine’s Quality Mode with dramatic AI-generated images. His highest-engagement post today. (Posted 11:00 AM)",
+          footnotes: ["8/10: Deducted 2 points because the post is promotional self-hype for Grok Imagine without disclosing Elon owns xAI, the company behind Grok."]
         }
       ],
     earlier: [{
@@ -250,7 +251,8 @@ var NEWS_DATA = {
           url: "https://x.com/BRICSinfo/status/2040085984281256418",
           honesty: "6/10",
           notes: "Aggregator relaying Iran claim. 7k+ likes, rapid viral spread.",
-          body: "Breaking geopolitical update that exploded in engagement — the single most viral post on X today. (Posted 12:00 PM)"
+          body: "Breaking geopolitical update that exploded in engagement — the single most viral post on X today. (Posted 12:00 PM)",
+          footnotes: ["6/10: Deducted 4 points because @BRICSinfo frames the Iranian claim as fact without noting it is unverified. The account has a pattern of amplifying one-sided geopolitical narratives without sourcing or balance."]
         }
       ],
     earlier: [{
@@ -259,35 +261,6 @@ var NEWS_DATA = {
       honesty: "10/10",
       body: "Liftoff at 6:35 PM EDT April 1. First crewed mission beyond LEO in 50+ years.",
       time: "Yesterday"
-    }]
-  },
-  pelosi: {
-    title: "Pelosi Trade Tracker",
-    subtitle: "Real-time tracker of Nancy Pelosi\u2019s disclosed stock trades. Data from official House clerk disclosures. Track live at <a href=\"https://www.pelositracker.app/\" target=\"_blank\">pelositracker.app</a> and <a href=\"https://www.capitoltrades.com/trades?politician=P000197\" target=\"_blank\">capitoltrades.com</a>.",
-    stories: [{
-      headline: "Jan 16: Bought 25,000 shares of AllianceBernstein (AB) \u2014 $1M\u2013$5M position",
-      handle: "@PelosiTracker", url: "https://x.com/pelositracker/status/2015809201298350295", stats: "320K views",
-      honesty: "8/10",
-      body: "Pelosi\u2019s latest disclosed trade: 25,000 shares of AllianceBernstein at ~$38/share. Also bought VST (Vistra, energy/AI) and TEM (Tempus AI, health AI) same day."
-    }],
-    earlier: [{
-      headline: "Dec 30: Sold AAPL, NVDA, AMZN, GOOGL shares \u2014 then re-entered with Jan 2027 LEAPS calls",
-      handle: "@PelosiTracker", url: "https://x.com/pelositracker/status/2015809201298350295", stats: "890K views",
-      honesty: "8/10",
-      body: "Sold direct shares in all four mega-caps, then bought 20 LEAPS call options each expiring Jan 2027. Bullish bets with leverage.",
-      time: "Jan 23 filing"
-    },{
-      headline: "Dec 30: Fully exited PayPal (PYPL) and Walt Disney (DIS)",
-      handle: "@PelosiTracker", url: "https://x.com/pelositracker/status/2015809201298350295", stats: "210K views",
-      honesty: "8/10",
-      body: "Full exits from both positions. No new positions opened in either.",
-      time: "Jan 23 filing"
-    },{
-      headline: "Portfolio thesis: Betting big on AI \u2014 NVDA, GOOGL, AMZN, AAPL core via options",
-      handle: "@pelositracker", url: "https://x.com/pelositracker/status/2015810232006701234", stats: "450K views",
-      honesty: "8/10",
-      body: "Strategy clear: maintain massive AI exposure through call options, all expiring Jan 2027. Net worth estimated at $200M+.",
-      time: "Analysis"
     }]
   },
   msm: {
@@ -373,8 +346,7 @@ var TABS = [
   { id: "top", label: "#1 Pop" },
   { id: "recipe", label: "Recipe" },
   { id: "submit", label: "Post/Replace" },
-  { id: "history", label: "History" },
-  { id: "pelosi", label: "Pelosi" }
+  { id: "history", label: "History" }
 ];
 var activeTab = "world";
 
@@ -417,7 +389,7 @@ function renderWorldStory(s) {
     var c = p.label === "Conservative" ? "label-conservative" : p.label === "Democrat" ? "label-democrat" : "label-thirdparty";
     var sup = p.footnoteId ? '<sup>' + p.footnoteId + '</sup>' : '';
     return '<a href="' + (p.url || '#') + '" target="_blank" class="perspective-link"><div class="perspective"><span class="' + c + '">' + p.label + '</span> <span class="handle">' + p.handle + '</span> &mdash; ' + p.text + ' <span class="honesty">honesty ' + p.honesty + sup + '</span></div></a>';
-  }).join("");
+  }).join("") + (s.url ? '<a href="' + s.url + '" target="_blank" class="view-post">View post</a>' : '') + renderFootnotes(s.footnotes);
 }
 
 function renderFootnotes(footnotes) {
@@ -483,7 +455,7 @@ function renderContent() {
   }
 
   // All other tabs
-  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", pelosi: "Pelosi", recipe: "Recipe", recipe: "Recipe of the Day", msm: "Not in MSM", local: "Local" };
+  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", recipe: "Recipe", recipe: "Recipe of the Day", msm: "Not in MSM", local: "Local" };
   var d = NEWS_DATA[activeTab];
   var h = '<div class="section-label">' + labels[activeTab] + ' &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
   var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
@@ -571,36 +543,6 @@ function renderContent() {
       h += '</tbody></table>';
     });
     h += '</div>';
-  }
-    if (activeTab === "pelosi") {
-    h += '<div class="holdings-section"><div class="holdings-title">Pelosi Portfolio &amp; Trade Log</div><div class="holdings-subtitle"><span class="trade-tag tag-hold">HOLD</span> = currently owns &nbsp; <span class="trade-tag tag-options">OPTIONS</span> = LEAPS calls (bullish bets, exp Jan 2027) &nbsp; <span class="trade-tag tag-buy">BOUGHT</span> = new position &nbsp; <span class="trade-tag tag-sell">SOLD</span> = exited/reduced. Source: House clerk disclosures.</div>';
-    h += '<table class="holdings-table"><thead><tr><th>Ticker</th><th>Company</th><th>Action</th><th>Date</th><th>Price</th><th>1D</th><th>1M</th><th>1Y</th><th>Details</th></tr></thead><tbody>';
-    var ptrades = [
-      { t: "AB", n: "AllianceBernstein", act: "hold", date: "Jan 16", p: "$38.00", d1: "+0.3%", m1: "+2.1%", y1: "+15%", info: "HOLDS 25K shares ($1\u20135M)" },
-      { t: "VST", n: "Vistra Corp", act: "hold", date: "Jan 16", p: "$156.00", d1: "+0.8%", m1: "-8.2%", y1: "+21.7%", info: "HOLDS 5K shares (energy/AI)" },
-      { t: "TEM", n: "Tempus AI", act: "hold", date: "Jan 16", p: "$47.32", d1: "-2.1%", m1: "-12%", y1: "+121%", info: "HOLDS 5K shares (health AI)" },
-      { t: "AVGO", n: "Broadcom", act: "hold", date: "Jun \u201925", p: "$293.56", d1: "-1.8%", m1: "-0.3%", y1: "+84.9%", info: "HOLDS 20K shares exercised" },
-      { t: "NVDA", n: "Nvidia", act: "options", date: "Dec 30", p: "$176.06", d1: "+5.6%", m1: "-11.4%", y1: "+52.4%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
-      { t: "GOOGL", n: "Alphabet", act: "options", date: "Dec 30", p: "$273.41", d1: "+5.6%", m1: "-8.1%", y1: "+86.6%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
-      { t: "AMZN", n: "Amazon", act: "options", date: "Dec 30", p: "$201.62", d1: "-1.1%", m1: "-4.8%", y1: "+30%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
-      { t: "AAPL", n: "Apple", act: "options", date: "Dec 30", p: "$247.05", d1: "-0.5%", m1: "-5.9%", y1: "+15%", info: "20 CALLS \u2191 exp Jan 2027 (BULLISH)" },
-      { t: "NVDA", n: "Nvidia", act: "sell", date: "Dec 30", p: "$176.06", d1: "+5.6%", m1: "-11.4%", y1: "+52.4%", info: "Sold direct shares (replaced w/ options)" },
-      { t: "GOOGL", n: "Alphabet", act: "sell", date: "Dec 30", p: "$273.41", d1: "+5.6%", m1: "-8.1%", y1: "+86.6%", info: "Sold direct shares (replaced w/ options)" },
-      { t: "AMZN", n: "Amazon", act: "sell", date: "Dec 30", p: "$201.62", d1: "-1.1%", m1: "-4.8%", y1: "+30%", info: "Sold direct shares (replaced w/ options)" },
-      { t: "AAPL", n: "Apple", act: "sell", date: "Dec 30", p: "$247.05", d1: "-0.5%", m1: "-5.9%", y1: "+15%", info: "Sold direct shares (replaced w/ options)" },
-      { t: "PYPL", n: "PayPal", act: "sell", date: "Dec 30", p: "$68.50", d1: "-0.8%", m1: "-6.2%", y1: "-12%", info: "Full exit \u2014 no longer held" },
-      { t: "DIS", n: "Walt Disney", act: "sell", date: "Dec 30", p: "$112.40", d1: "+0.4%", m1: "-3.1%", y1: "+5%", info: "Full exit \u2014 no longer held" }
-    ];
-    ptrades.forEach(function(t) {
-      var rc = t.act === "buy" ? "row-buy" : t.act === "sell" ? "row-sell" : "row-hold";
-      var tag = t.act === "buy" ? "tag-buy" : t.act === "sell" ? "tag-sell" : t.act === "options" ? "tag-options" : "tag-hold";
-      var label = t.act.toUpperCase();
-      var d1c = t.d1.charAt(0) === "-" ? "neg" : t.d1.charAt(0) === "+" ? "pos" : "";
-      var m1c = t.m1.charAt(0) === "-" ? "neg" : t.m1.charAt(0) === "+" ? "pos" : "";
-      var y1c = t.y1.charAt(0) === "-" ? "neg" : t.y1.charAt(0) === "+" ? "pos" : "";
-      h += '<tr class="' + rc + '"><td class="ticker">' + t.t + '</td><td>' + t.n + '</td><td><span class="trade-tag ' + tag + '">' + label + '</span></td><td>' + t.date + '</td><td>' + t.p + '</td><td class="' + d1c + '">' + t.d1 + '</td><td class="' + m1c + '">' + t.m1 + '</td><td class="' + y1c + '">' + t.y1 + '</td><td style="font-size:0.7rem;color:#666;">' + t.info + '</td></tr>';
-    });
-    h += '</tbody></table></div>';
   }
   h += renderLastUpdated();
   el.innerHTML = h;
