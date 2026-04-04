@@ -648,6 +648,22 @@ document.getElementById("currentDate").textContent = formatDate();
 renderNav();
 renderContent();
 
+// Fix honesty footnotes to use footnote-card styling
+function fixHonestyFootnotes() {
+  document.querySelectorAll(".story").forEach(function(el) {
+    var hdr = el.querySelector(".story-header");
+    if (hdr && hdr.textContent.indexOf("Honesty") > -1) {
+      el.className = "footnote-card";
+      // Remove posted timestamp from footnotes
+      var ts = hdr.querySelector("span[style]");
+      if (ts) ts.remove();
+    }
+  });
+}
+var _origRC = renderContent;
+renderContent = function() { _origRC(); fixHonestyFootnotes(); };
+fixHonestyFootnotes();
+
 
 
   // Auto-detect visitor location for LOCAL tab
