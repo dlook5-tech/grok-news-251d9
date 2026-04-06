@@ -101,13 +101,25 @@
 <footer>&copy; 2026 <strong>eXpressO News</strong> &mdash; Grok Curated Tweets Scored 1-10 for Honesty | Trending on X Right Now</footer>
 <script>
 var NEWS_DATA = {
-  lastUpdated: "4/6/2026, 12:25:54 PM",
+  lastUpdated: "4/6/2026, 1:26:03 PM",
   world: {
     title: "Top Story of the Day",
     subtitle: "Today\u2019s top story with a conservative view, Democrat view, and third-party view. Click on summary to link directly to actual X post.",
     stories: [
         {
-          headline: "US engaged in war with Iran, impacting global energy markets and Strait of Hormuz shipping",
+          headline: "Iran blockades Strait of Hormuz amid US-Iran war, sparking global energy crisis",
+          honesty: "8/10",
+          perspectives: [
+            { label: "Conservative", handle: "@JackPosobiec", url: "https://x.com/JackPosobiec/status/1933148089650491583", text: "Posobiec warns a direct strike on Iran would disastrously split the Trump coalition. Trump ran against new wars \u2014 midterms are close and Congress majority razor-thin. America First means no Middle East quagmire.", honesty: "8/10" },
+            { label: "Democrat", handle: "@Ilhan", url: "https://x.com/Ilhan/status/2033633228314050699", text: "Trump's illegal war in Iran cost Americans over $11 billion in the first week alone. Gas prices highest since 2023. Americans can't afford this expensive, endless war. Time to stop Trump's reckless abuse of power.", honesty: "8/10" },
+            { label: "Independent", handle: "@TheStudyofWar", url: "https://x.com/TheStudyofWar/status/2033260698352976216", text: "ISW special report: US is steadily destroying Iran's ability to use drones and missiles \u2014 its most essential tool. Military trajectory currently positive but war far from over. Data-driven analysis of operational progress.", honesty: "9/10" }
+          ],
+          notes: "Dominant story across feeds; diverse angles reflect real divides.",
+          body: "Three-perspective roundup.",
+          footnotes: ["Conservative: Bold but overlooks casualties.", "Democrat: Alarmist on costs, ignores prior Iranian attacks.", "Independent: Data-driven, neutral forecast."]
+        }
+      ],
+    earlier: [{ time: "12:25 PM", headline: "US engaged in war with Iran, impacting global energy markets and Strait of Hormuz shipping",
           honesty: "8/10",
           perspectives: [
             { label: "Conservative", handle: "@CriticalThreats", url: "https://x.com/criticalthreats/status/2039703794531832030", text: "Senior officials in Tehran seek to use the Strait of Hormuz and energy flows as post-war leverage. Iran will not accept a deal that doesn't preserve its strategic position.", honesty: "8/10" },
@@ -117,16 +129,13 @@ var NEWS_DATA = {
           notes: "Dominant story across geopolitics feeds; high engagement on energy crisis impacts.",
           body: "Three-perspective roundup.",
           footnotes: ["Conservative: Data-backed supply chain analysis.", "Democrat: Focuses on global inequities.", "Independent: Historical context strong."]
-        }
-      ],
-    earlier: [
-        { time: "12:30 PM", headline: "Iran war enters week 6: ceasefire rejected, Trump sets Hormuz deadline, oil prices spike.",
+        },
+{ time: "12:30 PM", headline: "Iran war enters week 6: ceasefire rejected, Trump sets Hormuz deadline, oil prices spike.",
           honesty: "8/10",
           perspectives: [
             { label: "Conservative", handle: "@benshapiro", url: "https://x.com/benshapiro/status/2031778604355375602", text: "Iran Propaganda Syndrome is real \u2014 if you\u2019re losing sleep over this war, you may have caught it from your favorite podcaster or Democratic politician.", honesty: "7/10" },
             { label: "Democrat", handle: "@AOC", url: "https://x.com/AOC/status/1937525272594595993", text: "Mr. President, don\u2019t take your anger out on me \u2014 I\u2019m just a silly girl. Take it out on whoever convinced you to betray the American people by illegally bombing Iran.", honesty: "7/10" },
-            { label: "Independent", handle: "@RBReich", url: "https://x.com/RBReich/status/2028591518391386267", text: "10 years ago, Bernie Sanders warned America of the unintended consequences from a regime change war with Iran. Watch.", honesty: "8/10" }
-          ],
+            { label: "Independent", handle: "@RBReich", url: "https://x.com/RBReich/status/2028591518391386267", text: "10 years ago, Bernie Sanders warned America of the unintended consequences from a regime change war with Iran. Watch.", honesty: "8/10" }],
           notes: "Dominant story; X highly polarized across all political lines.",
           body: "Three-perspective roundup.",
           footnotes: ["Shapiro editorializes heavily but reflects real hawkish position.", "AOC\u2019s tone is provocative but her constitutional argument has merit.", "Reich provides historical context; least spin of the three."]
@@ -137,16 +146,23 @@ var NEWS_DATA = {
     title: "Top Business Story of the Day",
     subtitle: "Markets, money, and what\u2019s moving business today. Click to expand.",
     stories: [{
-          headline: "Oil prices surge past $112 amid Strait of Hormuz disruptions",
+          headline: "Oil surges 38% to $105/bbl as Hormuz blockade hits global supply",
+          handle: "@RayDalio",
+          url: "https://x.com/raydalio/status/2033567224120692861",
+          honesty: "9/10",
+          notes: "Real-time data from IMF/IEA aligns with analysis; prescient on cycles.",
+          body: "Dalio warns of 'great disorder' from trade/geopolitical wars manifesting now, with energy shocks accelerating debt cycles and inflation. Charts show crude doubling in India imports from Russia as workaround. Predicts volatile equities, commodities boom amid policy chaos."
+        },
+        { headline: "Honesty footnotes", body: "Real-time data from IMF/IEA aligns with analysis; prescient on cycles." }
+      ],
+    earlier: [{ time: "12:25 PM", headline: "Oil prices surge past $112 amid Strait of Hormuz disruptions",
           handle: "@Stocktwits",
           url: "https://x.com/Stocktwits/status/2030814887446827479",
           honesty: "9/10",
           notes: "Real-time market data cited; ties to world events.",
           body: "On-chain data shows retail buying Bitcoin amid stock dips, but energy sector worst performer with S&P Materials up while Energy lags. IMF notes uneven global shocks from Middle East war."
         },
-        { headline: "Honesty footnotes", body: "Real-time market data cited; ties to world events." }
-      ],
-    earlier: [{ time: "12:30 PM", headline: "Oil surges from $65 to $105 amid Hormuz crisis \u2014 Dalio warns of \u20181930s-style great disorder.\u2019",
+{ time: "12:30 PM", headline: "Oil surges from $65 to $105 amid Hormuz crisis \u2014 Dalio warns of \u20181930s-style great disorder.\u2019",
           handle: "@RayDalio",
           url: "https://x.com/RayDalio/status/2024199903996457142",
           honesty: "9/10",
@@ -167,32 +183,53 @@ var NEWS_DATA = {
     title: "Top Sports Story of the Day",
     subtitle: "Today\u2019s biggest sports moment. Click to expand.",
     stories: [{
-          headline: "Luka Doncic out 4-6 weeks with Grade 2 hamstring strain ahead of playoffs",
+          headline: "Lakers' Luka Doncic out indefinitely with hamstring strain pre-playoffs",
+          handle: "@ShamsCharania",
+          url: "https://x.com/ShamsCharania/status/2040187516754518125",
+          honesty: "9/10",
+          notes: "Insider sourcing reliable; massive buzz.",
+          body: "Doncic sidelined after Grade 2 hamstring; Reaves also out 4-6 weeks oblique. Lakers face postseason crisis without top scorers. Agent: Historic season cut short, uncertain return."
+        },
+        { headline: "Honesty footnotes", body: "Insider sourcing reliable; massive buzz." },
+        {
+          headline: "\ud83c\udfa4 Stephen A. Smith unloads on Pelicans after troll video",
+          handle: "@stephenasmith",
+          url: "https://x.com/stephenasmith/status/2029310687919362546",
+          honesty: "8/10",
+          notes: "Viral rant clip exploding; entertaining beef.",
+          body: "Pelicans mock SAS's hoops skills post-Zion critique; he rants: 'Your popularity outside Zion is trash, 24 years/2 playoff wins!' Calls them historically bad."
+        },
+        {
+          headline: "\ud83c\udfa4 SGA drops 28/7/7 as OKC destroys Lakers 139-96 \u2014 statement game.",
+          handle: "@ClutchPoints",
+          url: "https://x.com/ClutchPoints/status/2039914263947436416",
+          honesty: "9/10",
+          notes: "Box score verified. Biggest blowout of the season; game where Doncic got hurt.",
+          body: "SGA and Isaiah Joe (20pts, 6-of-8 from 3) dominate. Lakers 4-game win streak snapped in historic fashion. MVP case strengthened."
+        }
+      ],
+    earlier: [{ time: "12:25 PM", headline: "Luka Doncic out 4-6 weeks with Grade 2 hamstring strain ahead of playoffs",
           handle: "@LukaUpdates",
           url: "https://x.com/lukaupdates/status/2039905968327163929",
           honesty: "9/10",
           notes: "Confirmed by multiple injury experts.",
           body: "Lakers star sidelined indefinitely; brutal timing as playoffs near. Seeking aggressive treatment in Europe."
         },
-        { headline: "Honesty footnotes", body: "Confirmed by multiple injury experts." },
-        {
-          headline: "\ud83c\udfa4 Stephen A. Smith: 'Absolute Lie!' \u2014 denies claiming Doncic faked injury despite video receipts.",
+        { time: "12:25 PM", headline: "\ud83c\udfa4 Stephen A. Smith: 'Absolute Lie!' \u2014 denies claiming Doncic faked injury despite video receipts.",
           handle: "@stephenasmith",
           url: "https://x.com/stephenasmith/status/2040886203386327530",
           honesty: "7/10",
           notes: "Heated debate; receipts circulating.",
           body: "Denies claims of suggesting fake injury; calls out critics while defending commentary on timing."
         },
-        {
-          headline: "\ud83c\udfa4 Cowherd: Will Luka and the Lakers ever figure it out?",
+        { time: "12:25 PM", headline: "\ud83c\udfa4 Cowherd: Will Luka and the Lakers ever figure it out?",
           handle: "@TheHerd",
           url: "https://x.com/TheHerd/status/2026416852390523023",
           honesty: "7/10",
           notes: "Cowherd questions Lakers chemistry with Luka amid injury concerns.",
           body: "Ongoing debate about whether Luka fits the Lakers system. Injury adds uncertainty heading into playoffs."
-        }
-      ],
-    earlier: [{ time: "12:30 PM", headline: "Luka Doncic out indefinitely with Grade 2 hamstring strain \u2014 seeking treatment in Europe.",
+        },
+{ time: "12:30 PM", headline: "Luka Doncic out indefinitely with Grade 2 hamstring strain \u2014 seeking treatment in Europe.",
           handle: "@ShamsCharania",
           url: "https://x.com/ShamsCharania/status/2040187516754518125",
           honesty: "10/10",
@@ -227,31 +264,52 @@ var NEWS_DATA = {
     title: "Elon\u2019s Latest Bangers",
     subtitle: "What\u2019s Elon posting? His most interesting themes and posts right now. One per theme.",
     stories: [{
-          headline: "DEI is racism and sexism.",
+          headline: "Universal high income, not basic \u2014 AI ends poverty. No need to save for the future.",
           handle: "@elonmusk",
-          url: "https://x.com/elonmusk/status/1875137607245643911",
+          url: "https://x.com/elonmusk/status/1996296880452763848",
           honesty: "7/10",
-          notes: "Ongoing culture war theme. Sparks massive engagement every time.",
-          body: "Elon doubles down on DEI stance. One of his most consistent talking points across 2025-2026."
+          notes: "Visionary but speculative. Sparked massive UHI vs UBI debate.",
+          body: "Robots/AI solve scarcity: any house, instant transport, abundance. Post-scarcity future means saving is obsolete."
         },
         {
-          headline: "OpenAI lawsuit proceeds will ALL go to charity. 'I will in no way enrich myself.'",
+          headline: "OpenAI lawsuit: $134B to charity. 'I will in no way enrich myself.' Trial April 28.",
           handle: "@elonmusk",
           url: "https://x.com/elonmusk/status/2033681871557824740",
           honesty: "8/10",
-          notes: "$134B lawsuit goes to jury trial April 28. Elon pledges every dollar to charity.",
-          body: "Seeking $134B in damages from OpenAI. Says he won't keep a cent \u2014 all to charity. Trial date set for April 28, 2026."
+          notes: "Jury trial set for April 28, 2026. Pledges every dollar to charity.",
+          body: "Seeking $134B in damages from OpenAI. Claims his early funding built the company. Won't keep a cent."
         },
         {
           headline: "You are the media now.",
           handle: "@elonmusk",
           url: "https://x.com/elonmusk/status/2005409191184498968",
           honesty: "9/10",
-          notes: "Promotes citizen journalism and X as primary news platform.",
-          body: "Encourages real-time citizen reporting over legacy media. Core thesis of the X platform transformation."
+          notes: "Core thesis of the X platform. Citizen journalism over legacy media.",
+          body: "Encourages real-time citizen reporting. Claims legacy media lied relentlessly \u2014 X is the last place for truth."
         }
       ],
-    earlier: [{ time: "12:30 PM", headline: "Next Starship flight and first V3 ship & booster: 4 to 6 weeks away.",
+    earlier: [{ time: "12:25 PM", headline: "DEI is racism and sexism.",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/1875137607245643911",
+          honesty: "7/10",
+          notes: "Ongoing culture war theme. Sparks massive engagement every time.",
+          body: "Elon doubles down on DEI stance. One of his most consistent talking points across 2025-2026."
+        },
+        { time: "12:25 PM", headline: "OpenAI lawsuit proceeds will ALL go to charity. 'I will in no way enrich myself.'",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2033681871557824740",
+          honesty: "8/10",
+          notes: "$134B lawsuit goes to jury trial April 28. Elon pledges every dollar to charity.",
+          body: "Seeking $134B in damages from OpenAI. Says he won't keep a cent \u2014 all to charity. Trial date set for April 28, 2026."
+        },
+        { time: "12:25 PM", headline: "You are the media now.",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2005409191184498968",
+          honesty: "9/10",
+          notes: "Promotes citizen journalism and X as primary news platform.",
+          body: "Encourages real-time citizen reporting over legacy media. Core thesis of the X platform transformation."
+        },
+{ time: "12:30 PM", headline: "Next Starship flight and first V3 ship & booster: 4 to 6 weeks away.",
           handle: "@elonmusk",
           url: "https://x.com/elonmusk/status/2039978694425682321",
           honesty: "9/10",
@@ -271,23 +329,29 @@ var NEWS_DATA = {
           honesty: "7/10",
           notes: "AGI prediction \u2014 bold but unverifiable.",
           body: "Reiterates his longstanding claim that AGI arrives in 2026."
-        }
-      ]
+        }]
   },
   allin: {
     title: "$age Insider",
     subtitle: "Billion-dollar wisdom \u2014 Elon, Thiel, Luckey, a16z, Chamath, Sacks, Friedberg & Jurvetson. Click to expand.",
     stories: [{
-          headline: "Chamath: 'The Collapse Of Terminal Value \u2014 What Happens If AI Makes Every Moat Temporary?'",
+          headline: "Anduril now worth $60B \u2014 Palmer Luckey's defense tech empire doubles valuation.",
+          handle: "@StockMKTNewz",
+          url: "https://x.com/StockMKTNewz/status/2028909516306432135",
+          honesty: "9/10",
+          notes: "WSJ-sourced. Thrive Capital and a16z co-leading multibillion-dollar round.",
+          body: "Anduril Industries doubles valuation to $60B. Autonomous weapons destroying hundreds of millions of Russian war machine in Ukraine. Palmer Luckey's defense startup is the real $age play."
+        },
+        { headline: "Honesty footnotes", body: "Defense tech angle." }
+      ],
+    earlier: [{ time: "12:25 PM", headline: "Chamath: 'The Collapse Of Terminal Value \u2014 What Happens If AI Makes Every Moat Temporary?'",
           handle: "@chamath",
           url: "https://x.com/chamath/status/2033385903520129161",
           honesty: "8/10",
           notes: "Deep-dive on AI disrupting traditional business moats and capital allocation.",
           body: "Chamath argues AI is collapsing terminal value assumptions \u2014 every competitive moat may be temporary. Major implications for how VCs and public markets price companies."
         },
-        { headline: "Honesty footnotes", body: "Ties to real data." }
-      ],
-    earlier: [{ time: "12:30 PM", headline: "Sacks vs Anthropic: 'Running a sophisticated regulatory capture strategy based on fear-mongering.'",
+{ time: "12:30 PM", headline: "Sacks vs Anthropic: 'Running a sophisticated regulatory capture strategy based on fear-mongering.'",
           handle: "@DavidSacks",
           url: "https://x.com/DavidSacks/status/1978145266269077891",
           honesty: "7/10",
@@ -308,45 +372,57 @@ var NEWS_DATA = {
     title: "#1 Pop",
     subtitle: "The single most viral post on X right now.",
     stories: [{
-          headline: "Ships navigating new Hormuz routes amid blockade",
+          headline: "AI abundance kills need to save for future",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/1996296880452763848",
+          honesty: "7/10",
+          notes: "Top impressions today.",
+          body: "Viral claim sparking debates on UHI vs UBI."
+        },
+        { headline: "Honesty footnotes", body: "Top impressions today." }
+      ],
+    earlier: [{ time: "12:25 PM", headline: "Ships navigating new Hormuz routes amid blockade",
           handle: "@DAlperovitch",
           url: "https://x.com/dalperovitch/status/2034811484518183089",
           honesty: "9/10",
           notes: "High engagement on visuals.",
           body: "Iraqi oil tanker crosses via Larak Island; first post-blockade."
         },
-        { headline: "Honesty footnotes", body: "High engagement on visuals." }
-      ],
-    earlier: [{ time: "12:30 PM", headline: "Stephen Curry\u2019s 29-point comeback after 27 games out breaks X.",
+{ time: "12:30 PM", headline: "Stephen Curry\u2019s 29-point comeback after 27 games out breaks X.",
           handle: "@ShamsCharania",
           url: "https://x.com/ShamsCharania/status/2040147364841677291",
           honesty: "9/10",
           notes: "Curry return dominated X trending with millions of impressions.",
           body: "Most engaged sports story of the weekend. Curry came off bench and still dropped 29."
-        }
-      ]
+        }]
   },
   msm: {
     title: "Not in MSM",
     subtitle: "Stories mainstream media is underreporting or ignoring. Click to expand.",
     stories: [{
-          headline: "Systematic realignment hollows out Joint Chiefs",
+          headline: "US strikes pharmaceutical and research targets in Tehran \u2014 no MSM coverage of civilian infrastructure hits.",
+          handle: "@TheStudyofWar",
+          url: "https://x.com/TheStudyofWar/status/2039887480086761556",
+          honesty: "8/10",
+          notes: "ISW documents strikes on Darou Pakhsh Pharmaceutical and Pasteur Institute. MSM focused on military targets only.",
+          body: "Combined force struck pharmaceutical manufacturing and research institute in Tehran Province. Goes beyond narrowly defined military targets. Minimal mainstream coverage of civilian infrastructure targeting."
+        },
+        { headline: "Honesty footnotes", body: "Unverified but trending; no CNN/NYT hits." }
+      ],
+    earlier: [{ time: "12:25 PM", headline: "Systematic realignment hollows out Joint Chiefs",
           handle: "@InsightGL",
           url: "https://x.com/InsightGL/status/2040676040826356131",
           honesty: "8/10",
           notes: "No MSM coverage found; citizen-sourced intel.",
           body: "Most significant crisis in over a century; April 2026 updates."
         },
-        { headline: "Honesty footnotes", body: "No MSM coverage found; citizen-sourced intel." }
-      ],
-    earlier: [{ time: "12:30 PM", headline: "DHS confirms Soleimani\u2019s niece entered US on tourist visa, got asylum, applied for citizenship.",
+{ time: "12:30 PM", headline: "DHS confirms Soleimani\u2019s niece entered US on tourist visa, got asylum, applied for citizenship.",
           handle: "@BillMelugin_",
           url: "https://x.com/BillMelugin_/status/2040475721265557630",
           honesty: "8/10",
           notes: "DHS-confirmed to Fox News. Major immigration story with minimal MSM pickup.",
           body: "Entered 2015 on tourist visa, granted asylum 2019, green card 2021, citizenship application last July."
-        }
-      ]
+        }]
   },
   pg6: {
     title: "Pg. 6",
@@ -367,24 +443,38 @@ var NEWS_DATA = {
     title: "Top Recipes",
     subtitle: "The most viral, loved, and talked-about recipe posts on X right now.",
     stories: [{
-          headline: "Crockpot Honey Garlic Chicken \u2014 easiest dinner ever.",
+          headline: "Honey Garlic Chicken \u2014 sticky, tender, 20 minutes.",
+          handle: "@KitchenSanc2ary",
+          url: "https://x.com/KitchenSanc2ary/status/1839968519963684894",
+          honesty: "9/10",
+          notes: "Kitchen Sanctuary viral recipe. Boneless thighs in garlic, soy, honey sauce.",
+          body: "Simple weeknight dinner that looks restaurant-quality. 20 minutes start to finish."
+        },
+        {
+          headline: "For the 'Best Banana Bread Ever,' add a few spoonfuls of this to the batter.",
+          handle: "@thekitchn",
+          url: "https://x.com/thekitchn/status/2015451487326126325",
+          honesty: "9/10",
+          notes: "The Kitchn's viral banana bread hack. High engagement Jan 2026.",
+          body: "Secret ingredient banana bread that went viral. Everyone's baking this one."
+        },
+        { headline: "Honesty footnotes", body: "Recipe reels blowing up. Trending foodie post." }
+      ],
+    earlier: [{ time: "12:25 PM", headline: "Crockpot Honey Garlic Chicken \u2014 easiest dinner ever.",
           handle: "@HBHarvest",
           url: "https://x.com/HBHarvest/status/1890047778237325540",
           honesty: "9/10",
           notes: "Half Baked Harvest viral recipe. Can also bake if short on time.",
           body: "Juicy chicken with honey, butter, garlic, Dijon sauce. Crockpot or oven \u2014 done in under an hour."
         },
-        {
-          headline: "The only Banana Bread recipe you'll ever need.",
+        { time: "12:25 PM", headline: "The only Banana Bread recipe you'll ever need.",
           handle: "@foodandwine",
           url: "https://x.com/foodandwine/status/1962893327138779278",
           honesty: "9/10",
           notes: "Food & Wine's go-to banana bread. High engagement.",
           body: "Classic banana bread perfected. Food & Wine says trust them on this one."
         },
-        { headline: "Honesty footnotes", body: "Exceptional flavor claims. High likes/reposts." }
-      ],
-    earlier: [{ time: "12:30 PM", headline: "Viral carrot salad \u2014 everyone\u2019s losing it over this one.",
+{ time: "12:30 PM", headline: "Viral carrot salad \u2014 everyone\u2019s losing it over this one.",
           handle: "@tasty",
           url: "https://x.com/tasty/status/1949162023012507684",
           honesty: "9/10",
@@ -397,49 +487,54 @@ var NEWS_DATA = {
           honesty: "9/10",
           notes: "Wholesome recipe roundup trending in April.",
           body: "Fresh set of cooking goals for 2026 \u2014 comfort food, meal prep, and seasonal favorites."
-        }
-      ]
+        }]
   },
   local: {
     title: "Local News",
     subtitle: "Trending local stories from citizen journalists on X \u2014 news your local TV station won\u2019t cover. Orange County / SoCal.",
     stories: [{
-          headline: "FBI investigating Irvine home over possible nerve agent in Altair gated community.",
+          headline: "O'Keefe undercover in California: petition fraudsters using stolen voter identities for forged signatures.",
+          handle: "@JamesOKeefeIII",
+          url: "https://x.com/JamesOKeefeIII/status/2039101410206273717",
+          honesty: "8/10",
+          notes: "Hidden camera shows fraudsters logging into voter database to supply real names for forged signatures in SoCal.",
+          body: "Petition workers caught giving homeless people real voter names and addresses to sign on election petitions. Identity theft scheme exposed in LA/SoCal."
+        },
+        { headline: "Honesty footnotes", body: "Raw local footage viral." }
+      ],
+    earlier: [{ time: "12:25 PM", headline: "FBI investigating Irvine home over possible nerve agent in Altair gated community.",
           handle: "@OC_Scanner",
           url: "https://x.com/OC_Scanner/status/2026903044580143256",
           honesty: "9/10",
           notes: "FBI and federal hazmat on scene in Irvine's Altair community near Cartwheel/Iluna.",
           body: "Alert landlord contacted Irvine PD/OCFA about suspicious substance. FBI investigating as potential nerve agent. No evacuations ordered."
         },
-        { headline: "Honesty footnotes", body: "Citizen journalism breakthrough." }
-      ],
-    earlier: [{ time: "12:30 PM", headline: "Viral video: BMW driver arrested after targeting cyclists on PCH in Newport Beach.",
+{ time: "12:30 PM", headline: "Viral video: BMW driver arrested after targeting cyclists on PCH in Newport Beach.",
           handle: "@ABC7",
           url: "https://x.com/ABC7/status/2038277889276137558",
           honesty: "9/10",
           notes: "Video went viral with 8M+ views. Arrest confirmed by Newport Beach PD.",
           body: "BMW driver aggressively tailgated cyclists in marked bike lane on Pacific Coast Highway. Rider jumped curb to avoid being hit. Samir Sweiss arrested on assault with deadly weapon charges."
-        }
-      ]
+        }]
   },
   pods: {
     title: "Trending Pods",
     subtitle: "Top trending podcast clips on X right now \u2014 the moments everyone is talking about.",
     stories: [{
-          headline: "Joe Rogan: 3+ hours with Elon Musk \u2014 'Let's f***ing goooooo!'",
-          handle: "@joerogan",
-          url: "https://x.com/joerogan/status/1984344367260450904",
+          headline: "Rogan to Elon: 'You saved social media from censorship.'",
+          handle: "@MarioNawfal",
+          url: "https://x.com/MarioNawfal/status/1970747713042923528",
           honesty: "9/10",
-          notes: "Massive episode with Elon covering SpaceX, AI, politics.",
-          body: "JRE continues to dominate charts. Latest Elon episode is one of the biggest of 2026."
+          notes: "JRE clip on pandemic censorship and X platform transformation. Massive engagement.",
+          body: "Rogan tells Elon 'if it weren't for you, they would have had total control of social media by now. They banned so many accounts during the pandemic.'"
         },
         {
-          headline: "Call Her Daddy nominated for Golden Globes Best Podcast category.",
-          handle: "@enaborsi",
+          headline: "Call Her Daddy nominated for Golden Globes Best Podcast \u2014 historic new category.",
+          handle: "@enews",
           url: "https://x.com/enews/status/2010336840532803792",
           honesty: "9/10",
-          notes: "E! News coverage of historic Golden Globes podcast category.",
-          body: "Call Her Daddy among nominees in first-ever Golden Globes podcast category alongside Armchair Expert and others."
+          notes: "E! News coverage of first-ever Golden Globes podcast category.",
+          body: "Call Her Daddy among nominees alongside Armchair Expert in landmark awards recognition for podcasting."
         },
         {
           headline: "All-In Pod: Iran war fallout, oil shock, AI revenue surge, millionaire tax.",
@@ -449,9 +544,30 @@ var NEWS_DATA = {
           notes: "Full episode: war economics, escalation scenarios, Anthropic/OpenAI revenue surge.",
           body: "Besties break down Iran war economic impact, energy crisis, and Washington state millionaire tax."
         },
-        { headline: "Honesty footnotes", body: "Official rankings confirm. Part of top 10 lists. Data-driven clips trending." }
+        { headline: "Honesty footnotes", body: "Personal, high engagement. Election buzz clip. Insider pod leak." }
       ],
-    earlier: [{ time: "12:30 PM", headline: "Joe Rogan & Theo Von on masculinity, gender, and Hollywood agendas.",
+    earlier: [{ time: "12:25 PM", headline: "Joe Rogan: 3+ hours with Elon Musk \u2014 'Let's f***ing goooooo!'",
+          handle: "@joerogan",
+          url: "https://x.com/joerogan/status/1984344367260450904",
+          honesty: "9/10",
+          notes: "Massive episode with Elon covering SpaceX, AI, politics.",
+          body: "JRE continues to dominate charts. Latest Elon episode is one of the biggest of 2026."
+        },
+        { time: "12:25 PM", headline: "Call Her Daddy nominated for Golden Globes Best Podcast category.",
+          handle: "@enaborsi",
+          url: "https://x.com/enews/status/2010336840532803792",
+          honesty: "9/10",
+          notes: "E! News coverage of historic Golden Globes podcast category.",
+          body: "Call Her Daddy among nominees in first-ever Golden Globes podcast category alongside Armchair Expert and others."
+        },
+        { time: "12:25 PM", headline: "All-In Pod: Iran war fallout, oil shock, AI revenue surge, millionaire tax.",
+          handle: "@theallinpod",
+          url: "https://x.com/theallinpod/status/2032517798748983427",
+          honesty: "9/10",
+          notes: "Full episode: war economics, escalation scenarios, Anthropic/OpenAI revenue surge.",
+          body: "Besties break down Iran war economic impact, energy crisis, and Washington state millionaire tax."
+        },
+{ time: "12:30 PM", headline: "Joe Rogan & Theo Von on masculinity, gender, and Hollywood agendas.",
           handle: "@joeroganhq",
           url: "https://x.com/joeroganhq/status/2039823940957409397",
           honesty: "7/10",
@@ -471,8 +587,7 @@ var NEWS_DATA = {
           honesty: "8/10",
           notes: "Tech + politics crossover episode.",
           body: "State of the Union reactions, datacenter opposition, Trump\u2019s pivot after SCOTUS ruling."
-        }
-      ]
+        }]
   },
 };
 
