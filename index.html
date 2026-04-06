@@ -570,7 +570,7 @@ function checkMidnightRotation() {
   var updated = new Date(NEWS_DATA.lastUpdated);
   var now = new Date();
   if (updated.toDateString() !== now.toDateString() && updated < now) {
-    var tabKeys = ["world","business","sports","elon","allin","top","pods","local","recipe"];
+    var tabKeys = ["world","business","sports","elon","allin","top","pods","local","recipe","msm","pg6"];
     tabKeys.forEach(function(key) {
       var d = NEWS_DATA[key];
       if (!d) return;

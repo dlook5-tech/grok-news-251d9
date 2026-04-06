@@ -201,6 +201,69 @@ def get_url(handle):
 with open('index.html', 'r') as f:
     html = f.read()
 
+# ---- PRESERVE OLD STORIES INTO EARLIER ----
+# Extract the current lastUpdated time to stamp old stories
+old_time_match = re.search(r'lastUpdated: "([^"]*)"', html)
+old_time = old_time_match.group(1) if old_time_match else now
+from datetime import datetime
+try:
+    old_dt = datetime.strptime(old_time.strip(), "%m/%d/%Y, %I:%M:%S %p")
+    old_time_short = old_dt.strftime("%-I:%M %p")
+except:
+    old_time_short = old_time
+
+def preserve_earlier(tab_name, html_text):
+    """Move current stories into the earlier array for a given tab."""
+    # Extract current stories block
+    pattern = r'(' + re.escape(tab_name) + r': \{[^}]*?stories: )(\[.*?\])(,\s*earlier: )(\[.*?\])'
+    m = re.search(pattern, html_text, flags=re.DOTALL)
+    if not m:
+        return html_text
+    old_stories_js = m.group(2).strip()
+    old_earlier_js = m.group(4).strip()
+    # Skip if old stories are empty
+    if old_stories_js == '[]':
+        return html_text
+    # Filter out "Honesty footnotes" entries from old stories before archiving
+    # Add time stamp to each old story
+    old_stories_stamped = re.sub(
+        r'(\{[\s\n]*headline:)',
+        '{ time: "' + old_time_short + '", headline:',
+        old_stories_js
+    )
+    # Remove honesty footnote objects from earlier (they clutter the archive)
+    old_stories_stamped = re.sub(
+        r',?\s*\{\s*time:[^}]*headline:\s*"Honesty footnotes"[^}]*\}',
+        '',
+        old_stories_stamped
+    )
+    # Merge: prepend old stories to existing earlier array
+    if old_earlier_js == '[]':
+        new_earlier = old_stories_stamped
+    else:
+        # Insert old stories at the beginning of earlier
+        inner_old = old_stories_stamped.strip()[1:-1].strip()  # strip [ ]
+        inner_existing = old_earlier_js.strip()[1:-1].strip()
+        if inner_old and inner_existing:
+            new_earlier = '[' + inner_old + ',\n' + inner_existing + ']'
+        elif inner_old:
+            new_earlier = '[' + inner_old + ']'
+        else:
+            new_earlier = old_earlier_js
+    # Replace the earlier array in html
+    html_text = re.sub(
+        r'(' + re.escape(tab_name) + r': \{[^}]*?stories: \[.*?\],\s*earlier: )\[.*?\]',
+        lambda mx: mx.group(1) + new_earlier,
+        html_text, flags=re.DOTALL
+    )
+    return html_text
+
+# Preserve stories for all tabs before overwriting
+all_tabs = ['world', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'local', 'recipe', 'pods', 'pg6']
+for tab in all_tabs:
+    if tab in stories:
+        html = preserve_earlier(tab, html)
+
 html = re.sub(r'lastUpdated: "[^"]*"', 'lastUpdated: "' + now + '"', html)
 
 def js_str(s):
@@ -360,7 +423,7 @@ if 'recipe' in stories:
     html = re.sub(pattern, lambda m: m.group(1) + new_stories + m.group(2), html, flags=re.DOTALL)
 
 # ---- Update simple tabs (business, allin, top, msm, local) ----
-simple_tabs = ['business', 'allin', 'top', 'msm', 'local']
+simple_tabs = ['business', 'allin', 'top', 'msm', 'local', 'pg6']
 for tab in simple_tabs:
     if tab not in stories:
         continue
