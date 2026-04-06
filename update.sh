@@ -27,7 +27,7 @@ STEP1_RAW=$(curl -s --max-time 180 https://api.x.ai/v1/responses \
   "model": "grok-4-1-fast-non-reasoning",
   "input": [
     {"role": "system", "content": "You are Grok, the AI of X. You know what is trending on X better than anyone. Answer in JSON only. No markdown, no code blocks."},
-    {"role": "user", "content": "I need the BEST stories on X right now for a news curation site. NOT entertainment trends — real substance that showcases X's best citizen journalism.\n\nFor each category, tell me the story, the best account posting about it, and their angle.\n\n1. WORLD: #1 hard news story (geopolitics, war, economy, policy). Give me the best conservative account covering it, the best progressive/democrat account, and the best independent journalist.\n2. BUSINESS: Top market/finance analysis with real data.\n3. SPORTS: (a) Biggest sports NEWS story people actually care about (injuries, trades, results). (b) Most viral Stephen A. Smith clip right now. (c) Most viral Colin Cowherd clip right now.\n4. ELON: Elon's 3 most interesting recent posts, each on a DIFFERENT theme. Not repetitive Grok posts — diverse topics.\n5. PODS: Top 3 trending podcast clips on X right now from major podcasts (Joe Rogan, All-In, Call Her Daddy, The Daily, etc). Pick the ones with the most views/engagement.\n6. ALLIN: Best recent post from chamath, davidsacks, pmarca, or PalmerLuckey.\n7. TOP: Most viral post on all of X today.\n8. MSM: Story trending on X that CNN/NYT/WaPo are NOT covering.\n9. RECIPE: Top 2 most viral food/recipe posts on X right now.\n10. LOCAL: US local news from citizen journalists.\n\nJSON format:\n{\"world\":{\"topic\":\"...\",\"headline\":\"one-line headline\",\"conservative\":{\"handle\":\"@...\",\"angle\":\"2-3 sentences\"},\"democrat\":{\"handle\":\"@...\",\"angle\":\"2-3 sentences\"},\"independent\":{\"handle\":\"@...\",\"angle\":\"2-3 sentences\"},\"honesty\":\"X/10\",\"notes\":\"...\",\"footnotes\":[\"1. conservative honesty note\",\"2. democrat honesty note\",\"3. independent honesty note\"]},\"business\":{\"topic\":\"...\",\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"2-3 sentences\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"sports\":{\"main\":{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"stephena\":{\"headline\":\"...\",\"handle\":\"@stephenasmith\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"cowherd\":{\"headline\":\"...\",\"handle\":\"@TheHerd\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}},\"elon\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@elonmusk\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},{\"headline\":\"...\",\"handle\":\"@elonmusk\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},{\"headline\":\"...\",\"handle\":\"@elonmusk\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"pods\":{\"clips\":[{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"allin\":{\"topic\":\"...\",\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"top\":{\"topic\":\"...\",\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"msm\":{\"topic\":\"...\",\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"recipe\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"local\":{\"topic\":\"...\",\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}}"}
+    {"role": "user", "content": "I need the BEST stories on X right now for a news curation site. NOT entertainment trends — real substance that showcases X's best citizen journalism.\n\nFor each category, tell me the story, the best account posting about it, and their angle.\n\n1. WORLD: The top 1-3 hard news stories (geopolitics, war, economy, policy). If ONE story dominates, just give that one. If 2-3 stories are equally important, give all of them. For EACH story, give the best conservative account, progressive/democrat account, and independent journalist.\n2. BUSINESS: Top market/finance analysis with real data.\n3. SPORTS: (a) Biggest sports NEWS story people actually care about (injuries, trades, results). (b) Most viral Stephen A. Smith clip right now. (c) Most viral Colin Cowherd clip right now.\n4. ELON: Elon's 3 most interesting recent posts, each on a DIFFERENT theme. Not repetitive Grok posts — diverse topics.\n5. PODS: Top 3 trending podcast clips on X right now from major podcasts (Joe Rogan, All-In, Call Her Daddy, The Daily, etc). Pick the ones with the most views/engagement.\n6. ALLIN: Best recent post from chamath, davidsacks, pmarca, or PalmerLuckey.\n7. TOP: Most viral post on all of X today.\n8. MSM: Story trending on X that CNN/NYT/WaPo are NOT covering.\n9. RECIPE: Top 2 most viral food/recipe posts on X right now.\n10. LOCAL: US local news from citizen journalists.\n\nJSON format:\n{\"world\":{\"stories\":[{\"topic\":\"...\",\"headline\":\"one-line headline\",\"conservative\":{\"handle\":\"@...\",\"angle\":\"2-3 sentences\"},\"democrat\":{\"handle\":\"@...\",\"angle\":\"2-3 sentences\"},\"independent\":{\"handle\":\"@...\",\"angle\":\"2-3 sentences\"},\"honesty\":\"X/10\",\"notes\":\"...\",\"footnotes\":[\"1. conservative honesty note\",\"2. democrat honesty note\",\"3. independent honesty note\"]}]},\"business\":{\"topic\":\"...\",\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"2-3 sentences\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"sports\":{\"main\":{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"stephena\":{\"headline\":\"...\",\"handle\":\"@stephenasmith\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"cowherd\":{\"headline\":\"...\",\"handle\":\"@TheHerd\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}},\"elon\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@elonmusk\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},{\"headline\":\"...\",\"handle\":\"@elonmusk\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},{\"headline\":\"...\",\"handle\":\"@elonmusk\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"pods\":{\"clips\":[{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"allin\":{\"topic\":\"...\",\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"top\":{\"topic\":\"...\",\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"msm\":{\"topic\":\"...\",\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"recipe\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},{\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"local\":{\"topic\":\"...\",\"headline\":\"...\",\"handle\":\"@...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}}"}
   ],
   "tools": [{"type": "web_search"}],
   "max_output_tokens": 5000,
@@ -37,10 +37,14 @@ ENDJSON
 )
 
 # Extract JSON from Step 1
-STEP1=$(echo "$STEP1_RAW" | python3 -c "
-import sys, json, re
+echo "$STEP1_RAW" > /tmp/grok_step1_raw.json
 
-r = json.load(sys.stdin)
+cat > /tmp/grok_parse.py <<'PYPARSESCRIPT'
+import json, re, sys
+
+with open(sys.argv[1]) as f:
+    r = json.load(f)
+
 if 'error' in r and r.get('error'):
     print('ERROR: ' + str(r['error']), file=sys.stderr)
     sys.exit(1)
@@ -53,23 +57,18 @@ for item in r.get('output', []):
                 text = c['text']
 
 text = text.strip()
-if text.startswith('\`\`\`'):
-    text = re.sub(r'\`\`\`json?\s*', '', text)
-    text = re.sub(r'\`\`\`\s*$', '', text)
+if text.startswith('```'):
+    text = re.sub(r'```json?\s*', '', text)
+    text = re.sub(r'```\s*$', '', text)
 text = re.sub(r'<grok:render[^>]*>.*?</grok:render>', '', text)
 
-depth = 0
-end = 0
-for i, ch in enumerate(text):
-    if ch == '{': depth += 1
-    elif ch == '}': depth -= 1
-    if depth == 0 and i > 0:
-        end = i + 1
-        break
-
-parsed = json.loads(text[:end])
+# Use json.raw_decode to properly parse first JSON object (handles braces in strings)
+decoder = json.JSONDecoder()
+parsed, _ = decoder.raw_decode(text.strip())
 print(json.dumps(parsed))
-")
+PYPARSESCRIPT
+
+STEP1=$(python3 /tmp/grok_parse.py /tmp/grok_step1_raw.json)
 
 if [ -z "$STEP1" ]; then
     echo "ERROR: Step 1 failed"
@@ -90,14 +89,19 @@ data = json.loads(sys.stdin.read())
 lines = ['Find the real X post IDs (numeric status IDs) for these accounts. Use web_search. Return null if not found.', '']
 
 i = 1
-# World perspectives
+# World perspectives (1-3 stories)
 w = data.get('world', {})
-for key in ['conservative', 'democrat', 'independent']:
-    p = w.get(key, {})
-    if p.get('handle'):
-        topic = w.get('topic', '')
-        lines.append(f'{i}. {p[\"handle\"]} - posting about: {topic}')
-        i += 1
+world_stories = w.get('stories', [])
+# Backwards compat: if world has direct conservative/democrat/independent, wrap it
+if not world_stories and w.get('conservative'):
+    world_stories = [w]
+for ws in world_stories:
+    for key in ['conservative', 'democrat', 'independent']:
+        p = ws.get(key, {})
+        if p.get('handle'):
+            topic = ws.get('topic', '')
+            lines.append(f'{i}. {p[\"handle\"]} - posting about: {topic}')
+            i += 1
 
 # Sports: main + stephena + cowherd
 sp = data.get('sports', {})
@@ -163,32 +167,8 @@ STEP2_RAW=$(curl -s --max-time 180 https://api.x.ai/v1/responses \
   -H "Authorization: Bearer $XAI_API_KEY" \
   -d @/tmp/grok_step2_payload.json)
 
-STEP2=$(echo "$STEP2_RAW" | python3 -c "
-import sys, json, re
-
-r = json.load(sys.stdin)
-text = ''
-for item in r.get('output', []):
-    if item.get('type') == 'message':
-        for c in item.get('content', []):
-            if c.get('type') == 'output_text':
-                text = c['text']
-
-text = text.strip()
-if text.startswith('\`\`\`'):
-    text = re.sub(r'\`\`\`json?\s*', '', text)
-    text = re.sub(r'\`\`\`\s*$', '', text)
-text = re.sub(r'<grok:render[^>]*>.*?</grok:render>', '', text)
-
-depth = 0; end = 0
-for i, ch in enumerate(text):
-    if ch == '{': depth += 1
-    elif ch == '}': depth -= 1
-    if depth == 0 and i > 0: end = i + 1; break
-
-parsed = json.loads(text[:end])
-print(json.dumps(parsed))
-")
+echo "$STEP2_RAW" > /tmp/grok_step2_raw.json
+STEP2=$(python3 /tmp/grok_parse.py /tmp/grok_step2_raw.json)
 
 echo "Step 2 done."
 
@@ -226,37 +206,45 @@ html = re.sub(r'lastUpdated: "[^"]*"', 'lastUpdated: "' + now + '"', html)
 def js_str(s):
     return json.dumps(s)
 
-# ---- Update WORLD ----
+# ---- Update WORLD (1-3 stories) ----
 if 'world' in stories:
     w = stories['world']
-    persp_lines = []
-    for key, label in [('conservative', 'Conservative'), ('democrat', 'Democrat'), ('independent', 'Independent')]:
-        p = w.get(key, {})
-        if not p.get('handle'):
-            continue
-        url = get_url(p['handle'])
-        text = p.get('angle', '')
-        honesty = w.get('honesty', '8/10')
-        persp_lines.append(
-            '            { label: "' + label + '", handle: "' + p['handle'] +
-            '", url: "' + url + '", text: ' + js_str(text) +
-            ', honesty: "' + honesty + '" }'
-        )
-    persp_js = ",\n".join(persp_lines)
-    footnotes = w.get('footnotes', [])
-    fn_js = json.dumps(footnotes) if footnotes else '[]'
+    # Support both array format and legacy single-story format
+    world_stories = w.get('stories', [])
+    if not world_stories and w.get('conservative'):
+        world_stories = [w]
 
-    new_stories = (
-        '[\n        {\n'
-        '          headline: ' + js_str(w.get('headline', w.get('topic', ''))) + ',\n'
-        '          honesty: "' + w.get('honesty', '8/10') + '",\n'
-        '          perspectives: [\n' + persp_js + '\n          ],\n'
-        '          notes: ' + js_str(w.get('notes', '')) + ',\n'
-        '          body: "Three-perspective roundup.",\n'
-        '          footnotes: ' + fn_js + '\n'
-        '        }\n'
-        '      ]'
-    )
+    story_blocks = []
+    for ws in world_stories:
+        persp_lines = []
+        for key, label in [('conservative', 'Conservative'), ('democrat', 'Democrat'), ('independent', 'Independent')]:
+            p = ws.get(key, {})
+            if not p.get('handle'):
+                continue
+            url = get_url(p['handle'])
+            text = p.get('angle', '')
+            honesty = ws.get('honesty', '8/10')
+            persp_lines.append(
+                '            { label: "' + label + '", handle: "' + p['handle'] +
+                '", url: "' + url + '", text: ' + js_str(text) +
+                ', honesty: "' + honesty + '" }'
+            )
+        persp_js = ",\n".join(persp_lines)
+        footnotes = ws.get('footnotes', [])
+        fn_js = json.dumps(footnotes) if footnotes else '[]'
+
+        story_blocks.append(
+            '{\n'
+            '          headline: ' + js_str(ws.get('headline', ws.get('topic', ''))) + ',\n'
+            '          honesty: "' + ws.get('honesty', '8/10') + '",\n'
+            '          perspectives: [\n' + persp_js + '\n          ],\n'
+            '          notes: ' + js_str(ws.get('notes', '')) + ',\n'
+            '          body: "Three-perspective roundup.",\n'
+            '          footnotes: ' + fn_js + '\n'
+            '        }'
+        )
+
+    new_stories = '[\n        ' + ',\n        '.join(story_blocks) + '\n      ]'
 
     html = re.sub(
         r'(world: \{[^}]*?stories: )\[.*?\](,\s*earlier:)',
