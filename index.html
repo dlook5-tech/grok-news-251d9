@@ -80,9 +80,9 @@
   .submit-btn:hover { background:#333; }
   .myfeed-input-wrap { display:flex; gap:8px; margin-bottom:16px; }
   .myfeed-input-wrap input { flex:1; padding:12px 14px; border:1px solid #ddd; border-radius:6px; font-size:0.95rem; font-family:inherit; }
-  .myfeed-mic { background:#1a1a1a; color:#f5f0e8; border:none; border-radius:50%; width:44px; height:44px; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.2s; }
-  .myfeed-mic:hover { background:#333; }
-  .myfeed-mic.recording { background:#c0392b; animation: pulse 1s infinite; }
+  .myfeed-mic { background:#fff; color:#555; border:2px solid #ccc; border-radius:50%; width:44px; height:44px; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; }
+  .myfeed-mic:hover { border-color:#888; color:#333; }
+  .myfeed-mic.recording { background:#ffe0e0; border-color:#c0392b; color:#c0392b; animation: pulse 1s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
   .myfeed-go { background:#1a1a1a; color:#f5f0e8; border:none; padding:12px 24px; border-radius:6px; font-size:0.9rem; font-weight:600; cursor:pointer; font-family:inherit; flex-shrink:0; }
   .myfeed-go:hover { background:#333; }
@@ -778,7 +778,9 @@ function renderWorldStory(s) {
   if (!s.perspectives) return ""; return s.perspectives.map(function(p) {
     var c = p.label === "Conservative" ? "label-conservative" : p.label === "Democrat" ? "label-democrat" : "label-thirdparty";
     var sup = p.footnoteId ? '<sup>' + p.footnoteId + '</sup>' : '';
-    return '<div class="perspective"><span class="' + c + '">' + p.label + '</span> <span class="handle">' + p.handle + '</span> &mdash; ' + p.text + ' <span class="honesty">honesty ' + p.honesty + sup + '</span><br><a href="' + (p.url || '#') + '" target="_blank" class="view-post">View post</a></div>';
+    var embedId = 'emb' + Math.random().toString(36).substr(2,6);
+    var embedBtn = p.url && p.url.indexOf('/status/') > -1 ? ' <a href="#" class="view-post" style="margin-left:8px;" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + p.url.replace(/'/g,"\\'") + '\')">Show tweet</a>' : '';
+    return '<div class="perspective"><span class="' + c + '">' + p.label + '</span> <span class="handle">' + p.handle + '</span> &mdash; ' + p.text + ' <span class="honesty">honesty ' + p.honesty + sup + '</span><br><a href="' + (p.url || '#') + '" target="_blank" class="view-post">View on X</a>' + embedBtn + '<div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div></div>';
   }).join("") + renderFootnotes(s.footnotes);
 }
 
@@ -792,7 +794,9 @@ function renderFootnotes(footnotes) {
 function renderSinglePost(s) {
   var stats = s.stats ? '<div class="post-stats">' + s.stats + '</div>' : '';
   var honesty = s.honesty ? ' <span class="honesty">honesty ' + s.honesty + '</span>' : '';
-  return '<div class="single-post"><div class="post-handle"><a href="' + s.url + '" target="_blank">' + s.handle + '</a>' + honesty + '</div><a class="view-post" href="' + s.url + '" target="_blank">View post</a>' + stats + '<div class="post-body">' + s.body + '</div></div>';
+  var embedId = 'emb' + Math.random().toString(36).substr(2,6);
+  var embedBtn = s.url && s.url.indexOf('/status/') > -1 ? ' <a href="#" class="view-post" style="margin-left:8px;" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + s.url.replace(/'/g,"\\'") + '\')">Show tweet</a>' : '';
+  return '<div class="single-post"><div class="post-handle"><a href="' + s.url + '" target="_blank">' + s.handle + '</a>' + honesty + '</div><a class="view-post" href="' + s.url + '" target="_blank">View on X</a>' + embedBtn + stats + '<div class="post-body">' + s.body + '</div><div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div></div>';
 }
 
 function renderContent() {
@@ -818,7 +822,7 @@ function renderContent() {
 
     h += '<div class="myfeed-input-wrap">' +
       '<input type="text" id="myfeedInput" placeholder="e.g. AI breakthroughs, SpaceX launches, NBA playoffs..." value="' + savedInterests.replace(/"/g,"&quot;") + '" />' +
-      '<button class="myfeed-mic" id="myfeedMic" onclick="toggleMic()" title="Voice input">\ud83c\udf99\ufe0f</button>' +
+      '<button class="myfeed-mic" id="myfeedMic" onclick="toggleMic()" title="Voice input"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="1" width="6" height="11" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>' +
       '<button class="myfeed-go" id="myfeedGo" onclick="fetchMyFeed()">Find Posts</button></div>';
 
     h += '<div class="myfeed-chips">';
@@ -1077,6 +1081,39 @@ function fixHonestyFootnotes() {
 var _origRC = renderContent;
 renderContent = function() { _origRC(); fixHonestyFootnotes(); };
 fixHonestyFootnotes();
+
+// ---- Tweet Embed: shows actual tweet without needing X login ----
+function toggleEmbed(containerId, tweetUrl) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  if (container.style.display !== 'none' && container.innerHTML) {
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = 'block';
+  container.innerHTML = '<div style="color:#999;font-size:0.8rem;padding:8px;">Loading tweet...</div>';
+  // Use Twitter oEmbed via our proxy to avoid CORS
+  var oembed = 'https://publish.twitter.com/oembed?url=' + encodeURIComponent(tweetUrl) + '&omit_script=true&dnt=true';
+  // Twitter oEmbed doesn't support CORS directly, so use the embed widget approach
+  var tweetId = tweetUrl.match(/status\/(\d+)/);
+  if (tweetId && window.twttr) {
+    container.innerHTML = '';
+    window.twttr.widgets.createTweet(tweetId[1], container, { theme: 'light', dnt: true, conversation: 'none' });
+  } else if (tweetId) {
+    // Load Twitter widget JS if not loaded yet
+    container.innerHTML = '';
+    var s = document.createElement('script');
+    s.src = 'https://platform.twitter.com/widgets.js';
+    s.onload = function() {
+      if (window.twttr) {
+        window.twttr.widgets.createTweet(tweetId[1], container, { theme: 'light', dnt: true, conversation: 'none' });
+      }
+    };
+    document.head.appendChild(s);
+  } else {
+    container.innerHTML = '<div style="color:#c0392b;font-size:0.8rem;padding:8px;">Could not load embed.</div>';
+  }
+}
 
 // ---- My Feed: localStorage + Speech + Netlify Function ----
 var _myfeedRecognition = null;
