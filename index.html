@@ -780,8 +780,9 @@ function renderWorldStory(s) {
     var c = p.label === "Conservative" ? "label-conservative" : p.label === "Democrat" ? "label-democrat" : "label-thirdparty";
     var sup = p.footnoteId ? '<sup>' + p.footnoteId + '</sup>' : '';
     var embedId = 'emb' + Math.random().toString(36).substr(2,6);
-    var embedBtn = p.url && p.url.indexOf('/status/') > -1 ? ' <a href="#" class="view-post" style="margin-left:8px;" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + p.url.replace(/'/g,"\\'") + '\')">Show tweet</a>' : '';
-    return '<div class="perspective"><span class="' + c + '">' + p.label + '</span> <span class="handle">' + p.handle + '</span> &mdash; ' + p.text + ' <span class="honesty">honesty ' + p.honesty + sup + '</span><br><a href="' + (p.url || '#') + '" target="_blank" class="view-post">View on X</a>' + embedBtn + '<div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div></div>';
+    var hasEmbed = p.url && p.url.indexOf('/status/') > -1;
+    var linkAction = hasEmbed ? 'href="#" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + p.url.replace(/'/g,"\\'") + '\')"' : 'href="' + (p.url || '#') + '" target="_blank"';
+    return '<div class="perspective"><span class="' + c + '">' + p.label + '</span> <span class="handle">' + p.handle + '</span> &mdash; ' + p.text + ' <span class="honesty">honesty ' + p.honesty + sup + '</span><br><a ' + linkAction + ' class="view-post">View post</a><div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div></div>';
   }).join("") + renderFootnotes(s.footnotes);
 }
 
@@ -796,8 +797,9 @@ function renderSinglePost(s) {
   var stats = s.stats ? '<div class="post-stats">' + s.stats + '</div>' : '';
   var honesty = s.honesty ? ' <span class="honesty">honesty ' + s.honesty + '</span>' : '';
   var embedId = 'emb' + Math.random().toString(36).substr(2,6);
-  var embedBtn = s.url && s.url.indexOf('/status/') > -1 ? ' <a href="#" class="view-post" style="margin-left:8px;" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + s.url.replace(/'/g,"\\'") + '\')">Show tweet</a>' : '';
-  return '<div class="single-post"><div class="post-handle"><a href="' + s.url + '" target="_blank">' + s.handle + '</a>' + honesty + '</div><a class="view-post" href="' + s.url + '" target="_blank">View on X</a>' + embedBtn + stats + '<div class="post-body">' + s.body + '</div><div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div></div>';
+  var hasEmbed = s.url && s.url.indexOf('/status/') > -1;
+  var linkAction = hasEmbed ? 'href="#" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + s.url.replace(/'/g,"\\'") + '\')"' : 'href="' + s.url + '" target="_blank"';
+  return '<div class="single-post"><div class="post-handle"><a href="' + s.url + '" target="_blank">' + s.handle + '</a>' + honesty + '</div><a ' + linkAction + ' class="view-post">View post</a>' + stats + '<div class="post-body">' + s.body + '</div><div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div></div>';
 }
 
 function renderContent() {
