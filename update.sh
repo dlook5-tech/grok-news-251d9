@@ -191,6 +191,133 @@ STEP2=$(python3 /tmp/grok_parse.py /tmp/grok_step2_raw.json)
 echo "Step 2 done."
 
 # ============================================================
+# STEP 2.5: Verify every URL via Twitter oEmbed API
+# ============================================================
+echo "Step 2.5: Verifying all URLs via oEmbed..."
+
+python3 - "$STEP1" "$STEP2" <<'VERIFYEOF'
+import json, sys, urllib.request, urllib.parse, time
+
+stories = json.loads(sys.argv[1])
+url_data = json.loads(sys.argv[2])
+
+# Build initial URL map from Step 2
+url_map = {}
+for post in url_data.get('posts', []):
+    handle = post.get('handle', '').lower().lstrip('@')
+    pid = post.get('post_id')
+    if pid and str(pid).isdigit():
+        url_map[handle] = f"https://x.com/{handle}/status/{pid}"
+
+def verify_url(url):
+    """Check if a tweet URL is real via Twitter oEmbed API. Returns True/False."""
+    try:
+        oembed_url = f"https://publish.twitter.com/oembed?url={urllib.parse.quote(url, safe='')}"
+        req = urllib.request.Request(oembed_url, headers={"User-Agent": "Mozilla/5.0"})
+        resp = urllib.request.urlopen(req, timeout=10)
+        if resp.getcode() == 200:
+            data = json.loads(resp.read())
+            return True, data.get('author_name', '')
+        return False, ''
+    except Exception as e:
+        return False, ''
+
+def verify_and_report(handle, url):
+    """Verify a URL. Returns (is_valid, url, author_name)."""
+    if '/status/' not in url:
+        return False, url, ''
+    ok, author = verify_url(url)
+    return ok, url, author
+
+# Collect all URLs from Step 1 + Step 2 for verification
+all_urls = []
+
+# World perspectives
+w = stories.get('world', {})
+world_stories = w.get('stories', [])
+if not world_stories and w.get('conservative'):
+    world_stories = [w]
+for ws in world_stories:
+    for key in ['conservative', 'democrat', 'independent']:
+        p = ws.get(key, {})
+        h = p.get('handle', '').lower().lstrip('@')
+        url = p.get('url', '') or url_map.get(h, f"https://x.com/{h}")
+        if h:
+            all_urls.append(('world.' + key, h, url))
+
+# Sports
+sp = stories.get('sports', {})
+for key in ['main', 'stephena', 'cowherd']:
+    s = sp.get(key, {})
+    h = s.get('handle', '').lower().lstrip('@')
+    url = s.get('url', '') or url_map.get(h, f"https://x.com/{h}")
+    if h:
+        all_urls.append(('sports.' + key, h, url))
+
+# Elon
+for i, ep in enumerate(stories.get('elon', {}).get('posts', [])):
+    h = ep.get('handle', '').lower().lstrip('@')
+    url = ep.get('url', '') or url_map.get(h, f"https://x.com/{h}")
+    if h:
+        all_urls.append((f'elon.{i}', h, url))
+
+# Pods
+for i, pc in enumerate(stories.get('pods', {}).get('clips', [])):
+    h = pc.get('handle', '').lower().lstrip('@')
+    url = pc.get('url', '') or url_map.get(h, f"https://x.com/{h}")
+    if h:
+        all_urls.append((f'pods.{i}', h, url))
+
+# Recipe
+for i, rp in enumerate(stories.get('recipe', {}).get('posts', [])):
+    h = rp.get('handle', '').lower().lstrip('@')
+    url = rp.get('url', '') or url_map.get(h, f"https://x.com/{h}")
+    if h:
+        all_urls.append((f'recipe.{i}', h, url))
+
+# Simple tabs
+for tab in ['business', 'allin', 'top', 'msm', 'local', 'pg6']:
+    d = stories.get(tab, {})
+    h = d.get('handle', '').lower().lstrip('@')
+    url = d.get('url', '') or url_map.get(h, f"https://x.com/{h}")
+    if h and h != 'n/a':
+        all_urls.append((tab, h, url))
+
+# Verify each URL
+verified = {}
+failed = []
+total = len(all_urls)
+for i, (label, handle, url) in enumerate(all_urls):
+    # Prefer Step 1 URL if it has /status/, otherwise use Step 2
+    if '/status/' not in url:
+        step2_url = url_map.get(handle, '')
+        if '/status/' in step2_url:
+            url = step2_url
+
+    ok, url_used, author = verify_and_report(handle, url)
+    if ok:
+        verified[handle] = url_used
+        print(f"  ✅ [{i+1}/{total}] {label}: {handle} → VERIFIED ({author})")
+    else:
+        failed.append((label, handle, url))
+        print(f"  ❌ [{i+1}/{total}] {label}: {handle} → FAILED ({url})")
+    time.sleep(0.15)  # rate limit courtesy
+
+# Write verified URL map for Step 3
+verified_map = json.dumps(verified)
+with open('/tmp/grok_verified_urls.json', 'w') as f:
+    f.write(verified_map)
+
+print(f"\nVerification: {len(verified)}/{total} passed, {len(failed)} failed")
+if failed:
+    print("Failed URLs (will use Step 2 fallback):")
+    for label, handle, url in failed:
+        print(f"  - {label}: @{handle} ({url})")
+VERIFYEOF
+
+echo "Step 2.5 done."
+
+# ============================================================
 # STEP 3: Assemble and update index.html
 # ============================================================
 echo "Step 3: Assembling and updating..."
@@ -202,18 +329,40 @@ now = sys.argv[1]
 stories = json.loads(sys.argv[2])
 url_data = json.loads(sys.argv[3])
 
-# Build URL lookup from Step 2
-url_map = {}
+# Build URL lookup from Step 2 (fallback)
+url_map_step2 = {}
 for post in url_data.get('posts', []):
     handle = post.get('handle', '').lower().lstrip('@')
     pid = post.get('post_id')
     if pid and str(pid).isdigit():
-        url_map[handle] = f"https://x.com/{handle}/status/{pid}"
+        url_map_step2[handle] = f"https://x.com/{handle}/status/{pid}"
+
+# Load VERIFIED URLs from Step 2.5 (preferred)
+try:
+    with open('/tmp/grok_verified_urls.json') as f:
+        verified_urls = json.loads(f.read())
+except:
+    verified_urls = {}
 
 def get_url(handle):
     h = handle.lower().lstrip('@')
-    if h in url_map:
-        return url_map[h]
+    # Priority: verified > step2 > profile fallback
+    if h in verified_urls:
+        return verified_urls[h]
+    if h in url_map_step2:
+        return url_map_step2[h]
+    # Check if Step 1 provided a URL with /status/
+    return f"https://x.com/{h}"
+
+def get_url_from_data(handle, step1_url=None):
+    """Get URL with Step 1 URL as additional option."""
+    h = handle.lower().lstrip('@')
+    if h in verified_urls:
+        return verified_urls[h]
+    if step1_url and '/status/' in str(step1_url):
+        return step1_url
+    if h in url_map_step2:
+        return url_map_step2[h]
     return f"https://x.com/{h}"
 
 with open('index.html', 'r') as f:
@@ -302,7 +451,7 @@ if 'world' in stories:
             p = ws.get(key, {})
             if not p.get('handle'):
                 continue
-            url = get_url(p['handle'])
+            url = get_url_from_data(p['handle'], p.get('url'))
             text = p.get('angle', '')
             honesty = ws.get('honesty', '8/10')
             persp_lines.append(
@@ -342,7 +491,7 @@ if 'sports' in stories:
         s = sp.get(key, {})
         if not s.get('handle'):
             continue
-        url = get_url(s['handle'])
+        url = get_url_from_data(s['handle'], s.get('url'))
         prefix = '\U0001f3a4 ' if key in ('stephena', 'cowherd') else ''
         sport_stories.append(
             '{\n'
@@ -371,7 +520,7 @@ if 'elon' in stories:
     for ep in elon.get('posts', []):
         if not ep.get('handle'):
             continue
-        url = get_url(ep['handle'])
+        url = get_url_from_data(ep['handle'], ep.get('url'))
         elon_stories.append(
             '{\n'
             '          headline: ' + js_str(ep.get('headline', '')) + ',\n'
@@ -394,7 +543,7 @@ if 'pods' in stories:
     for pc in pods.get('clips', []):
         if not pc.get('handle'):
             continue
-        url = get_url(pc['handle'])
+        url = get_url_from_data(pc['handle'], pc.get('url'))
         pod_stories.append(
             '{\n'
             '          headline: ' + js_str(pc.get('headline', '')) + ',\n'
@@ -421,7 +570,7 @@ if 'recipe' in stories:
     for rp in recipe.get('posts', []):
         if not rp.get('handle'):
             continue
-        url = get_url(rp['handle'])
+        url = get_url_from_data(rp['handle'], rp.get('url'))
         recipe_stories.append(
             '{\n'
             '          headline: ' + js_str(rp.get('headline', '')) + ',\n'
@@ -450,7 +599,7 @@ for tab in simple_tabs:
     if not handle or handle == 'N/A':
         continue
 
-    url = get_url(handle)
+    url = get_url_from_data(handle, d.get('url'))
 
     new_stories = (
         '[{\n'
@@ -472,7 +621,12 @@ for tab in simple_tabs:
 import re as re2
 status_urls = re2.findall(r'url: "https://x\.com/[^"]+/status/\d+', html)
 profile_urls = re2.findall(r'url: "https://x\.com/[a-zA-Z0-9_]+"[,\s]', html)
-print(f"URLs with /status/: {len(status_urls)} | Profile-only: {len(profile_urls)}")
+verified_count = sum(1 for u in status_urls if any(v in u for v in verified_urls.values()))
+print(f"URLs with /status/: {len(status_urls)} | Verified via oEmbed: {len(verified_urls)} | Profile-only: {len(profile_urls)}")
+if profile_urls:
+    print("WARNING: Some stories have profile-only URLs (no /status/ ID)")
+    for pu in profile_urls:
+        print(f"  ⚠️  {pu.strip()}")
 
 with open('index.html', 'w') as f:
     f.write(html)
@@ -483,6 +637,6 @@ PYEOF
 # Step 4: Deploy to Netlify
 echo "Deploying to Netlify..."
 export PATH="$PATH:/usr/local/bin:/opt/homebrew/bin"
-npx netlify-cli deploy --prod --dir=. --auth="$NETLIFY_AUTH_TOKEN" --site="$NETLIFY_SITE_ID" 2>&1 | tail -5
+npx netlify-cli deploy --prod --dir=. --functions=netlify/functions --auth="$NETLIFY_AUTH_TOKEN" --site="$NETLIFY_SITE_ID" 2>&1 | tail -5
 
 echo "=== Update complete at $(date) ==="
