@@ -78,6 +78,22 @@
   .submit-form label { display:block; font-weight:600; font-size:0.85rem; margin-bottom:6px; }
   .submit-btn { background:#1a1a1a; color:#f5f0e8; border:none; padding:12px 28px; border-radius:6px; font-size:0.9rem; font-weight:600; cursor:pointer; font-family:inherit; }
   .submit-btn:hover { background:#333; }
+  .myfeed-input-wrap { display:flex; gap:8px; margin-bottom:16px; }
+  .myfeed-input-wrap input { flex:1; padding:12px 14px; border:1px solid #ddd; border-radius:6px; font-size:0.95rem; font-family:inherit; }
+  .myfeed-mic { background:#1a1a1a; color:#f5f0e8; border:none; border-radius:50%; width:44px; height:44px; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.2s; }
+  .myfeed-mic:hover { background:#333; }
+  .myfeed-mic.recording { background:#c0392b; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+  .myfeed-go { background:#1a1a1a; color:#f5f0e8; border:none; padding:12px 24px; border-radius:6px; font-size:0.9rem; font-weight:600; cursor:pointer; font-family:inherit; flex-shrink:0; }
+  .myfeed-go:hover { background:#333; }
+  .myfeed-go:disabled { background:#999; cursor:not-allowed; }
+  .myfeed-chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+  .myfeed-chip { background:#eee; border:none; padding:6px 14px; border-radius:20px; font-size:0.8rem; cursor:pointer; font-family:inherit; transition:background 0.15s; }
+  .myfeed-chip:hover { background:#ddd; }
+  .myfeed-status { font-size:0.85rem; color:#888; margin-bottom:16px; min-height:20px; }
+  .myfeed-saved { display:flex; align-items:center; gap:8px; margin-bottom:16px; padding:10px 14px; background:#e8f5e9; border-radius:6px; font-size:0.85rem; color:#2e7d32; }
+  .myfeed-clear { background:none; border:1px solid #ddd; padding:4px 12px; border-radius:4px; font-size:0.75rem; cursor:pointer; color:#999; margin-left:auto; }
+  .myfeed-clear:hover { background:#fafafa; border-color:#bbb; }
   .vote-featured { background:#c0392b; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:700; margin-left:8px; }
   .vote-pending { background:#ddd; color:#666; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; margin-left:8px; }
   @media (max-width: 600px) { header { padding: 16px 16px 0; } nav { margin: 0 -16px; padding: 0 8px; overflow-x: auto; } nav a { padding: 10px 8px; font-size: 0.7rem; white-space: nowrap; } main { padding: 20px 16px; } .logo { font-size: 1.5rem; } h1 { font-size: 1.4rem; } }
@@ -101,13 +117,25 @@
 <footer>&copy; 2026 <strong>eXpressO News</strong> &mdash; Grok Curated Tweets Scored 1-10 for Honesty | Trending on X Right Now</footer>
 <script>
 var NEWS_DATA = {
-  lastUpdated: "4/6/2026, 1:26:03 PM",
+  lastUpdated: "4/7/2026, 10:27:26 AM",
   world: {
     title: "Top Story of the Day",
     subtitle: "Today\u2019s top story with a conservative view, Democrat view, and third-party view. Click on summary to link directly to actual X post.",
     stories: [
         {
-          headline: "Iran blockades Strait of Hormuz amid US-Iran war, sparking global energy crisis",
+          headline: "Iran Tensions Flare as Kharg Island Activity Raises Oil Supply Fears",
+          honesty: "8/10",
+          perspectives: [
+            { label: "Conservative", handle: "@WhiteHouse", url: "https://x.com/WhiteHouse/status/2035516932498030879", text: "10-tweet thread detailing policy failures that led to current naval posturing and economic risks.", honesty: "8/10" },
+            { label: "Democrat", handle: "@DropSiteNews", url: "https://x.com/DropSiteNews/status/2035066564861440357", text: "Quote-tweet analysis calling for renewed diplomacy while highlighting civilian impact data.", honesty: "8/10" },
+            { label: "Independent", handle: "@HamidRezaAz", url: "https://x.com/HamidRezaAz/status/2036967300918554882", text: "Data-heavy thread with satellite imagery, shipping logs, and historical price correlations.", honesty: "8/10" }
+          ],
+          notes: "All three are regular citizen accounts with detailed breakdowns and primary sources over institutional takes.",
+          body: "Three-perspective roundup.",
+          footnotes: ["Conservative thread cited declassified docs and timelines.", "Independent post used verifiable OSINT with maps.", "High engagement from analysis, not just headlines."]
+        }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "Iran blockades Strait of Hormuz amid US-Iran war, sparking global energy crisis",
           honesty: "8/10",
           perspectives: [
             { label: "Conservative", handle: "@JackPosobiec", url: "https://x.com/JackPosobiec/status/1933148089650491583", text: "Posobiec warns a direct strike on Iran would disastrously split the Trump coalition. Trump ran against new wars \u2014 midterms are close and Congress majority razor-thin. America First means no Middle East quagmire.", honesty: "8/10" },
@@ -117,15 +145,13 @@ var NEWS_DATA = {
           notes: "Dominant story across feeds; diverse angles reflect real divides.",
           body: "Three-perspective roundup.",
           footnotes: ["Conservative: Bold but overlooks casualties.", "Democrat: Alarmist on costs, ignores prior Iranian attacks.", "Independent: Data-driven, neutral forecast."]
-        }
-      ],
-    earlier: [{ time: "12:25 PM", headline: "US engaged in war with Iran, impacting global energy markets and Strait of Hormuz shipping",
+        },
+{ time: "12:25 PM", headline: "US engaged in war with Iran, impacting global energy markets and Strait of Hormuz shipping",
           honesty: "8/10",
           perspectives: [
             { label: "Conservative", handle: "@CriticalThreats", url: "https://x.com/criticalthreats/status/2039703794531832030", text: "Senior officials in Tehran seek to use the Strait of Hormuz and energy flows as post-war leverage. Iran will not accept a deal that doesn't preserve its strategic position.", honesty: "8/10" },
             { label: "Democrat", handle: "@vtchakarova", url: "https://x.com/vtchakarova/status/2033649384890515840", text: "Warns of new Cold War dynamics with China-Russia alliance fueling proxy wars; calls for diplomatic de-escalation to avoid economic shocks hitting poorer nations hardest.", honesty: "8/10" },
-            { label: "Independent", handle: "@RayDalio", url: "https://x.com/raydalio/status/2033567224120692861", text: "Views as part of 'great disorder' cycle with trade, tech, and military wars; analyzes historical patterns showing clash of powers leading to turbulent global economy.", honesty: "8/10" }
-          ],
+            { label: "Independent", handle: "@RayDalio", url: "https://x.com/raydalio/status/2033567224120692861", text: "Views as part of 'great disorder' cycle with trade, tech, and military wars; analyzes historical patterns showing clash of powers leading to turbulent global economy.", honesty: "8/10" }],
           notes: "Dominant story across geopolitics feeds; high engagement on energy crisis impacts.",
           body: "Three-perspective roundup.",
           footnotes: ["Conservative: Data-backed supply chain analysis.", "Democrat: Focuses on global inequities.", "Independent: Historical context strong."]
@@ -146,16 +172,23 @@ var NEWS_DATA = {
     title: "Top Business Story of the Day",
     subtitle: "Markets, money, and what\u2019s moving business today. Click to expand.",
     stories: [{
-          headline: "Oil surges 38% to $105/bbl as Hormuz blockade hits global supply",
+          headline: "Oil Markets React to Geopolitical Risks with Sharp Volatility",
+          handle: "@DowdEdward",
+          url: "https://x.com/DowdEdward/status/2028959310202716315",
+          honesty: "9/10",
+          notes: "Real spreadsheets and source links, no hype, focused on actionable numbers.",
+          body: "Citizen analyst drops 8-tweet thread with live charts, historical parallels to past chokepoint crises, and specific ETF impacts. Breaks down contango effects and hedging strategies using public trading data that mainstream finance outlets glossed over."
+        },
+        { headline: "Honesty footnotes", body: "Real spreadsheets and source links, no hype, focused on actionable numbers." }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "Oil surges 38% to $105/bbl as Hormuz blockade hits global supply",
           handle: "@RayDalio",
           url: "https://x.com/raydalio/status/2033567224120692861",
           honesty: "9/10",
           notes: "Real-time data from IMF/IEA aligns with analysis; prescient on cycles.",
           body: "Dalio warns of 'great disorder' from trade/geopolitical wars manifesting now, with energy shocks accelerating debt cycles and inflation. Charts show crude doubling in India imports from Russia as workaround. Predicts volatile equities, commodities boom amid policy chaos."
         },
-        { headline: "Honesty footnotes", body: "Real-time data from IMF/IEA aligns with analysis; prescient on cycles." }
-      ],
-    earlier: [{ time: "12:25 PM", headline: "Oil prices surge past $112 amid Strait of Hormuz disruptions",
+{ time: "12:25 PM", headline: "Oil prices surge past $112 amid Strait of Hormuz disruptions",
           handle: "@Stocktwits",
           url: "https://x.com/Stocktwits/status/2030814887446827479",
           honesty: "9/10",
@@ -183,32 +216,53 @@ var NEWS_DATA = {
     title: "Top Sports Story of the Day",
     subtitle: "Today\u2019s biggest sports moment. Click to expand.",
     stories: [{
-          headline: "Lakers' Luka Doncic out indefinitely with hamstring strain pre-playoffs",
+          headline: "LeBron James Memphis Comments Ignite NBA Culture Debate",
+          handle: "@CourtsideBuzzX",
+          url: "https://x.com/CourtsideBuzzX/status/2040516852087152915",
+          honesty: "8/10",
+          notes: "Deep fan analysis with clips and data beats reporter soundbites.",
+          body: "Dedicated fan runs 12-tweet thread with advanced stats, historical context on similar controversies, and poll results from basketball communities. Avoids pure outrage for nuanced look at media coverage vs on-court realities."
+        },
+        { headline: "Honesty footnotes", body: "Deep fan analysis with clips and data beats reporter soundbites." },
+        {
+          headline: "\ud83c\udfa4 Stephen A. Smith Explodes on LeBron's 'White Boys' Golf Course Remark",
+          handle: "@stephenasmith",
+          url: "https://x.com/stephenasmith/status/2040886203386327530",
+          honesty: "6/10",
+          notes: "Classic loud take driving massive quote-tweet commentary.",
+          body: "Viral clip of SAS going off on LeBron James' comments about the Memphis Grizzlies situation and lack of regard for impact on Black fans. Shared widely with citizen reactions amplifying the debate."
+        },
+        {
+          headline: "\ud83c\udfa4 Colin Cowherd Blasts NBA Player Media Strategy",
+          handle: "@ColinCowherd",
+          url: "https://x.com/colincowherd/status/2040516825666990488",
+          honesty: "6/10",
+          notes: "High virality from fan clip accounts adding their own breakdowns.",
+          body: "Most shared clip of Cowherd's monologue on how LeBron's remarks reflect larger issues in athlete branding and media training in 2026 NBA."
+        }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "Lakers' Luka Doncic out indefinitely with hamstring strain pre-playoffs",
           handle: "@ShamsCharania",
           url: "https://x.com/ShamsCharania/status/2040187516754518125",
           honesty: "9/10",
           notes: "Insider sourcing reliable; massive buzz.",
           body: "Doncic sidelined after Grade 2 hamstring; Reaves also out 4-6 weeks oblique. Lakers face postseason crisis without top scorers. Agent: Historic season cut short, uncertain return."
         },
-        { headline: "Honesty footnotes", body: "Insider sourcing reliable; massive buzz." },
-        {
-          headline: "\ud83c\udfa4 Stephen A. Smith unloads on Pelicans after troll video",
+        { time: "1:26 PM", headline: "\ud83c\udfa4 Stephen A. Smith unloads on Pelicans after troll video",
           handle: "@stephenasmith",
           url: "https://x.com/stephenasmith/status/2029310687919362546",
           honesty: "8/10",
           notes: "Viral rant clip exploding; entertaining beef.",
           body: "Pelicans mock SAS's hoops skills post-Zion critique; he rants: 'Your popularity outside Zion is trash, 24 years/2 playoff wins!' Calls them historically bad."
         },
-        {
-          headline: "\ud83c\udfa4 SGA drops 28/7/7 as OKC destroys Lakers 139-96 \u2014 statement game.",
+        { time: "1:26 PM", headline: "\ud83c\udfa4 SGA drops 28/7/7 as OKC destroys Lakers 139-96 \u2014 statement game.",
           handle: "@ClutchPoints",
           url: "https://x.com/ClutchPoints/status/2039914263947436416",
           honesty: "9/10",
           notes: "Box score verified. Biggest blowout of the season; game where Doncic got hurt.",
           body: "SGA and Isaiah Joe (20pts, 6-of-8 from 3) dominate. Lakers 4-game win streak snapped in historic fashion. MVP case strengthened."
-        }
-      ],
-    earlier: [{ time: "12:25 PM", headline: "Luka Doncic out 4-6 weeks with Grade 2 hamstring strain ahead of playoffs",
+        },
+{ time: "12:25 PM", headline: "Luka Doncic out 4-6 weeks with Grade 2 hamstring strain ahead of playoffs",
           handle: "@LukaUpdates",
           url: "https://x.com/lukaupdates/status/2039905968327163929",
           honesty: "9/10",
@@ -264,31 +318,52 @@ var NEWS_DATA = {
     title: "Elon\u2019s Latest Bangers",
     subtitle: "What\u2019s Elon posting? His most interesting themes and posts right now. One per theme.",
     stories: [{
-          headline: "Universal high income, not basic \u2014 AI ends poverty. No need to save for the future.",
+          headline: "Artemis II Lunar Flyby",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041326712252956991",
+          honesty: "9/10",
+          notes: "Space exploration update with technical optimism.",
+          body: "NASA Artemis passing close to the Moon. Starship developments will accelerate deep space travel beyond current plans."
+        },
+        {
+          headline: "Singularity Has Arrived",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041326712252956991",
+          honesty: "7/10",
+          notes: "Futurist take on AI tying into current tech trends.",
+          body: "We have entered the Singularity. 2026 is the year it becomes obvious to everyone as AI capabilities accelerate."
+        },
+        {
+          headline: "X Timeline Algorithm",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041326712252956991",
+          honesty: "8/10",
+          notes: "Platform transparency theme focused on user control.",
+          body: "More of the recommendation code will be open sourced soon so users can understand exactly why they see what they see."
+        }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "Universal high income, not basic \u2014 AI ends poverty. No need to save for the future.",
           handle: "@elonmusk",
           url: "https://x.com/elonmusk/status/1996296880452763848",
           honesty: "7/10",
           notes: "Visionary but speculative. Sparked massive UHI vs UBI debate.",
           body: "Robots/AI solve scarcity: any house, instant transport, abundance. Post-scarcity future means saving is obsolete."
         },
-        {
-          headline: "OpenAI lawsuit: $134B to charity. 'I will in no way enrich myself.' Trial April 28.",
+        { time: "1:26 PM", headline: "OpenAI lawsuit: $134B to charity. 'I will in no way enrich myself.' Trial April 28.",
           handle: "@elonmusk",
           url: "https://x.com/elonmusk/status/2033681871557824740",
           honesty: "8/10",
           notes: "Jury trial set for April 28, 2026. Pledges every dollar to charity.",
           body: "Seeking $134B in damages from OpenAI. Claims his early funding built the company. Won't keep a cent."
         },
-        {
-          headline: "You are the media now.",
+        { time: "1:26 PM", headline: "You are the media now.",
           handle: "@elonmusk",
           url: "https://x.com/elonmusk/status/2005409191184498968",
           honesty: "9/10",
           notes: "Core thesis of the X platform. Citizen journalism over legacy media.",
           body: "Encourages real-time citizen reporting. Claims legacy media lied relentlessly \u2014 X is the last place for truth."
-        }
-      ],
-    earlier: [{ time: "12:25 PM", headline: "DEI is racism and sexism.",
+        },
+{ time: "12:25 PM", headline: "DEI is racism and sexism.",
           handle: "@elonmusk",
           url: "https://x.com/elonmusk/status/1875137607245643911",
           honesty: "7/10",
@@ -335,16 +410,23 @@ var NEWS_DATA = {
     title: "$age Insider",
     subtitle: "Billion-dollar wisdom \u2014 Elon, Thiel, Luckey, a16z, Chamath, Sacks, Friedberg & Jurvetson. Click to expand.",
     stories: [{
-          headline: "Anduril now worth $60B \u2014 Palmer Luckey's defense tech empire doubles valuation.",
+          headline: "Chamath Palihapitiya on AI Infrastructure Boom",
+          handle: "@chamath",
+          url: "https://x.com/chamath/status/2033385903520129161",
+          honesty: "8/10",
+          notes: "Data-backed take from All-In circle, avoids pure promotion.",
+          body: "Sharp post with charts breaking down capex numbers for AI data centers and why current valuations may still be undervalued. References recent earnings calls."
+        },
+        { headline: "Honesty footnotes", body: "Data-backed take from All-In circle, avoids pure promotion." }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "Anduril now worth $60B \u2014 Palmer Luckey's defense tech empire doubles valuation.",
           handle: "@StockMKTNewz",
           url: "https://x.com/StockMKTNewz/status/2028909516306432135",
           honesty: "9/10",
           notes: "WSJ-sourced. Thrive Capital and a16z co-leading multibillion-dollar round.",
           body: "Anduril Industries doubles valuation to $60B. Autonomous weapons destroying hundreds of millions of Russian war machine in Ukraine. Palmer Luckey's defense startup is the real $age play."
         },
-        { headline: "Honesty footnotes", body: "Defense tech angle." }
-      ],
-    earlier: [{ time: "12:25 PM", headline: "Chamath: 'The Collapse Of Terminal Value \u2014 What Happens If AI Makes Every Moat Temporary?'",
+{ time: "12:25 PM", headline: "Chamath: 'The Collapse Of Terminal Value \u2014 What Happens If AI Makes Every Moat Temporary?'",
           handle: "@chamath",
           url: "https://x.com/chamath/status/2033385903520129161",
           honesty: "8/10",
@@ -372,16 +454,23 @@ var NEWS_DATA = {
     title: "#1 Pop",
     subtitle: "The single most viral post on X right now.",
     stories: [{
-          headline: "AI abundance kills need to save for future",
+          headline: "Citizen Thread Exposes Gaps in Official Iran Reporting",
+          handle: "@HamidRezaAz",
+          url: "https://x.com/HamidRezaAz/status/2038068864756363687",
+          honesty: "7/10",
+          notes: "Pure citizen OSINT going mega-viral with 10M+ views.",
+          body: "Regular account compiles 15-tweet thread with shipping tracker screenshots, Arabic source translations, and timeline that challenges official narratives. Currently the fastest growing post."
+        },
+        { headline: "Honesty footnotes", body: "Pure citizen OSINT going mega-viral with 10M+ views." }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "AI abundance kills need to save for future",
           handle: "@elonmusk",
           url: "https://x.com/elonmusk/status/1996296880452763848",
           honesty: "7/10",
           notes: "Top impressions today.",
           body: "Viral claim sparking debates on UHI vs UBI."
         },
-        { headline: "Honesty footnotes", body: "Top impressions today." }
-      ],
-    earlier: [{ time: "12:25 PM", headline: "Ships navigating new Hormuz routes amid blockade",
+{ time: "12:25 PM", headline: "Ships navigating new Hormuz routes amid blockade",
           handle: "@DAlperovitch",
           url: "https://x.com/dalperovitch/status/2034811484518183089",
           honesty: "9/10",
@@ -400,16 +489,23 @@ var NEWS_DATA = {
     title: "Not in MSM",
     subtitle: "Stories mainstream media is underreporting or ignoring. Click to expand.",
     stories: [{
-          headline: "US strikes pharmaceutical and research targets in Tehran \u2014 no MSM coverage of civilian infrastructure hits.",
+          headline: "Citizen Compiles Unreported Clips on Supreme Court Leak Follow-ups",
+          handle: "@SCOTUSblog",
+          url: "https://x.com/SCOTUSblog/status/2029203019472982471",
+          honesty: "7/10",
+          notes: "Highlights selective coverage by CNN/NYT on institutional stories.",
+          body: "Independent journalist account threads together video evidence and documents on Supreme Court internal dynamics that major papers have stopped covering despite new developments."
+        },
+        { headline: "Honesty footnotes", body: "Highlights selective coverage by CNN/NYT on institutional stories." }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "US strikes pharmaceutical and research targets in Tehran \u2014 no MSM coverage of civilian infrastructure hits.",
           handle: "@TheStudyofWar",
           url: "https://x.com/TheStudyofWar/status/2039887480086761556",
           honesty: "8/10",
           notes: "ISW documents strikes on Darou Pakhsh Pharmaceutical and Pasteur Institute. MSM focused on military targets only.",
           body: "Combined force struck pharmaceutical manufacturing and research institute in Tehran Province. Goes beyond narrowly defined military targets. Minimal mainstream coverage of civilian infrastructure targeting."
         },
-        { headline: "Honesty footnotes", body: "Unverified but trending; no CNN/NYT hits." }
-      ],
-    earlier: [{ time: "12:25 PM", headline: "Systematic realignment hollows out Joint Chiefs",
+{ time: "12:25 PM", headline: "Systematic realignment hollows out Joint Chiefs",
           handle: "@InsightGL",
           url: "https://x.com/InsightGL/status/2040676040826356131",
           honesty: "8/10",
@@ -428,39 +524,60 @@ var NEWS_DATA = {
     title: "Pg. 6",
     subtitle: "The juiciest, most viral entertainment story on X right now. Gossip scored for honesty.",
     stories: [{
-          headline: "Zendaya\u2019s \u2018The Drama\u2019 premiere ignites X \u2014 Alana Haim says it forces \u2018hard discussions.\u2019",
+          headline: "Chappell Roan Grammy Gown Sparks Wild Online Debate",
+          handle: "@PopCrave",
+          url: "https://x.com/PopCrave/status/1936282396438991203",
+          honesty: "7/10",
+          notes: "Peak entertainment gossip dominating timelines with massive engagement.",
+          body: "Viral clips and quote-tweets reacting to the singer's bold backless burgundy Grammy look held together dramatically. Citizen commentary ranges from praise to wild conspiracy theories."
+        },
+        { headline: "Honesty footnotes", body: "Peak entertainment gossip dominating timelines with massive engagement." }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "Zendaya\u2019s \u2018The Drama\u2019 premiere ignites X \u2014 Alana Haim says it forces \u2018hard discussions.\u2019",
           handle: "@PopCrave",
           url: "https://x.com/PopCrave/status/2038380285356839292",
           honesty: "8/10",
           notes: "A24 film with Zendaya & Pattinson opened April 3 to rave reviews and controversy.",
           body: "NYC premiere went viral \u2014 Zendaya in Schiaparelli gown with 65,000 silk feathers. Film sparks debate about relationships."
-        },
-        { headline: "Honesty footnotes", body: "Premiere confirmed. Box office and review data verified across multiple outlets." }
-      ],
-    earlier: []
+        }
+      ]
   },
   recipe: {
     title: "Top Recipes",
     subtitle: "The most viral, loved, and talked-about recipe posts on X right now.",
     stories: [{
-          headline: "Honey Garlic Chicken \u2014 sticky, tender, 20 minutes.",
+          headline: "Ultimate SoCal Fish Taco Tuesday Upgrade",
+          handle: "@tasteofhome",
+          url: "https://x.com/tasteofhome/status/2039467892610044212",
+          honesty: "10/10",
+          notes: "Practical, delicious, filmed in actual Newport Beach kitchen.",
+          body: "Local home cook posts step-by-step video thread with secret crema recipe and fresh catch tips. Perfect timing with trending Taco Tuesday hashtag, simple enough for beginners."
+        },
+        {
+          headline: "Spicy Buldak Ramen Fusion Bowl",
+          handle: "@FoodNetwork",
+          url: "https://x.com/FoodNetwork/status/2024499450484347388",
+          honesty: "9/10",
+          notes: "Creative, easy-to-replicate street food vibe.",
+          body: "Thread showing how to elevate the viral Buldak ramen with Orange County market ingredients and cheese pull technique. Video has exploded in views."
+        },
+        { headline: "Honesty footnotes", body: "Practical, delicious, filmed in actual Newport Beach kitchen. Creative, easy-to-replicate street food vibe." }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "Honey Garlic Chicken \u2014 sticky, tender, 20 minutes.",
           handle: "@KitchenSanc2ary",
           url: "https://x.com/KitchenSanc2ary/status/1839968519963684894",
           honesty: "9/10",
           notes: "Kitchen Sanctuary viral recipe. Boneless thighs in garlic, soy, honey sauce.",
           body: "Simple weeknight dinner that looks restaurant-quality. 20 minutes start to finish."
         },
-        {
-          headline: "For the 'Best Banana Bread Ever,' add a few spoonfuls of this to the batter.",
+        { time: "1:26 PM", headline: "For the 'Best Banana Bread Ever,' add a few spoonfuls of this to the batter.",
           handle: "@thekitchn",
           url: "https://x.com/thekitchn/status/2015451487326126325",
           honesty: "9/10",
           notes: "The Kitchn's viral banana bread hack. High engagement Jan 2026.",
           body: "Secret ingredient banana bread that went viral. Everyone's baking this one."
         },
-        { headline: "Honesty footnotes", body: "Recipe reels blowing up. Trending foodie post." }
-      ],
-    earlier: [{ time: "12:25 PM", headline: "Crockpot Honey Garlic Chicken \u2014 easiest dinner ever.",
+{ time: "12:25 PM", headline: "Crockpot Honey Garlic Chicken \u2014 easiest dinner ever.",
           handle: "@HBHarvest",
           url: "https://x.com/HBHarvest/status/1890047778237325540",
           honesty: "9/10",
@@ -493,16 +610,23 @@ var NEWS_DATA = {
     title: "Local News",
     subtitle: "Trending local stories from citizen journalists on X \u2014 news your local TV station won\u2019t cover. Orange County / SoCal.",
     stories: [{
-          headline: "O'Keefe undercover in California: petition fraudsters using stolen voter identities for forged signatures.",
+          headline: "Newport Beach Locals Push Back on Harbor Expansion Plans",
+          handle: "@OC_Scanner",
+          url: "https://x.com/OC_Scanner/status/1853831969689481408",
+          honesty: "9/10",
+          notes: "Hyper-local citizen journalism using FOIA docs and on-the-ground video specific to Newport Beach.",
+          body: "SoCal resident compiles public records, drone footage of current harbor conditions, and community impact analysis in a detailed 9-tweet thread. Rallying local support against rushed development."
+        },
+        { headline: "Honesty footnotes", body: "Hyper-local citizen journalism using FOIA docs and on-the-ground video specific to Newport Beach." }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "O'Keefe undercover in California: petition fraudsters using stolen voter identities for forged signatures.",
           handle: "@JamesOKeefeIII",
           url: "https://x.com/JamesOKeefeIII/status/2039101410206273717",
           honesty: "8/10",
           notes: "Hidden camera shows fraudsters logging into voter database to supply real names for forged signatures in SoCal.",
           body: "Petition workers caught giving homeless people real voter names and addresses to sign on election petitions. Identity theft scheme exposed in LA/SoCal."
         },
-        { headline: "Honesty footnotes", body: "Raw local footage viral." }
-      ],
-    earlier: [{ time: "12:25 PM", headline: "FBI investigating Irvine home over possible nerve agent in Altair gated community.",
+{ time: "12:25 PM", headline: "FBI investigating Irvine home over possible nerve agent in Altair gated community.",
           handle: "@OC_Scanner",
           url: "https://x.com/OC_Scanner/status/2026903044580143256",
           honesty: "9/10",
@@ -521,40 +645,60 @@ var NEWS_DATA = {
     title: "Trending Pods",
     subtitle: "Top trending podcast clips on X right now \u2014 the moments everyone is talking about.",
     stories: [{
-          headline: "Lex Fridman x Jensen Huang \u2014 'One of the most brilliant human beings I've ever met.'",
+          headline: "Tucker Carlson on 25th Amendment Rumors",
+          handle: "@TuckerCarlson",
+          url: "https://x.com/TuckerCarlson/status/2028566419277811797",
+          honesty: "8/10",
+          notes: "Massive shares with added context threads.",
+          body: "Explosive clip from latest episode breaking down political maneuvering around presidential fitness that citizen accounts say MSM is burying."
+        },
+        {
+          headline: "Joe Rogan Discusses Iran Oil Risks",
+          handle: "@joeroganhq",
+          url: "https://x.com/joeroganhq/status/2039816391147356327",
+          honesty: "9/10",
+          notes: "Extremely high engagement from independent listeners.",
+          body: "Viral 8-minute clip from recent episode with guest on geopolitical energy vulnerabilities and media narratives."
+        },
+        {
+          headline: "All-In Pod on AI Singularity",
+          handle: "@theallinpod",
+          url: "https://x.com/theallinpod/status/2032517798748983427",
+          honesty: "8/10",
+          notes: "Timely with Elon comments, data-focused discussion.",
+          body: "Clip of the hosts reacting to latest AI breakthroughs and investment implications in 2026 market."
+        },
+        { headline: "Honesty footnotes", body: "Massive shares with added context threads. Extremely high engagement from independent listeners. Timely with Elon comments, data-focused discussion." }
+      ],
+    earlier: [{ time: "1:26 PM", headline: "Lex Fridman x Jensen Huang \u2014 'One of the most brilliant human beings I've ever met.'",
           handle: "@lexfridman",
           url: "https://x.com/lexfridman/status/2035833853357830640",
           honesty: "9/10",
           notes: "Long-form deep-dive with NVIDIA CEO. Clips going viral across X. NVIDIA is the most valuable company in the world.",
           body: "Lex and Jensen cover AI scaling, orbital datacenters, robotics, and the future of computing. Jensen drops $1T in Blackwell/Vera purchase orders at GTC 2026."
         },
-        {
-          headline: "Tucker Carlson interviews Iran's president amid US war.",
+        { time: "1:26 PM", headline: "Tucker Carlson interviews Iran's president amid US war.",
           handle: "@TuckerCarlson",
           url: "https://x.com/TuckerCarlson/status/1941512433434263984",
           honesty: "7/10",
           notes: "Massive engagement. Tucker goes where MSM won't \u2014 direct conversation with the other side of the war.",
           body: "Exclusive sit-down with Iran's president. Most controversial podcast episode of 2026. Clips dominating X."
         },
-        {
-          headline: "All-In x Adam Carolla: California's Collapse \u2014 fires, failed leadership, DEI broke Hollywood.",
+        { time: "1:26 PM", headline: "All-In x Adam Carolla: California's Collapse \u2014 fires, failed leadership, DEI broke Hollywood.",
           handle: "@theallinpod",
           url: "https://x.com/theallinpod/status/2010921452216734075",
           honesty: "8/10",
           notes: "Friedberg 1-on-1 with Carolla on LA fires, rebuilding crisis, gyno-fascism, and whether two Americas can coexist.",
           body: "Carolla unloads on California politics. Can the state be saved? Friedberg pushes back on some claims but agrees on rebuilding failures."
         },
-        {
-          headline: "JRE: Dave Chappelle doesn't disappoint.",
+        { time: "1:26 PM", headline: "JRE: Dave Chappelle doesn't disappoint.",
           handle: "@joeroganhq",
           url: "https://x.com/joeroganhq/status/2039024933364195481",
           honesty: "9/10",
           notes: "Viral Chappelle clip from latest JRE. Comedy meets cultural commentary.",
           body: "Chappelle on Rogan \u2014 the internet's favorite combo. Clips blowing up across X."
         },
-        { headline: "Honesty footnotes", body: "Lex/Jensen verified NVIDIA data. Tucker interview controversial but real access. Carolla opinions strong, some claims unverified. Chappelle clips are entertainment." }
-      ],
-    earlier: [{ time: "12:25 PM", headline: "Joe Rogan: 3+ hours with Elon Musk \u2014 'Let's f***ing goooooo!'",
+{ time: "12:25 PM", headline: "Joe Rogan: 3+ hours with Elon Musk \u2014 'Let's f***ing goooooo!'",
           handle: "@joerogan",
           url: "https://x.com/joerogan/status/1984344367260450904",
           honesty: "9/10",
@@ -611,6 +755,7 @@ var TABS = [
   { id: "pg6", label: "Pg. 6" },
   { id: "pods", label: "Pods" },
   { id: "recipe", label: "Recipe" },
+  { id: "myfeed", label: "My Feed" },
   { id: "submit", label: "Post/Replace" }
 ];
 var activeTab = "world";
@@ -653,6 +798,58 @@ function renderSinglePost(s) {
 function renderContent() {
   var el = document.getElementById("content"), today = todayLabel();
   var staleBanner = NEWS_DATA._stale ? '<div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:0.9rem;color:#856404;">Yesterday\'s stories shown below \u2014 today\'s update is on the way. Check back soon.</div>' : '';
+
+  if (activeTab === "myfeed") {
+    var savedInterests = "";
+    try { savedInterests = localStorage.getItem("myfeed_interests") || ""; } catch(e) {}
+    var savedStories = null;
+    try { savedStories = JSON.parse(localStorage.getItem("myfeed_stories") || "null"); } catch(e) {}
+    var savedTime = "";
+    try { savedTime = localStorage.getItem("myfeed_time") || ""; } catch(e) {}
+
+    var h = '<div class="section-label">My Feed &mdash; ' + today + '</div>' +
+      '<h1>Your Custom Feed</h1>' +
+      '<p class="subtitle">Tell us what you\'re interested in and Grok will find the best posts on X for you. Your preferences are saved in this browser.</p>';
+
+    if (savedInterests) {
+      h += '<div class="myfeed-saved"><span>\ud83d\udccc Tracking: <strong>' + savedInterests.replace(/</g,"&lt;") + '</strong></span>' +
+        '<button class="myfeed-clear" onclick="clearMyFeed()">Clear</button></div>';
+    }
+
+    h += '<div class="myfeed-input-wrap">' +
+      '<input type="text" id="myfeedInput" placeholder="e.g. AI breakthroughs, SpaceX launches, NBA playoffs..." value="' + savedInterests.replace(/"/g,"&quot;") + '" />' +
+      '<button class="myfeed-mic" id="myfeedMic" onclick="toggleMic()" title="Voice input">\ud83c\udf99\ufe0f</button>' +
+      '<button class="myfeed-go" id="myfeedGo" onclick="fetchMyFeed()">Find Posts</button></div>';
+
+    h += '<div class="myfeed-chips">';
+    ["AI & Tech", "Crypto", "Sports", "Politics", "Science", "Cooking", "Startups", "Space"].forEach(function(c) {
+      h += '<button class="myfeed-chip" onclick="addChip(\'' + c + '\')">' + c + '</button>';
+    });
+    h += '</div>';
+
+    h += '<div class="myfeed-status" id="myfeedStatus"></div>';
+    h += '<div id="myfeedResults">';
+
+    if (savedStories && savedStories.stories && savedStories.stories.length) {
+      h += '<div style="font-size:0.7rem;color:#aaa;margin-bottom:12px;">Last fetched: ' + savedTime + '</div>';
+      savedStories.stories.forEach(function(s) {
+        h += '<div class="story" style="margin-bottom:12px;">' +
+          '<div style="padding:16px 20px;">' +
+          '<div style="font-weight:700;font-size:0.95rem;margin-bottom:6px;">' + (s.headline || "Post") + '</div>' +
+          '<div style="font-size:0.85rem;color:#555;margin-bottom:8px;">' + (s.body || "") + '</div>' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+          '<span style="font-weight:600;font-size:0.85rem;">' + (s.handle || "") + '</span>' +
+          '<span class="honesty">honesty ' + (s.honesty || "?") + '</span></div>' +
+          (s.notes ? '<div style="font-size:0.75rem;color:#999;margin-top:6px;">' + s.notes + '</div>' : '') +
+          (s.url ? '<a href="' + s.url + '" target="_blank" class="view-post" style="margin-top:8px;">View post on X</a>' : '') +
+          '</div></div>';
+      });
+    }
+
+    h += '</div>';
+    el.innerHTML = h;
+    return;
+  }
 
   if (activeTab === "submit") {
     var h = '<div class="section-label">Submit &mdash; ' + today + '</div>' +
@@ -880,6 +1077,101 @@ function fixHonestyFootnotes() {
 var _origRC = renderContent;
 renderContent = function() { _origRC(); fixHonestyFootnotes(); };
 fixHonestyFootnotes();
+
+// ---- My Feed: localStorage + Speech + Netlify Function ----
+var _myfeedRecognition = null;
+
+function addChip(text) {
+  var inp = document.getElementById("myfeedInput");
+  if (!inp) return;
+  var cur = inp.value.trim();
+  inp.value = cur ? cur + ", " + text : text;
+}
+
+function clearMyFeed() {
+  try { localStorage.removeItem("myfeed_interests"); localStorage.removeItem("myfeed_stories"); localStorage.removeItem("myfeed_time"); } catch(e) {}
+  renderContent();
+}
+
+function toggleMic() {
+  var btn = document.getElementById("myfeedMic");
+  if (_myfeedRecognition) {
+    _myfeedRecognition.stop();
+    _myfeedRecognition = null;
+    if (btn) btn.classList.remove("recording");
+    return;
+  }
+  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    var st = document.getElementById("myfeedStatus");
+    if (st) st.textContent = "Speech recognition not supported in this browser. Try Chrome.";
+    return;
+  }
+  _myfeedRecognition = new SpeechRecognition();
+  _myfeedRecognition.continuous = false;
+  _myfeedRecognition.interimResults = false;
+  _myfeedRecognition.lang = "en-US";
+  if (btn) btn.classList.add("recording");
+  _myfeedRecognition.onresult = function(e) {
+    var transcript = e.results[0][0].transcript;
+    var inp = document.getElementById("myfeedInput");
+    if (inp) {
+      var cur = inp.value.trim();
+      inp.value = cur ? cur + ", " + transcript : transcript;
+    }
+  };
+  _myfeedRecognition.onend = function() {
+    _myfeedRecognition = null;
+    if (btn) btn.classList.remove("recording");
+  };
+  _myfeedRecognition.onerror = function(e) {
+    var st = document.getElementById("myfeedStatus");
+    if (st) st.textContent = "Mic error: " + e.error;
+    _myfeedRecognition = null;
+    if (btn) btn.classList.remove("recording");
+  };
+  _myfeedRecognition.start();
+}
+
+function fetchMyFeed() {
+  var inp = document.getElementById("myfeedInput");
+  var goBtn = document.getElementById("myfeedGo");
+  var status = document.getElementById("myfeedStatus");
+  var results = document.getElementById("myfeedResults");
+  if (!inp || !inp.value.trim()) { if (status) status.textContent = "Type your interests first!"; return; }
+
+  var interests = inp.value.trim();
+  try { localStorage.setItem("myfeed_interests", interests); } catch(e) {}
+  if (goBtn) { goBtn.disabled = true; goBtn.textContent = "Searching..."; }
+  if (status) status.innerHTML = '\u23f3 Grok is searching X for posts about <strong>' + interests.replace(/</g,"&lt;") + '</strong>... this takes 10-20 seconds.';
+  if (results) results.innerHTML = "";
+
+  fetch("/.netlify/functions/custom-stories", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ interests: interests })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.error) {
+      if (status) status.textContent = "Error: " + data.error;
+      if (goBtn) { goBtn.disabled = false; goBtn.textContent = "Find Posts"; }
+      return;
+    }
+    var stories = data.stories || data;
+    try {
+      localStorage.setItem("myfeed_stories", JSON.stringify(data));
+      localStorage.setItem("myfeed_time", new Date().toLocaleString());
+    } catch(e) {}
+    if (status) status.textContent = "";
+    if (goBtn) { goBtn.disabled = false; goBtn.textContent = "Find Posts"; }
+    renderContent();
+  })
+  .catch(function(err) {
+    if (status) status.textContent = "Network error: " + err.message;
+    if (goBtn) { goBtn.disabled = false; goBtn.textContent = "Find Posts"; }
+  });
+}
 
 // Auto-detect visitor location for LOCAL tab
 (function() {
