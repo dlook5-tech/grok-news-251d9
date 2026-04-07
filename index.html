@@ -755,7 +755,8 @@ var TABS = [
   { id: "pg6", label: "Pg. 6" },
   { id: "pods", label: "Pods" },
   { id: "recipe", label: "Recipe" },
-  { id: "myfeed", label: "My Feed" },
+  { id: "myfeed1", label: "My Feed 1" },
+  { id: "myfeed2", label: "My Feed 2" },
   { id: "submit", label: "Post/Replace" }
 ];
 var activeTab = "world";
@@ -803,27 +804,28 @@ function renderContent() {
   var el = document.getElementById("content"), today = todayLabel();
   var staleBanner = NEWS_DATA._stale ? '<div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:0.9rem;color:#856404;">Yesterday\'s stories shown below \u2014 today\'s update is on the way. Check back soon.</div>' : '';
 
-  if (activeTab === "myfeed") {
+  if (activeTab === "myfeed1" || activeTab === "myfeed2") {
+    var slot = activeTab === "myfeed1" ? "1" : "2";
     var savedInterests = "";
-    try { savedInterests = localStorage.getItem("myfeed_interests") || ""; } catch(e) {}
+    try { savedInterests = localStorage.getItem("myfeed_interests_" + slot) || ""; } catch(e) {}
     var savedStories = null;
-    try { savedStories = JSON.parse(localStorage.getItem("myfeed_stories") || "null"); } catch(e) {}
+    try { savedStories = JSON.parse(localStorage.getItem("myfeed_stories_" + slot) || "null"); } catch(e) {}
     var savedTime = "";
-    try { savedTime = localStorage.getItem("myfeed_time") || ""; } catch(e) {}
+    try { savedTime = localStorage.getItem("myfeed_time_" + slot) || ""; } catch(e) {}
 
-    var h = '<div class="section-label">My Feed &mdash; ' + today + '</div>' +
-      '<h1>Your Custom Feed</h1>' +
+    var h = '<div class="section-label">My Feed ' + slot + ' &mdash; ' + today + '</div>' +
+      '<h1>Your Custom Feed ' + slot + '</h1>' +
       '<p class="subtitle">Tell us what you\'re interested in and Grok will find the best posts on X for you. Your preferences are saved in this browser.</p>';
 
     if (savedInterests) {
       h += '<div class="myfeed-saved"><span>\ud83d\udccc Tracking: <strong>' + savedInterests.replace(/</g,"&lt;") + '</strong></span>' +
-        '<button class="myfeed-clear" onclick="clearMyFeed()">Clear</button></div>';
+        '<button class="myfeed-clear" onclick="clearMyFeed(\'' + slot + '\')">Clear</button></div>';
     }
 
     h += '<div class="myfeed-input-wrap">' +
       '<input type="text" id="myfeedInput" placeholder="e.g. AI breakthroughs, SpaceX launches, NBA playoffs..." value="' + savedInterests.replace(/"/g,"&quot;") + '" />' +
       '<button class="myfeed-mic" id="myfeedMic" onclick="toggleMic()" title="Voice input"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="1" width="6" height="11" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>' +
-      '<button class="myfeed-go" id="myfeedGo" onclick="fetchMyFeed()">Find Posts</button></div>';
+      '<button class="myfeed-go" id="myfeedGo" onclick="fetchMyFeed(\'' + slot + '\')">Find Posts</button></div>';
 
     h += '<div class="myfeed-chips">';
     ["AI & Tech", "Crypto", "Sports", "Politics", "Science", "Cooking", "Startups", "Space"].forEach(function(c) {
@@ -1125,8 +1127,9 @@ function addChip(text) {
   inp.value = cur ? cur + ", " + text : text;
 }
 
-function clearMyFeed() {
-  try { localStorage.removeItem("myfeed_interests"); localStorage.removeItem("myfeed_stories"); localStorage.removeItem("myfeed_time"); } catch(e) {}
+function clearMyFeed(slot) {
+  slot = slot || (activeTab === "myfeed2" ? "2" : "1");
+  try { localStorage.removeItem("myfeed_interests_" + slot); localStorage.removeItem("myfeed_stories_" + slot); localStorage.removeItem("myfeed_time_" + slot); } catch(e) {}
   renderContent();
 }
 
@@ -1170,7 +1173,8 @@ function toggleMic() {
   _myfeedRecognition.start();
 }
 
-function fetchMyFeed() {
+function fetchMyFeed(slot) {
+  slot = slot || (activeTab === "myfeed2" ? "2" : "1");
   var inp = document.getElementById("myfeedInput");
   var goBtn = document.getElementById("myfeedGo");
   var status = document.getElementById("myfeedStatus");
@@ -1178,7 +1182,7 @@ function fetchMyFeed() {
   if (!inp || !inp.value.trim()) { if (status) status.textContent = "Type your interests first!"; return; }
 
   var interests = inp.value.trim();
-  try { localStorage.setItem("myfeed_interests", interests); } catch(e) {}
+  try { localStorage.setItem("myfeed_interests_" + slot, interests); } catch(e) {}
   if (goBtn) { goBtn.disabled = true; goBtn.textContent = "Searching..."; }
   if (status) status.innerHTML = '\u23f3 Grok is searching X for posts about <strong>' + interests.replace(/</g,"&lt;") + '</strong>... this takes 10-20 seconds.';
   if (results) results.innerHTML = "";
@@ -1197,8 +1201,8 @@ function fetchMyFeed() {
     }
     var stories = data.stories || data;
     try {
-      localStorage.setItem("myfeed_stories", JSON.stringify(data));
-      localStorage.setItem("myfeed_time", new Date().toLocaleString());
+      localStorage.setItem("myfeed_stories_" + slot, JSON.stringify(data));
+      localStorage.setItem("myfeed_time_" + slot, new Date().toLocaleString());
     } catch(e) {}
     if (status) status.textContent = "";
     if (goBtn) { goBtn.disabled = false; goBtn.textContent = "Find Posts"; }
