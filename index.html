@@ -743,6 +743,17 @@ var NEWS_DATA = {
   },
 };
 
+function myfeedTabLabel(slot) {
+  try {
+    var interests = localStorage.getItem("myfeed_interests_" + slot) || "";
+    if (interests) {
+      var word = interests.split(/[,&]/)[0].trim();
+      if (word.length > 12) word = word.substring(0, 10) + "..";
+      return word;
+    }
+  } catch(e) {}
+  return "My Feed " + slot;
+}
 var TABS = [
   { id: "world", label: "World" },
   { id: "business", label: "Business" },
@@ -755,8 +766,8 @@ var TABS = [
   { id: "pg6", label: "Pg. 6" },
   { id: "pods", label: "Pods" },
   { id: "recipe", label: "Recipe" },
-  { id: "myfeed1", label: "My Feed 1" },
-  { id: "myfeed2", label: "My Feed 2" },
+  { id: "myfeed1", label: myfeedTabLabel("1") },
+  { id: "myfeed2", label: myfeedTabLabel("2") },
   { id: "submit", label: "Post/Replace" }
 ];
 var activeTab = "world";
@@ -766,6 +777,11 @@ function todayLabel() { var d = new Date(), months = ["January","February","Marc
 
 function renderNav() {
   var nav = document.getElementById("nav");
+  // Refresh dynamic tab labels
+  TABS.forEach(function(t) {
+    if (t.id === "myfeed1") t.label = myfeedTabLabel("1");
+    if (t.id === "myfeed2") t.label = myfeedTabLabel("2");
+  });
   nav.innerHTML = TABS.map(function(t) { return '<a data-tab="' + t.id + '" class="' + (t.id === activeTab ? 'active' : '') + '">' + t.label + '</a>'; }).join("");
   nav.querySelectorAll("a").forEach(function(a) { a.addEventListener("click", function() { activeTab = a.dataset.tab; renderNav(); renderContent(); }); });
 }
@@ -856,6 +872,14 @@ function renderContent() {
 
     h += '</div>';
     el.innerHTML = h;
+    // Auto-refresh if interests saved but stories are stale (older than 1 hour)
+    if (savedInterests && savedTime) {
+      var lastFetch = new Date(savedTime).getTime();
+      var oneHour = 60 * 60 * 1000;
+      if (Date.now() - lastFetch > oneHour) {
+        setTimeout(function() { fetchMyFeed(slot); }, 500);
+      }
+    }
     return;
   }
 
@@ -1132,6 +1156,7 @@ function addChip(text) {
 function clearMyFeed(slot) {
   slot = slot || (activeTab === "myfeed2" ? "2" : "1");
   try { localStorage.removeItem("myfeed_interests_" + slot); localStorage.removeItem("myfeed_stories_" + slot); localStorage.removeItem("myfeed_time_" + slot); } catch(e) {}
+  renderNav();
   renderContent();
 }
 
@@ -1185,6 +1210,7 @@ function fetchMyFeed(slot) {
 
   var interests = inp.value.trim();
   try { localStorage.setItem("myfeed_interests_" + slot, interests); } catch(e) {}
+  renderNav(); // Update tab name to reflect new interests
   if (goBtn) { goBtn.disabled = true; goBtn.textContent = "Searching..."; }
   if (status) status.innerHTML = '\u23f3 Grok is searching X for posts about <strong>' + interests.replace(/</g,"&lt;") + '</strong>... this takes 10-20 seconds.';
   if (results) results.innerHTML = "";

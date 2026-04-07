@@ -303,10 +303,30 @@ for i, (label, handle, url) in enumerate(all_urls):
         print(f"  ❌ [{i+1}/{total}] {label}: {handle} → FAILED ({url})")
     time.sleep(0.15)  # rate limit courtesy
 
-# Write verified URL map for Step 3
+# Write verified URL map AND tweet previews for Step 3
 verified_map = json.dumps(verified)
 with open('/tmp/grok_verified_urls.json', 'w') as f:
     f.write(verified_map)
+
+# Also save tweet text previews for headline verification in Step 3
+tweet_previews = {}
+for label, handle, url in all_urls:
+    if handle in verified:
+        try:
+            oembed_url = f"https://publish.twitter.com/oembed?url={verified[handle]}"
+            req = urllib.request.Request(oembed_url, headers={"User-Agent": "Mozilla/5.0"})
+            resp = urllib.request.urlopen(req, timeout=10)
+            data = json.loads(resp.read())
+            import re as re2
+            text_match = re2.search(r'<p[^>]*>(.*?)</p>', data.get('html',''), re2.DOTALL)
+            if text_match:
+                clean = re2.sub(r'<[^>]+>', '', text_match.group(1))[:200]
+                tweet_previews[handle] = {"text": clean, "author": data.get("author_name","")}
+            time.sleep(0.1)
+        except:
+            pass
+with open('/tmp/grok_tweet_previews.json', 'w') as f:
+    f.write(json.dumps(tweet_previews))
 
 print(f"\nVerification: {len(verified)}/{total} passed, {len(failed)} failed")
 if failed:
@@ -343,6 +363,37 @@ try:
         verified_urls = json.loads(f.read())
 except:
     verified_urls = {}
+
+# Load tweet previews for headline verification
+try:
+    with open('/tmp/grok_tweet_previews.json') as f:
+        tweet_previews = json.loads(f.read())
+except:
+    tweet_previews = {}
+
+def check_headline_match(handle, headline, body):
+    """Check if headline/body roughly matches actual tweet. Returns corrected (headline, body) or originals."""
+    h = handle.lower().lstrip('@')
+    if h not in tweet_previews:
+        return headline, body
+    preview = tweet_previews[h]
+    tweet_text = preview.get('text', '')
+    author = preview.get('author', '')
+    if not tweet_text:
+        return headline, body
+    # Check keyword overlap
+    h_words = set(headline.lower().split())
+    t_words = set(tweet_text.lower().split())
+    overlap = h_words & t_words - {'the','a','an','and','or','of','in','on','to','is','for','with','at','by'}
+    if len(overlap) >= 2:
+        return headline, body  # Good enough match
+    # Mismatch — use tweet text as headline
+    clean_headline = tweet_text[:80].strip()
+    if len(tweet_text) > 80:
+        clean_headline = clean_headline.rsplit(' ', 1)[0] + '...'
+    new_body = f"{author}: {tweet_text[:250]}"
+    print(f"  HEADLINE FIX: '{headline[:50]}' → '{clean_headline[:50]}'")
+    return clean_headline, new_body
 
 def get_url(handle):
     h = handle.lower().lstrip('@')
@@ -493,14 +544,17 @@ if 'sports' in stories:
             continue
         url = get_url_from_data(s['handle'], s.get('url'))
         prefix = '\U0001f3a4 ' if key in ('stephena', 'cowherd') else ''
+        s_headline = s.get('headline', '')
+        s_body = s.get('body', '')
+        s_headline, s_body = check_headline_match(s['handle'], s_headline, s_body)
         sport_stories.append(
             '{\n'
-            '          headline: ' + js_str(prefix + s.get('headline', '')) + ',\n'
+            '          headline: ' + js_str(prefix + s_headline) + ',\n'
             '          handle: "' + s['handle'] + '",\n'
             '          url: "' + url + '",\n'
             '          honesty: "' + s.get('honesty', '8/10') + '",\n'
             '          notes: ' + js_str(s.get('notes', '')) + ',\n'
-            '          body: ' + js_str(s.get('body', '')) + '\n'
+            '          body: ' + js_str(s_body) + '\n'
             '        }'
         )
         # Add honesty footnote after main story
@@ -521,14 +575,17 @@ if 'elon' in stories:
         if not ep.get('handle'):
             continue
         url = get_url_from_data(ep['handle'], ep.get('url'))
+        ep_headline = ep.get('headline', '')
+        ep_body = ep.get('body', '')
+        ep_headline, ep_body = check_headline_match(ep['handle'], ep_headline, ep_body)
         elon_stories.append(
             '{\n'
-            '          headline: ' + js_str(ep.get('headline', '')) + ',\n'
+            '          headline: ' + js_str(ep_headline) + ',\n'
             '          handle: "' + ep['handle'] + '",\n'
             '          url: "' + url + '",\n'
             '          honesty: "' + ep.get('honesty', '10/10') + '",\n'
             '          notes: ' + js_str(ep.get('notes', '')) + ',\n'
-            '          body: ' + js_str(ep.get('body', '')) + '\n'
+            '          body: ' + js_str(ep_body) + '\n'
             '        }'
         )
     new_stories = '[' + ',\n        '.join(elon_stories) + '\n      ]'
@@ -544,14 +601,17 @@ if 'pods' in stories:
         if not pc.get('handle'):
             continue
         url = get_url_from_data(pc['handle'], pc.get('url'))
+        pc_headline = pc.get('headline', '')
+        pc_body = pc.get('body', '')
+        pc_headline, pc_body = check_headline_match(pc['handle'], pc_headline, pc_body)
         pod_stories.append(
             '{\n'
-            '          headline: ' + js_str(pc.get('headline', '')) + ',\n'
+            '          headline: ' + js_str(pc_headline) + ',\n'
             '          handle: "' + pc['handle'] + '",\n'
             '          url: "' + url + '",\n'
             '          honesty: "' + pc.get('honesty', '8/10') + '",\n'
             '          notes: ' + js_str(pc.get('notes', '')) + ',\n'
-            '          body: ' + js_str(pc.get('body', '')) + '\n'
+            '          body: ' + js_str(pc_body) + '\n'
             '        }'
         )
         notes_all.append(pc.get('notes', ''))
@@ -571,14 +631,17 @@ if 'recipe' in stories:
         if not rp.get('handle'):
             continue
         url = get_url_from_data(rp['handle'], rp.get('url'))
+        rp_headline = rp.get('headline', '')
+        rp_body = rp.get('body', '')
+        rp_headline, rp_body = check_headline_match(rp['handle'], rp_headline, rp_body)
         recipe_stories.append(
             '{\n'
-            '          headline: ' + js_str(rp.get('headline', '')) + ',\n'
+            '          headline: ' + js_str(rp_headline) + ',\n'
             '          handle: "' + rp['handle'] + '",\n'
             '          url: "' + url + '",\n'
             '          honesty: "' + rp.get('honesty', '10/10') + '",\n'
             '          notes: ' + js_str(rp.get('notes', '')) + ',\n'
-            '          body: ' + js_str(rp.get('body', '')) + '\n'
+            '          body: ' + js_str(rp_body) + '\n'
             '        }'
         )
         notes_all.append(rp.get('notes', ''))
@@ -600,15 +663,18 @@ for tab in simple_tabs:
         continue
 
     url = get_url_from_data(handle, d.get('url'))
+    headline_raw = d.get('headline', d.get('topic', ''))
+    body_raw = d.get('body', '')
+    headline_raw, body_raw = check_headline_match(handle, headline_raw, body_raw)
 
     new_stories = (
         '[{\n'
-        '          headline: ' + js_str(d.get('headline', d.get('topic', ''))) + ',\n'
+        '          headline: ' + js_str(headline_raw) + ',\n'
         '          handle: "' + handle + '",\n'
         '          url: "' + url + '",\n'
         '          honesty: "' + d.get('honesty', '8/10') + '",\n'
         '          notes: ' + js_str(d.get('notes', '')) + ',\n'
-        '          body: ' + js_str(d.get('body', '')) + '\n'
+        '          body: ' + js_str(body_raw) + '\n'
         '        },\n'
         '        { headline: "Honesty footnotes", body: ' + js_str(d.get('notes', '')) + ' }\n'
         '      ]'
