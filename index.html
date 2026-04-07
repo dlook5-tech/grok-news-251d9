@@ -652,6 +652,7 @@ function renderSinglePost(s) {
 
 function renderContent() {
   var el = document.getElementById("content"), today = todayLabel();
+  var staleBanner = NEWS_DATA._stale ? '<div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:0.9rem;color:#856404;">Yesterday\'s stories shown below \u2014 today\'s update is on the way. Check back soon.</div>' : '';
 
   if (activeTab === "submit") {
     var h = '<div class="section-label">Submit &mdash; ' + today + '</div>' +
@@ -671,7 +672,7 @@ function renderContent() {
 
   if (activeTab === "world") {
     var d = NEWS_DATA.world;
-    var h = '<div class="section-label">World &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
+    var h = '<div class="section-label">World &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>' + staleBanner;
     var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
     d.stories.forEach(function(s) { var pt = '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(Posted ' + postedTime + ')</span>'; h += acc(s.headline + pt, renderWorldStory(s)); });
     if (d.earlier && d.earlier.length) {
@@ -691,7 +692,7 @@ function renderContent() {
   // All other tabs
   var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", recipe: "Recipe", msm: "<s>MSM</s>", local: "Local", pods: "Pods", pg6: "Pg. 6" };
   var d = NEWS_DATA[activeTab];
-  var h = '<div class="section-label">' + labels[activeTab] + ' &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>';
+  var h = '<div class="section-label">' + labels[activeTab] + ' &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>' + staleBanner;
   var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
   d.stories.forEach(function(s) {
     var pt = '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(Posted ' + postedTime + ')</span>';
@@ -837,19 +838,12 @@ function renderLastUpdated() {
   return '<div class="last-updated">Last updated: ' + updated.toLocaleString() + ' &mdash; Next update: ' + nextStr + '</div>';
 }
 
-// Midnight reset: clear all stories at 12:01 AM when the date changes
+// Midnight reset: mark stories as stale but keep them visible with a banner
 function checkMidnightRotation() {
   var updated = new Date(NEWS_DATA.lastUpdated);
   var now = new Date();
   if (updated.toDateString() !== now.toDateString() && updated < now) {
-    var tabKeys = ["world","business","sports","elon","allin","top","pods","local","recipe","msm","pg6"];
-    tabKeys.forEach(function(key) {
-      var d = NEWS_DATA[key];
-      if (!d) return;
-      if (d.stories) d.stories = [];
-      if (d.earlier) d.earlier = [];
-    });
-    NEWS_DATA.lastUpdated = now.toLocaleString();
+    NEWS_DATA._stale = true;
     renderNav();
     renderContent();
   }
