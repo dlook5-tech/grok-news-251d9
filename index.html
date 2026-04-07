@@ -838,7 +838,8 @@ function renderLastUpdated() {
   return '<div class="last-updated">Last updated: ' + updated.toLocaleString() + ' &mdash; Next update: ' + nextStr + '</div>';
 }
 
-// Midnight reset: mark stories as stale but keep them visible with a banner
+// Midnight: keep yesterday's stories visible until new ones arrive. Trim earlier arrays to prevent infinite scroll.
+var MAX_EARLIER = 10; // max stories in "Earlier Today" per tab — keeps page a reasonable length
 function checkMidnightRotation() {
   var updated = new Date(NEWS_DATA.lastUpdated);
   var now = new Date();
@@ -847,6 +848,14 @@ function checkMidnightRotation() {
     renderNav();
     renderContent();
   }
+  // Trim earlier arrays if they get too long
+  var tabKeys = ["world","business","sports","elon","allin","top","pods","local","recipe","msm","pg6"];
+  tabKeys.forEach(function(key) {
+    var d = NEWS_DATA[key];
+    if (d && d.earlier && d.earlier.length > MAX_EARLIER) {
+      d.earlier = d.earlier.slice(0, MAX_EARLIER);
+    }
+  });
 }
 
 document.getElementById("currentDate").textContent = formatDate();
