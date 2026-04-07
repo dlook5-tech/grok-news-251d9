@@ -872,14 +872,6 @@ function renderContent() {
 
     h += '</div>';
     el.innerHTML = h;
-    // Auto-refresh if interests saved but stories are stale (older than 1 hour)
-    if (savedInterests && savedTime) {
-      var lastFetch = new Date(savedTime).getTime();
-      var oneHour = 60 * 60 * 1000;
-      if (Date.now() - lastFetch > oneHour) {
-        setTimeout(function() { fetchMyFeed(slot); }, 500);
-      }
-    }
     return;
   }
 
@@ -1094,6 +1086,36 @@ renderContent();
 // Check for midnight rotation on load and every minute
 checkMidnightRotation();
 setInterval(checkMidnightRotation, 60000);
+
+// Auto-refresh My Feed tabs in background on page load if stale (>1 hour old)
+(function() {
+  ["1","2"].forEach(function(slot) {
+    try {
+      var interests = localStorage.getItem("myfeed_interests_" + slot);
+      var time = localStorage.getItem("myfeed_time_" + slot);
+      if (interests && time) {
+        var lastFetch = new Date(time).getTime();
+        if (Date.now() - lastFetch > 60 * 60 * 1000) {
+          // Silently refresh in background
+          fetch("/.netlify/functions/custom-stories", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ interests: interests })
+          }).then(function(r) { return r.json(); }).then(function(data) {
+            if (!data.error && data.stories) {
+              try {
+                localStorage.setItem("myfeed_stories_" + slot, JSON.stringify(data));
+                localStorage.setItem("myfeed_time_" + slot, new Date().toLocaleString());
+              } catch(e) {}
+              // If user is currently on this feed tab, refresh the view
+              if (activeTab === "myfeed" + slot) renderContent();
+            }
+          }).catch(function() {});
+        }
+      }
+    } catch(e) {}
+  });
+})();
 
 // Fix honesty footnotes to use footnote-card styling
 function fixHonestyFootnotes() {
