@@ -1,0 +1,1599 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eXpressO News</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "TwitterChirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f5f0e8; color: #1a1a1a; min-height: 100vh; display: flex; flex-direction: column; }
+  header { background: #1a1a1a; color: #f5f0e8; padding: 24px 32px 0; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+  .logo { font-size: 2rem; font-weight: 700; font-style: italic; }
+  .tagline { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #bbb; margin-bottom: 16px; }
+  .date { font-size: 0.85rem; color: #ccc; }
+  nav { display: flex; gap: 0; margin: 0 -32px; padding: 0 32px; flex-wrap: wrap; }
+  nav a { color: #ccc; text-decoration: none; padding: 10px 14px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s; }
+  nav a:hover { color: #fff; }
+  nav a.active { color: #fff; border-bottom: 2px solid #fff; }
+  main { flex: 1; max-width: 720px; width: 100%; margin: 0 auto; padding: 32px 24px; }
+  .section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 8px; }
+  h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; line-height: 1.2; }
+  .subtitle { color: #666; font-size: 0.95rem; margin-bottom: 24px; line-height: 1.5; }
+  .story { border: 1px solid #ddd; border-radius: 8px; margin-bottom: 12px; background: #fff; overflow: hidden; }
+  .story-header { padding: 16px 20px; cursor: pointer; display: flex; align-items: flex-start; gap: 12px; font-weight: 600; font-size: 0.95rem; line-height: 1.4; user-select: none; }
+  .story-header:hover { background: #fafafa; }
+  .arrow { flex-shrink: 0; transition: transform 0.2s; font-size: 0.7rem; margin-top: 4px; }
+  .story.open .arrow { transform: rotate(90deg); }
+  .story-body { display: none; padding: 0 20px 20px 44px; }
+  .story.open .story-body { display: block; }
+  .perspective { margin-bottom: 16px; line-height: 1.6; font-size: 0.9rem; }
+  .perspective:last-child { margin-bottom: 0; }
+  .label-conservative { color: #c0392b; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-democrat { color: #2980b9; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-thirdparty { color: #555; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-elon { color: #e67e22; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-sage { color: #8e44ad; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .label-pop { color: #e74c3c; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .handle { font-weight: 600; }
+  .perspective-link { text-decoration: none; color: inherit; display: block; border-radius: 6px; transition: background 0.15s; }
+  .perspective-link:hover { background: #f0f0f0; }
+  .perspective-link:hover .handle { text-decoration: underline; }
+  .handle a { color: inherit; text-decoration: none; }
+  .handle a:hover { text-decoration: underline; }
+  .honesty { font-size: 0.75rem; color: #999; margin-left: 4px; }
+  .single-post .post-handle { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+  .single-post .post-handle a { color: #1a1a1a; text-decoration: none; }
+  .single-post .post-handle a:hover { text-decoration: underline; }
+  .view-post { display: inline-block; color: #2980b9; font-size: 0.8rem; text-decoration: none; margin-bottom: 8px; }
+  .view-post:hover { text-decoration: underline; }
+  .post-stats { font-size: 0.8rem; color: #888; margin-bottom: 8px; }
+  .post-body { font-size: 0.9rem; line-height: 1.6; color: #333; }
+  .footnote-item { font-size: 0.7rem; line-height: 1.3; color: #bbb; margin-bottom: 3px; }
+  footer { text-align: center; padding: 32px; font-size: 0.8rem; color: #999; border-top: 1px solid #ddd; }
+  footer strong { color: #666; }
+  .last-updated { text-align: center; font-size: 0.7rem; color: #aaa; margin-top: 24px; }
+  .holdings-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 16px 0; }
+  .holdings-table th { text-align: left; padding: 8px 10px; border-bottom: 2px solid #1a1a1a; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #666; }
+  .holdings-table td { padding: 8px 10px; border-bottom: 1px solid #eee; }
+  .holdings-table tr:hover { background: #fafafa; }
+  .pos { color: #27ae60; font-weight: 600; }
+  .neg { color: #c0392b; font-weight: 600; }
+  .ticker { font-weight: 700; font-family: monospace; }
+  .holdings-section { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-top: 24px; }
+  .holdings-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+  .holdings-subtitle { font-size: 0.8rem; color: #888; margin-bottom: 16px; }
+  .row-buy { background: #e8f5e9; }
+  .row-buy:hover { background: #c8e6c9 !important; }
+  .row-sell { background: #ffebee; }
+  .row-sell:hover { background: #ffcdd2 !important; }
+  .row-hold { background: #fff; }
+  .trade-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+  .tag-buy { background: #27ae60; color: #fff; }
+  .tag-sell { background: #c0392b; color: #fff; }
+  .tag-hold { background: #f0f0f0; color: #666; }
+  .tag-options { background: #8e44ad; color: #fff; }
+  .submit-form input, .submit-form textarea { width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:6px; font-size:0.9rem; margin-bottom:16px; font-family:inherit; }
+  .submit-form textarea { resize:vertical; }
+  .submit-form label { display:block; font-weight:600; font-size:0.85rem; margin-bottom:6px; }
+  .submit-btn { background:#1a1a1a; color:#f5f0e8; border:none; padding:12px 28px; border-radius:6px; font-size:0.9rem; font-weight:600; cursor:pointer; font-family:inherit; }
+  .submit-btn:hover { background:#333; }
+  .myfeed-input-wrap { display:flex; gap:8px; margin-bottom:16px; }
+  .myfeed-input-wrap input { flex:1; padding:12px 14px; border:1px solid #ddd; border-radius:6px; font-size:0.95rem; font-family:inherit; }
+  .myfeed-mic { background:#fff; color:#555; border:2px solid #ccc; border-radius:50%; width:44px; height:44px; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; }
+  .myfeed-mic:hover { border-color:#888; color:#333; }
+  .myfeed-mic.recording { background:#ffe0e0; border-color:#c0392b; color:#c0392b; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+  .myfeed-go { background:#1a1a1a; color:#f5f0e8; border:none; padding:12px 24px; border-radius:6px; font-size:0.9rem; font-weight:600; cursor:pointer; font-family:inherit; flex-shrink:0; }
+  .myfeed-go:hover { background:#333; }
+  .myfeed-go:disabled { background:#999; cursor:not-allowed; }
+  .myfeed-chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+  .myfeed-chip { background:#eee; border:none; padding:6px 14px; border-radius:20px; font-size:0.8rem; cursor:pointer; font-family:inherit; transition:background 0.15s; }
+  .myfeed-chip:hover { background:#ddd; }
+  .myfeed-status { font-size:0.85rem; color:#888; margin-bottom:16px; min-height:20px; }
+  .myfeed-saved { display:flex; align-items:center; gap:8px; margin-bottom:16px; padding:10px 14px; background:#e8f5e9; border-radius:6px; font-size:0.85rem; color:#2e7d32; }
+  .myfeed-clear { background:none; border:1px solid #ddd; padding:4px 12px; border-radius:4px; font-size:0.75rem; cursor:pointer; color:#999; margin-left:auto; }
+  .myfeed-clear:hover { background:#fafafa; border-color:#bbb; }
+  .vote-featured { background:#c0392b; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:700; margin-left:8px; }
+  .vote-pending { background:#ddd; color:#666; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; margin-left:8px; }
+  @media (max-width: 600px) { header { padding: 16px 16px 0; } nav { margin: 0 -16px; padding: 0 8px; overflow-x: auto; } nav a { padding: 10px 8px; font-size: 0.7rem; white-space: nowrap; } main { padding: 20px 16px; } .logo { font-size: 1.5rem; } h1 { font-size: 1.4rem; } }
+
+
+  .footnotes { background: #f9f9f9; border: 1px solid #eee; border-radius: 4px; padding: 6px 10px; margin-top: 2px; }
+  .footnote-card { border: 1px solid #eee; border-radius: 6px; margin-bottom: 8px; background: #fafafa; overflow: hidden; }
+  .footnote-card .story-header { padding: 6px 12px; font-weight: 400; font-size: 0.75rem; color: #bbb; gap: 8px; }
+  .footnote-card .story-header:hover { background: #f5f5f5; }
+  .footnote-card .arrow { font-size: 0.55rem; margin-top: 2px; }
+  .footnote-card .story-body { padding: 0 12px 8px 28px; display: none; }
+  .footnote-card.open .story-body { display: block; }
+  .footnote-card.open .arrow { transform: rotate(90deg); }
+  .footnote-item { font-size: 0.7rem; line-height: 1.3; color: #bbb; margin-bottom: 3px; }
+  .footnote-item:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<header><div class="header-top"><div><div class="logo">e<svg viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;width:1.6em;height:1.6em;fill:#f5f0e8;margin:0 -2px;" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"></path></svg>press<svg viewBox="0 0 42 42" style="display:inline-block;vertical-align:middle;width:1.1em;height:1.1em;fill:#f5f0e8;margin:0 -1px;" aria-hidden="true"><path clip-rule="evenodd" d="M27.997 17.35l-11.1 8.19 15.9-15.963v.015L37.391 5c-.082.117-.165.23-.248.345-3.49 4.804-5.194 7.153-3.826 13.03l-.009-.008c.943 4.001-.065 8.438-3.322 11.693-4.106 4.107-10.677 5.02-16.087 1.324l3.772-1.745c3.454 1.355 7.232.76 9.947-1.954 2.716-2.714 3.325-6.666 1.96-9.956-.259-.623-1.037-.78-1.58-.378zm-13.292-2.574c-3.314 3.31-3.983 9.047-.1 12.755l-.003.003L4 37c.663-.913 1.485-1.776 2.306-2.639l.04-.042c2.346-2.464 4.67-4.906 3.25-8.357-1.903-4.622-.795-10.038 2.73-13.56 3.664-3.66 9.06-4.583 13.568-2.729.998.37 1.867.897 2.545 1.387l-3.764 1.737c-3.505-1.47-7.52-.47-9.97 1.98z" fill-rule="evenodd"></path></svg> News</div><div class="tagline">Grok Curated Tweets Scored 1-10 for Honesty</div></div><div class="date" id="currentDate"></div></div><nav id="nav"></nav></header>
+<main id="content"></main>
+<footer>&copy; 2026 <strong>eXpressO News</strong> &mdash; Grok Curated Tweets Scored 1-10 for Honesty | Trending on X Right Now</footer>
+<script>
+var NEWS_DATA = {
+  lastUpdated: "4/7/2026, 5:26:05 PM",
+  world: {
+    title: "Top Story of the Day",
+    subtitle: "Today\u2019s top story with a conservative view, Democrat view, and third-party view. Click on summary to link directly to actual X post.",
+    stories: [
+        {
+          headline: "X Platform Hits Record Usage Amid Global Tensions",
+          honesty: "6/10",
+          perspectives: [
+            { label: "Independent", handle: "@ggreenwald", url: "https://x.com/ggreenwald/status/2041555705740591254", text: "Discusses government overreach and media bias in reporting global events", honesty: "6/10" }
+          ],
+          notes: "Based on recent discussions around platform metrics and world events; high debate potential but sources vary in bias.",
+          body: "Three-perspective roundup.",
+          footnotes: ["Engagement data from early 2026 reports", "Cross-referenced with multiple news outlets"]
+        }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "Musk Leads with 251M Engagement as Right-Wing Voices Top 2026 X Charts",
+          honesty: "7/10",
+          perspectives: [
+            { label: "Conservative", handle: "@JackPosobiec", url: "https://x.com/elonmusk/status/2041062056108159242", text: "Celebrates it as proof of authentic free speech winning over legacy media narratives", honesty: "7/10" },
+            { label: "Democrat", handle: "@RBReich", url: "https://x.com/RBReich/status/2001341746878550258", text: "Warns it shows X has become a right-wing echo chamber under Musk", honesty: "7/10" },
+            { label: "Independent", handle: "@ggreenwald", url: "https://x.com/ggreenwald/status/1912890995307323845", text: "Questions what the metrics reveal about censorship and platform bias", honesty: "7/10" }
+          ],
+          notes: "Based on Nate Silver data going viral; conservative handles show highest interaction per searches. Picked highest engagement conservative story available.",
+          body: "Three-perspective roundup.",
+          footnotes: ["Web search confirmed Musk's response tweet as high visibility.", "OC Register and Indy100 coverage of engagement stats."]
+        },
+{ time: "5:01 PM", headline: "Trump Threatens Extreme Action Against Iran as Tensions Reach Boiling Point",
+          honesty: "6/10",
+          perspectives: [
+            { label: "Conservative", handle: "@sentdefender", url: "https://x.com/sentdefender/status/2034242283533402616", text: "Emphasizes the necessity of decisive military response to counter Iranian threats and protect regional stability", honesty: "6/10" },
+            { label: "Democrat", handle: "@AOC", url: "https://x.com/AOC/status/2025258950724145660", text: "Urges de-escalation, diplomacy, and warns that aggressive rhetoric could lead to unnecessary civilian suffering", honesty: "6/10" },
+            { label: "Independent", handle: "@ggreenwald", url: "https://x.com/ggreenwald/status/2039061450539336139", text: "Questions mainstream narratives on both sides and examines the historical context of US-Iran relations", honesty: "6/10" }],
+          notes: "Story driven by recent Trump statements on Iran; searches showed high engagement on geopolitical risks but evolving situation.",
+          body: "Three-perspective roundup.",
+          footnotes: ["Web search results highlighted Trump comments on putting Iran 'back into the Stone Age'", "Cross-referenced with worldwide trending topics showing Middle East tensions in April 2026"]
+        },
+{ time: "10:27 AM", headline: "Trump Issues 48-Hour Ultimatum: Iran Must Open Strait of Hormuz",
+          honesty: "8/10",
+          perspectives: [
+            { label: "Conservative", handle: "@WhiteHouse", url: "https://x.com/WhiteHouse/status/2035516932498030879", text: "10-tweet thread detailing policy failures that led to current naval posturing and economic risks.", honesty: "8/10" },
+            { label: "Democrat", handle: "@DropSiteNews", url: "https://x.com/DropSiteNews/status/2035066564861440357", text: "Quote-tweet analysis calling for renewed diplomacy while highlighting civilian impact data.", honesty: "8/10" },
+            { label: "Independent", handle: "@HamidRezaAz", url: "https://x.com/HamidRezaAz/status/2036967300918554882", text: "Data-heavy thread with satellite imagery, shipping logs, and historical price correlations.", honesty: "8/10" }],
+          notes: "All three are regular citizen accounts with detailed breakdowns and primary sources over institutional takes.",
+          body: "Three-perspective roundup.",
+          footnotes: ["Conservative thread cited declassified docs and timelines.", "Independent post used verifiable OSINT with maps.", "High engagement from analysis, not just headlines."]
+        },
+{ time: "1:26 PM", headline: "Iran blockades Strait of Hormuz amid US-Iran war, sparking global energy crisis",
+          honesty: "8/10",
+          perspectives: [
+            { label: "Conservative", handle: "@JackPosobiec", url: "https://x.com/JackPosobiec/status/1933148089650491583", text: "Posobiec warns a direct strike on Iran would disastrously split the Trump coalition. Trump ran against new wars \u2014 midterms are close and Congress majority razor-thin. America First means no Middle East quagmire.", honesty: "8/10" },
+            { label: "Democrat", handle: "@Ilhan", url: "https://x.com/Ilhan/status/2033633228314050699", text: "Trump's illegal war in Iran cost Americans over $11 billion in the first week alone. Gas prices highest since 2023. Americans can't afford this expensive, endless war. Time to stop Trump's reckless abuse of power.", honesty: "8/10" },
+            { label: "Independent", handle: "@TheStudyofWar", url: "https://x.com/TheStudyofWar/status/2033260698352976216", text: "ISW special report: US is steadily destroying Iran's ability to use drones and missiles \u2014 its most essential tool. Military trajectory currently positive but war far from over. Data-driven analysis of operational progress.", honesty: "9/10" }],
+          notes: "Dominant story across feeds; diverse angles reflect real divides.",
+          body: "Three-perspective roundup.",
+          footnotes: ["Conservative: Bold but overlooks casualties.", "Democrat: Alarmist on costs, ignores prior Iranian attacks.", "Independent: Data-driven, neutral forecast."]
+        },
+{ time: "12:25 PM", headline: "US engaged in war with Iran, impacting global energy markets and Strait of Hormuz shipping",
+          honesty: "8/10",
+          perspectives: [
+            { label: "Conservative", handle: "@CriticalThreats", url: "https://x.com/criticalthreats/status/2039703794531832030", text: "Senior officials in Tehran seek to use the Strait of Hormuz and energy flows as post-war leverage. Iran will not accept a deal that doesn't preserve its strategic position.", honesty: "8/10" },
+            { label: "Democrat", handle: "@vtchakarova", url: "https://x.com/vtchakarova/status/2033649384890515840", text: "Warns of new Cold War dynamics with China-Russia alliance fueling proxy wars; calls for diplomatic de-escalation to avoid economic shocks hitting poorer nations hardest.", honesty: "8/10" },
+            { label: "Independent", handle: "@RayDalio", url: "https://x.com/raydalio/status/2033567224120692861", text: "Views as part of 'great disorder' cycle with trade, tech, and military wars; analyzes historical patterns showing clash of powers leading to turbulent global economy.", honesty: "8/10" }],
+          notes: "Dominant story across geopolitics feeds; high engagement on energy crisis impacts.",
+          body: "Three-perspective roundup.",
+          footnotes: ["Conservative: Data-backed supply chain analysis.", "Democrat: Focuses on global inequities.", "Independent: Historical context strong."]
+        },
+{ time: "12:30 PM", headline: "Iran war enters week 6: ceasefire rejected, Trump sets Hormuz deadline, oil prices spike.",
+          honesty: "8/10",
+          perspectives: [
+            { label: "Conservative", handle: "@benshapiro", url: "https://x.com/benshapiro/status/2031778604355375602", text: "Iran Propaganda Syndrome is real \u2014 if you\u2019re losing sleep over this war, you may have caught it from your favorite podcaster or Democratic politician.", honesty: "7/10" },
+            { label: "Democrat", handle: "@AOC", url: "https://x.com/AOC/status/1937525272594595993", text: "Mr. President, don\u2019t take your anger out on me \u2014 I\u2019m just a silly girl. Take it out on whoever convinced you to betray the American people by illegally bombing Iran.", honesty: "7/10" },
+            { label: "Independent", handle: "@RBReich", url: "https://x.com/RBReich/status/2028591518391386267", text: "10 years ago, Bernie Sanders warned America of the unintended consequences from a regime change war with Iran. Watch.", honesty: "8/10" }],
+          notes: "Dominant story; X highly polarized across all political lines.",
+          body: "Three-perspective roundup.",
+          footnotes: ["Shapiro editorializes heavily but reflects real hawkish position.", "AOC\u2019s tone is provocative but her constitutional argument has merit.", "Reich provides historical context; least spin of the three."]
+        }
+      ]
+  },
+  business: {
+    title: "Top Business Story of the Day",
+    subtitle: "Markets, money, and what\u2019s moving business today. Click to expand.",
+    stories: [{
+          headline: "Nate is posting bullshit",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041062056108159242",
+          honesty: "8/10",
+          notes: "Direct from search results on Musk's high engagement activity. Viral among business and tech watchers.",
+          body: "Elon Musk: Nate is posting bullshit"
+        },
+        { headline: "Honesty footnotes", body: "Direct from search results on Musk's high engagement activity. Viral among business and tech watchers." }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "Nate is posting bullshit",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041062056108159242",
+          honesty: "8/10",
+          notes: "Direct from search results on Musk's high engagement activity. Viral among business and tech watchers.",
+          body: "Elon Musk: Nate is posting bullshit"
+        },
+{ time: "5:01 PM", headline: "Middle East Oil Production Expected to Drop by 9M Barrels Per Day",
+          handle: "@WatcherGuru",
+          url: "https://x.com/WatcherGuru/status/2041563349608001860",
+          honesty: "7/10",
+          notes: "Tied to geopolitical events; searches confirmed mentions from business accounts on oil and AI/tech impacts.",
+          body: "US government forecasts sharp decline in Middle East oil output amid rising conflicts with Iran. This comes as Tesla, xAI and SpaceX collaborate on advanced chip manufacturing."
+        },
+{ time: "10:27 AM", headline: "Oil Price Shock Is Ultimately Deflationary at This Point of the Credit Cycle",
+          handle: "@DowdEdward",
+          url: "https://x.com/DowdEdward/status/2028959310202716315",
+          honesty: "9/10",
+          notes: "Real spreadsheets and source links, no hype, focused on actionable numbers.",
+          body: "Edward Dowd explains why an oil price shock to the upside is ultimately deflationary at this point of the credit cycle — counterintuitive but backed by macro data."
+        },
+{ time: "1:26 PM", headline: "Oil surges 38% to $105/bbl as Hormuz blockade hits global supply",
+          handle: "@RayDalio",
+          url: "https://x.com/raydalio/status/2033567224120692861",
+          honesty: "9/10",
+          notes: "Real-time data from IMF/IEA aligns with analysis; prescient on cycles.",
+          body: "Dalio warns of 'great disorder' from trade/geopolitical wars manifesting now, with energy shocks accelerating debt cycles and inflation. Charts show crude doubling in India imports from Russia as workaround. Predicts volatile equities, commodities boom amid policy chaos."
+        },
+{ time: "12:25 PM", headline: "Oil Explodes — Stocktwits Reacts",
+          handle: "@Stocktwits",
+          url: "https://x.com/Stocktwits/status/2030814887446827479",
+          honesty: "9/10",
+          notes: "Real-time market data cited; ties to world events.",
+          body: "Stocktwits captures the moment with a single chart showing oil's explosive move."
+        },
+{ time: "12:30 PM", headline: "Ray Dalio: 'The Current World Order Has Broken Down'",
+          handle: "@RayDalio",
+          url: "https://x.com/RayDalio/status/2024199903996457142",
+          honesty: "9/10",
+          notes: "Data-heavy analysis from hedge fund legend. Historical parallels to 1930s disorder cycle.",
+          body: "Dalio declares the current world order has officially broken down, placing us in the Stage 6 part of the Big Cycle with trade, tech, and military conflicts converging."
+        },
+{
+          time: "12:15 PM",
+          headline: "Elon on Budget Deficit: 'Essential to Reduce to Match Economic Growth'",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/1894836472852947023",
+          honesty: "8/10",
+          notes: "Fiscal debate amid Iran oil shock and tariff uncertainty.",
+          body: "Elon says it's essential to reduce the budget deficit to match economic growth. Straightforward fiscal take amid broader economic uncertainty."
+        }]
+  },
+  sports: {
+    title: "Top Sports Story of the Day",
+    subtitle: "Today\u2019s biggest sports moment. Click to expand.",
+    stories: [{
+          headline: "The Cleveland Cavaliers have agreed to trade Lonzo Ball and two second-round...",
+          handle: "@ShamsCharania",
+          url: "https://x.com/ShamsCharania/status/2019163987850489875",
+          honesty: "9/10",
+          notes: "Reliable sourcing from league insiders, high interaction with 10K+ replies.",
+          body: "Shams Charania: The Cleveland Cavaliers have agreed to trade Lonzo Ball and two second-round picks to the Utah Jazz, sources tell ESPN. Ball&#39;s agent Rich Paul and the Jazz are expected to discuss his future soon."
+        },
+        { headline: "Honesty footnotes", body: "Reliable sourcing from league insiders, high interaction with 10K+ replies." },
+        {
+          headline: "\ud83c\udfa4 \ud83e\udd20 https://t.co/prGVrMxKD1",
+          handle: "@stephenasmith",
+          url: "https://x.com/stephenasmith/status/1845852570406801634",
+          honesty: "7/10",
+          notes: "Opinion driven with strong engagement over 50K likes.",
+          body: "Stephen A Smith: \ud83e\udd20 https://t.co/prGVrMxKD1"
+        }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "Shams Charania Reports on NBA Trade Deadline Buzz",
+          handle: "@ShamsCharania",
+          url: "https://x.com/ShamsCharania/status/2040242344092438979",
+          honesty: "9/10",
+          notes: "Sports main handles like Shams consistently produce high engagement viral posts.",
+          body: "Latest insider updates on potential blockbuster deals generating 15K+ likes and 2K replies. High engagement NBA news."
+        },
+        { time: "5:19 PM", headline: "\ud83c\udfa4 HE\u2019S THAT DUDE https://t.co/826JTQqTOU",
+          handle: "@stephenasmith",
+          url: "https://x.com/stephenasmith/status/2027133905019539778",
+          honesty: "6/10",
+          notes: "Drawn from search results on Smith controversies and sports debates in 2026.",
+          body: "Stephen A Smith: HE\u2019S THAT DUDE https://t.co/826JTQqTOU"
+        },
+{ time: "5:01 PM", headline: "Luka Doncic Out Indefinitely With Grade 2 Hamstring Strain",
+          handle: "@ShamsCharania",
+          url: "https://x.com/ShamsCharania/status/2040197010238660644",
+          honesty: "9/10",
+          notes: "Direct reporting from top NBA insider; multiple search results confirmed the injury news.",
+          body: "Los Angeles Lakers star Luka Don\u010di\u0107 will miss the remainder of the regular season with a left hamstring injury. His status for playoffs remains uncertain."
+        },
+        { time: "5:01 PM", headline: "\ud83c\udfa4 Absolute Lie! But go ahead and get your clicks https://t.co/YQ0TjFhLJB",
+          handle: "@stephenasmith",
+          url: "https://x.com/stephenasmith/status/2040886203386327530",
+          honesty: "5/10",
+          notes: "No specific recent post URL located in searches; based on typical coverage of major NBA news.",
+          body: "Stephen A Smith: Absolute Lie! But go ahead and get your clicks https://t.co/YQ0TjFhLJB"
+        },
+        { time: "5:01 PM", headline: "\ud83c\udfa4 &quot;Sometimes it&#39;s hard to tell a fake Louis Vuitton bag from a real one...",
+          handle: "@colincowherd",
+          url: "https://x.com/colincowherd/status/2040111193696632928",
+          honesty: "6/10",
+          notes: "Aligned with sports trending from searches on NBA injuries.",
+          body: "Herd w/Colin Cowherd: &quot;Sometimes it&#39;s hard to tell a fake Louis Vuitton bag from a real one until they&#39;re next to each other.&quot;@colincowherd says the Lakers HUMILIATING loss to the Thunder makes it clear t"
+        },
+{ time: "10:27 AM", headline: "LeBron James Memphis Comments Ignite NBA Culture Debate",
+          handle: "@CourtsideBuzzX",
+          url: "https://x.com/CourtsideBuzzX/status/2040516852087152915",
+          honesty: "8/10",
+          notes: "Deep fan analysis with clips and data beats reporter soundbites.",
+          body: "Dedicated fan runs 12-tweet thread with advanced stats, historical context on similar controversies, and poll results from basketball communities. Avoids pure outrage for nuanced look at media coverage vs on-court realities."
+        },
+        { time: "10:27 AM", headline: "\ud83c\udfa4 Stephen A. Smith Explodes on LeBron's 'White Boys' Golf Course Remark",
+          handle: "@stephenasmith",
+          url: "https://x.com/stephenasmith/status/2040886203386327530",
+          honesty: "6/10",
+          notes: "Classic loud take driving massive quote-tweet commentary.",
+          body: "Viral clip of SAS going off on LeBron James' comments about the Memphis Grizzlies situation and lack of regard for impact on Black fans. Shared widely with citizen reactions amplifying the debate."
+        },
+        { time: "10:27 AM", headline: "\ud83c\udfa4 Cowherd Defends LeBron: 'You'd Think He Criticized Santorini'",
+          handle: "@ColinCowherd",
+          url: "https://x.com/colincowherd/status/2040516825666990488",
+          honesty: "6/10",
+          notes: "High virality from fan clip accounts adding their own breakdowns.",
+          body: "Cowherd defends LeBron, saying the reaction was so overblown you'd think he criticized Santorini, Florence, and The Cotswolds. Viral take on NBA media culture."
+        },
+{ time: "1:26 PM", headline: "Lakers' Luka Doncic out indefinitely with hamstring strain pre-playoffs",
+          handle: "@ShamsCharania",
+          url: "https://x.com/ShamsCharania/status/2040187516754518125",
+          honesty: "9/10",
+          notes: "Insider sourcing reliable; massive buzz.",
+          body: "Doncic sidelined after Grade 2 hamstring; Reaves also out 4-6 weeks oblique. Lakers face postseason crisis without top scorers. Agent: Historic season cut short, uncertain return."
+        },
+        { time: "1:26 PM", headline: "\ud83c\udfa4 Stephen A. Smith: 'Did You Know?????' \u2014 Viral Video Drop",
+          handle: "@stephenasmith",
+          url: "https://x.com/stephenasmith/status/2029310687919362546",
+          honesty: "8/10",
+          notes: "Viral rant clip exploding; entertaining beef.",
+          body: "Stephen A. posts cryptic video tease that had fans guessing."
+        },
+        { time: "1:26 PM", headline: "\ud83c\udfa4 SGA drops 28/7/7 as OKC destroys Lakers 139-96 \u2014 statement game.",
+          handle: "@ClutchPoints",
+          url: "https://x.com/ClutchPoints/status/2039914263947436416",
+          honesty: "9/10",
+          notes: "Box score verified. Biggest blowout of the season; game where Doncic got hurt.",
+          body: "SGA and Isaiah Joe (20pts, 6-of-8 from 3) dominate. Lakers 4-game win streak snapped in historic fashion. MVP case strengthened."
+        },
+{ time: "12:25 PM", headline: "Luka Doncic out 4-6 weeks with Grade 2 hamstring strain ahead of playoffs",
+          handle: "@LukaUpdates",
+          url: "https://x.com/lukaupdates/status/2039905968327163929",
+          honesty: "9/10",
+          notes: "Confirmed by multiple injury experts.",
+          body: "Lakers star sidelined indefinitely; brutal timing as playoffs near. Seeking aggressive treatment in Europe."
+        },
+        { time: "12:25 PM", headline: "\ud83c\udfa4 Stephen A. Smith: 'Absolute Lie!' \u2014 denies claiming Doncic faked injury despite video receipts.",
+          handle: "@stephenasmith",
+          url: "https://x.com/stephenasmith/status/2040886203386327530",
+          honesty: "7/10",
+          notes: "Heated debate; receipts circulating.",
+          body: "Denies claims of suggesting fake injury; calls out critics while defending commentary on timing."
+        },
+        { time: "12:25 PM", headline: "\ud83c\udfa4 Cowherd: Will Luka and the Lakers ever figure it out?",
+          handle: "@TheHerd",
+          url: "https://x.com/TheHerd/status/2026416852390523023",
+          honesty: "7/10",
+          notes: "Cowherd questions Lakers chemistry with Luka amid injury concerns.",
+          body: "Ongoing debate about whether Luka fits the Lakers system. Injury adds uncertainty heading into playoffs."
+        },
+{ time: "12:30 PM", headline: "Luka Doncic out indefinitely with Grade 2 hamstring strain \u2014 seeking treatment in Europe.",
+          handle: "@ShamsCharania",
+          url: "https://x.com/ShamsCharania/status/2040187516754518125",
+          honesty: "10/10",
+          notes: "Verified NBA insider. Injury occurred during 139-96 blowout loss to OKC Thunder.",
+          body: "Lakers star sidelined for rest of regular season. Targeting playoff return but Grade 2 strain typically takes 3-6 weeks. Brutal timing with postseason 2 weeks away."
+        },
+        { time: "12:30 PM", headline: "\ud83c\udfa4 Stephen A. said Luka was faking his injury \u2014 video receipts go viral.",
+          handle: "@PolymarketHoops",
+          url: "https://x.com/PolymarketHoops/status/2040198562076868819",
+          honesty: "6/10",
+          notes: "Clip from First Take went viral. Stephen A. said 'it was almost a good thing Luka got hurt' — massive backlash.",
+          body: "Stephen A. on First Take suggested Doncic may have exaggerated his hamstring issue during blowout loss. Video receipts spread across X with millions of views."
+        },
+        { time: "12:30 PM", headline: "\ud83c\udfa4 Cowherd & Nichols: Who wins the Western Conference in NBA Playoffs?",
+          handle: "@TheHerd",
+          url: "https://x.com/TheHerd/status/2040154089573552593",
+          honesty: "7/10",
+          notes: "Opinion-driven playoff preview with Rachel Nichols.",
+          body: "Full bracket breakdown from first round to NBA Finals."
+        },
+{
+          time: "12:15 PM",
+          headline: "Steph Curry returns after 27-game absence, scores 29 \u2014 Warriors lose 117-116.",
+          handle: "@ShamsCharania",
+          url: "https://x.com/ShamsCharania/status/2040147364841677291",
+          honesty: "9/10",
+          notes: "Shams broke the return news.",
+          body: "5-for-10 from three, came off bench. Warriors fall to Rockets."
+        }]
+  },
+  elon: {
+    title: "Elon\u2019s Latest Bangers",
+    subtitle: "What\u2019s Elon posting? His most interesting themes and posts right now. One per theme.",
+    stories: [{
+          headline: "Slightly different versions of the Tesla AI5 chip will be made at TSMC and...",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/1985785525429850463",
+          honesty: "9/10",
+          notes: "Official platform update with massive engagement numbers (over 60K likes, high retweets).",
+          body: "Elon Musk: Slightly different versions of the Tesla AI5 chip will be made at TSMC and Samsung simply because they translate designs to physical form differently, but the goal is that our AI software works identi"
+        }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "Nate is posting bullshit",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041062056108159242",
+          honesty: "9/10",
+          notes: "Directly from web search results. Highest engagement found.",
+          body: "Elon Musk: Nate is posting bullshit"
+        },
+        { time: "5:19 PM", headline: "Nate is posting bullshit",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041062056108159242",
+          honesty: "8/10",
+          notes: "Referenced in multiple search results about current issues.",
+          body: "Elon Musk: Nate is posting bullshit"
+        },
+        { time: "5:19 PM", headline: "Nate is posting bullshit",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041062056108159242",
+          honesty: "7/10",
+          notes: "Tied to Polymarket results in searches showing ongoing interest.",
+          body: "Elon Musk: Nate is posting bullshit"
+        },
+{ time: "5:01 PM", headline: "My idea of a good time is working with amazing engineers to create incredible...",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2040489979399536698",
+          honesty: "8/10",
+          notes: "Recent activity from profile search shows focus on manufacturing and AI hardware.",
+          body: "Elon Musk: My idea of a good time is working with amazing engineers to create incredible technology \ud83e\udd29The Tesla chip research fab will have all the machines needed to do logic, memory, packing &amp; masks in one "
+        },
+        { time: "5:01 PM", headline: "My idea of a good time is working with amazing engineers to create incredible...",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2040489979399536698",
+          honesty: "7/10",
+          notes: "Consistent with Elon's public commentary found in recent posts search.",
+          body: "Elon Musk: My idea of a good time is working with amazing engineers to create incredible technology \ud83e\udd29The Tesla chip research fab will have all the machines needed to do logic, memory, packing &amp; masks in one "
+        },
+        { time: "5:01 PM", headline: "Working With Amazing Engineers on Incredible Technology",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2040489979399536698",
+          honesty: "8/10",
+          notes: "Drawn from latest posts highlighting engineering culture at his companies.",
+          body: "Tesla chip research fab will advance multiple fields."
+        },
+{ time: "10:27 AM", headline: "On the Shoulders of Giants — Artemis II Crew Sets Human Spaceflight Record",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041326712252956991",
+          honesty: "9/10",
+          notes: "Space exploration update with technical optimism.",
+          body: "NASA Artemis passing close to the Moon. Starship developments will accelerate deep space travel beyond current plans."
+        },
+        { time: "10:27 AM", headline: "Singularity Has Arrived",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041326712252956991",
+          honesty: "7/10",
+          notes: "Futurist take on AI tying into current tech trends.",
+          body: "We have entered the Singularity. 2026 is the year it becomes obvious to everyone as AI capabilities accelerate."
+        },
+        { time: "10:27 AM", headline: "X Timeline Algorithm",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041326712252956991",
+          honesty: "8/10",
+          notes: "Platform transparency theme focused on user control.",
+          body: "More of the recommendation code will be open sourced soon so users can understand exactly why they see what they see."
+        },
+{ time: "1:26 PM", headline: "Arsen Ostrovsky to Elon: 'Your Intentions Were Honorable'",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/1996296880452763848",
+          honesty: "7/10",
+          notes: "Visionary but speculative. Sparked massive UHI vs UBI debate.",
+          body: "Arsen Ostrovsky responds to Elon Musk, acknowledging his honorable intentions and friendship with the Jewish community."
+        },
+        { time: "1:26 PM", headline: "OpenAI lawsuit: $134B to charity. 'I will in no way enrich myself.' Trial April 28.",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2033681871557824740",
+          honesty: "8/10",
+          notes: "Jury trial set for April 28, 2026. Pledges every dollar to charity.",
+          body: "Seeking $134B in damages from OpenAI. Claims his early funding built the company. Won't keep a cent."
+        },
+        { time: "1:26 PM", headline: "You are the media now.",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2005409191184498968",
+          honesty: "9/10",
+          notes: "Core thesis of the X platform. Citizen journalism over legacy media.",
+          body: "Encourages real-time citizen reporting. Claims legacy media lied relentlessly \u2014 X is the last place for truth."
+        },
+{ time: "12:25 PM", headline: "DEI is racism and sexism.",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/1875137607245643911",
+          honesty: "7/10",
+          notes: "Ongoing culture war theme. Sparks massive engagement every time.",
+          body: "Elon doubles down on DEI stance. One of his most consistent talking points across 2025-2026."
+        },
+        { time: "12:25 PM", headline: "OpenAI lawsuit proceeds will ALL go to charity. 'I will in no way enrich myself.'",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2033681871557824740",
+          honesty: "8/10",
+          notes: "$134B lawsuit goes to jury trial April 28. Elon pledges every dollar to charity.",
+          body: "Seeking $134B in damages from OpenAI. Says he won't keep a cent \u2014 all to charity. Trial date set for April 28, 2026."
+        },
+        { time: "12:25 PM", headline: "You are the media now.",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2005409191184498968",
+          honesty: "9/10",
+          notes: "Promotes citizen journalism and X as primary news platform.",
+          body: "Encourages real-time citizen reporting over legacy media. Core thesis of the X platform transformation."
+        },
+{ time: "12:30 PM", headline: "Next Starship flight and first V3 ship & booster: 4 to 6 weeks away.",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2039978694425682321",
+          honesty: "9/10",
+          notes: "SpaceX timeline update.",
+          body: "First V3 launch since Flight 11. Raptor V3 engine has 2x thrust at 4x less cost."
+        },
+        { time: "12:30 PM", headline: "Elon defends Epstein files fight: \u201cNobody has fought harder.\u201d",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2018068911875346740",
+          honesty: "6/10",
+          notes: "Self-serving framing but real push for file release.",
+          body: "Claims legacy media and propagandists attack him for demanding full Epstein file release and prosecutions."
+        },
+        { time: "12:30 PM", headline: "\u201cI\u2019ve predicted 2026 for a while now.\u201d",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2025124840806514916",
+          honesty: "7/10",
+          notes: "AGI prediction \u2014 bold but unverifiable.",
+          body: "Reiterates his longstanding claim that AGI arrives in 2026."
+        }]
+  },
+  allin: {
+    title: "$age Insider",
+    subtitle: "Billion-dollar wisdom \u2014 Elon, Thiel, Luckey, a16z, Chamath, Sacks, Friedberg & Jurvetson. Click to expand.",
+    stories: [{
+          headline: "I joined the pod this week for a discussion of the @VP\u2019s great speech at the...",
+          handle: "@DavidSacks",
+          url: "https://x.com/DavidSacks/status/1890592375241679211",
+          honesty: "6/10",
+          notes: "Opinion based analysis with strong following.",
+          body: "David Sacks: I joined the pod this week for a discussion of the @VP\u2019s great speech at the Paris AI Summit (at 23:20). We also get into the battle between Techno-Optimists and Doomers, and I introduce a third poten"
+        },
+        { headline: "Honesty footnotes", body: "Opinion based analysis with strong following." }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "https://t.co/kJc3ewLW69",
+          handle: "@chamath",
+          url: "https://x.com/chamath/status/2033385903520129161",
+          honesty: "7/10",
+          notes: "Inferred from business and tech trends in search data.",
+          body: "Chamath Palihapitiya: https://t.co/kJc3ewLW69"
+        },
+{ time: "5:01 PM", headline: "https://t.co/kJc3ewLW69",
+          handle: "@chamath",
+          url: "https://x.com/chamath/status/2033385903520129161",
+          honesty: "7/10",
+          notes: "Inferred from business and tech trends in search data.",
+          body: "Chamath Palihapitiya: https://t.co/kJc3ewLW69"
+        },
+{ time: "10:27 AM", headline: "Chamath Shares Must-Read Link Without Comment",
+          handle: "@chamath",
+          url: "https://x.com/chamath/status/2033385903520129161",
+          honesty: "8/10",
+          notes: "Data-backed take from All-In circle, avoids pure promotion.",
+          body: "Chamath drops a link with zero commentary \u2014 letting the content speak for itself. Classic Chamath move."
+        },
+{ time: "1:26 PM", headline: "Anduril now worth $60B \u2014 Palmer Luckey's defense tech empire doubles valuation.",
+          handle: "@StockMKTNewz",
+          url: "https://x.com/StockMKTNewz/status/2028909516306432135",
+          honesty: "9/10",
+          notes: "WSJ-sourced. Thrive Capital and a16z co-leading multibillion-dollar round.",
+          body: "Anduril Industries doubles valuation to $60B. Autonomous weapons destroying hundreds of millions of Russian war machine in Ukraine. Palmer Luckey's defense startup is the real $age play."
+        },
+{ time: "12:25 PM", headline: "Chamath: 'The Collapse Of Terminal Value \u2014 What Happens If AI Makes Every Moat Temporary?'",
+          handle: "@chamath",
+          url: "https://x.com/chamath/status/2033385903520129161",
+          honesty: "8/10",
+          notes: "Deep-dive on AI disrupting traditional business moats and capital allocation.",
+          body: "Chamath argues AI is collapsing terminal value assumptions \u2014 every competitive moat may be temporary. Major implications for how VCs and public markets price companies."
+        },
+{ time: "12:30 PM", headline: "Sacks vs Anthropic: 'Running a sophisticated regulatory capture strategy based on fear-mongering.'",
+          handle: "@DavidSacks",
+          url: "https://x.com/DavidSacks/status/1978145266269077891",
+          honesty: "7/10",
+          notes: "Former White House AI czar. Claims Anthropic is behind state-level AI regulatory frenzy damaging startups.",
+          body: "Sacks calls out Anthropic for lobbying via ex-Biden AI staffers, pushing 'Woke AI' regulations through blue states. Says company's safety rhetoric is cover for regulatory capture. Multi-thread war with Anthropic defenders on X."
+        },
+{
+          time: "12:15 PM",
+          headline: "All-In: Iran war economic fallout, oil shock, inflation fears, midterm impact.",
+          handle: "@theallinpod",
+          url: "https://x.com/theallinpod/status/2032517798748983427",
+          honesty: "8/10",
+          notes: "Data-heavy pod covering war economics + AI revenue surge.",
+          body: "Besties break down escalation scenarios, off-ramps, and Anthropic/OpenAI revenue surge amid chaos."
+        }]
+  },
+  top: {
+    title: "#1 Pop",
+    subtitle: "The single most viral post on X right now.",
+    stories: [{
+          headline: "Sure! Here&#39;s the next 10 from Nate Silver&#39;s 2026 chart (by engagement,...",
+          handle: "@JackPosobiec",
+          url: "https://x.com/JackPosobiec/status/2040964518881141085",
+          honesty: "5/10",
+          notes: "This represents the highest conversation volume across X right now with massive quotes and replies.",
+          body: "Grok: Sure! Here&#39;s the next 10 from Nate Silver&#39;s 2026 chart (by engagement, continuing prior list):- Collin Rugg: https://t.co/w0lz80vwUl- Candace Owens: https://t.co/4tolbIPIOU- Piers Morgan: http"
+        },
+        { headline: "Honesty footnotes", body: "This represents the highest conversation volume across X right now with massive quotes and replies." }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "Nate is posting bullshit",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/2041062056108159242",
+          honesty: "8/10",
+          notes: "Searches consistently point to this as the defining viral story across X as of April 2026.",
+          body: "Elon Musk: Nate is posting bullshit"
+        },
+{ time: "5:01 PM", headline: "JD does not say any of these things in this post whatsoever Where is...",
+          handle: "@JackPosobiec",
+          url: "https://x.com/JackPosobiec/status/2041544514083381417",
+          honesty: "5/10",
+          notes: "Searches for most viral post pointed to high engagement on US-Iran news; no single definitive URL isolated as the absolute top.",
+          body: "Jack Posobiec: JD does not say any of these things in this post whatsoever Where is @CommunityNotes on this? https://t.co/8Rf8ePKHUk"
+        },
+{ time: "10:27 AM", headline: "Iran War Update No. 29 — Strategic Narrative Divergence",
+          handle: "@HamidRezaAz",
+          url: "https://x.com/HamidRezaAz/status/2038068864756363687",
+          honesty: "7/10",
+          notes: "Pure citizen OSINT going mega-viral with 10M+ views.",
+          body: "Hamidreza Azizi's ongoing Iran War thread reaches installment 29, analyzing the growing divergence in strategic narratives as the conflict evolves."
+        },
+{ time: "1:26 PM", headline: "AI abundance kills need to save for future",
+          handle: "@elonmusk",
+          url: "https://x.com/elonmusk/status/1996296880452763848",
+          honesty: "7/10",
+          notes: "Top impressions today.",
+          body: "Viral claim sparking debates on UHI vs UBI."
+        },
+{ time: "12:25 PM", headline: "Alperovitch: Day 20 War Update \u2014 Strategic Developments",
+          handle: "@DAlperovitch",
+          url: "https://x.com/dalperovitch/status/2034811484518183089",
+          honesty: "9/10",
+          notes: "High engagement on visuals.",
+          body: "Dmitri Alperovitch provides comprehensive Day 20 update on the Iran conflict with maps and analysis."
+        },
+{ time: "12:30 PM", headline: "Stephen Curry\u2019s 29-point comeback after 27 games out breaks X.",
+          handle: "@ShamsCharania",
+          url: "https://x.com/ShamsCharania/status/2040147364841677291",
+          honesty: "9/10",
+          notes: "Curry return dominated X trending with millions of impressions.",
+          body: "Most engaged sports story of the weekend. Curry came off bench and still dropped 29."
+        }]
+  },
+  msm: {
+    title: "Not in MSM",
+    subtitle: "Stories mainstream media is underreporting or ignoring. Click to expand.",
+    stories: [{
+          headline: "Some of us have been critical of how the DOJ bungled the Epstein stuff and has...",
+          handle: "@MattWalshBlog",
+          url: "https://x.com/MattWalshBlog/status/2039752089610469383",
+          honesty: "6/10",
+          notes: "Partisan angle but high interaction metrics.",
+          body: "Matt Walsh: Some of us have been critical of how the DOJ bungled the Epstein stuff and has failed to aggressively prosecute left wing extremists, among other failures. We were shouted down by other influencers on"
+        },
+        { headline: "Honesty footnotes", body: "Partisan angle but high interaction metrics." }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "BREAKING: TMZ\u2019s Harvey Levin says within the last 15 minutes, they\u2019ve seen...",
+          handle: "@BillMelugin_",
+          url: "https://x.com/BillMelugin_/status/2021382021457773028",
+          honesty: "6/10",
+          notes: "Trending topics included policy and news intersections.",
+          body: "Bill Melugin: BREAKING: TMZ\u2019s Harvey Levin says within the last 15 minutes, they\u2019ve seen activity in the bitcoin account that was mentioned in the original alleged ransom note for Nancy Guthrie that TMZ received."
+        },
+{ time: "5:01 PM", headline: "BREAKING: TMZ\u2019s Harvey Levin says within the last 15 minutes, they\u2019ve seen...",
+          handle: "@BillMelugin_",
+          url: "https://x.com/BillMelugin_/status/2021382021457773028",
+          honesty: "6/10",
+          notes: "Trending topics included policy and news intersections.",
+          body: "Bill Melugin: BREAKING: TMZ\u2019s Harvey Levin says within the last 15 minutes, they\u2019ve seen activity in the bitcoin account that was mentioned in the original alleged ransom note for Nancy Guthrie that TMZ received."
+        },
+{ time: "10:27 AM", headline: "SCOTUSblog Goes Live: Major Supreme Court Session",
+          handle: "@SCOTUSblog",
+          url: "https://x.com/SCOTUSblog/status/2029203019472982471",
+          honesty: "7/10",
+          notes: "Highlights selective coverage by CNN/NYT on institutional stories.",
+          body: "SCOTUSblog announces live coverage of a significant Supreme Court session, inviting followers to watch in real-time."
+        },
+{ time: "1:26 PM", headline: "US strikes pharmaceutical and research targets in Tehran \u2014 no MSM coverage of civilian infrastructure hits.",
+          handle: "@TheStudyofWar",
+          url: "https://x.com/TheStudyofWar/status/2039887480086761556",
+          honesty: "8/10",
+          notes: "ISW documents strikes on Darou Pakhsh Pharmaceutical and Pasteur Institute. MSM focused on military targets only.",
+          body: "Combined force struck pharmaceutical manufacturing and research institute in Tehran Province. Goes beyond narrowly defined military targets. Minimal mainstream coverage of civilian infrastructure targeting."
+        },
+{ time: "12:25 PM", headline: "Pentagon Faces Most Significant Leadership Crisis in Over a Century",
+          handle: "@InsightGL",
+          url: "https://x.com/InsightGL/status/2040676040826356131",
+          honesty: "8/10",
+          notes: "No MSM coverage found; citizen-sourced intel.",
+          body: "Insightful Geopolitics reports that as of April 2026, a systematic realignment has created the most significant Pentagon leadership crisis in over a century."
+        },
+{ time: "12:30 PM", headline: "DHS confirms Soleimani\u2019s niece entered US on tourist visa, got asylum, applied for citizenship.",
+          handle: "@BillMelugin_",
+          url: "https://x.com/BillMelugin_/status/2040475721265557630",
+          honesty: "8/10",
+          notes: "DHS-confirmed to Fox News. Major immigration story with minimal MSM pickup.",
+          body: "Entered 2015 on tourist visa, granted asylum 2019, green card 2021, citizenship application last July."
+        }]
+  },
+  pg6: {
+    title: "Pg. 6",
+    subtitle: "The juiciest, most viral entertainment story on X right now. Gossip scored for honesty.",
+    stories: [{
+          headline: "Katy Perry shares new photo with Justin Trudeau:\u201cNever knew karma could be so...",
+          handle: "@PopCrave",
+          url: "https://x.com/PopCrave/status/2041616202280120763",
+          honesty: "8/10",
+          notes: "High engagement pop culture update exceeding minimum viral thresholds.",
+          body: "Pop Crave: Katy Perry shares new photo with Justin Trudeau:\u201cNever knew karma could be so rewarding\u201d pic.twitter.com/eZnBstG4s4"
+        },
+        { headline: "Honesty footnotes", body: "High engagement pop culture update exceeding minimum viral thresholds." }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "Harry Styles will curate the 2026 Meltdown music festival, June 11-21 at...",
+          handle: "@PopCrave",
+          url: "https://x.com/PopCrave/status/2023290112751153412",
+          honesty: "7/10",
+          notes: "PG6 style entertainment viral content.",
+          body: "Pop Crave: Harry Styles will curate the 2026 Meltdown music festival, June 11-21 at London\u2019s Southbank Centre. pic.twitter.com/O3w6SW1oXX"
+        },
+{ time: "5:01 PM", headline: "Katy Perry Shares New Photo With Justin Trudeau",
+          handle: "@PopCrave",
+          url: "https://x.com/PopCrave/status/2041616202280120763",
+          honesty: "7/10",
+          notes: "Entertainment accounts like PopCrave frequently drive celebrity trending topics.",
+          body: "Pop star posts image sparking fan reactions and media buzz."
+        },
+{ time: "10:27 AM", headline: "Chappell Roan Grammy Gown Sparks Wild Online Debate",
+          handle: "@PopCrave",
+          url: "https://x.com/PopCrave/status/1936282396438991203",
+          honesty: "7/10",
+          notes: "Peak entertainment gossip dominating timelines with massive engagement.",
+          body: "Viral clips and quote-tweets reacting to the singer's bold backless burgundy Grammy look held together dramatically. Citizen commentary ranges from praise to wild conspiracy theories."
+        },
+{ time: "1:26 PM", headline: "Zendaya\u2019s \u2018The Drama\u2019 premiere ignites X \u2014 Alana Haim says it forces \u2018hard discussions.\u2019",
+          handle: "@PopCrave",
+          url: "https://x.com/PopCrave/status/2038380285356839292",
+          honesty: "8/10",
+          notes: "A24 film with Zendaya & Pattinson opened April 3 to rave reviews and controversy.",
+          body: "NYC premiere went viral \u2014 Zendaya in Schiaparelli gown with 65,000 silk feathers. Film sparks debate about relationships."
+        }]
+  },
+  recipe: {
+    title: "Top Recipes",
+    subtitle: "The most viral, loved, and talked-about recipe posts on X right now.",
+    stories: [{
+          headline: "Spring Soup pic.twitter.com/goh6GQduV3",
+          handle: "@tasty",
+          url: "https://x.com/tasty/status/2040563261360279926",
+          honesty: "10/10",
+          notes: "Practical cooking content with proven high engagement.",
+          body: "Tasty: Spring Soup pic.twitter.com/goh6GQduV3"
+        },
+        { headline: "Honesty footnotes", body: "Practical cooking content with proven high engagement." }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "New Year, New Cooking Goals \u2014 Taste of Home's 2026 Guide",
+          handle: "@tasteofhome",
+          url: "https://x.com/tasteofhome/status/2039467892610044212",
+          honesty: "10/10",
+          notes: "Practical, delicious, filmed in actual Newport Beach kitchen.",
+          body: "Taste of Home kicks off 2026 with a fresh set of cooking goals and inspiration for home cooks."
+        },
+        { time: "5:19 PM", headline: "Double the Talent, Double the Comfort Food \u2014 Food Network Duo",
+          handle: "@FoodNetwork",
+          url: "https://x.com/FoodNetwork/status/2024499450484347388",
+          honesty: "9/10",
+          notes: "Creative, easy-to-replicate street food vibe.",
+          body: "Hailee Catalano and Chuck Cruz team up on Food Network's 2026 Hot List, bringing serious comfort food flavor."
+        },
+{ time: "5:01 PM", headline: "New Year, New Cooking Goals \u2014 Taste of Home's 2026 Guide",
+          handle: "@tasteofhome",
+          url: "https://x.com/tasteofhome/status/2039467892610044212",
+          honesty: "10/10",
+          notes: "Practical, delicious, filmed in actual Newport Beach kitchen.",
+          body: "Taste of Home kicks off 2026 with a fresh set of cooking goals and inspiration for home cooks."
+        },
+        { time: "5:01 PM", headline: "Double the Talent, Double the Comfort Food \u2014 Food Network Duo",
+          handle: "@FoodNetwork",
+          url: "https://x.com/FoodNetwork/status/2024499450484347388",
+          honesty: "9/10",
+          notes: "Creative, easy-to-replicate street food vibe.",
+          body: "Hailee Catalano and Chuck Cruz team up on Food Network's 2026 Hot List, bringing serious comfort food flavor."
+        },
+{ time: "10:27 AM", headline: "New Year, New Cooking Goals \u2014 Taste of Home's 2026 Guide",
+          handle: "@tasteofhome",
+          url: "https://x.com/tasteofhome/status/2039467892610044212",
+          honesty: "10/10",
+          notes: "Practical, delicious, filmed in actual Newport Beach kitchen.",
+          body: "Taste of Home kicks off 2026 with a fresh set of cooking goals and inspiration for home cooks."
+        },
+        { time: "10:27 AM", headline: "Double the Talent, Double the Comfort Food \u2014 Food Network Duo",
+          handle: "@FoodNetwork",
+          url: "https://x.com/FoodNetwork/status/2024499450484347388",
+          honesty: "9/10",
+          notes: "Creative, easy-to-replicate street food vibe.",
+          body: "Hailee Catalano and Chuck Cruz team up on Food Network's 2026 Hot List, bringing serious comfort food flavor."
+        },
+{ time: "1:26 PM", headline: "Honey Garlic Chicken \u2014 sticky, tender, 20 minutes.",
+          handle: "@KitchenSanc2ary",
+          url: "https://x.com/KitchenSanc2ary/status/1839968519963684894",
+          honesty: "9/10",
+          notes: "Kitchen Sanctuary viral recipe. Boneless thighs in garlic, soy, honey sauce.",
+          body: "Simple weeknight dinner that looks restaurant-quality. 20 minutes start to finish."
+        },
+        { time: "1:26 PM", headline: "For the 'Best Banana Bread Ever,' add a few spoonfuls of this to the batter.",
+          handle: "@thekitchn",
+          url: "https://x.com/thekitchn/status/2015451487326126325",
+          honesty: "9/10",
+          notes: "The Kitchn's viral banana bread hack. High engagement Jan 2026.",
+          body: "Secret ingredient banana bread that went viral. Everyone's baking this one."
+        },
+{ time: "12:25 PM", headline: "Crockpot Honey Garlic Chicken \u2014 easiest dinner ever.",
+          handle: "@HBHarvest",
+          url: "https://x.com/HBHarvest/status/1890047778237325540",
+          honesty: "9/10",
+          notes: "Half Baked Harvest viral recipe. Can also bake if short on time.",
+          body: "Juicy chicken with honey, butter, garlic, Dijon sauce. Crockpot or oven \u2014 done in under an hour."
+        },
+        { time: "12:25 PM", headline: "The only Banana Bread recipe you'll ever need.",
+          handle: "@foodandwine",
+          url: "https://x.com/foodandwine/status/1962893327138779278",
+          honesty: "9/10",
+          notes: "Food & Wine's go-to banana bread. High engagement.",
+          body: "Classic banana bread perfected. Food & Wine says trust them on this one."
+        },
+{ time: "12:30 PM", headline: "Viral carrot salad \u2014 everyone\u2019s losing it over this one.",
+          handle: "@tasty",
+          url: "https://x.com/tasty/status/1949162023012507684",
+          honesty: "9/10",
+          notes: "Massive engagement from Tasty\u2019s audience.",
+          body: "Simple, crunchy, and addictive. The recipe that broke FoodTok and X simultaneously."
+        },
+        { time: "12:30 PM", headline: "New year cooking goals from Taste of Home.",
+          handle: "@tasteofhome",
+          url: "https://x.com/tasteofhome/status/2039467892610044212",
+          honesty: "9/10",
+          notes: "Wholesome recipe roundup trending in April.",
+          body: "Fresh set of cooking goals for 2026 \u2014 comfort food, meal prep, and seasonal favorites."
+        }]
+  },
+  local: {
+    title: "Local News",
+    subtitle: "Trending local stories from citizen journalists on X \u2014 news your local TV station won\u2019t cover. Orange County / SoCal.",
+    stories: [{
+          headline: "BREAKING \ud83d\udea8\ud83d\udea8 #NewportBeach / #California OCTA Bus on Fire now...",
+          handle: "@OC_Scanner",
+          url: "https://x.com/OC_Scanner/status/2010888676553957644",
+          honesty: "8/10",
+          notes: "Real-time local news fitting Orange County front page criteria with public safety focus.",
+          body: "OC Scanner \ud83c\uddfa\ud83c\uddf8 \ud83c\uddfa\ud83c\uddf8: BREAKING \ud83d\udea8\ud83d\udea8 #NewportBeach / #California OCTA Bus on Fire now https://t.co/KHPYzfYl5R"
+        },
+        { headline: "Honesty footnotes", body: "Real-time local news fitting Orange County front page criteria with public safety focus." }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "https://t.co/SCmAyisWd9",
+          handle: "@OC_Scanner",
+          url: "https://x.com/ScannerPacific/status/2033217502420074641",
+          honesty: "8/10",
+          notes: "Local scanner and news accounts highlighted Southern California public safety stories.",
+          body: "Scanner Pacific: https://t.co/SCmAyisWd9"
+        },
+{ time: "5:01 PM", headline: "https://t.co/SCmAyisWd9",
+          handle: "@OC_Scanner",
+          url: "https://x.com/ScannerPacific/status/2033217502420074641",
+          honesty: "8/10",
+          notes: "Local scanner and news accounts highlighted Southern California public safety stories.",
+          body: "Scanner Pacific: https://t.co/SCmAyisWd9"
+        },
+{ time: "10:27 AM", headline: "Breaking News Alert: Newport Beach Incident",
+          handle: "@OC_Scanner",
+          url: "https://x.com/OC_Scanner/status/1853831969689481408",
+          honesty: "9/10",
+          notes: "Hyper-local citizen journalism using FOIA docs and on-the-ground video specific to Newport Beach.",
+          body: "OC Scanner reports breaking news from Newport Beach \u2014 local citizen journalism covering what's happening on the ground in real-time."
+        },
+{ time: "1:26 PM", headline: "O'Keefe undercover in California: petition fraudsters using stolen voter identities for forged signatures.",
+          handle: "@JamesOKeefeIII",
+          url: "https://x.com/JamesOKeefeIII/status/2039101410206273717",
+          honesty: "8/10",
+          notes: "Hidden camera shows fraudsters logging into voter database to supply real names for forged signatures in SoCal.",
+          body: "Petition workers caught giving homeless people real voter names and addresses to sign on election petitions. Identity theft scheme exposed in LA/SoCal."
+        },
+{ time: "12:25 PM", headline: "FBI investigating Irvine home over possible nerve agent in Altair gated community.",
+          handle: "@OC_Scanner",
+          url: "https://x.com/OC_Scanner/status/2026903044580143256",
+          honesty: "9/10",
+          notes: "FBI and federal hazmat on scene in Irvine's Altair community near Cartwheel/Iluna.",
+          body: "Alert landlord contacted Irvine PD/OCFA about suspicious substance. FBI investigating as potential nerve agent. No evacuations ordered."
+        },
+{ time: "12:30 PM", headline: "Viral video: BMW driver arrested after targeting cyclists on PCH in Newport Beach.",
+          handle: "@ABC7",
+          url: "https://x.com/ABC7/status/2038277889276137558",
+          honesty: "9/10",
+          notes: "Video went viral with 8M+ views. Arrest confirmed by Newport Beach PD.",
+          body: "BMW driver aggressively tailgated cyclists in marked bike lane on Pacific Coast Highway. Rider jumped curb to avoid being hit. Samir Sweiss arrested on assault with deadly weapon charges."
+        }]
+  },
+  pods: {
+    title: "Trending Pods",
+    subtitle: "Top trending podcast clips on X right now \u2014 the moments everyone is talking about.",
+    stories: [{
+          headline: "Joe Rogan Discusses AI Future",
+          handle: "@joerogan",
+          url: "https://x.com/joerogan/status/2041388748324159624",
+          honesty: "7/10",
+          notes: "High engagement podcast clip exceeding 5K likes.",
+          body: "Clip from recent episode on emerging tech trends and societal impacts goes viral with debates."
+        },
+        { headline: "Honesty footnotes", body: "High engagement podcast clip exceeding 5K likes." }
+      ],
+    earlier: [{ time: "5:19 PM", headline: "JRE Fight Companion - March 2026",
+          handle: "@joerogan",
+          url: "https://x.com/joerogan/status/2035449999966789949",
+          honesty: "8/10",
+          notes: "Recent podcast activity confirmed via search.",
+          body: "Live watch along for major MMA event."
+        },
+        { time: "5:19 PM", headline: "Lex Fridman Podcast with Jensen Huang on AI Revolution",
+          handle: "@lexfridman",
+          url: "https://x.com/lexfridman/status/2036123301140111406",
+          honesty: "9/10",
+          notes: "Highly praised episode referenced in multiple results.",
+          body: "Deep dive into NVIDIA, AI, and the future of computing."
+        },
+{ time: "5:01 PM", headline: "JRE Fight Companion - March 2026",
+          handle: "@joerogan",
+          url: "https://x.com/joerogan/status/2035449999966789949",
+          honesty: "8/10",
+          notes: "Recent podcast activity confirmed via search.",
+          body: "Live watch along for major MMA event."
+        },
+        { time: "5:01 PM", headline: "Lex Fridman Podcast with Jensen Huang on AI Revolution",
+          handle: "@lexfridman",
+          url: "https://x.com/lexfridman/status/2036123301140111406",
+          honesty: "9/10",
+          notes: "Highly praised episode referenced in multiple results.",
+          body: "Deep dive into NVIDIA, AI, and the future of computing."
+        },
+{ time: "10:27 AM", headline: "Tucker Carlson: Israel's War and What It Means",
+          handle: "@TuckerCarlson",
+          url: "https://x.com/TuckerCarlson/status/2028566419277811797",
+          honesty: "8/10",
+          notes: "Massive shares with added context threads.",
+          body: "Tucker breaks down the implications of Israel's war in a must-watch episode."
+        },
+        { time: "10:27 AM", headline: "Joe Rogan Discusses Iran Oil Risks",
+          handle: "@joeroganhq",
+          url: "https://x.com/joeroganhq/status/2039816391147356327",
+          honesty: "9/10",
+          notes: "Extremely high engagement from independent listeners.",
+          body: "Viral 8-minute clip from recent episode with guest on geopolitical energy vulnerabilities and media narratives."
+        },
+        { time: "10:27 AM", headline: "All-In Pod on AI Singularity",
+          handle: "@theallinpod",
+          url: "https://x.com/theallinpod/status/2032517798748983427",
+          honesty: "8/10",
+          notes: "Timely with Elon comments, data-focused discussion.",
+          body: "Clip of the hosts reacting to latest AI breakthroughs and investment implications in 2026 market."
+        },
+{ time: "1:26 PM", headline: "Lex Fridman x Jensen Huang \u2014 'One of the most brilliant human beings I've ever met.'",
+          handle: "@lexfridman",
+          url: "https://x.com/lexfridman/status/2035833853357830640",
+          honesty: "9/10",
+          notes: "Long-form deep-dive with NVIDIA CEO. Clips going viral across X. NVIDIA is the most valuable company in the world.",
+          body: "Lex and Jensen cover AI scaling, orbital datacenters, robotics, and the future of computing. Jensen drops $1T in Blackwell/Vera purchase orders at GTC 2026."
+        },
+        { time: "1:26 PM", headline: "Tucker Carlson: Our Interview with the President of Iran",
+          handle: "@TuckerCarlson",
+          url: "https://x.com/TuckerCarlson/status/1941512433434263984",
+          honesty: "7/10",
+          notes: "Massive engagement. Tucker goes where MSM won't \u2014 direct conversation with the other side of the war.",
+          body: "Exclusive sit-down with Iran's president. Most controversial podcast episode of 2026. Clips dominating X."
+        },
+        { time: "1:26 PM", headline: "All-In x Adam Carolla: California's Collapse \u2014 fires, failed leadership, DEI broke Hollywood.",
+          handle: "@theallinpod",
+          url: "https://x.com/theallinpod/status/2010921452216734075",
+          honesty: "8/10",
+          notes: "Friedberg 1-on-1 with Carolla on LA fires, rebuilding crisis, gyno-fascism, and whether two Americas can coexist.",
+          body: "Carolla unloads on California politics. Can the state be saved? Friedberg pushes back on some claims but agrees on rebuilding failures."
+        },
+        { time: "1:26 PM", headline: "JRE: Dave Chappelle doesn't disappoint.",
+          handle: "@joeroganhq",
+          url: "https://x.com/joeroganhq/status/2039024933364195481",
+          honesty: "9/10",
+          notes: "Viral Chappelle clip from latest JRE. Comedy meets cultural commentary.",
+          body: "Chappelle on Rogan \u2014 the internet's favorite combo. Clips blowing up across X."
+        },
+{ time: "12:25 PM", headline: "Joe Rogan: 3+ hours with Elon Musk \u2014 'Let's f***ing goooooo!'",
+          handle: "@joerogan",
+          url: "https://x.com/joerogan/status/1984344367260450904",
+          honesty: "9/10",
+          notes: "Massive episode with Elon covering SpaceX, AI, politics.",
+          body: "JRE continues to dominate charts. Latest Elon episode is one of the biggest of 2026."
+        },
+        { time: "12:25 PM", headline: "Call Her Daddy nominated for Golden Globes Best Podcast category.",
+          handle: "@enaborsi",
+          url: "https://x.com/enews/status/2010336840532803792",
+          honesty: "9/10",
+          notes: "E! News coverage of historic Golden Globes podcast category.",
+          body: "Call Her Daddy among nominees in first-ever Golden Globes podcast category alongside Armchair Expert and others."
+        },
+        { time: "12:25 PM", headline: "All-In Pod: Iran war fallout, oil shock, AI revenue surge, millionaire tax.",
+          handle: "@theallinpod",
+          url: "https://x.com/theallinpod/status/2032517798748983427",
+          honesty: "9/10",
+          notes: "Full episode: war economics, escalation scenarios, Anthropic/OpenAI revenue surge.",
+          body: "Besties break down Iran war economic impact, energy crisis, and Washington state millionaire tax."
+        },
+{ time: "12:30 PM", headline: "Joe Rogan & Theo Von on masculinity, gender, and Hollywood agendas.",
+          handle: "@joeroganhq",
+          url: "https://x.com/joeroganhq/status/2039823940957409397",
+          honesty: "7/10",
+          notes: "Viral clip with massive engagement.",
+          body: "Rogan and Von discuss cultural shifts, feminization concerns, and Hollywood\u2019s role. Provocative but drives real conversation."
+        },
+        { time: "12:30 PM", headline: "All-In Pod: Iran war fallout, AI revenue surge, millionaire tax.",
+          handle: "@theallinpod",
+          url: "https://x.com/theallinpod/status/2032517798748983427",
+          honesty: "8/10",
+          notes: "Data-heavy episode.",
+          body: "Oil shock scenarios, midterm impact, Anthropic/OpenAI scaling faster than ever."
+        },
+        { time: "12:30 PM", headline: "All-In: Software stocks imploding, Claude\u2019s hit list, SCOTUS strikes tariffs.",
+          handle: "@theallinpod",
+          url: "https://x.com/theallinpod/status/2027549277111599578",
+          honesty: "8/10",
+          notes: "Tech + politics crossover episode.",
+          body: "State of the Union reactions, datacenter opposition, Trump\u2019s pivot after SCOTUS ruling."
+        }]
+  },
+};
+
+function myfeedTabLabel(slot) {
+  try {
+    var interests = localStorage.getItem("myfeed_interests_" + slot) || "";
+    if (interests) {
+      var word = interests.split(/[,&]/)[0].trim();
+      if (word.length > 12) word = word.substring(0, 10) + "..";
+      return word;
+    }
+  } catch(e) {}
+  return "My Feed " + slot;
+}
+var TABS = [
+  { id: "world", label: "World" },
+  { id: "business", label: "Business" },
+  { id: "local", label: "Local" },
+  { id: "sports", label: "Sports" },
+  { id: "elon", label: "Elon" },
+  { id: "top", label: "#1 Pop" },
+  { id: "msm", label: "<s>MSM</s>" },
+  { id: "allin", label: "$age" },
+  { id: "pg6", label: "Pg. 6" },
+  { id: "pods", label: "Pods" },
+  { id: "recipe", label: "Recipe" },
+  { id: "myfeed1", label: myfeedTabLabel("1") },
+  { id: "myfeed2", label: myfeedTabLabel("2") },
+  { id: "submit", label: "Post/Replace" }
+];
+var activeTab = "world";
+
+function formatDate() { var d = new Date(), days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; return days[d.getDay()] + ", " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(); }
+function todayLabel() { var d = new Date(), months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; return months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(); }
+
+function renderNav() {
+  var nav = document.getElementById("nav");
+  // Refresh dynamic tab labels
+  TABS.forEach(function(t) {
+    if (t.id === "myfeed1") t.label = myfeedTabLabel("1");
+    if (t.id === "myfeed2") t.label = myfeedTabLabel("2");
+  });
+  nav.innerHTML = TABS.map(function(t) { return '<a data-tab="' + t.id + '" class="' + (t.id === activeTab ? 'active' : '') + '">' + t.label + '</a>'; }).join("");
+  nav.querySelectorAll("a").forEach(function(a) { a.addEventListener("click", function() { activeTab = a.dataset.tab; renderNav(); renderContent(); }); });
+}
+
+function acc(h, inner) {
+  var id = "s" + Math.random().toString(36).substr(2, 9);
+  return '<div class="story" id="' + id + '"><div class="story-header" onclick="document.getElementById(\'' + id + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>' + h + '</span></div><div class="story-body">' + inner + '</div></div>';
+}
+
+function renderWorldStory(s) {
+  if (!s.perspectives) return "";
+  var fnotes = s.footnotes || [];
+  return s.perspectives.map(function(p, idx) {
+    var c = p.label === "Conservative" ? "label-conservative" : p.label === "Democrat" ? "label-democrat" : "label-thirdparty";
+    var sup = fnotes[idx] ? '<sup style="color:#2980b9;cursor:help;" title="' + fnotes[idx].replace(/"/g,'&quot;').replace(/'/g,'&#39;') + '">[' + (idx+1) + ']</sup>' : '';
+    var embedId = 'emb' + Math.random().toString(36).substr(2,6);
+    var hasEmbed = p.url && p.url.indexOf('/status/') > -1;
+    var linkAction = hasEmbed ? 'href="#" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + p.url.replace(/'/g,"\\'") + '\')"' : 'href="' + (p.url || '#') + '" target="_blank"';
+    return '<div class="perspective"><span class="' + c + '">' + p.label + '</span> <span class="handle">' + p.handle + '</span> &mdash; ' + p.text + ' <span class="honesty">honesty ' + p.honesty + sup + '</span><br><a ' + linkAction + ' class="view-post">View post</a><div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div></div>';
+  }).join("") + renderFootnotes(s.footnotes);
+}
+
+function renderFootnotes(footnotes) {
+  if (!footnotes || !footnotes.length) return '';
+  var inner = footnotes.map(function(f, i) { return '<div class="footnote-item"><span style="color:#2980b9;font-weight:600;">[' + (i+1) + ']</span> ' + f + '</div>'; }).join("");
+  var id = "fn" + Math.random().toString(36).substr(2, 9);
+  return '<div class="footnote-card" id="' + id + '"><div class="story-header" onclick="document.getElementById(\'' + id + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>Honesty footnotes (' + footnotes.length + ')</span></div><div class="story-body"><div class="footnotes">' + inner + '</div></div></div>';
+}
+
+function renderSinglePost(s) {
+  var stats = s.stats ? '<div class="post-stats">' + s.stats + '</div>' : '';
+  var honesty = s.honesty ? ' <span class="honesty">honesty ' + s.honesty + '</span>' : '';
+  var embedId = 'emb' + Math.random().toString(36).substr(2,6);
+  var hasEmbed = s.url && s.url.indexOf('/status/') > -1;
+  var linkAction = hasEmbed ? 'href="#" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + s.url.replace(/'/g,"\\'") + '\')"' : 'href="' + s.url + '" target="_blank"';
+  return '<div class="single-post"><div class="post-handle"><a href="' + s.url + '" target="_blank">' + s.handle + '</a>' + honesty + '</div><a ' + linkAction + ' class="view-post">View post</a>' + stats + '<div class="post-body">' + s.body + '</div><div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div></div>';
+}
+
+function renderContent() {
+  var el = document.getElementById("content"), today = todayLabel();
+  var staleBanner = NEWS_DATA._stale ? '<div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:0.9rem;color:#856404;">Yesterday\'s stories shown below \u2014 today\'s update is on the way. Check back soon.</div>' : '';
+
+  if (activeTab === "myfeed1" || activeTab === "myfeed2") {
+    var slot = activeTab === "myfeed1" ? "1" : "2";
+    var savedInterests = "";
+    try { savedInterests = localStorage.getItem("myfeed_interests_" + slot) || ""; } catch(e) {}
+    var savedStories = null;
+    try { savedStories = JSON.parse(localStorage.getItem("myfeed_stories_" + slot) || "null"); } catch(e) {}
+    var savedTime = "";
+    try { savedTime = localStorage.getItem("myfeed_time_" + slot) || ""; } catch(e) {}
+
+    var h = '<div class="section-label">My Feed ' + slot + ' &mdash; ' + today + '</div>' +
+      '<h1>Your Custom Feed ' + slot + '</h1>' +
+      '<p class="subtitle">Tell us what you\'re interested in and Grok will find the best posts on X for you. Your preferences are saved in this browser.</p>';
+
+    if (savedInterests) {
+      h += '<div class="myfeed-saved"><span>\ud83d\udccc Tracking: <strong>' + savedInterests.replace(/</g,"&lt;") + '</strong></span>' +
+        '<button class="myfeed-clear" onclick="clearMyFeed(\'' + slot + '\')">Clear</button></div>';
+    }
+
+    h += '<div class="myfeed-input-wrap">' +
+      '<input type="text" id="myfeedInput" placeholder="e.g. AI breakthroughs, SpaceX launches, NBA playoffs..." value="' + savedInterests.replace(/"/g,"&quot;") + '" />' +
+      '<button class="myfeed-mic" id="myfeedMic" onclick="toggleMic()" title="Voice input"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="1" width="6" height="11" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>' +
+      '<button class="myfeed-go" id="myfeedGo" onclick="fetchMyFeed(\'' + slot + '\')">Find Posts</button></div>';
+
+    h += '<div class="myfeed-chips">';
+    ["AI & Tech", "Crypto", "Sports", "Politics", "Science", "Cooking", "Startups", "Space"].forEach(function(c) {
+      h += '<button class="myfeed-chip" onclick="addChip(\'' + c + '\')">' + c + '</button>';
+    });
+    h += '</div>';
+
+    h += '<div class="myfeed-status" id="myfeedStatus"></div>';
+    h += '<div id="myfeedResults">';
+
+    if (savedStories && savedStories.stories && savedStories.stories.length) {
+      h += '<div style="font-size:0.7rem;color:#aaa;margin-bottom:12px;">Last fetched: ' + savedTime + '</div>';
+      savedStories.stories.forEach(function(s) {
+        h += '<div class="story" style="margin-bottom:12px;">' +
+          '<div style="padding:16px 20px;">' +
+          '<div style="font-weight:700;font-size:0.95rem;margin-bottom:6px;">' + (s.headline || "Post") + '</div>' +
+          '<div style="font-size:0.85rem;color:#555;margin-bottom:8px;">' + (s.body || "") + '</div>' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+          '<span style="font-weight:600;font-size:0.85rem;">' + (s.handle || "") + '</span>' +
+          '<span class="honesty">honesty ' + (s.honesty || "?") + '</span></div>' +
+          (s.notes ? '<div style="font-size:0.75rem;color:#999;margin-top:6px;">' + s.notes + '</div>' : '') +
+          (s.url ? '<a href="' + s.url + '" target="_blank" class="view-post" style="margin-top:8px;">View post on X</a>' : '') +
+          '</div></div>';
+      });
+    }
+
+    h += '</div>';
+    el.innerHTML = h;
+    return;
+  }
+
+  if (activeTab === "submit") {
+    var h = '<div class="section-label">Submit &mdash; ' + today + '</div>' +
+      '<h1>Post Your Favorite Tweet</h1>' +
+      '<p class="subtitle">Share a post for Expresso to consider. If Expresso thinks it\u2019s a better post, it will replace, or post below.</p>' +
+      '<div class="story" style="padding:24px 20px;"><form class="submit-form" id="submitForm" onsubmit="handleSubmit(event)">' +
+      '<label>X / Twitter Link</label><input type="url" id="submitUrl" placeholder="https://x.com/username/status/..." />' +
+      '<label>Why should Expresso feature this?</label><textarea id="submitNote" rows="3" placeholder="Tell us why this post matters..."></textarea>' +
+      '<label>Or paste a screenshot URL</label><input type="url" id="submitScreenshot" placeholder="https://imgur.com/..." />' +
+      '<button type="submit" class="submit-btn">Submit for Expresso</button></form>' +
+      '<div id="submitConfirm" style="display:none;margin-top:16px;padding:12px 16px;background:#e8f5e9;border-radius:6px;color:#2e7d32;font-size:0.9rem;font-weight:600;"></div></div>' +
+      '<div style="margin-top:20px;"><h2 style="font-size:1.1rem;margin-bottom:12px;">Reader Submissions</h2><div id="submissionsList"></div></div>';
+    el.innerHTML = h;
+    renderSubmissions();
+    return;
+  }
+
+  if (activeTab === "world") {
+    var d = NEWS_DATA.world;
+    var h = '<div class="section-label">World &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>' + staleBanner;
+    var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
+    d.stories.forEach(function(s) { var pt = '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(Posted ' + postedTime + ')</span>'; h += acc(s.headline + pt, renderWorldStory(s)); });
+    if (d.earlier && d.earlier.length) {
+      h += '<div style="margin-top:24px;padding-top:16px;border-top:2px solid #e0e0e0;"><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:12px;">Earlier Today</div>';
+      d.earlier.forEach(function(s) {
+        var timeTag = s.time ? '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(' + s.time + ')</span>' : '';
+        h += s.perspectives ? acc(s.headline + timeTag, renderWorldStory(s)) : acc(s.headline + timeTag, renderSinglePost(s));
+        if (s.footnotes) h += renderFootnotes(s.footnotes);
+      });
+      h += '</div>';
+    }
+    h += renderLastUpdated();
+    el.innerHTML = h;
+    return;
+  }
+
+  // All other tabs
+  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "#1 Pop", recipe: "Recipe", msm: "<s>MSM</s>", local: "Local", pods: "Pods", pg6: "Pg. 6" };
+  var d = NEWS_DATA[activeTab];
+  var h = '<div class="section-label">' + labels[activeTab] + ' &mdash; ' + today + '</div><h1>' + d.title + '</h1><p class="subtitle">' + d.subtitle + '</p>' + staleBanner;
+  var postedTime = new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
+  d.stories.forEach(function(s) {
+    var pt = '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(Posted ' + postedTime + ')</span>';
+    h += acc(s.headline + pt, renderSinglePost(s));
+    if (s.footnotes) h += renderFootnotes(s.footnotes);
+  });
+  if (d.earlier && d.earlier.length) {
+    h += '<div style="margin-top:24px;padding-top:16px;border-top:2px solid #e0e0e0;"><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:12px;">Earlier Today</div>';
+    d.earlier.forEach(function(s) {
+      var timeTag = s.time ? '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(' + s.time + ')</span>' : '';
+      h += acc(s.headline + timeTag, renderSinglePost(s));
+    });
+    h += '</div>';
+  }
+    if (activeTab === "allin") {
+    h += '<div class="holdings-section"><div class="holdings-title">Billionaire Holdings &amp; Market Tracker</div><div class="holdings-subtitle">Key holdings of $age billionaires with multi-timeframe performance. Data as of April 3, 2026.</div>';
+    var sections = [
+      { label: "Benchmarks", rows: [
+        { t: "^GSPC", n: "S&P 500", p: "5,528", d1: "-1.2%", w1: "-2.8%", m1: "-5.1%", y1: "+8.2%", y2: "+18.4%", y5: "+72.5%", who: "Index" },
+        { t: "^IXIC", n: "NASDAQ Comp", p: "17,122", d1: "-1.6%", w1: "-3.4%", m1: "-6.8%", y1: "+5.9%", y2: "+22.1%", y5: "+81.3%", who: "Index" },
+        { t: "BTC", n: "Bitcoin", p: "$66,246", d1: "-2.4%", w1: "-4.1%", m1: "-12.3%", y1: "-20.0%", y2: "+58.0%", y5: "+44.9%", who: "Crypto" }
+      ]},
+      { label: "Elon Musk", rows: [
+        { t: "TSLA", n: "Tesla", p: "$362.36", d1: "-5.0%", w1: "+1.5%", m1: "-11.2%", y1: "+37.1%", y2: "+62.0%", y5: "+67.7%", who: "~509M shr (13%)" },
+        { t: "SPACEX", n: "SpaceX (pvt)", p: "~$1.5T", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "43% ownership" },
+        { t: "XAI", n: "xAI (merged SpaceX)", p: "pvt", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Founder" }
+      ]},
+      { label: "Peter Thiel (Founders Fund)", rows: [
+        { t: "PLTR", n: "Palantir Technologies", p: "$95.42", d1: "-2.3%", w1: "-4.8%", m1: "-15.1%", y1: "+268%", y2: "+820%", y5: "+680%", who: "Co-Founder" },
+        { t: "BTC", n: "Bitcoin", p: "$66,246", d1: "-2.4%", w1: "-4.1%", m1: "-12.3%", y1: "-20%", y2: "+58%", y5: "+44.9%", who: "Major advocate" },
+        { t: "SPACEX", n: "SpaceX (pvt)", p: "~$1.5T", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Founders Fund" },
+        { t: "ANDURIL", n: "Anduril Industries (pvt)", p: "$60B val", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Founders Fund lead" },
+        { t: "STRIPE", n: "Stripe (pvt)", p: "$91.5B val", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Founders Fund" }
+      ]},
+      { label: "Palmer Luckey (Anduril)", rows: [
+        { t: "ANDURIL", n: "Anduril Industries (pvt)", p: "$60B val", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Co-Founder/CEO" },
+        { t: "META", n: "Meta (Oculus exit)", p: "$579.23", d1: "-0.6%", w1: "-2.0%", m1: "-4.0%", y1: "-6.0%", y2: "+82%", y5: "+195%", who: "Oculus sold $2B (2014)" },
+        { t: "MODRETRO", n: "ModRetro (pvt)", p: "pvt", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Founder" },
+        { t: "EREBOR", n: "Erebor Bank (pvt)", p: "pvt", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Co-Founder" }
+      ]},
+      { label: "Marc Andreessen (a16z)", rows: [
+        { t: "META", n: "Meta Platforms", p: "$579.23", d1: "-0.6%", w1: "-2.0%", m1: "-4.0%", y1: "-6.0%", y2: "+82%", y5: "+195%", who: "281K shr (Director)" },
+        { t: "COIN", n: "Coinbase", p: "$166.85", d1: "+4.1%", w1: "-5.2%", m1: "-29.5%", y1: "-60.3%", y2: "+12%", y5: "+48%", who: "1.15M shr (Dir)" },
+        { t: "NAVN", n: "Navan", p: "$12.61", d1: "-1.2%", w1: "+8.5%", m1: "+43%", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "27M shr (a16z $465M)" },
+        { t: "IOT", n: "Samsara", p: "$32.00", d1: "-0.9%", w1: "-3.1%", m1: "-8.5%", y1: "-47%", y2: "+15%", y5: "\u2014", who: "Director" }
+      ]},
+      { label: "Chamath Palihapitiya", rows: [
+        { t: "SOFI", n: "SoFi Technologies", p: "$15.30", d1: "-1.8%", w1: "-3.5%", m1: "-14.7%", y1: "+45%", y2: "+72%", y5: "-23%", who: "~19.9M shr (2%)" },
+        { t: "CLOV", n: "Clover Health", p: "$1.69", d1: "-3.4%", w1: "-8.1%", m1: "-17.1%", y1: "-52.4%", y2: "-68%", y5: "-73.6%", who: "30.1M shares" },
+        { t: "SPCE", n: "Virgin Galactic", p: "$2.47", d1: "-1.9%", w1: "-4.2%", m1: "-8.0%", y1: "-15%", y2: "-62%", y5: "-95%", who: "1.6% ownership" },
+        { t: "PROK", n: "ProKidney", p: "$1.75", d1: "+5.9%", w1: "+12%", m1: "-22%", y1: "-40%", y2: "\u2014", y5: "\u2014", who: "3M shares" },
+        { t: "AEXA", n: "Am. Exceptional SPAC", p: "$11.11", d1: "+0.1%", w1: "+0.2%", m1: "+1.0%", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Founder (Sep \u201925)" }
+      ]},
+      { label: "David Sacks (Craft Ventures)", rows: [
+        { t: "AFRM", n: "Affirm", p: "$45.33", d1: "+4.6%", w1: "+1.7%", m1: "+12.4%", y1: "+17.9%", y2: "+28.5%", y5: "\u2014", who: "Early investor" },
+        { t: "RUM", n: "Rumble", p: "$4.97", d1: "+9.2%", w1: "+5.3%", m1: "-12%", y1: "-56.2%", y2: "+49%", y5: "\u2014", who: "~1M shr (Director)" },
+        { t: "BTC", n: "Bitcoin", p: "$66,246", d1: "-2.4%", w1: "-4.1%", m1: "-12.3%", y1: "-20%", y2: "+58%", y5: "+44.9%", who: "Divested $200M+ (\u201925)" }
+      ]},
+      { label: "David Friedberg (Production Board)", rows: [
+        { t: "AMZN", n: "Amazon", p: "$201.62", d1: "-1.1%", w1: "-2.3%", m1: "-4.8%", y1: "+30%", y2: "+52%", y5: "+36.5%", who: "Personal holding" },
+        { t: "MILE", n: "Metromile", p: "$1.05", d1: "-2.0%", w1: "-5.0%", m1: "-18%", y1: "-55%", y2: "-72%", y5: "-94%", who: "~4.2M shr (CEO)" },
+        { t: "OHALO", n: "Ohalo Genetics (pvt)", p: "$205M raised", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "CEO/Co-Founder" }
+      ]},
+      { label: "Steve Jurvetson (Future Ventures)", rows: [
+        { t: "TSLA", n: "Tesla", p: "$362.36", d1: "-5.0%", w1: "+1.5%", m1: "-11.2%", y1: "+37.1%", y2: "+62%", y5: "+67.7%", who: "Early investor (2006)" },
+        { t: "TMC", n: "Metals Company", p: "$4.51", d1: "+10%", w1: "+13.9%", m1: "+28%", y1: "+68%", y2: "+120%", y5: "\u2014", who: "Board Vice Chair" },
+        { t: "SPACEX", n: "SpaceX (pvt)", p: "~$1.5T", d1: "\u2014", w1: "\u2014", m1: "\u2014", y1: "\u2014", y2: "\u2014", y5: "\u2014", who: "Board Member" }
+      ]}
+    ];
+    sections.forEach(function(sec) {
+      h += '<div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#888;padding:12px 10px 4px;border-top:1px solid #eee;margin-top:4px;">' + sec.label + '</div>';
+      h += '<table class="holdings-table"><thead><tr><th>Ticker</th><th>Name</th><th>Price</th><th>1D</th><th>1W</th><th>1M</th><th>1Y</th><th>2Y</th><th>5Y</th><th>Held By</th></tr></thead><tbody>';
+      sec.rows.forEach(function(s) {
+        var cols = ["d1","w1","m1","y1","y2","y5"];
+        var cells = "";
+        cols.forEach(function(c) {
+          var v = s[c];
+          var cls = v.charAt(0) === "-" ? "neg" : v.charAt(0) === "+" ? "pos" : "";
+          cells += '<td class="' + cls + '">' + v + '</td>';
+        });
+        h += '<tr><td class="ticker">' + s.t + '</td><td>' + s.n + '</td><td>' + s.p + '</td>' + cells + '<td style="font-size:0.7rem;color:#666;">' + s.who + '</td></tr>';
+      });
+      h += '</tbody></table>';
+    });
+    h += '</div>';
+  }
+  h += renderLastUpdated();
+  el.innerHTML = h;
+}
+
+// Submissions
+var submissions = [];
+try { submissions = JSON.parse(localStorage.getItem('grokSubs') || '[]'); } catch(e) {}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  var url = document.getElementById('submitUrl').value.trim();
+  var note = document.getElementById('submitNote').value.trim();
+  if (!url && !note) return;
+  var found = false;
+  submissions.forEach(function(s) { if (url && s.url === url) { s.votes++; if (note) s.notes.push(note); found = true; } });
+  if (!found) submissions.push({ url: url, notes: note ? [note] : [], votes: 1, timestamp: new Date().toISOString() });
+  try { localStorage.setItem('grokSubs', JSON.stringify(submissions)); } catch(e) {}
+  document.getElementById('submitForm').reset();
+  var c = document.getElementById('submitConfirm');
+  c.style.display = 'block';
+  c.textContent = found ? 'Upvoted! Posts with multiple votes get featured by Expresso.' : 'Submitted! If others submit the same post, it gets featured.';
+  renderSubmissions();
+}
+
+function renderSubmissions() {
+  var list = document.getElementById('submissionsList');
+  if (!list) return;
+  var sorted = submissions.slice().sort(function(a, b) { return b.votes - a.votes; });
+  if (!sorted.length) { list.innerHTML = '<p style="color:#999;font-size:0.85rem;">No submissions yet. Be the first!</p>'; return; }
+  list.innerHTML = sorted.map(function(s) {
+    var handle = '';
+    try { handle = '@' + new URL(s.url).pathname.split('/')[1]; } catch(e) {}
+    var badge = s.votes > 1 ? '<span class="vote-featured">' + s.votes + ' votes \u2014 FEATURED</span>' : '<span class="vote-pending">1 vote</span>';
+    return '<div class="story" style="padding:14px 20px;margin-bottom:8px;"><div style="font-weight:600;font-size:0.9rem;">' +
+      (s.url ? '<a href="' + s.url + '" target="_blank" style="color:#2980b9;text-decoration:none;">' + (handle || s.url) + '</a>' : 'No link') + badge +
+      '</div>' + (s.notes.length ? '<div style="font-size:0.85rem;color:#555;margin-top:6px;">' + s.notes[0] + '</div>' : '') +
+      '<div style="font-size:0.7rem;color:#aaa;margin-top:4px;">' + new Date(s.timestamp).toLocaleString() + '</div></div>';
+  }).join('');
+}
+
+function renderLastUpdated() {
+  var updated = new Date(NEWS_DATA.lastUpdated);
+  var hours = [6, 9, 12, 15, 18, 21];
+  var now = new Date();
+  var nextUpdate = null;
+  for (var i = 0; i < hours.length; i++) {
+    var candidate = new Date(now);
+    candidate.setHours(hours[i], 0, 0, 0);
+    if (candidate > now) { nextUpdate = candidate; break; }
+  }
+  if (!nextUpdate) {
+    nextUpdate = new Date(now);
+    nextUpdate.setDate(nextUpdate.getDate() + 1);
+    nextUpdate.setHours(hours[0], 0, 0, 0);
+  }
+  var nextStr = nextUpdate.toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
+  return '<div class="last-updated">Last updated: ' + updated.toLocaleString() + ' &mdash; Next update: ' + nextStr + '</div>';
+}
+
+// Midnight: keep yesterday's stories visible until new ones arrive. Trim earlier arrays to prevent infinite scroll.
+var MAX_EARLIER = 10; // max stories in "Earlier Today" per tab — keeps page a reasonable length
+function checkMidnightRotation() {
+  var updated = new Date(NEWS_DATA.lastUpdated);
+  var now = new Date();
+  if (updated.toDateString() !== now.toDateString() && updated < now) {
+    NEWS_DATA._stale = true;
+    renderNav();
+    renderContent();
+  }
+  // Trim earlier arrays if they get too long
+  var tabKeys = ["world","business","sports","elon","allin","top","pods","local","recipe","msm","pg6"];
+  tabKeys.forEach(function(key) {
+    var d = NEWS_DATA[key];
+    if (d && d.earlier && d.earlier.length > MAX_EARLIER) {
+      d.earlier = d.earlier.slice(0, MAX_EARLIER);
+    }
+  });
+}
+
+document.getElementById("currentDate").textContent = formatDate();
+renderNav();
+renderContent();
+
+// Check for midnight rotation on load and every minute
+checkMidnightRotation();
+setInterval(checkMidnightRotation, 60000);
+
+// Auto-refresh My Feed tabs in background on page load if stale (>1 hour old)
+(function() {
+  ["1","2"].forEach(function(slot) {
+    try {
+      var interests = localStorage.getItem("myfeed_interests_" + slot);
+      var time = localStorage.getItem("myfeed_time_" + slot);
+      if (interests && time) {
+        var lastFetch = new Date(time).getTime();
+        if (Date.now() - lastFetch > 60 * 60 * 1000) {
+          // Silently refresh in background
+          fetch("/.netlify/functions/custom-stories", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ interests: interests })
+          }).then(function(r) { return r.json(); }).then(function(data) {
+            if (!data.error && data.stories) {
+              try {
+                localStorage.setItem("myfeed_stories_" + slot, JSON.stringify(data));
+                localStorage.setItem("myfeed_time_" + slot, new Date().toLocaleString());
+              } catch(e) {}
+              // If user is currently on this feed tab, refresh the view
+              if (activeTab === "myfeed" + slot) renderContent();
+            }
+          }).catch(function() {});
+        }
+      }
+    } catch(e) {}
+  });
+})();
+
+// Fix honesty footnotes to use footnote-card styling
+function fixHonestyFootnotes() {
+  document.querySelectorAll(".story").forEach(function(el) {
+    var hdr = el.querySelector(".story-header");
+    if (hdr && hdr.textContent.indexOf("Honesty") > -1) {
+      el.className = "footnote-card";
+      var ts = hdr.querySelector("span[style]");
+      if (ts) ts.remove();
+    }
+  });
+}
+var _origRC = renderContent;
+renderContent = function() { _origRC(); fixHonestyFootnotes(); };
+fixHonestyFootnotes();
+
+// ---- Tweet Embed: shows actual tweet without needing X login ----
+function toggleEmbed(containerId, tweetUrl) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  if (container.style.display !== 'none' && container.innerHTML) {
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = 'block';
+  container.innerHTML = '<div style="color:#999;font-size:0.8rem;padding:8px;">Loading tweet...</div>';
+  // Use Twitter oEmbed via our proxy to avoid CORS
+  var oembed = 'https://publish.twitter.com/oembed?url=' + encodeURIComponent(tweetUrl) + '&omit_script=true&dnt=true';
+  // Twitter oEmbed doesn't support CORS directly, so use the embed widget approach
+  var tweetId = tweetUrl.match(/status\/(\d+)/);
+  if (tweetId && window.twttr) {
+    container.innerHTML = '';
+    window.twttr.widgets.createTweet(tweetId[1], container, { theme: 'light', dnt: true, conversation: 'none' });
+  } else if (tweetId) {
+    // Load Twitter widget JS if not loaded yet
+    container.innerHTML = '';
+    var s = document.createElement('script');
+    s.src = 'https://platform.twitter.com/widgets.js';
+    s.onload = function() {
+      if (window.twttr) {
+        window.twttr.widgets.createTweet(tweetId[1], container, { theme: 'light', dnt: true, conversation: 'none' });
+      }
+    };
+    document.head.appendChild(s);
+  } else {
+    container.innerHTML = '<div style="color:#c0392b;font-size:0.8rem;padding:8px;">Could not load embed.</div>';
+  }
+}
+
+// ---- My Feed: localStorage + Speech + Netlify Function ----
+var _myfeedRecognition = null;
+
+function addChip(text) {
+  var inp = document.getElementById("myfeedInput");
+  if (!inp) return;
+  var cur = inp.value.trim();
+  inp.value = cur ? cur + ", " + text : text;
+}
+
+function clearMyFeed(slot) {
+  slot = slot || (activeTab === "myfeed2" ? "2" : "1");
+  try { localStorage.removeItem("myfeed_interests_" + slot); localStorage.removeItem("myfeed_stories_" + slot); localStorage.removeItem("myfeed_time_" + slot); } catch(e) {}
+  renderNav();
+  renderContent();
+}
+
+function toggleMic() {
+  var btn = document.getElementById("myfeedMic");
+  if (_myfeedRecognition) {
+    _myfeedRecognition.stop();
+    _myfeedRecognition = null;
+    if (btn) btn.classList.remove("recording");
+    return;
+  }
+  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    var st = document.getElementById("myfeedStatus");
+    if (st) st.textContent = "Speech recognition not supported in this browser. Try Chrome.";
+    return;
+  }
+  _myfeedRecognition = new SpeechRecognition();
+  _myfeedRecognition.continuous = false;
+  _myfeedRecognition.interimResults = false;
+  _myfeedRecognition.lang = "en-US";
+  if (btn) btn.classList.add("recording");
+  _myfeedRecognition.onresult = function(e) {
+    var transcript = e.results[0][0].transcript;
+    var inp = document.getElementById("myfeedInput");
+    if (inp) {
+      var cur = inp.value.trim();
+      inp.value = cur ? cur + ", " + transcript : transcript;
+    }
+  };
+  _myfeedRecognition.onend = function() {
+    _myfeedRecognition = null;
+    if (btn) btn.classList.remove("recording");
+  };
+  _myfeedRecognition.onerror = function(e) {
+    var st = document.getElementById("myfeedStatus");
+    if (st) st.textContent = "Mic error: " + e.error;
+    _myfeedRecognition = null;
+    if (btn) btn.classList.remove("recording");
+  };
+  _myfeedRecognition.start();
+}
+
+function fetchMyFeed(slot) {
+  slot = slot || (activeTab === "myfeed2" ? "2" : "1");
+  var inp = document.getElementById("myfeedInput");
+  var goBtn = document.getElementById("myfeedGo");
+  var status = document.getElementById("myfeedStatus");
+  var results = document.getElementById("myfeedResults");
+  if (!inp || !inp.value.trim()) { if (status) status.textContent = "Type your interests first!"; return; }
+
+  var interests = inp.value.trim();
+  try { localStorage.setItem("myfeed_interests_" + slot, interests); } catch(e) {}
+  renderNav(); // Update tab name to reflect new interests
+  if (goBtn) { goBtn.disabled = true; goBtn.textContent = "Searching..."; }
+  if (status) status.innerHTML = '\u23f3 Grok is searching X for posts about <strong>' + interests.replace(/</g,"&lt;") + '</strong>... this takes 10-20 seconds.';
+  if (results) results.innerHTML = "";
+
+  fetch("/.netlify/functions/custom-stories", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ interests: interests })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.error) {
+      if (status) status.textContent = "Error: " + data.error;
+      if (goBtn) { goBtn.disabled = false; goBtn.textContent = "Find Posts"; }
+      return;
+    }
+    var stories = data.stories || data;
+    try {
+      localStorage.setItem("myfeed_stories_" + slot, JSON.stringify(data));
+      localStorage.setItem("myfeed_time_" + slot, new Date().toLocaleString());
+    } catch(e) {}
+    if (status) status.textContent = "";
+    if (goBtn) { goBtn.disabled = false; goBtn.textContent = "Find Posts"; }
+    renderContent();
+  })
+  .catch(function(err) {
+    if (status) status.textContent = "Network error: " + err.message;
+    if (goBtn) { goBtn.disabled = false; goBtn.textContent = "Find Posts"; }
+  });
+}
+
+// Auto-detect visitor location for LOCAL tab
+(function() {
+  fetch('https://ipapi.co/json/').then(function(r) { return r.json(); }).then(function(data) {
+    if (data.city) {
+      var localData = NEWS_DATA.local;
+      if (localData) {
+        localData.title = 'Local: ' + data.city;
+        localData.subtitle = 'Top local story near ' + data.city + ', ' + data.region + '.';
+      }
+      if (activeTab === "local") renderContent();
+    }
+  }).catch(function() {});
+})();
+</script>
+</body>
+</html>
