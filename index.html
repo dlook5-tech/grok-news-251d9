@@ -912,9 +912,11 @@ function acc(h, inner) {
 }
 
 function renderWorldStory(s) {
-  if (!s.perspectives) return ""; return s.perspectives.map(function(p) {
+  if (!s.perspectives) return "";
+  var fnotes = s.footnotes || [];
+  return s.perspectives.map(function(p, idx) {
     var c = p.label === "Conservative" ? "label-conservative" : p.label === "Democrat" ? "label-democrat" : "label-thirdparty";
-    var sup = p.footnoteId ? '<sup>' + p.footnoteId + '</sup>' : '';
+    var sup = fnotes[idx] ? '<sup style="color:#2980b9;cursor:help;" title="' + fnotes[idx].replace(/"/g,'&quot;').replace(/'/g,'&#39;') + '">[' + (idx+1) + ']</sup>' : '';
     var embedId = 'emb' + Math.random().toString(36).substr(2,6);
     var hasEmbed = p.url && p.url.indexOf('/status/') > -1;
     var linkAction = hasEmbed ? 'href="#" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + p.url.replace(/'/g,"\\'") + '\')"' : 'href="' + (p.url || '#') + '" target="_blank"';
@@ -924,9 +926,9 @@ function renderWorldStory(s) {
 
 function renderFootnotes(footnotes) {
   if (!footnotes || !footnotes.length) return '';
-  var inner = footnotes.map(function(f) { return '<div class="footnote-item">' + f + '</div>'; }).join("");
+  var inner = footnotes.map(function(f, i) { return '<div class="footnote-item"><span style="color:#2980b9;font-weight:600;">[' + (i+1) + ']</span> ' + f + '</div>'; }).join("");
   var id = "fn" + Math.random().toString(36).substr(2, 9);
-  return '<div class="footnote-card" id="' + id + '"><div class="story-header" onclick="document.getElementById(\'' + id + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>Honesty footnotes</span></div><div class="story-body"><div class="footnotes">' + inner + '</div></div></div>';
+  return '<div class="footnote-card" id="' + id + '"><div class="story-header" onclick="document.getElementById(\'' + id + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>Honesty footnotes (' + footnotes.length + ')</span></div><div class="story-body"><div class="footnotes">' + inner + '</div></div></div>';
 }
 
 function renderSinglePost(s) {
