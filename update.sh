@@ -1,9 +1,9 @@
 #!/bin/bash
 # eXpressO News Auto-Update Script
-# Uses Grok API in a 3-step pipeline:
-#   Step 1: Ask Grok what's trending (stories + accounts)
-#   Step 2: Ask Grok for specific post IDs (small batches)
-#   Step 3: Validate and assemble, then update index.html + deploy
+# Uses Grok API + oEmbed verification pipeline:
+#   Step 1: Ask Grok what's trending (constrained to KNOWN REAL handles)
+#   Step 2: Verify EVERY URL via Twitter oEmbed API (hard gate)
+#   Step 3: Only publish verified stories. Abort if quality too low.
 
 set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -15,7 +15,7 @@ NOW=$(date "+%-m/%-d/%Y, %-I:%M:%S %p")
 echo "=== eXpressO News Update — $NOW ==="
 
 # ============================================================
-# STEP 1: Ask Grok what's trending on X (stories, not URLs)
+# STEP 1: Ask Grok what's trending — CONSTRAINED to real handles
 # ============================================================
 echo "Step 1: Asking Grok what's trending..."
 
@@ -26,8 +26,8 @@ STEP1_RAW=$(curl -s --max-time 180 https://api.x.ai/v1/responses \
 {
   "model": "grok-4.20-0309-reasoning",
   "input": [
-    {"role": "system", "content": "You are Grok, the AI of X. You know what is trending on X better than anyone. Answer in JSON only. No markdown, no code blocks. IMPORTANT: For EVERY post you recommend, you MUST include the real post URL with /status/NUMBERS. Use web_search to find the actual post. Never return profile-only URLs."},
-    {"role": "user", "content": "I need the BEST stories on X right now for a news curation site that showcases CITIZEN JOURNALISM — regular people doing threads, commentary, and analysis that's BETTER than mainstream media.\n\nCRITICAL RULES:\n- CITIZEN JOURNALISTS FIRST. Prefer regular people doing threads and quote-tweet commentary over institutional accounts like @Reuters, @ESPN, @CNN.\n- THREADS > single posts. A person who did a 10-tweet breakdown is more interesting than a news org posting a headline.\n- For EVERY handle you return, also return their actual post URL from X (with /status/NUMBERS). Use web_search to find it. This is mandatory.\n- If someone quote-tweeted a story and added killer analysis, pick THAT person, not the original poster.\n\nCATEGORIES:\n\n1. WORLD: Top 1-3 hard news stories. For EACH: best conservative CITIZEN voice (not Fox News), best progressive CITIZEN voice (not DNC), best independent analyst. Prefer people with threads and real analysis.\n2. BUSINESS: Best citizen analyst breaking down markets/finance with real data. NOT Bloomberg or CNBC — find the person on X doing it better.\n3. SPORTS: (a) Biggest story people care about — find the fan/analyst with the best breakdown, not just the reporter. (b) Most viral Stephen A. Smith clip. (c) Most viral Cowherd clip.\n4. ELON: 3 most interesting recent Elon posts, each DIFFERENT theme. Include actual post URLs.\n5. PODS: Top 3 viral podcast clips on X — Rogan, Tucker, All-In, Lex Fridman, Call Her Daddy, Adam Carolla, etc. Find the actual clip posts with highest engagement.\n6. ALLIN ($age): Best recent post from chamath, davidsacks, pmarca, PalmerLuckey, or friedberg.\n7. TOP: Single most viral post on all of X right now.\n8. MSM: Story trending on X that CNN/NYT/WaPo are NOT covering. Citizen journalist exposing what MSM won't.\n9. RECIPE: Top 2 viral food/recipe posts.\n10. LOCAL: Orange County / Newport Beach / SoCal citizen journalism. NOT random US news.\n11. PG6: Juiciest entertainment/gossip story.\n\nFor EVERY item, include: headline, handle, url (WITH /status/ID), body (2-3 sentences), honesty (X/10), notes.\n\nJSON format:\n{\"world\":{\"stories\":[{\"topic\":\"...\",\"headline\":\"...\",\"conservative\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"democrat\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"independent\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"honesty\":\"X/10\",\"notes\":\"...\",\"footnotes\":[\"...\",\"...\",\"...\"]}]},\"business\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"sports\":{\"main\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"stephena\":{\"headline\":\"...\",\"handle\":\"@stephenasmith\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"cowherd\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}},\"elon\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@elonmusk\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"pods\":{\"clips\":[{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"allin\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"top\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"msm\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"recipe\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"local\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"pg6\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}}"}
+    {"role": "system", "content": "You are Grok, the AI of X. Answer in JSON only. No markdown, no code blocks.\n\nCRITICAL: You MUST use web_search to find every URL. Do NOT invent or guess URLs. If you cannot find a real post URL via web_search, set url to null.\n\nCRITICAL: Only use handles from the APPROVED LISTS below. Do NOT invent handles."},
+    {"role": "user", "content": "Find the best trending stories on X right now. Use web_search for EVERY URL.\n\nIMPORTANT: ONLY use handles from these approved lists. Do NOT make up handles.\n\nAPPROVED HANDLES BY CATEGORY:\n\nWORLD Conservative: @JackPosobiec, @baboramus, @baboramus, @Cernovich, @RealCandaceO, @benshapiro, @TuckerCarlson, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @TomFitton, @JesseBWatters, @IngrahamAngle, @WarMonitors, @sentdefender, @CriticalThreats, @WhiteHouse\nWORLD Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @kaboramus, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews, @maboramus\nWORLD Independent: @HamidRezaAz, @TheStudyofWar, @vtchakarova, @RayDalio, @dalperovitch, @InsightGL, @KimZetter, @Snowden, @ggreenwald\n\nBUSINESS: @DowdEdward, @RayDalio, @Stocktwits, @StockMKTNewz, @zaboramus, @WatcherGuru, @unusual_whales, @TruthGundlach, @LizAnnSonders, @elerianm\n\nSPORTS main: @ShamsCharania, @wojespn, @ClutchPoints, @BleacherReport, @CourtsideBuzzX, @lukaupdates, @PolymarketHoops, @TheAthletic, @ESPNStatsInfo\nSPORTS stephena: @stephenasmith (MUST use this exact handle)\nSPORTS cowherd: @TheHerd, @colincowherd (MUST use one of these)\n\nELON: @elonmusk (MUST use this exact handle, find 3 different recent posts)\n\nPODS: @joerogan, @joeroganhq, @TuckerCarlson, @theallinpod, @lexfridman, @CallHerDaddy, @adamcarolla, @JREClips, @enews\n\nALLIN ($age): @chamath, @DavidSacks, @pmarca, @PalmerLuckey, @friedberg\n\nTOP: Any handle — but it MUST be the single most viral post on X right now. Use web_search.\n\nMSM: @BillMelugin_, @libaboramus, @MattWalshBlog, @TimcastNews, @TheRabbitHole84, @SCOTUSblog, @InsightGL, @JamesOKeefeIII\n\nRECIPE: @tasteofhome, @FoodNetwork, @thekitchn, @HBHarvest, @foodandwine, @tasty, @KitchenSanc2ary, @budgetbytes\n\nLOCAL (must be Orange County/Newport Beach/SoCal): @OC_Scanner, @ABC7, @ABORAMUS, @LAist, @ABORAMUS, @KTLA, @ABORAMUS\n\nPG6: @PopCrave, @enaboramus, @enews, @JustJared, @etnow, @TMZ\n\nFor each category, search X for the MOST RECENT trending post from these handles. Use web_search to find each URL.\n\nJSON format:\n{\"world\":{\"stories\":[{\"topic\":\"...\",\"headline\":\"...\",\"conservative\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"democrat\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"independent\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"honesty\":\"X/10\",\"notes\":\"...\",\"footnotes\":[\"...\",\"...\"]}]},\"business\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"sports\":{\"main\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"stephena\":{\"headline\":\"...\",\"handle\":\"@stephenasmith\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"cowherd\":{\"headline\":\"...\",\"handle\":\"@TheHerd\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}},\"elon\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@elonmusk\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"pods\":{\"clips\":[{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"allin\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"top\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"msm\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"recipe\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"local\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"pg6\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}}"}
   ],
   "tools": [{"type": "web_search"}],
   "max_output_tokens": 8000,
@@ -62,19 +62,15 @@ if text.startswith('```'):
     text = re.sub(r'```\s*$', '', text)
 text = re.sub(r'<grok:render[^>]*>.*?</grok:render>', '', text)
 
-# Try raw_decode first; if truncated, repair by adding missing closing braces
 decoder = json.JSONDecoder()
 try:
     parsed, _ = decoder.raw_decode(text.strip())
 except json.JSONDecodeError:
-    # Fix unclosed strings: if odd number of unescaped quotes, close the last one
     quote_count = len(re.findall(r'(?<!\\)"', text))
     if quote_count % 2 != 0:
         text += '"'
-    # Count missing braces and brackets, append them
     opens_b = text.count('{') - text.count('}')
     opens_a = text.count('[') - text.count(']')
-    # Trim any trailing incomplete key/value (after last comma or colon)
     text = re.sub(r',\s*$', '', text)
     text += ']' * max(0, opens_a) + '}' * max(0, opens_b)
     try:
@@ -89,338 +85,290 @@ PYPARSESCRIPT
 STEP1=$(python3 /tmp/grok_parse.py /tmp/grok_step1_raw.json)
 
 if [ -z "$STEP1" ]; then
-    echo "ERROR: Step 1 failed"
+    echo "ERROR: Step 1 failed — keeping old content"
     exit 1
 fi
 echo "Step 1 done. Got story intelligence."
 
 # ============================================================
-# STEP 2: Build URL search request from Step 1 handles
+# STEP 1.5: Fix null URLs — focused search per handle
 # ============================================================
-echo "Step 2: Finding real post URLs..."
+echo "Step 1.5: Fixing null URLs with focused searches..."
 
-# Generate the Step 2 prompt from Step 1 data
-STEP2_PROMPT=$(echo "$STEP1" | python3 -c "
-import sys, json
-
-data = json.loads(sys.stdin.read())
-lines = ['Find the real X post IDs (numeric status IDs) for these accounts. Use web_search. Return null if not found.', '']
-
-i = 1
-# World perspectives (1-3 stories)
-w = data.get('world', {})
-world_stories = w.get('stories', [])
-# Backwards compat: if world has direct conservative/democrat/independent, wrap it
-if not world_stories and w.get('conservative'):
-    world_stories = [w]
-for ws in world_stories:
-    for key in ['conservative', 'democrat', 'independent']:
-        p = ws.get(key, {})
-        if p.get('handle'):
-            topic = ws.get('topic', '')
-            lines.append(f'{i}. {p[\"handle\"]} - posting about: {topic}')
-            i += 1
-
-# Sports: main + stephena + cowherd
-sp = data.get('sports', {})
-for key in ['main', 'stephena', 'cowherd']:
-    s = sp.get(key, {})
-    if s.get('handle'):
-        lines.append(f'{i}. {s[\"handle\"]} - posting about: {s.get(\"headline\", \"\")}')
-        i += 1
-
-# Elon posts (up to 3)
-elon = data.get('elon', {})
-for ep in elon.get('posts', []):
-    if ep.get('handle'):
-        lines.append(f'{i}. {ep[\"handle\"]} - posting about: {ep.get(\"headline\", \"\")}')
-        i += 1
-
-# Pods clips (up to 3)
-pods = data.get('pods', {})
-for pc in pods.get('clips', []):
-    if pc.get('handle'):
-        lines.append(f'{i}. {pc[\"handle\"]} - posting about: {pc.get(\"headline\", \"\")}')
-        i += 1
-
-# Recipe posts (up to 2)
-recipe = data.get('recipe', {})
-for rp in recipe.get('posts', []):
-    if rp.get('handle'):
-        lines.append(f'{i}. {rp[\"handle\"]} - posting about: {rp.get(\"headline\", \"\")}')
-        i += 1
-
-# Simple tabs
-for tab in ['business', 'allin', 'top', 'msm', 'local']:
-    d = data.get(tab, {})
-    h = d.get('handle', '')
-    if h and h != 'N/A':
-        lines.append(f'{i}. {h} - posting about: {d.get(\"topic\", d.get(\"headline\", \"\"))}')
-        i += 1
-
-lines.append('')
-lines.append('JSON: {\"posts\":[{\"handle\":\"@...\",\"post_id\":NUMERIC_OR_NULL,\"preview\":\"first 50 chars of post\"}]}')
-print('\\n'.join(lines))
-")
-
-# Write the Step 2 request to a temp file to avoid quoting issues
-python3 -c "
-import json, sys
-prompt = sys.stdin.read().strip()
-payload = {
-    'model': 'grok-4.20-0309-reasoning',
-    'input': [
-        {'role': 'system', 'content': 'You are Grok on X. Find real post IDs from X. Use web_search to verify each one. Return null for post_id if you cannot find the real numeric ID. Do NOT fabricate IDs. Return JSON only.'},
-        {'role': 'user', 'content': prompt}
-    ],
-    'tools': [{'type': 'web_search'}],
-    'max_output_tokens': 3000,
-    'temperature': 0.1
-}
-print(json.dumps(payload))
-" <<< "$STEP2_PROMPT" > /tmp/grok_step2_payload.json
-
-STEP2_RAW=$(curl -s --max-time 180 https://api.x.ai/v1/responses \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $XAI_API_KEY" \
-  -d @/tmp/grok_step2_payload.json)
-
-echo "$STEP2_RAW" > /tmp/grok_step2_raw.json
-STEP2=$(python3 /tmp/grok_parse.py /tmp/grok_step2_raw.json)
-
-echo "Step 2 done."
-
-# ============================================================
-# STEP 2.5: Verify every URL via Twitter oEmbed API
-# ============================================================
-echo "Step 2.5: Verifying all URLs via oEmbed..."
-
-python3 - "$STEP1" "$STEP2" <<'VERIFYEOF'
-import json, sys, urllib.request, urllib.parse, time
+STEP1=$(python3 - "$STEP1" "$XAI_API_KEY" <<'FIXNULLS'
+import json, sys, urllib.request, re, time
 
 stories = json.loads(sys.argv[1])
-url_data = json.loads(sys.argv[2])
+api_key = sys.argv[2]
 
-# Build initial URL map from Step 2
-url_map = {}
-for post in url_data.get('posts', []):
-    handle = post.get('handle', '').lower().lstrip('@')
-    pid = post.get('post_id')
-    if pid and str(pid).isdigit():
-        url_map[handle] = f"https://x.com/{handle}/status/{pid}"
+def search_handle_url(handle, topic):
+    """Make a focused Grok API call to find a real URL for this handle."""
+    handle_clean = handle.lstrip('@')
+    payload = json.dumps({
+        "model": "grok-4.20-0309-reasoning",
+        "input": [
+            {"role": "user", "content": f"Use web_search to find the most recent post by @{handle_clean} on X about: {topic}. Return ONLY the full URL (https://x.com/{handle_clean}/status/NUMBERS). Nothing else. No explanation."}
+        ],
+        "tools": [{"type": "web_search"}],
+        "max_output_tokens": 200,
+        "temperature": 0
+    }).encode()
+
+    try:
+        req = urllib.request.Request(
+            "https://api.x.ai/v1/responses",
+            data=payload,
+            headers={"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
+        )
+        resp = urllib.request.urlopen(req, timeout=60)
+        data = json.loads(resp.read())
+        for item in data.get('output', []):
+            if item.get('type') == 'message':
+                for c in item.get('content', []):
+                    if c.get('type') == 'output_text':
+                        urls = re.findall(r'https://x\.com/\w+/status/\d+', c['text'])
+                        if urls:
+                            return urls[0]
+    except Exception as e:
+        print(f"  API error for @{handle_clean}: {e}", file=sys.stderr)
+    return None
+
+fixed = 0
+
+# Fix world perspectives
+w = stories.get('world', {})
+ws_list = w.get('stories', [])
+if not ws_list and w.get('conservative'):
+    ws_list = [w]
+for ws in ws_list:
+    topic = ws.get('topic', ws.get('headline', ''))
+    for key in ['conservative', 'democrat', 'independent']:
+        p = ws.get(key, {})
+        if p.get('handle') and not p.get('url'):
+            url = search_handle_url(p['handle'], topic)
+            if url:
+                p['url'] = url
+                fixed += 1
+                print(f"  Fixed: {p['handle']} → {url}", file=sys.stderr)
+            time.sleep(0.5)
+
+# Fix sports
+sp = stories.get('sports', {})
+for key in ['main', 'stephena', 'cowherd']:
+    s = sp.get(key, {})
+    if s.get('handle') and not s.get('url'):
+        url = search_handle_url(s['handle'], s.get('headline', ''))
+        if url:
+            s['url'] = url
+            fixed += 1
+            print(f"  Fixed: {s['handle']} → {url}", file=sys.stderr)
+        time.sleep(0.5)
+
+# Fix elon
+for ep in stories.get('elon', {}).get('posts', []):
+    if ep.get('handle') and not ep.get('url'):
+        url = search_handle_url(ep['handle'], ep.get('headline', ''))
+        if url:
+            ep['url'] = url
+            fixed += 1
+            print(f"  Fixed: {ep['handle']} → {url}", file=sys.stderr)
+        time.sleep(0.5)
+
+# Fix pods
+for pc in stories.get('pods', {}).get('clips', []):
+    if pc.get('handle') and not pc.get('url'):
+        url = search_handle_url(pc['handle'], pc.get('headline', ''))
+        if url:
+            pc['url'] = url
+            fixed += 1
+            print(f"  Fixed: {pc['handle']} → {url}", file=sys.stderr)
+        time.sleep(0.5)
+
+# Fix recipe
+for rp in stories.get('recipe', {}).get('posts', []):
+    if rp.get('handle') and not rp.get('url'):
+        url = search_handle_url(rp['handle'], rp.get('headline', ''))
+        if url:
+            rp['url'] = url
+            fixed += 1
+            print(f"  Fixed: {rp['handle']} → {url}", file=sys.stderr)
+        time.sleep(0.5)
+
+# Fix simple tabs
+for tab in ['business', 'allin', 'top', 'msm', 'local', 'pg6']:
+    d = stories.get(tab, {})
+    if d.get('handle') and not d.get('url'):
+        url = search_handle_url(d['handle'], d.get('headline', d.get('topic', '')))
+        if url:
+            d['url'] = url
+            fixed += 1
+            print(f"  Fixed: {d['handle']} → {url}", file=sys.stderr)
+        time.sleep(0.5)
+
+print(f"Step 1.5: Fixed {fixed} null URLs", file=sys.stderr)
+print(json.dumps(stories))
+FIXNULLS
+)
+
+echo "Step 1.5 done."
+
+# ============================================================
+# STEP 2: Verify EVERY URL via oEmbed + get tweet text (HARD GATE)
+# ============================================================
+echo "Step 2: Verifying all URLs via oEmbed (hard gate)..."
+
+VERIFY_RESULT=$(python3 - "$STEP1" <<'VERIFYEOF'
+import json, sys, urllib.request, urllib.parse, re, time
+
+stories = json.loads(sys.argv[1])
 
 def verify_url(url):
-    """Check if a tweet URL is real via Twitter oEmbed API. Returns True/False."""
+    """Check tweet via oEmbed. Returns (ok, author, tweet_text) or (False, '', '')."""
+    if not url or '/status/' not in str(url):
+        return False, '', ''
     try:
         oembed_url = f"https://publish.twitter.com/oembed?url={urllib.parse.quote(url, safe='')}"
         req = urllib.request.Request(oembed_url, headers={"User-Agent": "Mozilla/5.0"})
         resp = urllib.request.urlopen(req, timeout=10)
         if resp.getcode() == 200:
             data = json.loads(resp.read())
-            return True, data.get('author_name', '')
-        return False, ''
-    except Exception as e:
-        return False, ''
+            author = data.get('author_name', '')
+            text_match = re.search(r'<p[^>]*>(.*?)</p>', data.get('html',''), re.DOTALL)
+            tweet_text = re.sub(r'<[^>]+>', '', text_match.group(1))[:200] if text_match else ''
+            return True, author, tweet_text
+        return False, '', ''
+    except:
+        return False, '', ''
 
-def verify_and_report(handle, url):
-    """Verify a URL. Returns (is_valid, url, author_name)."""
-    if '/status/' not in url:
-        return False, url, ''
-    ok, author = verify_url(url)
-    return ok, url, author
+# Collect and verify ALL URLs
+verified = {}  # handle -> {url, author, text}
+failed = []
+total = 0
 
-# Collect all URLs from Step 1 + Step 2 for verification
-all_urls = []
+def check(label, handle, url):
+    global total
+    total += 1
+    h = handle.lower().lstrip('@')
+    ok, author, text = verify_url(url)
+    if ok:
+        verified[h] = {"url": url, "author": author, "text": text}
+        print(f"  ✅ [{total}] {label}: @{h} → {author}", file=sys.stderr)
+    else:
+        failed.append((label, h, url))
+        print(f"  ❌ [{total}] {label}: @{h} → FAKE ({url})", file=sys.stderr)
+    time.sleep(0.12)
 
 # World perspectives
 w = stories.get('world', {})
-world_stories = w.get('stories', [])
-if not world_stories and w.get('conservative'):
-    world_stories = [w]
-for ws in world_stories:
+ws_list = w.get('stories', [])
+if not ws_list and w.get('conservative'):
+    ws_list = [w]
+for ws in ws_list:
     for key in ['conservative', 'democrat', 'independent']:
         p = ws.get(key, {})
-        h = p.get('handle', '').lower().lstrip('@')
-        url = p.get('url', '') or url_map.get(h, f"https://x.com/{h}")
-        if h:
-            all_urls.append(('world.' + key, h, url))
+        if p.get('handle'):
+            check(f'world.{key}', p['handle'], p.get('url',''))
 
 # Sports
 sp = stories.get('sports', {})
 for key in ['main', 'stephena', 'cowherd']:
     s = sp.get(key, {})
-    h = s.get('handle', '').lower().lstrip('@')
-    url = s.get('url', '') or url_map.get(h, f"https://x.com/{h}")
-    if h:
-        all_urls.append(('sports.' + key, h, url))
+    if s.get('handle'):
+        check(f'sports.{key}', s['handle'], s.get('url',''))
 
 # Elon
 for i, ep in enumerate(stories.get('elon', {}).get('posts', [])):
-    h = ep.get('handle', '').lower().lstrip('@')
-    url = ep.get('url', '') or url_map.get(h, f"https://x.com/{h}")
-    if h:
-        all_urls.append((f'elon.{i}', h, url))
+    if ep.get('handle'):
+        check(f'elon.{i}', ep['handle'], ep.get('url',''))
 
 # Pods
 for i, pc in enumerate(stories.get('pods', {}).get('clips', [])):
-    h = pc.get('handle', '').lower().lstrip('@')
-    url = pc.get('url', '') or url_map.get(h, f"https://x.com/{h}")
-    if h:
-        all_urls.append((f'pods.{i}', h, url))
+    if pc.get('handle'):
+        check(f'pods.{i}', pc['handle'], pc.get('url',''))
 
 # Recipe
 for i, rp in enumerate(stories.get('recipe', {}).get('posts', [])):
-    h = rp.get('handle', '').lower().lstrip('@')
-    url = rp.get('url', '') or url_map.get(h, f"https://x.com/{h}")
-    if h:
-        all_urls.append((f'recipe.{i}', h, url))
+    if rp.get('handle'):
+        check(f'recipe.{i}', rp['handle'], rp.get('url',''))
 
 # Simple tabs
 for tab in ['business', 'allin', 'top', 'msm', 'local', 'pg6']:
     d = stories.get(tab, {})
-    h = d.get('handle', '').lower().lstrip('@')
-    url = d.get('url', '') or url_map.get(h, f"https://x.com/{h}")
-    if h and h != 'n/a':
-        all_urls.append((tab, h, url))
+    if d.get('handle') and d.get('handle') != 'N/A':
+        check(tab, d['handle'], d.get('url',''))
 
-# Verify each URL
-verified = {}
-failed = []
-total = len(all_urls)
-for i, (label, handle, url) in enumerate(all_urls):
-    # Prefer Step 1 URL if it has /status/, otherwise use Step 2
-    if '/status/' not in url:
-        step2_url = url_map.get(handle, '')
-        if '/status/' in step2_url:
-            url = step2_url
+pass_rate = len(verified) / total if total > 0 else 0
+print(f"\nVerification: {len(verified)}/{total} passed ({pass_rate:.0%}), {len(failed)} FAKE", file=sys.stderr)
 
-    ok, url_used, author = verify_and_report(handle, url)
-    if ok:
-        verified[handle] = url_used
-        print(f"  ✅ [{i+1}/{total}] {label}: {handle} → VERIFIED ({author})")
-    else:
-        failed.append((label, handle, url))
-        print(f"  ❌ [{i+1}/{total}] {label}: {handle} → FAILED ({url})")
-    time.sleep(0.15)  # rate limit courtesy
+# HARD GATE: If less than 40% pass, ABORT
+if pass_rate < 0.4:
+    print(f"ABORT: Only {pass_rate:.0%} passed verification. Keeping old content.", file=sys.stderr)
+    print("ABORT")
+    sys.exit(0)
 
-# Write verified URL map AND tweet previews for Step 3
-verified_map = json.dumps(verified)
-with open('/tmp/grok_verified_urls.json', 'w') as f:
-    f.write(verified_map)
-
-# Also save tweet text previews for headline verification in Step 3
-tweet_previews = {}
-for label, handle, url in all_urls:
-    if handle in verified:
-        try:
-            oembed_url = f"https://publish.twitter.com/oembed?url={verified[handle]}"
-            req = urllib.request.Request(oembed_url, headers={"User-Agent": "Mozilla/5.0"})
-            resp = urllib.request.urlopen(req, timeout=10)
-            data = json.loads(resp.read())
-            import re as re2
-            text_match = re2.search(r'<p[^>]*>(.*?)</p>', data.get('html',''), re2.DOTALL)
-            if text_match:
-                clean = re2.sub(r'<[^>]+>', '', text_match.group(1))[:200]
-                tweet_previews[handle] = {"text": clean, "author": data.get("author_name","")}
-            time.sleep(0.1)
-        except:
-            pass
-with open('/tmp/grok_tweet_previews.json', 'w') as f:
-    f.write(json.dumps(tweet_previews))
-
-print(f"\nVerification: {len(verified)}/{total} passed, {len(failed)} failed")
-if failed:
-    print("Failed URLs (will use Step 2 fallback):")
-    for label, handle, url in failed:
-        print(f"  - {label}: @{handle} ({url})")
+# Output the verified map as JSON
+print(json.dumps(verified))
 VERIFYEOF
+)
 
-echo "Step 2.5 done."
+if [ "$VERIFY_RESULT" = "ABORT" ] || [ -z "$VERIFY_RESULT" ]; then
+    echo "QUALITY GATE FAILED — not enough verified URLs. Keeping old content."
+    exit 0
+fi
+
+echo "$VERIFY_RESULT" > /tmp/grok_verified_urls.json
+echo "Step 2 done."
 
 # ============================================================
-# STEP 3: Assemble and update index.html
+# STEP 3: Assemble ONLY verified stories into index.html
 # ============================================================
-echo "Step 3: Assembling and updating..."
+echo "Step 3: Assembling verified stories only..."
 
-python3 - "$NOW" "$STEP1" "$STEP2" <<'PYEOF'
+python3 - "$NOW" "$STEP1" <<'PYEOF'
 import json, re, sys
 
 now = sys.argv[1]
 stories = json.loads(sys.argv[2])
-url_data = json.loads(sys.argv[3])
 
-# Build URL lookup from Step 2 (fallback)
-url_map_step2 = {}
-for post in url_data.get('posts', []):
-    handle = post.get('handle', '').lower().lstrip('@')
-    pid = post.get('post_id')
-    if pid and str(pid).isdigit():
-        url_map_step2[handle] = f"https://x.com/{handle}/status/{pid}"
-
-# Load VERIFIED URLs from Step 2.5 (preferred)
+# Load verified URLs + tweet text
 try:
     with open('/tmp/grok_verified_urls.json') as f:
-        verified_urls = json.loads(f.read())
+        verified = json.loads(f.read())
 except:
-    verified_urls = {}
+    verified = {}
 
-# Load tweet previews for headline verification
-try:
-    with open('/tmp/grok_tweet_previews.json') as f:
-        tweet_previews = json.loads(f.read())
-except:
-    tweet_previews = {}
-
-def check_headline_match(handle, headline, body):
-    """Check if headline/body roughly matches actual tweet. Returns corrected (headline, body) or originals."""
+def get_verified_url(handle):
+    """ONLY return verified URLs. Returns None if not verified."""
     h = handle.lower().lstrip('@')
-    if h not in tweet_previews:
-        return headline, body
-    preview = tweet_previews[h]
-    tweet_text = preview.get('text', '')
-    author = preview.get('author', '')
-    if not tweet_text:
-        return headline, body
-    # Check keyword overlap
-    h_words = set(headline.lower().split())
-    t_words = set(tweet_text.lower().split())
-    overlap = h_words & t_words - {'the','a','an','and','or','of','in','on','to','is','for','with','at','by'}
+    v = verified.get(h)
+    if v:
+        return v['url']
+    return None
+
+def get_verified_headline(handle, grok_headline, grok_body):
+    """Use tweet text to fix headline if it doesn't match."""
+    h = handle.lower().lstrip('@')
+    v = verified.get(h)
+    if not v or not v.get('text'):
+        return grok_headline, grok_body
+    tweet_text = v['text']
+    author = v.get('author', '')
+    # Check overlap
+    h_words = set(w.lower() for w in grok_headline.split() if len(w) > 2)
+    t_words = set(w.lower() for w in tweet_text.split() if len(w) > 2)
+    overlap = h_words & t_words
     if len(overlap) >= 2:
-        return headline, body  # Good enough match
-    # Mismatch — use tweet text as headline
-    clean_headline = tweet_text[:80].strip()
+        return grok_headline, grok_body  # Close enough
+    # Use tweet text as headline
+    clean = tweet_text[:80].strip()
     if len(tweet_text) > 80:
-        clean_headline = clean_headline.rsplit(' ', 1)[0] + '...'
-    new_body = f"{author}: {tweet_text[:250]}"
-    print(f"  HEADLINE FIX: '{headline[:50]}' → '{clean_headline[:50]}'")
-    return clean_headline, new_body
-
-def get_url(handle):
-    h = handle.lower().lstrip('@')
-    # Priority: verified > step2 > profile fallback
-    if h in verified_urls:
-        return verified_urls[h]
-    if h in url_map_step2:
-        return url_map_step2[h]
-    # Check if Step 1 provided a URL with /status/
-    return f"https://x.com/{h}"
-
-def get_url_from_data(handle, step1_url=None):
-    """Get URL with Step 1 URL as additional option."""
-    h = handle.lower().lstrip('@')
-    if h in verified_urls:
-        return verified_urls[h]
-    if step1_url and '/status/' in str(step1_url):
-        return step1_url
-    if h in url_map_step2:
-        return url_map_step2[h]
-    return f"https://x.com/{h}"
+        clean = clean.rsplit(' ', 1)[0] + '...'
+    return clean, f"{author}: {tweet_text[:250]}"
 
 with open('index.html', 'r') as f:
     html = f.read()
 
 # ---- PRESERVE OLD STORIES INTO EARLIER ----
-# Extract the current lastUpdated time to stamp old stories
 old_time_match = re.search(r'lastUpdated: "([^"]*)"', html)
 old_time = old_time_match.group(1) if old_time_match else now
 from datetime import datetime
@@ -431,36 +379,28 @@ except:
     old_time_short = old_time
 
 def preserve_earlier(tab_name, html_text):
-    """Move current stories into the earlier array for a given tab."""
-    # Extract current stories block
     pattern = r'(' + re.escape(tab_name) + r': \{[^}]*?stories: )(\[.*?\])(,\s*earlier: )(\[.*?\])'
     m = re.search(pattern, html_text, flags=re.DOTALL)
     if not m:
         return html_text
     old_stories_js = m.group(2).strip()
     old_earlier_js = m.group(4).strip()
-    # Skip if old stories are empty
     if old_stories_js == '[]':
         return html_text
-    # Filter out "Honesty footnotes" entries from old stories before archiving
-    # Add time stamp to each old story
     old_stories_stamped = re.sub(
         r'(\{[\s\n]*headline:)',
         '{ time: "' + old_time_short + '", headline:',
         old_stories_js
     )
-    # Remove honesty footnote objects from earlier (they clutter the archive)
     old_stories_stamped = re.sub(
         r',?\s*\{\s*time:[^}]*headline:\s*"Honesty footnotes"[^}]*\}',
         '',
         old_stories_stamped
     )
-    # Merge: prepend old stories to existing earlier array
     if old_earlier_js == '[]':
         new_earlier = old_stories_stamped
     else:
-        # Insert old stories at the beginning of earlier
-        inner_old = old_stories_stamped.strip()[1:-1].strip()  # strip [ ]
+        inner_old = old_stories_stamped.strip()[1:-1].strip()
         inner_existing = old_earlier_js.strip()[1:-1].strip()
         if inner_old and inner_existing:
             new_earlier = '[' + inner_old + ',\n' + inner_existing + ']'
@@ -468,7 +408,6 @@ def preserve_earlier(tab_name, html_text):
             new_earlier = '[' + inner_old + ']'
         else:
             new_earlier = old_earlier_js
-    # Replace the earlier array in html
     html_text = re.sub(
         r'(' + re.escape(tab_name) + r': \{[^}]*?stories: \[.*?\],\s*earlier: )\[.*?\]',
         lambda mx: mx.group(1) + new_earlier,
@@ -476,7 +415,7 @@ def preserve_earlier(tab_name, html_text):
     )
     return html_text
 
-# Preserve stories for all tabs before overwriting
+# Preserve stories for all tabs
 all_tabs = ['world', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'local', 'recipe', 'pods', 'pg6']
 for tab in all_tabs:
     if tab in stories:
@@ -487,10 +426,11 @@ html = re.sub(r'lastUpdated: "[^"]*"', 'lastUpdated: "' + now + '"', html)
 def js_str(s):
     return json.dumps(s)
 
-# ---- Update WORLD (1-3 stories) ----
+updated_tabs = 0
+
+# ---- Update WORLD (only verified perspectives) ----
 if 'world' in stories:
     w = stories['world']
-    # Support both array format and legacy single-story format
     world_stories = w.get('stories', [])
     if not world_stories and w.get('conservative'):
         world_stories = [w]
@@ -502,7 +442,9 @@ if 'world' in stories:
             p = ws.get(key, {})
             if not p.get('handle'):
                 continue
-            url = get_url_from_data(p['handle'], p.get('url'))
+            url = get_verified_url(p['handle'])
+            if not url:
+                continue  # SKIP unverified perspectives
             text = p.get('angle', '')
             honesty = ws.get('honesty', '8/10')
             persp_lines.append(
@@ -510,10 +452,11 @@ if 'world' in stories:
                 '", url: "' + url + '", text: ' + js_str(text) +
                 ', honesty: "' + honesty + '" }'
             )
+        if not persp_lines:
+            continue  # Skip story if no verified perspectives
         persp_js = ",\n".join(persp_lines)
         footnotes = ws.get('footnotes', [])
         fn_js = json.dumps(footnotes) if footnotes else '[]'
-
         story_blocks.append(
             '{\n'
             '          headline: ' + js_str(ws.get('headline', ws.get('topic', ''))) + ',\n'
@@ -525,28 +468,28 @@ if 'world' in stories:
             '        }'
         )
 
-    new_stories = '[\n        ' + ',\n        '.join(story_blocks) + '\n      ]'
+    if story_blocks:
+        new_stories = '[\n        ' + ',\n        '.join(story_blocks) + '\n      ]'
+        html = re.sub(
+            r'(world: \{[^}]*?stories: )\[.*?\](,\s*earlier:)',
+            lambda m: m.group(1) + new_stories + m.group(2),
+            html, flags=re.DOTALL
+        )
+        updated_tabs += 1
 
-    html = re.sub(
-        r'(world: \{[^}]*?stories: )\[.*?\](,\s*earlier:)',
-        lambda m: m.group(1) + new_stories + m.group(2),
-        html, flags=re.DOTALL
-    )
-
-# ---- Update SPORTS (main + Stephen A + Cowherd) ----
+# ---- Update SPORTS (only verified) ----
 if 'sports' in stories:
     sp = stories['sports']
     sport_stories = []
-
     for key in ['main', 'stephena', 'cowherd']:
         s = sp.get(key, {})
         if not s.get('handle'):
             continue
-        url = get_url_from_data(s['handle'], s.get('url'))
+        url = get_verified_url(s['handle'])
+        if not url:
+            continue  # SKIP unverified
         prefix = '\U0001f3a4 ' if key in ('stephena', 'cowherd') else ''
-        s_headline = s.get('headline', '')
-        s_body = s.get('body', '')
-        s_headline, s_body = check_headline_match(s['handle'], s_headline, s_body)
+        s_headline, s_body = get_verified_headline(s['handle'], s.get('headline',''), s.get('body',''))
         sport_stories.append(
             '{\n'
             '          headline: ' + js_str(prefix + s_headline) + ',\n'
@@ -557,27 +500,26 @@ if 'sports' in stories:
             '          body: ' + js_str(s_body) + '\n'
             '        }'
         )
-        # Add honesty footnote after main story
         if key == 'main':
             sport_stories.append(
                 '{ headline: "Honesty footnotes", body: ' + js_str(s.get('notes', '')) + ' }'
             )
+    if sport_stories:
+        new_stories = '[' + ',\n        '.join(sport_stories) + '\n      ]'
+        pattern = r'(sports: \{[^}]*?stories: )\[.*?\](,\s*earlier:)'
+        html = re.sub(pattern, lambda m: m.group(1) + new_stories + m.group(2), html, flags=re.DOTALL)
+        updated_tabs += 1
 
-    new_stories = '[' + ',\n        '.join(sport_stories) + '\n      ]'
-    pattern = r'(sports: \{[^}]*?stories: )\[.*?\](,\s*earlier:)'
-    html = re.sub(pattern, lambda m: m.group(1) + new_stories + m.group(2), html, flags=re.DOTALL)
-
-# ---- Update ELON (3 bangers) ----
+# ---- Update ELON (only verified) ----
 if 'elon' in stories:
-    elon = stories['elon']
     elon_stories = []
-    for ep in elon.get('posts', []):
+    for ep in stories['elon'].get('posts', []):
         if not ep.get('handle'):
             continue
-        url = get_url_from_data(ep['handle'], ep.get('url'))
-        ep_headline = ep.get('headline', '')
-        ep_body = ep.get('body', '')
-        ep_headline, ep_body = check_headline_match(ep['handle'], ep_headline, ep_body)
+        url = get_verified_url(ep['handle'])
+        if not url:
+            continue
+        ep_headline, ep_body = get_verified_headline(ep['handle'], ep.get('headline',''), ep.get('body',''))
         elon_stories.append(
             '{\n'
             '          headline: ' + js_str(ep_headline) + ',\n'
@@ -588,22 +530,23 @@ if 'elon' in stories:
             '          body: ' + js_str(ep_body) + '\n'
             '        }'
         )
-    new_stories = '[' + ',\n        '.join(elon_stories) + '\n      ]'
-    pattern = r'(elon: \{[^}]*?stories: )\[.*?\](,\s*earlier:)'
-    html = re.sub(pattern, lambda m: m.group(1) + new_stories + m.group(2), html, flags=re.DOTALL)
+    if elon_stories:
+        new_stories = '[' + ',\n        '.join(elon_stories) + '\n      ]'
+        pattern = r'(elon: \{[^}]*?stories: )\[.*?\](,\s*earlier:)'
+        html = re.sub(pattern, lambda m: m.group(1) + new_stories + m.group(2), html, flags=re.DOTALL)
+        updated_tabs += 1
 
-# ---- Update PODS (3 clips) ----
+# ---- Update PODS (only verified) ----
 if 'pods' in stories:
-    pods = stories['pods']
     pod_stories = []
     notes_all = []
-    for pc in pods.get('clips', []):
+    for pc in stories['pods'].get('clips', []):
         if not pc.get('handle'):
             continue
-        url = get_url_from_data(pc['handle'], pc.get('url'))
-        pc_headline = pc.get('headline', '')
-        pc_body = pc.get('body', '')
-        pc_headline, pc_body = check_headline_match(pc['handle'], pc_headline, pc_body)
+        url = get_verified_url(pc['handle'])
+        if not url:
+            continue
+        pc_headline, pc_body = get_verified_headline(pc['handle'], pc.get('headline',''), pc.get('body',''))
         pod_stories.append(
             '{\n'
             '          headline: ' + js_str(pc_headline) + ',\n'
@@ -615,25 +558,26 @@ if 'pods' in stories:
             '        }'
         )
         notes_all.append(pc.get('notes', ''))
-    pod_stories.append(
-        '{ headline: "Honesty footnotes", body: ' + js_str(' '.join(notes_all)) + ' }'
-    )
-    new_stories = '[' + ',\n        '.join(pod_stories) + '\n      ]'
-    pattern = r'(pods: \{[^}]*?stories: )\[.*?\](,\s*earlier:)'
-    html = re.sub(pattern, lambda m: m.group(1) + new_stories + m.group(2), html, flags=re.DOTALL)
+    if pod_stories:
+        pod_stories.append(
+            '{ headline: "Honesty footnotes", body: ' + js_str(' '.join(notes_all)) + ' }'
+        )
+        new_stories = '[' + ',\n        '.join(pod_stories) + '\n      ]'
+        pattern = r'(pods: \{[^}]*?stories: )\[.*?\](,\s*earlier:)'
+        html = re.sub(pattern, lambda m: m.group(1) + new_stories + m.group(2), html, flags=re.DOTALL)
+        updated_tabs += 1
 
-# ---- Update RECIPE (2 posts) ----
+# ---- Update RECIPE (only verified) ----
 if 'recipe' in stories:
-    recipe = stories['recipe']
     recipe_stories = []
     notes_all = []
-    for rp in recipe.get('posts', []):
+    for rp in stories['recipe'].get('posts', []):
         if not rp.get('handle'):
             continue
-        url = get_url_from_data(rp['handle'], rp.get('url'))
-        rp_headline = rp.get('headline', '')
-        rp_body = rp.get('body', '')
-        rp_headline, rp_body = check_headline_match(rp['handle'], rp_headline, rp_body)
+        url = get_verified_url(rp['handle'])
+        if not url:
+            continue
+        rp_headline, rp_body = get_verified_headline(rp['handle'], rp.get('headline',''), rp.get('body',''))
         recipe_stories.append(
             '{\n'
             '          headline: ' + js_str(rp_headline) + ',\n'
@@ -645,14 +589,16 @@ if 'recipe' in stories:
             '        }'
         )
         notes_all.append(rp.get('notes', ''))
-    recipe_stories.append(
-        '{ headline: "Honesty footnotes", body: ' + js_str(' '.join(notes_all)) + ' }'
-    )
-    new_stories = '[' + ',\n        '.join(recipe_stories) + '\n      ]'
-    pattern = r'(recipe: \{[^}]*?stories: )\[.*?\](,\s*earlier:)'
-    html = re.sub(pattern, lambda m: m.group(1) + new_stories + m.group(2), html, flags=re.DOTALL)
+    if recipe_stories:
+        recipe_stories.append(
+            '{ headline: "Honesty footnotes", body: ' + js_str(' '.join(notes_all)) + ' }'
+        )
+        new_stories = '[' + ',\n        '.join(recipe_stories) + '\n      ]'
+        pattern = r'(recipe: \{[^}]*?stories: )\[.*?\](,\s*earlier:)'
+        html = re.sub(pattern, lambda m: m.group(1) + new_stories + m.group(2), html, flags=re.DOTALL)
+        updated_tabs += 1
 
-# ---- Update simple tabs (business, allin, top, msm, local) ----
+# ---- Update simple tabs (ONLY if verified) ----
 simple_tabs = ['business', 'allin', 'top', 'msm', 'local', 'pg6']
 for tab in simple_tabs:
     if tab not in stories:
@@ -661,11 +607,11 @@ for tab in simple_tabs:
     handle = d.get('handle', '')
     if not handle or handle == 'N/A':
         continue
+    url = get_verified_url(handle)
+    if not url:
+        continue  # SKIP unverified — keep old content for this tab
 
-    url = get_url_from_data(handle, d.get('url'))
-    headline_raw = d.get('headline', d.get('topic', ''))
-    body_raw = d.get('body', '')
-    headline_raw, body_raw = check_headline_match(handle, headline_raw, body_raw)
+    headline_raw, body_raw = get_verified_headline(handle, d.get('headline', d.get('topic','')), d.get('body',''))
 
     new_stories = (
         '[{\n'
@@ -682,17 +628,13 @@ for tab in simple_tabs:
 
     pattern = r'(' + re.escape(tab) + r': \{[^}]*?stories: )\[.*?\](,\s*earlier:)'
     html = re.sub(pattern, lambda m, ns=new_stories: m.group(1) + ns + m.group(2), html, flags=re.DOTALL)
+    updated_tabs += 1
 
-# Report URL quality
+# Final quality report
 import re as re2
 status_urls = re2.findall(r'url: "https://x\.com/[^"]+/status/\d+', html)
 profile_urls = re2.findall(r'url: "https://x\.com/[a-zA-Z0-9_]+"[,\s]', html)
-verified_count = sum(1 for u in status_urls if any(v in u for v in verified_urls.values()))
-print(f"URLs with /status/: {len(status_urls)} | Verified via oEmbed: {len(verified_urls)} | Profile-only: {len(profile_urls)}")
-if profile_urls:
-    print("WARNING: Some stories have profile-only URLs (no /status/ ID)")
-    for pu in profile_urls:
-        print(f"  ⚠️  {pu.strip()}")
+print(f"Updated {updated_tabs} tabs | URLs with /status/: {len(status_urls)} | Profile-only: {len(profile_urls)}")
 
 with open('index.html', 'w') as f:
     f.write(html)
