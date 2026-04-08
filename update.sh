@@ -26,8 +26,8 @@ STEP1_RAW=$(curl -s --max-time 180 https://api.x.ai/v1/responses \
 {
   "model": "grok-4.20-0309-reasoning",
   "input": [
-    {"role": "system", "content": "You are Grok, the AI of X. Answer in JSON only. No markdown, no code blocks.\n\nCRITICAL: You MUST use web_search to find every URL. Do NOT invent or guess URLs. If you cannot find a real post URL via web_search, set url to null.\n\nCRITICAL: Only use handles from the APPROVED LISTS below. Do NOT invent handles."},
-    {"role": "user", "content": "Find the best trending stories on X right now. Use web_search for EVERY URL.\n\nIMPORTANT: ONLY use handles from these approved lists. Do NOT make up handles.\n\nAPPROVED HANDLES BY CATEGORY:\n\nWORLD Conservative: @JackPosobiec, @baboramus, @baboramus, @Cernovich, @RealCandaceO, @benshapiro, @TuckerCarlson, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @TomFitton, @JesseBWatters, @IngrahamAngle, @WarMonitors, @sentdefender, @CriticalThreats, @WhiteHouse\nWORLD Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @kaboramus, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews, @maboramus\nWORLD Independent: @HamidRezaAz, @TheStudyofWar, @vtchakarova, @RayDalio, @dalperovitch, @InsightGL, @KimZetter, @Snowden, @ggreenwald\n\nBUSINESS: @DowdEdward, @RayDalio, @Stocktwits, @StockMKTNewz, @zaboramus, @WatcherGuru, @unusual_whales, @TruthGundlach, @LizAnnSonders, @elerianm\n\nSPORTS main: @ShamsCharania, @wojespn, @ClutchPoints, @BleacherReport, @CourtsideBuzzX, @lukaupdates, @PolymarketHoops, @TheAthletic, @ESPNStatsInfo\nSPORTS stephena: @stephenasmith (MUST use this exact handle)\nSPORTS cowherd: @TheHerd, @colincowherd (MUST use one of these)\n\nELON: @elonmusk (MUST use this exact handle, find 3 different recent posts)\n\nPODS: @joerogan, @joeroganhq, @TuckerCarlson, @theallinpod, @lexfridman, @CallHerDaddy, @adamcarolla, @JREClips, @enews\n\nALLIN ($age): @chamath, @DavidSacks, @pmarca, @PalmerLuckey, @friedberg\n\nTOP: Any handle — but it MUST be the single most viral post on X right now. Use web_search.\n\nMSM: @BillMelugin_, @libaboramus, @MattWalshBlog, @TimcastNews, @TheRabbitHole84, @SCOTUSblog, @InsightGL, @JamesOKeefeIII\n\nRECIPE: @tasteofhome, @FoodNetwork, @thekitchn, @HBHarvest, @foodandwine, @tasty, @KitchenSanc2ary, @budgetbytes\n\nLOCAL (must be Orange County/Newport Beach/SoCal): @OC_Scanner, @ABC7, @ABORAMUS, @LAist, @ABORAMUS, @KTLA, @ABORAMUS\n\nPG6: @PopCrave, @enaboramus, @enews, @JustJared, @etnow, @TMZ\n\nFor each category, search X for the MOST RECENT trending post from these handles. Use web_search to find each URL.\n\nJSON format:\n{\"world\":{\"stories\":[{\"topic\":\"...\",\"headline\":\"...\",\"conservative\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"democrat\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"independent\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"honesty\":\"X/10\",\"notes\":\"...\",\"footnotes\":[\"...\",\"...\"]}]},\"business\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"sports\":{\"main\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"stephena\":{\"headline\":\"...\",\"handle\":\"@stephenasmith\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"cowherd\":{\"headline\":\"...\",\"handle\":\"@TheHerd\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}},\"elon\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@elonmusk\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"pods\":{\"clips\":[{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"allin\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"top\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"msm\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"recipe\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"local\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"pg6\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}}"}
+    {"role": "system", "content": "You are Grok, the AI of X. Answer in JSON only. No markdown, no code blocks.\n\nCRITICAL: You MUST use web_search to find every URL. Do NOT invent or guess URLs. If you cannot find a real post URL via web_search, set url to null.\n\nCRITICAL: Only use handles from the APPROVED LISTS below. Do NOT invent handles.\n\nENGAGEMENT QUALITY RULE: ONLY pick posts with HIGH ENGAGEMENT. Minimum 5,000 likes OR 500 replies OR 1,000 retweets. Prioritize VIRAL posts — the ones generating the most conversation, debate, and interaction. If a handle has no high-engagement recent posts, skip them and pick a different handle from the approved list who DOES have viral content. We want the hottest, most-discussed posts on X — NOT random low-interaction tweets. Include approximate engagement numbers (likes, replies, retweets) in the body text so we can verify quality."},
+    {"role": "user", "content": "Find the MOST VIRAL, highest-engagement trending stories on X right now. Use web_search for EVERY URL.\n\nIMPORTANT: ONLY use handles from these approved lists. Do NOT make up handles.\n\nPRIORITY: Pick the posts with the MOST likes, replies, retweets, and interaction. We want posts that are BLOWING UP — going viral, generating massive threads, sparking debate. If you see a post with 50K likes, pick that over one with 2K likes. Engagement is KING.\n\nAPPROVED HANDLES BY CATEGORY:\n\nWORLD Conservative: @JackPosobiec, @baboramus, @baboramus, @Cernovich, @RealCandaceO, @benshapiro, @TuckerCarlson, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @TomFitton, @JesseBWatters, @IngrahamAngle, @WarMonitors, @sentdefender, @CriticalThreats, @WhiteHouse\nWORLD Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @kaboramus, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews, @maboramus\nWORLD Independent: @HamidRezaAz, @TheStudyofWar, @vtchakarova, @RayDalio, @dalperovitch, @InsightGL, @KimZetter, @Snowden, @ggreenwald\n\nBUSINESS: @DowdEdward, @RayDalio, @Stocktwits, @StockMKTNewz, @zaboramus, @WatcherGuru, @unusual_whales, @TruthGundlach, @LizAnnSonders, @elerianm\n\nSPORTS main: @ShamsCharania, @wojespn, @ClutchPoints, @BleacherReport, @CourtsideBuzzX, @lukaupdates, @PolymarketHoops, @TheAthletic, @ESPNStatsInfo\nSPORTS stephena: @stephenasmith (MUST use this exact handle)\nSPORTS cowherd: @TheHerd, @colincowherd (MUST use one of these)\n\nELON: @elonmusk (MUST use this exact handle, find 3 DIFFERENT recent posts — each must have a DIFFERENT tweet URL and DIFFERENT topic. Do NOT return the same tweet 3 times. Search for 3 separate posts. Pick the ones with the MOST engagement)\n\nPODS: @joerogan, @joeroganhq, @TuckerCarlson, @theallinpod, @lexfridman, @CallHerDaddy, @adamcarolla, @JREClips, @enews\n\nALLIN ($age): @chamath, @DavidSacks, @pmarca, @PalmerLuckey, @friedberg\n\nTOP: Any handle — it MUST be the single most VIRAL post on ALL of X right now. The one EVERYONE is talking about. Use web_search to find the post with the absolute highest engagement.\n\nMSM: @BillMelugin_, @libaboramus, @MattWalshBlog, @TimcastNews, @TheRabbitHole84, @SCOTUSblog, @InsightGL, @JamesOKeefeIII\n\nRECIPE: @tasteofhome, @FoodNetwork, @thekitchn, @HBHarvest, @foodandwine, @tasty, @KitchenSanc2ary, @budgetbytes\n\nLOCAL (MUST be Orange County / Newport Beach / SoCal — pick stories that would be FRONT PAGE of the Daily Pilot or OC Register. Real local NEWS: crime, politics, development, community issues, weather events, school board, city council, major local events. NOT random beach photos or fluff): @OC_Scanner, @ABC7, @ABORAMUS, @LAist, @ABORAMUS, @KTLA, @ABORAMUS, @OCRegister, @DailyPilot, @NBPDsocial, @CityofNewportBeach\n\nPG6: @PopCrave, @enaboramus, @enews, @JustJared, @etnow, @TMZ\n\nFor each category, search X for the post with the HIGHEST ENGAGEMENT from these handles. Use web_search to find each URL.\n\nJSON format:\n{\"world\":{\"stories\":[{\"topic\":\"...\",\"headline\":\"...\",\"conservative\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"democrat\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"independent\":{\"handle\":\"@...\",\"url\":\"https://x.com/.../status/...\",\"angle\":\"...\"},\"honesty\":\"X/10\",\"notes\":\"...\",\"footnotes\":[\"...\",\"...\"]}]},\"business\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"sports\":{\"main\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"stephena\":{\"headline\":\"...\",\"handle\":\"@stephenasmith\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"cowherd\":{\"headline\":\"...\",\"handle\":\"@TheHerd\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}},\"elon\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@elonmusk\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"pods\":{\"clips\":[{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"allin\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"top\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"msm\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"recipe\":{\"posts\":[{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}]},\"local\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"},\"pg6\":{\"headline\":\"...\",\"handle\":\"@...\",\"url\":\"...\",\"body\":\"...\",\"honesty\":\"X/10\",\"notes\":\"...\"}}"}
   ],
   "tools": [{"type": "web_search"}],
   "max_output_tokens": 8000,
@@ -349,10 +349,32 @@ def get_verified_headline(handle, grok_headline, grok_body):
     """Use tweet text to fix headline if it doesn't match."""
     h = handle.lower().lstrip('@')
     v = verified.get(h)
+
+    # QUALITY: If headline is a URL/link or garbage, always replace it
+    is_garbage_headline = (
+        grok_headline.startswith('http') or
+        grok_headline.startswith('https://t.co') or
+        len(grok_headline.strip()) < 5
+    )
+
     if not v or not v.get('text'):
+        if is_garbage_headline and grok_body and not grok_body.startswith('http'):
+            clean = grok_body[:80].strip()
+            if len(grok_body) > 80:
+                clean = clean.rsplit(' ', 1)[0] + '...'
+            return clean, grok_body
         return grok_headline, grok_body
+
     tweet_text = v['text']
     author = v.get('author', '')
+
+    # If headline is garbage, always use tweet text
+    if is_garbage_headline:
+        clean = tweet_text[:80].strip()
+        if len(tweet_text) > 80:
+            clean = clean.rsplit(' ', 1)[0] + '...'
+        return clean, f"{author}: {tweet_text[:250]}"
+
     # Check overlap
     h_words = set(w.lower() for w in grok_headline.split() if len(w) > 2)
     t_words = set(w.lower() for w in tweet_text.split() if len(w) > 2)
@@ -510,15 +532,20 @@ if 'sports' in stories:
         html = re.sub(pattern, lambda m: m.group(1) + new_stories + m.group(2), html, flags=re.DOTALL)
         updated_tabs += 1
 
-# ---- Update ELON (only verified) ----
+# ---- Update ELON (only verified, DEDUPLICATED) ----
 if 'elon' in stories:
     elon_stories = []
+    seen_elon_urls = set()
     for ep in stories['elon'].get('posts', []):
         if not ep.get('handle'):
             continue
         url = get_verified_url(ep['handle'])
         if not url:
             continue
+        # DEDUP: skip if we already have this URL
+        if url in seen_elon_urls:
+            continue
+        seen_elon_urls.add(url)
         ep_headline, ep_body = get_verified_headline(ep['handle'], ep.get('headline',''), ep.get('body',''))
         elon_stories.append(
             '{\n'
