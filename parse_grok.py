@@ -269,7 +269,7 @@ def enrich_urls(data):
                 tasks.append((['world', wi, key], p['handle'], w.get('headline', '')))
 
     # Array tabs
-    for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'local']:
+    for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'local', 'top', 'msm', 'pg6', 'recipe', 'science']:
         items = data.get(tab, [])
         if not isinstance(items, list):
             items = [items]
@@ -277,11 +277,7 @@ def enrich_urls(data):
             if isinstance(item, dict) and item.get('handle') and not item.get('url'):
                 tasks.append(([tab, i], item['handle'], item.get('headline', '')))
 
-    # Single tabs
-    for tab in ['top', 'msm', 'pg6', 'recipe', 'science']:
-        item = data.get(tab, {})
-        if isinstance(item, dict) and item.get('handle') and not item.get('url'):
-            tasks.append(([tab], item['handle'], item.get('headline', '')))
+    # (All tabs now handled as arrays above)
 
     if not tasks:
         return data
@@ -498,7 +494,7 @@ else:
     output['world'] = existing.get('world', {'stories': [], 'earlier': []})
 
 # Process array tabs (elon, sports, allin, pods, business)
-for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'local']:
+for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'local', 'top', 'msm', 'pg6', 'recipe', 'science']:
     tab_data = data.get(tab, [])
     posts = tab_data if isinstance(tab_data, list) else [tab_data]
     cleaned = []
@@ -523,20 +519,7 @@ for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'local']:
         print(f"  WARNING: {tab} had no valid stories, keeping old", file=sys.stderr)
         output[tab] = existing.get(tab, {'stories': [], 'earlier': []})
 
-# Process single-post tabs
-for tab in ['top', 'msm', 'pg6', 'recipe', 'science']:
-    s = clean_story(data.get(tab, {}))
-    tab_earlier = existing.get(tab, {}).get('earlier', [])
-    if s:
-        old_stories = existing.get(tab, {}).get('stories', [])
-        for old in old_stories:
-            old['time'] = old.get('time', update_time)
-            tab_earlier.insert(0, old)
-        tab_earlier = tab_earlier[:10]
-        output[tab] = {'stories': [s], 'earlier': tab_earlier}
-    else:
-        print(f"  WARNING: {tab} failed validation, keeping old", file=sys.stderr)
-        output[tab] = existing.get(tab, {'stories': [], 'earlier': []})
+# (All tabs now processed as arrays above)
 
 # ---- Quality report ----
 total_stories = 0
