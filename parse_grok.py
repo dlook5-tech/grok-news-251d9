@@ -218,11 +218,11 @@ def find_tweet_url(handle, headline):
     if not XAI_API_KEY:
         return None
     h = handle.lstrip('@')
-    prompt = f'Find the most recent tweet by @{h} about: "{headline}". Return ONLY the tweet URL in format https://x.com/{h}/status/NUMERIC_ID. Nothing else — just the URL or "null" if not found.'
+    prompt = f'Use the x_search tool to search for: from:{h} {headline[:60]}. Return ONLY the tweet URL from the x_search results in format https://x.com/{h}/status/NUMERIC_ID. You MUST use x_search to find real posts. Do NOT invent or reason about status IDs. Only return URLs from actual tool results. If x_search returns no results, return "null".'
     payload = json.dumps({
-        'model': 'grok-4.20-0309-reasoning',
+        'model': 'grok-4-1-fast-non-reasoning',
         'input': [
-            {'role': 'system', 'content': 'Return ONLY a tweet URL. No explanation.'},
+            {'role': 'system', 'content': 'You MUST call x_search before answering. Return ONLY a tweet URL from the search results. Do NOT generate or guess status IDs. No explanation.'},
             {'role': 'user', 'content': prompt}
         ],
         'tools': [{'type': 'x_search'}],
