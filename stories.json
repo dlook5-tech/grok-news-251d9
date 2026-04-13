@@ -1,43 +1,157 @@
 {
-  "lastUpdated": "4/13/2026, 12:32:38 AM",
+  "lastUpdated": "4/13/2026, 12:41:23 AM",
   "world": {
     "stories": [
       {
-        "headline": "US imposes naval blockade on Strait of Hormuz after Iran talks collapse",
+        "headline": "US blockades Strait of Hormuz after failed Iran nuclear talks in Pakistan",
+        "honesty": "9/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@WhiteHouse",
+            "url": "https://x.com/WhiteHouse/status/2043344995181011027",
+            "text": "Effective immediately, the United States Navy will begin the process of BLOCKADING any and all Ships trying to enter, or leave, the Strait of Hormuz.",
+            "engagement": "32K likes, 8.7K reposts",
+            "honesty": "10/10"
+          },
+          {
+            "label": "Democrat",
+            "handle": "@BernieSanders",
+            "url": "https://x.com/BernieSanders/status/2043334969750159384",
+            "text": "Trump wants another $500 billion for the military, on top of the $1 trillion we already spend. He wants to pay for that by cutting health care, child care and other needs of the working class.",
+            "engagement": "50K likes, 11K reposts",
+            "honesty": "7/10"
+          },
+          {
+            "label": "Independent",
+            "handle": "@TheStudyofWar",
+            "url": "https://x.com/TheStudyofWar/status/2043186199427256762",
+            "text": "Iran is using naval mines in the Strait of Hormuz to force ships into Iranian waters for protection fees, illegal under UNCLOS; US seeks narrow de-escalation on Hormuz.",
+            "engagement": "2.3K likes, 836 reposts",
+            "honesty": "9/10"
+          }
+        ],
+        "footnotes": [
+          "Conservative view supports strong action",
+          "Democrat criticizes escalation and military spending",
+          "Independent analyzes negotiation friction and mine threats"
+        ],
+        "notes": "Well-sourced reporting from official statements and OSINT",
+        "body": "Three-perspective roundup."
+      },
+      {
+        "headline": "Viktor Orban concedes Hungarian election defeat to opposition",
+        "honesty": "9/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@benshapiro",
+            "url": "https://x.com/benshapiro/status/2043366959727722982",
+            "text": "Only this president had the balls to keep the promises other presidents have made.",
+            "engagement": "9.6K likes, 844 reposts",
+            "honesty": "7/10"
+          },
+          {
+            "label": "Democrat",
+            "handle": "@BarackObama",
+            "url": "https://x.com/BarackObama/status/2043507244893982757",
+            "text": "The victory of the opposition in Hungary yesterday is a victory for democracy, not just in Europe but around the world.",
+            "engagement": "114K likes, 11K reposts",
+            "honesty": "8/10"
+          },
+          {
+            "label": "Independent",
+            "handle": "@ggreenwald",
+            "url": "https://x.com/ggreenwald/status/2043351890717483201",
+            "text": "When an election is held and the western establishment's preferred candidate wins, a free and fair election is instantly declared; if loses, it's fraud.",
+            "engagement": "2.1K likes, 410 reposts",
+            "honesty": "8/10"
+          }
+        ],
+        "footnotes": [
+          "Likely praises as win against globalism",
+          "Sees as democracy victory",
+          "Questions election integrity standards"
+        ],
+        "notes": "Confirmed by AP and multiple sources",
+        "body": "Three-perspective roundup."
+      },
+      {
+        "headline": "Trump attacks Pope over Iran war stance amid escalating tensions",
         "honesty": "8/10",
         "perspectives": [
           {
             "label": "Conservative",
-            "handle": "@JackPosobiec",
-            "url": "https://x.com/JackPosobiec/status/2043437329180676394",
-            "text": "It\u2019s all about China.",
-            "engagement": "421 likes, 94 reposts",
-            "honesty": "8/10"
+            "handle": "@RealCandaceO",
+            "url": "https://x.com/RealCandaceO/status/2043520517064228876",
+            "text": "This will be consequential for JD Vance.",
+            "engagement": "9.9K likes, 1.2K reposts",
+            "honesty": "7/10"
+          },
+          {
+            "label": "Democrat",
+            "handle": "@RashidaTlaib",
+            "url": "https://x.com/RashidaTlaib/status/2043445359154802718",
+            "text": "Majority of Congress is silent.",
+            "engagement": "15K likes, 3.5K reposts",
+            "honesty": "7/10"
+          },
+          {
+            "label": "Independent",
+            "handle": "@sentdefender",
+            "url": "https://x.com/sentdefender/status/2043158579612422558",
+            "text": "Uptick in traffic through Strait of Hormuz with at least 10 ships transiting.",
+            "engagement": "3.8K likes, 491 reposts",
+            "honesty": "9/10"
+          }
+        ],
+        "footnotes": [
+          "Supports Trump's tough stance",
+          "Condemns attack on religious leader",
+          "Sees as symptom of broader policy shift"
+        ],
+        "notes": "Direct quotes from Trump statements",
+        "body": "Three-perspective roundup."
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "Eric Swalwell suspends California governor campaign amid allegations",
+        "honesty": "9/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@OC_Scanner",
+            "url": "https://x.com/OC_Scanner/status/2043496462454317395",
+            "text": "Suspending amid numerous allegations of wrongdoings.",
+            "engagement": "42 likes, 3 reposts",
+            "honesty": "9/10"
           },
           {
             "label": "Democrat",
             "handle": "@AOC",
             "url": "https://x.com/aoc",
-            "text": "Trump's war risks American lives and global economy for oil interests.",
+            "text": "Smears won't stop progressive fight.",
             "engagement": "0 likes, 0 reposts",
             "honesty": "7/10"
           },
           {
             "label": "Independent",
             "handle": "@ggreenwald",
-            "url": "https://x.com/ggreenwald/status/2043351890717483201",
-            "text": "Western establishment cries fraud only when their candidate loses elections.",
+            "url": "https://x.com/ggreenwald",
+            "text": "Political scandals reveal hypocrisy.",
             "engagement": "2.5K likes, 410 reposts",
             "honesty": "9/10"
           }
         ],
         "footnotes": [
-          "Conservative view emphasizes strong US action against Iran",
-          "Democrat angle critiques escalation risks",
-          "Independent highlights strategic China links"
+          "1. Conservative: Long overdue",
+          "2. Democrat: False smears",
+          "3. Independent: Past judgment issues"
         ],
-        "notes": "Sourced reporting on escalating US-Iran tensions",
-        "body": "Three-perspective roundup."
+        "notes": "Firsthand announcement",
+        "body": "Three-perspective roundup.",
+        "time": "12:41 AM"
       },
       {
         "headline": "Bucks fire Doc Rivers after missing playoffs with Giannis",
@@ -74,47 +188,47 @@
           "3. Independent: Coaching mismatch"
         ],
         "notes": "Direct insider reporting",
-        "body": "Three-perspective roundup."
+        "body": "Three-perspective roundup.",
+        "time": "12:41 AM"
       },
       {
-        "headline": "Eric Swalwell suspends California governor campaign amid allegations",
-        "honesty": "9/10",
+        "headline": "US imposes naval blockade on Strait of Hormuz after Iran talks collapse",
+        "honesty": "8/10",
         "perspectives": [
           {
             "label": "Conservative",
-            "handle": "@OC_Scanner",
-            "url": "https://x.com/OC_Scanner/status/2043496462454317395",
-            "text": "Suspending amid numerous allegations of wrongdoings.",
-            "engagement": "42 likes, 3 reposts",
-            "honesty": "9/10"
+            "handle": "@JackPosobiec",
+            "url": "https://x.com/JackPosobiec/status/2043437329180676394",
+            "text": "It\u2019s all about China.",
+            "engagement": "421 likes, 94 reposts",
+            "honesty": "8/10"
           },
           {
             "label": "Democrat",
             "handle": "@AOC",
             "url": "https://x.com/aoc",
-            "text": "Smears won't stop progressive fight.",
+            "text": "Trump's war risks American lives and global economy for oil interests.",
             "engagement": "0 likes, 0 reposts",
             "honesty": "7/10"
           },
           {
             "label": "Independent",
             "handle": "@ggreenwald",
-            "url": "https://x.com/ggreenwald",
-            "text": "Political scandals reveal hypocrisy.",
+            "url": "https://x.com/ggreenwald/status/2043351890717483201",
+            "text": "Western establishment cries fraud only when their candidate loses elections.",
             "engagement": "2.5K likes, 410 reposts",
             "honesty": "9/10"
           }
         ],
         "footnotes": [
-          "1. Conservative: Long overdue",
-          "2. Democrat: False smears",
-          "3. Independent: Past judgment issues"
+          "Conservative view emphasizes strong US action against Iran",
+          "Democrat angle critiques escalation risks",
+          "Independent highlights strategic China links"
         ],
-        "notes": "Firsthand announcement",
-        "body": "Three-perspective roundup."
-      }
-    ],
-    "earlier": [
+        "notes": "Sourced reporting on escalating US-Iran tensions",
+        "body": "Three-perspective roundup.",
+        "time": "12:41 AM"
+      },
       {
         "headline": "Eric Swalwell suspends California governor campaign over past allegations",
         "honesty": "7/10",
@@ -372,133 +486,49 @@
         "notes": "Sourced analysis of viral political clash involving religion, immigration, and global tensions",
         "body": "Three-perspective roundup.",
         "time": "12:02 AM"
-      },
-      {
-        "headline": "Elon Musk spotlights South Africa white farmer murders as genocide amid asylum debate",
-        "honesty": "9/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@elonmusk",
-            "url": "https://x.com/elonmusk/status/2043506462203453743",
-            "text": "Each cross is a murdered family.",
-            "engagement": "51K likes, 8.8K reposts",
-            "honesty": "10/10"
-          },
-          {
-            "label": "Democrat",
-            "handle": "@DropSiteNews",
-            "url": "https://x.com/DropSiteNews/status/2043500879739850898",
-            "text": "A 1.5-year-old infant girl was killed in an Israeli strike in Srifa, south Lebanon, as her family gathered to bury her father.",
-            "engagement": "967 likes, 120 reposts",
-            "honesty": "9/10"
-          },
-          {
-            "label": "Independent",
-            "handle": "@JackPosobiec",
-            "url": "https://x.com/JackPosobiec/status/2043506104856887732",
-            "text": "Cardinal Prevost was promoted by Pope Francis and given a prominent Vatican position during his papacy. We found Prevost's twitter feed last year where he was trashing Trump and Vance.",
-            "engagement": "2K likes, 402 reposts",
-            "honesty": "8/10"
-          }
-        ],
-        "footnotes": [
-          "1. Conservative: Highlights persecution",
-          "2. No recent Democrat post found; using sourced reporting",
-          "3. No recent independent post; neutral analysis"
-        ],
-        "notes": "High engagement on sourced video; claims debated but firsthand imagery from monument",
-        "body": "Three-perspective roundup.",
-        "time": "11:57 PM"
-      },
-      {
-        "headline": "Trump blasts Pope Leo as 'liberal' and 'weak on crime' amid Iran war ceasefire tensions",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@JackPosobiec",
-            "url": "https://x.com/JackPosobiec/status/2043506104856887732",
-            "text": "Cardinal Prevost was promoted by Pope Francis and given a prominent Vatican position during his papacy. We found Prevost's twitter feed last year where he was trashing Trump and Vance, as well as border enforcement. And praising George Floyd.",
-            "engagement": "1.9K likes, 397 reposts",
-            "honesty": "8/10"
-          },
-          {
-            "label": "Democrat",
-            "handle": "@DropSiteNews",
-            "url": "https://x.com/DropSiteNews/status/2043500879739850898",
-            "text": "President Trump: \u201cPope Leo is WEAK on Crime, and terrible for Foreign Policy\u2026 Leo should get his act together.\u201d",
-            "engagement": "957 likes, 120 reposts",
-            "honesty": "9/10"
-          },
-          {
-            "label": "Independent",
-            "handle": "@TheStudyofWar",
-            "url": "https://x.com/TheStudyofWar/status/2043450415010750641",
-            "text": "The US Navy is attempting to prevent Iranian and Iranian-approved vessels from entering and exiting the Strait, while Iran prevents all other vessels from entering and exiting the Strait.",
-            "engagement": "507 likes, 169 reposts",
-            "honesty": "10/10"
-          }
-        ],
-        "footnotes": [
-          "1. Conservative: Strong anti-Pope rhetoric",
-          "2. Democrat: Highlights Trump attack",
-          "3. Independent: Ceasefire and Hormuz context"
-        ],
-        "notes": "Sourced analysis of major global spat; high engagement on political-religious clash",
-        "body": "Three-perspective roundup.",
-        "time": "11:52 PM"
-      },
-      {
-        "headline": "US-Iran war escalates as Trump negotiations fail, Israel advances in Lebanon amid ceasefire tensions",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@TuckerCarlson",
-            "url": "https://x.com/TuckerCarlson/status/2042050749677375532",
-            "text": "Netanyahu launches terror attack on Beirut, destroying Trump\u2019s ceasefire. We need to detach from Israel immediately.",
-            "engagement": "118K likes, 28K reposts",
-            "honesty": "7/10"
-          },
-          {
-            "label": "Democrat",
-            "handle": "@BernieSanders",
-            "url": "https://x.com/BernieSanders/status/2041215852008046819",
-            "text": "While the world focuses on the destruction in Iran, we must not ignore what Israel is doing in Lebanon. 1,461 have been killed. 4,430 have been injured. 1.2 million have been displaced. Israel now occupies 14% of Lebanon. Enough is enough. No more US military aid to Israel.",
-            "engagement": "193K likes, 44K reposts",
-            "honesty": "7/10"
-          },
-          {
-            "label": "Independent",
-            "handle": "@ggreenwald",
-            "url": "https://x.com/ggreenwald/status/2041969522949644493",
-            "text": "Vance says it's bizarre that Iran would want the war to continue over its desire to protect a foreign country (Lebanon) \"that has nothing to do with them.\" Meanwhile, official bipartisan US policy for decades has been, and still is, that the US will go to war to protect Israel.",
-            "engagement": "17K likes, 4K reposts",
-            "honesty": "8/10"
-          }
-        ],
-        "footnotes": [
-          "1. Conservative: Pro-Trump/anti-Iran bias evident",
-          "2. Democrat: Anti-war, anti-Israel aid slant",
-          "3. Independent: Critical of all sides, focuses on policy implications"
-        ],
-        "notes": "Well-sourced reporting on ongoing conflict with some opinionated framing",
-        "body": "Three-perspective roundup.",
-        "time": "11:47 PM"
       }
     ]
   },
   "elon": {
     "stories": [
       {
-        "headline": "Elon Musk calls out insane double standard on South African farmers vs migrants",
+        "headline": "Elon Musk calls Starlink a gamechanger as Virgin Atlantic accelerates rollout",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2043487224931737821",
+        "body": "Starlink is a gamechanger.",
+        "engagement": "20K likes, 2K reposts",
+        "honesty": "10/10",
+        "notes": "Direct firsthand statement"
+      },
+      {
+        "headline": "Elon Musk condemns insane double-standard on South African farmer genocide",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2043504840064868424",
-        "body": "White South Africans persecuted but migrants get full rights.",
-        "engagement": "29K likes, 3.5K reposts",
+        "body": "An insane double-standard. Who is pushing this?",
+        "engagement": "30K likes, 3.6K reposts",
         "honesty": "10/10",
-        "notes": "Direct firsthand"
+        "notes": "Personal commentary on issue"
+      },
+      {
+        "headline": "Elon Musk agrees US uniquely fought Civil War to end slavery",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2043487337624322500",
+        "body": "Yeah.",
+        "engagement": "21K likes, 2.4K reposts",
+        "honesty": "10/10",
+        "notes": "Agreement with historical fact"
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "Confirms reports of total distrust.",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2043504464003543526",
+        "body": "Confirms reports of total distrust.",
+        "engagement": "39K likes, 3.6K reposts",
+        "honesty": "10/10",
+        "notes": "Direct",
+        "time": "12:41 AM"
       },
       {
         "headline": "Bar from travel, seize assets for anti-white laws.",
@@ -507,19 +537,19 @@
         "body": "Bar from travel, seize assets for anti-white laws.",
         "engagement": "5K likes, 701 reposts",
         "honesty": "10/10",
-        "notes": "Direct"
+        "notes": "Direct",
+        "time": "12:41 AM"
       },
       {
-        "headline": "Confirms reports of total distrust.",
+        "headline": "Elon Musk calls out insane double standard on South African farmers vs migrants",
         "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2043504464003543526",
-        "body": "Confirms reports of total distrust.",
-        "engagement": "39K likes, 3.6K reposts",
+        "url": "https://x.com/elonmusk/status/2043504840064868424",
+        "body": "White South Africans persecuted but migrants get full rights.",
+        "engagement": "29K likes, 3.5K reposts",
         "honesty": "10/10",
-        "notes": "Direct"
-      }
-    ],
-    "earlier": [
+        "notes": "Direct firsthand",
+        "time": "12:41 AM"
+      },
       {
         "headline": "Elon: Starlink is aviation gamechanger",
         "handle": "@elonmusk",
@@ -589,49 +619,49 @@
         "honesty": "10/10",
         "notes": "Direct agreement",
         "time": "12:17 AM"
-      },
-      {
-        "headline": "An insane double-standard. Who is pushing this? We should identify the people an",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2043504840064868424",
-        "body": "An insane double-standard. Who is pushing this? We should identify the people and organizations by name.",
-        "engagement": "28K likes, 3.3K reposts",
-        "honesty": "10/10",
-        "notes": "Direct opinion",
-        "time": "12:17 AM"
-      },
-      {
-        "headline": "Elon Musk: Each cross marks a murdered white South African farm family",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2043506462203453743",
-        "body": "Each cross is a murdered family [quoting video of crosses representing murdered white farmers]",
-        "engagement": "57K likes, 9.8K reposts",
-        "honesty": "10/10",
-        "notes": "Direct quote",
-        "time": "12:17 AM"
-      },
-      {
-        "headline": "Elon Musk demands sanctions on South African politicians pushing racist laws against white farmers",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2043504346986619138",
-        "body": "I\u2019m not kidding.",
-        "engagement": "4.6K likes, 626 reposts",
-        "honesty": "10/10",
-        "notes": "Direct firsthand opinion",
-        "time": "12:13 AM"
       }
     ]
   },
   "sports": {
     "stories": [
       {
-        "headline": "LeBron James to wear LEGACY patch in final game of 23rd season",
+        "headline": "LeBron to wear 'LEGACY' patch in final game of 23rd season",
         "handle": "@BleacherReport",
         "url": "https://x.com/BleacherReport/status/2043495587840934373",
-        "body": "Lakers star honors longevity with special jersey patch.",
-        "engagement": "12K likes, 693 reposts",
+        "body": "LeBron will wear a 'LEGACY' patch on his jersey to celebrate the final game of his 23rd season.",
+        "engagement": "12K likes, 702 reposts",
         "honesty": "10/10",
         "notes": "Direct NBA source"
+      },
+      {
+        "headline": "Stephen A. Smith calls out Geno Auriemma for poor sportsmanship vs Dawn Staley",
+        "handle": "@stephenasmith",
+        "url": "https://x.com/stephenasmith/status/2040244421015351792",
+        "body": "Couldn\u2019t take losing to Dawn Staley. Simply and plain. Horrible, horrible look for him.",
+        "engagement": "2.8K likes, 275 reposts",
+        "honesty": "7/10",
+        "notes": "Hot take on coaching behavior"
+      },
+      {
+        "headline": "Colin Cowherd predicts Cooper Flagg becomes 15-time All-Star",
+        "handle": "@TheHerd",
+        "url": "https://x.com/TheHerd/status/2041208503222538617",
+        "body": "He's the best teenager I've EVER seen in the NBA... a 15-time All Star.",
+        "engagement": "1.2K likes, 124 reposts",
+        "honesty": "7/10",
+        "notes": "Bold prediction on prospect"
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "Flagg headed to 15-time All-Star status.",
+        "handle": "@TheHerd",
+        "url": "https://x.com/TheHerd/status/2041208503222538617",
+        "body": "Flagg headed to 15-time All-Star status.",
+        "engagement": "1.2K likes, 124 reposts",
+        "honesty": "7/10",
+        "notes": "Hot take analysis",
+        "time": "12:41 AM"
       },
       {
         "headline": "Geno acted like a sore loser after UConn defeat.",
@@ -640,19 +670,19 @@
         "body": "Geno acted like a sore loser after UConn defeat.",
         "engagement": "18K likes, 2.4K reposts",
         "honesty": "7/10",
-        "notes": "Labeled opinion hot take"
+        "notes": "Labeled opinion hot take",
+        "time": "12:41 AM"
       },
       {
-        "headline": "Flagg headed to 15-time All-Star status.",
-        "handle": "@TheHerd",
-        "url": "https://x.com/TheHerd/status/2041208503222538617",
-        "body": "Flagg headed to 15-time All-Star status.",
-        "engagement": "1.2K likes, 124 reposts",
-        "honesty": "7/10",
-        "notes": "Hot take analysis"
-      }
-    ],
-    "earlier": [
+        "headline": "LeBron James to wear LEGACY patch in final game of 23rd season",
+        "handle": "@BleacherReport",
+        "url": "https://x.com/BleacherReport/status/2043495587840934373",
+        "body": "Lakers star honors longevity with special jersey patch.",
+        "engagement": "12K likes, 693 reposts",
+        "honesty": "10/10",
+        "notes": "Direct NBA source",
+        "time": "12:41 AM"
+      },
       {
         "headline": "Colin Cowherd shares Sunday NBA thoughts in viral clip",
         "handle": "@colincowherd",
@@ -722,49 +752,49 @@
         "honesty": "N/A",
         "notes": "No qualifying post",
         "time": "12:17 AM"
-      },
-      {
-        "headline": "No recent hot take found; placeholder on ongoing NBA drama.",
-        "handle": "@stephenasmith",
-        "url": "https://x.com/stephenasmith",
-        "body": "No recent hot take found; placeholder on ongoing NBA drama.",
-        "engagement": "N/A",
-        "honesty": "N/A",
-        "notes": "No qualifying post",
-        "time": "12:17 AM"
-      },
-      {
-        "headline": "Shams: Doc Rivers departing Milwaukee Bucks after 32-50 season",
-        "handle": "@ShamsCharania",
-        "url": "https://x.com/ShamsCharania/status/2043490909904634290",
-        "body": "BREAKING: Doc Rivers is departing as head coach of the Milwaukee Bucks, sources tell ESPN. After a 32-50 season, the Bucks will embark on their third coaching search in the last three years.",
-        "engagement": "33K likes, 4.4K reposts",
-        "honesty": "10/10",
-        "notes": "Firsthand NBA insider",
-        "time": "12:17 AM"
-      },
-      {
-        "headline": "Bleacher Report: LeBron to wear 'LEGACY' patch honoring final game of his 23rd NBA season",
-        "handle": "@BleacherReport",
-        "url": "https://x.com/BleacherReport/status/2043495587840934373",
-        "body": "Lakers star marks career milestone.",
-        "engagement": "11K likes, 659 reposts",
-        "honesty": "9/10",
-        "notes": "Official NBA confirmation",
-        "time": "12:13 AM"
       }
     ]
   },
   "allin": {
     "stories": [
       {
-        "headline": "Marc Andreessen mocks bad founders needing VC paralympics",
+        "headline": "Marc Andreessen jokes venture capital already funds bad founders",
         "handle": "@pmarca",
         "url": "https://x.com/pmarca/status/2043422414193959062",
-        "body": "VC exists for worst founders too.",
-        "engagement": "3.9K likes, 118 reposts",
+        "body": "Boy do I have news for you.",
+        "engagement": "4K likes, 118 reposts",
         "honesty": "10/10",
-        "notes": "Direct"
+        "notes": "Humorous response"
+      },
+      {
+        "headline": "David Sacks questions Anthropic AI threat credibility",
+        "handle": "@DavidSacks",
+        "url": "https://x.com/DavidSacks/status/2043370436847972832",
+        "body": "Anthropic may have a serious credibility problem if threats don\u2019t materialize.",
+        "engagement": "1.9K likes, 158 reposts",
+        "honesty": "8/10",
+        "notes": "Analysis of AI claims"
+      },
+      {
+        "headline": "Palmer Luckey defends biology facts on optimal childbearing age",
+        "handle": "@PalmerLuckey",
+        "url": "https://x.com/PalmerLuckey/status/2041737527489609950",
+        "body": "Humans are biologically wired for healthier children earlier in life.",
+        "engagement": "1.3K likes, 82 reposts",
+        "honesty": "9/10",
+        "notes": "Scientific reference"
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "Humans wired for healthier kids earlier.",
+        "handle": "@PalmerLuckey",
+        "url": "https://x.com/PalmerLuckey/status/2043186278871822557",
+        "body": "Humans wired for healthier kids earlier.",
+        "engagement": "660 likes, 4 reposts",
+        "honesty": "10/10",
+        "notes": "Direct",
+        "time": "12:41 AM"
       },
       {
         "headline": "Work ethic over wealth for legacy.",
@@ -773,19 +803,19 @@
         "body": "Work ethic over wealth for legacy.",
         "engagement": "246 likes, 6 reposts",
         "honesty": "10/10",
-        "notes": "Direct"
+        "notes": "Direct",
+        "time": "12:41 AM"
       },
       {
-        "headline": "Humans wired for healthier kids earlier.",
-        "handle": "@PalmerLuckey",
-        "url": "https://x.com/PalmerLuckey/status/2043186278871822557",
-        "body": "Humans wired for healthier kids earlier.",
-        "engagement": "660 likes, 4 reposts",
+        "headline": "Marc Andreessen mocks bad founders needing VC paralympics",
+        "handle": "@pmarca",
+        "url": "https://x.com/pmarca/status/2043422414193959062",
+        "body": "VC exists for worst founders too.",
+        "engagement": "3.9K likes, 118 reposts",
         "honesty": "10/10",
-        "notes": "Direct"
-      }
-    ],
-    "earlier": [
+        "notes": "Direct",
+        "time": "12:41 AM"
+      },
       {
         "headline": "Chamath: Character imprints family more than possessions",
         "handle": "@chamath",
@@ -855,41 +885,22 @@
         "honesty": "N/A",
         "notes": "None found",
         "time": "12:17 AM"
-      },
-      {
-        "headline": "Palmer Luckey debunks Moon landing hoax with exclusive lunar rover video evidence",
-        "handle": "@PalmerLuckey",
-        "url": "https://x.com/PalmerLuckey/status/2041737527489609950",
-        "body": "If you watch the video, I address this.",
-        "engagement": "1.4K likes, 82 reposts",
-        "honesty": "9/10",
-        "notes": "Well-sourced demonstration",
-        "time": "12:13 AM"
-      },
-      {
-        "headline": "Chamath Palihapitiya agrees AI boosts EBITDA as workers demand direct comp over equity",
-        "handle": "@chamath",
-        "url": "https://x.com/chamath/status/2043007389826453728",
-        "body": "This is \ud83d\udcaf. The outcome is that employees will want more direct comp and you will see it in EBITDA and FCF.",
-        "engagement": "1.6K likes, 76 reposts",
-        "honesty": "8/10",
-        "notes": "Opinion on business trends",
-        "time": "12:13 AM"
-      },
-      {
-        "headline": "Marc Andreessen: AI will finally end decades of 'security through obscurity' in computing",
-        "handle": "@pmarca",
-        "url": "https://x.com/pmarca/status/2041663222835769483",
-        "body": "Every security engineer knows 'security through obscurity' doesn't work. But that's how we've actually been running.",
-        "engagement": "1.4K likes, 105 reposts",
-        "honesty": "8/10",
-        "notes": "Sourced tech analysis",
-        "time": "12:13 AM"
       }
     ]
   },
   "pods": {
     "stories": [
+      {
+        "headline": "Joe Rogan clip: Elon Musk on California law banning voter ID",
+        "handle": "@joeroganhq",
+        "url": "https://x.com/joeroganhq/status/2042736884804206880",
+        "body": "Elon: They passed a law making it illegal to show ID in any election in California. Rogan: For what logical reason?",
+        "engagement": "3K likes, 535 reposts",
+        "honesty": "9/10",
+        "notes": "Podcast excerpt"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Joe Rogan guest Duncan Trussell rips endless wars for oil",
         "handle": "@joeroganhq",
@@ -897,10 +908,9 @@
         "body": "Focus on country not bombing kids.",
         "engagement": "6.8K likes, 545 reposts",
         "honesty": "7/10",
-        "notes": "Podcast clip"
-      }
-    ],
-    "earlier": [
+        "notes": "Podcast clip",
+        "time": "12:41 AM"
+      },
       {
         "headline": "All-In Pod: Anthropic dominates OpenAI revenue",
         "handle": "@theallinpod",
@@ -990,21 +1000,40 @@
         "honesty": "8/10",
         "notes": "Interview clip",
         "time": "11:47 PM"
-      },
-      {
-        "headline": "Father Ripperger exorcist: Demons control parts of US politics",
-        "handle": "@TuckerCarlson",
-        "url": "https://x.com/TuckerCarlson/status/2042050749677375532",
-        "body": "Demons in charge of parts of American politics; child sacrifice pacts.",
-        "engagement": "117K likes, 27K reposts",
-        "honesty": "7/10",
-        "notes": "Controversial podcast excerpt",
-        "time": "11:42 PM"
       }
     ]
   },
   "business": {
     "stories": [
+      {
+        "headline": "Trump claims he created greatest stock market in history amid volatility",
+        "handle": "@WatcherGuru",
+        "url": "https://x.com/WatcherGuru/status/2043497427206836691",
+        "body": "President Trump says he created the 'greatest stock market in history.'",
+        "engagement": "3.6K likes, 277 reposts",
+        "honesty": "7/10",
+        "notes": "Opinionated claim during market tensions"
+      },
+      {
+        "headline": "Bitcoin drops under $72K after Vance announces failed Iran deal",
+        "handle": "@WatcherGuru",
+        "url": "https://x.com/WatcherGuru/status/2043143180846010513",
+        "body": "Bitcoin falls under $72,000 after Vice President JD Vance says US failed to reach deal with Iran.",
+        "engagement": "12K likes, 1.9K reposts",
+        "honesty": "9/10",
+        "notes": "Direct market reaction reporting"
+      },
+      {
+        "headline": "Trump praises Palantir's war-fighting capabilities",
+        "handle": "@unusual_whales",
+        "url": "https://x.com/unusual_whales/status/2042630587102675175",
+        "body": "Trump says $PLTR has proven to have great war fighting capabilities.",
+        "engagement": "692 likes, 61 reposts",
+        "honesty": "8/10",
+        "notes": "Sourced from Trump statement"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Trump claims he created greatest stock market ever",
         "handle": "@WatcherGuru",
@@ -1012,10 +1041,9 @@
         "body": "President Trump boasts of historic market gains.",
         "engagement": "3.5K likes, 273 reposts",
         "honesty": "7/10",
-        "notes": "Opinionated claim"
-      }
-    ],
-    "earlier": [
+        "notes": "Opinionated claim",
+        "time": "12:41 AM"
+      },
       {
         "headline": "China shipping weapons to Iran risks big problems says Trump",
         "handle": "@unusual_whales",
@@ -1105,29 +1133,49 @@
         "honesty": "9/10",
         "notes": "Sourced from SF Chronicle",
         "time": "11:57 PM"
-      },
-      {
-        "headline": "Trump claims he created 'greatest stock market in history' amid Hormuz tensions",
-        "handle": "@WatcherGuru",
-        "url": "https://x.com/WatcherGuru/status/2043497427206836691",
-        "body": "President Trump boasts of historic market performance despite global risks.",
-        "engagement": "3.3K likes, 256 reposts",
-        "honesty": "7/10",
-        "notes": "Opinionated claim, labeled clearly",
-        "time": "11:52 PM"
       }
     ]
   },
   "local": {
     "stories": [
       {
-        "headline": "Anaheim PD standoff after shooting on E Valencia Ave",
-        "handle": "@OC_Scanner",
-        "url": "https://x.com/OC_Scanner/status/2043516466935591264",
-        "body": "Armed suspect contained, victims unknown.",
-        "engagement": "51 likes, 5 reposts",
+        "headline": "All LA County beaches under water quality advisory after storms",
+        "handle": "@KTLA",
+        "url": "https://x.com/KTLA/status/2043397593439625533",
+        "body": "Officials warn to stay out of LA County beach water due to recent storms.",
+        "engagement": "21 likes, 14 reposts",
         "honesty": "9/10",
-        "notes": "Live scanner"
+        "notes": "Official advisory"
+      },
+      {
+        "headline": "OC couple warns of mortgage fraud after nearly losing down payment",
+        "handle": "@ABC7",
+        "url": "https://x.com/ABC7/status/2043364587136033233",
+        "body": "SoCal couple shares warning after nearly losing down payment in mortgage fraud.",
+        "engagement": "10 likes, 7 reposts",
+        "honesty": "9/10",
+        "notes": "Victim testimony"
+      },
+      {
+        "headline": "Fatal shooting investigated on Cherry Avenue in Long Beach",
+        "handle": "@KTLA",
+        "url": "https://x.com/KTLA/status/2043549808086942113",
+        "body": "Fatal gun violence in heavily trafficked Long Beach area; police seek witnesses.",
+        "engagement": "0 likes, 0 reposts",
+        "honesty": "9/10",
+        "notes": "Police investigation"
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "Campaign ad draws ridicule.",
+        "handle": "@OC_Scanner",
+        "url": "https://x.com/OC_Scanner/status/2043516036964917599",
+        "body": "Campaign ad draws ridicule.",
+        "engagement": "28 likes, 1 reposts",
+        "honesty": "8/10",
+        "notes": "Local satire",
+        "time": "12:41 AM"
       },
       {
         "headline": "Apologizes for judgment errors amid allegations.",
@@ -1136,19 +1184,19 @@
         "body": "Apologizes for judgment errors amid allegations.",
         "engagement": "25K likes, 5K reposts",
         "honesty": "9/10",
-        "notes": "Announcement"
+        "notes": "Announcement",
+        "time": "12:41 AM"
       },
       {
-        "headline": "Campaign ad draws ridicule.",
+        "headline": "Anaheim PD standoff after shooting on E Valencia Ave",
         "handle": "@OC_Scanner",
-        "url": "https://x.com/OC_Scanner/status/2043516036964917599",
-        "body": "Campaign ad draws ridicule.",
-        "engagement": "28 likes, 1 reposts",
-        "honesty": "8/10",
-        "notes": "Local satire"
-      }
-    ],
-    "earlier": [
+        "url": "https://x.com/OC_Scanner/status/2043516466935591264",
+        "body": "Armed suspect contained, victims unknown.",
+        "engagement": "51 likes, 5 reposts",
+        "honesty": "9/10",
+        "notes": "Live scanner",
+        "time": "12:41 AM"
+      },
       {
         "headline": "Katie Porter mocked for governor coalescing comment",
         "handle": "@OC_Scanner",
@@ -1218,41 +1266,22 @@
         "honesty": "9/10",
         "notes": "Local breaking political news",
         "time": "12:02 AM"
-      },
-      {
-        "headline": "Rep. Eric Swalwell suspends California governor campaign over assault allegations",
-        "handle": "@KTLA",
-        "url": "https://x.com/KTLA/status/2043503721619804612",
-        "body": "#BREAKING: Democratic Rep. Eric Swalwell has suspended his campaign for California governor after he was accused of sexual assault.",
-        "engagement": "106 likes, 31 reposts",
-        "honesty": "9/10",
-        "notes": "Local SoCal politics",
-        "time": "11:57 PM"
-      },
-      {
-        "headline": "Rep. Eric Swalwell suspends CA governor bid amid sexual assault allegations",
-        "handle": "@KTLA",
-        "url": "https://x.com/KTLA/status/2043497966145589653",
-        "body": "Drops out after accusations; Democrats urge resignation from Congress.",
-        "engagement": "29 likes, 6 reposts",
-        "honesty": "9/10",
-        "notes": "Local breaking news",
-        "time": "11:52 PM"
-      },
-      {
-        "headline": "OC Scanner reports multi-vehicle crash on I-5 in Newport Beach",
-        "handle": "@OC_Scanner",
-        "url": "https://x.com/oc_scanner",
-        "body": "Major injury collision on NB I-5 south of MacArthur. All lanes blocked. Fire and CHP on scene.",
-        "engagement": "5K likes, 1K reposts",
-        "honesty": "10/10",
-        "notes": "Live local alert",
-        "time": "11:47 PM"
       }
     ]
   },
   "top": {
     "stories": [
+      {
+        "headline": "Barack Obama hails Hungary opposition win as global democracy victory",
+        "handle": "@BarackObama",
+        "url": "https://x.com/barackobama",
+        "body": "Victory for democracy in Hungary testament to people's resilience.",
+        "engagement": "114K likes, 11K reposts",
+        "honesty": "8/10",
+        "notes": "High engagement political statement"
+      }
+    ],
+    "earlier": [
       {
         "headline": "OpenAI Sam Altman's home shot at after Molotov attack",
         "handle": "@unusual_whales",
@@ -1260,10 +1289,9 @@
         "body": "Escalating violence against AI leader.",
         "engagement": "12K likes, 865 reposts",
         "honesty": "9/10",
-        "notes": "Sourced reporting"
-      }
-    ],
-    "earlier": [
+        "notes": "Sourced reporting",
+        "time": "12:41 AM"
+      },
       {
         "headline": "Ohio family killed by semi-truck driver Modou Ngom",
         "handle": "@EndWokeness",
@@ -1353,21 +1381,22 @@
         "honesty": "10/10",
         "notes": "Viral authentic clip",
         "time": "11:42 PM"
-      },
-      {
-        "headline": "Kid Smokes CNN Reporter at Artemis Launch: 'We're Going Back to the F*cking Moon'",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2039443777719283920",
-        "body": "Kid just SMOKED a CNN reporter outside of Artemis II launch.",
-        "engagement": "137K likes, 15K reposts",
-        "honesty": "9/10",
-        "notes": "Viral citizen video clip",
-        "time": "11:36 PM"
       }
     ]
   },
   "msm": {
     "stories": [
+      {
+        "headline": "Conservative journalist Savanah Hernandez attacked by Antifa outside ICE facility",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2043120685233349057",
+        "body": "Savanah Hernandez brutally assaulted outside ICE facility in Minneapolis.",
+        "engagement": "36K likes, 8.4K reposts",
+        "honesty": "9/10",
+        "notes": "Eyewitness video evidence"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Ohio family killed by semi-truck driver Modou Ngom",
         "handle": "@EndWokeness",
@@ -1375,10 +1404,9 @@
         "body": "Mom, dad, 1-year-old dead in crash.",
         "engagement": "8K likes, 2.3K reposts",
         "honesty": "9/10",
-        "notes": "Direct report"
-      }
-    ],
-    "earlier": [
+        "notes": "Direct report",
+        "time": "12:41 AM"
+      },
       {
         "headline": "Leftists boycott Roberto\u2019s Taco Shop over CEO Trump photo",
         "handle": "@libsoftiktok",
@@ -1468,21 +1496,22 @@
         "honesty": "9/10",
         "notes": "Hidden camera firsthand",
         "time": "11:42 PM"
-      },
-      {
-        "headline": "Conservative Journalist Attacked Outside ICE Facility in Minneapolis",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2043120685233349057",
-        "body": "Conservative journalist @Savsays was just ATTACKED outside an ICE facility in Minneapolis. Where are the cops???",
-        "engagement": "36K likes, 8.4K reposts",
-        "honesty": "9/10",
-        "notes": "Video evidence of incident",
-        "time": "11:36 PM"
       }
     ]
   },
   "pg6": {
     "stories": [
+      {
+        "headline": "Trump shares image depicting himself as Jesus Christ on Orthodox Easter",
+        "handle": "@PopBase",
+        "url": "https://x.com/PopBase/status/2043534485262569699",
+        "body": "Donald Trump shares image depicting himself as Jesus Christ.",
+        "engagement": "12K likes, 720 reposts",
+        "honesty": "10/10",
+        "notes": "Direct post confirmation"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Katy Perry dances cozy with Justin Trudeau at Bieber Coachella set",
         "handle": "@etnow",
@@ -1490,10 +1519,9 @@
         "body": "Couple gets intimate onstage.",
         "engagement": "72 likes, 14 reposts",
         "honesty": "9/10",
-        "notes": "Eyewitness"
-      }
-    ],
-    "earlier": [
+        "notes": "Eyewitness",
+        "time": "12:41 AM"
+      },
       {
         "headline": "Young Thug brings Camila Cabello for Havana at Coachella",
         "handle": "@PopCrave",
@@ -1583,21 +1611,22 @@
         "honesty": "8/10",
         "notes": "Gossip on celeb controversy",
         "time": "11:42 PM"
-      },
-      {
-        "headline": "Diddy Appeals Conviction, Claims Freak Offs Are Protected Amateur P*rno",
-        "handle": "@TMZ",
-        "url": "https://x.com/TMZ/status/2042243833304433091",
-        "body": "Diddy appeals his conviction and says freak offs were amateur p*rno and are protected by the 1st Amendment.",
-        "engagement": "12K likes, 963 reposts",
-        "honesty": "8/10",
-        "notes": "Legal reporting on appeal",
-        "time": "11:36 PM"
       }
     ]
   },
   "recipe": {
     "stories": [
+      {
+        "headline": "One Pan Ranch Cheddar Chicken and Rice bakes everything together",
+        "handle": "@HBHarvest",
+        "url": "https://x.com/HBHarvest/status/2041097079800410171",
+        "body": "One Pan Ranch Cheddar Chicken and Rice: mix, bake, serve\u2014no separate rice cooking.",
+        "engagement": "29 likes, 4 reposts",
+        "honesty": "10/10",
+        "notes": "Recipe with instructions"
+      }
+    ],
+    "earlier": [
       {
         "headline": "\u308f\u3055\u30d3\u30fc\u30d5 snack recipe giveaway explodes with 4K reposts",
         "handle": "@yamayoshiseika",
@@ -1605,10 +1634,9 @@
         "body": "Revived Japanese beef snack in boxes; mix wasabi and beef for viral treat.",
         "engagement": "2K likes, 4.6K reposts",
         "honesty": "10/10",
-        "notes": "Direct promo"
-      }
-    ],
-    "earlier": [
+        "notes": "Direct promo",
+        "time": "12:41 AM"
+      },
       {
         "headline": "Air fryer potatoes taste like McDonald's fries",
         "handle": "@DeanTTraining",
@@ -1698,21 +1726,22 @@
         "honesty": "10/10",
         "notes": "Step-by-step recipe video",
         "time": "11:36 PM"
-      },
-      {
-        "headline": "Viral One-Pan Lemon Garlic Butter Chicken and Asparagus Recipe",
-        "handle": "@halfbakedharvest",
-        "url": "https://x.com/halfbakedharvest",
-        "body": "Ingredients: 4 chicken breasts, 1 lb asparagus, 4 tbsp butter, 4 garlic cloves, 1 lemon, herbs, salt/pepper. Steps: 1. Season chicken. 2. Sear in skillet 5 min per side. 3. Add asparagus, garlic, butter, lemon juice. 4. Bake at 400F for 12-15 min until done. Ready in under 30 minutes!",
-        "engagement": "24K likes, 5.6K reposts",
-        "honesty": "10/10",
-        "notes": "Actual step-by-step cooking recipe going viral with video demonstration",
-        "time": "11:33 PM"
       }
     ]
   },
   "science": {
     "stories": [
+      {
+        "headline": "Christina Koch greets dog after returning from Moon mission",
+        "handle": "@astro_jaz",
+        "url": "https://x.com/astro_jaz/status/2043498211340370175",
+        "body": "Christina Koch greeting her dog after returning from the Moon.",
+        "engagement": "60K likes, 4.9K reposts",
+        "honesty": "10/10",
+        "notes": "NASA astronaut firsthand"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Artificial sweeteners show multi-generational harm in mice study",
         "handle": "@EricTopol",
@@ -1720,10 +1749,9 @@
         "body": "Potential adverse effects across offspring.",
         "engagement": "145 likes, 40 reposts",
         "honesty": "9/10",
-        "notes": "Peer-reviewed"
-      }
-    ],
-    "earlier": [
+        "notes": "Peer-reviewed",
+        "time": "12:41 AM"
+      },
       {
         "headline": "Astronaut Christina Koch reunites with ecstatic dog post-moon mission",
         "handle": "@astro_jaz",
@@ -1813,16 +1841,6 @@
         "honesty": "10/10",
         "notes": "Direct NASA science post",
         "time": "11:42 PM"
-      },
-      {
-        "headline": "Mass US Bee Die-Off: 1.6M Colonies Lost Amid USDA Bee Lab Closure Plans",
-        "handle": "@DrEricDing",
-        "url": "https://x.com/DrEricDing/status/2041413753338474991",
-        "body": "Despite suddenly losing 1.6 million bee colonies... Trump WH planning to close USDA\u2019s premier bee laboratory.",
-        "engagement": "7.7K likes, 4.9K reposts",
-        "honesty": "9/10",
-        "notes": "Sourced environmental alert",
-        "time": "11:36 PM"
       }
     ]
   },
@@ -1839,8 +1857,8 @@
         "state": "CLOSED"
       },
       "BTC-USD": {
-        "price": 71036.6,
-        "change": 0.42,
+        "price": 71093.12,
+        "change": 0.5,
         "state": "CLOSED"
       },
       "TSLA": {
@@ -1889,6 +1907,6 @@
         "state": "CLOSED"
       }
     },
-    "fetchedAt": "4/13/2026, 12:32:38 AM"
+    "fetchedAt": "4/13/2026, 12:41:23 AM"
   }
 }

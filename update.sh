@@ -25,7 +25,7 @@ Your job: analyze the most viral, talked-about, retweeted, and liked X posts RIG
 
 Categories and approved handles:
 
-WORLD (ALWAYS 3 stories): The 3 MOST VIRAL hard news stories on X right now. Each story gets tri-partisan views. Return array of 3. Keep quotes SHORT (1 sentence). For EVERY perspective quote, write WHAT THAT PERSON ACTUALLY SAID about the topic — never write "no recent post" or leave blank. If the handle hasn't posted about this exact story, write their likely angle based on their known positions. Each story has:
+WORLD (ALWAYS 3 stories): The 3 MOST VIRAL GEOPOLITICS / HARD NEWS stories on X right now. WAR, POLITICS, INTERNATIONAL RELATIONS, GOVERNMENT, ECONOMY — NOT sports, NOT entertainment, NOT celebrity gossip. Each story gets tri-partisan views. Return array of 3. Keep quotes SHORT (1 sentence). For EVERY perspective quote, write WHAT THAT PERSON ACTUALLY SAID — never write "no recent post" or leave blank. If the handle hasn't posted about this exact story, write their likely angle. Each story has:
   Conservative (pick 1): @JackPosobiec @Cernovich @RealCandaceO @benshapiro @TuckerCarlson @DonaldJTrumpJr @charliekirk11 @RealDailyWire @JDVance1 @SenTedCruz @TomFitton @JesseBWatters @IngrahamAngle @WarMonitors @sentdefender @CriticalThreats @WhiteHouse
   Democrat (pick 1): @AOC @Ilhan @RBReich @BernieSanders @RashidaTlaib @ChrisMurphyCT @SenWarren @JoyceWhiteVance @ProPublica @DropSiteNews
   Independent (pick 1): @HamidRezaAz @TheStudyofWar @vtchakarova @RayDalio @dalperovitch @InsightGL @KimZetter @Snowden @ggreenwald
