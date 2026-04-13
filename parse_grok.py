@@ -357,6 +357,45 @@ def clean_url(handle, url):
     h = handle.lower().lstrip('@')
     return f"https://x.com/{h}"
 
+# Map handles to real names so headlines are readable by normal people
+HANDLE_NAMES = {
+    '@pmarca': 'Marc Andreessen', '@chamath': 'Chamath Palihapitiya',
+    '@DavidSacks': 'David Sacks', '@PalmerLuckey': 'Palmer Luckey',
+    '@friedberg': 'David Friedberg', '@elonmusk': 'Elon Musk',
+    '@JackPosobiec': 'Jack Posobiec', '@Cernovich': 'Mike Cernovich',
+    '@RealCandaceO': 'Candace Owens', '@benshapiro': 'Ben Shapiro',
+    '@TuckerCarlson': 'Tucker Carlson', '@DonaldJTrumpJr': 'Don Jr.',
+    '@charliekirk11': 'Charlie Kirk', '@AOC': 'AOC',
+    '@BernieSanders': 'Bernie Sanders', '@RBReich': 'Robert Reich',
+    '@ggreenwald': 'Glenn Greenwald', '@Snowden': 'Edward Snowden',
+    '@RayDalio': 'Ray Dalio', '@stephenasmith': 'Stephen A. Smith',
+    '@colincowherd': 'Colin Cowherd', '@joerogan': 'Joe Rogan',
+    '@lexfridman': 'Lex Fridman', '@MattWalshBlog': 'Matt Walsh',
+    '@BillMelugin_': 'Bill Melugin', '@TimcastNews': 'Tim Pool',
+    '@JamesOKeefeIII': "James O'Keefe", '@LibsOfTikTok': 'Libs of TikTok',
+    '@SenWarren': 'Elizabeth Warren', '@SenTedCruz': 'Ted Cruz',
+    '@PopCrave': 'Pop Crave', '@TMZ': 'TMZ',
+    '@unusual_whales': 'Unusual Whales', '@WatcherGuru': 'Watcher Guru',
+    '@ShamsCharania': 'Shams Charania', '@wojespn': 'Adrian Wojnarowski',
+}
+
+def humanize_headline(headline, handle):
+    """Replace @handles in headlines with real names so normal readers understand."""
+    h = headline
+    # Replace the handle itself if it appears in the headline
+    if handle in HANDLE_NAMES:
+        short = handle.lstrip('@')
+        # Replace variations: @handle, handle (without @), lowercase
+        for variant in [handle, short, short.lower()]:
+            if variant in h:
+                h = h.replace(variant, HANDLE_NAMES[handle])
+    # Replace any other known handles mentioned in the headline
+    for hndl, name in HANDLE_NAMES.items():
+        short = hndl.lstrip('@')
+        if short in h and name not in h:
+            h = h.replace('@' + short, name).replace(short, name)
+    return h
+
 def clean_story(s):
     """Validate and clean a single story dict. Returns None if garbage."""
     if not isinstance(s, dict):
@@ -367,6 +406,7 @@ def clean_story(s):
     if not handle:
         return None
     headline = str(s.get('headline', '') or s.get('body', '')[:80] or 'Untitled')
+    headline = humanize_headline(headline, handle)
     return {
         'headline': headline,
         'handle': handle,

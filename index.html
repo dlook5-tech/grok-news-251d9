@@ -229,8 +229,12 @@ function renderSinglePost(s) {
   var hasEmbed = s.url && s.url.indexOf('/status/') > -1;
   var linkAction = hasEmbed ? 'href="#" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + s.url.replace(/'/g,"\\'") + '\')"' : 'href="' + s.url + '" target="_blank"';
   var eng = s.engagement ? '<div style="font-size:0.75rem;color:#888;margin-top:2px;">' + s.engagement + '</div>' : '';
-  var noteHtml = s.notes ? '<div style="font-size:0.72rem;color:#b5a998;margin-top:6px;font-style:italic;">Score note: ' + s.notes + '</div>' : '';
-  return '<div class="single-post"><div class="post-handle"><a href="' + s.url + '" target="_blank">' + s.handle + '</a>' + honesty + '</div>' + eng + '<a ' + linkAction + ' class="view-post">View post</a>' + stats + '<div class="post-body">' + s.body + '</div>' + noteHtml + '<div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div></div>';
+  var footnoteHtml = '';
+  if (s.notes && s.honesty) {
+    var fnId = "fn" + Math.random().toString(36).substr(2, 9);
+    footnoteHtml = '<div class="footnote-card" id="' + fnId + '"><div class="story-header" onclick="document.getElementById(\'' + fnId + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>Honesty footnote — ' + s.honesty + '</span></div><div class="story-body"><div class="footnotes"><div class="footnote-item">' + s.notes + '</div></div></div></div>';
+  }
+  return '<div class="single-post"><div class="post-handle"><a href="' + s.url + '" target="_blank">' + s.handle + '</a>' + honesty + '</div>' + eng + '<a ' + linkAction + ' class="view-post">View post</a>' + stats + '<div class="post-body">' + s.body + '</div><div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div></div>' + footnoteHtml;
 }
 
 function renderContent() {

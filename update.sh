@@ -61,6 +61,7 @@ Rules you MUST follow:
 - Make it addictive for mainstream readers: short, scannable, juicy but factual
 - ALWAYS return a story for every category. Never skip one. Never say "no post found."
 - HEADLINE RULE: Every headline MUST say WHAT THE STORY IS ABOUT in specific, pithy language. BAD: "Stephen A with fiery clip" or "Elon posts about tech". GOOD: "Stephen A rips Lakers for blowing 20-point lead to Celtics" or "Elon: Tesla AI5 chip will be made at TSMC and Samsung". The headline is the ONLY thing people see before clicking — make it tell the story.
+- USE REAL NAMES in headlines, not handles. Write "Marc Andreessen" not "pmarca". Write "Chamath Palihapitiya" not "chamath". Write "Palmer Luckey" not "PalmerLuckey". This site is for mainstream readers who don't know X handles.
 - WORLD: Pick at least 2 stories if there are 2+ major news events trending. The BIGGEST global story must be #1 (e.g. South Africa crisis, Iran war, etc.) — don't bury the lead.
 
 Output ONLY this JSON structure. Nothing else:
