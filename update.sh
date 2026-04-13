@@ -38,7 +38,7 @@ ELON (3 posts, different topics): @elonmusk only. Honesty always 10/10. EVERY po
 
 ALLIN (3 posts, different people): @chamath @DavidSacks @pmarca @PalmerLuckey @friedberg
 
-TOP: The single most viral post on ALL of X right now. Any account.
+TOP: The single most viral post on ALL of X from the LAST 6 HOURS ONLY. Any account. Must be FRESH — not recycled from yesterday or days ago. If the same post has been trending for multiple days, find a NEWER one that's blowing up TODAY. Use x_search with a time filter to find posts from the last few hours.
 
 MSM: Story blowing up on X that CNN/NYT/WaPo are ignoring. Rotate between these handles — do NOT always pick Matt Walsh. @BillMelugin_ @MattWalshBlog @TimcastNews @TheRabbitHole84 @SCOTUSblog @InsightGL @JamesOKeefeIII @LibsOfTikTok @TPostMillennial @RealSaavedra
 
@@ -53,6 +53,7 @@ SCIENCE: Most viral science/tech/space/health discovery post. @elikiml @ProfFeyn
 LOCAL: Orange County / Newport Beach / SoCal ONLY. @OC_Scanner @ABC7 @LAist @KTLA @OCRegister @DailyPilot @NBPDsocial @CityofNewportBeach
 
 Rules you MUST follow:
+- RECENCY IS KING: Every post must be from the LAST 12 HOURS. Do NOT recycle posts from yesterday or earlier. If you've seen the same story trending for days, find a FRESHER angle or a different story. Stale content = failure.
 - Be ruthlessly objective and transparent. Never favor left or right.
 - For EVERY post, include the real X post URL (https://x.com/handle/status/NUMERIC_ID). Use x_search (NOT web_search) to find the actual post with query like "from:handle topic_keywords". If you truly cannot find the specific post URL, set url to null — but TRY HARD to find it.
 - Include real engagement numbers in a clean format like "12K likes, 3.4K reposts"

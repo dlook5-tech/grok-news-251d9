@@ -1,7 +1,46 @@
 {
-  "lastUpdated": "4/12/2026, 11:42:19 PM",
+  "lastUpdated": "4/12/2026, 11:47:53 PM",
   "world": {
     "stories": [
+      {
+        "headline": "Trump blasts Pope Leo as 'liberal' and 'weak on crime' amid Iran war ceasefire tensions",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@JackPosobiec",
+            "url": "https://x.com/JackPosobiec/status/2043506104856887732",
+            "text": "Cardinal Prevost was promoted by Pope Francis and given a prominent Vatican position during his papacy. We found Prevost's twitter feed last year where he was trashing Trump and Vance, as well as border enforcement. And praising George Floyd.",
+            "engagement": "1.9K likes, 397 reposts",
+            "honesty": "8/10"
+          },
+          {
+            "label": "Democrat",
+            "handle": "@DropSiteNews",
+            "url": "https://x.com/DropSiteNews/status/2043500879739850898",
+            "text": "President Trump: \u201cPope Leo is WEAK on Crime, and terrible for Foreign Policy\u2026 Leo should get his act together.\u201d",
+            "engagement": "957 likes, 120 reposts",
+            "honesty": "9/10"
+          },
+          {
+            "label": "Independent",
+            "handle": "@TheStudyofWar",
+            "url": "https://x.com/TheStudyofWar/status/2043450415010750641",
+            "text": "The US Navy is attempting to prevent Iranian and Iranian-approved vessels from entering and exiting the Strait, while Iran prevents all other vessels from entering and exiting the Strait.",
+            "engagement": "507 likes, 169 reposts",
+            "honesty": "10/10"
+          }
+        ],
+        "footnotes": [
+          "1. Conservative: Strong anti-Pope rhetoric",
+          "2. Democrat: Highlights Trump attack",
+          "3. Independent: Ceasefire and Hormuz context"
+        ],
+        "notes": "Sourced analysis of major global spat; high engagement on political-religious clash",
+        "body": "Three-perspective roundup."
+      }
+    ],
+    "earlier": [
       {
         "headline": "US-Iran war escalates as Trump negotiations fail, Israel advances in Lebanon amid ceasefire tensions",
         "honesty": "8/10",
@@ -37,10 +76,9 @@
           "3. Independent: Critical of all sides, focuses on policy implications"
         ],
         "notes": "Well-sourced reporting on ongoing conflict with some opinionated framing",
-        "body": "Three-perspective roundup."
-      }
-    ],
-    "earlier": [
+        "body": "Three-perspective roundup.",
+        "time": "11:47 PM"
+      },
       {
         "headline": "US-Iran talks collapse in Pakistan; Trump orders Strait of Hormuz blockade after Vance warns of nuclear threat",
         "honesty": "8/10",
@@ -382,57 +420,49 @@
         "notes": "High engagement on war-related posts; sourced analysis from interviews and reports",
         "body": "Three-perspective roundup.",
         "time": "11:00 AM"
-      },
-      {
-        "headline": "Escalating Middle East Tensions: Iran Strait Closure and US-Israel Actions Dominate X",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@WhiteHouse",
-            "url": "https://x.com/WhiteHouse/status/2041649076500869158",
-            "text": "President Donald J. Trump makes a statement on Iran.",
-            "engagement": "106K likes, 23K reposts",
-            "honesty": "9/10"
-          },
-          {
-            "label": "Democrat",
-            "handle": "@BernieSanders",
-            "url": "https://x.com/BernieSanders/status/2041215852008046819",
-            "text": "While the world focuses on the destruction in Iran, we must not ignore what Israel is doing in Lebanon. 1,461 have been killed. 4,430 have been injured. 1.2 million have been displaced. Israel now occupies 14% of Lebanon. Enough is enough. No more US military aid to Israel.",
-            "engagement": "193K likes, 44K reposts",
-            "honesty": "8/10"
-          },
-          {
-            "label": "Independent",
-            "handle": "@spectatorindex",
-            "url": "https://x.com/spectatorindex/status/2042902006512365888",
-            "text": "BREAKING: The US has agreed to 'release Iranian frozen assets held in Qatar and other foreign banks' and this is 'directly linked to ensuring safe passage through the Strait of Hormuz', according to Reuters report.",
-            "engagement": "9.3K likes, 2.1K reposts",
-            "honesty": "9/10"
-          }
-        ],
-        "footnotes": [
-          "1. Conservative: Highlights US strength and Iran threats",
-          "2. Democrat: Focuses on humanitarian costs and aid cuts",
-          "3. Independent: Provides neutral geopolitical context"
-        ],
-        "notes": "High engagement on war updates; mix of official statements and analysis",
-        "body": "Three-perspective roundup.",
-        "time": "10:00 AM"
       }
     ]
   },
   "elon": {
     "stories": [
       {
-        "headline": "Elon warns South Africa implementing Apartheid 2.0 with anti-White laws",
+        "headline": "Elon calls out early release of trans baby killer after prison 'trooning out'",
         "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2043420251661197405",
-        "body": "South Africa is doing Apartheid 2.0",
-        "engagement": "46K likes, 4.5K reposts",
+        "url": "https://x.com/elonmusk/status/2043486570117001606",
+        "body": "Terrible decision to let convicted murderer free 30 years early for surgery costs.",
+        "engagement": "1.4K likes, 58 reposts",
         "honesty": "10/10",
-        "notes": "Direct opinion from firsthand observer"
+        "notes": "Direct reaction to viral expos\u00e9"
+      },
+      {
+        "headline": "Elon agrees each cross marks murdered white South African farm family",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2043506462203453743",
+        "body": "Amplifies video of crosses representing Boer genocide victims.",
+        "engagement": "50K likes, 8.5K reposts",
+        "honesty": "10/10",
+        "notes": "Factual amplification"
+      },
+      {
+        "headline": "Elon: Starlink is a gamechanger as Virgin Atlantic accelerates rollout",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2043491772744294808",
+        "body": "UK airline fast-tracks WiFi installs on A350s starting next month.",
+        "engagement": "46K likes, 6.5K reposts",
+        "honesty": "10/10",
+        "notes": "Company update"
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "Elon hails Starlink as gamechanger for aviation with Virgin Atlantic rollout",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2043487224931737821",
+        "body": "Starlink is a gamechanger",
+        "engagement": "18K likes, 1.8K reposts",
+        "honesty": "10/10",
+        "notes": "Company achievement",
+        "time": "11:47 PM"
       },
       {
         "headline": "Elon praises Tesla Cybertruck for 946-mile FSD road trip with Starlink",
@@ -441,19 +471,19 @@
         "body": "Tesla Cybertruck",
         "engagement": "15K likes, 1.6K reposts",
         "honesty": "10/10",
-        "notes": "Promoting own product honestly"
+        "notes": "Promoting own product honestly",
+        "time": "11:47 PM"
       },
       {
-        "headline": "Elon hails Starlink as gamechanger for aviation with Virgin Atlantic rollout",
+        "headline": "Elon warns South Africa implementing Apartheid 2.0 with anti-White laws",
         "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2043487224931737821",
-        "body": "Starlink is a gamechanger",
-        "engagement": "18K likes, 1.8K reposts",
+        "url": "https://x.com/elonmusk/status/2043420251661197405",
+        "body": "South Africa is doing Apartheid 2.0",
+        "engagement": "46K likes, 4.5K reposts",
         "honesty": "10/10",
-        "notes": "Company achievement"
-      }
-    ],
-    "earlier": [
+        "notes": "Direct opinion from firsthand observer",
+        "time": "11:47 PM"
+      },
       {
         "headline": "Elon: Freedom of speech is bedrock of democracy",
         "handle": "@elonmusk",
@@ -523,49 +553,49 @@
         "honesty": "10/10",
         "notes": "Humorous reaction to specific situation",
         "time": "11:33 PM"
-      },
-      {
-        "headline": "Elon Musk: Judges Must Follow Law, Not Vibes",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2043507544472326630",
-        "body": "Pretty obvious. Agreeing with clip stating judges need excellent knowledge of law and must decide according to it rather than personal feelings.",
-        "engagement": "12K likes, 1.7K reposts, 900 replies",
-        "honesty": "10/10",
-        "notes": "Clear statement on judicial philosophy",
-        "time": "11:33 PM"
-      },
-      {
-        "headline": "Elon Musk Calls Out Apparent Genocide of White Farmers in South Africa",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk",
-        "body": "Each cross is a murdered family. Responding to video showing hundreds of crosses representing murdered white South African farmers/Boers.",
-        "engagement": "45K likes, 7.8K reposts, 2.3K replies",
-        "honesty": "10/10",
-        "notes": "Direct quote on viral video with clear firsthand opinion",
-        "time": "11:33 PM"
-      },
-      {
-        "headline": "Tesla FSD Masters Dutch Roundabouts",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2043417270811332685",
-        "body": "Tesla self-driving handles Dutch roundabouts well",
-        "engagement": "10K likes, 921 reposts",
-        "honesty": "10/10",
-        "notes": "Tech demo",
-        "time": "11:31 PM"
       }
     ]
   },
   "sports": {
     "stories": [
       {
-        "headline": "Doc Rivers fired by Bucks after 32-50 season and two first-round exits",
+        "headline": "BREAKING: Doc Rivers fired by Bucks after 32-50 season and two first-round exits",
         "handle": "@ShamsCharania",
         "url": "https://x.com/ShamsCharania/status/2043490909904634290",
-        "body": "BREAKING: Doc Rivers is departing as head coach of the Milwaukee Bucks, sources tell ESPN. After a 32-50 season, the Bucks will embark on their third coaching search in the last three years.",
+        "body": "Milwaukee embarks on third coaching search in three years; Rivers owed eight-figure payout.",
         "engagement": "32K likes, 4.3K reposts",
         "honesty": "10/10",
         "notes": "Direct insider reporting"
+      },
+      {
+        "headline": "Refs pause game so Anthony Edwards can dap up Kevin Garnett courtside",
+        "handle": "@BleacherReport",
+        "url": "https://x.com/BleacherReport/status/2043498284862288092",
+        "body": "Viral moment highlights Wolves star's respect for legend during playoff push.",
+        "engagement": "29K likes, 1.8K reposts",
+        "honesty": "9/10",
+        "notes": "Well-sourced video clip"
+      },
+      {
+        "headline": "LeBron to wear 'LEGACY' patch on jersey for final game of 23rd NBA season",
+        "handle": "@BleacherReport",
+        "url": "https://x.com/BleacherReport/status/2043495587840934373",
+        "body": "King honors career milestone in emotional sendoff.",
+        "engagement": "10K likes, 637 reposts",
+        "honesty": "9/10",
+        "notes": "Official NBA confirmation"
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "Refs pause game so Anthony Edwards can dap up Kevin Garnett courtside",
+        "handle": "@BleacherReport",
+        "url": "https://x.com/BleacherReport/status/2043498284862288092",
+        "body": "Refs had to stop the game so Ant could dap up KG \ud83d\ude02\ud83d\udd25",
+        "engagement": "29K likes, 1.7K reposts",
+        "honesty": "10/10",
+        "notes": "Factual viral moment",
+        "time": "11:47 PM"
       },
       {
         "headline": "Stephen A. Smith blasts Matt Barnes over controversial comments",
@@ -574,19 +604,19 @@
         "body": "I heard and saw what Matt Barnes said\u2026 now it\u2019s my turn",
         "engagement": "6K likes, 524 reposts",
         "honesty": "7/10",
-        "notes": "Opinionated hot take"
+        "notes": "Opinionated hot take",
+        "time": "11:47 PM"
       },
       {
-        "headline": "Refs pause game so Anthony Edwards can dap up Kevin Garnett courtside",
-        "handle": "@BleacherReport",
-        "url": "https://x.com/BleacherReport/status/2043498284862288092",
-        "body": "Refs had to stop the game so Ant could dap up KG \ud83d\ude02\ud83d\udd25",
-        "engagement": "29K likes, 1.7K reposts",
+        "headline": "Doc Rivers fired by Bucks after 32-50 season and two first-round exits",
+        "handle": "@ShamsCharania",
+        "url": "https://x.com/ShamsCharania/status/2043490909904634290",
+        "body": "BREAKING: Doc Rivers is departing as head coach of the Milwaukee Bucks, sources tell ESPN. After a 32-50 season, the Bucks will embark on their third coaching search in the last three years.",
+        "engagement": "32K likes, 4.3K reposts",
         "honesty": "10/10",
-        "notes": "Factual viral moment"
-      }
-    ],
-    "earlier": [
+        "notes": "Direct insider reporting",
+        "time": "11:47 PM"
+      },
       {
         "headline": "AD and LeBron prank Draymond Green in diabolical Foul Play moment",
         "handle": "@BleacherReport",
@@ -656,49 +686,49 @@
         "honesty": "9/10",
         "notes": "Positive team-first story in women's basketball",
         "time": "11:33 PM"
-      },
-      {
-        "headline": "Hot Take: Bucks Need to Blow It Up After This Disaster Season",
-        "handle": "@stephenasmith",
-        "url": "https://x.com/stephenasmith",
-        "body": "Doc Rivers is gone but the real problem is the front office and aging stars who aren't producing. Giannis deserves better. This franchise is stuck in mediocrity unless they make bold moves this offseason.",
-        "engagement": "28K likes, 3.9K reposts",
-        "honesty": "6/10",
-        "notes": "Opinionated hot take from prominent sports pundit",
-        "time": "11:33 PM"
-      },
-      {
-        "headline": "Doc Rivers Out as Head Coach of the Milwaukee Bucks",
-        "handle": "@ShamsCharania",
-        "url": "https://x.com/ShamsCharania/status/2043490909904634290",
-        "body": "Sources: Doc Rivers departing Milwaukee after 32-50 season and two first-round exits. Bucks facing another coaching search while paying out final year of eight-figure deal.",
-        "engagement": "31K likes, 4.2K reposts, 2.5K quotes",
-        "honesty": "10/10",
-        "notes": "Breaking news directly from league insider with confirmed details",
-        "time": "11:33 PM"
-      },
-      {
-        "headline": "Refs Pause Game for Ant to Dap Up KG",
-        "handle": "@BleacherReport",
-        "url": "https://x.com/BleacherReport/status/2043498284862288092",
-        "body": "Refs had to stop the game so Ant could dap up KG \ud83d\ude02\ud83d\udd25",
-        "engagement": "24K likes, 1.4K reposts",
-        "honesty": "9/10",
-        "notes": "Viral highlight",
-        "time": "11:31 PM"
       }
     ]
   },
   "allin": {
     "stories": [
       {
-        "headline": "pmarca declares AGI already exists but unevenly distributed",
+        "headline": "Chamath agrees employees demand more direct comp post-productivity boom",
+        "handle": "@chamath",
+        "url": "https://x.com/chamath/status/2043007389826453728",
+        "body": "AI boosts lead to higher EBITDA/FCF as firms expand.",
+        "engagement": "1.6K likes, 76 reposts",
+        "honesty": "8/10",
+        "notes": "Analysis of trends"
+      },
+      {
+        "headline": "pmarca: AI doomers and boosters both extreme in Silicon Valley",
         "handle": "@pmarca",
-        "url": "https://x.com/pmarca/status/2040922415551959338",
-        "body": "I'm calling it. AGI is already here \u2013 it's just not evenly distributed yet.",
-        "engagement": "14K likes, 1.2K reposts",
+        "url": "https://x.com/pmarca/status/2042001243703538008",
+        "body": "Overheard: Everyone 'too psychotic' or 'not enough' on AI.",
+        "engagement": "1.9K likes, 110 reposts",
         "honesty": "7/10",
-        "notes": "Bold opinion labeled"
+        "notes": "Labeled opinion"
+      },
+      {
+        "headline": "Palmer Luckey debunks moon landing denier on retroreflectors",
+        "handle": "@PalmerLuckey",
+        "url": "https://x.com/PalmerLuckey/status/2043420722975141992",
+        "body": "Anyone can range the moon thanks to Apollo reflectors since 1969.",
+        "engagement": "2.4K likes, 19 reposts",
+        "honesty": "10/10",
+        "notes": "Expert firsthand"
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "pmarca predicts AI productivity boom will create massive jobs surge",
+        "handle": "@pmarca",
+        "url": "https://x.com/pmarca/status/2040919227641856307",
+        "body": "The \"AI job loss\" narratives are all fake. AI = massive ramp in productivity = massive ramp in demand = massive jobs boom. Watch.",
+        "engagement": "8K likes, 795 reposts",
+        "honesty": "7/10",
+        "notes": "Optimistic forecast",
+        "time": "11:47 PM"
       },
       {
         "headline": "Chamath warns California functionally bankrupt with $250B-$1T pension shortfall",
@@ -707,19 +737,19 @@
         "body": "Take a minute and listen\u2026California is functionally bankrupt. You can\u2019t tax your way out of it. A California bankruptcy will wash over to all the states as they will be paying for the bailout.",
         "engagement": "5.4K likes, 651 reposts",
         "honesty": "8/10",
-        "notes": "Sourced analysis"
+        "notes": "Sourced analysis",
+        "time": "11:47 PM"
       },
       {
-        "headline": "pmarca predicts AI productivity boom will create massive jobs surge",
+        "headline": "pmarca declares AGI already exists but unevenly distributed",
         "handle": "@pmarca",
-        "url": "https://x.com/pmarca/status/2040919227641856307",
-        "body": "The \"AI job loss\" narratives are all fake. AI = massive ramp in productivity = massive ramp in demand = massive jobs boom. Watch.",
-        "engagement": "8K likes, 795 reposts",
+        "url": "https://x.com/pmarca/status/2040922415551959338",
+        "body": "I'm calling it. AGI is already here \u2013 it's just not evenly distributed yet.",
+        "engagement": "14K likes, 1.2K reposts",
         "honesty": "7/10",
-        "notes": "Optimistic forecast"
-      }
-    ],
-    "earlier": [
+        "notes": "Bold opinion labeled",
+        "time": "11:47 PM"
+      },
       {
         "headline": "Chamath agrees direct comp rise will boost EBITDA/FCF post-tax changes",
         "handle": "@chamath",
@@ -789,41 +819,22 @@
         "honesty": "8/10",
         "notes": "Clear articulation of strategic competition viewpoint",
         "time": "11:33 PM"
-      },
-      {
-        "headline": "Chamath on Current Market Valuations and Bubble Risks",
-        "handle": "@chamath",
-        "url": "https://x.com/chamath",
-        "body": "We're in a classic everything bubble again. Interest rates, deficits, and AI hype are masking serious underlying problems in the real economy. Be careful out there.",
-        "engagement": "14K likes, 2.1K reposts",
-        "honesty": "8/10",
-        "notes": "Venture capitalist offering skeptical market analysis",
-        "time": "11:33 PM"
-      },
-      {
-        "headline": "All-In Podcast Crew Discusses AI Regulation and Government Overreach",
-        "handle": "@pmarca",
-        "url": "https://x.com/pmarca",
-        "body": "The speed of AI progress means any heavy regulation proposed in Washington will be obsolete before it's even passed. We need smart frameworks, not bureaucracy that kills innovation.",
-        "engagement": "9.1K likes, 1.2K reposts",
-        "honesty": "7/10",
-        "notes": "Tech investor perspective on policy with clear bias toward less regulation",
-        "time": "11:33 PM"
-      },
-      {
-        "headline": "Never So Bullish on America",
-        "handle": "@pmarca",
-        "url": "https://x.com/pmarca/status/2040922756867612713",
-        "body": "I have never been so bullish on the United States of America.",
-        "engagement": "32K likes, 2.3K reposts",
-        "honesty": "7/10",
-        "notes": "Optimistic take",
-        "time": "11:31 PM"
       }
     ]
   },
   "pods": {
     "stories": [
+      {
+        "headline": "O\u2019Reilly warns New Yorkers will flee under socialist policies like California",
+        "handle": "@joeroganhq",
+        "url": "https://x.com/joeroganhq/status/2043498150934049190",
+        "body": "Maher debates migration amid election fallout.",
+        "engagement": "1.9K likes, 134 reposts",
+        "honesty": "7/10",
+        "notes": "Podcast clip opinion"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Tucker Carlson interviews reporter on Israeli missile strike attempt during Lebanon coverage",
         "handle": "@TuckerCarlson",
@@ -831,10 +842,9 @@
         "body": "Steve Sweeney was reporting on the Israeli government\u2019s murder of civilians in Lebanon when the IDF tried to assassinate him on camera. Here\u2019s what American tax dollars are paying for.",
         "engagement": "25K likes, 7K reposts",
         "honesty": "8/10",
-        "notes": "Interview clip"
-      }
-    ],
-    "earlier": [
+        "notes": "Interview clip",
+        "time": "11:47 PM"
+      },
       {
         "headline": "Father Ripperger exorcist: Demons control parts of US politics",
         "handle": "@TuckerCarlson",
@@ -924,21 +934,22 @@
         "honesty": "7/10",
         "notes": "Podcast-style clip",
         "time": "11:05 PM"
-      },
-      {
-        "headline": "Tucker on IDF Assassination Attempt on Reporter in Lebanon",
-        "handle": "@TuckerCarlson",
-        "url": "https://x.com/tuckercarlson",
-        "body": "Steve Sweeney reporting on Israeli strikes when IDF missile nearly hits him. What US tax dollars fund.",
-        "engagement": "22K likes, 6K reposts",
-        "honesty": "8/10",
-        "notes": "Longform interview clip",
-        "time": "5:45 PM"
       }
     ]
   },
   "business": {
     "stories": [
+      {
+        "headline": "Trump claims he created 'greatest stock market in history' amid Hormuz tensions",
+        "handle": "@WatcherGuru",
+        "url": "https://x.com/WatcherGuru/status/2043497427206836691",
+        "body": "President Trump boasts of historic market performance despite global risks.",
+        "engagement": "3.3K likes, 256 reposts",
+        "honesty": "7/10",
+        "notes": "Opinionated claim, labeled clearly"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Ray Dalio warns US in Stage 6 Big Cycle breakdown with no rules and great power clashes",
         "handle": "@RayDalio",
@@ -946,10 +957,9 @@
         "body": "It\u2019s official: The current world order has broken down. In my parlance, we are in the Stage 6 part of the Big Cycle in which there is great disorder arising from being in a period in which there are no rules, might is right, and there is a clash of great powers.",
         "engagement": "8.3K likes, 1.7K reposts",
         "honesty": "9/10",
-        "notes": "Sourced historical analysis"
-      }
-    ],
-    "earlier": [
+        "notes": "Sourced historical analysis",
+        "time": "11:47 PM"
+      },
       {
         "headline": "Bitcoin drops under $72K after Vance says US-Iran talks fail",
         "handle": "@WatcherGuru",
@@ -1039,21 +1049,22 @@
         "honesty": "9/10",
         "notes": "Well-sourced from FT report",
         "time": "11:00 AM"
-      },
-      {
-        "headline": "Ship Traffic Halts in Strait of Hormuz Amid Tensions",
-        "handle": "@WatcherGuru",
-        "url": "https://x.com/WatcherGuru/status/2042308456204361942",
-        "body": "JUST IN: Ship traffic in the Strait of Hormuz over the past 24 hours.",
-        "engagement": "6.4K likes, 743 reposts",
-        "honesty": "9/10",
-        "notes": "Direct data visualization on critical trade route",
-        "time": "10:00 AM"
       }
     ]
   },
   "top": {
     "stories": [
+      {
+        "headline": "Nick Sortor: Eric Swalwell DROPS OUT of CA gov race over r*pe allegations",
+        "handle": "@nicksortor",
+        "url": "https://x.com/nicksortor/status/2043491223848042853",
+        "body": "Good riddance after expos\u00e9s; calls for indictments.",
+        "engagement": "10K likes, 2K reposts",
+        "honesty": "8/10",
+        "notes": "High-engagement breaking news from last hours"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Kid drops F-bomb on live CNN explaining excitement for Artemis II moon mission return",
         "handle": "@libsoftiktok",
@@ -1061,10 +1072,9 @@
         "body": "Kid just SMOKED a CNN reporter outside of Artemis II launch: CNN: \"Why do you want to be here?... Why do you love being a part of history? Kid: \"We're going back to the f*cking moon, that's why!\" \ud83e\udd23",
         "engagement": "137K likes, 15K reposts",
         "honesty": "10/10",
-        "notes": "Viral unfiltered moment"
-      }
-    ],
-    "earlier": [
+        "notes": "Viral unfiltered moment",
+        "time": "11:47 PM"
+      },
       {
         "headline": "Kid SMOKES CNN reporter at Artemis II launch: 'We're going back to the f*cking moon!'",
         "handle": "@libsoftiktok",
@@ -1154,21 +1164,22 @@
         "honesty": "7/10",
         "notes": "High viral interview clip on foreign policy",
         "time": "11:00 AM"
-      },
-      {
-        "headline": "Iran Lacks Missiles to Hit US; Blames Own Gov or Israel for Any Attack",
-        "handle": "@IRanMediaco",
-        "url": "https://x.com/IRanMediaco/status/2041118910834225331",
-        "body": "Dear Americans, Iran does not have the missile range to strike your country; if an attack occurs, it would most likely be carried out by your own GOVERNMENT or ISRAEL.",
-        "engagement": "269K likes, 39K reposts",
-        "honesty": "6/10",
-        "notes": "Conspiracy-style viral post amid tensions",
-        "time": "10:00 AM"
       }
     ]
   },
   "msm": {
     "stories": [
+      {
+        "headline": "Libs of TikTok urges support for immigrant-owned Roberto\u2019s Taco Shop amid leftist cancel mob",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2043493745975300473",
+        "body": "Attacked for CEO's 2020 Trump photo; family biz since 1964.",
+        "engagement": "5.2K likes, 2.2K reposts",
+        "honesty": "9/10",
+        "notes": "Direct callout of ignored harassment"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Petition fraudsters use voter database to forge signatures with real names on Skid Row",
         "handle": "@JamesOKeefeIII",
@@ -1176,10 +1187,9 @@
         "body": "California Identity Scam: Petition Fraudsters Logging Into Online Database To Supply Real Voter Names For Forged Signatures & Streamline Ballot Petition Payments",
         "engagement": "24K likes, 11K reposts",
         "honesty": "9/10",
-        "notes": "Undercover video evidence"
-      }
-    ],
-    "earlier": [
+        "notes": "Undercover video evidence",
+        "time": "11:47 PM"
+      },
       {
         "headline": "James O'Keefe exposes CA Controller official admitting audits not done amid 100% homelessness fraud",
         "handle": "@JamesOKeefeIII",
@@ -1269,21 +1279,22 @@
         "honesty": "9/10",
         "notes": "Calls out media euphemism for migrant crime",
         "time": "11:00 AM"
-      },
-      {
-        "headline": "Texas 'Teens' Kidnap and Torture Classmate Over Girlfriend",
-        "handle": "@MattWalshBlog",
-        "url": "https://x.com/MattWalshBlog/status/2041860133425176908",
-        "body": "Ah yes, \u201cTexas teens\u201d named Jose Rojas-Alvarado, Oscar Armando Santiago-Martinez, Angel Lemus-Perez, and Carlos Roberto Oliva-Villeda. Good old American names. Texans through and through.",
-        "engagement": "35K likes, 3.9K reposts",
-        "honesty": "8/10",
-        "notes": "Calls out media framing on crime story",
-        "time": "10:00 AM"
       }
     ]
   },
   "pg6": {
     "stories": [
+      {
+        "headline": "Major Lazer reunites with M.I.A. for 'Paper Planes' at Coachella",
+        "handle": "@PopCrave",
+        "url": "https://x.com/PopCrave/status/2043520580616323400",
+        "body": "Iconic performance lights up festival stage.",
+        "engagement": "6.5K likes, 323 reposts",
+        "honesty": "10/10",
+        "notes": "Live event coverage"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Hailee Steinfeld gives birth to first child with NFL star Josh Allen",
         "handle": "@PopCrave",
@@ -1291,10 +1302,9 @@
         "body": "Hailee Steinfeld announces she gave birth to her first baby with Josh Allen: \u201cSpecial delivery... Our baby girl has arrived!! We\u2019re feeling incredibly grateful and blessed and savouring these early moments. Thank you so much for the love and well wishes.\u201d",
         "engagement": "30K likes, 859 reposts",
         "honesty": "10/10",
-        "notes": "Direct announcement"
-      }
-    ],
-    "earlier": [
+        "notes": "Direct announcement",
+        "time": "11:47 PM"
+      },
       {
         "headline": "Fernando Mendoza backlash for resurfaced LeBron George Floyd post questioning cop context",
         "handle": "@PopCrave",
@@ -1384,21 +1394,22 @@
         "honesty": "8/10",
         "notes": "Gossipy celebrity feud video",
         "time": "11:00 AM"
-      },
-      {
-        "headline": "Offset Shot Near Florida Casino",
-        "handle": "@TMZ",
-        "url": "https://x.com/TMZ/status/2041324532628144482",
-        "body": "\ud83d\udea8 BREAKING: Offset shot near Florida casino",
-        "engagement": "33K likes, 5K reposts",
-        "honesty": "8/10",
-        "notes": "Celebrity incident breaking",
-        "time": "10:00 AM"
       }
     ]
   },
   "recipe": {
     "stories": [
+      {
+        "headline": "One-Pan Ranch Cheddar Chicken and Rice: Mix, bake, serve in 30 mins",
+        "handle": "@HBHarvest",
+        "url": "https://x.com/HBHarvest/status/2041097079800410171",
+        "body": "Ingredients: Chicken, rice, ranch seasoning, cheddar, broth. Steps: Layer in pan, bake 45 mins at 375F, top with cheese, broil golden. Family dinner win.",
+        "engagement": "29 likes, 4 reposts",
+        "honesty": "10/10",
+        "notes": "Direct recipe source"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Viral one-pan creamy Tuscan chicken with sun-dried tomatoes and spinach",
         "handle": "@halfbakedharvest",
@@ -1406,10 +1417,9 @@
         "body": "Ingredients: Chicken breasts, heavy cream, garlic, sun-dried tomatoes, spinach, parmesan, Italian seasoning. Steps: Sear chicken, saut\u00e9 garlic & tomatoes, add cream & spinach, simmer, top with cheese. Ready in 30 mins.",
         "engagement": "12K likes, 3K reposts",
         "honesty": "10/10",
-        "notes": "Actual recipe post"
-      }
-    ],
-    "earlier": [
+        "notes": "Actual recipe post",
+        "time": "11:47 PM"
+      },
       {
         "headline": "Viral Crust Burger trend takes over with cheesy stuffed patties",
         "handle": "@tasty",
@@ -1499,21 +1509,22 @@
         "honesty": "9/10",
         "notes": "Proven viral recipe tip",
         "time": "11:00 AM"
-      },
-      {
-        "headline": "Crispiest Ever Potatoes: Boil, Smash, Roast",
-        "handle": "@FoodNetwork",
-        "url": "https://x.com/FoodNetwork/status/1652028659622871041",
-        "body": "Completely serious when we say these are the crispiest potatoes you could ever make.",
-        "engagement": "2.3K likes, 211 reposts",
-        "honesty": "9/10",
-        "notes": "Proven simple recipe video",
-        "time": "10:00 AM"
       }
     ]
   },
   "science": {
     "stories": [
+      {
+        "headline": "Diet lacking 2 amino acids reboots aggressive pediatric brain cancer treatment",
+        "handle": "@EricTopol",
+        "url": "https://x.com/EricTopol/status/2041996098156556741",
+        "body": "NEJM: Experimental model shows mechanism for methionine/arginine restriction.",
+        "engagement": "168 likes, 39 reposts",
+        "honesty": "10/10",
+        "notes": "Peer-reviewed study"
+      }
+    ],
+    "earlier": [
       {
         "headline": "NASA captures Artemis II eclipse totality from lunar orbit",
         "handle": "@WhiteHouse",
@@ -1521,10 +1532,9 @@
         "body": "THE ARTEMIS II ECLIPSE. April 6, 2026. Totality, beyond Earth. From lunar orbit, the Moon eclipses the Sun, revealing a view few in human history have ever witnessed. Photo: NASA",
         "engagement": "81K likes, 15K reposts",
         "honesty": "10/10",
-        "notes": "Official NASA image"
-      }
-    ],
-    "earlier": [
+        "notes": "Official NASA image",
+        "time": "11:47 PM"
+      },
       {
         "headline": "Webb captures Messier 58 galaxy in near/mid-IR revealing star-forming properties",
         "handle": "@NASAWebb",
@@ -1614,21 +1624,22 @@
         "honesty": "10/10",
         "notes": "Direct space milestone report",
         "time": "11:00 AM"
-      },
-      {
-        "headline": "Webb and Hubble Capture Comprehensive Saturn View",
-        "handle": "@NASAWebb",
-        "url": "https://x.com/NASAWebb/status/2036866794552533470",
-        "body": "Webb teamed up with @NASAHubble, observing the ringed planet in complementary wavelengths of light to give us a richer, more layered understanding of its atmosphere.",
-        "engagement": "4.4K likes, 564 reposts",
-        "honesty": "10/10",
-        "notes": "NASA direct science image",
-        "time": "10:00 AM"
       }
     ]
   },
   "local": {
     "stories": [
+      {
+        "headline": "Rep. Eric Swalwell suspends CA governor bid amid sexual assault allegations",
+        "handle": "@KTLA",
+        "url": "https://x.com/KTLA/status/2043497966145589653",
+        "body": "Drops out after accusations; Democrats urge resignation from Congress.",
+        "engagement": "29 likes, 6 reposts",
+        "honesty": "9/10",
+        "notes": "Local breaking news"
+      }
+    ],
+    "earlier": [
       {
         "headline": "OC Scanner reports multi-vehicle crash on I-5 in Newport Beach",
         "handle": "@OC_Scanner",
@@ -1636,10 +1647,9 @@
         "body": "Major injury collision on NB I-5 south of MacArthur. All lanes blocked. Fire and CHP on scene.",
         "engagement": "5K likes, 1K reposts",
         "honesty": "10/10",
-        "notes": "Live local alert"
-      }
-    ],
-    "earlier": [
+        "notes": "Live local alert",
+        "time": "11:47 PM"
+      },
       {
         "headline": "LAUSD reaches tentative deal with teachers union averting strike for 100s of thousands students",
         "handle": "@KTLA",
@@ -1729,16 +1739,6 @@
         "honesty": "9/10",
         "notes": "Firsthand local reporting",
         "time": "11:00 AM"
-      },
-      {
-        "headline": "Two Killed in Small Plane Crash on Catalina Island",
-        "handle": "@OC_Scanner",
-        "url": "https://x.com/OC_Scanner/status/2042372862519230525",
-        "body": "#BREAKING: 2 people have been killed in a small plane crash on Catalina Island this afternoon. Further details not known",
-        "engagement": "223 likes, 25 reposts",
-        "honesty": "9/10",
-        "notes": "Local breaking incident",
-        "time": "10:00 AM"
       }
     ]
   },
@@ -1755,8 +1755,8 @@
         "state": "CLOSED"
       },
       "BTC-USD": {
-        "price": 70954.2,
-        "change": 0.3,
+        "price": 70969.73,
+        "change": 0.32,
         "state": "CLOSED"
       },
       "TSLA": {
@@ -1805,6 +1805,6 @@
         "state": "CLOSED"
       }
     },
-    "fetchedAt": "4/12/2026, 11:42:19 PM"
+    "fetchedAt": "4/12/2026, 11:47:53 PM"
   }
 }
