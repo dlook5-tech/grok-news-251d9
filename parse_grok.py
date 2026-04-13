@@ -220,7 +220,7 @@ def find_tweet_url(handle, headline):
     h = handle.lstrip('@')
     prompt = f'Find the most recent tweet by @{h} about: "{headline}". Return ONLY the tweet URL in format https://x.com/{h}/status/NUMERIC_ID. Nothing else — just the URL or "null" if not found.'
     payload = json.dumps({
-        'model': 'grok-4-1-fast-non-reasoning',
+        'model': 'grok-4.20-0309-reasoning',
         'input': [
             {'role': 'system', 'content': 'Return ONLY a tweet URL. No explanation.'},
             {'role': 'user', 'content': prompt}
