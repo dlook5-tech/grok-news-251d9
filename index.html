@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>eXpressO News</title>
+<title>eXpressO news</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -97,7 +97,7 @@
   .myfeed-clear:hover { background:#fafafa; border-color:#bbb; }
   .vote-featured { background:#c0392b; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:700; margin-left:8px; }
   .vote-pending { background:#ddd; color:#666; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; margin-left:8px; }
-  @media (max-width: 600px) { header { padding: 14px 16px 0; } nav { margin: 0 -16px; padding: 0 8px; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; } nav a { padding: 8px 8px; font-size: 0.62rem; white-space: nowrap; } main { padding: 20px 16px; } .logo { font-size: 1.5rem; } h1 { font-size: 1.3rem; } }
+  @media (max-width: 600px) { header { padding: 14px 16px 0; } .nav-wrap { position: relative; } .nav-wrap::after { content: '\u25b6'; position: absolute; right: 0; top: 0; bottom: 0; width: 28px; display: flex; align-items: center; justify-content: center; background: linear-gradient(to right, transparent, #f7f2ea 60%); color: #b8860b; font-size: 0.7rem; pointer-events: none; z-index: 2; transition: opacity 0.3s; } .nav-wrap.scrolled-end::after { opacity: 0; } nav { margin: 0 -16px; padding: 0 8px; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; } nav::-webkit-scrollbar { display: none; } nav a { padding: 8px 8px; font-size: 0.62rem; white-space: nowrap; } main { padding: 20px 16px; } .logo { font-size: 1.5rem; } h1 { font-size: 1.3rem; } }
   .footnotes { background: #f5f0ea; border: 1px solid #e5ddd3; border-radius: 4px; padding: 6px 10px; margin-top: 2px; }
   .footnote-card { border: 1px solid #e5ddd3; border-radius: 6px; margin-bottom: 8px; background: #f5f0ea; overflow: hidden; }
   .footnote-card .story-header { padding: 6px 12px; font-weight: 400; font-size: 0.72rem; color: #b5a998; gap: 8px; }
@@ -112,9 +112,9 @@
 </style>
 </head>
 <body>
-<header><div class="header-top"><div><div class="logo">e<svg viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;width:1.6em;height:1.6em;fill:#1c1410;margin:0 -2px;" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"></path></svg>press<svg viewBox="0 0 42 42" style="display:inline-block;vertical-align:middle;width:1.1em;height:1.1em;fill:#1c1410;margin:0 -1px;" aria-hidden="true"><path clip-rule="evenodd" d="M27.997 17.35l-11.1 8.19 15.9-15.963v.015L37.391 5c-.082.117-.165.23-.248.345-3.49 4.804-5.194 7.153-3.826 13.03l-.009-.008c.943 4.001-.065 8.438-3.322 11.693-4.106 4.107-10.677 5.02-16.087 1.324l3.772-1.745c3.454 1.355 7.232.76 9.947-1.954 2.716-2.714 3.325-6.666 1.96-9.956-.259-.623-1.037-.78-1.58-.378zm-13.292-2.574c-3.314 3.31-3.983 9.047-.1 12.755l-.003.003L4 37c.663-.913 1.485-1.776 2.306-2.639l.04-.042c2.346-2.464 4.67-4.906 3.25-8.357-1.903-4.622-.795-10.038 2.73-13.56 3.664-3.66 9.06-4.583 13.568-2.729.998.37 1.867.897 2.545 1.387l-3.764 1.737c-3.505-1.47-7.52-.47-9.97 1.98z" fill-rule="evenodd"></path></svg> News <svg viewBox="0 0 110 110" style="display:inline-block;vertical-align:middle;width:1.6em;height:1.6em;margin-left:6px;" aria-label="latte art heart"><circle cx="55" cy="55" r="52" fill="#b8894d"/><circle cx="55" cy="55" r="48" fill="#c99a58"/><path d="M55 22 C43 5 12 5 12 32 C12 62 55 92 55 92 C55 92 98 62 98 32 C98 5 67 5 55 22Z" fill="#fff" opacity="0.35"/><path d="M55 28 C45 13 20 13 20 35 C20 59 55 86 55 86 C55 86 90 59 90 35 C90 13 65 13 55 28Z" fill="#fff" opacity="0.5"/><path d="M55 34 C47 21 28 21 28 38 C28 55 55 79 55 79 C55 79 82 55 82 38 C82 21 63 21 55 34Z" fill="#fff" opacity="0.7"/><path d="M55 40 C49 30 36 30 36 41 C36 52 55 72 55 72 C55 72 74 52 74 41 C74 30 61 30 55 40Z" fill="#fff" opacity="0.85"/><path d="M55 46 C51 38 43 38 43 45 C43 52 55 64 55 64 C55 64 67 52 67 45 C67 38 59 38 55 46Z" fill="#fff" opacity="0.95"/><line x1="55" y1="30" x2="55" y2="92" stroke="#fff" stroke-width="2.5" opacity="0.8"/></svg></div><div class="tagline">Grok AI Tweets Curated &amp; Scored 1-10 for Honesty</div></div><div class="date" id="currentDate"></div></div><nav id="nav"></nav></header>
+<header><div class="header-top"><div><div class="logo">e<svg viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;width:1.6em;height:1.6em;fill:#1c1410;margin:0 -2px;" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"></path></svg>press<svg viewBox="0 0 42 42" style="display:inline-block;vertical-align:middle;width:1.1em;height:1.1em;fill:#1c1410;margin:0 -1px;" aria-hidden="true"><path clip-rule="evenodd" d="M27.997 17.35l-11.1 8.19 15.9-15.963v.015L37.391 5c-.082.117-.165.23-.248.345-3.49 4.804-5.194 7.153-3.826 13.03l-.009-.008c.943 4.001-.065 8.438-3.322 11.693-4.106 4.107-10.677 5.02-16.087 1.324l3.772-1.745c3.454 1.355 7.232.76 9.947-1.954 2.716-2.714 3.325-6.666 1.96-9.956-.259-.623-1.037-.78-1.58-.378zm-13.292-2.574c-3.314 3.31-3.983 9.047-.1 12.755l-.003.003L4 37c.663-.913 1.485-1.776 2.306-2.639l.04-.042c2.346-2.464 4.67-4.906 3.25-8.357-1.903-4.622-.795-10.038 2.73-13.56 3.664-3.66 9.06-4.583 13.568-2.729.998.37 1.867.897 2.545 1.387l-3.764 1.737c-3.505-1.47-7.52-.47-9.97 1.98z" fill-rule="evenodd"></path></svg> News <svg viewBox="0 0 110 110" style="display:inline-block;vertical-align:middle;width:1.6em;height:1.6em;margin-left:6px;" aria-label="latte art heart"><circle cx="55" cy="55" r="52" fill="#b8894d"/><circle cx="55" cy="55" r="48" fill="#c99a58"/><path d="M55 22 C43 5 12 5 12 32 C12 62 55 92 55 92 C55 92 98 62 98 32 C98 5 67 5 55 22Z" fill="#fff" opacity="0.35"/><path d="M55 28 C45 13 20 13 20 35 C20 59 55 86 55 86 C55 86 90 59 90 35 C90 13 65 13 55 28Z" fill="#fff" opacity="0.5"/><path d="M55 34 C47 21 28 21 28 38 C28 55 55 79 55 79 C55 79 82 55 82 38 C82 21 63 21 55 34Z" fill="#fff" opacity="0.7"/><path d="M55 40 C49 30 36 30 36 41 C36 52 55 72 55 72 C55 72 74 52 74 41 C74 30 61 30 55 40Z" fill="#fff" opacity="0.85"/><path d="M55 46 C51 38 43 38 43 45 C43 52 55 64 55 64 C55 64 67 52 67 45 C67 38 59 38 55 46Z" fill="#fff" opacity="0.95"/><line x1="55" y1="30" x2="55" y2="92" stroke="#fff" stroke-width="2.5" opacity="0.8"/></svg></div><div class="tagline">Grok AI Curated Tweets Honesty Scored 1-10</div></div><div class="date" id="currentDate"></div></div><div class="nav-wrap"><nav id="nav"></nav></div></header>
 <main id="content"><div class="loading">Loading stories...</div></main>
-<footer>&copy; 2026 <strong>eXpressO News</strong> &mdash; Grok AI Tweets Curated &amp; Scored 1-10 for Honesty | Trending on X Right Now</footer>
+<footer>&copy; 2026 <strong>eXpressO news</strong> &mdash; Grok AI Curated Tweets Honesty Scored 1-10 | Trending on X Right Now</footer>
 <script>
 // ---- Tab metadata (static, never changes) ----
 var TAB_META = {
@@ -194,6 +194,16 @@ function renderNav() {
   });
   nav.innerHTML = TABS.map(function(t) { return '<a data-tab="' + t.id + '" class="' + (t.id === activeTab ? 'active' : '') + '">' + t.label + '</a>'; }).join("");
   nav.querySelectorAll("a").forEach(function(a) { a.addEventListener("click", function() { activeTab = a.dataset.tab; renderNav(); renderContent(); }); });
+  // Scroll arrow: hide when scrolled to end, show when more tabs exist
+  var wrap = nav.parentElement;
+  function checkScroll() {
+    if (!wrap || !wrap.classList.contains('nav-wrap')) return;
+    var atEnd = nav.scrollLeft + nav.clientWidth >= nav.scrollWidth - 10;
+    if (atEnd) wrap.classList.add('scrolled-end');
+    else wrap.classList.remove('scrolled-end');
+  }
+  nav.addEventListener('scroll', checkScroll);
+  setTimeout(checkScroll, 100);
 }
 
 function acc(h, inner) {

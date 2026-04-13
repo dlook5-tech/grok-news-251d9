@@ -192,9 +192,11 @@ except json.JSONDecodeError as e:
 
 # ---- Validate and clean ----
 GARBAGE = [
-    'no recent viral post', 'setting to null', 'no post found',
-    'no hot take', 'no recent elon', 'no recent post', 'not found',
-    'no notable post', 'n/a'
+    'no recent post', 'no recent viral', 'no recent take', 'no recent hot take',
+    'setting to null', 'no post found', 'not found',
+    'no hot take found', 'no take found', 'no viral post', 'no notable post',
+    'n/a', 'placeholder', 'no story found',
+    'could not find', 'unable to find', 'no matching', 'none found'
 ]
 
 def is_garbage(text):
@@ -255,15 +257,19 @@ def enrich_urls(data):
     """Find real tweet URLs for stories that have null/missing URLs."""
     tasks = []  # (path, handle, headline)
 
-    # World perspectives
-    w = data.get('world', {})
-    for key in ['conservative', 'democrat', 'independent']:
-        p = w.get(key, {})
-        if isinstance(p, dict) and p.get('handle') and not p.get('url'):
-            tasks.append((['world', key], p['handle'], w.get('headline', '')))
+    # World perspectives (supports array or single object)
+    world_raw = data.get('world', {})
+    world_list = world_raw if isinstance(world_raw, list) else [world_raw]
+    for wi, w in enumerate(world_list):
+        if not isinstance(w, dict):
+            continue
+        for key in ['conservative', 'democrat', 'independent']:
+            p = w.get(key, {})
+            if isinstance(p, dict) and p.get('handle') and not p.get('url'):
+                tasks.append((['world', wi, key], p['handle'], w.get('headline', '')))
 
     # Array tabs
-    for tab in ['elon', 'sports', 'allin', 'pods']:
+    for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'local']:
         items = data.get(tab, [])
         if not isinstance(items, list):
             items = [items]
@@ -272,7 +278,7 @@ def enrich_urls(data):
                 tasks.append(([tab, i], item['handle'], item.get('headline', '')))
 
     # Single tabs
-    for tab in ['business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local']:
+    for tab in ['top', 'msm', 'pg6', 'recipe', 'science']:
         item = data.get(tab, {})
         if isinstance(item, dict) and item.get('handle') and not item.get('url'):
             tasks.append(([tab], item['handle'], item.get('headline', '')))
@@ -376,7 +382,7 @@ HANDLE_NAMES = {
     '@SenWarren': 'Elizabeth Warren', '@SenTedCruz': 'Ted Cruz',
     '@PopCrave': 'Pop Crave', '@TMZ': 'TMZ',
     '@unusual_whales': 'Unusual Whales', '@WatcherGuru': 'Watcher Guru',
-    '@ShamsCharania': 'Shams Charania', '@wojespn': 'Adrian Wojnarowski',
+    '@ShamsCharania': 'Shams Charania (ESPN)', '@wojespn': 'Adrian Wojnarowski',
 }
 
 def humanize_headline(headline, handle):
@@ -471,23 +477,28 @@ output = {
     'lastUpdated': now.strftime("%-m/%-d/%Y, %-I:%M:%S %p")
 }
 
-# Process world
-world_story = clean_world(data.get('world', {}))
+# Process world (now supports array of stories)
+world_raw = data.get('world', {})
+if isinstance(world_raw, list):
+    world_stories = [clean_world(w) for w in world_raw]
+else:
+    world_stories = [clean_world(world_raw)]
+world_stories = [w for w in world_stories if w]
 world_earlier = existing.get('world', {}).get('earlier', [])
-if world_story:
+if world_stories:
     # Rotate current stories to earlier
     old_stories = existing.get('world', {}).get('stories', [])
     for s in old_stories:
         s['time'] = s.get('time', update_time)
         world_earlier.insert(0, s)
     world_earlier = world_earlier[:10]
-    output['world'] = {'stories': [world_story], 'earlier': world_earlier}
+    output['world'] = {'stories': world_stories, 'earlier': world_earlier}
 else:
-    print("  WARNING: World story failed validation, keeping old", file=sys.stderr)
+    print("  WARNING: World stories failed validation, keeping old", file=sys.stderr)
     output['world'] = existing.get('world', {'stories': [], 'earlier': []})
 
-# Process array tabs (elon, sports, allin, pods)
-for tab in ['elon', 'sports', 'allin', 'pods']:
+# Process array tabs (elon, sports, allin, pods, business)
+for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'local']:
     tab_data = data.get(tab, [])
     posts = tab_data if isinstance(tab_data, list) else [tab_data]
     cleaned = []
@@ -513,7 +524,7 @@ for tab in ['elon', 'sports', 'allin', 'pods']:
         output[tab] = existing.get(tab, {'stories': [], 'earlier': []})
 
 # Process single-post tabs
-for tab in ['business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local']:
+for tab in ['top', 'msm', 'pg6', 'recipe', 'science']:
     s = clean_story(data.get(tab, {}))
     tab_earlier = existing.get(tab, {}).get('earlier', [])
     if s:
@@ -531,7 +542,7 @@ for tab in ['business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local']:
 total_stories = 0
 real_urls = 0
 profile_urls = 0
-for tab in ['world', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'pg6', 'pods', 'recipe', 'local']:
+for tab in ['world', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'pg6', 'pods', 'recipe', 'science', 'local']:
     for s in output.get(tab, {}).get('stories', []):
         total_stories += 1
         if 'perspectives' in s:
