@@ -255,27 +255,25 @@ def enrich_urls(data):
     """Find real tweet URLs for stories that have null/missing URLs."""
     tasks = []  # (path, handle, headline)
 
-    # World perspectives
-    w = data.get('world', {})
-    for key in ['conservative', 'democrat', 'independent']:
-        p = w.get(key, {})
-        if isinstance(p, dict) and p.get('handle') and not p.get('url'):
-            tasks.append((['world', key], p['handle'], w.get('headline', '')))
+    # World perspectives (now an array of world stories)
+    world_data = data.get('world', [])
+    world_items = world_data if isinstance(world_data, list) else [world_data]
+    for wi, w in enumerate(world_items):
+        if not isinstance(w, dict):
+            continue
+        for key in ['conservative', 'democrat', 'independent']:
+            p = w.get(key, {})
+            if isinstance(p, dict) and p.get('handle') and not p.get('url'):
+                tasks.append((['world', wi, key], p['handle'], w.get('headline', '')))
 
-    # Array tabs
-    for tab in ['elon', 'sports', 'allin', 'pods']:
+    # All array tabs
+    for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local']:
         items = data.get(tab, [])
         if not isinstance(items, list):
             items = [items]
         for i, item in enumerate(items):
             if isinstance(item, dict) and item.get('handle') and not item.get('url'):
                 tasks.append(([tab, i], item['handle'], item.get('headline', '')))
-
-    # Single tabs
-    for tab in ['business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local']:
-        item = data.get(tab, {})
-        if isinstance(item, dict) and item.get('handle') and not item.get('url'):
-            tasks.append(([tab], item['handle'], item.get('headline', '')))
 
     if not tasks:
         return data
@@ -401,8 +399,8 @@ def clean_world(w):
             'engagement': str(p.get('engagement', '')),
             'honesty': str(p.get('honesty', w.get('honesty', '8/10')))
         })
-    if len(perspectives) < 2:
-        print("  WARNING: World has fewer than 2 valid perspectives", file=sys.stderr)
+    if len(perspectives) < 1:
+        print("  WARNING: World has no valid perspectives", file=sys.stderr)
         return None
     footnotes = w.get('footnotes', [])
     if not isinstance(footnotes, list):
@@ -431,23 +429,29 @@ output = {
     'lastUpdated': now.strftime("%-m/%-d/%Y, %-I:%M:%S %p")
 }
 
-# Process world
-world_story = clean_world(data.get('world', {}))
+# Process world (now an array of stories)
+world_data = data.get('world', {})
+world_items = world_data if isinstance(world_data, list) else [world_data]
+world_cleaned = []
+for w in world_items:
+    ws = clean_world(w)
+    if ws:
+        world_cleaned.append(ws)
+
 world_earlier = existing.get('world', {}).get('earlier', [])
-if world_story:
-    # Rotate current stories to earlier
+if world_cleaned:
     old_stories = existing.get('world', {}).get('stories', [])
     for s in old_stories:
         s['time'] = s.get('time', update_time)
         world_earlier.insert(0, s)
-    world_earlier = world_earlier[:10]
-    output['world'] = {'stories': [world_story], 'earlier': world_earlier}
+    world_earlier = world_earlier[:15]
+    output['world'] = {'stories': world_cleaned, 'earlier': world_earlier}
 else:
-    print("  WARNING: World story failed validation, keeping old", file=sys.stderr)
+    print("  WARNING: World stories failed validation, keeping old", file=sys.stderr)
     output['world'] = existing.get('world', {'stories': [], 'earlier': []})
 
-# Process array tabs (elon, sports, allin, pods)
-for tab in ['elon', 'sports', 'allin', 'pods']:
+# Process all array tabs (everything is now 3 stories)
+for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local']:
     tab_data = data.get(tab, [])
     posts = tab_data if isinstance(tab_data, list) else [tab_data]
     cleaned = []
@@ -466,25 +470,10 @@ for tab in ['elon', 'sports', 'allin', 'pods']:
         for s in old_stories:
             s['time'] = s.get('time', update_time)
             tab_earlier.insert(0, s)
-        tab_earlier = tab_earlier[:10]
+        tab_earlier = tab_earlier[:15]
         output[tab] = {'stories': cleaned, 'earlier': tab_earlier}
     else:
         print(f"  WARNING: {tab} had no valid stories, keeping old", file=sys.stderr)
-        output[tab] = existing.get(tab, {'stories': [], 'earlier': []})
-
-# Process single-post tabs
-for tab in ['business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local']:
-    s = clean_story(data.get(tab, {}))
-    tab_earlier = existing.get(tab, {}).get('earlier', [])
-    if s:
-        old_stories = existing.get(tab, {}).get('stories', [])
-        for old in old_stories:
-            old['time'] = old.get('time', update_time)
-            tab_earlier.insert(0, old)
-        tab_earlier = tab_earlier[:10]
-        output[tab] = {'stories': [s], 'earlier': tab_earlier}
-    else:
-        print(f"  WARNING: {tab} failed validation, keeping old", file=sys.stderr)
         output[tab] = existing.get(tab, {'stories': [], 'earlier': []})
 
 # ---- Quality report ----
