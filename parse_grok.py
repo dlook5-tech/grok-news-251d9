@@ -3,7 +3,33 @@
 Parse Grok API response, validate every field, and output clean stories.json data.
 If validation fails, exit non-zero so the pipeline keeps the old data.
 """
-import sys, json, re, datetime
+import sys, json, re, datetime, urllib.parse, subprocess
+
+# ---- Freshness check via Twitter snowflake ID ----
+MAX_AGE_HOURS = 48  # Reject any post older than 48 hours
+
+def url_age_hours(url):
+    """Extract post age in hours from Twitter snowflake ID in URL. Returns None if not a status URL."""
+    if not url:
+        return None
+    m = re.search(r'/status/(\d+)', url)
+    if not m:
+        return None
+    try:
+        sid = int(m.group(1))
+        ts_ms = (sid >> 22) + 1288834974657
+        post_time = datetime.datetime.fromtimestamp(ts_ms / 1000)
+        age = datetime.datetime.now() - post_time
+        return age.total_seconds() / 3600
+    except Exception:
+        return None
+
+def is_fresh(url, max_hours=MAX_AGE_HOURS):
+    """Returns True if URL is fresh (within max_hours) or if age can't be determined."""
+    age = url_age_hours(url)
+    if age is None:
+        return True  # Can't determine age, let it through
+    return age <= max_hours
 
 # ---- Parse API response ----
 raw = sys.stdin.read()
@@ -355,6 +381,21 @@ def clean_url(handle, url):
     h = handle.lower().lstrip('@')
     return f"https://x.com/{h}"
 
+def trim_text(text, max_sentences=2, max_chars=150):
+    """Trim text to max_sentences and max_chars. Keep it punchy."""
+    if not text:
+        return ''
+    text = str(text).strip()
+    # Split into sentences
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    trimmed = '. '.join(sentences[:max_sentences])
+    if not trimmed.endswith(('.', '!', '?')):
+        trimmed += '.'
+    # Hard cap on length
+    if len(trimmed) > max_chars:
+        trimmed = trimmed[:max_chars].rsplit(' ', 1)[0] + '...'
+    return trimmed
+
 def clean_story(s):
     """Validate and clean a single story dict. Returns None if garbage."""
     if not isinstance(s, dict):
@@ -365,18 +406,35 @@ def clean_story(s):
     if not handle:
         return None
     headline = str(s.get('headline', '') or s.get('body', '')[:80] or 'Untitled')
+
+    # FRESHNESS GATE: check the RAW url from Grok BEFORE clean_url sanitizes it
+    raw_url = s.get('url', '')
+    age = url_age_hours(raw_url)
+    if age is not None and age > MAX_AGE_HOURS:
+        print(f"  STALE ({int(age)}h old): {handle} - {headline[:50]}", file=sys.stderr)
+        return None
+
+    url = clean_url(handle, raw_url)
+
+    # Double-check cleaned URL too
+    age2 = url_age_hours(url)
+    if age2 is not None and age2 > MAX_AGE_HOURS:
+        print(f"  STALE ({int(age2)}h old): {handle} - {headline[:50]}", file=sys.stderr)
+        return None
+
     return {
         'headline': headline,
         'handle': handle,
-        'url': clean_url(handle, s.get('url')),
-        'body': str(s.get('body', '')),
+        'url': url,
+        'body': trim_text(s.get('body', ''), max_sentences=2, max_chars=150),
         'engagement': str(s.get('engagement', '')),
         'honesty': str(s.get('honesty', '8/10')),
-        'notes': str(s.get('notes', ''))
+        'notes': str(s.get('notes', '')),
+        'posted': datetime.datetime.now().strftime("%-m/%-d/%Y %-I:%M %p")
     }
 
 def clean_world(w):
-    """Validate world story (3 perspectives)"""
+    """Validate world story — REQUIRES all 3 perspectives (conservative, democrat, independent)."""
     if not isinstance(w, dict):
         return None
     headline = w.get('headline', w.get('topic', ''))
@@ -386,22 +444,52 @@ def clean_world(w):
     for key, label in [('conservative', 'Conservative'), ('democrat', 'Democrat'), ('independent', 'Independent')]:
         p = w.get(key, {})
         if not isinstance(p, dict) or not p.get('handle'):
-            continue
+            print(f"  REJECT world story: missing {key} perspective entirely", file=sys.stderr)
+            return None  # ALL 3 required — reject whole story if any missing
         ptext = p.get('quote', p.get('angle', ''))
         if is_garbage(ptext):
-            print(f"  SKIP garbage world/{key}", file=sys.stderr)
-            continue
+            print(f"  REJECT world story: garbage {key} text", file=sys.stderr)
+            return None  # ALL 3 required
+        p_url = clean_url(p['handle'], p.get('url'))
+        # If URL is stale, fall back to profile URL (perspective still matters)
+        p_age = url_age_hours(p_url)
+        if p_age is not None and p_age > MAX_AGE_HOURS:
+            print(f"  STALE world/{key} URL ({int(p_age)}h), using profile link: {p['handle']}", file=sys.stderr)
+            h = p['handle'].lower().lstrip('@')
+            p_url = f"https://x.com/{h}"
         perspectives.append({
             'label': label,
             'handle': p['handle'],
-            'url': clean_url(p['handle'], p.get('url')),
-            'text': str(ptext),
+            'url': p_url,
+            'text': trim_text(ptext, max_sentences=2, max_chars=150),
             'engagement': str(p.get('engagement', '')),
             'honesty': str(p.get('honesty', w.get('honesty', '8/10')))
         })
-    if len(perspectives) < 1:
-        print("  WARNING: World has no valid perspectives", file=sys.stderr)
+    # Final check: must have exactly 3
+    if len(perspectives) != 3:
+        print(f"  REJECT world story: only {len(perspectives)} perspectives", file=sys.stderr)
         return None
+
+    # RELEVANCE CHECK: perspectives must relate to the headline topic
+    # Extract key words from headline (3+ chars, not common words)
+    stop_words = {'the','and','for','are','but','not','you','all','can','had','her','was','one','our','out','has','his','how','its','may','new','now','old','see','way','who','did','get','let','say','she','too','use','with','from','have','this','that','will','each','make','like','just','over','such','take','than','them','very','when','come','could','would','about','after','being','their','there','these','those','which','other','into','more','some','what','been','were','then','also','most','must','upon'}
+    headline_words = set()
+    for w_token in re.split(r'[^a-zA-Z]+', str(headline).lower()):
+        if len(w_token) >= 3 and w_token not in stop_words:
+            headline_words.add(w_token)
+
+    off_topic_count = 0
+    for p in perspectives:
+        p_words = set(re.split(r'[^a-zA-Z]+', p['text'].lower()))
+        overlap = headline_words & p_words
+        if len(overlap) == 0 and len(headline_words) >= 2:
+            off_topic_count += 1
+            print(f"  OFF-TOPIC: {p['label']} perspective has 0 keyword overlap with headline '{str(headline)[:40]}'", file=sys.stderr)
+
+    if off_topic_count >= 2:
+        print(f"  REJECT world story: {off_topic_count}/3 perspectives are off-topic", file=sys.stderr)
+        return None
+
     footnotes = w.get('footnotes', [])
     if not isinstance(footnotes, list):
         footnotes = []
@@ -411,7 +499,8 @@ def clean_world(w):
         'perspectives': perspectives,
         'footnotes': [str(f) for f in footnotes],
         'notes': str(w.get('notes', '')),
-        'body': 'Three-perspective roundup.'
+        'body': 'Three-perspective roundup.',
+        'posted': datetime.datetime.now().strftime("%-m/%-d/%Y %-I:%M %p")
     }
 
 # ---- Build output ----
@@ -424,6 +513,30 @@ try:
         existing = json.load(f)
 except (FileNotFoundError, json.JSONDecodeError):
     existing = {}
+
+def expire_old_stories(stories, max_age_hours=MAX_AGE_HOURS):
+    """Remove stories with ANY URL older than max_age_hours. Zero tolerance for stale content."""
+    kept = []
+    for s in stories:
+        if 'perspectives' in s:
+            urls = [p.get('url', '') for p in s.get('perspectives', [])]
+        else:
+            urls = [s.get('url', '')]
+
+        # If ANY URL is old, drop the entire story
+        has_old = False
+        for u in urls:
+            age = url_age_hours(u)
+            if age is not None and age > max_age_hours:
+                has_old = True
+                break
+
+        if has_old:
+            hl = s.get('headline', '?')[:40]
+            print(f"  EXPIRED earlier: {hl}", file=sys.stderr)
+        else:
+            kept.append(s)
+    return kept
 
 output = {
     'lastUpdated': now.strftime("%-m/%-d/%Y, %-I:%M:%S %p")
@@ -443,24 +556,55 @@ if world_cleaned:
     old_stories = existing.get('world', {}).get('stories', [])
     for s in old_stories:
         s['time'] = s.get('time', update_time)
+        if 'posted' not in s:
+            s['posted'] = now.strftime("%-m/%-d/%Y %-I:%M %p")
         world_earlier.insert(0, s)
-    world_earlier = world_earlier[:15]
+    world_earlier = expire_old_stories(world_earlier)
+    # Deduplicate world earlier by headline similarity
+    seen_world_headlines = set()
+    deduped_world = []
+    for s in world_earlier:
+        # Use first perspective URL as dedup key
+        urls = [p.get('url', '') for p in s.get('perspectives', [])]
+        primary_url = urls[0] if urls else ''
+        if primary_url and primary_url in seen_world_headlines:
+            continue
+        if primary_url:
+            seen_world_headlines.add(primary_url)
+        deduped_world.append(s)
+    world_earlier = deduped_world[:10]
     output['world'] = {'stories': world_cleaned, 'earlier': world_earlier}
 else:
     print("  WARNING: World stories failed validation, keeping old", file=sys.stderr)
     output['world'] = existing.get('world', {'stories': [], 'earlier': []})
 
 # Process all array tabs (everything is now 3 stories)
+NON_SOCAL_KEYWORDS = {'new york', 'nyc', 'manhattan', 'brooklyn', 'michigan', 'detroit', 'chicago', 'boston', 'seattle', 'portland', 'denver', 'atlanta', 'miami', 'dallas', 'houston', 'phoenix', 'philadelphia', 'san francisco', 'minnesota', 'ohio', 'florida', 'texas', 'virginia', 'washington dc', 'maine', 'vermont'}
+
 for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local']:
     tab_data = data.get(tab, [])
     posts = tab_data if isinstance(tab_data, list) else [tab_data]
     cleaned = []
     seen_urls = set()
+    seen_handles = set()
     for p in posts:
         s = clean_story(p)
         if s and s['url'] not in seen_urls:
             if tab == 'elon':
                 s['honesty'] = '10/10'
+            # LOCAL tab: reject non-SoCal stories
+            if tab == 'local':
+                combined = (s.get('headline', '') + ' ' + s.get('body', '')).lower()
+                if any(kw in combined for kw in NON_SOCAL_KEYWORDS):
+                    print(f"  REJECT local: non-SoCal story '{s['headline'][:50]}'", file=sys.stderr)
+                    continue
+            # MSM tab: enforce handle diversity (max 1 per handle)
+            if tab == 'msm':
+                h = s.get('handle', '').lower()
+                if h in seen_handles:
+                    print(f"  REJECT msm: duplicate handle {h}", file=sys.stderr)
+                    continue
+                seen_handles.add(h)
             seen_urls.add(s['url'])
             cleaned.append(s)
 
@@ -469,8 +613,26 @@ for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 
         old_stories = existing.get(tab, {}).get('stories', [])
         for s in old_stories:
             s['time'] = s.get('time', update_time)
+            if 'posted' not in s:
+                s['posted'] = now.strftime("%-m/%-d/%Y %-I:%M %p")
             tab_earlier.insert(0, s)
-        tab_earlier = tab_earlier[:15]
+        tab_earlier = expire_old_stories(tab_earlier)
+        # Deduplicate earlier by URL — keep only first occurrence of each URL
+        seen_earlier_urls = set()
+        deduped_earlier = []
+        for s in tab_earlier:
+            urls = []
+            if 'perspectives' in s:
+                urls = [p.get('url', '') for p in s.get('perspectives', [])]
+            else:
+                urls = [s.get('url', '')]
+            primary_url = urls[0] if urls else ''
+            if primary_url and primary_url in seen_earlier_urls:
+                continue  # Skip duplicate
+            if primary_url:
+                seen_earlier_urls.add(primary_url)
+            deduped_earlier.append(s)
+        tab_earlier = deduped_earlier[:10]
         output[tab] = {'stories': cleaned, 'earlier': tab_earlier}
     else:
         print(f"  WARNING: {tab} had no valid stories, keeping old", file=sys.stderr)
@@ -495,7 +657,15 @@ for tab in ['world', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'pg6',
             else:
                 profile_urls += 1
 
+# Per-tab breakdown
+print(f"\n--- QC REPORT ---", file=sys.stderr)
+for tab in ['world', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'pg6', 'pods', 'recipe', 'science', 'local']:
+    stories = output.get(tab, {}).get('stories', [])
+    earlier = output.get(tab, {}).get('earlier', [])
+    status = "✓" if len(stories) >= 3 else f"⚠ ONLY {len(stories)}"
+    print(f"  {tab:10s}: {len(stories)} stories {status}, {len(earlier)} earlier", file=sys.stderr)
 print(f"Quality: {total_stories} stories, {real_urls} real URLs, {profile_urls} profile-only", file=sys.stderr)
+print(f"--- END QC ---\n", file=sys.stderr)
 
 # ---- Fetch live stock quotes ----
 TICKERS = ['^GSPC', '^IXIC', 'BTC-USD', 'TSLA', 'PLTR', 'META', 'COIN', 'SOFI', 'CLOV', 'AFRM', 'RUM', 'AMZN']
