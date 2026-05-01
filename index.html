@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<!-- Auto-reload every 15 min as a backstop. visibilitychange/pageshow listeners catch tab returns;
+     this catches the case where a tab is left open in a single session for hours. -->
+<meta http-equiv="refresh" content="900">
 <title>eXpressO News</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap');
@@ -17,7 +23,7 @@
   nav a { color: #8a7e72; text-decoration: none; padding: 9px 11px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
   nav a:hover { color: #3a2a18; }
   nav a.active { color: #b8860b; border-bottom: 2px solid #b8860b; font-weight: 700; }
-  main { flex: 1; max-width: 680px; width: 100%; margin: 0 auto; padding: 28px 24px; }
+  main { flex: 1; max-width: 880px; width: 100%; margin: 0 auto; padding: 28px 24px; }
   .section-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f0e6d6; margin-bottom: 6px; font-weight: 600; }
   h1 { font-family: "Playfair Display", Georgia, serif; font-size: 1.7rem; font-weight: 800; margin-bottom: 6px; line-height: 1.2; color: #fff8ee; text-shadow: 0 1px 3px rgba(80,40,0,0.3); }
   .subtitle { color: #f0e6d6; font-size: 0.88rem; margin-bottom: 24px; line-height: 1.5; }
@@ -25,11 +31,21 @@
   .story-header { padding: 14px 18px; cursor: pointer; display: flex; align-items: flex-start; gap: 10px; font-weight: 600; font-size: 0.9rem; line-height: 1.4; user-select: none; }
   .story-header:hover { background: #f5efe5; }
   .arrow { flex-shrink: 0; transition: transform 0.2s; font-size: 0.65rem; margin-top: 5px; color: #b5a998; }
-  .story.open .arrow { transform: rotate(90deg); }
-  .story-body { display: none; padding: 0 18px 18px 40px; }
-  .story.open .story-body { display: block; }
+  .story.open > .story-header > .arrow { transform: rotate(90deg); }
+  .story > .story-body { display: none; padding: 0 18px 18px 40px; }
+  .story.open > .story-body { display: block; }
   .perspective { margin-bottom: 14px; line-height: 1.6; font-size: 0.88rem; }
   .perspective:last-child { margin-bottom: 0; }
+  /* World tab: Red / White / Blue nested perspective blocks — Business-tab style */
+  .perspective-block { margin-bottom: 8px; border-radius: 6px; border: 1px solid; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .perspective-block > .story-header { padding: 10px 14px; font-size: 0.85rem; }
+  .perspective-block > .story-body { padding: 0 14px 14px 30px; }
+  .perspective-conservative { background: #fbe9e9; border-color: #e3b5b0; }
+  .perspective-conservative > .story-header:hover { background: #f5d8d4; }
+  .perspective-independent  { background: #fafafa; border-color: #d8d4cb; }
+  .perspective-independent > .story-header:hover { background: #f0ede6; }
+  .perspective-democrat     { background: #e6eff7; border-color: #b4cae0; }
+  .perspective-democrat > .story-header:hover { background: #d4e2ef; }
   .label-conservative { color: #a63d2f; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; }
   .label-democrat { color: #2b6ea3; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; }
   .label-thirdparty { color: #5a7247; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -50,17 +66,59 @@
   .view-post:hover { text-decoration: underline; color: #1a5f8a; }
   .post-stats { font-size: 0.78rem; color: #a89e93; margin-bottom: 8px; }
   .post-body { font-size: 0.88rem; line-height: 1.65; color: #3d3029; }
-  .footnote-item { font-size: 0.7rem; line-height: 1.3; color: #b5a998; margin-bottom: 3px; }
+  .footnote-item { font-size: 0.82rem; line-height: 1.5; color: #2a1810; margin-bottom: 5px; font-weight: 500; }
   footer { text-align: center; padding: 28px; font-size: 0.75rem; color: #d4b896; border-top: 1px solid #a0845e; background: #8b6e4e; }
   footer strong { color: #f5f0e8; }
   .last-updated { text-align: center; font-size: 0.68rem; color: #f0e6d6; margin-top: 24px; letter-spacing: 0.3px; }
-  .holdings-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 16px 0; }
-  .holdings-table th { text-align: left; padding: 8px 10px; border-bottom: 2px solid #1a1a1a; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #666; }
-  .holdings-table td { padding: 8px 10px; border-bottom: 1px solid #eee; }
+  .holdings-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 16px 0; table-layout: fixed; }
+  .holdings-table th { text-align: left; padding: 8px 6px; border-bottom: 2px solid #1a1a1a; font-weight: 700; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.4px; color: #666; white-space: nowrap; }
+  .holdings-table td { padding: 8px 6px; border-bottom: 1px solid #eee; font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .holdings-table tr:hover { background: #fafafa; }
+  .holdings-table col.c-tk { width: 62px; }
+  .holdings-table col.c-nm { width: auto; }
+  .holdings-table col.c-pr { width: 72px; }
+  .holdings-table col.c-pct { width: 56px; }
+  .holdings-table col.c-hb { width: 130px; }
+  .holdings-table th.num, .holdings-table td.num { text-align: right; }
+  .holdings-table td.held-by { font-size: 0.7rem; color: #666; }
+  @media (max-width: 700px) {
+    .holdings-table { font-size: 0.7rem; }
+    .holdings-table th, .holdings-table td { padding: 6px 4px; }
+    .holdings-table col.c-tk { width: 50px; }
+    .holdings-table col.c-pr { width: 60px; }
+    .holdings-table col.c-pct { width: 44px; }
+    .holdings-table col.c-hb { width: 90px; }
+  }
   .pos { color: #27ae60; font-weight: 600; }
   .neg { color: #c0392b; font-weight: 600; }
   .ticker { font-weight: 700; font-family: monospace; }
+  .tab-art { float: right; width: 280px; max-width: 38%; margin: 6px 0 18px 24px; }
+  .tab-art-bump { width: 340px; max-width: 44%; }
+  .tab-art-big  { width: 400px; max-width: 50%; }
+  .tab-art-wide { width: 450px; max-width: 55%; }
+  .tab-art img { width: 100%; display: block; border: 1px solid #b89968; box-shadow: 0 4px 18px rgba(0,0,0,0.22); border-radius: 2px; }
+  .tab-art-caption { margin-top: 10px; font-family: Georgia, serif; font-size: 1rem; font-style: italic; color: #4a2f1a; text-align: center; letter-spacing: 0.3px; }
+  .tab-art-caption.strong { font-size: 1.15rem; font-style: normal; font-weight: 700; color: #2a1810; }
+  @media (max-width: 700px) {
+    /* Mobile: image becomes a full-width block ABOVE stories so accordions get full width.
+       This prevents first-story squeeze AND lets tweet embeds render at full width when tapped. */
+    .tab-art {
+      float: none;
+      clear: both;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 0 20px 0;
+    }
+    .tab-art-bump, .tab-art-big, .tab-art-wide {
+      width: 100%;
+      max-width: 100%;
+    }
+    .tab-art img { max-height: 260px; object-fit: cover; }
+    .tab-art-wide img { max-height: 320px; }
+    .tab-art-caption { font-size: 0.8rem; margin-top: 6px; }
+    .tab-art-caption.strong { font-size: 0.9rem; }
+  }
   .holdings-section { background: #faf7f3; border: 1px solid #ddd5cb; border-radius: 6px; padding: 20px; margin-top: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .holdings-title { font-family: "Playfair Display", Georgia, serif; font-size: 1rem; font-weight: 700; margin-bottom: 4px; color: #2c1e10; }
   .holdings-subtitle { font-size: 0.78rem; color: #a89e93; margin-bottom: 16px; }
@@ -97,28 +155,40 @@
   .myfeed-clear:hover { background:#fafafa; border-color:#bbb; }
   .vote-featured { background:#c0392b; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:700; margin-left:8px; }
   .vote-pending { background:#ddd; color:#666; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; margin-left:8px; }
-  @media (max-width: 600px) { header { padding: 14px 16px 0; } nav { margin: 0 -16px; padding: 0 8px; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; } nav a { padding: 8px 8px; font-size: 0.62rem; white-space: nowrap; } main { padding: 20px 16px; } .logo { font-size: 1.5rem; } h1 { font-size: 1.3rem; } }
+  @media (max-width: 600px) { header { padding: 14px 16px 0; position: relative; } nav { margin: 0 -16px; padding: 0 8px; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; } nav::-webkit-scrollbar { display: none; } nav a { padding: 8px 8px; font-size: 0.62rem; white-space: nowrap; } main { padding: 20px 16px; } .logo { font-size: 1.5rem; } h1 { font-size: 1.3rem; } header::after { content: "\203A"; position: absolute; right: 4px; bottom: 6px; width: 24px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 700; color: #6b4a2e; background: linear-gradient(to right, rgba(247,242,234,0) 0%, #f7f2ea 50%); pointer-events: none; z-index: 5; } }
   .footnotes { background: #f5f0ea; border: 1px solid #e5ddd3; border-radius: 4px; padding: 6px 10px; margin-top: 2px; }
   .footnote-card { border: 1px solid #e5ddd3; border-radius: 6px; margin-bottom: 8px; background: #f5f0ea; overflow: hidden; }
-  .footnote-card .story-header { padding: 6px 12px; font-weight: 400; font-size: 0.72rem; color: #b5a998; gap: 8px; }
+  .footnote-card .story-header { padding: 8px 12px; font-weight: 600; font-size: 0.78rem; color: #5c4a36; gap: 8px; }
   .footnote-card .story-header:hover { background: #ede8e0; }
-  .footnote-card .arrow { font-size: 0.55rem; margin-top: 2px; }
-  .footnote-card .story-body { padding: 0 12px 8px 28px; display: none; }
-  .footnote-card.open .story-body { display: block; }
-  .footnote-card.open .arrow { transform: rotate(90deg); }
-  .footnote-item { font-size: 0.7rem; line-height: 1.3; color: #bbb; margin-bottom: 3px; }
+  .footnote-card .arrow { font-size: 0.6rem; margin-top: 3px; color: #6b5842; }
+  .footnote-card > .story-body { padding: 0 12px 10px 28px; display: none; }
+  .footnote-card.open > .story-body { display: block; }
+  .footnote-card.open > .story-header > .arrow { transform: rotate(90deg); }
+  .footnote-item { font-size: 0.82rem; line-height: 1.5; color: #2a1810; margin-bottom: 5px; font-weight: 500; }
   .footnote-item:last-child { margin-bottom: 0; }
+  .scoring-key-toggle { margin-bottom: 8px; }
+  .scoring-key-header { display: flex; gap: 6px; align-items: center; font-size: 0.7rem; color: #6b5842; cursor: pointer; padding: 4px 2px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; user-select: none; }
+  .scoring-key-header:hover { color: #5c4a36; }
+  .scoring-key-header .arrow { font-size: 0.55rem; transition: transform 0.2s; }
+  .scoring-key-toggle.open .scoring-key-header .arrow { transform: rotate(90deg); }
+  .scoring-key-body { display: none; font-size: 0.72rem; line-height: 1.5; color: #5c4a36; background: #efe7db; border-left: 3px solid #8b6f4a; padding: 8px 12px; margin-top: 4px; border-radius: 3px; }
+  .scoring-key-toggle.open .scoring-key-body { display: block; }
+  .scoring-key-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 3px; }
+  .scoring-key-row span { white-space: nowrap; }
+  .scoring-key-body .deduct { color: #8b2e1f; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .scoring-key-example { font-size: 0.7rem; color: #5a4530; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #c9b99f; font-style: italic; }
   .loading { text-align:center; padding:60px 20px; color:#a89e93; font-size:0.9rem; }
 </style>
 </head>
 <body>
-<header><div class="header-top"><div><div class="logo">e<svg viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;width:1.6em;height:1.6em;fill:#1c1410;margin:0 -2px;" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"></path></svg>press<svg viewBox="0 0 42 42" style="display:inline-block;vertical-align:middle;width:1.1em;height:1.1em;fill:#1c1410;margin:0 -1px;" aria-hidden="true"><path clip-rule="evenodd" d="M27.997 17.35l-11.1 8.19 15.9-15.963v.015L37.391 5c-.082.117-.165.23-.248.345-3.49 4.804-5.194 7.153-3.826 13.03l-.009-.008c.943 4.001-.065 8.438-3.322 11.693-4.106 4.107-10.677 5.02-16.087 1.324l3.772-1.745c3.454 1.355 7.232.76 9.947-1.954 2.716-2.714 3.325-6.666 1.96-9.956-.259-.623-1.037-.78-1.58-.378zm-13.292-2.574c-3.314 3.31-3.983 9.047-.1 12.755l-.003.003L4 37c.663-.913 1.485-1.776 2.306-2.639l.04-.042c2.346-2.464 4.67-4.906 3.25-8.357-1.903-4.622-.795-10.038 2.73-13.56 3.664-3.66 9.06-4.583 13.568-2.729.998.37 1.867.897 2.545 1.387l-3.764 1.737c-3.505-1.47-7.52-.47-9.97 1.98z" fill-rule="evenodd"></path></svg> news <svg viewBox="0 0 130 130" style="display:inline-block;vertical-align:middle;width:1.8em;height:1.8em;margin-left:4px;margin-bottom:-2px;" aria-label="latte art heart"><defs><radialGradient id="cg" cx="50%" cy="48%" r="50%"><stop offset="0%" stop-color="#d4a86a"/><stop offset="70%" stop-color="#b8894d"/><stop offset="100%" stop-color="#9a7040"/></radialGradient><radialGradient id="fg" cx="50%" cy="45%" r="42%"><stop offset="0%" stop-color="#f5ead8" stop-opacity="0.95"/><stop offset="60%" stop-color="#e8d5b8" stop-opacity="0.7"/><stop offset="100%" stop-color="#c9a067" stop-opacity="0"/></radialGradient></defs><ellipse cx="65" cy="68" rx="58" ry="54" fill="#e8e0d8"/><ellipse cx="65" cy="66" rx="56" ry="52" fill="#f5f0ea"/><circle cx="65" cy="64" r="46" fill="url(#cg)"/><circle cx="65" cy="64" r="42" fill="url(#fg)" opacity="0.5"/><path d="M65 43 C57 29 40 31 40 47 C40 63 65 85 65 85 C65 85 90 63 90 47 C90 31 73 29 65 43Z" fill="#fff" opacity="0.55"/><path d="M65 49 C59 37 46 39 46 51 C46 63 65 81 65 81 C65 81 84 63 84 51 C84 39 71 37 65 49Z" fill="#fff" opacity="0.7"/><path d="M65 55 C61 45 52 47 52 55 C52 63 65 77 65 77 C65 77 78 63 78 55 C78 47 69 45 65 55Z" fill="#fff" opacity="0.85"/><line x1="65" y1="57" x2="65" y2="89" stroke="#fff" stroke-width="2" opacity="0.6" stroke-linecap="round"/><ellipse cx="65" cy="64" r="46" fill="none" stroke="#c9a067" stroke-width="1.5" opacity="0.3"/><path d="M111 58 Q120 60 122 68 Q124 76 116 78" fill="none" stroke="#f5f0ea" stroke-width="5" stroke-linecap="round"/><path d="M111 58 Q120 60 122 68 Q124 76 116 78" fill="none" stroke="#e0d5c8" stroke-width="3.5" stroke-linecap="round"/></svg></div><div class="tagline">Grok AI Curated Tweets Honesty Scored 1-10</div></div><div class="date" id="currentDate"></div></div><nav id="nav"></nav></header>
+<header><div class="header-top"><div><div class="logo">e<svg viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;width:1.6em;height:1.6em;fill:#1c1410;margin:0 -2px;" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"></path></svg>press<svg viewBox="0 0 42 42" style="display:inline-block;vertical-align:middle;width:1.1em;height:1.1em;fill:#1c1410;margin:0 -1px;" aria-hidden="true"><path clip-rule="evenodd" d="M27.997 17.35l-11.1 8.19 15.9-15.963v.015L37.391 5c-.082.117-.165.23-.248.345-3.49 4.804-5.194 7.153-3.826 13.03l-.009-.008c.943 4.001-.065 8.438-3.322 11.693-4.106 4.107-10.677 5.02-16.087 1.324l3.772-1.745c3.454 1.355 7.232.76 9.947-1.954 2.716-2.714 3.325-6.666 1.96-9.956-.259-.623-1.037-.78-1.58-.378zm-13.292-2.574c-3.314 3.31-3.983 9.047-.1 12.755l-.003.003L4 37c.663-.913 1.485-1.776 2.306-2.639l.04-.042c2.346-2.464 4.67-4.906 3.25-8.357-1.903-4.622-.795-10.038 2.73-13.56 3.664-3.66 9.06-4.583 13.568-2.729.998.37 1.867.897 2.545 1.387l-3.764 1.737c-3.505-1.47-7.52-.47-9.97 1.98z" fill-rule="evenodd"></path></svg> news <svg viewBox="0 0 150 130" style="display:inline-block;vertical-align:middle;width:2.1em;height:1.8em;margin-left:4px;margin-bottom:-2px;" aria-label="latte art heart"><defs><radialGradient id="cg" cx="50%" cy="48%" r="50%"><stop offset="0%" stop-color="#d4a86a"/><stop offset="70%" stop-color="#b8894d"/><stop offset="100%" stop-color="#9a7040"/></radialGradient><radialGradient id="fg" cx="50%" cy="45%" r="42%"><stop offset="0%" stop-color="#f5ead8" stop-opacity="0.95"/><stop offset="60%" stop-color="#e8d5b8" stop-opacity="0.7"/><stop offset="100%" stop-color="#c9a067" stop-opacity="0"/></radialGradient></defs><path d="M121 56 C144 56 144 82 121 82" fill="none" stroke="#a89878" stroke-width="8" stroke-linecap="round"/><path d="M121 56 C144 56 144 82 121 82" fill="none" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round"/><ellipse cx="65" cy="68" rx="58" ry="54" fill="#e8e0d8"/><ellipse cx="65" cy="66" rx="56" ry="52" fill="#f5f0ea"/><circle cx="65" cy="64" r="46" fill="url(#cg)"/><circle cx="65" cy="64" r="42" fill="url(#fg)" opacity="0.5"/><path d="M65 43 C57 29 40 31 40 47 C40 63 65 85 65 85 C65 85 90 63 90 47 C90 31 73 29 65 43Z" fill="#fff" opacity="0.55"/><path d="M65 49 C59 37 46 39 46 51 C46 63 65 81 65 81 C65 81 84 63 84 51 C84 39 71 37 65 49Z" fill="#fff" opacity="0.7"/><path d="M65 55 C61 45 52 47 52 55 C52 63 65 77 65 77 C65 77 78 63 78 55 C78 47 69 45 65 55Z" fill="#fff" opacity="0.85"/><line x1="65" y1="57" x2="65" y2="89" stroke="#fff" stroke-width="2" opacity="0.6" stroke-linecap="round"/><ellipse cx="65" cy="64" r="46" fill="none" stroke="#c9a067" stroke-width="1.5" opacity="0.3"/></svg></div><div class="tagline">Grok AI Curated Tweets Honesty Scored 1-10</div></div><div class="date" id="currentDate"></div></div><nav id="nav"></nav></header>
 <main id="content"><div class="loading">Loading stories...</div></main>
 <footer>&copy; 2026 <strong>eXpressO News</strong> &mdash; Grok AI Curated Tweets Honesty Scored 1-10 | Trending on X Right Now</footer>
 <script>
 // ---- Tab metadata (static, never changes) ----
 var TAB_META = {
-  world:    { title: "Top Story of the Day", subtitle: "Today\u2019s top story with a conservative view, Democrat view, and third-party view. Click on summary to link directly to actual X post." },
+  world:    { title: "Top Story of the Day", subtitle: '<span style="color:#a63d2f;font-weight:700;">Conservative</span>, <span style="color:#ffffff;font-weight:700;">Independent</span>, <span style="color:#2b6ea3;font-weight:700;">Democrat</span> views. Click block to expand.' },
+  usa:      { title: "Top USA Story of the Day", subtitle: '<span style="color:#a63d2f;font-weight:700;">Conservative</span>, <span style="color:#ffffff;font-weight:700;">Independent</span>, <span style="color:#2b6ea3;font-weight:700;">Democrat</span> views on national US news. Click block to expand.' },
   business: { title: "Top Business Story of the Day", subtitle: "Markets, money, and what\u2019s moving business today. Click to expand." },
   sports:   { title: "Top Sports Story of the Day", subtitle: "Today\u2019s biggest sports moment. Click to expand." },
   elon:     { title: "Elon\u2019s Latest Bangers", subtitle: "What\u2019s Elon posting? His most interesting themes and posts right now. One per theme." },
@@ -129,21 +199,52 @@ var TAB_META = {
   recipe:   { title: "Top Recipes", subtitle: "The most viral, loved, and talked-about recipe posts on X right now." },
   local:    { title: "Local News", subtitle: "Trending local stories from citizen journalists on X \u2014 news your local TV station won\u2019t cover. Orange County / SoCal." },
   pods:     { title: "Trending Pods", subtitle: "Top trending podcast clips on X right now \u2014 the moments everyone is talking about." },
-  science:  { title: "Science Corner", subtitle: "The most viral science, space, health, and tech discovery posts on X right now." }
+  science:  { title: "Science Corner", subtitle: "The most viral science, space, health, and tech discovery posts on X right now." },
+  memes:    { title: "Memes of the Moment", subtitle: "The 3 most viral memes and satirical posts trending on X right now \u2014 all sides, scored equally." },
+  comedy:   { title: "Comedy Gold", subtitle: "The 3 most viral comedy clips on X right now \u2014 stand-up moments, bits, and old legends resurfacing." },
+  tiktok:   { title: "Top TikToks", subtitle: "The 3 most viral TikTok clips of the moment \u2014 any subject. News, gossip, comedy, whatever is blowing up." },
+  golf:     { title: "Golf Tip of the Day", subtitle: "The single most viral golf tip TikTok of the moment \u2014 swing, drill, or lesson that's making the rounds." },
+  freespeech: { title: "Free Speech", subtitle: "Standout posts, clips, and moments on the free-speech conversation." }
 };
 
 // ---- Story data (loaded from stories.json) ----
 var NEWS_DATA = { lastUpdated: "", _stale: false };
 
-// ---- Load stories.json ----
+// ---- Cache-busting version check (with loop guard) ----
+// Only reloads ONCE per server-version. Uses sessionStorage to prevent flashing if the cache remains stale.
+var THIS_VERSION = "20260501084318";
+function checkVersion() {
+  if (!THIS_VERSION || THIS_VERSION.indexOf("BUILD_VERSION") !== -1) return;
+  fetch("version.txt?t=" + Date.now(), { cache: "no-store" })
+    .then(function(r) { return r.text(); })
+    .then(function(serverVersion) {
+      serverVersion = (serverVersion || "").trim();
+      if (!serverVersion || serverVersion === THIS_VERSION) return;
+      try {
+        if (sessionStorage.getItem("reloadedForVersion") === serverVersion) return; // already tried once, stop looping
+        sessionStorage.setItem("reloadedForVersion", serverVersion);
+      } catch (e) {}
+      console.log("[version] cached=" + THIS_VERSION + " server=" + serverVersion + " - reloading once");
+      var u = new URL(window.location.href);
+      u.searchParams.set("_v", serverVersion);
+      window.location.replace(u.toString());
+    })
+    .catch(function() {});
+}
+
+// ---- Load stories.json (cache-busted, no-store to defeat browser cache) ----
 function loadStories() {
-  fetch("stories.json?t=" + Date.now())
+  fetch("stories.json?t=" + Date.now(), { cache: "no-store", headers: { "Cache-Control": "no-cache" } })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       NEWS_DATA = data;
       renderNav();
       renderContent();
       checkMidnightRotation();
+      // Auto-refresh stories every 5 min so users who leave the tab open get fresh content
+      if (!window._storiesPoll) {
+        window._storiesPoll = setInterval(loadStories, 5 * 60 * 1000);
+      }
     })
     .catch(function(err) {
       console.error("Failed to load stories.json:", err);
@@ -165,21 +266,25 @@ function myfeedTabLabel(slot) {
 }
 var TABS = [
   { id: "world", label: "World" },
+  { id: "usa", label: "USA" },
   { id: "business", label: "Business" },
   { id: "local", label: "Local" },
   { id: "sports", label: "Sports" },
   { id: "top", label: "Trending" },
-  { id: "msm", label: "<s>MSM</s>" },
   { id: "elon", label: "Elon" },
-  { id: "allin", label: "$age" },
   { id: "pods", label: "Pods" },
-  { id: "recipe", label: "Recipe" },
-  { id: "pg6", label: "Pg. 6" },
+  { id: "allin", label: "$age" },
+  { id: "msm", label: "<s>MSM</s>" },
   { id: "science", label: "Science" },
+  { id: "pg6", label: "Pg. 6" },
+  { id: "memes", label: "Memes" },
+  { id: "comedy", label: "Comedy" },
+  { id: "recipe", label: "Recipe" },
+  { id: "golf", label: "Golf" },
   { id: "earlier", label: "Earlier" },
-  { id: "myfeed1", label: myfeedTabLabel("1") },
-  { id: "myfeed2", label: myfeedTabLabel("2") },
-  { id: "submit", label: "Post/Replace" }
+  { id: "you", label: "You" },
+  { id: "submit", label: "Post/Replace" },
+  { id: "freespeech", label: "Free" }
 ];
 var activeTab = "world";
 
@@ -189,11 +294,64 @@ function todayLabel() { var d = new Date(), months = ["January","February","Marc
 function renderNav() {
   var nav = document.getElementById("nav");
   TABS.forEach(function(t) {
-    if (t.id === "myfeed1") t.label = myfeedTabLabel("1");
-    if (t.id === "myfeed2") t.label = myfeedTabLabel("2");
+    // memes and comedy have static labels now
   });
   nav.innerHTML = TABS.map(function(t) { return '<a data-tab="' + t.id + '" class="' + (t.id === activeTab ? 'active' : '') + '">' + t.label + '</a>'; }).join("");
-  nav.querySelectorAll("a").forEach(function(a) { a.addEventListener("click", function() { activeTab = a.dataset.tab; renderNav(); renderContent(); }); });
+  nav.querySelectorAll("a").forEach(function(a) { a.addEventListener("click", function() { activeTab = a.dataset.tab; renderNav(); renderContent(); window.scrollTo(0, 0); }); });
+}
+
+// ---- Swipe gestures: left/right swipe on <main> switches to adjacent tab ----
+function setupSwipe() {
+  var main = document.querySelector("main");
+  if (!main) return;
+  var startX = 0, startY = 0, startT = 0, moved = false;
+  main.addEventListener("touchstart", function(e) {
+    if (e.touches.length !== 1) return;
+    startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+    startT = Date.now(); moved = false;
+  }, { passive: true });
+  main.addEventListener("touchmove", function(e) {
+    if (!startT || e.touches.length !== 1) return;
+    var dx = e.touches[0].clientX - startX, dy = e.touches[0].clientY - startY;
+    if (Math.abs(dx) > 10 || Math.abs(dy) > 10) moved = true;
+  }, { passive: true });
+  main.addEventListener("touchend", function(e) {
+    if (!startT || !moved) { startT = 0; return; }
+    var t = e.changedTouches[0];
+    var dx = t.clientX - startX, dy = t.clientY - startY, dt = Date.now() - startT;
+    startT = 0;
+    var nextIdx = null;
+    var curIdx = -1;
+    for (var i = 0; i < TABS.length; i++) { if (TABS[i].id === activeTab) { curIdx = i; break; } }
+    if (curIdx < 0) return;
+    // Horizontal swipe: >= 60px, mostly horizontal (2:1), under 600ms
+    if (Math.abs(dx) >= 60 && Math.abs(dx) >= Math.abs(dy) * 2 && dt < 600) {
+      nextIdx = dx < 0 ? curIdx + 1 : curIdx - 1;  // left = next, right = prev
+    }
+    // Vertical swipe — uses industry-standard velocity + distance (TikTok / Instagram / Apple HIG ballpark):
+    //   Trigger if: distance >= 80px AND velocity >= 0.3 px/ms (fast flick), OR distance >= 180px (slow committed drag)
+    //   PLUS: must be near top/bottom edge of page (within 80px) so it doesn't fire during mid-page scrolling
+    else if (Math.abs(dy) >= Math.abs(dx) * 2) {
+      var velocity = dt > 0 ? Math.abs(dy) / dt : 0;
+      var isFlick = Math.abs(dy) >= 80 && velocity >= 0.3;
+      var isSlowDrag = Math.abs(dy) >= 180;
+      if (isFlick || isSlowDrag) {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var scrollH = document.documentElement.scrollHeight;
+        var nearTop = scrollTop <= 80;
+        var nearBottom = (window.innerHeight + scrollTop) >= (scrollH - 80);
+        if (dy < 0 && nearBottom) nextIdx = curIdx + 1;       // swipe up at bottom → next tab
+        else if (dy > 0 && nearTop) nextIdx = curIdx - 1;     // swipe down at top → previous tab
+      }
+    }
+    if (nextIdx === null || nextIdx < 0 || nextIdx >= TABS.length) return;
+    activeTab = TABS[nextIdx].id;
+    renderNav(); renderContent();
+    // Scroll the active tab into view in the nav bar
+    var activeA = document.querySelector('nav a.active');
+    if (activeA && activeA.scrollIntoView) activeA.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+    window.scrollTo(0, 0);
+  }, { passive: true });
 }
 
 function acc(h, inner) {
@@ -204,67 +362,355 @@ function acc(h, inner) {
 function renderWorldStory(s) {
   if (!s.perspectives) return "";
   var fnotes = s.footnotes || [];
-  return s.perspectives.map(function(p, idx) {
-    var c = p.label === "Conservative" ? "label-conservative" : p.label === "Democrat" ? "label-democrat" : "label-thirdparty";
-    var sup = fnotes[idx] ? '<sup style="color:#2980b9;cursor:help;" title="' + fnotes[idx].replace(/"/g,'&quot;').replace(/'/g,'&#39;') + '">[' + (idx+1) + ']</sup>' : '';
-    var eng = p.engagement ? '<span style="font-size:0.75rem;color:#888;margin-left:6px;">' + p.engagement + '</span>' : '';
-    var viewLink = (p.url && p.url.indexOf('/status/') !== -1) ? '<br><a href="' + p.url + '" target="_blank" class="view-post">View post on X</a>' : '';
-    return '<div class="perspective"><span class="' + c + '">' + p.label + '</span> <span class="handle">' + p.handle + '</span>' + eng + ' &mdash; ' + p.text + ' <span class="honesty">honesty ' + p.honesty + sup + '</span>' + viewLink + '</div>';
-  }).join("") + renderFootnotes(s.footnotes);
+
+  // Red / White / Blue: Conservative, Independent, Democrat
+  var byLabel = {};
+  s.perspectives.forEach(function(p) { byLabel[p.label] = p; });
+  var ordered = [
+    { p: byLabel['Conservative'], cls: 'perspective-conservative' },
+    { p: byLabel['Independent'] || byLabel['Third-party'], cls: 'perspective-independent' },
+    { p: byLabel['Democrat'],     cls: 'perspective-democrat' }
+  ].filter(function(o) { return o.p; });
+
+  // Exactly like a Business-tab block:
+  //   Header = summary text (color tells you the side — no labels, no honesty badge up top)
+  //   Click → auto-loads tweet embed
+  //   Honesty footnote card at the bottom
+  return ordered.map(function(o, idx) {
+    var p = o.p;
+    var pid = 'p' + Math.random().toString(36).substr(2, 9);
+    var embedId = 'emw' + Math.random().toString(36).substr(2, 9);
+    var footnoteForP = fnotes[idx] || '';
+    var hasXPost = p.url && p.url.indexOf('/status/') !== -1 && (p.url.indexOf('x.com') !== -1 || p.url.indexOf('twitter.com') !== -1);
+    var onclickExpr = "var b=document.getElementById('" + pid + "');b.classList.toggle('open');";
+    if (hasXPost) {
+      onclickExpr += "if(b.classList.contains('open')){toggleEmbed('" + embedId + "','" + p.url.replace(/'/g,"\\'") + "');}";
+    }
+    var embedSlot = hasXPost ? '<div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div>' : '';
+    var honestyCard = '';
+    if (p.honesty) {
+      var hid = 'h' + Math.random().toString(36).substr(2,9);
+      // One plain-English line explaining the score. Prefer Grok's per-perspective
+      // reason (notes/evidence) over the generic story footnote.
+      var noteText = (p.notes || p.evidence || footnoteForP || 'See post for full context.').trim();
+      honestyCard = '<div class="footnote-card" id="' + hid + '" style="margin-top:12px;"><div class="story-header" onclick="event.stopPropagation();document.getElementById(\'' + hid + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>Honesty ' + p.honesty + '</span></div><div class="story-body"><div class="footnotes"><div class="footnote-item">' + noteText + '</div></div></div></div>';
+    }
+    // Translation card \u2014 when post is in or quote-tweets a non-English language.
+    var translationCard = '';
+    if (p.translation) {
+      translationCard = '<div style="margin-top:10px;padding:10px 12px;background:#fbf7ec;border-left:3px solid #b8860b;border-radius:4px;font-size:0.83rem;line-height:1.5;color:#3d3029;"><strong style="color:#8b6e1e;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;">Translation:</strong> ' + p.translation + '</div>';
+    }
+    // Pithy teaser in the block header — keeps all 3 perspective blocks short and scannable.
+    // Full quote + honesty footnote show when user clicks. typeof makeTeaser check keeps this
+    // resilient if that helper hasn't loaded yet.
+    var _rawSummary = ((p.text || p.headline || '') + '').trim() || 'View post';
+    var summary = (typeof makeTeaser === 'function') ? makeTeaser(_rawSummary) : _rawSummary;
+    // Fallback body when there's no /status/ URL — show handle link + engagement so block never looks empty on expand
+    var textBody = '';
+    if (!hasXPost) {
+      var handleLink = p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="color:#2980b9;text-decoration:none;">' + (p.handle || 'View profile') + ' \u2192</a>' : (p.handle || '');
+      textBody = '<div style="padding:8px 4px;font-size:0.85rem;line-height:1.55;color:#3d3029;">' +
+                   '<div style="margin-bottom:6px;">\u2014 ' + handleLink + '</div>' +
+                   (p.engagement ? '<div style="font-size:0.76rem;color:#8a7e6e;">' + p.engagement + '</div>' : '') +
+                   '<div style="font-size:0.75rem;color:#a89e93;margin-top:8px;font-style:italic;">No direct tweet link available \u2014 tap handle to view profile.</div>' +
+                 '</div>';
+    }
+    return '<div class="story perspective-block ' + o.cls + '" id="' + pid + '">' +
+             '<div class="story-header" onclick="event.stopPropagation();' + onclickExpr + '">' +
+               '<span class="arrow">\u25b6</span><span>' + summary + '</span>' +
+             '</div>' +
+             '<div class="story-body">' + textBody + embedSlot + translationCard + honestyCard + '</div>' +
+           '</div>';
+  }).join("");
+}
+
+// ---- Story clustering: detect groups of stories about the same underlying event ----
+// Returns an object { storyIndex: { seq: 1, total: N, clusterId: X } } for stories in a cluster of size >= 2.
+function detectStoryClusters(stories) {
+  if (!stories || stories.length < 2) return {};
+  var stopwords = {the:1,a:1,an:1,is:1,are:1,was:1,were:1,to:1,of:1,in:1,on:1,at:1,for:1,and:1,or:1,but:1,with:1,as:1,by:1,from:1,his:1,her:1,its:1,this:1,that:1,will:1,has:1,have:1,new:1,says:1,say:1,over:1,after:1,before:1,amid:1,claims:1,claim:1};
+  var norms = stories.map(function(s) {
+    var t = (s.headline || '') + ' ' + (s.body || '');
+    return new Set(t.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/).filter(function(w) { return w.length > 3 && !stopwords[w]; }));
+  });
+  // Union-find over story indices
+  var parent = stories.map(function(_, i) { return i; });
+  function find(i) { while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; } return i; }
+  function union(a, b) { parent[find(a)] = find(b); }
+  for (var i = 0; i < stories.length; i++) {
+    for (var j = i + 1; j < stories.length; j++) {
+      var a = norms[i], b = norms[j];
+      if (a.size < 2 || b.size < 2) continue;
+      var intersection = 0;
+      a.forEach(function(w) { if (b.has(w)) intersection++; });
+      var smaller = Math.min(a.size, b.size);
+      // Cluster if >= 40% of the smaller headline's significant words appear in the other
+      if (intersection / smaller >= 0.4) union(i, j);
+    }
+  }
+  // Group by cluster root
+  var groups = {};
+  for (var k = 0; k < stories.length; k++) {
+    var root = find(k);
+    if (!groups[root]) groups[root] = [];
+    groups[root].push(k);
+  }
+  var result = {};
+  Object.keys(groups).forEach(function(root) {
+    var members = groups[root];
+    if (members.length < 2) return;
+    members.forEach(function(idx, pos) {
+      result[idx] = { seq: pos + 1, total: members.length, clusterId: root };
+    });
+  });
+  return result;
+}
+
+function renderScoringKey() {
+  var id = "sk" + Math.random().toString(36).substr(2, 9);
+  return '<div class="scoring-key-toggle" id="' + id + '">' +
+    '<div class="scoring-key-header" onclick="document.getElementById(\'' + id + '\').classList.toggle(\'open\')">' +
+      '<span class="arrow">\u25b6</span><span>Scoring key</span>' +
+    '</div>' +
+    '<div class="scoring-key-body">' +
+      '<div class="scoring-key-row"><span><span class="deduct">&minus;5</span> intentionally dishonest</span><span><span class="deduct">&minus;4</span> false</span><span><span class="deduct">&minus;4</span> obvious bias</span><span><span class="deduct">&minus;4</span> no data to support claim</span><span><span class="deduct">&minus;3</span> opinion framed as fact</span><span><span class="deduct">&minus;1</span> each additional flag (combo)</span></div>' +
+      '<div class="scoring-key-example">Example: dishonest + biased = 10 &minus; 5 &minus; 1 = <strong>4</strong>. Biased + no data = 10 &minus; 4 &minus; 1 = <strong>5</strong>.</div>' +
+    '</div>' +
+  '</div>';
 }
 
 function renderFootnotes(footnotes) {
   if (!footnotes || !footnotes.length) return '';
   var inner = footnotes.map(function(f, i) { return '<div class="footnote-item"><span style="color:#2980b9;font-weight:600;">[' + (i+1) + ']</span> ' + f + '</div>'; }).join("");
   var id = "fn" + Math.random().toString(36).substr(2, 9);
-  return '<div class="footnote-card" id="' + id + '"><div class="story-header" onclick="document.getElementById(\'' + id + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>Honesty footnotes (' + footnotes.length + ')</span></div><div class="story-body"><div class="footnotes">' + inner + '</div></div></div>';
+  return '<div class="footnote-card" id="' + id + '"><div class="story-header" onclick="document.getElementById(\'' + id + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>Honesty footnotes (' + footnotes.length + ')</span></div><div class="story-body"><div class="footnotes">' + inner + '</div>' + renderScoringKey() + '</div></div>';
+}
+
+// ---- Inline tweet embed ----
+// Click "View post" → tweet renders IN the page via Twitter's widget. No navigation, no iOS dialog.
+function toggleEmbed(containerId, tweetUrl) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  if (container.style.display !== 'none' && container.innerHTML) {
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = 'block';
+  container.innerHTML = '<div style="color:#999;font-size:0.8rem;padding:8px;">Loading tweet...</div>';
+  var m = tweetUrl.match(/status\/(\d+)/);
+  if (!m) { container.innerHTML = '<div style="color:#c0392b;font-size:0.8rem;padding:8px;">Could not load embed.</div>'; return; }
+  var tweetId = m[1];
+  function render() {
+    container.innerHTML = '';
+    window.twttr.widgets.createTweet(tweetId, container, { theme: 'light', dnt: true, conversation: 'none' });
+  }
+  if (window.twttr && window.twttr.widgets) { render(); return; }
+  var s = document.createElement('script');
+  s.src = 'https://platform.twitter.com/widgets.js';
+  s.async = true;
+  s.onload = render;
+  document.head.appendChild(s);
+}
+
+// Tabs where honesty scoring doesn't apply — entertainment, not news
+var NO_HONESTY_TABS = { recipe: 1, memes: 1, comedy: 1, golf: 1, tiktok: 1 };
+
+// Business-tab style block: summary in header. Click → auto-load tweet embed, show honesty footnote at bottom.
+// No "View post" middle step. No blue link. Just click → post appears + honesty below.
+// Make the block header a TEASER — short hook that hints at the story without spoiling it.
+// Tabs that want the full body kept: pods, recipe, science, freespeech (users want more context up front there).
+var TEASER_TABS = { world:1, usa:1, business:1, local:1, sports:1, top:1, msm:1, elon:1, allin:1, pg6:1 };
+var TEASER_MAX = 72; // chars — short hook, not full story
+function makeTeaser(fullBody) {
+  var t = (fullBody || '').trim();
+  if (!t) return 'View post';
+  if (!TEASER_TABS[activeTab]) return t;
+  if (t.length <= TEASER_MAX) return t;
+  // Cut at nearest word boundary under TEASER_MAX
+  var cut = t.substr(0, TEASER_MAX);
+  var lastSpace = cut.lastIndexOf(' ');
+  if (lastSpace > TEASER_MAX * 0.6) cut = cut.substr(0, lastSpace);
+  // Strip trailing punctuation that looks mid-sentence
+  cut = cut.replace(/[\s,;:.!?\-]+$/, '');
+  return cut + '\u2026';
+}
+
+// Parse YouTube URL → {videoId, startSeconds, endSeconds}
+// Supports &t=123s, &start=123, &end=456 — used to pin clips to a specific window.
+function parseYouTube(url) {
+  if (!url) return null;
+  var m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/);
+  if (!m) return null;
+  var videoId = m[1];
+  var startMatch = url.match(/[?&]t=(\d+)s?|[?&]start=(\d+)/);
+  var start = startMatch ? parseInt(startMatch[1] || startMatch[2] || '0', 10) : 0;
+  var endMatch = url.match(/[?&]end=(\d+)/);
+  var end = endMatch ? parseInt(endMatch[1], 10) : 0;
+  return { videoId: videoId, start: start, end: end };
+}
+
+function renderAutoEmbedBlock(s) {
+  var sid = 'b' + Math.random().toString(36).substr(2,9);
+  var embedId = 'emb' + Math.random().toString(36).substr(2,9);
+  var fullBody = (s.body || s.headline || '').trim() || 'View post';
+  var body = makeTeaser(fullBody);
+  var url = s.url || '';
+  var ytInfo = parseYouTube(url);
+  var hasXPost = url && url.indexOf('/status/') !== -1 && (url.indexOf('x.com') !== -1 || url.indexOf('twitter.com') !== -1);
+
+  // Click handler: toggle open + auto-embed tweet (if it's an X post)
+  var onclickExpr = "var b=document.getElementById('" + sid + "');b.classList.toggle('open');";
+  if (hasXPost) {
+    onclickExpr += "if(b.classList.contains('open')){toggleEmbed('" + embedId + "','" + url.replace(/'/g,"\\'") + "');}";
+  }
+
+  // Inside body:
+  // - Embed slot (if X post) — loaded on first click
+  // - External link button (if non-X URL like TikTok/YouTube) — opens same tab
+  // - Honesty footnote card at bottom (collapsible)
+  var inner = '';
+  if (hasXPost) {
+    inner += '<div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div>';
+  } else if (ytInfo) {
+    // YouTube: inline iframe embed. playsinline=1 keeps it from hijacking to native player on iOS.
+    // modestbranding=1 + rel=0 reduce branding/suggestions noise.
+    var ytSrc = 'https://www.youtube.com/embed/' + ytInfo.videoId + '?rel=0&modestbranding=1&playsinline=1' +
+                (ytInfo.start > 0 ? '&start=' + ytInfo.start : '') +
+                (ytInfo.end > 0 ? '&end=' + ytInfo.end : '');
+    inner += '<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin-top:10px;border-radius:6px;">' +
+               '<iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" ' +
+                 'src="' + ytSrc + '" loading="lazy" playsinline webkit-playsinline ' +
+                 'allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
+             '</div>';
+  } else if (url) {
+    var extLabel = 'View source';
+    var u = url.toLowerCase();
+    if (u.indexOf('tiktok.com') !== -1) extLabel = 'Watch on TikTok';
+    else if (u.indexOf('instagram.com') !== -1) extLabel = 'View on Instagram';
+    else if (u.indexOf('x.com') !== -1 || u.indexOf('twitter.com') !== -1) extLabel = 'View on X';
+    inner += '<a href="' + url + '" class="view-post" style="margin-top:8px;">' + extLabel + '</a>';
+  }
+
+  // Translation card \u2014 when post is foreign-language or quote-tweets foreign content.
+  if (s.translation) {
+    inner += '<div style="margin-top:10px;padding:10px 12px;background:#fbf7ec;border-left:3px solid #b8860b;border-radius:4px;font-size:0.83rem;line-height:1.5;color:#3d3029;"><strong style="color:#8b6e1e;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;">Translation:</strong> ' + s.translation + '</div>';
+  }
+  // Honesty footnote at bottom (only for news tabs, not entertainment)
+  if (s.honesty && !NO_HONESTY_TABS[activeTab]) {
+    var hid = 'h' + Math.random().toString(36).substr(2,9);
+    var note = ((s.notes || s.evidence || '').trim()) || 'See post for full context.';
+    inner += '<div class="footnote-card" id="' + hid + '" style="margin-top:12px;"><div class="story-header" onclick="event.stopPropagation();document.getElementById(\'' + hid + '\').classList.toggle(\'open\')"><span class="arrow">\u25b6</span><span>Honesty ' + s.honesty + '</span></div><div class="story-body"><div class="footnotes"><div class="footnote-item">' + note + '</div></div></div></div>';
+  }
+
+  return '<div class="story" id="' + sid + '">' +
+           '<div class="story-header" onclick="' + onclickExpr + '"><span class="arrow">\u25b6</span><span>' + body + '</span></div>' +
+           '<div class="story-body">' + inner + '</div>' +
+         '</div>';
 }
 
 function renderSinglePost(s) {
   var stats = s.stats ? '<div class="post-stats">' + s.stats + '</div>' : '';
-  var honesty = s.honesty ? ' <span class="honesty">honesty ' + s.honesty + '</span>' : '';
+  var honesty = (s.honesty && !NO_HONESTY_TABS[activeTab]) ? ' <span class="honesty">honesty ' + s.honesty + '</span>' : '';
   var eng = s.engagement ? '<div style="font-size:0.75rem;color:#888;margin-top:2px;">' + s.engagement + '</div>' : '';
-  var noteHtml = s.notes ? '<div style="font-size:0.72rem;color:#b5a998;margin-top:6px;font-style:italic;">Score note: ' + s.notes + '</div>' : '';
-  var viewLink = (s.url && s.url.indexOf('/status/') !== -1) ? '<a href="' + s.url + '" target="_blank" class="view-post">View post on X</a>' : '';
-  var handleLink = (s.url && s.url.indexOf('/status/') !== -1) ? '<a href="' + s.url + '" target="_blank">' + s.handle + '</a>' : '<span>' + s.handle + '</span>';
-  return '<div class="single-post"><div class="post-handle">' + handleLink + honesty + '</div>' + eng + viewLink + stats + '<div class="post-body">' + s.body + '</div>' + noteHtml + '</div>';
+  var viewLabel = 'View post on X';
+  var hasValidUrl = false;
+  if (s.url) {
+    if (s.url.indexOf('tiktok.com') !== -1) { viewLabel = 'Watch on TikTok'; hasValidUrl = true; }
+    else if (s.url.indexOf('youtube.com') !== -1 || s.url.indexOf('youtu.be') !== -1) { viewLabel = 'Watch on YouTube'; hasValidUrl = true; }
+    else if (s.url.indexOf('instagram.com') !== -1) { viewLabel = 'View on Instagram'; hasValidUrl = true; }
+    else if (s.url.indexOf('/status/') !== -1) { viewLabel = 'View post on X'; hasValidUrl = true; }
+  }
+  var embedId = 'emb' + Math.random().toString(36).substr(2,6);
+  var isXPost = s.url && s.url.indexOf('/status/') !== -1 && (s.url.indexOf('x.com') !== -1 || s.url.indexOf('twitter.com') !== -1);
+  var viewLink = '';
+  if (isXPost) {
+    viewLink = '<a href="#" onclick="event.preventDefault();toggleEmbed(\'' + embedId + '\',\'' + s.url.replace(/'/g,"\\'") + '\');return false;" class="view-post">View post</a><div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div>';
+  } else if (hasValidUrl) {
+    // External links (TikTok, YouTube, Instagram) open in SAME tab so Safari back-button returns to expresso
+    viewLink = '<a href="' + s.url + '" class="view-post">' + viewLabel + '</a>';
+  } else if (s.url) {
+    var fallbackLabel = (s.url.indexOf('x.com') !== -1 || s.url.indexOf('twitter.com') !== -1) ? 'View on X' : 'View source';
+    viewLink = '<a href="' + s.url + '" class="view-post">' + fallbackLabel + '</a>';
+  }
+  var handleLink = (hasValidUrl || s.url) ? '<a href="' + s.url + '">' + s.handle + '</a>' : '<span>' + s.handle + '</span>';
+  var allNotes = [];
+  if (s.notes) allNotes.push(s.notes);
+  if (s.footnotes && s.footnotes.length) allNotes = allNotes.concat(s.footnotes);
+  var footnotesHtml = (allNotes.length && !NO_HONESTY_TABS[activeTab]) ? renderFootnotes(allNotes) : '';
+  return '<div class="single-post"><div class="post-handle">' + handleLink + honesty + '</div>' + eng + viewLink + stats + '<div class="post-body">' + s.body + '</div>' + footnotesHtml + '</div>';
+}
+
+// ---- Tab art: image floated right of stories, per-tab captions ----
+var TAB_ART = {
+  world:    { src: "images/world.jpg",    caption: "", wide: true, brighten: 1.04 },
+  usa:      { src: "images/usa.jpg",      caption: "", wide: true },
+  business: { src: "images/business.jpg", caption: "", wide: true },
+  local:    { src: "images/local.jpg",    caption: "", wide: true, brighten: 1.22, contrast: 1.15 },
+  sports:   { src: "images/sports.jpg",   caption: "", wide: true },
+  top:      { src: "images/top.jpg",      caption: "", wide: true },
+  msm:      { src: "images/msm.jpg",      caption: "", wide: true, overlayHTML: 'Citizen <s style="text-decoration-thickness:2px;">K</s>Reign', overlaySmall: true },
+  elon:     { src: "images/elon.jpg",     caption: "", wide: true },
+  allin:    { src: "images/allin.jpg",    caption: "", wide: true },
+  pods:     { src: "images/pods.jpg",     caption: "", wide: true },
+  recipe:   { src: "images/recipe.jpg",   caption: "", wide: true },
+  earlier:  { src: "images/earlier.jpg",  caption: "", wide: true },
+  pg6:      { src: "images/pg6.jpg",      caption: "", wide: true, overlay: "XOXO", overlaySmall: true },
+  science:  { src: "images/science.jpg",  caption: "", wide: true },
+  memes:    { src: "images/memes.jpg",     caption: "", wide: true },
+  comedy:   { src: "images/comedy.jpg",    caption: "", wide: true },
+  tiktok:   { src: "images/tiktok.jpg",    caption: "", wide: true },
+  golf:     { src: "images/golf.jpg",      caption: "", wide: true, overlay: "what\u2019s up with the no divots?", overlayBottom: true }
+};
+
+function renderTabArt(tab) {
+  var a = TAB_ART[tab];
+  if (!a) return '';
+  var cap = a.caption ? '<div class="tab-art-caption' + (a.strong ? ' strong' : '') + '">' + a.caption + '</div>' : '';
+  var overlayInner = a.overlayHTML || a.overlay || '';
+  var overlay = '';
+  if (overlayInner) {
+    var sz = a.overlaySmall ? '0.95rem' : '2.2rem';
+    var wt = a.overlaySmall ? '700' : '900';
+    var posStyle = a.overlayBottom
+      ? 'left:0;right:0;bottom:10px;text-align:center;font-size:1.15rem;font-weight:700;'
+      : 'bottom:4px;right:6px;font-size:' + sz + ';font-weight:' + wt + ';';
+    overlay = '<div style="position:absolute;' + posStyle + 'font-family:Georgia,serif;color:#fff;text-shadow:1px 1px 3px rgba(0,0,0,0.95),0 0 10px rgba(0,0,0,0.85);letter-spacing:0.5px;">' + overlayInner + '</div>';
+  }
+  var filters = [];
+  if (a.brighten) filters.push('brightness(' + a.brighten + ')');
+  if (a.contrast) filters.push('contrast(' + a.contrast + ')');
+  if (a.brighten || a.contrast) filters.push('saturate(1.05)');
+  var filterStyle = filters.length ? 'filter:' + filters.join(' ') + ';' : '';
+  var imgStyle = filterStyle ? ' style="' + filterStyle + '"' : '';
+  var imgTag = '<img src="' + a.src + '" alt="' + tab + '"' + imgStyle + ' />';
+  var imgWrap = overlay ? '<div style="position:relative;">' + imgTag + overlay + '</div>' : imgTag;
+  var sizeClass = a.wide ? ' tab-art-wide' : a.big ? ' tab-art-big' : a.bump ? ' tab-art-bump' : '';
+  var wrapClass = 'tab-art' + sizeClass;
+  return '<div class="' + wrapClass + '">' + imgWrap + cap + '</div>';
+}
+
+// Build a "Xh ago" tag for a story using its real post time when available.
+function buildPostedTag(s) {
+  var ts = (s && s.post_ts) ? s.post_ts : (NEWS_DATA && NEWS_DATA.lastUpdated);
+  if (!ts) return '';
+  var d = new Date(ts);
+  if (isNaN(d.getTime())) return '';
+  var diffMin = Math.round((Date.now() - d.getTime()) / 60000);
+  var label;
+  if (diffMin < 1) label = 'just now';
+  else if (diffMin < 60) label = diffMin + 'm ago';
+  else if (diffMin < 60 * 24) label = Math.round(diffMin / 60) + 'h ago';
+  else label = Math.round(diffMin / (60 * 24)) + 'd ago';
+  return '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(' + label + ')</span>';
 }
 
 function renderContent() {
   var el = document.getElementById("content"), today = todayLabel();
-  var staleBanner = NEWS_DATA._stale ? '<div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:0.9rem;color:#856404;">Yesterday\'s stories shown below \u2014 today\'s update is on the way. Check back soon.</div>' : '';
+  var staleBanner = '';
 
-  if (activeTab === "myfeed1" || activeTab === "myfeed2") {
-    var slot = activeTab === "myfeed1" ? "1" : "2";
-    var savedInterests = "";
-    try { savedInterests = localStorage.getItem("myfeed_interests_" + slot) || ""; } catch(e) {}
-    var savedStories = null;
-    try { savedStories = JSON.parse(localStorage.getItem("myfeed_stories_" + slot) || "null"); } catch(e) {}
-    var savedTime = "";
-    try { savedTime = localStorage.getItem("myfeed_time_" + slot) || ""; } catch(e) {}
-    var h = '<div class="section-label">My Feed ' + slot + ' &mdash; ' + today + '</div><h1>Your Custom Feed ' + slot + '</h1><p class="subtitle">Tell us what you\'re interested in and Grok will find the best posts on X for you. Your preferences are saved in this browser.</p>';
-    if (savedInterests) {
-      h += '<div class="myfeed-saved"><span>\ud83d\udccc Tracking: <strong>' + savedInterests.replace(/</g,"&lt;") + '</strong></span><button class="myfeed-clear" onclick="clearMyFeed(\'' + slot + '\')">Clear</button></div>';
-    }
-    h += '<div class="myfeed-input-wrap"><input type="text" id="myfeedInput" placeholder="e.g. AI breakthroughs, SpaceX launches, NBA playoffs..." value="' + savedInterests.replace(/"/g,"&quot;") + '" /><button class="myfeed-mic" id="myfeedMic" onclick="toggleMic()" title="Voice input"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="1" width="6" height="11" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><button class="myfeed-go" id="myfeedGo" onclick="fetchMyFeed(\'' + slot + '\')">Find Posts</button></div>';
-    h += '<div class="myfeed-chips">';
-    ["AI & Tech", "Crypto", "Sports", "Politics", "Science", "Cooking", "Startups", "Space"].forEach(function(c) {
-      h += '<button class="myfeed-chip" onclick="addChip(\'' + c + '\')">' + c + '</button>';
-    });
-    h += '</div><div class="myfeed-status" id="myfeedStatus"></div><div id="myfeedResults">';
-    if (savedStories && savedStories.stories && savedStories.stories.length) {
-      h += '<div style="font-size:0.7rem;color:#aaa;margin-bottom:12px;">Last fetched: ' + savedTime + '</div>';
-      savedStories.stories.forEach(function(s) {
-        h += '<div class="story" style="margin-bottom:12px;"><div style="padding:16px 20px;"><div style="font-weight:700;font-size:0.95rem;margin-bottom:6px;">' + (s.headline || "Post") + '</div><div style="font-size:0.85rem;color:#555;margin-bottom:8px;">' + (s.body || "") + '</div><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:600;font-size:0.85rem;">' + (s.handle || "") + '</span><span class="honesty">honesty ' + (s.honesty || "?") + '</span></div>' + (s.notes ? '<div style="font-size:0.75rem;color:#999;margin-top:6px;">' + s.notes + '</div>' : '') + (s.url ? '<a href="' + s.url + '" target="_blank" class="view-post" style="margin-top:8px;">View post on X</a>' : '') + '</div></div>';
-      });
-    }
-    h += '</div>';
-    el.innerHTML = h;
-    return;
-  }
 
   if (activeTab === "earlier") {
-    var h = '<div class="section-label">Earlier Today &mdash; ' + today + '</div><h1>Earlier Stories</h1><p class="subtitle">Previous updates from today, organized by section.</p>';
+    var h = '<div class="section-label">Earlier Today &mdash; ' + today + '</div>' + renderTabArt('earlier') + '<h1>Earlier Stories</h1><p class="subtitle">Previous updates from today, organized by section.</p>';
     var earlierTabs = [
       { key: "world", label: "World" }, { key: "business", label: "Business" },
       { key: "local", label: "Local" }, { key: "sports", label: "Sports" },
@@ -286,7 +732,6 @@ function renderContent() {
         } else {
           h += acc(s.headline + timeTag, renderSinglePost(s));
         }
-        if (s.footnotes) h += renderFootnotes(s.footnotes);
       });
     });
     if (!hasAny) {
@@ -297,138 +742,107 @@ function renderContent() {
     return;
   }
 
+  if (activeTab === "freespeech") {
+    var d = NEWS_DATA.freespeech || { stories: [] };
+    var meta = TAB_META.freespeech;
+    var h = '<div class="section-label">Free Speech &mdash; ' + today + '</div>' + renderTabArt('freespeech') + '<h1>' + meta.title + '</h1><p class="subtitle">' + meta.subtitle + '</p>';
+    if (!d.stories || !d.stories.length) {
+      h += '<p style="color:#f0e6d6;font-size:0.9rem;margin-top:16px;">No standout posts yet.</p>';
+    } else {
+      d.stories.forEach(function(s) {
+        h += renderAutoEmbedBlock(s);
+      });
+    }
+    h += renderLastUpdated();
+    el.innerHTML = h;
+    return;
+  }
+
   if (activeTab === "submit") {
-    var h = '<div class="section-label">Submit &mdash; ' + today + '</div><h1>Post Your Favorite Tweet</h1><p class="subtitle">Share a post for Expresso to consider. If Expresso thinks it\u2019s a better post, it will replace, or post below.</p><div class="story" style="padding:24px 20px;"><form class="submit-form" id="submitForm" onsubmit="handleSubmit(event)"><label>X / Twitter Link</label><input type="url" id="submitUrl" placeholder="https://x.com/username/status/..." /><label>Why should Expresso feature this?</label><textarea id="submitNote" rows="3" placeholder="Tell us why this post matters..."></textarea><label>Or paste a screenshot URL</label><input type="url" id="submitScreenshot" placeholder="https://imgur.com/..." /><button type="submit" class="submit-btn">Submit for Expresso</button></form><div id="submitConfirm" style="display:none;margin-top:16px;padding:12px 16px;background:#e8f5e9;border-radius:6px;color:#2e7d32;font-size:0.9rem;font-weight:600;"></div></div><div style="margin-top:20px;"><h2 style="font-size:1.1rem;margin-bottom:12px;">Reader Submissions</h2><div id="submissionsList"></div></div>';
+    var h = '<div class="section-label">Post / Replace &mdash; ' + today + '</div><h1>Submit a Post to Expresso</h1><p class="subtitle">Think a post should be featured? Send it here. Posts with multiple votes get curated.</p>';
+    h += '<form class="submit-form" id="submitForm" onsubmit="handleSubmit(event)">';
+    h += '<label for="submitUrl">X post URL</label>';
+    h += '<input type="url" id="submitUrl" placeholder="https://x.com/username/status/123..." />';
+    h += '<label for="submitNote">Why this should be featured (optional)</label>';
+    h += '<textarea id="submitNote" rows="3" placeholder="A sentence or two about why this matters..."></textarea>';
+    h += '<button type="submit" class="submit-btn">Submit</button>';
+    h += '<div id="submitConfirm" style="display:none;margin-top:12px;padding:10px 14px;background:#e8f5e9;border-radius:6px;color:#2e7d32;font-size:0.85rem;font-weight:500;"></div>';
+    h += '</form>';
+    h += '<div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#888;margin:28px 0 10px;font-weight:700;">Submissions</div>';
+    h += '<div id="submissionsList"></div>';
     el.innerHTML = h;
     renderSubmissions();
     return;
   }
 
-  if (activeTab === "world") {
-    var d = NEWS_DATA.world;
+  if (activeTab === "you") {
+    var savedInterests = '';
+    try { savedInterests = localStorage.getItem('you_interests') || ''; } catch(e) {}
+    var savedStories = null;
+    try { savedStories = JSON.parse(localStorage.getItem('you_stories') || 'null'); } catch(e) {}
+    var savedTime = '';
+    try { savedTime = localStorage.getItem('you_time') || ''; } catch(e) {}
+    var h = '<div class="section-label">You &mdash; ' + today + '</div><h1>Your Custom Feed</h1><p class="subtitle">Tell us what you\u2019re into \u2014 Grok finds the best posts on X just for you. Saved in this browser.</p>';
+    if (savedInterests) {
+      h += '<div class="myfeed-saved"><span>\ud83d\udccc Tracking: <strong>' + savedInterests.replace(/</g,'&lt;') + '</strong></span><button class="myfeed-clear" onclick="clearYouFeed()">Clear</button></div>';
+    }
+    h += '<div class="myfeed-input-wrap"><input type="text" id="youInput" placeholder="e.g. AI breakthroughs, Lakers, Korean BBQ, SpaceX launches..." value="' + savedInterests.replace(/"/g,'&quot;') + '" /><button class="myfeed-go" id="youGo" onclick="fetchYouFeed()">Find Posts</button></div>';
+    h += '<div class="myfeed-chips">';
+    ['AI & Tech','Crypto','Sports','Politics','Science','Cooking','Startups','Space','Comedy','Music'].forEach(function(c) {
+      h += '<button class="myfeed-chip" onclick="addYouChip(\'' + c + '\')">' + c + '</button>';
+    });
+    h += '</div><div class="myfeed-status" id="youStatus"></div><div id="youResults">';
+    if (savedStories && savedStories.stories && savedStories.stories.length) {
+      h += '<div style="font-size:0.7rem;color:#aaa;margin-bottom:12px;">Last fetched: ' + savedTime + '</div>';
+      savedStories.stories.forEach(function(s) {
+        var eid = 'yem' + Math.random().toString(36).substr(2,6);
+        var hasX = s.url && s.url.indexOf('/status/') !== -1 && (s.url.indexOf('x.com') !== -1 || s.url.indexOf('twitter.com') !== -1);
+        var sid = 'ys' + Math.random().toString(36).substr(2,6);
+        var clickExpr = "var b=document.getElementById('" + sid + "');b.classList.toggle('open');";
+        if (hasX) clickExpr += "if(b.classList.contains('open')){toggleEmbed('" + eid + "','" + s.url.replace(/'/g,"\\'") + "');}";
+        var embedSlot = hasX ? '<div id="' + eid + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div>' : '';
+        h += '<div class="story" id="' + sid + '" style="margin-bottom:10px;"><div class="story-header" onclick="' + clickExpr + '"><span class="arrow">\u25b6</span><span>' + (s.headline || 'Post') + '</span></div><div class="story-body">' + embedSlot + '<div class="post-body">' + (s.body || '') + '</div></div></div>';
+      });
+    }
+    h += '</div>';
+    el.innerHTML = h;
+    return;
+  }
+
+  if (activeTab === "world" || activeTab === "usa") {
+    var d = NEWS_DATA[activeTab];
     if (!d) { el.innerHTML = '<div class="loading">Loading...</div>'; return; }
-    var meta = TAB_META.world;
-    var h = '<div class="section-label">World &mdash; ' + today + '</div><h1>' + meta.title + '</h1><p class="subtitle">' + meta.subtitle + '</p>' + staleBanner;
-    var postedTime = NEWS_DATA.lastUpdated ? new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'}) : '';
-    (d.stories || []).forEach(function(s) { var pt = '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(Posted ' + postedTime + ')</span>'; h += acc(s.headline + pt, renderWorldStory(s)); });
+    var meta = TAB_META[activeTab];
+    var sectionName = activeTab === "usa" ? "USA" : "World";
+    var h = '<div class="section-label">' + sectionName + ' &mdash; ' + today + '</div>' + renderTabArt(activeTab) + '<h1>' + meta.title + '</h1><p class="subtitle">' + meta.subtitle + '</p>' + staleBanner;
+    if (!d.stories || !d.stories.length) {
+      h += '<p style="color:#f0e6d6;font-size:0.9rem;margin-top:16px;">Stories will appear here after the next update cycle.</p>';
+    } else {
+      d.stories.forEach(function(s) {
+        var pt = buildPostedTag(s);
+        h += acc(s.headline + pt, renderWorldStory(s));
+      });
+    }
     h += renderLastUpdated();
     el.innerHTML = h;
     return;
   }
 
   // All other tabs
-  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "Trending", recipe: "Recipe", msm: "<s>MSM</s>", local: "Local", pods: "Pods", pg6: "Pg. 6", science: "Science" };
+  var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "Trending", recipe: "Recipe", msm: "<s>MSM</s>", local: "Local", pods: "Pods", pg6: "Pg. 6", science: "Science", memes: "Memes", comedy: "Comedy", tiktok: "TikTok", golf: "Golf", usa: "USA" };
   var d = NEWS_DATA[activeTab];
   if (!d) { el.innerHTML = '<div class="loading">Loading...</div>'; return; }
   var meta = TAB_META[activeTab] || { title: labels[activeTab] || activeTab, subtitle: "" };
-  var h = '<div class="section-label">' + (labels[activeTab] || activeTab) + ' &mdash; ' + today + '</div><h1>' + meta.title + '</h1><p class="subtitle">' + meta.subtitle + '</p>' + staleBanner;
+  var h = '<div class="section-label">' + (labels[activeTab] || activeTab) + ' &mdash; ' + today + '</div>' + renderTabArt(activeTab) + '<h1>' + meta.title + '</h1><p class="subtitle">' + meta.subtitle + '</p>' + staleBanner;
   var postedTime = NEWS_DATA.lastUpdated ? new Date(NEWS_DATA.lastUpdated).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'}) : '';
   (d.stories || []).forEach(function(s) {
-    var pt = '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;">(Posted ' + postedTime + ')</span>';
-    h += acc(s.headline + pt, renderSinglePost(s));
-    if (s.footnotes) h += renderFootnotes(s.footnotes);
+    h += renderAutoEmbedBlock(s);
   });
-  if (activeTab === "allin") {
-    h += renderHoldings();
-  }
   h += renderLastUpdated();
   el.innerHTML = h;
 }
 
-// ---- Holdings table (live data via Yahoo Finance) ----
-var HOLDINGS_STRUCTURE = [
-  { label: "Benchmarks", rows: [
-    { t: "^GSPC", n: "S&P 500", who: "Index" },
-    { t: "^IXIC", n: "NASDAQ Comp", who: "Index" },
-    { t: "BTC-USD", n: "Bitcoin", who: "Crypto", display: "BTC" }
-  ]},
-  { label: "Elon Musk", rows: [
-    { t: "TSLA", n: "Tesla", who: "~509M shr (13%)" },
-    { t: "SPACEX", n: "SpaceX (pvt)", who: "43% ownership", pvt: "~$1.5T" },
-    { t: "XAI", n: "xAI (merged SpaceX)", who: "Founder", pvt: "pvt" }
-  ]},
-  { label: "Peter Thiel (Founders Fund)", rows: [
-    { t: "PLTR", n: "Palantir Technologies", who: "Co-Founder" },
-    { t: "BTC-USD", n: "Bitcoin", who: "Major advocate", display: "BTC" },
-    { t: "SPACEX", n: "SpaceX (pvt)", who: "Founders Fund", pvt: "~$1.5T" },
-    { t: "ANDURIL", n: "Anduril Industries (pvt)", who: "Founders Fund lead", pvt: "$60B val" },
-    { t: "STRIPE", n: "Stripe (pvt)", who: "Founders Fund", pvt: "$91.5B val" }
-  ]},
-  { label: "Palmer Luckey (Anduril)", rows: [
-    { t: "ANDURIL", n: "Anduril Industries (pvt)", who: "Co-Founder/CEO", pvt: "$60B val" },
-    { t: "META", n: "Meta (Oculus exit)", who: "Oculus sold $2B (2014)" }
-  ]},
-  { label: "Marc Andreessen (a16z)", rows: [
-    { t: "META", n: "Meta Platforms", who: "281K shr (Director)" },
-    { t: "COIN", n: "Coinbase", who: "1.15M shr (Dir)" }
-  ]},
-  { label: "Chamath Palihapitiya", rows: [
-    { t: "SOFI", n: "SoFi Technologies", who: "~19.9M shr (2%)" },
-    { t: "CLOV", n: "Clover Health", who: "30.1M shares" }
-  ]},
-  { label: "David Sacks (Craft Ventures)", rows: [
-    { t: "AFRM", n: "Affirm", who: "Early investor" },
-    { t: "RUM", n: "Rumble", who: "~1M shr (Director)" }
-  ]},
-  { label: "David Friedberg (Production Board)", rows: [
-    { t: "AMZN", n: "Amazon", who: "Personal holding" }
-  ]}
-];
-
-function getQuotes() {
-  var q = NEWS_DATA.quotes;
-  if (!q || !q.data) return {};
-  return q.data;
-}
-
-function fmtPct(v) {
-  if (v === null || v === undefined || isNaN(v)) return "\u2014";
-  var s = (v >= 0 ? "+" : "") + v.toFixed(1) + "%";
-  return s;
-}
-
-function fmtPrice(v, ticker) {
-  if (v === null || v === undefined) return "\u2014";
-  if (ticker === "BTC-USD") return "$" + Math.round(v).toLocaleString();
-  if (v >= 1000) return v.toLocaleString(undefined, {maximumFractionDigits: 0});
-  return "$" + v.toFixed(2);
-}
-
-function renderHoldings() {
-  var quotes = getQuotes();
-  var hasData = Object.keys(quotes).length > 0;
-  var fetchTime = NEWS_DATA.quotes && NEWS_DATA.quotes.fetchedAt ? NEWS_DATA.quotes.fetchedAt : '';
-  var stateLabel = '';
-  if (hasData) {
-    var anyState = quotes[Object.keys(quotes)[0]];
-    var mktState = anyState && anyState.state || '';
-    if (mktState === 'REGULAR') stateLabel = '<span style="color:#27ae60;font-size:0.7rem;">Market Open</span>';
-    else if (mktState === 'PRE') stateLabel = '<span style="color:#e67e22;font-size:0.7rem;">Pre-Market</span>';
-    else if (mktState === 'POST') stateLabel = '<span style="color:#e67e22;font-size:0.7rem;">After Hours</span>';
-    else stateLabel = '<span style="color:#999;font-size:0.7rem;">Market Closed</span>';
-    if (fetchTime) stateLabel += ' <span style="color:#aaa;font-size:0.65rem;">\u2022 as of ' + fetchTime + '</span>';
-  }
-  var h = '<div class="holdings-section"><div class="holdings-title">Billionaire Holdings &amp; Market Tracker</div><div class="holdings-subtitle">Key holdings of $age billionaires. ' + stateLabel + '</div>';
-  HOLDINGS_STRUCTURE.forEach(function(sec) {
-    h += '<div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#888;padding:12px 10px 4px;border-top:1px solid #eee;margin-top:4px;">' + sec.label + '</div>';
-    h += '<table class="holdings-table"><thead><tr><th>Ticker</th><th>Name</th><th>Price</th><th>1D</th><th>Held By</th></tr></thead><tbody>';
-    sec.rows.forEach(function(s) {
-      if (s.pvt) {
-        h += '<tr><td class="ticker">' + s.t + '</td><td>' + s.n + '</td><td>' + s.pvt + '</td><td>\u2014</td><td style="font-size:0.7rem;color:#666;">' + s.who + '</td></tr>';
-        return;
-      }
-      var q = quotes[s.t];
-      var price = q ? fmtPrice(q.price, s.t) : '\u2014';
-      var d1 = q ? fmtPct(q.change) : '\u2014';
-      var d1cls = q && q.change < 0 ? "neg" : q && q.change > 0 ? "pos" : "";
-      var ticker = s.display || s.t;
-      h += '<tr><td class="ticker">' + ticker + '</td><td>' + s.n + '</td><td>' + price + '</td><td class="' + d1cls + '">' + d1 + '</td><td style="font-size:0.7rem;color:#666;">' + s.who + '</td></tr>';
-    });
-    h += '</tbody></table>';
-  });
-  h += '</div>';
-  return h;
-}
+// Holdings table removed — billionaire holdings & market tracker no longer displayed.
 
 // ---- Submissions ----
 var submissions = [];
@@ -455,12 +869,38 @@ function renderSubmissions() {
   if (!list) return;
   var sorted = submissions.slice().sort(function(a, b) { return b.votes - a.votes; });
   if (!sorted.length) { list.innerHTML = '<p style="color:#999;font-size:0.85rem;">No submissions yet. Be the first!</p>'; return; }
-  list.innerHTML = sorted.map(function(s) {
+  // Render each submission as a full story card (like other tabs) with tweet embed.
+  // Submissions persist via localStorage until user clicks Delete.
+  list.innerHTML = sorted.map(function(s, i) {
     var handle = '';
     try { handle = '@' + new URL(s.url).pathname.split('/')[1]; } catch(e) {}
-    var badge = s.votes > 1 ? '<span class="vote-featured">' + s.votes + ' votes \u2014 FEATURED</span>' : '<span class="vote-pending">1 vote</span>';
-    return '<div class="story" style="padding:14px 20px;margin-bottom:8px;"><div style="font-weight:600;font-size:0.9rem;">' + (s.url ? '<a href="' + s.url + '" target="_blank" style="color:#2980b9;text-decoration:none;">' + (handle || s.url) + '</a>' : 'No link') + badge + '</div>' + (s.notes.length ? '<div style="font-size:0.85rem;color:#555;margin-top:6px;">' + s.notes[0] + '</div>' : '') + '<div style="font-size:0.7rem;color:#aaa;margin-top:4px;">' + new Date(s.timestamp).toLocaleString() + '</div></div>';
+    var hasX = s.url && s.url.indexOf('/status/') !== -1 && (s.url.indexOf('x.com') !== -1 || s.url.indexOf('twitter.com') !== -1);
+    var sid = 'sub' + i;
+    var eid = 'subem' + i;
+    var clickExpr = "var b=document.getElementById('" + sid + "');b.classList.toggle('open');";
+    if (hasX) clickExpr += "if(b.classList.contains('open')){toggleEmbed('" + eid + "','" + s.url.replace(/'/g,"\\'") + "');}";
+    var embedSlot = hasX ? '<div id="' + eid + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div>' : '';
+    var headline = (s.notes && s.notes[0]) ? s.notes[0] : ((handle || 'Post') + ' \u2014 user-submitted');
+    var badge = s.votes > 1 ? '<span class="vote-featured" style="margin-left:8px;font-size:0.7rem;background:#dcedc8;color:#33691e;padding:2px 6px;border-radius:3px;">' + s.votes + ' votes</span>' : '';
+    var deleteBtn = '<button onclick="deleteSubmission(' + i + ')" style="float:right;font-size:0.7rem;background:none;border:1px solid #ddd;color:#888;border-radius:4px;padding:3px 8px;cursor:pointer;margin-top:-2px;">Delete</button>';
+    return '<div class="story" id="' + sid + '" style="margin-bottom:10px;">' +
+           '<div class="story-header" onclick="' + clickExpr + '">' +
+           '<span class="arrow">\u25b6</span><span>' + headline + '</span>' + badge + deleteBtn +
+           '</div>' +
+           '<div class="story-body">' + embedSlot +
+           '<div class="post-body" style="font-size:0.8rem;color:#888;">Submitted: ' + new Date(s.timestamp).toLocaleString() + ' \u00b7 ' + (handle ? handle : '') + '</div>' +
+           '</div></div>';
   }).join('');
+}
+
+function deleteSubmission(idx) {
+  var sorted = submissions.slice().sort(function(a, b) { return b.votes - a.votes; });
+  var target = sorted[idx];
+  if (!target) return;
+  if (!confirm('Delete this submission?')) return;
+  submissions = submissions.filter(function(s) { return s.url !== target.url; });
+  try { localStorage.setItem('grokSubs', JSON.stringify(submissions)); } catch(e) {}
+  renderSubmissions();
 }
 
 function renderLastUpdated() {
@@ -581,6 +1021,54 @@ function toggleMic() {
   _myfeedRecognition.start();
 }
 
+// ---- "You" tab feed handlers ----
+function addYouChip(text) {
+  var inp = document.getElementById('youInput');
+  if (!inp) return;
+  var cur = inp.value.trim();
+  inp.value = cur ? cur + ', ' + text : text;
+}
+function clearYouFeed() {
+  try {
+    localStorage.removeItem('you_interests');
+    localStorage.removeItem('you_stories');
+    localStorage.removeItem('you_time');
+  } catch(e) {}
+  renderContent();
+}
+function fetchYouFeed() {
+  var inp = document.getElementById('youInput');
+  var goBtn = document.getElementById('youGo');
+  var status = document.getElementById('youStatus');
+  var results = document.getElementById('youResults');
+  if (!inp || !inp.value.trim()) { if (status) status.textContent = 'Type your interests first!'; return; }
+  var interests = inp.value.trim();
+  try { localStorage.setItem('you_interests', interests); } catch(e) {}
+  if (goBtn) { goBtn.disabled = true; goBtn.textContent = 'Searching...'; }
+  if (status) status.innerHTML = '\u23f3 Grok is searching X for posts about <strong>' + interests.replace(/</g,'&lt;') + '</strong>... 10\u201320 seconds.';
+  if (results) results.innerHTML = '';
+  fetch('/.netlify/functions/custom-stories', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ interests: interests })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.error) { if (status) status.textContent = 'Error: ' + data.error; if (goBtn) { goBtn.disabled = false; goBtn.textContent = 'Find Posts'; } return; }
+    try {
+      localStorage.setItem('you_stories', JSON.stringify(data));
+      localStorage.setItem('you_time', new Date().toLocaleString());
+    } catch(e) {}
+    if (status) status.textContent = '';
+    if (goBtn) { goBtn.disabled = false; goBtn.textContent = 'Find Posts'; }
+    renderContent();
+  })
+  .catch(function(err) {
+    if (status) status.textContent = 'Network error: ' + err.message;
+    if (goBtn) { goBtn.disabled = false; goBtn.textContent = 'Find Posts'; }
+  });
+}
+
 function fetchMyFeed(slot) {
   slot = slot || (activeTab === "myfeed2" ? "2" : "1");
   var inp = document.getElementById("myfeedInput");
@@ -662,10 +1150,89 @@ function fetchMyFeed(slot) {
 })();
 
 // ---- Init ----
+window._pageLoadTime = Date.now();
 document.getElementById("currentDate").textContent = formatDate();
 renderNav();
 loadStories();
+setupSwipe();
+checkVersion();                                        // immediately on load
+setInterval(checkVersion, 60 * 1000);                  // check every minute — auto-reload stale browsers
 setInterval(checkMidnightRotation, 60000);
+
+// iOS Safari fix: setInterval gets paused/killed when tab is backgrounded.
+// When the user returns to the tab, immediately re-check version + force-fetch fresh stories.
+// This is the difference between "user has to manually refresh" and "user sees new content automatically."
+function onTabReturn() {
+  // Re-check server version. If newer than what we loaded, page reloads automatically.
+  checkVersion();
+  // Belt-and-suspenders: force-refetch stories.json regardless. If lastUpdated changed, re-render.
+  fetch('/stories.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(fresh) {
+      if (fresh && fresh.lastUpdated && fresh.lastUpdated !== NEWS_DATA.lastUpdated) {
+        NEWS_DATA = fresh;
+        if (typeof renderContent === 'function') renderContent();
+        if (typeof renderLastUpdated === 'function') renderLastUpdated();
+      }
+    })
+    .catch(function() {});
+}
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible') onTabReturn();
+});
+window.addEventListener('pageshow', function(ev) {
+  // pageshow with persisted=true fires when iOS restores the page from bfcache
+  if (ev.persisted) onTabReturn();
+});
+window.addEventListener('focus', onTabReturn);
+
+// ---- Register Service Worker (auto cache-busting for ALL future visits) ----
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    // Append a stamp so browsers (especially iOS) refetch sw.js even when caching is aggressive.
+    var swUrl = '/sw.js?v=' + (THIS_VERSION || Date.now());
+    navigator.serviceWorker.register(swUrl, { updateViaCache: 'none' })
+      .then(function(reg) {
+        // Check for SW updates every minute
+        setInterval(function() { reg.update(); }, 60 * 1000);
+      })
+      .catch(function() {});
+
+    // Listen for the new SW to claim this page (postMessage from activate handler) and force a reload
+    // so the user sees fresh HTML/data without manual cache clear.
+    navigator.serviceWorker.addEventListener('message', function(ev) {
+      if (ev.data && ev.data.type === 'SW_UPDATED') {
+        try {
+          var lastReload = sessionStorage.getItem('swReloadedAt') || '0';
+          var minSinceReload = (Date.now() - parseInt(lastReload, 10)) / 60000;
+          if (minSinceReload >= 2) {  // safety: prevent reload loops
+            sessionStorage.setItem('swReloadedAt', String(Date.now()));
+            location.reload();
+          }
+        } catch (e) {}
+      }
+    });
+
+    // Belt-and-suspenders: if NEWS_DATA is empty after 4s of load, force-fetch stories.json
+    // with cache-bust and re-render. Catches the iOS-stale-cache failure mode.
+    setTimeout(function() {
+      var allEmpty = true;
+      for (var k in NEWS_DATA) {
+        if (NEWS_DATA[k] && NEWS_DATA[k].stories && NEWS_DATA[k].stories.length > 0) {
+          allEmpty = false; break;
+        }
+      }
+      if (allEmpty) {
+        fetch('/stories.json?_busy=' + Date.now(), { cache: 'no-store' })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            NEWS_DATA = data;
+            renderContent();
+          }).catch(function(){});
+      }
+    }, 4000);
+  });
+}
 </script>
 </body>
 </html>

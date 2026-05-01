@@ -1,0 +1,21 @@
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Frame-Options: DENY
+
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/stories.json
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/images/*
+  Cache-Control: public, max-age=86400, immutable

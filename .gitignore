@@ -1,1 +1,6 @@
 .netlify/
+.env
+.env.*
+seen_history.json
+*.log
+.DS_Store
