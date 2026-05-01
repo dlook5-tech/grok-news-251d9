@@ -10,10 +10,15 @@
 
 set -euo pipefail
 
-MAIN="/Users/lookhome/grok-news-251d9/grok-news-251d9"
-SITE_ID="3e9d07ef-77d8-404a-8dad-413fa633ff16"
+# Make portable: works on Mac local + GitHub Actions runners
+MAIN="$(cd "$(dirname "$0")" && pwd)"
+SITE_ID="${NETLIFY_SITE_ID:-3e9d07ef-77d8-404a-8dad-413fa633ff16}"
 
-source "$MAIN/.env"
+# Source .env if available (Mac local), otherwise rely on env vars (CI)
+if [ -f "$MAIN/.env" ]; then
+    source "$MAIN/.env"
+fi
+: "${NETLIFY_AUTH_TOKEN:?NETLIFY_AUTH_TOKEN required (set via .env on Mac, GitHub Secrets in CI)}"
 
 cd "$MAIN"
 
@@ -54,9 +59,9 @@ fi
 
 # Build the file manifest: path -> sha1
 echo "[deploy] Computing file hashes..."
-FILES_JSON=$(python3 <<'PYEOF'
+FILES_JSON=$(MAIN="$MAIN" python3 <<'PYEOF'
 import hashlib, json, os
-MAIN = "/Users/lookhome/grok-news-251d9/grok-news-251d9"
+MAIN = os.environ['MAIN']
 root_files = ["index.html", "stories.json", "_headers", "version.txt", "sw.js"]
 manifest = {}
 paths_by_hash = {}
@@ -140,7 +145,9 @@ FINAL=$(curl -s -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" \
 echo "$FINAL" | python3 -c "import json,sys; d=json.load(sys.stdin); print(f'[deploy] id={d.get(\"id\",\"?\")} state={d.get(\"state\",\"?\")} url={d.get(\"ssl_url\",\"?\")}')"
 echo "[deploy] Done at $(date)"
 
-# ---- Auto-snapshot to Desktop after every successful deploy ----
+# ---- Auto-snapshot to Desktop after every successful deploy (Mac only) ----
+# Skipped on GitHub Actions runners (no Desktop, plus Netlify keeps deploy history natively).
+if [ -z "${GITHUB_ACTIONS:-}" ] && [ -d "$HOME/Desktop" ]; then
 SNAP_DIR="$HOME/Desktop/expresso_snapshots/$(date +%Y-%m-%d_%H-%M-%S)"
 mkdir -p "$SNAP_DIR/code" "$SNAP_DIR/images"
 cp "$MAIN/index.html" "$MAIN/update.sh" "$MAIN/parse_grok.py" "$MAIN/cron_update.sh" "$MAIN/deploy.sh" "$MAIN/sw.js" "$MAIN/_headers" "$MAIN/version.txt" "$MAIN/fetch_tiktok.py" "$SNAP_DIR/code/" 2>/dev/null
@@ -151,8 +158,10 @@ echo "[deploy] Snapshot: $SNAP_DIR"
 
 # Keep only the last 20 snapshots so the Desktop doesn't fill up
 ls -1dt "$HOME/Desktop/expresso_snapshots/"*/ 2>/dev/null | tail -n +21 | xargs -I{} rm -rf "{}" 2>/dev/null || true
+fi  # end Mac-only snapshot block
 
 # ---- Auto-handoff doc to Desktop (for continuing on iPhone via Claude app) ----
+if [ -z "${GITHUB_ACTIONS:-}" ] && [ -d "$HOME/Desktop" ]; then
 # Refreshed each deploy. Read-only summary of project state. Paste into Claude
 # mobile app to brief any Claude on where the project is.
 HANDOFF="$HOME/Desktop/expresso_handoff.md"
@@ -218,3 +227,4 @@ out.append("- Foreign-language translation field added (Apr 30); will populate o
 print('\n'.join(out))
 HANDOFF_PYEOF
 echo "[deploy] Handoff doc: $HANDOFF"
+fi  # end Mac-only handoff block

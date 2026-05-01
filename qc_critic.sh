@@ -6,16 +6,18 @@
 # 4. Deploy continues.
 
 set -e
-MAIN="/Users/lookhome/grok-news-251d9/grok-news-251d9"
+MAIN="$(cd "$(dirname "$0")" && pwd)"
 cd "$MAIN"
-source .env
+if [ -f .env ]; then source .env; fi
+: "${XAI_API_KEY:?XAI_API_KEY required}"
 
 echo "=== QC Critic Pass — $(date) ===" > /tmp/expresso_qc_review.log
 
 # 1. Compact summary of current picks
-python3 <<'PYEOF' > /tmp/qc_summary.txt
-import json
-with open('/Users/lookhome/grok-news-251d9/grok-news-251d9/stories.json') as f:
+MAIN="$MAIN" python3 <<'PYEOF' > /tmp/qc_summary.txt
+import json, os
+MAIN = os.environ['MAIN']
+with open(os.path.join(MAIN, 'stories.json')) as f:
     d = json.load(f)
 lines = []
 tabs = ['world','usa','business','local','sports','top','msm','elon','allin','pods','recipe','pg6','science','memes','comedy','tiktok','golf']
@@ -95,10 +97,11 @@ curl -s --max-time 240 https://api.x.ai/v1/responses \
     -d @/tmp/grok_payload_critic.json > /tmp/grok_raw_critic.json
 
 # 4. Parse concerns, validate replacements, swap into stories.json
-python3 <<'PYEOF' >> /tmp/expresso_qc_review.log
-import json, re, datetime, sys
-STORIES_PATH = '/Users/lookhome/grok-news-251d9/grok-news-251d9/stories.json'
-sys.path.insert(0, '/Users/lookhome/grok-news-251d9/grok-news-251d9')
+MAIN="$MAIN" python3 <<'PYEOF' >> /tmp/expresso_qc_review.log
+import json, re, datetime, sys, os
+MAIN = os.environ['MAIN']
+STORIES_PATH = os.path.join(MAIN, 'stories.json')
+sys.path.insert(0, MAIN)
 
 def url_age_hours(url):
     if not url: return None

@@ -11,7 +11,13 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
-source .env
+# Source .env if it exists (Mac local dev). On GitHub Actions, secrets come via env vars.
+if [ -f .env ]; then
+    source .env
+fi
+# Fail loudly if required secrets are missing.
+: "${XAI_API_KEY:?XAI_API_KEY is required (set via .env on Mac, GitHub Secrets in CI)}"
+: "${NETLIFY_AUTH_TOKEN:?NETLIFY_AUTH_TOKEN is required (set via .env on Mac, GitHub Secrets in CI)}"
 
 echo "=== eXpressO News v4 Update — $(date) ==="
 
@@ -752,7 +758,7 @@ done
 
 # TikTok tab uses tikwm.com free trending API, not Grok
 echo "  Starting: tiktok via tikwm.com"
-python3 /Users/lookhome/grok-news-251d9/grok-news-251d9/fetch_tiktok.py &
+python3 $SCRIPT_DIR/fetch_tiktok.py &
 
 echo "Waiting for all calls to complete..."
 wait
@@ -1159,10 +1165,10 @@ echo "Parse done."
 # Does NOT block deploy — surfaces concerns for prompt-tuning.
 # ============================================================
 echo "Running QC critic pass..."
-bash /Users/lookhome/grok-news-251d9/grok-news-251d9/qc_critic.sh || echo "QC critic skipped"
+bash $SCRIPT_DIR/qc_critic.sh || echo "QC critic skipped"
 
 # DEPLOY via Netlify API
 echo "Deploying via digest API..."
-bash /Users/lookhome/grok-news-251d9/grok-news-251d9/deploy.sh
+bash $SCRIPT_DIR/deploy.sh
 
 echo "=== v4 Done ===" ; date

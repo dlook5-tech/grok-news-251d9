@@ -114,14 +114,24 @@ The user has lived through **multiple iterations of the same fixes**. Before pro
 
 **Current state:** v3 working. 100% pass rate on last 3 crons (54/54, 48/48, 49/49).
 
-### 7. Cron reliability (Mac sleep)
+### 7. Cron reliability (Mac sleep) — RESOLVED via GitHub Actions
 
-**Iterations (open problem):**
+**Iterations:**
 1. `launchd` plist with StartCalendarInterval
 2. `pmset wakeorpoweron MTWRFSU 05:55:00` so Mac wakes for 6am cron
-3. **Pending decision:** GitHub Actions migration (user thinking about it)
+3. **2026-05-01:** GitHub Actions migration — `.github/workflows/cron.yml` runs every 2 hours regardless of Mac state. Mac launchd should be disabled once GH Actions verified working.
 
-**Current state:** Works when Mac is awake or wakes for 6am. Mid-day crons can miss if Mac sleeps. **Don't propose new launchd configs — go straight to GitHub Actions discussion if user complains.**
+**Current state:** v3 GitHub Actions. Cron schedule: every 2 hours UTC (`0 */2 * * *`).
+
+**Required GitHub Secrets** (set via repo Settings → Secrets and variables → Actions):
+- `XAI_API_KEY`
+- `NETLIFY_AUTH_TOKEN`
+- `NETLIFY_SITE_ID` (optional; defaults to embedded value)
+
+**To disable Mac launchd once GH Actions confirmed:**
+```bash
+launchctl unload ~/Library/LaunchAgents/com.expresso.cron.plist
+```
 
 ### 8. Crime-blotter content (sensationalized violent crime)
 

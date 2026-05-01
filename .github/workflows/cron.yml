@@ -1,0 +1,69 @@
+name: eXpressO News Cron
+
+on:
+  schedule:
+    # Every 2 hours, on the hour. UTC. Adjusts to PDT/PST automatically.
+    # PDT (summer): runs at 17:00, 19:00, 21:00, 23:00, 01:00, 03:00, 05:00, 07:00, 09:00, 11:00, 13:00, 15:00 UTC
+    #             = 10:00, 12:00, 14:00, 16:00, 18:00, 20:00, 22:00, 00:00, 02:00, 04:00, 06:00, 08:00 PDT
+    - cron: '0 */2 * * *'
+  workflow_dispatch:  # Manual trigger from the Actions tab
+
+# Prevent overlap if a previous run is still going
+concurrency:
+  group: expresso-cron
+  cancel-in-progress: false
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python deps
+        # Only use stdlib + what's already in update.sh — but ensure jq isn't relied on.
+        # No PyPI deps needed: parse_grok.py uses only stdlib.
+        run: |
+          python3 --version
+          which curl
+          which python3
+
+      - name: Run pipeline
+        env:
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          chmod +x update.sh deploy.sh qc_critic.sh
+          bash update.sh
+
+      - name: Commit refreshed state files
+        # update.sh modifies version.txt + sw.js + stories.json + index.html (BUILD stamps).
+        # Push them back so the next cron starts from current state.
+        if: success()
+        run: |
+          git config user.name "expresso-cron"
+          git config user.email "cron@expresso-news.local"
+          git add -A version.txt sw.js stories.json index.html seen_history.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Cron: refresh stories $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          else
+            echo "No changes to commit"
+          fi
+
+      - name: Upload pipeline log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-log-${{ github.run_id }}
+          path: |
+            /tmp/expresso_qc_review.log
+            /tmp/grok_raw*.json
+          retention-days: 7
