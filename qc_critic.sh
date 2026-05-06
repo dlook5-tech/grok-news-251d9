@@ -20,7 +20,7 @@ MAIN = os.environ['MAIN']
 with open(os.path.join(MAIN, 'stories.json')) as f:
     d = json.load(f)
 lines = []
-tabs = ['world','usa','business','local','sports','top','msm','elon','allin','pods','recipe','pg6','science','memes','comedy','tiktok','golf']
+tabs = ['world','usa','business','local','sports','top','msm','elon','allin','pods','recipe','pg6','science','conspiracy','comedy','tiktok']
 for tab in tabs:
     tv = d.get(tab, {})
     if not isinstance(tv, dict): continue
@@ -39,35 +39,46 @@ for tab in tabs:
 print('\n'.join(lines))
 PYEOF
 
-# 2. Critic prompt — asks for FULL replacement stories, not just suggestions
+# 2. Critic prompt — INSIGHT QUALITY scorer (was: just looking for more viral)
 cat > /tmp/grok_p_critic.txt <<CRITIC_PROMPT
-You are a SECOND-OPINION CRITIC for eXpressO News. The first Grok pass just curated these stories and is about to publish. Your job: identify ANY underperforming picks and replace them with demonstrably better posts.
+You are an INSIGHT-QUALITY CRITIC for eXpressO News. The user is sick of bare announcements / endorsements / MSM-quote-bait getting picked. Your job: score each pick on INSIGHT QUALITY (does it add a take, analysis, or specific insight beyond the bare news?), and REPLACE anything scoring <6/10.
 
 Current picks:
 
 $(cat /tmp/qc_summary.txt)
 
-For EACH tab, use x_search RIGHT NOW to find the TOP posts on that subject. Compare against the current picks.
+INSIGHT SCORING RUBRIC (0-10):
+  10 = original analysis with specific data + interpretation, contrarian angle, or "here's what nobody is saying" framing
+  8-9 = clear take with reasoning ("this matters because X" / "watch Y, that's the real story")
+  6-7 = mild commentary on news (acceptable floor — keeps the post)
+  4-5 = bare summary of news with no take (DROP/REPLACE)
+  2-3 = pure announcement, endorsement boilerplate, or MSM quote with no original take (DROP/REPLACE)
+  0-1 = "BREAKING:" + statistic, "Congrats to X", all-caps shouting, "JUST IN:" with no commentary (DROP/REPLACE)
 
-REPLACE a pick if ANY of these are true:
-- A demonstrably MORE VIRAL / more compelling / fresher post exists on the same topic
-- The current pick is a boring rerun or low-engagement filler
-- The current pick is a context-less reply ("disputes a claim", "that is not true" without showing what)
-- The current pick is older than 4 hours AND a fresher viral post on the same topic exists
-- The current pick has lower engagement than an obvious alternative (e.g., 800 likes vs 15K likes available)
+DROP/REPLACE the pick if:
+- Score < 6 on insight quality
+- It's a quoted-MSM passage with no original analysis from the handle (e.g. \\"per TIME\\", \\"per WaPo\\", \\"per NYT\\")
+- It's a "JUST IN:" or "BREAKING:" + bare fact (e.g. WatcherGuru "JUST IN: Trump's net worth tripled")
+- It's an endorsement/congrats with no analytical content (Sanders "Congrats to X, fighting for working families")
+- @WhiteHouse / @POTUS / official PR with no analysis layer
+- It's a context-less reply ("disputes a claim", "that is not true" without showing what)
+- It's older than 24 hours AND a fresher more-insightful post exists on the same topic
 
-For each replacement, return the FULL replacement story object. The replacement MUST:
+For each replacement, search X for posts with HIGH-INSIGHT content (analysts, contrarian voices, deep-dive threads, "here's why this matters" framings). Don't just chase engagement — chase insight.
+
+The replacement MUST:
 - Be a real X post (URL contains /status/ and a numeric ID)
 - Be from within the last 24 hours
-- Have higher engagement than the current pick
+- Score 7+ on the insight rubric above
 - Be self-contained (reader understands without clicking out)
 - NOT be a reply starting with @someone
 - NOT use vague references like "a claim", "the person", "someone"
+- NOT be another "JUST IN:" / "BREAKING:" / endorsement / MSM-quote post
 
 Return JSON:
 {"replacements":[
   {
-    "tab": "world" | "usa" | "business" | "local" | "sports" | "top" | "msm" | "elon" | "allin" | "pods" | "recipe" | "pg6" | "science" | "memes" | "comedy" | "tiktok" | "golf",
+    "tab": "world" | "usa" | "business" | "local" | "sports" | "top" | "msm" | "elon" | "allin" | "pods" | "recipe" | "pg6" | "science" | "conspiracy" | "comedy" | "tiktok",
     "slot_index": 0 (or 1, 2, 3, 4),
     "reason": "why the current pick is weak",
     "severity": "high" | "med" | "low",

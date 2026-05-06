@@ -209,7 +209,7 @@ def process_drop(drop_data):
 
     PERSPECTIVE_TABS = ('world', 'usa')
     SINGLE_TABS = ('business', 'sports', 'elon', 'allin', 'top', 'msm', 'pg6', 'pods',
-                   'recipe', 'science', 'local', 'memes', 'comedy', 'tiktok', 'golf',
+                   'recipe', 'science', 'local', 'conspiracy', 'comedy', 'tiktok',
                    'freespeech')
 
     for tab_name, tab_payload in drop_data.items():

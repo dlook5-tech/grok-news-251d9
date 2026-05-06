@@ -1,0 +1,12 @@
+{
+  "name": "eXpressO News",
+  "short_name": "eXpressO",
+  "description": "Grok-curated news aggregator — fastest signal from X, beating mainstream media.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#c9a67a",
+  "theme_color": "#1c1410",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US"
+}

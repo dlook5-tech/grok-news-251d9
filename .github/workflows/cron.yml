@@ -2,10 +2,10 @@ name: eXpressO News Cron
 
 on:
   schedule:
-    # Every 2 hours, on the hour. UTC. Adjusts to PDT/PST automatically.
-    # PDT (summer): runs at 17:00, 19:00, 21:00, 23:00, 01:00, 03:00, 05:00, 07:00, 09:00, 11:00, 13:00, 15:00 UTC
-    #             = 10:00, 12:00, 14:00, 16:00, 18:00, 20:00, 22:00, 00:00, 02:00, 04:00, 06:00, 08:00 PDT
-    - cron: '0 */2 * * *'
+    # 4 crons/day at 6am, 10am, 2pm, 6pm Pacific Time.
+    # PDT (UTC-7, summer Mar-Nov): 13, 17, 21, 01 UTC
+    # PST (UTC-8, winter Nov-Mar): 14, 18, 22, 02 UTC — fires 1hr earlier in PT (5/9/1/5)
+    - cron: '0 1,13,17,21 * * *'
   workflow_dispatch:  # Manual trigger from the Actions tab
 
 # Prevent overlap if a previous run is still going

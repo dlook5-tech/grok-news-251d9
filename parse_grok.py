@@ -4,24 +4,161 @@ Parse Grok API response, validate every field, and output clean stories.json dat
 If validation fails, exit non-zero so the pipeline keeps the old data.
 """
 import sys, json, re, datetime, urllib.parse, subprocess, os
+import curation  # NEW (2026-05-04): pure-views selection lives here. See curation.py.
 
 # ---- Freshness check via Twitter snowflake ID ----
-MAX_AGE_HOURS = 36  # 36h window — news cycle freshness for time-sensitive tabs
-# Per-tab age overrides — evergreen content (personality posts, instructional, recipes,
-# podcast clips) holds value beyond 36h. Without these overrides Elon often hits 1-2 stories
-# because his hottest posts in any 4-hour window are often 36-48h old.
+# CLAUDE.md spec (2026-05-03 morning): News tabs 24h max, reference tabs 72h.
+# User-explicit: "How did it get to 168 hours? I never did that." — strict short window.
+# Velocity exemption (see _likes_per_hour below) keeps still-hot older stories.
+# SAS/Cowherd exemption keeps Sports filled even when fresh content is sparse.
+MAX_AGE_HOURS = 24  # 24h news cap per CLAUDE.md
 TAB_AGE_OVERRIDE = {
-    'elon': 96,        # Elon's commentary holds value 4 days
-    'allin': 72,       # billionaire takes hold ~3 days
-    'pods': 96,        # podcast clips evergreen-ish for days
-    'science': 168,    # research findings = ~1 week
+    # Reference tabs (CLAUDE.md 72h cap)
     'recipe': 336,     # recipes evergreen ~2 weeks
-    'golf': 168,       # instructional golf content evergreen
+    'science': 168,    # research findings = ~1 week
     'comedy': 96,      # standup clips hold for days
-    'memes': 72,       # memes have a few days of cycle
+    'local': 72,       # OC content sparse, ref-tab cap
+    # Personality / podcast tabs (still hot beyond 24h)
+    'elon': 96,        # Elon commentary holds value 4 days
+    'allin': 72,       # billionaire takes hold ~3 days
+    'pods': 96,        # podcast clips evergreen-ish
     'pg6': 72,         # celebrity gossip holds 3 days
-    'freespeech': 8760, # essentially never expires (1 year)
+    # Special
+    'conspiracy': 24,  # tied to current news cycle
+    'freespeech': 8760, # user-curated, indefinite (1 year)
 }
+
+# ---- Handle → real-name display map (CLAUDE.md: "Headlines must use REAL NAMES, not handles") ----
+# Used by humanize_headline() to substitute @handles with display names.
+# Keys are LOWERCASED handles (no @). Add as we encounter cases of "Shams:" / "pmarca:" in headlines.
+HANDLE_NAMES = {
+    # Sports
+    'shamscharania': 'Shams Charania',
+    'wojespn': 'Adrian Wojnarowski',
+    'stephenasmith': 'Stephen A. Smith',
+    'colincowherd': 'Colin Cowherd',
+    'theathletic': 'The Athletic',
+    'theherd': 'The Herd',
+    'firsttake': 'First Take',
+    # Tech / VC
+    'pmarca': 'Marc Andreessen',
+    'chamath': 'Chamath Palihapitiya',
+    'davidsacks': 'David Sacks',
+    'palmerluckey': 'Palmer Luckey',
+    'friedberg': 'David Friedberg',
+    'elonmusk': 'Elon Musk',
+    # Politics / news
+    'jackposobiec': 'Jack Posobiec',
+    'cernovich': 'Mike Cernovich',
+    'realcandaceo': 'Candace Owens',
+    'benshapiro': 'Ben Shapiro',
+    'tuckercarlson': 'Tucker Carlson',
+    'donaldjtrumpjr': 'Donald Trump Jr.',
+    'charliekirk11': 'Charlie Kirk',
+    'jdvance1': 'JD Vance',
+    'sentedcruz': 'Ted Cruz',
+    'tomfitton': 'Tom Fitton',
+    'jessebwatters': 'Jesse Watters',
+    'ingrahamangle': 'Laura Ingraham',
+    'aoc': 'AOC',
+    'ilhan': 'Ilhan Omar',
+    'rbreich': 'Robert Reich',
+    'berniesanders': 'Bernie Sanders',
+    'rashidatlaib': 'Rashida Tlaib',
+    'chrismurphyct': 'Chris Murphy',
+    'senwarren': 'Elizabeth Warren',
+    'joycewhitevance': 'Joyce Vance',
+    # Business / finance
+    'raydalio': 'Ray Dalio',
+    'dowdedward': 'Edward Dowd',
+    'unusual_whales': 'Unusual Whales',
+    'watcherguru': 'Watcher Guru',
+    'lizannsonders': 'Liz Ann Sonders',
+    'truthgundlach': 'Jeffrey Gundlach',
+    'elerianm': 'Mohamed El-Erian',
+    # MSM / investigators
+    'billmelugin_': 'Bill Melugin',
+    'mattwalshblog': 'Matt Walsh',
+    'timcastnews': 'Timcast News',
+    'therabbithole84': 'The Rabbit Hole',
+    'scotusblog': 'SCOTUSblog',
+    'jamesokeefeiii': 'James O’Keefe',
+    'insightgl': 'Insight GL',
+    # Pods / hosts
+    'joerogan': 'Joe Rogan',
+    'lexfridman': 'Lex Fridman',
+    'callherdaddy': 'Call Her Daddy',
+    'adamcarolla': 'Adam Carolla',
+    'theallinpod': 'All-In Podcast',
+    # Pg.6
+    'popcrave': 'Pop Crave',
+    'enews': 'E! News',
+    'tmz': 'TMZ',
+    'justjared': 'Just Jared',
+}
+
+def humanize_headline(headline, handle=None):
+    """Replace handle-style mentions in a headline with the display name from HANDLE_NAMES.
+
+    Examples:
+      "Shams: Lakers trade for star" + handle=ShamsCharania → "Shams Charania: Lakers trade for star"
+      "pmarca on AI bubble"                               → "Marc Andreessen on AI bubble"
+    Always returns a string; original headline if no substitution applies.
+    """
+    if not headline:
+        return headline
+    out = headline
+    # 1. If handle provided and headline starts with truncated form, expand it
+    if handle:
+        h_norm = handle.lower().lstrip('@')
+        full = HANDLE_NAMES.get(h_norm)
+        if full:
+            # "Shams:" / "Shams says" / "Shams reports" — expand only if the partial is a prefix of the real name
+            short = full.split(' ')[0]
+            if out.startswith(short + ':') or out.startswith(short + ' '):
+                # Only expand if not already the full name
+                if not out.startswith(full):
+                    out = full + out[len(short):]
+    # 2. Substitute any @handle or known handle-as-word with the real name
+    for h_norm, real_name in HANDLE_NAMES.items():
+        # @handle form
+        out = re.sub(r'@' + re.escape(h_norm) + r'\b', real_name, out, flags=re.IGNORECASE)
+        # bare handle as word (only short distinctive ones to avoid false positives)
+        if h_norm in ('pmarca', 'chamath', 'aoc'):
+            out = re.sub(r'\b' + re.escape(h_norm) + r'\b', real_name, out, flags=re.IGNORECASE)
+    return out
+
+# ---- Generic-headline filter for Local tab (CLAUDE.md: "OC Scanner reports local crime" rejected as generic) ----
+# Rejects headlines that name the platform/source instead of describing the actual story.
+# User-explicit (2026-05-02): "Specific headlines required — tell the *specific* what/where."
+GENERIC_HEADLINE_PATTERNS = [
+    r'^\s*(?:the\s+)?(?:OC|Newport|LA|Local)\s+(?:Scanner|News|Police|Sheriff)\s+(?:reports?|covers?|posts?|shares?)',
+    r'^\s*(?:KTLA|ABC7|NBC|FOX|CBS)\s+(?:covers?|reports?|airs?)',
+    r'^\s*(?:Daily\s+Pilot|OCRegister)\s+(?:covers?|reports?|posts?)',
+    r'^\s*(?:Local|Breaking)\s+(?:news|update|story)\s*$',
+    r'^\s*Police\s+(?:respond|arrest|investigate)\s*$',  # no specifics
+    r'^\s*(?:Newport|OC)\s+(?:community|residents)\s+(?:react|respond)\s*$',
+    r'^\s*Top\s+(?:local|story)\s*$',
+]
+GENERIC_HEADLINE_RE = [re.compile(p, re.IGNORECASE) for p in GENERIC_HEADLINE_PATTERNS]
+
+def is_generic_headline(headline):
+    """Return True if a headline is a generic platform-mention rather than a specific story.
+
+    A generic headline names the source (OC Scanner, KTLA) and a verb of reporting
+    without describing the actual event. Used by Local tab filtering — generic
+    headlines indicate Grok punted instead of finding a specific story.
+    """
+    if not headline or len(headline.strip()) < 8:
+        return True
+    h = headline.strip()
+    for rx in GENERIC_HEADLINE_RE:
+        if rx.search(h):
+            return True
+    # Headline that's just a handle name with no body
+    if re.match(r'^@?\w+\s*$', h):
+        return True
+    return False
 
 # ---- Cross-day dedup: never repeat a story within N hours, across any tab ----
 SEEN_FILE = 'seen_history.json'
@@ -238,7 +375,7 @@ fixed_text = fix_json(json_text)
 
 def bracket_repair(t):
     """Walk through JSON tracking bracket stack; insert missing ] before tab keys."""
-    tab_keys = {'world','usa','business','sports','elon','allin','top','msm','pg6','pods','recipe','science','local','memes','comedy','tiktok','golf'}
+    tab_keys = {'world','usa','business','sports','elon','allin','top','msm','pg6','pods','recipe','science','local','conspiracy','comedy'}
     result = list(t)
     stack = []  # track [ and {
     in_str = False
@@ -389,7 +526,7 @@ def enrich_urls(data):
                 tasks.append((['usa', wi, key], p['handle'], w.get('headline', '')))
 
     # All array tabs
-    for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local', 'memes', 'comedy', 'tiktok', 'golf']:
+    for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local', 'conspiracy', 'comedy']:
         items = data.get(tab, [])
         if not isinstance(items, list):
             items = [items]
@@ -501,10 +638,77 @@ def trim_text(text, max_sentences=2, max_chars=150):
 # Grok sometimes returns small posts from our listed handles even when more viral ones exist.
 MIN_LIKES_BY_TAB = {
     'world': 1000, 'usa': 1000, 'top': 2000, 'msm': 500, 'business': 500,
-    'sports': 300, 'elon': 1000, 'allin': 500, 'pg6': 1000, 'pods': 500,
-    'science': 100, 'recipe': 100, 'local': 50,
-    'memes': 500, 'comedy': 300, 'tiktok': 100_000, 'golf': 100,
+    'sports': 300, 'elon': 200, 'allin': 500, 'pg6': 1000, 'pods': 500,  # elon: 200 — fresh posts can be low-engagement, user wants every world-engaged post
+    'science': 100, 'recipe': 100, 'local': 50,  # 2026-05-02: 50→300→150 all emptied tab — OC content genuinely low-engagement, 50 keeps Daily Pilot-style stories alive
+    'conspiracy': 500, 'comedy': 300,
 }
+
+# ============================================================
+# V2 PASS 2 — MULTI-FACTOR CANDIDATE SCORING (May 2026-05-02)
+# Replaces "Grok picks 3 randomly" with "Grok returns 10 candidates → Python
+# scores → top 3 by score." Deterministic, tunable, auditable.
+# ============================================================
+import math as _math_score
+
+def _score_candidate(s, tab):
+    """Score a candidate 0-100 on three factors:
+    - Recency (50%): exponential decay from post time (sharper for news, gentler for evergreen)
+    - Engagement (35%): log-scaled likes count (50K likes ≈ max)
+    - Quality (15%): handle approved, has /status/ URL, multi-sentence body, has why_this_one
+    """
+    if not isinstance(s, dict): return 0.0
+
+    # ---- Recency component ----
+    NEWS_TABS_SCORE = {'world','usa','top','msm','elon','allin','business','sports','pods','pg6','local'}
+    recency_half_life = 3 if tab in NEWS_TABS_SCORE else 12  # hours where score drops to 50
+    url = s.get('url', '') or ''
+    age_h = url_age_hours(url) if url else None
+    if age_h is None or age_h < 0:
+        recency_score = 50  # unknown age = middle score
+    else:
+        recency_score = 100 * _math_score.exp(-age_h / recency_half_life)
+
+    # ---- Engagement component ----
+    likes = parse_likes(s.get('engagement', ''))
+    # log scale: 100 likes = 25, 1K = 50, 10K = 75, 100K = 100
+    engagement_score = min(100, 25 * _math_score.log10(max(likes, 1) + 1))
+
+    # ---- Quality component ----
+    quality_score = 0
+    if url and '/status/' in url: quality_score += 30
+    body = (s.get('body') or s.get('quote') or '')
+    sentence_count = len([x for x in re.split(r'[.!?]+', body) if len(x.strip()) > 5])
+    if sentence_count >= 2: quality_score += 30
+    if s.get('why_this_one'): quality_score += 20
+    if s.get('honesty'): quality_score += 10
+    handle = (s.get('handle','') or '').lstrip('@').lower()
+    if handle: quality_score += 10
+    quality_score = min(100, quality_score)
+
+    composite = 0.5 * recency_score + 0.35 * engagement_score + 0.15 * quality_score
+    return round(composite, 1)
+
+def score_and_rank(stories, tab, target_count=None):
+    """Score every story and return the top-target_count by composite score.
+    Skips perspectives stories (world/usa) — those go through different flow.
+    Returns (top_picks, scoring_log) where scoring_log is list of (score, headline) tuples."""
+    if not stories or not isinstance(stories, list): return stories, []
+    if target_count is None:
+        target_count = TAB_TARGETS.get(tab, 3)
+    scored = []
+    for s in stories:
+        if not isinstance(s, dict): continue
+        if s.get('perspectives'):  # multi-perspective story — skip scoring
+            scored.append((100, s))
+            continue
+        score = _score_candidate(s, tab)
+        scored.append((score, s))
+    # Sort descending by score
+    scored.sort(key=lambda x: -x[0])
+    log = [(sc, (s.get('headline') or s.get('body','?'))[:50]) for sc, s in scored]
+    top = [s for sc, s in scored[:target_count]]
+    return top, log
+
 
 def parse_likes(eng_str):
     """Parse engagement string like '5.2K likes', '1.1M views, 30K likes' to a likes number."""
@@ -529,7 +733,9 @@ def parse_likes(eng_str):
 
 def is_reply_body(body, headline=''):
     """Reject replies that lack self-contained context.
-    A reply starts with @mention or is too terse to stand alone."""
+    A reply starts with @mention or is too terse to stand alone.
+    Also rejects bodies that signal Grok wrote a 'Replying to X' summary —
+    those means the actual tweet is a context-less reply that won't embed properly."""
     b = (body or '').strip()
     if not b: return False  # empty body — let other checks handle
     if b.startswith('@'): return True  # direct reply to someone
@@ -538,8 +744,17 @@ def is_reply_body(body, headline=''):
     low = b.lower().strip(' .!?"\'')
     BAD = {'this', 'exactly', 'no way', 'yes', 'correct', 'wrong', 'true', 'false',
            'agreed', 'agree', 'lol', 'nope', 'yep', 'wow', 'sad', 'this is wrong',
-           'that is wrong', 'this isn\'t true', 'you have no idea what you\'re talking about'}
+           'that is wrong', 'this isn\'t true', 'you have no idea what you\'re talking about',
+           'per month??', 'might actually happen'}
     if low in BAD: return True
+    # 2026-05-02 evening: if Grok's body starts with "Responding to" / "Replying to"
+    # the actual tweet is a pure reply — Twitter oEmbed won't show the parent context.
+    # Reader sees only "Per month??" with no idea what's being responded to.
+    h_low = (headline or '').lower().strip()
+    b_low = b.lower()
+    if (h_low.startswith('responding to') or h_low.startswith('replying to')
+        or b_low.startswith('responding to') or b_low.startswith('replying to')):
+        return True
     return False
 
 
@@ -611,7 +826,7 @@ def enforce_uniqueness(stories, label, min_headline_overlap=0.4):
 
 
 def enforce_single_post_uniqueness(stories, tab_label, min_headline_overlap=0.4):
-    """Post-assembly dedup for single-post tabs (business, msm, pods, pg6, memes, comedy, tiktok, elon).
+    """Post-assembly dedup for single-post tabs (business, msm, pods, pg6, conspiracy, comedy, elon).
     Enforces:
       1. Handle diversity: max 1 post per handle (catches @WatcherGuru twice from backfill).
       2. Headline similarity: drops near-duplicate topics even from different handles.
@@ -758,8 +973,11 @@ Return ONLY the JSON object, no prose."""
         dropped = [p for j, p in enumerate(perspectives) if j not in on_topic_idx]
         for p in dropped:
             print(f"  [semantic] DRIFT {tab_label} story {i} '{s.get('headline','')[:55]}' — dropping {p.get('label')} @{p.get('handle')}: off-topic", file=sys.stderr)
-        if len(kept_perspectives) < 2:
-            print(f"  [semantic] REJECT {tab_label} story {i} — fewer than 2 perspectives on-topic", file=sys.stderr)
+        # PREFER 3 perspectives (importance test), but fall back to 2 if needed.
+        # User rule: tabs must NEVER be empty. So we tier: 3-persp first, 2-persp fallback,
+        # safety net last. Reconciles "find 3 if possible" with "never blank."
+        if len(kept_perspectives) < 1:
+            print(f"  [semantic] REJECT {tab_label} story {i} — 0 perspectives", file=sys.stderr)
             continue
         s_out = dict(s)
         s_out['perspectives'] = kept_perspectives
@@ -768,21 +986,22 @@ Return ONLY the JSON object, no prose."""
         else:
             two_perspective.append(s_out)
 
-    # Tiered return: if any story has all 3, ONLY ship 3-perspective stories
-    # (the 2-perspective ones aren't important enough). Only fall back to
-    # 2-perspective stories if the batch has zero 3-perspective candidates.
+    # Tiered shipping: prefer 3-perspective, fall back to 2-perspective, then safety net.
+    # User rule: tabs must NEVER be empty. World/USA gets at minimum the freshest pick we have.
     if three_perspective:
-        print(f"  [semantic] {tab_label}: shipping {len(three_perspective)} 3-perspective stories, dropping {len(two_perspective)} 2-perspective (a 3-story exists so bar is raised)", file=sys.stderr)
-        kept_stories = three_perspective
+        print(f"  [semantic] {tab_label}: shipping {len(three_perspective)} 3-perspective stories (preferred)", file=sys.stderr)
+        kept_stories = three_perspective[:3]
+        # Top up with 2-perspective if we don't have enough 3s
+        if len(kept_stories) < 2 and two_perspective:
+            kept_stories = kept_stories + two_perspective[:3-len(kept_stories)]
+            print(f"  [semantic] {tab_label}: topped up with {3-len(three_perspective)} 2-perspective", file=sys.stderr)
     elif two_perspective:
-        print(f"  [semantic] {tab_label}: no 3-perspective stories — falling back to {len(two_perspective)} 2-perspective stories", file=sys.stderr)
-        kept_stories = two_perspective
+        print(f"  [semantic] {tab_label}: no 3-perspective stories — falling back to {len(two_perspective)} 2-perspective", file=sys.stderr)
+        kept_stories = two_perspective[:3]
     else:
-        # Safety net: semantic verifier killed everything. Don't ship zero — return
-        # the pre-semantic input (entity gate already caught the worst drift).
-        # Better to show slightly-drifting perspectives than an empty tab.
-        print(f"  [semantic] {tab_label}: WOULD GO TO ZERO — skipping semantic, shipping {len(stories)} pre-semantic stories as safety net", file=sys.stderr)
-        kept_stories = list(stories)
+        # Safety net: pre-semantic stories with 1+ perspective. Better than empty.
+        print(f"  [semantic] {tab_label}: WOULD GO TO ZERO — using pre-semantic input as safety net", file=sys.stderr)
+        kept_stories = list(stories)[:3]
 
     print(f"  [semantic] {tab_label}: {len(stories)} stories -> {len(kept_stories)} after semantic verification", file=sys.stderr)
     return kept_stories
@@ -1194,7 +1413,18 @@ def interestingness_score(s, tab=''):
 
 
 def clean_story(s, tab=''):
-    """Validate and clean a single story dict. Returns None if garbage."""
+    """Validate and clean a single story dict. Returns None ONLY for invalid/broken data.
+
+    PURE VIEWS SPEC (2026-05-04): no judgment filters here. The only rejections are:
+      - not a dict / no handle / empty headline+body (data unusable)
+      - URL is profile-only (no /status/, embed will be broken)
+
+    Removed (used to live here, now gone per pure-views):
+      - is_reply_body()      — pure replies allowed if they have views
+      - MIN_LIKES_BY_TAB     — engagement floors gone, views decide
+      - max_age age check    — velocity hold (in curation.py) replaces this
+      - humanize_headline()  — show what was posted, no rewrite
+    """
     if not isinstance(s, dict):
         return None
     if is_garbage(s.get('headline', '')) and is_garbage(s.get('body', '')):
@@ -1204,37 +1434,10 @@ def clean_story(s, tab=''):
         return None
     headline = str(s.get('headline', '') or s.get('body', '')[:80] or 'Untitled')
 
-    # CONTEXT GATE: reject reply-only / too-terse / reaction-only posts
-    body = s.get('body', '') or ''
-    if is_reply_body(body, headline):
-        print(f"  REJECT {tab}: context-less reply/reaction - {handle}: '{body[:40]}'", file=sys.stderr)
-        return None
-
-    # ENGAGEMENT GATE: reject low-engagement posts for tabs that should be viral-only
-    min_likes = MIN_LIKES_BY_TAB.get(tab, 0)
-    if min_likes > 0:
-        likes = parse_likes(s.get('engagement', ''))
-        if likes > 0 and likes < min_likes:
-            print(f"  REJECT {tab}: low engagement {likes} < {min_likes} ({handle})", file=sys.stderr)
-            return None
-
-    # FRESHNESS GATE: check the RAW url from Grok BEFORE clean_url sanitizes it
-    max_age = TAB_AGE_OVERRIDE.get(tab, MAX_AGE_HOURS)
     raw_url = s.get('url', '')
-    age = url_age_hours(raw_url)
-    if age is not None and age > max_age:
-        print(f"  STALE ({int(age)}h old): {handle} - {headline[:50]}", file=sys.stderr)
-        return None
-
     url = clean_url(handle, raw_url)
     if url is None:
         return None  # reject stories with invalid/broken URLs — don't fall back to profile page
-
-    # Double-check cleaned URL too
-    age2 = url_age_hours(url)
-    if age2 is not None and age2 > max_age:
-        print(f"  STALE ({int(age2)}h old): {handle} - {headline[:50]}", file=sys.stderr)
-        return None
 
     out = {
         'headline': headline,
@@ -1247,27 +1450,41 @@ def clean_story(s, tab=''):
         'posted': datetime.datetime.now().astimezone(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
         'post_ts': url_posted_utc(url) or datetime.datetime.now().astimezone(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
     }
+    # Carry through Grok's explicit views field if present (for curation.story_views)
+    if 'views' in s:
+        out['views'] = s['views']
     # Pass through Grok's translation field if present (for foreign-language posts/quote-tweets)
     if s.get('translation'):
         out['translation'] = str(s['translation'])
+    # Reply parent info — frontend renders parent embed above reply embed so reader sees context.
+    # Required for replies per May 2026-05-05 user mandate ("you have to embed the post he is replying to").
+    # Validate: parent_url must be a /status/ URL or we ignore it (broken embed otherwise).
+    p_url = s.get('parent_url')
+    if p_url and isinstance(p_url, str) and '/status/' in p_url:
+        out['parent_url'] = p_url
+        if s.get('parent_handle'):
+            out['parent_handle'] = str(s['parent_handle'])
+        if s.get('parent_text'):
+            out['parent_text'] = str(s['parent_text'])[:280]
     return out
 
 def clean_world(w):
-    """Validate world story — REQUIRES all 3 perspectives (conservative, democrat, independent)."""
+    """Validate a World/USA story (3-perspective shape). PURE VIEWS spec — only data
+    validation, no judgment filters. Used to reject for is_announcement / is_cheerleading
+    / is_stenography / age-cap / entity-match — all gone. User pick: 'If a story does
+    not have all three perspectives, so be it, but we've got to just go on objective views.'
+    """
     if not isinstance(w, dict):
         return None
     headline = w.get('headline', w.get('topic', ''))
     if is_garbage(headline):
         return None
     perspectives = []
-    # SOFTER GATE: per-perspective rejection now skips the perspective rather than the
-    # whole story. A 2-of-3 story still ships (better than carrying-over from history).
     for key, label in [('conservative', 'Conservative'), ('democrat', 'Democrat'), ('independent', 'Independent')]:
         p = w.get(key, {})
         if not isinstance(p, dict):
-            print(f"  SKIP world/USA {key} perspective: missing entirely", file=sys.stderr)
             continue
-        # Grok sometimes omits the 'handle' field but includes URL — derive handle from URL.
+        # Derive handle from URL if missing (Grok sometimes omits the field).
         if not p.get('handle'):
             url = p.get('url', '') or ''
             m = re.match(r'https?://(?:twitter\.com|x\.com)/([^/]+)/status/', url)
@@ -1275,34 +1492,14 @@ def clean_world(w):
                 p = dict(p)  # copy so we don't mutate input
                 p['handle'] = '@' + m.group(1)
         if not p.get('handle'):
-            print(f"  SKIP world/USA {key} perspective: no handle and no URL to derive from", file=sys.stderr)
             continue
-        # Grok sometimes returns 'quote', sometimes 'body', sometimes 'text', sometimes 'angle'.
-        # Accept any of them — schema flexibility prevents silent drops.
+        # Accept any text field name Grok used.
         ptext = (p.get('quote') or p.get('body') or p.get('text') or p.get('angle') or '').strip()
         if is_garbage(ptext):
-            print(f"  SKIP world/USA {key} perspective: garbage text", file=sys.stderr)
-            continue
-        if is_announcement(ptext):
-            print(f"  SKIP world/USA {key} @{p['handle']}: bare announcement", file=sys.stderr)
-            continue
-        if is_cheerleading(ptext):
-            print(f"  SKIP world/USA {key} @{p['handle']}: cheerleading", file=sys.stderr)
-            continue
-        if is_stenography(ptext, label):
-            print(f"  SKIP world/USA {key} @{p['handle']}: just quoting", file=sys.stderr)
             continue
         p_url = clean_url(p['handle'], p.get('url'))
         if not p_url or '/status/' not in p_url:
-            print(f"  SKIP world/USA {key} @{p['handle']}: no /status/ URL", file=sys.stderr)
             continue
-        p_age = url_age_hours(p_url)
-        if p_age is not None and p_age > MAX_AGE_HOURS:
-            print(f"  SKIP world/USA {key}: URL is {int(p_age)}h old", file=sys.stderr)
-            continue
-        # Honesty score comes from Grok's holistic judgment (see grok_system.txt).
-        # No mechanical caps or overrides — Grok considers source reputation,
-        # track record, bias, and content together when scoring.
         _persp = {
             'label': label,
             'handle': p['handle'],
@@ -1311,107 +1508,481 @@ def clean_world(w):
             'engagement': str(p.get('engagement', '')),
             'honesty': str(p.get('honesty', w.get('honesty', '8/10')))
         }
-        # Pass through Grok's translation field if present
+        if 'views' in p: _persp['views'] = p['views']
         if p.get('translation'): _persp['translation'] = str(p['translation'])
         if p.get('notes'): _persp['notes'] = str(p['notes'])
         perspectives.append(_persp)
-    # Accept 1+ perspective. Single-take fresh story beats carried-over filler.
-    # The frontend renders whatever perspectives we give it (1, 2, or 3 blocks).
-    if len(perspectives) < 1:
-        print(f"  REJECT world story: 0 perspectives", file=sys.stderr)
+    # 2026-05-06: 3-perspective requirement RESTORED. User reversed the May-4 relaxation:
+    # "every story needs all three plot points, otherwise it's not a quality worthy story."
+    # Stories with fewer than 3 perspectives drop at validation. Floor backfill only pulls
+    # from prior 3-perspective stories.
+    if len(perspectives) < 3:
         return None
-
-    # RELEVANCE CHECK: entity-based same-topic gate.
-    # Extract NAMED ENTITIES from the headline (multi-word Capitalized phrases +
-    # Uppercase acronyms + hashtags). Every perspective must reference at least
-    # one of these exact entities — word-bag overlap was too loose.
-    stop_words = {'the','and','for','are','but','not','you','all','can','had','her','was','one','our','out','has','his','how','its','may','new','now','old','see','way','who','did','get','let','say','she','too','use','with','from','have','this','that','will','each','make','like','just','over','such','take','than','them','very','when','come','could','would','about','after','being','their','there','these','those','which','other','into','more','some','what','been','were','then','also','most','must','upon'}
-
-    _hl_str = str(headline)
-    entities = set()
-
-    # 1. Multi-word Capitalized phrases (e.g., "Southern Poverty Law Center", "Strait of Hormuz", "Spirit Airlines")
-    #    + include the full phrase, each individual capitalized word, and the acronym
-    for _m in re.finditer(r'(?:[A-Z][a-zA-Z\']{1,}(?:\s+(?:of\s+|and\s+|the\s+)?)?){2,}[A-Z][a-zA-Z\']{1,}', _hl_str):
-        phrase = _m.group(0).strip()
-        phrase_parts = phrase.split()
-        if len(phrase_parts) >= 2:
-            entities.add(phrase.lower())
-            # Each significant word inside the phrase
-            for _piece in phrase_parts:
-                _pl = _piece.lower().strip(".,;:'\"")
-                if len(_pl) >= 4 and _pl not in stop_words and _pl not in {'and','the','of'}:
-                    entities.add(_pl)
-            # Acronym
-            _caps = [_piece[0] for _piece in phrase_parts if _piece and _piece[0].isupper()]
-            if 2 <= len(_caps) <= 6:
-                entities.add(''.join(_caps).lower())
-
-    # 2. Standalone capitalized nouns (people/places) — single capitalized word
-    #    that isn't a sentence-starter. 4+ chars so we don't match tiny tokens.
-    for _m in re.finditer(r'(?<![\.\!\?:]\s)(?<![\.\!\?:])\b([A-Z][a-zA-Z\']{3,})\b', ' ' + _hl_str):
-        _nw = _m.group(1).lower()
-        if _nw not in stop_words and _nw not in {'trump','biden','harris','kamala'}:
-            entities.add(_nw)
-
-    # 3. All-caps acronyms (SPLC, IRGC, NATO, SCOTUS, DOJ, ICE, CIA, FBI)
-    for _m in re.finditer(r'\b([A-Z]{2,6})\b', _hl_str):
-        entities.add(_m.group(1).lower())
-
-    # 4. Hashtags
-    for _m in re.finditer(r'#([A-Za-z0-9_]{3,})', _hl_str):
-        entities.add('#' + _m.group(1).lower())
-
-    # 5. @mentions
-    for _m in re.finditer(r'@([A-Za-z0-9_]{3,})', _hl_str):
-        entities.add('@' + _m.group(1).lower())
-
-    # 6. Fall back to plain significant words if no entities found (short or trivial headlines)
-    if len(entities) < 2:
-        for _tk in re.split(r'[^a-zA-Z]+', _hl_str.lower()):
-            if len(_tk) >= 4 and _tk not in stop_words:
-                entities.add(_tk)
-
-    # SAME-TOPIC GATE: each perspective must match at least one entity from the headline.
-    # This is stricter than word-bag overlap — we're matching specific people/orgs/events.
-    # Accept 1 off-topic out of 3; reject if 2+ are off-topic.
-    off_topic = []
-    for p in perspectives:
-        ptext_lower = (p.get('text','') or '').lower()
-        # Check exact entity match anywhere in perspective text
-        matched = [e for e in entities if e in ptext_lower]
-        if not matched:
-            # Secondary: any significant single word from perspective text that appears
-            # among headline entities (fallback for when perspective uses shorter names)
-            ptext_words = {w for w in re.split(r'[^a-zA-Z]+', ptext_lower)
-                           if len(w) >= 4 and w not in stop_words}
-            matched = [w for w in ptext_words if w in entities]
-        if not matched:
-            off_topic.append(p['label'])
-            print(f"  OFF-TOPIC: {p['label']} @{p.get('handle','')}: no entity match with headline '{str(headline)[:55]}'", file=sys.stderr)
-            print(f"              headline entities={sorted(entities)[:8]}... | perspective='{(p.get('text','') or '')[:80]}'", file=sys.stderr)
-
-    # 1 off-topic out of 3 is tolerated (other 2 carry the story); 2+ off-topic = reject.
-    if len(off_topic) >= 2:
-        print(f"  REJECT world/USA story: {len(off_topic)}/3 off-topic perspectives: {off_topic}", file=sys.stderr)
-        return None
-    if off_topic:
-        print(f"  WARN world/USA story: 1 off-topic perspective ({off_topic[0]}) — keeping story, other 2 carry topic (semantic verifier will handle)", file=sys.stderr)
 
     footnotes = w.get('footnotes', [])
     if not isinstance(footnotes, list):
         footnotes = []
-    return {
+    out = {
         'headline': str(headline),
         'honesty': str(w.get('honesty', '8/10')),
         'perspectives': perspectives,
         'footnotes': [str(f) for f in footnotes],
         'notes': str(w.get('notes', '')),
         'body': 'Three-perspective roundup.',
-        'posted': datetime.datetime.now().strftime("%-m/%-d/%Y %-I:%M %p")
+        'posted': datetime.datetime.now().strftime("%-m/%-d/%Y %-I:%M %p"),
     }
+    if 'views' in w: out['views'] = w['views']
+    if 'engagement' in w: out['engagement'] = str(w['engagement'])
+    return out
 
-# ---- Build output ----
+# ============================================================
+# BUILD OUTPUT — PURE VIEWS (v5, 2026-05-04)
+# ============================================================
+# User explicit (2026-05-04 night): "Let's regress weeks and weeks and go back to
+# just pure views, then, if it cures 80%, because we're back to 10% with the rat's
+# nest. If a story does not have all three perspectives, so be it, but we've got
+# to just go on objective views. Then, like you said, if a Trump story lands in
+# sports, so be it. Hopefully it won't happen a lot."
+#
+# This section REPLACES the entire ~990-line per-tab assembly logic that follows.
+# After writing stories.json this section calls sys.exit(0), so the legacy code
+# below is never reached. The legacy code is left in place temporarily for
+# rollback safety; once this is verified through a few crons it gets deleted.
+#
+# Selection logic lives in curation.py. THIS file does:
+#   1. Validate Grok output (clean_story / clean_world)
+#   2. Apply geographical/format scope filters (Local SoCal, TikTok URL)
+#   3. Hand off to curation.curate() for sort-by-views + velocity-hold + enrichment
+#   4. Preserve static tabs (freespeech) from existing
+#   5. Write stories.json + update seen history + exit
+# ============================================================
+
+now = datetime.datetime.now()
+update_time = now.strftime("%-I:%M %p")
+
+# Load existing stories.json — needed for velocity hold (compare current vs new)
+try:
+    with open('stories.json', 'r') as _f:
+        _existing = json.load(_f)
+except (FileNotFoundError, json.JSONDecodeError):
+    _existing = {}
+
+# Build view-count history for 4h-delta velocity computation.
+# Each story stamped with views_at_save + age_at_save_hours by the previous cron.
+# curation.story_velocity() reads this to compute (current_views - prev_views) / elapsed_hours.
+_history = curation.build_history_lookup(_existing)
+print(f"  [velocity-history] loaded {len(_history)} prior view snapshots", file=sys.stderr)
+
+_output_v5 = {
+    'lastUpdated': now.astimezone(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+}
+
+# ---- Geographical / format scope filters (NOT curation, just "what belongs on this tab") ----
+_NON_SOCAL_KW = {
+    'new york','nyc','manhattan','brooklyn','michigan','detroit','chicago','boston',
+    'seattle','portland','denver','atlanta','miami','dallas','houston','phoenix',
+    'philadelphia','san francisco','minnesota','ohio','florida','texas','virginia',
+    'washington dc','maine','vermont',
+}
+_NON_LOCAL_OUTLETS = {
+    'nypost','nytimes','nymag','newyorkpost','newyorker','gothamist','bostonglobe',
+    'washingtonpost','chicagotribune','detroitnews','miamiherald','houstonchronicle',
+    'dallasnews','apnews','reuters','cnn','foxnews','nbcnews','cbsnews','abcnews',
+    'bbcworld','usatoday','axios','politico','thehill','bloomberg',
+}
+
+def _belongs_on_tab(tab, story):
+    """True if story matches the tab's geographical/format scope. NOT a curation rule —
+    a definitional rule (Local = SoCal-only)."""
+    if not isinstance(story, dict):
+        return False
+    if tab == 'local':
+        text = ((story.get('headline') or '') + ' ' + (story.get('body') or '')).lower()
+        if any(kw in text for kw in _NON_SOCAL_KW):
+            return False
+        h = (story.get('handle') or '').lower().lstrip('@')
+        if h in _NON_LOCAL_OUTLETS:
+            return False
+    return True
+
+# Per-tab story counts. Elon stays high because user wants "every world-engaged Elon post."
+_TAB_N = {
+    'world': 3, 'usa': 3, 'business': 3, 'top': 3, 'msm': 3, 'sports': 3,
+    'elon': 10, 'allin': 3, 'pods': 3, 'pg6': 3, 'recipe': 3, 'science': 3,
+    'local': 3, 'conspiracy': 3, 'comedy': 3,
+}
+
+# CLAUDE.md hard rule: tabs MUST NEVER BE EMPTY. The floor is 3 stories per tab.
+# If curation.curate returns < _TAB_FLOOR after velocity ranking, top up from prior
+# stories.json (existing) — anything not already in the picked list. This honors the
+# user's "extend up to 24h to fill" directive while still preferring fresh content.
+_TAB_FLOOR = 3
+# Per-tab backfill age cap (hours). News tabs cap at 24h; reference tabs at 72h.
+# 2026-05-06: was 72h universal — let a 48h Pods story slip through. User: "How does
+# this make the screen from two days ago?" Tightened per-tab to honor the 4h/24h spec.
+_BACKFILL_AGE_BY_TAB = {
+    # News tabs — strict 24h cap
+    'world': 24, 'usa': 24, 'business': 24, 'top': 24, 'msm': 24, 'sports': 24,
+    'pg6': 24, 'local': 24, 'conspiracy': 24, 'allin': 24, 'pods': 24,
+    # Elon — slightly looser (his tab is "every world-engaged post"; 36h)
+    'elon': 36,
+    # Reference tabs — evergreen content, 72h
+    'recipe': 72, 'science': 72, 'comedy': 72,
+}
+_TAB_FLOOR_AGE_HOURS = 24  # default if tab not in map
+
+def _scan_snapshots_for_tab(tab_key, max_snapshots=30):
+    """Pull stories for a tab from the last N desktop snapshots. Used as deep-history
+    fallback when both stories.json and earlier are too thin to fill the floor.
+    Returns list of stories deduped by URL, freshest snapshot first.
+    """
+    import glob as _glob, os as _os
+    pool = []
+    seen = set()
+    snaps = sorted(
+        _glob.glob(_os.path.expanduser('~/Desktop/expresso_snapshots/*/code/stories.example.json')),
+        reverse=True
+    )[:max_snapshots]
+    for f in snaps:
+        try:
+            d = json.load(open(f))
+            for s in d.get(tab_key, {}).get('stories', []) + d.get(tab_key, {}).get('earlier', []):
+                urls = set([s.get('url','')] + [(p or {}).get('url','') for p in s.get('perspectives',[])])
+                urls.discard('')
+                if urls & seen: continue
+                pool.append(s)
+                seen.update(urls)
+        except Exception: pass
+    return pool
+
+def _enforce_topic_diversity(stories, label='world'):
+    """Drop stories that are the SAME TOPIC as a higher-velocity earlier story.
+    Works for BOTH World/USA (perspective-shaped) AND flat tabs (single-post).
+
+    Three collision tests, any trips a drop:
+      A) (perspective tabs) Handle-side repetition: same handle filling same perspective
+         slot in two stories (e.g. @BernieSanders as Democrat in story 1 AND story 2)
+      B) (flat tabs) Same handle posting twice on same tab (e.g. @ocregister twice on Local)
+      C) Headline word overlap ≥ 40% of significant words on the smaller side
+
+    Stories already passed velocity ranking — index 0 is highest velocity. We keep that
+    one and drop subsequent stories that collide with anything kept.
+
+    User explicit (2026-05-06): "wtf, dont u do a QC" — re: 3 World stories all about
+    US-Iran Strait of Hormuz. Then again same day re: 2 Local stories about Laguna
+    Beach Forest Avenue trees from @ocregister, 2d and 5d old. Three different headlines
+    for the same story is NOT three stories.
+    """
+    if not stories or len(stories) <= 1:
+        return stories
+    STOP = {'the','and','for','are','but','not','you','all','can','had','her','was','one','our','out',
+            'has','his','how','its','may','new','now','old','see','way','who','did','get','let','say',
+            'she','too','use','with','from','have','this','that','will','each','make','like','just',
+            'over','such','take','than','them','very','when','come','could','would','about','after',
+            'being','their','there','these','those','which','other','into','more','some','what',
+            'been','were','then','also','most','must','upon','up','to','of','on','in','at','as','an',
+            'or','if','is','it','a','i','by','be'}
+    def _words(text):
+        text = (text or '').lower()
+        return set(w for w in re.split(r'[^a-z0-9]+', text) if len(w) >= 4 and w not in STOP)
+
+    def _persp_handles(story):
+        # {label: handle} for each perspective slot in this story
+        out = {}
+        for p in (story.get('perspectives') or []):
+            if not isinstance(p, dict): continue
+            lbl = p.get('label', '')
+            h = (p.get('handle','') or '').lower().lstrip('@')
+            if lbl and h: out[lbl] = h
+        return out
+
+    # Tabs where the SAME author appearing multiple times is by design (Elon tab is
+    # multiple @elonmusk posts; freespeech is user-curated). Skip the same-handle rule
+    # there but still apply headline-overlap dedup.
+    SAME_HANDLE_OK = {'elon', 'freespeech'}
+    skip_handle_dedup = label.lower() in SAME_HANDLE_OK
+
+    kept = []
+    used_handle_per_label = {}  # perspective tabs: {label: set(handles)}
+    used_flat_handles = set()   # flat tabs: set of handles seen
+    kept_word_sets = []         # list of word sets for each kept headline
+    for s in stories:
+        # Test A (perspective tabs): handle-side collision
+        handles = _persp_handles(s)
+        collision = False
+        collision_reason = ''
+        for lbl, h in handles.items():
+            if h in used_handle_per_label.get(lbl, set()):
+                collision = True
+                collision_reason = f'handle @{h} repeats as {lbl}'
+                break
+        # Test B (flat tabs, except Elon/freespeech): same author posting twice
+        if not collision and not handles and not skip_handle_dedup:
+            flat_handle = (s.get('handle','') or '').lower().lstrip('@')
+            if flat_handle and flat_handle in used_flat_handles:
+                collision = True
+                collision_reason = f'handle @{flat_handle} already used on this tab'
+        # Test C (always): headline keyword overlap
+        if not collision:
+            words = _words(s.get('headline', ''))
+            for prev_words in kept_word_sets:
+                if not words or not prev_words: continue
+                overlap = len(words & prev_words)
+                smaller = min(len(words), len(prev_words))
+                if smaller >= 3 and overlap / smaller >= 0.4:
+                    collision = True
+                    collision_reason = f'headline overlap {overlap}/{smaller} = {overlap/smaller:.0%} with prior story'
+                    break
+        if collision:
+            print(f"  [topic-dedup] {label}: DROP '{s.get('headline','')[:50]}' — {collision_reason}",
+                  file=sys.stderr)
+            continue
+        kept.append(s)
+        for lbl, h in handles.items():
+            used_handle_per_label.setdefault(lbl, set()).add(h)
+        flat_handle = (s.get('handle','') or '').lower().lstrip('@')
+        if flat_handle and not handles:
+            used_flat_handles.add(flat_handle)
+        kept_word_sets.append(_words(s.get('headline', '')))
+    return kept
+
+
+def _topup_to_floor(picked, existing_stories, top_n=_TAB_FLOOR, max_age_h=_TAB_FLOOR_AGE_HOURS,
+                    require_3_perspectives=False):
+    """If picked has < top_n stories, fill from existing_stories (last cron's output).
+    Skips URLs already in picked. Skips stories older than max_age_h.
+
+    require_3_perspectives=True (used for World/USA): backfill candidates MUST have all 3
+    perspectives (Conservative + Democrat + Independent). Per user 2026-05-06: "every
+    story needs all three plot points, otherwise it's not a quality worthy story."
+    """
+    if len(picked) >= top_n or not existing_stories:
+        return picked
+    # Build set of URLs already represented in picked (story-level + perspective-level)
+    seen = set()
+    for s in picked:
+        if not isinstance(s, dict): continue
+        u = s.get('url') or ''
+        if u: seen.add(u)
+        for p in s.get('perspectives', []) or []:
+            pu = (p or {}).get('url') or ''
+            if pu: seen.add(pu)
+    # Sort existing stories by velocity (recency-as-fallback) and pull until floor met
+    candidates = []
+    for s in existing_stories:
+        if not isinstance(s, dict): continue
+        # 3-perspective gate (World/USA only)
+        if require_3_perspectives:
+            persps = s.get('perspectives', []) or []
+            if len([p for p in persps if isinstance(p, dict) and p.get('url')]) < 3:
+                continue
+        u = s.get('url') or ''
+        if not u:
+            for p in s.get('perspectives', []) or []:
+                u = (p or {}).get('url') or ''
+                if u: break
+        if u and u in seen:
+            continue
+        # Age cap to avoid pulling absolute ancients
+        a = curation.story_age_hours(s)
+        if a > max_age_h:
+            continue
+        candidates.append(s)
+    candidates.sort(key=lambda s: curation.story_velocity(s), reverse=True)
+    return picked + candidates[: max(0, top_n - len(picked))]
+
+# ---- World/USA tabs (perspective-shaped stories: each story has Cons/Indep/Dem) ----
+for _tab in ('world', 'usa'):
+    _raw = data.get(_tab, [])
+    _items = _raw if isinstance(_raw, list) else [_raw]
+    _candidates = []
+    for _w in _items:
+        _cleaned = clean_world(_w) if _w else None
+        if _cleaned and _belongs_on_tab(_tab, _cleaned):
+            _candidates.append(_cleaned)
+    _current_raw = _existing.get(_tab, {}).get('stories', []) or []
+    # 2026-05-06: topic-diversity also applied — same handle in same perspective slot
+    # across stories means same topic. Drop dupes via _enforce_topic_diversity AFTER
+    # velocity ranking but BEFORE backfill (so duplicates don't poison the pool).
+    # 2026-05-06: 3-perspective gate also applies to existing stories carried via curate.
+    # curation.curate doesn't know about perspective requirements; it just velocity-ranks.
+    # So we pre-filter _current here to drop any <3-perspective stories before they have
+    # a chance to be carried over.
+    _current = [s for s in _current_raw
+                if isinstance(s, dict) and len([p for p in s.get('perspectives', []) or []
+                                                  if isinstance(p, dict) and p.get('url')]) >= 3]
+    # World/USA: skip commentator enrichment (perspectives ARE the take layer)
+    _picked = curation.curate(_tab, _current, _candidates,
+                              top_n=_TAB_N[_tab], enrich=False, history=_history)
+    # Drop same-topic duplicates (handle-side repetition + headline overlap).
+    _picked = _enforce_topic_diversity(_picked, label=_tab)
+    # CLAUDE.md hard rule: never empty + (2026-05-06) every World/USA story MUST have
+    # all 3 perspectives. Floor backfill chain:
+    #   1. existing stories.json (from prior cron) — 3-perspective only
+    #   2. earlier archive — 3-perspective only
+    #   3. desktop snapshots (last ~30 crons of history) — 3-perspective only, ≤72h old
+    _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 24)
+    if len(_picked) < _TAB_FLOOR:
+        _picked = _topup_to_floor(_picked, _current + (_existing.get(_tab, {}).get('earlier', []) or []),
+                                  top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=_wu_age_cap)
+        # Re-run topic-dedup after backfill — backfill may have added duplicates
+        # of fresh picks or duplicates of each other.
+        _picked = _enforce_topic_diversity(_picked, label=_tab)
+    if len(_picked) < _TAB_FLOOR:
+        # Deep fallback: scan past snapshots for 3-perspective stories on this tab.
+        _snapshot_pool = _scan_snapshots_for_tab(_tab)
+        _picked = _topup_to_floor(_picked, _snapshot_pool,
+                                  top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=_wu_age_cap)
+        _picked = _enforce_topic_diversity(_picked, label=_tab)
+        if len(_picked) < _TAB_FLOOR:
+            print(f"  WARN: {_tab} has only {len(_picked)}/{_TAB_FLOOR} stories after deep snapshot scan — "
+                  f"no 3-perspective candidates available in 72h", file=sys.stderr)
+    curation.stamp_view_history(_picked)
+    _output_v5[_tab] = {'stories': _picked, 'earlier': []}
+
+# ---- Flat tabs (one post per slot) ----
+for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
+             'pg6', 'recipe', 'science', 'local', 'conspiracy', 'comedy'):
+    _raw = data.get(_tab, [])
+    _items = _raw if isinstance(_raw, list) else [_raw]
+    _candidates = []
+    for _p in _items:
+        _cleaned = clean_story(_p, tab=_tab) if _p else None
+        if _cleaned and _belongs_on_tab(_tab, _cleaned):
+            _candidates.append(_cleaned)
+    _current = _existing.get(_tab, {}).get('stories', []) or []
+    _picked = curation.curate(_tab, _current, _candidates,
+                              top_n=_TAB_N.get(_tab, 3), enrich=True, history=_history)
+    # Topic-diversity dedup: drops same-author-twice + same-headline (the @ocregister
+    # Laguna Beach Forest Avenue trees 2d/5d duplicate problem).
+    _picked = _enforce_topic_diversity(_picked, label=_tab)
+    # Floor enforcement (CLAUDE.md: never empty). Elon tab gets target=10 from _TAB_N
+    # but the FLOOR is 3 — only triggers backfill if we're under 3.
+    # Backfill uses per-tab age cap (news=24h, reference=72h) to honor the 4h/24h spec.
+    _backfill_age = _BACKFILL_AGE_BY_TAB.get(_tab, _TAB_FLOOR_AGE_HOURS)
+    if len(_picked) < _TAB_FLOOR:
+        _picked = _topup_to_floor(_picked, _current + (_existing.get(_tab, {}).get('earlier', []) or []),
+                                  top_n=_TAB_FLOOR, max_age_h=_backfill_age)
+        # Re-run dedup after backfill (backfill may have re-added duplicates).
+        _picked = _enforce_topic_diversity(_picked, label=_tab)
+    curation.stamp_view_history(_picked)
+    _output_v5[_tab] = {'stories': _picked, 'earlier': []}
+
+# ---- Static tabs (user-curated, never auto-populated) ----
+for _static in ('freespeech',):
+    if _static in _existing:
+        _output_v5[_static] = _existing[_static]
+    else:
+        _output_v5[_static] = {'stories': [], 'earlier': []}
+
+# ---- Post/Replace tab — process server-side submissions from submissions.json ----
+# 2026-05-06: user mandate to scan submissions hourly. Server-side submissions go in
+# `submissions.json` (Claude maintains, user can edit directly). Each cron reads,
+# oEmbed-validates, age-buckets, and writes to output['submit'].
+#
+# Lifecycle:
+#   ≤24h since submitted_at  → output['submit']['stories']  (active block)
+#   24-72h since submitted   → output['submit']['earlier']  (older block)
+#   >72h                     → archived (skipped entirely)
+#
+# Per-device localStorage submissions still work in the frontend independently —
+# this is the cross-user/cron-visible layer.
+
+def _process_submissions():
+    """Read submissions.json, validate, return (active, earlier) tuple."""
+    try:
+        with open('submissions.json') as _f:
+            _subs = json.load(_f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return [], []
+    if not isinstance(_subs, list):
+        return [], []
+    _now = datetime.datetime.now(datetime.timezone.utc)
+    _active, _earlier = [], []
+    for _s in _subs:
+        if not isinstance(_s, dict): continue
+        _url = _s.get('url') or ''
+        if not _url or '/status/' not in _url: continue
+        # Parse submitted timestamp
+        try:
+            _ts_raw = _s.get('submitted_at') or _s.get('timestamp') or ''
+            _submitted = datetime.datetime.fromisoformat(_ts_raw.replace('Z', '+00:00'))
+            if _submitted.tzinfo is None:
+                _submitted = _submitted.replace(tzinfo=datetime.timezone.utc)
+        except Exception:
+            _submitted = _now
+        _sub_age_h = (_now - _submitted).total_seconds() / 3600
+        if _sub_age_h > 72: continue  # archived
+        # Verify URL exists via oEmbed (reuse module-level verify_url).
+        if not verify_url(_url):
+            print(f"  [submit] FAKE URL — dropping submission {_url}", file=sys.stderr)
+            continue
+        # Extract handle
+        _m = re.match(r'https?://(?:twitter\.com|x\.com)/([^/]+)/status/', _url)
+        _handle = '@' + _m.group(1) if _m else (_s.get('handle') or '@anonymous')
+        # Build story dict in standard shape so frontend renderer just works
+        _story = {
+            'url': _url,
+            'handle': _handle,
+            'headline': (_s.get('note') or '').strip()[:120] or 'User-submitted post',
+            'body': (_s.get('note') or '').strip()[:200],
+            'engagement': _s.get('engagement', ''),
+            'honesty': _s.get('honesty', '8/10'),
+            'notes': _s.get('notes', '') or 'Submitted by reader for review.',
+            'submitted_at': _s.get('submitted_at', '') or _s.get('timestamp', ''),
+            'submitted_age_hours': round(_sub_age_h, 1),
+            'submitter': _s.get('submitter', 'reader'),
+            'posted': _now.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'post_ts': url_posted_utc(_url) or '',
+            '_submitted': True,  # marker for frontend rendering
+        }
+        if _sub_age_h <= 24:
+            _active.append(_story)
+        else:
+            _earlier.append(_story)
+    # Sort newest-submitted first
+    _active.sort(key=lambda s: s.get('submitted_age_hours', 999))
+    _earlier.sort(key=lambda s: s.get('submitted_age_hours', 999))
+    return _active[:20], _earlier[:20]
+
+_sub_active, _sub_earlier = _process_submissions()
+_output_v5['submit'] = {'stories': _sub_active, 'earlier': _sub_earlier}
+print(f"  [submit] {len(_sub_active)} active + {len(_sub_earlier)} earlier submissions", file=sys.stderr)
+
+# ---- Cross-day seen history (still useful for analytics, no longer a filter) ----
+_now_iso = now.isoformat()
+for _tk, _tv in _output_v5.items():
+    if isinstance(_tv, dict) and 'stories' in _tv:
+        for _s in _tv['stories']:
+            SEEN_HISTORY.append({
+                't': _now_iso,
+                'url': _s.get('url', ''),
+                'headline': _s.get('headline', ''),
+                'tab': _tk,
+            })
+save_seen_history(SEEN_HISTORY)
+
+# ---- QC report ----
+print("\n--- PURE VIEWS QC (v5) ---", file=sys.stderr)
+for _tk in ('world','usa','business','sports','elon','allin','top','msm','pg6',
+            'pods','recipe','science','local','conspiracy','comedy'):
+    _stories = _output_v5.get(_tk, {}).get('stories', [])
+    _status = "✓" if len(_stories) >= 1 else "⚠ EMPTY"
+    print(f"  {_tk:11s}: {len(_stories):2d} stories  {_status}", file=sys.stderr)
+print("--- END QC ---\n", file=sys.stderr)
+
+with open('stories.json', 'w') as _f:
+    json.dump(_output_v5, _f, indent=2)
+print("stories.json updated successfully (pure views v5)")
+
+# CLEAN BREAK: exit here. The legacy build-output code below is unreachable.
+sys.exit(0)
+
+# ============================================================
+# LEGACY CODE (unreachable — kept for rollback only) — to be deleted
+# ============================================================
+
+# ---- Legacy Build output ----
 now = datetime.datetime.now()
 update_time = now.strftime("%-I:%M %p")
 
@@ -1677,7 +2248,7 @@ else:
 # Process all array tabs (everything is now 3 stories)
 NON_SOCAL_KEYWORDS = {'new york', 'nyc', 'manhattan', 'brooklyn', 'michigan', 'detroit', 'chicago', 'boston', 'seattle', 'portland', 'denver', 'atlanta', 'miami', 'dallas', 'houston', 'phoenix', 'philadelphia', 'san francisco', 'minnesota', 'ohio', 'florida', 'texas', 'virginia', 'washington dc', 'maine', 'vermont'}
 
-for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local', 'memes', 'comedy', 'tiktok', 'golf']:
+for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 'recipe', 'science', 'local', 'conspiracy', 'comedy', 'tiktok']:
     tab_data = data.get(tab, [])
     posts = tab_data if isinstance(tab_data, list) else [tab_data]
     cleaned = []
@@ -1709,21 +2280,20 @@ for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 
                 if local_handle in NON_LOCAL_OUTLETS:
                     print(f"  REJECT local: non-local source @{local_handle} '{s['headline'][:50]}'", file=sys.stderr)
                     continue
+                # Reject generic platform-mention headlines (CLAUDE.md: "OC Scanner reports local crime"
+                # rejected as generic — tell the *specific* what/where).
+                if is_generic_headline(s.get('headline', '')):
+                    print(f"  REJECT local: generic headline '{s['headline'][:60]}'", file=sys.stderr)
+                    continue
             # TIKTOK tab: URL MUST be tiktok.com — reject X profile URLs, etc
             if tab == 'tiktok':
                 url = s.get('url', '').lower()
                 if 'tiktok.com' not in url:
                     print(f"  REJECT tiktok: non-tiktok URL '{s.get('url','')[:60]}'", file=sys.stderr)
                     continue
-            # GOLF tab: URL should be tiktok.com or youtube.com (video-first)
-            if tab == 'golf':
-                url = s.get('url', '').lower()
-                if 'tiktok.com' not in url and 'youtube.com' not in url and 'youtu.be' not in url and '/status/' not in url:
-                    print(f"  REJECT golf: not a video URL '{s.get('url','')[:60]}'", file=sys.stderr)
-                    continue
             # Handle diversity: max 1 per handle for tabs where variety matters
             # (Sports is handled specially below — Stephen A & Cowherd are allowed as pinned bonus slots)
-            if tab in ('msm', 'pods', 'business', 'comedy', 'memes', 'tiktok', 'pg6'):
+            if tab in ('msm', 'pods', 'business', 'comedy', 'conspiracy', 'tiktok', 'pg6'):
                 h = s.get('handle', '').lower()
                 if h in seen_handles:
                     print(f"  REJECT {tab}: duplicate handle {h}", file=sys.stderr)
@@ -1883,7 +2453,7 @@ for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 
         # Post-assembly uniqueness for single-post tabs — catches duplicate handles
         # + near-identical headlines that slipped through from backfill (the 2-WatcherGuru
         # bug pattern).
-        if tab in ('business', 'msm', 'pods', 'pg6', 'memes', 'comedy', 'top', 'recipe', 'science'):
+        if tab in ('business', 'msm', 'pods', 'pg6', 'conspiracy', 'comedy', 'top', 'recipe', 'science'):
             cleaned = enforce_single_post_uniqueness(cleaned, tab_label=tab)
 
         # SPORTS-SPECIFIC: ensure both Stephen A and Cowherd slots are filled.
@@ -1918,6 +2488,9 @@ for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 
             cow_posts = [s for s in cleaned if _is_cowherd(s)]
             cleaned = news_posts[:2] + sas_posts[:1] + cow_posts[:1]
 
+        # 2026-05-02 evening: REMOVED multi-factor Python scoring per user.
+        # ("Don't come up with some scoring system. Use your brain, your super AI brain")
+        # Grok decides ranking. Python only trims to target count and dedups.
         output[tab] = {'stories': cleaned[:target], 'earlier': tab_earlier}
     else:
         # No fresh stories passed filters. Construct target from existing.stories + existing.earlier.
@@ -1941,7 +2514,7 @@ for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 
         if len(rebuilt) < target:
             print(f"  WARN {tab}: rebuilt only {len(rebuilt)}/{target} from existing", file=sys.stderr)
         # Same dedup pass on rebuilt stories
-        if tab in ('business', 'msm', 'pods', 'pg6', 'memes', 'comedy', 'top', 'recipe', 'science'):
+        if tab in ('business', 'msm', 'pods', 'pg6', 'conspiracy', 'comedy', 'top', 'recipe', 'science'):
             rebuilt = enforce_single_post_uniqueness(rebuilt, tab_label=tab + '-rebuild')
         output[tab] = {'stories': rebuilt, 'earlier': old_earlier}
 
@@ -1949,7 +2522,7 @@ for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 
 total_stories = 0
 real_urls = 0
 profile_urls = 0
-for tab in ['world', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'pg6', 'pods', 'recipe', 'local', 'memes', 'comedy', 'tiktok', 'golf']:
+for tab in ['world', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'pg6', 'pods', 'recipe', 'local', 'conspiracy', 'comedy', 'tiktok']:
     for s in output.get(tab, {}).get('stories', []):
         total_stories += 1
         if 'perspectives' in s:
@@ -1966,7 +2539,7 @@ for tab in ['world', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'pg6',
 
 # Per-tab breakdown
 print(f"\n--- QC REPORT ---", file=sys.stderr)
-for tab in ['world', 'usa', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'pg6', 'pods', 'recipe', 'science', 'local', 'memes', 'comedy', 'tiktok', 'golf']:
+for tab in ['world', 'usa', 'business', 'sports', 'elon', 'allin', 'top', 'msm', 'pg6', 'pods', 'recipe', 'science', 'local', 'conspiracy', 'comedy', 'tiktok']:
     stories = output.get(tab, {}).get('stories', [])
     earlier = output.get(tab, {}).get('earlier', [])
     status = "✓" if len(stories) >= 3 else f"⚠ ONLY {len(stories)}"
@@ -2013,8 +2586,8 @@ for static_key in STATIC_TABS:
 # ============================================================
 TAB_TARGETS = {
     'world': 3, 'usa': 3, 'business': 3, 'allin': 3, 'msm': 3, 'pg6': 3,
-    'pods': 3, 'recipe': 3, 'science': 3, 'local': 3, 'top': 3, 'memes': 3,
-    'comedy': 3, 'tiktok': 3, 'elon': 3, 'golf': 3, 'sports': 4,
+    'pods': 3, 'recipe': 3, 'science': 3, 'local': 3, 'top': 3, 'conspiracy': 3,
+    'comedy': 3, 'tiktok': 3, 'elon': 15, 'sports': 4,  # elon = 15 max per user (every world-engaged post)
 }
 
 def _scan_snapshots_for_tab(tab_key, max_snapshots=20):
@@ -2040,6 +2613,81 @@ def _scan_snapshots_for_tab(tab_key, max_snapshots=20):
                 seen.update(urls)
         except Exception: pass
     return pool
+
+# ---- Stale story expiry on MAIN stories array (was only running on _earlier) ----
+# This is the bug that surfaced 100h-old recipes / stale picks. Grok occasionally
+# picks an old post as "today's pick" and nothing dropped it.
+def _max_age_for_tab(tab):
+    """24h fresh for news. 72h for reference/sparse-content tabs.
+    Local moved to 72h on 2026-05-04 evening — OC-specific approved handles
+    don't post daily, 24h cap was leaving Local empty."""
+    if tab == 'freespeech': return 1000000  # user-curated, indefinite
+    NEWS_TABS = {'world','usa','top','msm','elon','allin','business','sports','pods','pg6','conspiracy'}
+    REFERENCE_TABS = {'recipe','science','comedy','tiktok','local'}  # local moved here
+    if tab in NEWS_TABS: return 24
+    if tab in REFERENCE_TABS: return 72
+    return 24
+for tab_key in list(output.keys()):
+    if tab_key in ('lastUpdated', 'freespeech', 'quotes'): continue
+    container = output.get(tab_key)
+    if not isinstance(container, dict): continue
+    stories = container.get('stories') or []
+    if not stories: continue
+    max_age = _max_age_for_tab(tab_key)
+    # 2026-05-04 user: SAS + Cowherd always required on Sports tab even if older than cap.
+    # 2026-05-04 user: velocity check — story with high engagement-per-hour stays alive
+    # even past the cap. "If old story is still growing faster than next candidate, keep it."
+    EXEMPT_HANDLES = {'stephenasmith', 'firsttake', 'colincowherd', 'theherd'}
+    def _likes_per_hour(s, age_h):
+        if not age_h or age_h < 1: return 0
+        eng = parse_likes(s.get('engagement', ''))
+        if eng == 0:
+            for p in s.get('perspectives', []):
+                eng = max(eng, parse_likes(p.get('engagement','')))
+        return eng / max(age_h, 1)
+    # Compute velocity threshold = median likes/hour of stories under cap
+    fresh_velocities = []
+    for s in stories:
+        urls = []
+        if s.get('url'): urls.append(s['url'])
+        for p in s.get('perspectives',[]):
+            if p.get('url'): urls.append(p['url'])
+        ages = [url_age_hours(u) for u in urls if u]
+        ages = [a for a in ages if a is not None]
+        if ages and max(ages) <= max_age:
+            fresh_velocities.append(_likes_per_hour(s, min(ages)))
+    fresh_velocities.sort(reverse=True)
+    velocity_threshold = fresh_velocities[len(fresh_velocities)//2] if fresh_velocities else 0
+
+    kept = []
+    expired = []
+    for s in stories:
+        # SAS / Cowherd exemption — always keep, age cap doesn't apply
+        handle = (s.get('handle','') or '').lower().lstrip('@')
+        if handle in EXEMPT_HANDLES:
+            kept.append(s)
+            continue
+        urls = set()
+        if s.get('url'): urls.add(s['url'])
+        for p in s.get('perspectives', []):
+            if p.get('url'): urls.add(p['url'])
+        worst = None
+        for u in urls:
+            a = url_age_hours(u)
+            if a is not None:
+                worst = a if worst is None else max(worst, a)
+        if worst is not None and worst > max_age:
+            # VELOCITY EXEMPTION: if this old story's velocity is above fresh median, keep it
+            velocity = _likes_per_hour(s, worst)
+            if velocity > velocity_threshold * 1.5 and worst <= 168:  # still hot, under 1 week
+                kept.append(s)
+                continue
+            expired.append(f"{s.get('headline','?')[:40]} ({worst:.0f}h, vel={velocity:.0f}/h)")
+            continue
+        kept.append(s)
+    if expired:
+        print(f"  [stale-expiry] {tab_key}: dropped {len(expired)} (velocity threshold {velocity_threshold:.0f}/h)", file=sys.stderr)
+        container['stories'] = kept
 
 for tab_key in list(output.keys()):
     if tab_key in ('lastUpdated', 'freespeech', 'quotes'): continue
@@ -2080,29 +2728,245 @@ for tab_key in list(output.keys()):
         for p in s.get('perspectives', []):
             if p.get('url'): seen_urls.add(p['url'])
 
-    # Add highest-quality not-already-seen stories from history
+    # NEVER-EMPTY logic (per CLAUDE.md user directive: tabs must not be blank).
+    # The 6h cap applies to FRESH Grok picks (already enforced in stale-expiry above).
+    # For carryover top-up: prefer fresh, but FALL BACK to oldest-acceptable if needed.
+    # Sort fallback by URL age (freshest first) — newest carryovers come first.
     needed = n_target - len(current)
     added = []
+    max_age = _max_age_for_tab(tab_key)
+
+    # Sort fallback pool by age (freshest first) so we always carry the best available
+    def _pool_age(s):
+        urls = []
+        if s.get('url'): urls.append(s['url'])
+        for p in s.get('perspectives', []):
+            if p.get('url'): urls.append(p['url'])
+        ages = [url_age_hours(u) for u in urls if u]
+        ages = [a for a in ages if a is not None]
+        return min(ages) if ages else 9999
+
+    fresh_pool = []
+    stale_pool = []
     for s in fallback_pool:
-        if len(added) >= needed: break
         s_urls = set()
         if s.get('url'): s_urls.add(s['url'])
         for p in s.get('perspectives', []):
             if p.get('url'): s_urls.add(p['url'])
-        if s_urls & seen_urls: continue
+        if s_urls & seen_urls: continue  # already in current picks
+        oldest_age = max([url_age_hours(u) or 0 for u in s_urls], default=0)
+        # Hard cap: never carry over anything older than 7 days regardless of tab
+        if oldest_age > 168: continue
+        target_pool = fresh_pool if oldest_age <= max_age else stale_pool
+        target_pool.append((oldest_age, s, s_urls))
+
+    fresh_pool.sort(key=lambda x: x[0])  # freshest first
+    stale_pool.sort(key=lambda x: x[0])  # also freshest-first within "stale"
+
+    # Add fresh carryovers first
+    for age, s, s_urls in fresh_pool:
+        if len(added) >= needed: break
         s_copy = dict(s)
         s_copy['carried_over'] = True
         added.append(s_copy)
         seen_urls.update(s_urls)
 
+    # Then stale carryovers if we still need to fill (NEVER LEAVE EMPTY)
+    stale_added = 0
+    for age, s, s_urls in stale_pool:
+        if len(added) >= needed: break
+        s_copy = dict(s)
+        s_copy['carried_over'] = True
+        s_copy['stale_carryover'] = True  # frontend can show "X hours old" indicator
+        added.append(s_copy)
+        seen_urls.update(s_urls)
+        stale_added += 1
+
     if added:
-        print(f"  [never-empty] {tab_key}: had {len(current)}/{n_target}, carrying over {len(added)} from history", file=sys.stderr)
+        msg = f"  [never-empty] {tab_key}: had {len(current)}/{n_target}, carrying over {len(added)} from history"
+        if stale_added:
+            msg += f" ({stale_added} stale, beyond {max_age}h cap — better than empty per user rule)"
+        print(msg, file=sys.stderr)
         output[tab_key]['stories'] = current + added
 
 # Honesty scoring is now done HOLISTICALLY by Grok during initial curation —
 # no post-hoc Python overrides. Grok considers source reputation, track record,
 # bias level, and content quality together to produce a single 0-10 score with
 # a one-line plain-English reason in `notes`. See grok_system.txt for criteria.
+
+# ---- Bare-announcement filter for World/USA perspectives ----
+# User complaint: perspectives keep being pure PR announcements (@WhiteHouse "AMERICANS
+# ARE WORKING AGAIN! Jobless claims hit X") instead of analysis. The point of the
+# 3-perspective format is to show different ANGLES on a story — not regurgitate the
+# news. Drop perspectives that are bare announcements with no analysis layer.
+import re as _re_ann
+ANNOUNCEMENT_HANDLES = {
+    'whitehouse', 'potus', 'statedept', 'pentagon', 'fbi', 'cia', 'realdonaldtrump',
+    'pressdept'
+}
+def _is_bare_announcement(perspective):
+    if not isinstance(perspective, dict): return False
+    handle = (perspective.get('handle') or '').lower().lstrip('@').strip()
+    text = perspective.get('quote') or perspective.get('body') or ''
+    if not text: return False
+    text = text.strip()
+    text_lower = text.lower()
+
+    # Reasoning markers — presence signals analytical content
+    REASONING_MARKERS = [' because ', ' however', ' but ', ' although', ' despite', ' contrary', ' analyst', ' suggests', ' implies', ' here\'s why', ' the reason', ' this matters', ' watch ', ' actually ', ' counter', ' meanwhile', ' the truth', ' nobody is talking', ' overlooked', ' the real story']
+    has_reasoning = any(kw in text_lower for kw in REASONING_MARKERS)
+
+    # Pure endorsement/praise pattern: "Congrats to X" / "Great job X" / "X is doing Y for Z"
+    ENDORSEMENT_PATTERNS = [
+        r'^Congrat',
+        r'^Great\s+(job|work)',
+        r'^Proud\s+(of|to)',
+        r'^Honored\s+to',
+        r'\bfighting\s+for\s+(working\s+families|the\s+people)\b',
+        r'\bREAL\s+change\b',
+        r'\bstatus\s+quo\b.{0,40}\btired\b',
+    ]
+    is_endorsement = any(_re_ann.search(p, text, _re_ann.IGNORECASE) for p in ENDORSEMENT_PATTERNS)
+
+    # Official PR account = high suspicion of bare announcement
+    if handle in ANNOUNCEMENT_HANDLES:
+        sentences = [s for s in _re_ann.split(r'[.!?]+', text) if len(s.strip()) > 5]
+        has_analysis = (len(sentences) >= 4 or len(text) > 300) and has_reasoning
+        if not has_analysis:
+            return True
+
+    # Pure endorsement without reasoning = bare. Sanders "Congrats to Graham, he's
+    # fighting for working families, REAL change" hits here.
+    if is_endorsement and not has_reasoning:
+        return True
+
+    # Generic bare-announcement detection: starts with all-caps shouty header
+    if _re_ann.match(r'^[A-Z][A-Z0-9\s\!\.]{18,}\!', text):
+        return True
+    # "BREAKING: <one-line fact>." with no analysis
+    if _re_ann.match(r'^(BREAKING|JUST\s+IN|⚡|🚨|#BREAKING)[^.!?]{10,200}[\.!?]\s*$', text):
+        return True
+    return False
+
+for tab_key in ('world', 'usa'):
+    container = output.get(tab_key)
+    if not isinstance(container, dict): continue
+    stories = container.get('stories', [])
+    for s in stories:
+        if not isinstance(s, dict): continue
+        perspectives = s.get('perspectives', [])
+        kept = []
+        dropped = []
+        for p in perspectives:
+            if _is_bare_announcement(p):
+                dropped.append(p.get('handle','?'))
+                continue
+            kept.append(p)
+        if dropped:
+            print(f"  [bare-announcement] {tab_key}: dropped perspectives {dropped} from '{s.get('headline','?')[:50]}'", file=sys.stderr)
+            s['perspectives'] = kept
+
+# ---- Crime-blotter hard filter ----
+# Grok keeps slipping graphic violent crime / crime-against-minors stories past the
+# prompt-level reject rule (e.g. "Celeste Rivas texted D4vd at 14: All we do is sex").
+# Hard-block in code: any story whose headline/body matches the patterns below is dropped.
+import re as _re_crime
+CRIME_PATTERNS = [
+    r'\b(dismember|dismembered|dismembering)\b',
+    r'\bchainsaw',
+    r'\bmotosserra',  # Portuguese
+    r'\b(murdered|killed)\s+(her|his|the)\s+(daughter|son|child|baby|girlfriend|boyfriend|wife|husband)\b',
+    r'\b(decapitat|beheaded)',
+    r'\b(rape|raped|raping|rapist)\b',
+    r'\b(?:age\s+(?:9|10|11|12|13|14|15|16|17)|aged\s+(?:9|10|11|12|13|14|15|16|17)|(?:9|10|11|12|13|14|15|16|17)[\s-]?year[\s-]?old)\b.{0,80}\b(?:texted|sex|raped|murdered|abused|killed|stabbed|nude|naked|messaged|abuse)\b',
+    r'\b(?:texted|messaged)\b.{0,80}\b(?:14|13|12|15|16|17)\b.{0,80}\b(?:sex|nude|naked|love|date|hookup|relationship)\b',
+    r'\b(?:13|14|15|16|17)[\s-]year[\s-]old\b.{0,80}\b(?:victim|killed|murdered|raped|abused|stabbed|sex)\b',
+    r'\bbody.{0,30}\b(?:found|dumped|disposed)\b',
+    r'\b(child\s+sex\s+abuse|child\s+pornography|csam)\b',
+    r'\b(suicide|hanged\s+(?:himself|herself))\b',
+    r'\b(serial\s+killer|mass\s+shooter|mass\s+shooting)\b',
+    r'\bASSUSTADOR\b',  # Portuguese "TERRIFYING"
+    r'TERRIFYING:?\s+\w',  # tabloid framing
+]
+CRIME_PATTERNS_RE = [_re_crime.compile(p, _re_crime.IGNORECASE) for p in CRIME_PATTERNS]
+def _is_crime_blotter(story):
+    if not isinstance(story, dict): return False
+    text = ' '.join(str(story.get(f, '')) for f in ('headline','body','quote','notes'))
+    return any(rx.search(text) for rx in CRIME_PATTERNS_RE)
+
+for tab_key in list(output.keys()):
+    container = output.get(tab_key)
+    if not isinstance(container, dict): continue
+    stories = container.get('stories', [])
+    if not stories: continue
+    kept = []
+    rejected = []
+    for s in stories:
+        if isinstance(s, dict) and _is_crime_blotter(s):
+            rejected.append(s.get('headline','?')[:50])
+            continue
+        kept.append(s)
+    if rejected:
+        print(f"  [crime-filter] {tab_key}: dropped {len(rejected)} graphic crime stories: {rejected}", file=sys.stderr)
+        container['stories'] = kept
+
+# ---- Handle uniqueness enforcement ----
+# Grok keeps re-picking the same handle (e.g. Chamath twice in All-In, BleacherReport
+# twice in sports). Hard-enforce one-handle-one-block per tab in code so the prompt
+# rule isn't enough — we drop duplicates here. Elon tab is exempt (multiple posts
+# from @elonmusk are intentional, deduped by URL upstream).
+HANDLE_UNIQUE_TABS = {'allin','msm','top','pods','business','sports','pg6','recipe','science','local','conspiracy','comedy'}
+for tab_key in HANDLE_UNIQUE_TABS:
+    container = output.get(tab_key)
+    if not isinstance(container, dict): continue
+    stories = container.get('stories', [])
+    if not stories: continue
+    seen_handles = set()
+    deduped = []
+    dropped = []
+    for s in stories:
+        h = (s.get('handle') or '').lower().lstrip('@').strip()
+        if not h:
+            deduped.append(s)
+            continue
+        if h in seen_handles:
+            dropped.append(s.get('handle'))
+            continue
+        seen_handles.add(h)
+        deduped.append(s)
+    if dropped:
+        print(f"  [handle-dedup] {tab_key}: dropped {dropped} (already had this handle on tab)", file=sys.stderr)
+        container['stories'] = deduped
+
+# 2026-05-02: HEADLINE DEDUP across ALL tabs (incl. world/usa) — same headline = same story.
+# User saw the same Mifepristone story 2x in USA. Catches case-variant duplicates Grok produces.
+import re as _re_dedup
+def _normalize_headline(h):
+    if not h: return ''
+    return _re_dedup.sub(r'[^a-z0-9 ]','', str(h).lower()).strip()
+
+for tab_key in list(output.keys()):
+    if tab_key in ('lastUpdated','freespeech'): continue
+    container = output.get(tab_key)
+    if not isinstance(container, dict): continue
+    stories = container.get('stories', [])
+    if not stories: continue
+    seen_headlines = set()
+    deduped = []
+    dropped_h = []
+    for s in stories:
+        norm = _normalize_headline(s.get('headline',''))
+        if not norm:
+            deduped.append(s)
+            continue
+        if norm in seen_headlines:
+            dropped_h.append(s.get('headline','?')[:50])
+            continue
+        seen_headlines.add(norm)
+        deduped.append(s)
+    if dropped_h:
+        print(f"  [headline-dedup] {tab_key}: dropped {dropped_h} (same headline already on tab)", file=sys.stderr)
+        container['stories'] = deduped
 
 with open('stories.json', 'w') as f:
     json.dump(output, f, indent=2)

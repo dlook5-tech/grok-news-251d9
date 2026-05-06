@@ -43,8 +43,30 @@ if [ ! -s "$MAIN/stories.json" ]; then
   echo "[deploy] ABORT: stories.json missing or empty" >&2
   exit 1
 fi
+
+# 2026-05-02: ENFORCE freespeech persistence. The Free tab is user-curated and must
+# survive every cron/cleanup/ad-hoc-script. Source of truth: freespeech.json.
+# Always overlay it onto stories.json before deploy. If any code/script clobbered
+# freespeech in stories.json, this restores it.
+if [ -f "$MAIN/freespeech.json" ]; then
+    MAIN="$MAIN" python3 <<'PYEOF'
+import json, os
+MAIN = os.environ['MAIN']
+with open(os.path.join(MAIN, 'stories.json')) as f: d = json.load(f)
+with open(os.path.join(MAIN, 'freespeech.json')) as f: fs = json.load(f)
+old_count = len(d.get('freespeech', {}).get('stories', []))
+new_count = len(fs.get('stories', []))
+d['freespeech'] = fs
+with open(os.path.join(MAIN, 'stories.json'), 'w') as f:
+    json.dump(d, f, indent=2)
+if old_count != new_count:
+    print(f'[deploy] freespeech overlay: stories.json had {old_count}, restored {new_count} from freespeech.json')
+else:
+    print(f'[deploy] freespeech persisted ({new_count} stories from freespeech.json)')
+PYEOF
+fi
 # Required tabs — if any are missing, something has reverted the file
-for tab_check in 'id: "memes"' 'id: "golf"' 'id: "comedy"' 'id: "you"' 'id: "world"' 'id: "usa"' 'id: "business"' 'id: "submit"' 'id: "freespeech"'; do
+for tab_check in 'id: "conspiracy"' 'id: "comedy"' 'id: "you"' 'id: "world"' 'id: "usa"' 'id: "business"' 'id: "submit"' 'id: "freespeech"'; do
   if ! grep -q "$tab_check" "$MAIN/index.html"; then
     echo "[deploy] ABORT: missing required tab definition '$tab_check' in index.html — possible regression" >&2
     exit 1
@@ -62,7 +84,7 @@ echo "[deploy] Computing file hashes..."
 FILES_JSON=$(MAIN="$MAIN" python3 <<'PYEOF'
 import hashlib, json, os
 MAIN = os.environ['MAIN']
-root_files = ["index.html", "stories.json", "_headers", "version.txt", "sw.js"]
+root_files = ["index.html", "stories.json", "_headers", "version.txt", "sw.js", "manifest.webmanifest"]
 manifest = {}
 paths_by_hash = {}
 for rel in root_files:
@@ -187,7 +209,7 @@ try:
     out.append("")
     out.append("| Tab | Stories | Carried-over |")
     out.append("|---|---|---|")
-    for tab in ['world','usa','business','local','sports','top','elon','pods','allin','msm','science','pg6','memes','comedy','recipe','golf','earlier','you','submit','freespeech','tiktok']:
+    for tab in ['world','usa','business','local','sports','top','elon','pods','allin','msm','science','pg6','conspiracy','comedy','recipe','earlier','you','submit','freespeech','tiktok']:
         v = d.get(tab, {})
         if not isinstance(v, dict): continue
         st = v.get('stories', [])

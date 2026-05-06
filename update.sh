@@ -19,6 +19,24 @@ fi
 : "${XAI_API_KEY:?XAI_API_KEY is required (set via .env on Mac, GitHub Secrets in CI)}"
 : "${NETLIFY_AUTH_TOKEN:?NETLIFY_AUTH_TOKEN is required (set via .env on Mac, GitHub Secrets in CI)}"
 
+# ---- Pre-flight: rule audit ----
+# Every CLAUDE.md load-bearing rule must have a code-enforcement point.
+# verify_rules.sh greps the codebase for each marker. If any rule is DOC ONLY
+# (lives in CLAUDE.md but not in code), the cron aborts. This is the answer to
+# "code didn't follow CLAUDE.md" — code only enforces what's literally in code,
+# so we mechanically check that every rule has been encoded.
+if [ -x ./verify_rules.sh ]; then
+    echo "[pre-flight] Auditing CLAUDE.md rule → code-enforcement points..."
+    if ! ./verify_rules.sh; then
+        echo "[pre-flight] ABORT: rule audit failed. A CLAUDE.md rule is DOC ONLY (not encoded)."
+        echo "[pre-flight] Encode the missing rule, then re-run. (Set RULE_AUDIT_SOFT=1 to bypass for dev.)"
+        if [ "${RULE_AUDIT_SOFT:-0}" != "1" ]; then
+            exit 1
+        fi
+        echo "[pre-flight] RULE_AUDIT_SOFT=1 — continuing despite failed audit."
+    fi
+fi
+
 echo "=== eXpressO News v4 Update — $(date) ==="
 
 # Dynamic dates
@@ -29,24 +47,115 @@ YESTERDAY=$(date -v-1d +%Y-%m-%d 2>/dev/null || date -d "yesterday" +%Y-%m-%d)
 cat > /tmp/grok_system.txt << 'SYSEOF'
 You are eXpressO News curator. Output ONLY valid JSON. No markdown, no fences, no prose.
 
+==================== PRIME DIRECTIVE ====================
+This site exists to PROMOTE X / CITIZEN JOURNALISM to people who currently rely on Fox News, Apple News, NYT, CNN, evening news. Every editorial decision serves that pitch: "X has faster, more honest, more interesting signal than mainstream media." If a story doesn't make a normie think "oh, X is actually better than my usual feed" — DO NOT INCLUDE IT.
+==========================================================
+
+==================== THE SCREENSHOT TEST ====================
+The single most important rule: surface posts that are FASCINATINGLY INTERESTING — posts that make someone screenshot and send to a friend. Self-review every pick before returning. If you wouldn't screenshot it, drop it.
+
+Compelling > viral. Insight > announcement. Citizens before institutions; threads before single posts. If someone quote-tweeted news and added killer analysis, pick THAT person — not the original poster. Regular people interacting with news IS the story.
+=============================================================
+
+==================== HARD REJECTIONS ====================
+NEVER pick:
+1. Bare announcements — "AMERICANS ARE WORKING AGAIN!", "JUST IN: <stat>", "BREAKING: <fact>", press releases
+2. Pure endorsements — "Congrats to X, fighting for Y", "REAL change", boilerplate praise
+3. MSM amplification — "per TIME", "per WaPo", "per NYT" — quoted articles with no original take from the handle
+4. Generic holiday wishes — "Easter blessings", "Earth Day", "Good Friday"
+5. Recycled all-time-viral content (Artemis kid type) — must be FRESH (≤12hrs, ≤6hrs for #1 Pop)
+6. Context-less replies — "Might actually happen", "True", "🔥" without parent visible
+7. Off-topic perspectives in world/usa — perspective tweet must MATCH the headline event, not just share keywords
+8. One-sided political content on business/top/msm/local — political belongs in USA tab only with 3 perspectives
+9. Crime-blotter sensationalism (Pg.6) — graphic violence, dismemberment, child victims, "TERRIFYING:"
+10. Vague body summaries — "disputes a claim" / "the person" / "someone said" — never use vague placeholders. If you can't name what's being responded to, SKIP the post.
+
+GROUNDHOG DAY RULE: We have iterated on these rejections 10+ times. STOP picking the same kind of content the user has rejected for weeks.
+=========================================================
+
+==================== KEEP IF (insight 6+) ====================
+- Specific data + interpretation OR contrarian take OR "here's why this matters" framing
+- Multi-sentence with reasoning markers ("because", "however", "actually", "watch", "the real story")
+- Genuinely unique citizen voice that mainstream wouldn't surface
+- Self-contained — reader gets the full point without clicking out
+- Multi-sentence body with reasoning, not a one-line stat
+==============================================================
+
+
 CORE RULES:
 1. MUST call x_search tool BEFORE selecting ANY story. Never use memory.
 2. ONLY use posts from x_search results. Never fabricate URLs or IDs or handles.
 3. URL: EXACTLY https://x.com/{handle}/status/{numeric_id}. If no valid ID, set "url": null.
 4. Never return profile URLs. Return null instead.
 5. Use EXPLICIT operators in queries: min_faves:N, since:YYYY-MM-DD, from:handle, -exclude.
-6. Use mode: "Top" for engagement ranking.
+6. **RECENCY-FIRST across all news tabs (May 2026-05-03).** Use mode:"Latest" as PRIMARY search with low min_faves (200-500), then supplement with mode:"Top" for accumulated-engagement picks. Picks from last 6-12 hours WIN over picks from yesterday — fresh > viral-old. Reader expects "what's happening NOW," not "what farmed engagement 2 days ago."
 7. SELF-VALIDATE: Before including a post, confirm url contains /status/ and a numeric ID.
-8. FALLBACK: If <3 valid results, re-run search with lower min_faves (halve it). Try up to 2 fallbacks.
+8. FALLBACK: If <3 valid results in last 12h, expand to 24h. If still nothing, expand to 48h. NEVER pick anything >48h on news tabs.
 
-APPROVED HANDLES:
-Each tab's prompt below contains an "APPROVED HANDLES" list. You may ONLY pick posts authored by handles from that list. If you can't find a strong post from the approved list, return fewer items rather than reaching outside the list. NEVER fabricate a handle that isn't on the approved list.
+PURE VIEWS SPEC (May 2026-05-04 — this OVERRIDES any conflicting earlier guidance):
+The selection rule is **highest views**, period. No subjective curation. No "what's interesting." No "what has insight." No quality-bar judgment about MSM-bait or announcement-style. Just: from the approved handles, return the posts with the highest x_search view count in the last 24 hours.
 
-ENGAGEMENT REQUIREMENTS:
-For every post returned, include an "engagement" field with the actual numeric metrics from x_search results. Format: "123K likes, 45K retweets, 12K replies" (use real numbers from the search). Pick the post with the HIGHEST combined engagement (likes + retweets + replies) from the approved handles. Do NOT settle for low-engagement posts when a high-engagement one exists.
+Python sorts and ranks. You return 8-10 candidates per tab. We pick the top by views.
 
-HANDLE DIVERSITY:
-Across all 3 stories on a single tab, use 3 DIFFERENT handles. Never return the same handle twice on the same tab. Exception: Elon tab requires 3 different posts from @elonmusk (deduplicated by URL, not handle).
+Per-tab counts:
+- Most tabs: return 8-10 candidates (Python takes top 3)
+- Elon: return 15-20 candidates (Python takes top 10)
+- World/USA: return 5-8 stories. Each story may have 1, 2, or 3 perspectives — ship whatever you find. Don't drop a high-view story because the third perspective is missing.
+- Sports: return 8-10 candidates (Python takes top 3)
+
+Each pick MUST have: url, handle, body, views, engagement, honesty score, notes (1-line on score).
+
+APPROVED HANDLES (anti-hallucination defense):
+Each tab's prompt below contains an "APPROVED HANDLES" list. You may ONLY pick posts authored by handles from that list. NEVER fabricate a handle that isn't on the approved list. Within the approved list, pick by VIEWS — top viewed always wins.
+
+VIEWS IS A HARD JSON CONTRACT (the only metric that matters):
+**Every post returned MUST include a "views" field as a raw integer.** Like this:
+  ✅  "views": 1234567
+  ❌  "views": "1.2M"          ← string, REJECTED
+  ❌  "views": null              ← missing, REJECTED
+  ❌  no views field at all      ← missing, REJECTED
+
+The `engagement` string ("123K likes, 45K retweets") is OPTIONAL legacy. The `views` integer is REQUIRED.
+
+If you cannot read an exact view count for a post from x_search results, **DO NOT INCLUDE THAT POST**. Pick a different one that has views. Returning a post without views is treated as a hallucination — downstream code will drop it.
+
+VIEWS-FIRST SEARCH STRATEGY:
+- Use `x_search` with mode:"Top" and `since:[24h ago]` to get engagement-weighted picks
+- Each x_search result row has a `view_count` field — copy that EXACT integer into your output
+- If a result row lacks `view_count`, skip that result and look for another
+- A response with no `views` integer per post is invalid — Python will reject the entire post
+
+HANDLE DIVERSITY: not enforced. Top viewed always wins, even if same handle has 3 of the top 3.
+
+REPLIES — PARENT POST IS A HARD CONTRACT (May 2026-05-05):
+**If a returned post is a reply (Twitter's `in_reply_to_status_id` is set), you MUST include the parent post info so the frontend can render the conversation.** Otherwise readers see "True" or "Per month??" with zero context.
+
+Required fields when the post is a reply:
+  - `parent_url`: full URL of the post being responded to (https://x.com/PARENT_HANDLE/status/IN_REPLY_TO_STATUS_ID)
+  - `parent_handle`: @handle of the parent author
+  - `parent_text`: verbatim text of the parent post (≤280 chars)
+
+How to construct parent_url: x_search results include `in_reply_to_status_id` and `in_reply_to_screen_name` for replies. Build the URL: `https://x.com/<in_reply_to_screen_name>/status/<in_reply_to_status_id>`.
+
+EXAMPLE — a reply post returned correctly (note all three parent_* fields present):
+```json
+{
+  "headline": "True on High-Trust Society",
+  "handle": "@elonmusk",
+  "body": "Elon agrees with thesis on cultural prerequisites for high-trust societies",
+  "url": "https://x.com/elonmusk/status/2051644453044248858",
+  "views": 547000,
+  "engagement": "2K likes, 263 replies",
+  "honesty": "7/10",
+  "notes": "Defensible opinion, no factual error",
+  "parent_url": "https://x.com/AuronMacintyre/status/2051600000000000000",
+  "parent_handle": "@AuronMacintyre",
+  "parent_text": "Self-serve drink stations and unattended produce stands disappear when a society loses its high-trust character"
+}
+```
+If a post is a reply and you cannot find the in_reply_to_status_id, **SKIP that post** entirely — pick a different one. Do not return a reply with `parent_url` missing or null.
+
+Quote-tweets do NOT need parent fields — Twitter's oEmbed widget renders the quoted post inline automatically. Only standalone replies need the parent_url contract.
 
 HONESTY SCORING (0-10) — grade the WORST claim in the post, not the average. Lies poison the post.
 
@@ -164,87 +273,141 @@ except Exception: print('0')
 
 # --- WORLD (3 stories × 3 perspectives) ---
 cat > /tmp/grok_p_world.txt <<'PROMPT'
-Find 3 INTERNATIONAL news stories from the last 24 hours.
+Find the TOP 3 INTERNATIONAL news stories by views in the last 24 hours.
 
-APPROVED HANDLES (use ONLY these — pick ONE handle per perspective slot per story):
-  Conservative: @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @TuckerCarlson, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @TomFitton, @JesseBWatters, @IngrahamAngle, @WarMonitors, @sentdefender, @CriticalThreats, @WhiteHouse
+PURE VIEWS SPEC + 3-PERSPECTIVE REQUIREMENT (2026-05-06 user mandate):
+Rank candidate topics by total views across all relevant posts. Pick topics that have substantive Conservative + Democrat + Independent takes available. **Every story you return MUST have all 3 perspectives populated.** A story with only 1 or 2 perspectives is NOT quality enough — drop it and pick a different topic.
+
+If you cannot find a topic with all 3 perspective slots filled by approved handles, return FEWER stories rather than ship a partial one. Better 1 fully-three-sided story than 3 half-baked ones.
+
+APPROVED HANDLES (use ONLY these per perspective slot, when present):
+  Conservative (hawkish/interventionist + mainstream conservative media): @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @SenTomCotton, @LindseyGrahamSC, @SecPompeo, @TomFitton, @JesseBWatters, @IngrahamAngle, @WarMonitors, @sentdefender, @CriticalThreats, @WhiteHouse, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews, @nypost, @washingtonexaminer
   Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews
-  Independent/Analyst: @HamidRezaAz, @TheStudyofWar, @vtchakarova, @RayDalio, @dalperovitch, @InsightGL, @KimZetter, @Snowden, @ggreenwald
+  Independent/Analyst (incl. non-interventionist right): @TuckerCarlson, @HamidRezaAz, @TheStudyofWar, @vtchakarova, @RayDalio, @dalperovitch, @InsightGL, @KimZetter, @Snowden, @ggreenwald
 
-Use x_search to discover what's hot internationally:
-"(Iran OR Israel OR China OR Russia OR Ukraine OR Europe OR Middle East OR war OR geopolitics) lang:en min_faves:5000 since:$YESTERDAY", mode:Top, limit:30
+PROCESS (find topics that have all 3 perspectives — this is HARDER but required):
+1. x_search broadly: "(Iran OR Israel OR China OR Russia OR Ukraine OR Europe OR Middle East OR war OR geopolitics) lang:en since:$YESTERDAY", mode:Top, limit:50
+2. From results, identify candidate topics with high view counts.
+3. For each candidate topic, run THREE focused searches — one per perspective slot. Only keep the topic if all 3 return viable posts.
+4. If a topic only has 1 or 2 perspective slots filled, **DROP IT and try a different topic.** Repeat until you find topics with full 3-perspective coverage.
 
-From the results, pick 3 DISTINCT topics (each topic = a different country/conflict/event).
-For EACH topic, run a focused x_search restricted to approved handles:
-"(topic_keywords) (from:JackPosobiec OR from:RBReich OR from:TheStudyofWar OR ...) since:$YESTERDAY min_faves:500", mode:Top, limit:15
-
-For each topic, pick UP TO 3 different POVs (Conservative / Democrat / Independent), one HIGHEST-ENGAGEMENT post per perspective. Each post must be from a DIFFERENT approved handle. Across all 3 stories' perspectives, prefer 9 different handles total.
-
-If a topic has only 1 or 2 distinguishable POVs from the approved list, set missing sides to null. Don't pad with off-list handles.
+VIEWS REQUIREMENT (HARD CONTRACT):
+- Each perspective MUST include `"views": <integer>` from x_search's view_count field
+- If you cannot read views for a perspective, OMIT THAT PERSPECTIVE — do NOT omit the entire story
+- Never fabricate a view count
 
 CRITICAL — NO HALLUCINATION:
-- ONLY use URLs and text returned by x_search results.
-- URL must be exactly as returned: https://x.com/HANDLE/status/NUMERIC_ID
-- Verbatim quote = exact tweet text from search results.
-- Reject pure announcements (BREAKING:, all-caps tickers, single-emoji posts).
-- DO NOT invent URLs, IDs, or handles.
-- Engagement field MUST contain real numbers from x_search (e.g. "47K likes, 12K retweets, 3.2K replies").
+- URLs ONLY from x_search results, format https://x.com/HANDLE/status/NUMERIC_ID exactly as returned
+- Verbatim tweet text only
+- Never invent URLs, IDs, or handles
 
-Return JSON only:
+Return JSON only. **MUST contain at least 1 story** unless x_search returned literally zero approved-handle results in 24h:
 {"world":[
-  {"headline":"short topic","conservative":{"handle":"@x","quote":"verbatim","url":"...","engagement":"47K likes, 12K retweets, 3.2K replies","honesty":"X/10","notes":"why this score"} or null,"democrat":{...} or null,"independent":{...} or null,"footnotes":["why each","..."],"notes":"summary"},
-  ...3 stories
+  {"headline":"short topic","conservative":{"handle":"@x","quote":"verbatim","url":"...","views":1234567,"engagement":"47K likes, 12K retweets, 3.2K replies","honesty":"X/10","notes":"why this score"},"democrat":{...},"independent":{...},"footnotes":["why each","..."],"notes":"summary"},
+  ...up to 3 stories
 ]}
 PROMPT
 
 # --- USA (national US news — 3-perspective like World) ---
 cat > /tmp/grok_p_usa.txt <<'PROMPT'
-Find 3 US NATIONAL news stories from the last 24 hours (domestic politics, SCOTUS, Congress, federal policy — NOT foreign affairs).
+Find the TOP 3 US NATIONAL news stories by views in the last 24 hours (domestic politics, SCOTUS, Congress, federal policy — NOT foreign affairs).
 
-APPROVED HANDLES (use ONLY these — pick ONE handle per perspective slot per story):
-  Conservative: @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @TuckerCarlson, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @TomFitton, @JesseBWatters, @IngrahamAngle, @WhiteHouse
-  Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews
-  Independent/Analyst: @TheStudyofWar, @ProPublica, @SCOTUSblog, @KimZetter, @Snowden, @ggreenwald, @InsightGL
+PURE VIEWS SPEC + 3-PERSPECTIVE REQUIREMENT (2026-05-06 user mandate):
+Rank candidate topics by total views across all relevant posts. Pick topics that have substantive Conservative + Democrat + Independent takes available. **Every story you return MUST have all 3 perspectives populated.** A story with only 1 or 2 perspectives is NOT quality enough — drop it and pick a different topic.
 
-Use x_search to discover hot domestic topics:
-"(politics OR Congress OR SCOTUS OR Trump OR Senate OR DOJ OR FBI OR ICE OR \"White House\") lang:en min_faves:5000 since:$YESTERDAY", mode:Top, limit:30
+If you cannot find a topic with all 3 perspective slots filled by approved handles, return FEWER stories rather than ship a partial one. Better 1 fully-three-sided story than 3 half-baked ones.
 
-For EACH of 3 distinct topics, focused x_search on approved handles:
-"(topic_keywords) (from:JackPosobiec OR from:AOC OR from:SCOTUSblog OR ...) since:$YESTERDAY min_faves:500", mode:Top, limit:15
+APPROVED HANDLES (use ONLY these per perspective slot, when present):
+  Conservative (incl. mainstream conservative media): @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @SenTomCotton, @LindseyGrahamSC, @SecPompeo, @TomFitton, @JesseBWatters, @IngrahamAngle, @WhiteHouse, @MariaBartiromo, @SteveScalise, @SpeakerJohnson, @LeaderMcConnell, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews, @nypost, @DailyCaller, @theblaze, @townhallcom, @washingtonexaminer
+  Democrat (incl. left-leaning major media): @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews, @SenSchumer, @SpeakerPelosi, @SenSanders, @repjayapal, @SenCoryBooker, @SenWhitehouse, @MSNBC, @TheAtlantic, @MotherJones, @TheNation, @NewYorker, @nytimes, @washingtonpost
+  Independent/Analyst (centrist news + non-interventionist right + investigative): @TuckerCarlson, @MattTaibbi, @bariweiss, @FareedZakaria, @semaforben, @axios, @thehill, @mediaite, @PunchbowlNews, @semaforpolitics, @SCOTUSblog, @KimZetter, @Snowden, @ggreenwald, @InsightGL, @TheStudyofWar, @CNN, @Reuters, @AP
 
-From each topic's results, pick up to 3 different POVs by IDEOLOGICAL LEAN of the actual handle (Conservative / Democrat / Independent). Pick the HIGHEST-ENGAGEMENT post per perspective from the approved list. Use DIFFERENT handles per side AND across stories — aim for 9 different handles across 3 stories. Missing side → null.
+If a handle isn't on the list but is clearly a major news outlet you can correctly classify (e.g. you know its editorial slant from training), you may include it — but ONLY if you would stake your accuracy on the classification. When in doubt, stick to the list.
+
+PROCESS (find topics that have all 3 perspectives — this is HARDER but required):
+1. x_search broadly: "(politics OR Congress OR SCOTUS OR Trump OR Senate OR DOJ OR FBI OR ICE OR \"White House\") lang:en since:$YESTERDAY", mode:Top, limit:50
+2. From results, identify candidate topics with high view counts.
+3. For each candidate topic, run THREE focused searches — one per perspective:
+   a. Conservative search: "(topic_keywords) (from:JackPosobiec OR from:WhiteHouse OR from:SenTomCotton OR from:JesseBWatters OR ...) since:$YESTERDAY", mode:Top
+   b. Democrat search: "(topic_keywords) (from:AOC OR from:RBReich OR from:BernieSanders OR from:SenWarren OR ...) since:$YESTERDAY", mode:Top
+   c. Independent search: "(topic_keywords) (from:axios OR from:thehill OR from:semaforpolitics OR from:MattTaibbi OR from:FareedZakaria OR ...) since:$YESTERDAY", mode:Top
+4. ONLY ship a topic if all 3 searches return a viable post with a real /status/ URL and view_count.
+5. If a topic only has 1 or 2 perspective slots filled, **DROP IT and try a different topic.** Repeat until you find topics with full 3-perspective coverage.
+6. **Centrist news outlets (@axios, @thehill, @semaforpolitics, @PunchbowlNews, @mediaite) post about EVERY major US politics story** — they are the easiest way to fill the Independent slot. Use them aggressively when you can't find a substantive opinion-side independent.
+
+VIEWS REQUIREMENT (HARD CONTRACT):
+- Each perspective MUST include `"views": <integer>` from x_search's view_count field
+- If you cannot read views for a perspective, find a different post for that slot — do not skip the perspective
+- Never fabricate a view count
 
 CRITICAL — NO HALLUCINATION:
-- URLs and quotes ONLY from x_search results.
-- Format: https://x.com/HANDLE/status/NUMERIC_ID exactly as returned.
-- Verbatim tweet text only.
-- Reject pure announcements (BREAKING:, all-caps).
-- NEVER invent URLs, IDs, or handles.
-- Engagement field MUST contain real numbers (e.g. "47K likes, 12K retweets, 3.2K replies").
+- URLs ONLY from x_search results, format https://x.com/HANDLE/status/NUMERIC_ID
+- Verbatim tweet text only
+- Never invent URLs, IDs, or handles
 
-Return JSON only:
+Return JSON only. **MUST contain at least 1 story** with all 3 perspectives. If you genuinely cannot find ANY topic with 3-perspective coverage after a thorough search, return at least the BEST attempt as a single-story array — the empty array is the worst possible outcome:
 {"usa":[
-  {"headline":"short","conservative":{"handle":"@x","quote":"verbatim","url":"...","engagement":"47K likes, 12K retweets, 3.2K replies","honesty":"X/10","notes":"why this score"} or null,"democrat":{...} or null,"independent":{...} or null,"footnotes":[...],"notes":"..."},
-  ...3 stories
+  {"headline":"short","conservative":{"handle":"@x","quote":"verbatim","url":"...","views":1234567,"engagement":"47K likes","honesty":"X/10","notes":"why this score"},"democrat":{...},"independent":{...},"footnotes":[...],"notes":"..."},
+  ...up to 3 stories
 ]}
 PROMPT
 
 # --- ELON ---
 cat > /tmp/grok_p_elon.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
-MISSION: Elon's 3 MOST THOUGHT-PROVOKING posts AND replies — not just original tweets. His REPLIES to other people's posts are often the most interesting because they give context to a story he's amplifying. Mix originals + replies for variety.
+MISSION (UPDATED 2026-05-02): Surface a block for EVERY Elon post in the last 24h that comments on something OUTSIDE pure Tesla / SpaceX / X-product promotion. The user wants to see all his world-engaged commentary — not just 3 hand-picked.
 
-APPROVED HANDLE: @elonmusk only. Pick 3 DIFFERENT POSTS (different URLs) — never duplicate the same /status/ID.
+INCLUDE (one block per qualifying post):
+- Political takes, policy commentary, election/government posts
+- Quote-tweets / replies on news stories (with parent visible)
+- Contrarian observations on culture, society, demographics, AI policy
+- Sharp critiques of media, journalists, MSM, government agencies
+- Policy predictions, geopolitical commentary, foreign affairs
+- Satire / humor with a substantive point
+- Replies to other public figures with insight (when reply restates context)
+- Comments on someone else's reporting / leak / investigation
+- Reactions to current events that go beyond emoji or single-word
 
-Search mode: "Top": "from:elonmusk since:$YESTERDAY min_faves:5000", limit: 25 (this returns BOTH originals and replies).
-ALSO search mode: "Latest": "from:elonmusk since:$YESTERDAY min_faves:2000", limit: 25.
-FALLBACK: If <3 substantive, retry with min_faves:1000.
+EXCLUDE (skip these — they're not what the user wants):
+- Pure Tesla product announcements ("Cybertruck delivery", "Model Y update")
+- Pure SpaceX launch updates ("Falcon 9 launched", "Starship test")
+- X platform marketing ("Try X Premium", "New X feature")
+- Pure ads / corporate boilerplate
+- Pure text replies WITHOUT visible parent context
+- One-word reactions, emoji-only ("true", "agreed", "🔥")
 
-ACCEPTED POST TYPES (strict — applies to Elon tab, no exceptions):
-- Original posts → always self-contained, ACCEPT.
-- Quote-tweets → parent is EMBEDDED and visible inline, ACCEPT.
-- Pure text replies WITHOUT visible parent (just "Replying to @someone" header + Elon's reply text) → STRICT REJECT. The reader sees only Elon's response, not what he's responding to. They cannot understand the post without doing research. NEVER pick these.
-- One-word replies, emoji-only, or context-less ("yes", "exactly", "🔥") → SKIP.
+APPROVED HANDLE: @elonmusk only. Each post must be a DIFFERENT URL.
+
+NO ARBITRARY LIMIT: return ALL qualifying posts (typically 3-15 per day depending on his activity). The user wants every world-engaged post to get a block, not a hand-picked top 3.
+
+RECENCY-FIRST SEARCH (May 2026-05-02 evening — user complained about 2-day-old picks while Elon posts hourly):
+Use mode "Latest" PRIMARILY — Elon posts every few hours, fresh content always exists. Don't let high min_faves threshold filter out the last 6 hours of posts (which haven't accumulated likes yet but are the most recent).
+
+Searches:
+1. PRIMARY: mode:"Latest" "from:elonmusk since:$TODAY", limit: 50 — get last 24h of EVERYTHING he posted, no min_faves floor
+2. SUPPLEMENT: mode:"Latest" "from:elonmusk since:$YESTERDAY min_faves:500", limit: 25 — yesterday's top-engaged
+3. SUPPLEMENT: mode:"Top" "from:elonmusk since:$YESTERDAY min_faves:2000", limit: 25 — highest engagement of last 48h
+
+FROM THE COMBINED RESULTS, prefer:
+- Posts from last 6 hours (slot 1 must be ≤6h if any qualifying exists)
+- Posts from last 24 hours (next slots)
+- Older posts ONLY as last resort if today is genuinely thin
+
+DO NOT default to picking high-engagement old posts when fresh substantive ones exist. Recency wins over accumulated likes when both are substantive.
+
+POST TYPE GUIDANCE (Elon tab — no preference between originals and quote-tweets, judge each on its own merits):
+1. **Original substantive posts** (predictions, announcements, contrarian observations) — kept.
+2. **Quote-tweets** with commentary — kept. Twitter's embed renders the parent post inline.
+3. **REPLIES ARE OK** if you populate parent_url / parent_handle / parent_text (see system prompt). The frontend will render the parent post embed ABOVE the reply so readers see the conversation. Without parent_url, drop the post.
+4. **REJECT: Pure ads / Tesla/X marketing** ("Try X Premium today!") — boring corporate.
+
+CRITICAL — RENDERED CARD TEST: The site renders posts via Twitter's oEmbed. For pure replies, the embedded card shows ONLY the reply text — NOT the parent tweet that Elon is responding to. So even if YOU know what he's replying to (from your search results), the READER will see only Elon's words. Apply the test: if the reply text alone, in isolation, would not make sense to a reader who has no context, REJECT. Examples to REJECT:
+- "Might actually happen" (replying to a Newsom satire video — reader has no clue what)
+- "True" (replying to a claim — reader has no clue what claim)
+- "This is how an economy actually works" replying to a French parent that's not auto-translated — reader sees French
+- Any reply where you wrote a body like "Replying to X about Y" — that body context isn't shown to the reader; only the bare tweet text is shown via oEmbed embed
+
+Rule of thumb: if you find yourself writing "Replying to..." in the body field, the post FAILS the test. Skip it.
 
 If a quote-tweet's parent is in a non-English language (French/Portuguese/Spanish/etc), you MUST set "translation" field with full English translation of the parent tweet. If you can't translate, SKIP and pick another post.
 
@@ -262,7 +425,7 @@ HONESTY SCORING (apply rigorously, NOT auto-10):
 Most Elon posts are 7-9 (opinions, predictions, jokes). Reserve 10 for VERIFIABLE facts.
 Body: 1 sentence describing the take and (if reply) what he's responding to, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "147K likes, 22K retweets, 8K replies").
-Return JSON: {"elon":[{"headline":"...","handle":"@elonmusk","body":"...","engagement":"147K likes, 22K retweets, 8K replies","url":"...","honesty":"X/10","notes":"why this score"},...]}
+Return JSON: {"elon":[{"headline":"...","handle":"@elonmusk","body":"...","views":1234567,"engagement":"147K likes, 22K retweets, 8K replies","url":"...","honesty":"X/10","notes":"why this score"},...]}
 PROMPT
 
 # --- ALLIN ---
@@ -290,7 +453,7 @@ Pick 3 posts from 3 DIFFERENT approved handles — strongest ORIGINAL INSIGHT (h
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "5.2K likes, 800 retweets, 200 replies").
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"allin":[{"headline":"...","handle":"@...","body":"...","engagement":"5.2K likes, 800 retweets, 200 replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"allin":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"5.2K likes, 800 retweets, 200 replies","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
 # --- TOP VIRAL ---
@@ -302,7 +465,7 @@ Fallback: "lang:en since:$YESTERDAY min_faves:5000", mode: "Top", limit: 10.
 Pick the 3 highest-engagement posts. 3 DIFFERENT handles.
 Body: 1 sentence, under 120 chars.
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"top":[{"headline":"...","handle":"@...","body":"...","engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"top":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
 # --- MSM ---
@@ -332,7 +495,7 @@ PICK 3 posts from 3 DIFFERENT approved handles — HIGHEST ENGAGEMENT post from 
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "47K likes, 12K retweets, 3.2K replies").
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"msm":[{"headline":"...","handle":"@...","body":"...","engagement":"47K likes, 12K retweets, 3.2K replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"msm":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 12K retweets, 3.2K replies","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
 # --- BUSINESS ---
@@ -351,11 +514,21 @@ FALLBACK: If <3, retry with min_faves:50.
 
 QUALITY BAR: pick posts with data + opinion, contrarian call, or macro framing. REJECT bare earnings numbers, price-only posts, or "line go up" cheerleading.
 
+POLITICAL CONTENT REJECTION (HARD RULE): Business is markets/finance/macro ONLY. REJECT any post that is:
+- A political proposal, voting rights debate, immigration policy, social policy
+- A politician praising/criticizing another politician
+- A media outlet quoting a politician on policy (TIME on Washington, etc.)
+- An MSM-quote about "what most Americans think" of policy
+- Any content where the primary subject is partisan politics rather than markets/business
+If the topic is political, it belongs in the USA tab (which has 3-perspective format with Conservative/Democrat/Independent), NOT business. Single-perspective political content is explicitly forbidden — the user wants balance on every political story.
+
+QUOTED-MSM REJECTION: REJECT any post whose body is primarily a quoted passage from TIME, NY Times, WaPo, Washington Post, NPR, Reuters, AP, etc. (look for "per TIME" / "per NYT" / "per WaPo" patterns or text that opens with a quote). These are amplifications, not analysis.
+
 Pick 3 posts from 3 DIFFERENT approved handles — STRONGEST INSIGHT (highest combined likes+retweets+replies) per handle.
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "12K likes, 3K retweets, 800 replies").
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"business":[{"headline":"...","handle":"@...","body":"...","engagement":"12K likes, 3K retweets, 800 replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"business":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"12K likes, 3K retweets, 800 replies","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
 # --- SPORTS ---
@@ -381,7 +554,7 @@ FALLBACK: If weekend and no breaking news, use Friday's posts. ALWAYS produce 4 
 
 Body: 1 sentence, under 120 chars.
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take.
-Return JSON: {"sports":[{"headline":"...","handle":"@...","body":"...","engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"sports":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
 # --- PODS ---
@@ -417,7 +590,7 @@ Pick 3 from DIFFERENT approved shows — the 3 HIGHEST-ENGAGEMENT (combined like
 Body: 1 sentence describing the specific moment (what was said/happened), under 120 chars. Do NOT describe the episode generally.
 Engagement field MUST contain real numbers (e.g. "47K likes, 8K retweets, 3K replies").
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"pods":[{"headline":"...","handle":"@...","body":"...","engagement":"47K likes, 8K retweets, 3K replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"pods":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 8K retweets, 3K replies","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
 # --- PG6 (Celebrity) ---
@@ -449,7 +622,7 @@ Pick the 3 HIGHEST-ENGAGEMENT (combined likes+retweets+replies) UNEXPECTED/drama
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "47K likes, 8K retweets, 3K replies").
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"pg6":[{"headline":"...","handle":"@...","body":"...","engagement":"47K likes, 8K retweets, 3K replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"pg6":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 8K retweets, 3K replies","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
 # --- RECIPE ---
@@ -466,7 +639,7 @@ FALLBACK: If <3 from approved handles, retry with last 3 days.
 Body must name the dish. Skip non-recipe posts.
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "5K likes, 1K retweets, 200 replies").
-Return JSON: {"recipe":[{"headline":"...","handle":"@...","body":"...","engagement":"5K likes, 1K retweets, 200 replies","url":"...","honesty":"10/10","notes":"..."},...]}
+Return JSON: {"recipe":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"5K likes, 1K retweets, 200 replies","url":"...","honesty":"10/10","notes":"..."},...]}
 PROMPT
 
 # --- SCIENCE ---
@@ -483,41 +656,93 @@ FALLBACK 3: Last resort: "(scientists OR researchers OR study OR discovery) sinc
 
 PICK 3 from DIFFERENT handles describing 3 DIFFERENT discoveries. Body must name what was actually discovered/found.
 Body: 1 sentence under 120 chars.
-Return JSON: {"science":[{"headline":"...","handle":"@...","body":"...","engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"science":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
 # --- LOCAL ---
 cat > /tmp/grok_p_local.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
-ONLY stories physically in Orange County, Newport Beach, Huntington Beach, Irvine, LA, or SoCal.
+
+THE QUALITY MODEL — DAILY PILOT (https://www.dailypilot.com/)
+The user's exact guidance: "Go look at the Daily Pilot, it's the Newport Beach community paper. Look at the stories — that's the model for what to look for."
+
+Use web_search FIRST: "site:dailypilot.com" or visit dailypilot.com to see what types of stories are running THIS WEEK. Then find X posts that cover the SAME categories of stories. The Daily Pilot covers:
+- Newport Beach / Costa Mesa / Huntington Beach / Irvine / Laguna Beach city government (council meetings, mayor, planning commission, school board votes)
+- Local crime blotter (NBPD, OCSD reports — non-graphic, just specific incidents)
+- High school sports (Corona del Mar, Newport Harbor, Sage Hill, Estancia, etc.)
+- Local business openings/closings (restaurants, retail, small business stories)
+- Beach conditions, surf reports, water quality, ocean life
+- Real estate / housing development / zoning
+- Restaurant reviews and food scene
+- Community events (Newport Beach Film Festival, Boat Parade, Concerts on the Green)
+- Local non-profits and charities
+- Specific people (mayors, council members, school principals, business owners, athletes)
+- Traffic / road closures specific to OC
+
+GEOGRAPHY RULE (STRICT): Stories MUST be Newport Beach, Costa Mesa, Huntington Beach, Irvine, Laguna Beach, Corona del Mar, Balboa, Fountain Valley, Tustin. NEVER:
+- Generic LA County (Compton, Watts, downtown LA, Hollywood) unless directly affects OC
+- Political marches, labor rallies, protests anywhere
+- LA-wide breaking-news tickers
+- Federal political stories that just happen to be in California
 
 APPROVED HANDLES (use ONLY these — pick 3 DIFFERENT handles):
-@OC_Scanner, @ABC7, @LAist, @KTLA, @OCRegister, @DailyPilot, @NBPDsocial, @CityofNewportBeach
+@DailyPilot, @OC_Scanner, @OCRegister, @NBPDsocial, @CityofNewportBeach, @hbpd, @CityofHB, @cityofIrvine, @CMPD_NewsInfo, @oclnews, @CdMHigh, @newportharborhs
 
-Search: "(\"Orange County\" OR \"Newport Beach\" OR \"Huntington Beach\" OR \"Los Angeles\" OR SoCal) (from:OC_Scanner OR from:ABC7 OR from:KTLA OR from:LAist OR from:OCRegister OR from:DailyPilot OR from:NBPDsocial OR from:CityofNewportBeach) since:$YESTERDAY -Michigan -NYC -\"New York\" -Chicago -Florida -Texas", mode: "Top", limit: 20.
-FALLBACK: If <3, broaden: "from:OC_Scanner OR from:KTLA OR from:ABC7 OR from:OCRegister OR from:LAist OR from:DailyPilot since:$YESTERDAY -Michigan -NYC -Florida -Texas -Chicago", mode: "Top", limit: 20.
-Every story MUST be about a SoCal location. Verify before including.
-Body: 1 sentence, under 120 chars.
-Engagement field MUST contain real numbers (e.g. "5K likes, 1K retweets, 200 replies").
-Return JSON: {"local":[{"headline":"...","handle":"@...","body":"...","engagement":"5K likes, 1K retweets, 200 replies","url":"...","honesty":"10/10","notes":"..."},...]}
+PRIORITY ORDER:
+1. @DailyPilot direct posts — these ARE the model
+2. @OC_Scanner / @NBPDsocial / @hbpd for incidents
+3. @OCRegister for OC-wide stories
+4. @CityofNewportBeach / @cityofHB / @cityofIrvine for civic news
+
+Search:
+"from:DailyPilot since:$YESTERDAY", mode: "Top", limit: 20
+"from:OC_Scanner OR from:OCRegister OR from:NBPDsocial OR from:CityofNewportBeach OR from:hbpd OR from:CityofHB since:$YESTERDAY", mode: "Top", limit: 20
+"(\"Newport Beach\" OR \"Costa Mesa\" OR \"Huntington Beach\" OR \"Corona del Mar\" OR Irvine OR Laguna) since:$YESTERDAY min_faves:50", mode: "Top", limit: 20
+
+FALLBACK: If <3 fresh OC stories, broaden to last 3 days from same handles. Better to have a 2-day-old Newport Beach city council vote than a fresh LA story.
+
+THE TEST: "Would the Daily Pilot run this story?" If yes — pick it. If no (because it's LA, federal, partisan rant, MSM-bait) — skip it.
+
+Body: 1 sentence describing the specific local story, under 140 chars. Name the city, the people, or the place.
+Engagement field MUST contain real numbers (e.g. "1.2K likes, 200 retweets, 50 replies").
+Return JSON: {"local":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"1.2K likes, 200 retweets, 50 replies","url":"...","honesty":"10/10","notes":"..."},...]}
 PROMPT
 
-# --- MEMES ---
-cat > /tmp/grok_p_memes.txt <<PROMPT
+# --- CONSPIRACY ---
+cat > /tmp/grok_p_conspiracy.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
-The 3 MOST VIRAL memes, cartoons, or satirical posts on X right now. Must be humorous or satirical.
+MISSION: 3 posts going DEEP behind the biggest stories of the day — investigative threads, suppressed angles, undercover footage, court documents, document dumps, FOIA results, contradictions in official narratives, things mainstream media is NOT asking. The vibe is "in search of the truth behind the biggest stories."
 
-IMPORTANT: POLITICAL BALANCE. Do not target any politically-slanted satire account specifically. Pick from a diverse pool. If 2 of the 3 you're about to select lean the same political direction, swap one for a neutral or opposing-lean option to maintain balance.
+APPROVED HANDLES (use ONLY these — pick 3 DIFFERENT handles):
+@JackPosobiec, @JamesOKeefeIII, @TomFitton, @WallStreetApes, @TheRabbitHole84, @CollinRugg, @libsoftiktok, @EndWokeness, @DropSiteNews, @Snowden, @ggreenwald, @ProPublica, @KimZetter, @disclosetv, @megynkelly, @SecularTalk, @MariaBartiromo, @JulianAssange, @BillMelugin_
 
-Search: "(meme OR satire OR cartoon OR parody) lang:en since:$YESTERDAY min_faves:10000", mode: "Top", limit: 20.
-FALLBACK 1: If <3, broaden to "lang:en since:$YESTERDAY min_faves:5000 (meme OR satire OR funny)", mode: "Top", limit: 20.
-FALLBACK 2: If still <3, drop min_faves to 2000.
+QUALITY BAR — what counts as a "conspiracy / truth-behind" post:
+- Investigative threads with specific evidence (documents, video, leaked memos)
+- Undercover footage (Project Veritas style)
+- Documented contradictions between official narrative and evidence
+- FOIA results, court filings, financial disclosures revealing things
+- Suppressed angles on viral stories ("the part nobody is talking about")
+- Specific people, places, dates, dollar amounts — NOT vague "they don't want you to know"
+- Tied to a CURRENT BIG STORY — not random rabbit holes
 
-Pick the 3 highest-engagement meme/satirical posts from DIFFERENT handles. Prefer variety: one apolitical meme (observational humor, animals, relationships, tech), one political-left-leaning if funny, one political-right-leaning if funny — OR all three apolitical. NEVER 3 that lean the same political direction.
+REJECT:
+- Pure rant / "wake up sheeple" with no evidence
+- Vague "they're hiding something" without specifics
+- UFO / Bigfoot / aliens unless tied to actual document release
+- Anti-vax / flat earth — those are old conspiracies, not "truth behind today's stories"
+- Content older than 6 hours (must be tied to current news cycle)
+- MSM amplification ("per CNN") — these are people DOING reporting MSM isn't doing
 
-Body: 1 sentence describing what the meme shows or why it's funny, under 120 chars.
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Memes are usually 7-8. Apply scoring equally to all sides — no favoritism.
-Return JSON: {"memes":[{"headline":"...","handle":"@...","body":"...","engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Search:
+"(from:JackPosobiec OR from:JamesOKeefeIII OR from:TomFitton OR from:WallStreetApes OR from:TheRabbitHole84 OR from:CollinRugg OR from:libsoftiktok OR from:EndWokeness OR from:DropSiteNews OR from:Snowden OR from:ggreenwald OR from:ProPublica OR from:KimZetter OR from:disclosetv OR from:BillMelugin_) since:$YESTERDAY min_faves:1000", mode: "Top", limit: 30
+FALLBACK 1: If <3 strong picks, drop to min_faves:500.
+FALLBACK 2: Add "(receipts OR documents OR leaked OR exposed OR investigation OR FOIA OR \"court filing\")" to narrow toward actual evidence-based posts.
+
+Pick 3 from 3 DIFFERENT approved handles — strongest evidence/investigation posts.
+Body: 1 sentence naming the SPECIFIC angle being investigated, under 140 chars.
+Engagement field MUST contain real numbers (e.g. "12K likes, 3K retweets, 800 replies").
+Honesty: score on the specific evidence presented. Score-with-evidence = 8-10. Pure speculation = 4-6. Conspiracy without specifics = 2-3.
+Return JSON: {"conspiracy":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"12K likes, 3K retweets, 800 replies","url":"...","honesty":"X/10","notes":"why this score"},...]}
 PROMPT
 
 # --- COMEDY ---
@@ -529,54 +754,12 @@ FALLBACK: If <3, broaden: "("standup" OR "stand-up" OR "comedy clip") lang:en si
 Pick the 3 highest-engagement comedy clip posts from DIFFERENT handles.
 Body: 1 sentence describing the comedian/moment, under 120 chars.
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Most comedy clips are 8-9 (performative).
-Return JSON: {"comedy":[{"headline":"...","handle":"@...","body":"...","engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"comedy":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
 # --- TIKTOK ---
-cat > /tmp/grok_p_tiktok.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-The 3 MOST VIRAL TikTok clips being shared on X right now. ANY subject — news, gossip, comedy, dance, cooking, sports, whatever. Massively viral only.
-Search: "tiktok.com lang:en since:$YESTERDAY min_faves:10000", mode: "Top", limit: 20.
-FALLBACK: If <3, retry: "tiktok.com lang:en since:$YESTERDAY min_faves:2000", mode: "Top", limit: 20.
-Pick the 3 highest-engagement posts from DIFFERENT handles.
-
-ABSOLUTELY CRITICAL RULES:
-1. The "url" field MUST start with "https://www.tiktok.com/" or "https://tiktok.com/" — NO OTHER URLS ALLOWED.
-2. Do NOT return X profile URLs like "https://x.com/username".
-3. Do NOT return X status URLs like "https://x.com/username/status/123".
-4. You MUST extract the tiktok.com URL that was embedded or linked in the X post's body.
-5. If an X post doesn't contain an extractable tiktok.com URL, SKIP that post and try the next one.
-6. If you cannot find 3 posts with real tiktok.com URLs, return fewer posts rather than faking URLs.
-
-The "handle" field should be the TikTok creator's handle (e.g., @khaby.lame) taken from the tiktok.com URL path.
-
-Body: 1 sentence describing the TikTok content and why it went viral, under 120 chars.
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take.
-Return JSON: {"tiktok":[{"headline":"...","handle":"@tiktok_creator","body":"...","engagement":"...","url":"https://www.tiktok.com/...","honesty":"X/10","notes":"..."},...]}
-PROMPT
-
-# --- GOLF ---
-cat > /tmp/grok_p_golf.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-Find the 3 MOST VIRAL golf-tip videos being shared on X — swing tips, drills, putting lessons, short game, course management. INSTRUCTIONAL content only (not tournament highlights, not news).
-
-SEARCH STRATEGY (run multiple in parallel, combine results):
-1. Top golf instruction accounts (broadened roster): "from:rickshielspga OR from:meandmygolf OR from:GolfMonthlyMag OR from:athletic_motion OR from:GolfDigest OR from:GolfChannel OR from:TheGolfingMachine OR from:GolfIQ OR from:pgatour OR from:NUCLRGOLF OR from:RiggsGolf OR from:Nickolgolf OR from:4golfonline OR from:GolfWeek OR from:noplaceforgolf OR from:thejyhsong OR from:Bryson OR from:Slomoswinglib OR from:golfacademy_eu OR from:mike_dicksongolf OR from:pgaprofessional since:$YESTERDAY min_faves:20", mode: "Top", limit: 30
-2. Golf-tip keyword search: "(golf swing tip OR golf drill OR golf fix OR putting tip OR chip shot tip OR golf lesson OR golf instruction) lang:en since:$YESTERDAY min_faves:50", mode: "Top", limit: 25
-3. TikTok golf clips reshared: "tiktok.com (golf OR swing OR putting OR chipping OR driving) lang:en since:$YESTERDAY min_faves:30", mode: "Top", limit: 25
-
-FALLBACK 1: If <3 after above, broaden timeframe to last 3 days (since:3 days ago).
-FALLBACK 2: If still <3, drop min_faves to 5 for golf instruction handles.
-FALLBACK 3: Last resort — search "tiktok.com golf" anywhere in last 7 days; pick 3 most-engaged that show a tip.
-
-Pick the 3 highest-engagement INSTRUCTIONAL golf tips from DIFFERENT handles. A "tip" must contain actionable advice (not "watch me play this hole" or tournament clips).
-
-CRITICAL: If the source is a TikTok being reshared on X, return the ACTUAL TikTok URL (https://www.tiktok.com/...) as the url field, not the X URL. If the source is a YouTube Short, return the YouTube URL. Use the original creator's handle (not the X reposter).
-
-Body: 1 sentence summarizing the specific tip (e.g. "keep your trail elbow tucked for consistent contact"), under 120 chars.
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Instruction tips are usually 8-9 (technique opinions).
-Return JSON: {"golf":[{"headline":"...","handle":"@...","body":"...","engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
-PROMPT
+# TikTok tab REMOVED (2026-05-05): user eliminated TikTok from tab roster long ago;
+# this prompt + fetch_tiktok.py + tikwm scraper were leftover dead code.
 
 # ============================================================
 # GLOBAL RULES — appended to every prompt before it runs
@@ -745,7 +928,7 @@ INJECT_EOF
 # ============================================================
 echo "Launching 16 parallel API calls..."
 
-CATEGORIES="world usa elon allin top msm business sports pods pg6 recipe science local memes comedy golf"
+CATEGORIES="world usa elon allin top msm business sports pods pg6 recipe science local conspiracy comedy"
 
 for cat in $CATEGORIES; do
     # All tabs run on grok-4-fast. The world/USA prompts have been simplified so the
@@ -756,9 +939,7 @@ for cat in $CATEGORIES; do
     grok_call "/tmp/grok_p_${cat}.txt" "/tmp/grok_raw_${cat}.json" "$model" &
 done
 
-# TikTok tab uses tikwm.com free trending API, not Grok
-echo "  Starting: tiktok via tikwm.com"
-python3 $SCRIPT_DIR/fetch_tiktok.py &
+# TikTok scraper REMOVED (2026-05-05) — tab eliminated from UI long ago.
 
 echo "Waiting for all calls to complete..."
 wait
@@ -772,7 +953,7 @@ echo "Merging and validating..."
 python3 <<'MERGE_EOF' > /tmp/grok_raw.json
 import json, sys, re
 
-CATEGORIES = 'world usa elon allin top msm business sports pods pg6 recipe science local memes comedy tiktok golf'.split()
+CATEGORIES = 'world usa elon allin top msm business sports pods pg6 recipe science local conspiracy comedy'.split()
 
 def extract_json_text(raw_file):
     try:
@@ -1160,12 +1341,17 @@ fi
 echo "Parse done."
 
 # ============================================================
-# QC CRITIC PASS — second Grok review of curated stories
-# Logs concerns to /tmp/expresso_qc_review.log for human review.
-# Does NOT block deploy — surfaces concerns for prompt-tuning.
+# CLAUDE CRITIC PASS — DISABLED (May 2026-05-04).
+# User chose pure-views spec: no AI judgment layer over selection.
+# curation.py is now the only selection authority. claude_critic.sh
+# imposed taste judgments ("is this interesting?", "is this MSM-bait?")
+# which is exactly the rat's nest we're escaping.
 # ============================================================
-echo "Running QC critic pass..."
-bash $SCRIPT_DIR/qc_critic.sh || echo "QC critic skipped"
+# bash $SCRIPT_DIR/claude_critic.sh   # bypassed per user pure-views pick
+echo "Claude critic: bypassed (pure views spec)"
+
+# Legacy qc_critic.sh — also disabled.
+# bash $SCRIPT_DIR/qc_critic.sh
 
 # DEPLOY via Netlify API
 echo "Deploying via digest API..."
