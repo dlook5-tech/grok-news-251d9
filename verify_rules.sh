@@ -104,8 +104,14 @@ check "ui:conspiracy-image"             index.html       "conspiracy\.webp|consp
 # ============================================================
 # E. SETTINGS — bypass permissions at all 3 levels.
 # ============================================================
-check "settings:project-bypass"         .claude/settings.json                              "bypassPermissions" exists
-check "settings:user-global-bypass"     /Users/lookhome/.claude/settings.json              "bypassPermissions" exists
+# Settings audits — skip on CI (the user-global Mac path doesn't exist on Linux).
+# These checks are dev-mode only (ensure Claude Code can run without permission prompts).
+if [[ -f .claude/settings.json ]]; then
+  check "settings:project-bypass"         .claude/settings.json                              "bypassPermissions" exists
+fi
+if [[ -f /Users/lookhome/.claude/settings.json ]]; then
+  check "settings:user-global-bypass"     /Users/lookhome/.claude/settings.json              "bypassPermissions" exists
+fi
 
 # ============================================================
 # F. NEW PROMPT REQUIREMENTS — Grok must be told to return views.
