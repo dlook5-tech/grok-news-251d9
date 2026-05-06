@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-06T17:52:10Z",
+  "lastUpdated": "2026-05-06T21:57:59Z",
   "world": {
     "stories": [
       {
@@ -16,7 +16,7 @@
             "views": 595865,
             "notes": "Verifiable direct quote from President Trump on negotiation outcomes; no factual errors in reporting the statement.",
             "views_at_save": 595865,
-            "age_at_save_hours": 5.88
+            "age_at_save_hours": 9.98
           },
           {
             "label": "Democrat",
@@ -28,7 +28,7 @@
             "views": 51381,
             "notes": "Accurate reporting of Rubio's statements with context on war objectives and legal claims; includes critical framing without introducing false facts.",
             "views_at_save": 51381,
-            "age_at_save_hours": 21.05
+            "age_at_save_hours": 25.14
           },
           {
             "label": "Independent",
@@ -40,7 +40,7 @@
             "views": 90545,
             "notes": "Opinionated analysis critiquing media reporting; factual claims about negotiation resemblance to Obama deal are defensible predictions without verifiable lies.",
             "views_at_save": 90545,
-            "age_at_save_hours": 5.48
+            "age_at_save_hours": 9.57
           }
         ],
         "footnotes": [
@@ -52,13 +52,61 @@
         "body": "Three-perspective roundup.",
         "posted": "5/6/2026 5:52 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 5.88
+        "age_at_save_hours": 9.98
       }
     ],
     "earlier": []
   },
   "usa": {
     "stories": [
+      {
+        "headline": "Trump Releases 2026 Counterterrorism Strategy Targeting Cartels and Antifa",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@WhiteHouse",
+            "url": "https://x.com/WhiteHouse/status/2052138268171387060",
+            "text": "\ud83c\uddfa\ud83c\uddf8 America is our homeland \u2014 and it will be protected.. The 2026 Counterterrorism Report prioritizes:\n\u2022 Eliminating cartel networks\n\u2022 Targeting...",
+            "engagement": "1.9K likes, 499 reposts",
+            "honesty": "9/10",
+            "views": 49190,
+            "notes": "Official policy announcement from the White House, verifiable facts on strategy priorities without false claims.",
+            "views_at_save": 49190,
+            "age_at_save_hours": 0.5
+          },
+          {
+            "label": "Democrat",
+            "handle": "@politico",
+            "url": "https://x.com/politico/status/2052144684496212026",
+            "text": "Trump counterterrorism strategy targets \u2018violent left-wing extremists\u2019 with \u2018transgender ideology\u2019...",
+            "engagement": "3 likes",
+            "honesty": "8/10",
+            "views": 980,
+            "notes": "Reports on controversial aspects of the strategy targeting left-wing groups, based on document analysis.",
+            "views_at_save": 980,
+            "age_at_save_hours": 0.08
+          },
+          {
+            "label": "Independent",
+            "handle": "@thehill",
+            "url": "https://x.com/thehill/status/2052102597893374217",
+            "text": "Trump\u2019s counterterrorism strategy puts focus on left-wing \u2018violent secular groups\u2019...",
+            "engagement": "7 likes",
+            "honesty": "8/10",
+            "views": 3637,
+            "notes": "Factual summary of the strategy's emphasis on domestic threats, no demonstrable errors.",
+            "views_at_save": 3637,
+            "age_at_save_hours": 2.87
+          }
+        ],
+        "footnotes": [],
+        "notes": "High-view story on federal policy update emphasizing domestic security; total views across perspectives exceed 50K.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/6/2026 9:58 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 0.5
+      },
       {
         "headline": "FBI Raids Office of Virginia Democratic State Senator in Corruption Probe",
         "honesty": "8/10",
@@ -73,7 +121,7 @@
             "views": 211355,
             "notes": "Factual reporting of ongoing raid based on on-scene correspondent and sources, no apparent errors",
             "views_at_save": 211355,
-            "age_at_save_hours": 2.43
+            "age_at_save_hours": 6.53
           },
           {
             "label": "Democrat",
@@ -85,7 +133,7 @@
             "views": 64615,
             "notes": "Partisan commentary questioning the timing and reporting of the raid, defensible opinion without factual inaccuracies",
             "views_at_save": 64615,
-            "age_at_save_hours": 1.42
+            "age_at_save_hours": 5.52
           },
           {
             "label": "Independent",
@@ -97,7 +145,7 @@
             "views": 21606,
             "notes": "Straightforward breaking news announcement from reliable source with confirmed details",
             "views_at_save": 21606,
-            "age_at_save_hours": 1.42
+            "age_at_save_hours": 5.52
           }
         ],
         "footnotes": [],
@@ -105,7 +153,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/6/2026 9:50 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 2.43
+        "age_at_save_hours": 6.53
       },
       {
         "headline": "Senate Republicans Propose $1 Billion for Secret Service Upgrades Including White House Ballroom",
@@ -121,7 +169,7 @@
             "views": 9995,
             "notes": "Reports president's statement on project status - verifiable quote with no false claims",
             "views_at_save": 9995,
-            "age_at_save_hours": 3.86
+            "age_at_save_hours": 7.95
           },
           {
             "label": "Democrat",
@@ -133,7 +181,7 @@
             "views": 8919,
             "notes": "Partisan critique of GOP spending priorities linking to health care - defensible opinion without demonstrable lies",
             "views_at_save": 8919,
-            "age_at_save_hours": 0.59
+            "age_at_save_hours": 4.69
           },
           {
             "label": "Independent",
@@ -145,7 +193,7 @@
             "views": 25609,
             "notes": "Neutral factual report on Senate Republican proposal - verifiable legislative news",
             "views_at_save": 25609,
-            "age_at_save_hours": 18.21
+            "age_at_save_hours": 22.3
           }
         ],
         "footnotes": [],
@@ -153,13 +201,61 @@
         "body": "Three-perspective roundup.",
         "posted": "5/6/2026 5:52 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 3.86
+        "age_at_save_hours": 7.95
       }
     ],
     "earlier": []
   },
   "elon": {
     "stories": [
+      {
+        "headline": "Elon Shares Rubio on American Opportunity",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052129757098295732",
+        "body": "Elon posts video of Marco Rubio stating hope for America to remain a place where anyone from anywhere can achieve anything.",
+        "engagement": "40K likes, 4.9K reposts, 2.7K replies",
+        "honesty": "9/10",
+        "notes": "Accurate sharing of verifiable public statement by Rubio.",
+        "posted": "2026-05-06T21:58:00Z",
+        "post_ts": "2026-05-06T20:53:55Z",
+        "views": 4262388,
+        "views_at_save": 4262388,
+        "age_at_save_hours": 1.07
+      },
+      {
+        "headline": "Elon Details His Tax Payments",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052126760633040977",
+        "body": "Elon reveals paying over $10B in taxes one year, more than anyone in history, and expecting trillions total, responding to debate on whether rich pay...",
+        "engagement": "21K likes, 2.8K reposts, 2.4K replies",
+        "honesty": "9/10",
+        "notes": "Factual self-reporting of tax history, verifiable through public records.",
+        "posted": "2026-05-06T21:58:00Z",
+        "post_ts": "2026-05-06T20:42:01Z",
+        "views": 484803,
+        "parent_url": "https://x.com/TheRabbitHole/status/2052117357615800510",
+        "parent_handle": "@TheRabbitHole",
+        "parent_text": "Do rich people pay taxes? > Yes. Do they pay their fair share? > More actually.",
+        "views_at_save": 484803,
+        "age_at_save_hours": 1.27
+      },
+      {
+        "headline": "Elon on Cultural Brainwashing",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052133883676938695",
+        "body": "Elon says a white leftist advocating ISIS return to Australia has been brainwashed to hate her own culture, responding to video of debate with ISIS...",
+        "engagement": "3K likes, 237 reposts, 315 replies",
+        "honesty": "7/10",
+        "notes": "Subjective opinion on cultural dynamics without factual inaccuracies.",
+        "posted": "2026-05-06T21:58:00Z",
+        "post_ts": "2026-05-06T21:10:19Z",
+        "views": 28772,
+        "parent_url": "https://x.com/DrewPavlou/status/2051638088259289474",
+        "parent_handle": "@DrewPavlou",
+        "parent_text": "Suicidal white leftist lady wearing LGBT rainbow earrings argues that Australia should bring ISIS members stranded overseas back to Australia, while Yazidi refugee who was personally tortured by ISIS begs for them to be blocked. Absolute perfect example of Western suicidal empath",
+        "views_at_save": 28772,
+        "age_at_save_hours": 0.79
+      },
       {
         "headline": "Elon Praises Anthropic Team on AI Safety Efforts",
         "handle": "@elonmusk",
@@ -175,7 +271,7 @@
         "parent_handle": "@nottombrown",
         "parent_text": "In the next few days we'll be ramping up Claude inference on Colossus. \n\nGrateful to be partnering with SpaceX here. We are going to need to move a lot of atoms in order to keep up with AI demand, and there's nobody better at quickly moving atoms (on or off planet Earth)",
         "views_at_save": 126726,
-        "age_at_save_hours": 0.95
+        "age_at_save_hours": 5.05
       },
       {
         "headline": "Elon Outlines Compute Leasing Policy for AI Companies",
@@ -192,7 +288,7 @@
         "parent_handle": "@MobofJoggers",
         "parent_text": "Do you plan on having extra computer to lease out in the future or will SpaceXAI and Tesla be using all of it?",
         "views_at_save": 32954,
-        "age_at_save_hours": 0.51
+        "age_at_save_hours": 4.61
       },
       {
         "headline": "Immigration Voter Import",
@@ -209,7 +305,7 @@
         "parent_handle": "@jgebbia",
         "parent_text": "Illuminating speech by Schumer worth watching. Dems used to be against illegal immigration. What changed?",
         "views_at_save": 80608,
-        "age_at_save_hours": 1.89
+        "age_at_save_hours": 5.98
       },
       {
         "headline": "Elon on ironic reparations advocate",
@@ -226,7 +322,7 @@
         "parent_handle": "@wil_da_beast630",
         "parent_text": "This is very funny.",
         "views_at_save": 109252,
-        "age_at_save_hours": 10.67
+        "age_at_save_hours": 14.76
       },
       {
         "headline": "SSRIs Critique",
@@ -243,7 +339,7 @@
         "parent_handle": "@fworksconfetti",
         "parent_text": "Ella Emhoff, stepdaughter of former Vice President Kamala Harris, from 16 December last year: \"...I'm just sitting here crocheting, waiting for a friend, and I was just listening to this podcast that The Wall Street Journal put out about SSRIs and anti-anxiety meds and kind of th",
         "views_at_save": 422855,
-        "age_at_save_hours": 12.19
+        "age_at_save_hours": 16.28
       }
     ],
     "earlier": []
@@ -255,14 +351,14 @@
         "handle": "@ShamsCharania",
         "url": "https://x.com/ShamsCharania/status/2052070398552879593",
         "body": "Philadelphia 76ers star Joel Embiid ruled out for Game 2 against New York Knicks due to ankle and hip injuries.",
-        "engagement": "15.3K likes, 1.8K reposts, 3.2K quotes, 2.1K replies",
+        "engagement": "29K likes, 2.9K reposts, 4.5K quotes, 3.3K replies",
         "honesty": "10/10",
-        "notes": "ESPN insider reporting verified injury update from sources.",
-        "posted": "2026-05-06T17:52:11Z",
+        "notes": "Verified insider report on NBA playoff injury.",
+        "posted": "2026-05-06T21:58:00Z",
         "post_ts": "2026-05-06T16:58:03Z",
-        "views": 2139171,
-        "views_at_save": 2139171,
-        "age_at_save_hours": 0.9
+        "views": 5856845,
+        "views_at_save": 5856845,
+        "age_at_save_hours": 5.0
       },
       {
         "headline": "Cowherd on KD's Future and Knicks' Viability",
@@ -276,7 +372,7 @@
         "post_ts": "2026-05-06T14:29:20Z",
         "views": 21012,
         "views_at_save": 21012,
-        "age_at_save_hours": 3.38
+        "age_at_save_hours": 7.48
       },
       {
         "headline": "2026 NFLPA Rookie Premiere player list announced",
@@ -290,7 +386,7 @@
         "post_ts": "2026-05-06T15:06:51Z",
         "views": 248673,
         "views_at_save": 248673,
-        "age_at_save_hours": 2.76
+        "age_at_save_hours": 6.85
       }
     ],
     "earlier": []
@@ -298,46 +394,46 @@
   "allin": {
     "stories": [
       {
-        "headline": "Chamath on Balanced AI Adoption",
+        "headline": "Chamath on AI Strategy for Enterprises",
         "handle": "@chamath",
         "url": "https://x.com/chamath/status/2052056698437927186",
-        "body": "AI success demands optimism tempered by cynicism to avoid SaaS traps like vendor lock-in and ensure coherent enterprise strategies.",
-        "engagement": "118 likes, 4 retweets, 23 replies",
+        "body": "Successful AI adoption demands optimism balanced with cynicism about current tech limits to prevent vendor lock-in and build coherent strategies.",
+        "engagement": "187 likes, 7 retweets, 27 replies",
         "honesty": "7/10",
-        "notes": "Opinion on AI strategy with no factual errors.",
-        "posted": "2026-05-06T17:52:12Z",
+        "notes": "Opinion on AI business strategy and adoption challenges.",
+        "posted": "2026-05-06T21:58:01Z",
         "post_ts": "2026-05-06T16:03:36Z",
-        "views": 43468,
-        "views_at_save": 43468,
-        "age_at_save_hours": 1.81
+        "views": 61694,
+        "views_at_save": 61694,
+        "age_at_save_hours": 5.91
       },
       {
-        "headline": "Palmer Luckey Uncovers Star Wars Censorship",
-        "handle": "@PalmerLuckey",
-        "url": "https://x.com/PalmerLuckey/status/2051549912165413303",
-        "body": "In the Game Boy Advance version of Star Wars Episode III, the line 'If you are not with me, then you're my enemy!' was changed to 'against me' while...",
-        "engagement": "3.3K likes, 43 retweets, 110 replies",
-        "honesty": "9/10",
-        "notes": "Verifiable observation of media adaptation change.",
-        "posted": "2026-05-06T17:52:12Z",
-        "post_ts": "2026-05-05T06:29:49Z",
-        "views": 173795,
-        "views_at_save": 173795,
-        "age_at_save_hours": 35.37
-      },
-      {
-        "headline": "Marc Andreessen Backs Relocating to Tech Hubs",
+        "headline": "Marc Andreessen Endorses Moving to Tech Hubs",
         "handle": "@pmarca",
         "url": "https://x.com/pmarca/status/2051736864051302650",
-        "body": "Despite remote work hype, it's essential to move to industry clusters like the Bay Area to break into tech, as 91% of AI market cap is there.",
-        "engagement": "1.4K likes, 61 retweets, 58 replies",
-        "honesty": "7/10",
-        "notes": "Opinion endorsing location-based career advice.",
-        "posted": "2026-05-06T17:05:30Z",
+        "body": "Relocating to industry clusters like the Bay Area is crucial for AI success, despite criticism, as 91% of global AI market cap is concentrated there.",
+        "engagement": "1.4K likes, 66 retweets, 60 replies",
+        "honesty": "8/10",
+        "notes": "Endorses verifiable fact on AI market concentration with supportive opinion.",
+        "posted": "2026-05-06T21:58:01Z",
         "post_ts": "2026-05-05T18:52:42Z",
-        "views": 341105,
-        "views_at_save": 341105,
-        "age_at_save_hours": 22.99
+        "views": 356212,
+        "views_at_save": 356212,
+        "age_at_save_hours": 27.09
+      },
+      {
+        "headline": "Palmer Luckey Notices Star Wars Dialogue Change",
+        "handle": "@PalmerLuckey",
+        "url": "https://x.com/PalmerLuckey/status/2051549912165413303",
+        "body": "The Game Boy Advance port of Star Wars Episode III altered the iconic line 'you're my enemy' to 'you're against me,' leaving other dialogue intact.",
+        "engagement": "3.3K likes, 43 retweets, 110 replies",
+        "honesty": "10/10",
+        "notes": "Factual observation of specific game adaptation change.",
+        "posted": "2026-05-06T21:58:01Z",
+        "post_ts": "2026-05-05T06:29:49Z",
+        "views": 174977,
+        "views_at_save": 174977,
+        "age_at_save_hours": 39.47
       }
     ],
     "earlier": []
@@ -345,18 +441,18 @@
   "pods": {
     "stories": [
       {
-        "headline": "Megyn Kelly on Blake Lively's Lawsuit Settlement",
+        "headline": "Megyn Kelly on Blake Lively Settlement",
         "handle": "@MegynKellyShow",
         "url": "https://x.com/MegynKellyShow/status/2051851113381454079",
-        "body": "Megyn Kelly attributes Blake Lively's settlement to her tarnished reputation from media scrutiny over treatment of Justin Baldoni.",
-        "engagement": "3K likes, 130 reposts, 67 replies",
-        "honesty": "8/10",
-        "notes": "Fact-based opinion on public celebrity dispute.",
-        "posted": "2026-05-06T17:52:12Z",
+        "body": "Megyn Kelly says Blake Lively settled because relentless media confrontation over her behavior toward Justin Baldoni ruined her reputation.",
+        "engagement": "3.3K likes, 149 reposts, 71 replies",
+        "honesty": "7/10",
+        "notes": "Opinion take on celebrity lawsuit based on reported events.",
+        "posted": "2026-05-06T21:58:01Z",
         "post_ts": "2026-05-06T02:26:41Z",
-        "views": 203553,
-        "views_at_save": 203553,
-        "age_at_save_hours": 15.43
+        "views": 223602,
+        "views_at_save": 223602,
+        "age_at_save_hours": 19.52
       },
       {
         "headline": "Shane Gillis Roasts Marco Rubio",
@@ -370,7 +466,7 @@
         "post_ts": "2026-05-06T03:00:01Z",
         "views": 415668,
         "views_at_save": 415668,
-        "age_at_save_hours": 14.87
+        "age_at_save_hours": 18.97
       },
       {
         "headline": "Cenk Uygur Banned from Major Networks",
@@ -384,13 +480,41 @@
         "post_ts": "2026-05-05T00:30:00Z",
         "views": 47106,
         "views_at_save": 47106,
-        "age_at_save_hours": 41.37
+        "age_at_save_hours": 45.47
       }
     ],
     "earlier": []
   },
   "business": {
     "stories": [
+      {
+        "headline": "Ray Dalio on Debt Cycles and Money Printing",
+        "handle": "@RayDalio",
+        "url": "https://x.com/RayDalio/status/2052135714893287583",
+        "body": "Extreme debt levels force governments to print money, shifting but not solving debt cycles.",
+        "engagement": "146 likes, 24 retweets, 22 replies",
+        "honesty": "7/10",
+        "notes": "Opinion on historical debt dynamics, no factual errors.",
+        "posted": "2026-05-06T21:58:01Z",
+        "post_ts": "2026-05-06T21:17:35Z",
+        "views": 18726,
+        "views_at_save": 18726,
+        "age_at_save_hours": 0.67
+      },
+      {
+        "headline": "Edward Dowd Signals Housing Market Rollover",
+        "handle": "@DowdEdward",
+        "url": "https://x.com/DowdEdward/status/2051705103007293856",
+        "body": "Median new home price plunges $21.6K to $387.4K, indicating national housing rollover.",
+        "engagement": "552 likes, 87 retweets, 42 replies",
+        "honesty": "8/10",
+        "notes": "Analysis based on verifiable price data.",
+        "posted": "2026-05-06T21:58:01Z",
+        "post_ts": "2026-05-05T16:46:30Z",
+        "views": 39936,
+        "views_at_save": 39936,
+        "age_at_save_hours": 29.19
+      },
       {
         "headline": "Anthropic's AI Self-Improvement Feature",
         "handle": "@unusual_whales",
@@ -403,21 +527,7 @@
         "post_ts": "2026-05-06T16:50:59Z",
         "views": 97951,
         "views_at_save": 97951,
-        "age_at_save_hours": 1.02
-      },
-      {
-        "headline": "National Housing Rollover in Motion",
-        "handle": "@DowdEdward",
-        "url": "https://x.com/DowdEdward/status/2051705103007293856",
-        "body": "Edward Dowd predicts a national housing market rollover as median new home prices drop sharply to $387.4K, the lowest since 2021.",
-        "engagement": "548 likes, 87 retweets, 42 replies",
-        "honesty": "7/10",
-        "notes": "Opinion on market trend supported by price data.",
-        "posted": "2026-05-06T17:52:13Z",
-        "post_ts": "2026-05-05T16:46:30Z",
-        "views": 39541,
-        "views_at_save": 39541,
-        "age_at_save_hours": 25.1
+        "age_at_save_hours": 5.12
       }
     ],
     "earlier": []
@@ -425,46 +535,46 @@
   "top": {
     "stories": [
       {
-        "headline": "Claude Announces SpaceX Partnership for Compute Boost",
+        "headline": "Elon Endorses NVIDIA GB300",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052135256866824293",
+        "body": "Elon Musk calls NVIDIA's GB300 the best AI computer amid SpaceX-Anthropic partnership.",
+        "engagement": "8K likes, 737 reposts",
+        "honesty": "7/10",
+        "notes": "Opinion: Praise for product in context of real partnership.",
+        "posted": "2026-05-06T21:58:01Z",
+        "post_ts": "2026-05-06T21:15:46Z",
+        "views": 2018119,
+        "views_at_save": 2018119,
+        "age_at_save_hours": 0.7
+      },
+      {
+        "headline": "Anthropic-SpaceX Compute Partnership",
         "handle": "@claudeai",
         "url": "https://x.com/claudeai/status/2052060691893227611",
-        "body": "Anthropic has partnered with SpaceX to increase compute capacity for Claude, raising usage limits for Code and API.",
-        "engagement": "41K likes, 3.5K reposts, 2K replies",
-        "honesty": "10/10",
-        "notes": "Fact - official company announcement",
-        "posted": "2026-05-06T17:52:13Z",
+        "body": "Anthropic partners with SpaceX to increase compute capacity and raises limits for Claude Code and API usage.",
+        "engagement": "84K likes, 7K reposts",
+        "honesty": "9/10",
+        "notes": "Fact: Company announcement of partnership and updates.",
+        "posted": "2026-05-06T21:58:01Z",
         "post_ts": "2026-05-06T16:19:29Z",
-        "views": 2528184,
-        "views_at_save": 2528184,
-        "age_at_save_hours": 1.55
+        "views": 9027934,
+        "views_at_save": 9027934,
+        "age_at_save_hours": 5.64
       },
       {
-        "headline": "Chaos at JP Morgan",
-        "handle": "@corporatedudes",
-        "url": "https://x.com/corporatedudes/status/2051995481006371051",
-        "body": "Hilarious image captures bizarre workplace antics at JP Morgan bank.",
-        "engagement": "13K likes, 499 reposts",
-        "honesty": "7/10",
-        "notes": "Opinion on humorous workplace scenario.",
-        "posted": "2026-05-06T16:34:38Z",
-        "post_ts": "2026-05-06T12:00:21Z",
-        "views": 496333,
-        "views_at_save": 496333,
-        "age_at_save_hours": 5.86
-      },
-      {
-        "headline": "OpenAI's New Networking Protocol",
-        "handle": "@OpenAI",
-        "url": "https://x.com/OpenAI/status/2052025532485902368",
-        "body": "OpenAI partners with AMD, Broadcom, Intel, Microsoft, and NVIDIA to launch Multipath Reliable Connection for faster AI training.",
-        "engagement": "2K likes, 272 reposts",
-        "honesty": "10/10",
-        "notes": "Fact",
-        "posted": "2026-05-06T16:34:38Z",
-        "post_ts": "2026-05-06T13:59:46Z",
-        "views": 274908,
-        "views_at_save": 274908,
-        "age_at_save_hours": 3.87
+        "headline": "NVIDIA Powers AI Frontier Labs",
+        "handle": "@nvidia",
+        "url": "https://x.com/nvidia/status/2052091408643756296",
+        "body": "NVIDIA enables SpaceX and AnthropicAI compute partnership using 220,000+ GPUs in Colossus 1.",
+        "engagement": "3K likes, 300 reposts",
+        "honesty": "9/10",
+        "notes": "Fact: Official announcement of tech partnership.",
+        "posted": "2026-05-06T21:58:01Z",
+        "post_ts": "2026-05-06T18:21:32Z",
+        "views": 2122747,
+        "views_at_save": 2122747,
+        "age_at_save_hours": 3.61
       }
     ],
     "earlier": []
@@ -472,18 +582,32 @@
   "msm": {
     "stories": [
       {
-        "headline": "FBI Raids Virginia Democrat Leader's Office in Corruption Probe",
+        "headline": "FBI Raids Virginia Democrat Senator's Office in Corruption Probe",
         "handle": "@BillMelugin_",
         "url": "https://x.com/BillMelugin_/status/2052038354930192470",
-        "body": "FBI serves search warrants at Senate President Louise Lucas's office and adjacent cannabis dispensary amid major federal corruption investigation.",
-        "engagement": "17.5K likes, 5.7K reposts, 1.4K replies",
+        "body": "FBI raids office of VA Senate Pro Tempore Louise Lucas, a Democrat, in major corruption investigation linked to cannabis dispensary.",
+        "engagement": "22K likes, 7K reposts, 1.2K quotes, 1.9K replies",
         "honesty": "9/10",
-        "notes": "Fact-based breaking report from law enforcement sources with on-scene verification.",
-        "posted": "2026-05-06T17:52:13Z",
+        "notes": "Verified fact from law enforcement sources with light contextual framing.",
+        "posted": "2026-05-06T21:58:02Z",
         "post_ts": "2026-05-06T14:50:43Z",
-        "views": 2030399,
-        "views_at_save": 2030399,
-        "age_at_save_hours": 3.03
+        "views": 3330690,
+        "views_at_save": 3330690,
+        "age_at_save_hours": 7.12
+      },
+      {
+        "headline": "DOJ Probes VA DA for Preferential Treatment to Illegal Alien Criminals",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2052132027269259310",
+        "body": "DOJ investigates Fairfax VA Attorney's Office for allegedly offering special deals only to illegal immigrant defendants.",
+        "engagement": "2.4K likes, 829 reposts, 19 quotes, 94 replies",
+        "honesty": "9/10",
+        "notes": "Reported DOJ investigation as verified fact.",
+        "posted": "2026-05-06T21:58:02Z",
+        "post_ts": "2026-05-06T21:02:56Z",
+        "views": 44329,
+        "views_at_save": 44329,
+        "age_at_save_hours": 0.92
       },
       {
         "headline": "$100M Fire Aid Laundered to Nonprofits, Not Victims",
@@ -497,21 +621,7 @@
         "post_ts": "2026-05-06T11:00:03Z",
         "views": 72990,
         "views_at_save": 72990,
-        "age_at_save_hours": 6.87
-      },
-      {
-        "headline": "Florida Official Arrested for $2.8M SNAP Benefits Fraud",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2052057436547076540",
-        "body": "CFO Abbas Rehman of Blaise Ingoglia arrested for stealing over $2.8 million in SNAP funds, facing 30 years in prison.",
-        "engagement": "6.5K likes, 1.5K reposts, 27 quotes, 167 replies",
-        "honesty": "9/10",
-        "notes": "Fact based on official arrest and indictment details.",
-        "posted": "2026-05-06T17:05:32Z",
-        "post_ts": "2026-05-06T16:06:32Z",
-        "views": 129088,
-        "views_at_save": 129088,
-        "age_at_save_hours": 1.76
+        "age_at_save_hours": 10.97
       }
     ],
     "earlier": []
@@ -520,37 +630,37 @@
     "stories": [
       {
         "headline": "Hayden Panettiere Comes Out as Bisexual",
-        "handle": "@TMZ",
-        "url": "https://x.com/TMZ/status/2052052036808499383",
-        "body": "Hayden Panettiere publicly comes out as bisexual in emotional new interview.",
-        "engagement": "2.4K likes, 150 retweets, 1.6K replies",
-        "honesty": "10/10",
-        "notes": "Fact - direct public statement from the celebrity.",
-        "posted": "2026-05-06T17:52:13Z",
-        "post_ts": "2026-05-06T15:45:05Z",
-        "views": 404207,
-        "views_at_save": 404207,
-        "age_at_save_hours": 2.12
-      },
-      {
-        "headline": "Melissa Barrera Accuses Paramount of Lying on Scream 7 Box Office",
         "handle": "@Variety",
-        "url": "https://x.com/Variety/status/2052049318710755715",
-        "body": "Melissa Barrera claims Paramount lied about Scream 7's box office numbers and says the cast crossed a picket line by nostalgia-baiting the film.",
-        "engagement": "4.7K likes, 535 retweets, 274 replies",
-        "honesty": "8/10",
-        "notes": "Fact reporting her claims and opinions.",
-        "posted": "2026-05-06T17:05:32Z",
-        "post_ts": "2026-05-06T15:34:17Z",
-        "views": 256349,
-        "views_at_save": 256349,
-        "age_at_save_hours": 2.3
+        "url": "https://x.com/Variety/status/2052110651129246150",
+        "body": "Hayden Panettiere reveals she is bisexual at 36, citing fears of public opinion and Hollywood pressures.",
+        "engagement": "952 likes, 118 retweets, 183 replies",
+        "honesty": "9/10",
+        "notes": "Fact: direct quotes from Panettiere's US Weekly interview.",
+        "posted": "2026-05-06T21:58:02Z",
+        "post_ts": "2026-05-06T19:38:00Z",
+        "views": 109534,
+        "views_at_save": 109534,
+        "age_at_save_hours": 2.33
       }
     ],
     "earlier": []
   },
   "recipe": {
     "stories": [
+      {
+        "headline": "Tomato Galette",
+        "handle": "@BonAppetit",
+        "url": "https://x.com/bonappetit/status/2052134615557829073",
+        "body": "Peak season tomatoes, garlic, and cheese wrapped in buttery flaky crust.",
+        "engagement": "1 likes, 0 retweets, 0 replies",
+        "honesty": "10/10",
+        "notes": "Classic recipe from trusted culinary magazine.",
+        "posted": "2026-05-06T21:58:02Z",
+        "post_ts": "2026-05-06T21:13:13Z",
+        "views": 1828,
+        "views_at_save": 1828,
+        "age_at_save_hours": 0.75
+      },
       {
         "headline": "Slow Cooked Steak Diane Casserole",
         "handle": "@KitchenSanc2ary",
@@ -563,7 +673,7 @@
         "post_ts": "2026-05-06T14:49:00Z",
         "views": 1292,
         "views_at_save": 1292,
-        "age_at_save_hours": 3.05
+        "age_at_save_hours": 7.15
       },
       {
         "headline": "Crispy Pork and Chives Rice Paper Dumplings",
@@ -577,21 +687,7 @@
         "post_ts": "2026-05-06T14:49:32Z",
         "views": 4049,
         "views_at_save": 4049,
-        "age_at_save_hours": 3.04
-      },
-      {
-        "headline": "Classic Greek Salad Recipe",
-        "handle": "@bonappetit",
-        "url": "https://x.com/bonappetit/status/2051360333428859120",
-        "body": "Prepare a fresh Greek salad ideal as a vegetarian lunch or side.",
-        "engagement": "11 likes, 3 retweets, 2 replies",
-        "honesty": "10/10",
-        "notes": "Standard recipe link from reputable source.",
-        "posted": "2026-05-06T15:34:46Z",
-        "post_ts": "2026-05-04T17:56:30Z",
-        "views": 4691,
-        "views_at_save": 4691,
-        "age_at_save_hours": 47.93
+        "age_at_save_hours": 7.14
       }
     ],
     "earlier": []
@@ -610,7 +706,7 @@
         "post_ts": "2026-05-06T15:03:00Z",
         "views": 9151,
         "views_at_save": 9151,
-        "age_at_save_hours": 2.82
+        "age_at_save_hours": 6.92
       },
       {
         "headline": "Webb Reveals Faster Emergence of Massive Star Clusters",
@@ -624,7 +720,7 @@
         "post_ts": "2026-05-06T13:36:57Z",
         "views": 39849,
         "views_at_save": 39849,
-        "age_at_save_hours": 4.25
+        "age_at_save_hours": 8.35
       }
     ],
     "earlier": []
@@ -632,24 +728,52 @@
   "local": {
     "stories": [
       {
-        "headline": "Erewhon Rumors in Costa Mesa/Newport Beach",
+        "headline": "Erewhon eyes Costa Mesa and Newport Beach locations",
         "handle": "@ocregister",
         "url": "https://x.com/ocregister/status/2051701654873903593",
-        "body": "Boutique grocery chain Erewhon is rumored to be eyeing new locations in Costa Mesa and Newport Beach areas.",
+        "body": "Boutique grocery chain Erewhon is rumored to be considering new store openings in Costa Mesa and Newport Beach.",
         "engagement": "0 likes, 0 reposts, 0 replies",
         "honesty": "10/10",
-        "notes": "OC Register reporting on local business rumors from credible source.",
-        "posted": "2026-05-06T17:52:14Z",
+        "notes": "OC Register reporting on local business development rumor - verifiable news.",
+        "posted": "2026-05-06T21:58:03Z",
         "post_ts": "2026-05-05T16:32:47Z",
-        "views": 540,
-        "views_at_save": 540,
-        "age_at_save_hours": 25.32
+        "views": 564,
+        "views_at_save": 564,
+        "age_at_save_hours": 29.42
       }
     ],
     "earlier": []
   },
   "conspiracy": {
     "stories": [
+      {
+        "headline": "Ilhan Omar's Ex at Embassy Amid Fraud Probe",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2052106302713725156",
+        "body": "Photo reveals Rep.. Ilhan Omar's ex-husband at U.S.",
+        "engagement": "3K likes, 1.4K reposts, 147 replies",
+        "honesty": "8/10",
+        "notes": "Photographic evidence ties suspicious timing to documented fraud scheme proceedings.",
+        "posted": "2026-05-06T21:58:03Z",
+        "post_ts": "2026-05-06T19:20:43Z",
+        "views": 64357,
+        "views_at_save": 64357,
+        "age_at_save_hours": 2.62
+      },
+      {
+        "headline": "Israeli Ceasefire Violations Kill 10 in Gaza",
+        "handle": "@DropSiteNews",
+        "url": "https://x.com/DropSiteNews/status/2052114057080266878",
+        "body": "Report details 10 specific Israeli attacks in Gaza on May 6, killing 10 including a police officer, amid 2,741 total violations since ceasefire.",
+        "engagement": "241 likes, 140 reposts, 7 replies",
+        "honesty": "9/10",
+        "notes": "Sourced from NGO coordinator, hospitals, and media with specific incidents, casualties, and statistics.",
+        "posted": "2026-05-06T21:58:03Z",
+        "post_ts": "2026-05-06T19:51:32Z",
+        "views": 16588,
+        "views_at_save": 16588,
+        "age_at_save_hours": 2.11
+      },
       {
         "headline": "Hidden Iran Damage to US Bases Exposed by Satellite Images",
         "handle": "@ggreenwald",
@@ -662,41 +786,27 @@
         "post_ts": "2026-05-06T12:33:39Z",
         "views": 61535,
         "views_at_save": 61535,
-        "age_at_save_hours": 5.31
-      },
-      {
-        "headline": "$100M Fire Aid Concert Funds Laundered to Nonprofits",
-        "handle": "@WallStreetApes",
-        "url": "https://x.com/WallStreetApes/status/2051980304227655987",
-        "body": "California Rep.. Kevin Kiley reveals $100M raised for Pacific Palisades fire victims was diverted to nonprofits for voter programs, immigrant aid,...",
-        "engagement": "1.8K likes, 1K reposts, 133 replies",
-        "honesty": "8/10",
-        "notes": "Cites specific nonprofit allocations and amounts from investigation, though sourcing is congressional statement.",
-        "posted": "2026-05-06T13:04:34Z",
-        "post_ts": "2026-05-06T11:00:03Z",
-        "views": 23542,
-        "views_at_save": 23542,
-        "age_at_save_hours": 6.87
-      },
-      {
-        "headline": "Sanctuary Policies Enable Violent Crime in California",
-        "handle": "@BillMelugin_",
-        "url": "https://x.com/BillMelugin_/status/2051840827605778853",
-        "body": "Former LA Mayor claims sanctuary policies don't protect criminals, but case of murdered Good Samaritan Johnny Sanchez shows two illegal aliens with...",
-        "engagement": "3.8K likes, 1.1K reposts, 71 replies",
-        "honesty": "9/10",
-        "notes": "Details specific murder case with prior arrests and ignored detainers, supported by video and records.",
-        "posted": "2026-05-06T13:04:34Z",
-        "post_ts": "2026-05-06T01:45:49Z",
-        "views": 60376,
-        "views_at_save": 60376,
-        "age_at_save_hours": 16.11
+        "age_at_save_hours": 9.41
       }
     ],
     "earlier": []
   },
   "comedy": {
     "stories": [
+      {
+        "headline": "Paul F. Tompkins and Scott Aukerman's Funniest Podcast Moments",
+        "handle": "@ralter",
+        "url": "https://x.com/ralter/status/2052090635021074627",
+        "body": "Paul F.. Tompkins and Scott Aukerman compile the funniest moments in podcasting from 2009 to present.",
+        "engagement": "493 likes, 38 reposts",
+        "honesty": "8/10",
+        "notes": "Presents a video compilation of humorous podcast clips with light commentary.",
+        "posted": "2026-05-06T21:58:03Z",
+        "post_ts": "2026-05-06T18:18:28Z",
+        "views": 33957,
+        "views_at_save": 33957,
+        "age_at_save_hours": 3.66
+      },
       {
         "headline": "AI Standup Comedy Agent",
         "handle": "@maxescu",
@@ -709,7 +819,7 @@
         "post_ts": "2026-05-06T14:02:09Z",
         "views": 1322,
         "views_at_save": 1322,
-        "age_at_save_hours": 3.84
+        "age_at_save_hours": 7.93
       },
       {
         "headline": "Dave Chappelle brings Ye onstage at comedy show",
@@ -723,21 +833,7 @@
         "post_ts": "2026-05-04T18:48:01Z",
         "views": 798875,
         "views_at_save": 798875,
-        "age_at_save_hours": 47.07
-      },
-      {
-        "headline": "Kids Repeating Jokes After No Laughs",
-        "handle": "@TemooTitan",
-        "url": "https://x.com/TemooTitan/status/2051322895947726951",
-        "body": "Hilarious video shows kids repeating their jokes when no one laughs, called top tier comedy.",
-        "engagement": "35K likes, 1.2K reposts",
-        "honesty": "8/10",
-        "notes": "Sharing a funny performative video clip with opinion on its quality.",
-        "posted": "2026-05-06T04:18:28Z",
-        "post_ts": "2026-05-04T15:27:44Z",
-        "views": 554627,
-        "views_at_save": 554627,
-        "age_at_save_hours": 50.41
+        "age_at_save_hours": 51.17
       }
     ],
     "earlier": []
