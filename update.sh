@@ -853,10 +853,15 @@ cat > /tmp/grok_topic_lock_payload.json <<JSONEOF
 }
 JSONEOF
 
-curl -s --max-time 120 https://api.x.ai/v1/responses \
+# Topic-lock is OPTIONAL — if it times out or fails, the world/usa prompts proceed
+# without injected topic hints (the python parser below handles empty/error JSON).
+# || true prevents `set -e` from aborting the whole pipeline on curl failure.
+# Timeout bumped 120→180 to handle GitHub Actions IP latency to xAI.
+curl -s --max-time 180 https://api.x.ai/v1/responses \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $XAI_API_KEY" \
-    -d @/tmp/grok_topic_lock_payload.json > /tmp/grok_raw_topic_lock.json
+    -d @/tmp/grok_topic_lock_payload.json > /tmp/grok_raw_topic_lock.json || \
+    echo '{"error": "topic-lock curl failed or timed out — continuing without topic hints"}' > /tmp/grok_raw_topic_lock.json
 
 # Extract the topic-lock JSON and stash it where world/usa prompts can reference it
 python3 <<'TLPY' > /tmp/topic_lock.json
