@@ -239,20 +239,22 @@ def pick_by_views(candidates, top_n=DEFAULT_TOP_N):
     return sorted(candidates or [], key=story_views, reverse=True)[:top_n]
 
 
-def apply_velocity_hold(current, candidates, top_n=DEFAULT_TOP_N, history=None):
+def apply_velocity_hold(current, candidates, top_n=DEFAULT_TOP_N, history=None, max_age_h=None):
     """
     Combine current (already-displayed) stories and new candidates, dedup, then return
-    the top N by 4-hour growth (see story_velocity). A 23h-old story with growth
-    rate beating a 1h-old candidate stays. Stories with no view signal get dropped
-    after 24h regardless.
+    the top N by 4-hour growth (see story_velocity).
 
-    The `history` parameter is a dict {url -> {views_at_save, age_at_save_hours}}
-    persisted from the prior cron's stories.json. Allows real 4h-delta computation
-    when both current_views and prior_views are known.
+    max_age_h: HARD ceiling for any story regardless of growth proof. User spec
+    (2026-05-06): "nothing should be more than four hours old unless its velocity
+    beats the new... keep the story all the way up till 24 hours."
+    News tabs should pass max_age_h=24, reference tabs 72. Defaults to MAX_HOLD_HOURS
+    (168h) to preserve old behavior if not specified.
 
     Dedup by URL (or by normalized headline if URLs are missing — handles the World/USA
     case where the URL is at the perspective level).
     """
+    if max_age_h is None:
+        max_age_h = MAX_HOLD_HOURS
     def keyfor(s):
         u = s.get('url') or ''
         if not u:
@@ -271,13 +273,13 @@ def apply_velocity_hold(current, candidates, top_n=DEFAULT_TOP_N, history=None):
     # so the 4h-delta computation has the prior snapshot to compare against.
     seen = {}
     for s in (candidates or []):
-        if story_age_hours(s) > MAX_HOLD_HOURS:
+        if story_age_hours(s) > max_age_h:
             continue
         k = keyfor(s)
         if k not in seen:
             seen[k] = s
     for s in (current or []):
-        if story_age_hours(s) > MAX_HOLD_HOURS:
+        if story_age_hours(s) > max_age_h:
             continue
         k = keyfor(s)
         if k in seen:
@@ -358,7 +360,7 @@ def enrich_commentator(top_story, all_candidates):
 # THE WHOLE PIPELINE — one function
 # ============================================================
 
-def curate(tab, current_stories, fresh_candidates, top_n=DEFAULT_TOP_N, enrich=True, history=None):
+def curate(tab, current_stories, fresh_candidates, top_n=DEFAULT_TOP_N, enrich=True, history=None, max_age_h=None):
     """
     Run the entire selection pipeline for a single tab.
 
@@ -375,7 +377,7 @@ def curate(tab, current_stories, fresh_candidates, top_n=DEFAULT_TOP_N, enrich=T
       list of N stories, ranked by 4h-growth, optionally enriched.
     """
     chosen = apply_velocity_hold(current_stories or [], fresh_candidates or [],
-                                  top_n=top_n, history=history)
+                                  top_n=top_n, history=history, max_age_h=max_age_h)
     if enrich and chosen:
         chosen = [enrich_commentator(s, fresh_candidates or []) for s in chosen]
     return chosen

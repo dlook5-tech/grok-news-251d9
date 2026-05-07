@@ -1827,9 +1827,12 @@ for _tab in ('world', 'usa'):
     _current = [s for s in _current_raw
                 if isinstance(s, dict) and len([p for p in s.get('perspectives', []) or []
                                                   if isinstance(p, dict) and p.get('url')]) >= 3]
-    # World/USA: skip commentator enrichment (perspectives ARE the take layer)
+    # World/USA: skip commentator enrichment (perspectives ARE the take layer).
+    # max_age_h enforces the per-tab cap (24h news, 72h ref) AT THE VELOCITY-HOLD
+    # LEVEL — old stories drop even if they have proven 4h-delta growth.
+    _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 24)
     _picked = curation.curate(_tab, _current, _candidates,
-                              top_n=_TAB_N[_tab], enrich=False, history=_history)
+                              top_n=_TAB_N[_tab], enrich=False, history=_history, max_age_h=_wu_age_cap)
     # Drop same-topic duplicates (handle-side repetition + headline overlap).
     _picked = _enforce_topic_diversity(_picked, label=_tab)
     # CLAUDE.md hard rule: never empty + (2026-05-06) every World/USA story MUST have
@@ -1837,7 +1840,6 @@ for _tab in ('world', 'usa'):
     #   1. existing stories.json (from prior cron) — 3-perspective only
     #   2. earlier archive — 3-perspective only
     #   3. desktop snapshots (last ~30 crons of history) — 3-perspective only, ≤72h old
-    _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 24)
     if len(_picked) < _TAB_FLOOR:
         _picked = _topup_to_floor(_picked, _current + (_existing.get(_tab, {}).get('earlier', []) or []),
                                   top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=_wu_age_cap)
@@ -1867,15 +1869,17 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
         if _cleaned and _belongs_on_tab(_tab, _cleaned):
             _candidates.append(_cleaned)
     _current = _existing.get(_tab, {}).get('stories', []) or []
+    # Per-tab age cap enforced at velocity-hold level — drops stories beyond cap
+    # even if they show proven 4h-delta growth from prior snapshots.
+    _backfill_age = _BACKFILL_AGE_BY_TAB.get(_tab, _TAB_FLOOR_AGE_HOURS)
     _picked = curation.curate(_tab, _current, _candidates,
-                              top_n=_TAB_N.get(_tab, 3), enrich=True, history=_history)
+                              top_n=_TAB_N.get(_tab, 3), enrich=True, history=_history,
+                              max_age_h=_backfill_age)
     # Topic-diversity dedup: drops same-author-twice + same-headline (the @ocregister
     # Laguna Beach Forest Avenue trees 2d/5d duplicate problem).
     _picked = _enforce_topic_diversity(_picked, label=_tab)
     # Floor enforcement (CLAUDE.md: never empty). Elon tab gets target=10 from _TAB_N
     # but the FLOOR is 3 — only triggers backfill if we're under 3.
-    # Backfill uses per-tab age cap (news=24h, reference=72h) to honor the 4h/24h spec.
-    _backfill_age = _BACKFILL_AGE_BY_TAB.get(_tab, _TAB_FLOOR_AGE_HOURS)
     if len(_picked) < _TAB_FLOOR:
         _picked = _topup_to_floor(_picked, _current + (_existing.get(_tab, {}).get('earlier', []) or []),
                                   top_n=_TAB_FLOOR, max_age_h=_backfill_age)
