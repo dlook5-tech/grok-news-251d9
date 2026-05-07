@@ -1512,6 +1512,22 @@ def clean_world(w):
         if p.get('translation'): _persp['translation'] = str(p['translation'])
         if p.get('notes'): _persp['notes'] = str(p['notes'])
         perspectives.append(_persp)
+    # 2026-05-06: WITHIN-STORY URL DEDUP. Reject if two perspectives share a URL —
+    # that's Grok hallucinating handle attribution (e.g. @AP's tweet labeled as @samstein
+    # in the Democrat slot AND @AP in the Independent slot, with different honesty scores).
+    # User caught: "same stories for independent and democrat, with different honesty scores?!"
+    _seen_urls_in_story = set()
+    _deduped_perspectives = []
+    for _p in perspectives:
+        _u = _p.get('url','')
+        if _u and _u in _seen_urls_in_story:
+            print(f"  REJECT world/USA perspective: URL {_u[-40:]} duplicates another "
+                  f"perspective in same story (Grok hallucinated handle attribution)", file=sys.stderr)
+            continue
+        if _u: _seen_urls_in_story.add(_u)
+        _deduped_perspectives.append(_p)
+    perspectives = _deduped_perspectives
+
     # 2026-05-06: 3-perspective requirement RESTORED. User reversed the May-4 relaxation:
     # "every story needs all three plot points, otherwise it's not a quality worthy story."
     # Stories with fewer than 3 perspectives drop at validation. Floor backfill only pulls
