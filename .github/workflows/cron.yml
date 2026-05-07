@@ -53,6 +53,9 @@ jobs:
       - name: Commit refreshed state files
         # update.sh modifies version.txt + sw.js + stories.json + index.html (BUILD stamps).
         # Push them back so the next cron starts from current state.
+        # Pull-rebase before push handles the race where commits land on main during
+        # the pipeline run (e.g. dev pushing fixes). State files are auto-generated, so
+        # if there's a conflict we always prefer "ours" (the cron's fresh state).
         if: success()
         run: |
           git config user.name "expresso-cron"
@@ -60,7 +63,18 @@ jobs:
           git add -A version.txt sw.js stories.json index.html seen_history.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m "Cron: refresh stories $(date -u +%Y-%m-%dT%H:%MZ)"
-            git push
+            # Try push, on rejection rebase + retry
+            for i in 1 2 3; do
+              if git push 2>&1; then
+                echo "Push succeeded on attempt $i"
+                exit 0
+              fi
+              echo "Push rejected (remote drift). Rebasing..."
+              git fetch origin main
+              git rebase -X ours origin/main || { git rebase --abort; exit 1; }
+            done
+            echo "ERROR: push failed after 3 attempts"
+            exit 1
           else
             echo "No changes to commit"
           fi
