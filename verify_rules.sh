@@ -119,6 +119,19 @@ fi
 check "prompt:views-as-metric"          update.sh        "VIEWS REQUIREMENT|VIEWS IS THE METRIC|views.*integer" exists
 check "prompt:pure-views-spec"          update.sh        "PURE VIEWS SPEC"                                     exists
 
+# --- ABSOLUTE BLOCKER: no git merge conflict markers in any deployed file ---
+# 2026-05-07: a leftover `<<<<<<<` in index.html broke JavaScript parsing for ALL visitors.
+# Site showed "Loading stories..." forever. This check makes that mistake un-shippable.
+for f in index.html parse_grok.py update.sh deploy.sh curation.py; do
+  if [[ -f "$f" ]] && grep -qE '^<<<<<<< |^>>>>>>> |^=======$' "$f"; then
+    printf "${RED}FAIL${NC} %-50s %s  (git merge conflict markers present!)\n" "no-merge-markers:$f" "$f"
+    FAIL=$((FAIL+1)); FAILED_RULES+=("no-merge-markers:$f")
+  else
+    printf "${GREEN}PASS${NC} %-50s %s\n" "no-merge-markers:$f" "$f"
+    PASS=$((PASS+1))
+  fi
+done
+
 echo ""
 echo "=== Summary ==="
 printf "  ${GREEN}PASS${NC}: %d   ${RED}FAIL${NC}: %d\n" "$PASS" "$FAIL"
