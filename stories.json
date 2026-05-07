@@ -1,7 +1,59 @@
 {
-  "lastUpdated": "2026-05-07T04:35:14Z",
+  "lastUpdated": "2026-05-07T15:04:22Z",
   "world": {
     "stories": [
+      {
+        "headline": "US-Iran War Negotiations",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@FoxNews",
+            "url": "https://x.com/FoxNews/status/2052332120513626460",
+            "text": "NEW: The U.S.. is reportedly laying out tough new conditions in a proposal to end the war with Iran \u2014 including a 20-year ban on uranium enrichment,...",
+            "engagement": "2.3K likes, 480 reposts, 33 quotes, 449 replies",
+            "honesty": "9/10",
+            "views": 302437,
+            "notes": "Reports verifiable details of US proposal from officials and includes context on ongoing Israel strikes.",
+            "views_at_save": 302437,
+            "age_at_save_hours": 4.77
+          },
+          {
+            "label": "Democrat",
+            "handle": "@RBReich",
+            "url": "https://x.com/RBReich/status/2052063659396882887",
+            "text": "Independent estimates warn the Iran War has cost $72B so far \u2014 nearly triple what Trump's DoD has admitted.. That's over $1 billion per day.",
+            "engagement": "991 likes, 391 reposts, 12 quotes, 80 replies",
+            "honesty": "8/10",
+            "views": 14475,
+            "notes": "Cites independent estimates on war costs for a critical economic perspective, though exact figures may vary by source.",
+            "views_at_save": 14475,
+            "age_at_save_hours": 22.55
+          },
+          {
+            "label": "Independent",
+            "handle": "@TheStudyofWar",
+            "url": "https://x.com/TheStudyofWar/status/2052061911164788964",
+            "text": "NEW: The United States and Iran have continued to iterate on a 14-point agreement to end the war and set a framework for nuclear negotiations at a...",
+            "engagement": "172 likes, 61 reposts, 11 quotes, 13 replies",
+            "honesty": "10/10",
+            "views": 122287,
+            "notes": "Factual reporting and analysis based on Axios and official statements, no unsubstantiated claims.",
+            "views_at_save": 122287,
+            "age_at_save_hours": 22.67
+          }
+        ],
+        "footnotes": [
+          "Conservative perspective emphasizes tough US conditions and ongoing military actions.",
+          "Democrat perspective highlights economic costs to criticize the war.",
+          "Independent perspective provides neutral analysis of negotiation progress and Iranian objectives."
+        ],
+        "notes": "Negotiations between the US and Iran are advancing on a framework to end the war, with disputes over nuclear program and Strait of Hormuz control, amid high economic and strategic stakes.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/7/2026 3:04 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 4.77
+      },
       {
         "headline": "US-Iran Peace Negotiations",
         "honesty": "8/10",
@@ -16,7 +68,7 @@
             "views": 22022,
             "notes": "President's firm policy statement on preventing Iran from acquiring nuclear weapons; opinion but aligned with administration position without factual inaccuracies",
             "views_at_save": 22022,
-            "age_at_save_hours": 9.29
+            "age_at_save_hours": 19.78
           },
           {
             "label": "Democrat",
@@ -28,7 +80,7 @@
             "views": 37452,
             "notes": "Factual reporting of diplomatic meeting with direct quotes from officials; verifiable through public statements",
             "views_at_save": 37452,
-            "age_at_save_hours": 14.5
+            "age_at_save_hours": 24.99
           },
           {
             "label": "Independent",
@@ -40,7 +92,7 @@
             "views": 117566,
             "notes": "Critique of media reporting as biased propaganda based on observed patterns; subjective opinion without introducing false facts",
             "views_at_save": 117566,
-            "age_at_save_hours": 16.19
+            "age_at_save_hours": 26.68
           }
         ],
         "footnotes": [
@@ -52,59 +104,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/7/2026 4:13 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 9.29
-      },
-      {
-        "headline": "US and Iran Nearing Deal to End War",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@WhiteHouse",
-            "url": "https://x.com/WhiteHouse/status/2051995243340325120",
-            "text": "\u201cAssuming Iran agrees to give what has been agreed to, which is, perhaps, a big assumption, the already legendary Epic Fury will be at an end.... If...",
-            "engagement": "14K likes, 3.7K reposts, 372 quotes, 3.1K replies",
-            "honesty": "8/10",
-            "views": 565634,
-            "notes": "Verifiable direct quote from President Trump on negotiation outcomes; opinionated but factually accurate statement.",
-            "views_at_save": 565634,
-            "age_at_save_hours": 16.6
-          },
-          {
-            "label": "Democrat",
-            "handle": "@BernieSanders",
-            "url": "https://x.com/BernieSanders/status/2051467354652000261",
-            "text": "Oil prices today: $105.25 a barrel\nGas prices today: $4.46 a gallon\n\nOil prices in March 2011: $105.06 a barrel\nGas prices in March 2011: $3.51 a...",
-            "engagement": "34K likes, 4.7K reposts, 298 quotes, 2.7K replies",
-            "honesty": "8/10",
-            "views": 1723370,
-            "notes": "Uses verifiable oil and gas price data to frame war's economic impact; opinion on corporate profiteering is defensible.",
-            "views_at_save": 1723370,
-            "age_at_save_hours": 51.56
-          },
-          {
-            "label": "Independent",
-            "handle": "@TuckerCarlson",
-            "url": "https://x.com/TuckerCarlson/status/2051712573578330435",
-            "text": "The Iran war is bleeding America dry and it's far worse than you think.. Thomas Massie is one of the only people in Congress sounding the alarm.",
-            "engagement": "15K likes, 2.8K reposts, 156 quotes, 3K replies",
-            "honesty": "7/10",
-            "views": 958626,
-            "notes": "Pure opinion on war costs with no factual claims; promotional content but self-contained.",
-            "views_at_save": 958626,
-            "age_at_save_hours": 35.32
-          }
-        ],
-        "footnotes": [
-          "Conservative view supports Trump's firm stance in negotiations.",
-          "Democrat perspective criticizes war's toll on American consumers.",
-          "Independent take highlights unsustainable financial burden of the conflict."
-        ],
-        "notes": "Top-viewed international story centers on potential US-Iran agreement to halt hostilities, with perspectives reflecting partisan divides on the war's implications.",
-        "body": "Three-perspective roundup.",
-        "posted": "5/6/2026 10:05 AM",
-        "views_at_save": 0,
-        "age_at_save_hours": 16.6
+        "age_at_save_hours": 19.78
       }
     ],
     "earlier": []
@@ -112,52 +112,100 @@
   "usa": {
     "stories": [
       {
-        "headline": "Trump Administration's Immigration Enforcement and Mass Deportations Under Scrutiny",
+        "headline": "Trump Immigration Raids Spark Economic Concerns and Legal Challenges",
         "honesty": "8/10",
         "perspectives": [
           {
             "label": "Conservative",
             "handle": "@NEWSMAX",
-            "url": "https://x.com/NEWSMAX/status/2052063394287780075",
-            "text": "Acknowledging that \"things weren't perfect,\" Tom Homan defended the Trump administration's immigration crackdown while insisting the White House...",
-            "engagement": "73 likes, 14 reposts",
-            "honesty": "8/10",
-            "views": 6038,
-            "notes": "Defends the policy as committed enforcement.",
-            "views_at_save": 6038,
-            "age_at_save_hours": 12.08
+            "url": "https://x.com/NEWSMAX/status/2052304934687977670",
+            "text": "The White House plans to end an accelerated training program it had been using to quickly deploy thousands of rookie ICE agents and instead certify...",
+            "engagement": "112 likes, 20 reposts",
+            "honesty": "9/10",
+            "views": 13985,
+            "notes": "Reports administration's adjustment to ICE training policy; factual with light positive spin.",
+            "views_at_save": 13985,
+            "age_at_save_hours": 6.57
           },
           {
             "label": "Democrat",
-            "handle": "@propublica",
-            "url": "https://x.com/propublica/status/2052025668641145084",
-            "text": "From the start of 2021 through the 2024 election, the FTC fielded about 960 complaints of immigration scams \u2014 like fake attorneys or people...",
-            "engagement": "46 likes, 29 reposts",
+            "handle": "@washingtonpost",
+            "url": "https://x.com/washingtonpost/status/2051980345919119487",
+            "text": "President Trump\u2019s immigration raids and checkpoints are weighing on the labor market, leading to fewer jobs for both U.S.-born men without a college...",
+            "engagement": "592 likes, 329 reposts",
+            "honesty": "8/10",
+            "views": 101093,
+            "notes": "Cites economic study on raid impacts; critical framing but underlying data verifiable.",
+            "views_at_save": 101093,
+            "age_at_save_hours": 28.07
+          },
+          {
+            "label": "Independent",
+            "handle": "@axios",
+            "url": "https://x.com/axios/status/2052152996507660630",
+            "text": "Trump's mandatory ICE detention policy struck down in appeals court...",
+            "engagement": "29 likes, 11 reposts",
             "honesty": "10/10",
-            "views": 4697,
-            "notes": "Highlights negative impacts like increased scams.",
-            "views_at_save": 4697,
-            "age_at_save_hours": 14.58
+            "views": 15019,
+            "notes": "Neutral reporting of federal court decision against ICE policy.",
+            "views_at_save": 15019,
+            "age_at_save_hours": 16.64
+          }
+        ],
+        "footnotes": [],
+        "notes": "Focuses on federal immigration enforcement under Trump, including training changes, economic effects, and court blocks.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/7/2026 3:04 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 6.57
+      },
+      {
+        "headline": "Redistricting Battles Heat Up After SCOTUS Ruling and Primaries",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@FoxNews",
+            "url": "https://x.com/FoxNews/status/2052055061279158341",
+            "text": "Five Republican state senators ousted in one primary night after crossing Trump.. The president backed challengers against Indiana lawmakers who...",
+            "engagement": "3195 likes, 770 reposts",
+            "honesty": "9/10",
+            "views": 123573,
+            "notes": "Accurate reporting of primary election results with pro-Trump framing; no factual errors.",
+            "views_at_save": 123573,
+            "age_at_save_hours": 23.12
+          },
+          {
+            "label": "Democrat",
+            "handle": "@TheAtlantic",
+            "url": "https://x.com/TheAtlantic/status/2052190682798817678",
+            "text": "Donald Trump\u2019s misgovernment should make the midterm gap too wide for Republicans to overcome\u2014even with his recent gerrymandering wins\u2014but Democrats...",
+            "engagement": "46 likes, 16 reposts",
+            "honesty": "7/10",
+            "views": 18332,
+            "notes": "Opinion piece critiquing Republican gerrymandering and midterm prospects; defensible analysis without lies.",
+            "views_at_save": 18332,
+            "age_at_save_hours": 14.14
           },
           {
             "label": "Independent",
             "handle": "@AP",
-            "url": "https://x.com/AP/status/2050262736613843411",
-            "text": "Renewal wait times for the Obama-era program that allows people who were brought to the U.S.. as children to temporarily remain in the country and...",
-            "engagement": "131 likes, 46 reposts",
+            "url": "https://x.com/AP/status/2052062560967397433",
+            "text": "BREAKING: The FBI served a search warrant at a Virginia Senate leader's office as part of a corruption probe, an AP source says.....",
+            "engagement": "485 likes, 157 reposts",
             "honesty": "10/10",
-            "views": 126523,
-            "notes": "Reports on policy effects on DACA recipients.",
-            "views_at_save": 126523,
-            "age_at_save_hours": 131.34
+            "views": 290798,
+            "notes": "Straightforward breaking news on FBI probe tied to redistricting; sourced and verifiable.",
+            "views_at_save": 290798,
+            "age_at_save_hours": 22.62
           }
         ],
         "footnotes": [],
-        "notes": "Covers commitment to deportations alongside challenges and delays in immigration processing.",
+        "notes": "Story covers ongoing redistricting efforts, SCOTUS impacts, and related political fallout including primaries and investigations.",
         "body": "Three-perspective roundup.",
-        "posted": "5/6/2026 10:20 AM",
+        "posted": "5/7/2026 3:04 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 12.08
+        "age_at_save_hours": 23.12
       }
     ],
     "earlier": []
@@ -179,7 +227,7 @@
         "parent_handle": "@jgebbia",
         "parent_text": "Illuminating speech by Schumer worth watching. Dems used to be against illegal immigration. What changed?",
         "views_at_save": 92978,
-        "age_at_save_hours": 12.61
+        "age_at_save_hours": 23.09
       },
       {
         "headline": "Positive on Anthropic AI Partnership",
@@ -196,7 +244,7 @@
         "parent_handle": "@nottombrown",
         "parent_text": "In the next few days we'll be ramping up Claude inference on Colossus. \n\nGrateful to be partnering with SpaceX here. We are going to need to move a lot of atoms in order to keep up with AI demand, and there's nobody better at quickly moving atoms (on or off planet Earth)",
         "views_at_save": 20335,
-        "age_at_save_hours": 11.67
+        "age_at_save_hours": 22.15
       },
       {
         "headline": "Elon on ironic reparations advocate",
@@ -213,7 +261,7 @@
         "parent_handle": "@wil_da_beast630",
         "parent_text": "This is very funny.",
         "views_at_save": 109252,
-        "age_at_save_hours": 21.39
+        "age_at_save_hours": 31.87
       },
       {
         "headline": "SSRIs Critique",
@@ -230,27 +278,58 @@
         "parent_handle": "@fworksconfetti",
         "parent_text": "Ella Emhoff, stepdaughter of former Vice President Kamala Harris, from 16 December last year: \"...I'm just sitting here crocheting, waiting for a friend, and I was just listening to this podcast that The Wall Street Journal put out about SSRIs and anti-anxiety meds and kind of th",
         "views_at_save": 422855,
-        "age_at_save_hours": 22.9
+        "age_at_save_hours": 33.39
+      },
+      {
+        "headline": "Incentives Drive Innovation",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052257419762586026",
+        "body": "Elon Musk notes that incentives drive outcomes, quoting his take on balancing risk and reward for bold moves.",
+        "engagement": "68K likes, 10K reposts, 374 quotes, 3.8K replies",
+        "honesty": "9/10",
+        "notes": "Factual core opinion on business culture.",
+        "posted": "2026-05-07T15:04:23Z",
+        "post_ts": "2026-05-07T05:21:12Z",
+        "views": 8026093,
+        "views_at_save": 8026093,
+        "age_at_save_hours": 9.72
+      },
+      {
+        "headline": "Space for AI Compute",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052106301401186807",
+        "body": "Elon Musk marvels at space's potential for AI datacenters, agreeing on terrestrial bottlenecks.",
+        "engagement": "64K likes, 5.8K reposts, 333 quotes, 4.5K replies",
+        "honesty": "8/10",
+        "notes": "Commentary on geopolitical tech future, accurate.",
+        "posted": "2026-05-07T15:04:23Z",
+        "post_ts": "2026-05-06T19:20:43Z",
+        "views": 30854378,
+        "views_at_save": 30854378,
+        "age_at_save_hours": 19.73
+      },
+      {
+        "headline": "Honesty Key to AI Safety",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052077313425301574",
+        "body": "Elon Musk stresses that honesty is the best policy for AI safety, responding to Skynet concerns.",
+        "engagement": "2.8K likes, 280 reposts, 35 quotes, 347 replies",
+        "honesty": "8/10",
+        "notes": "Opinion on AI policy with no false claims.",
+        "posted": "2026-05-07T15:04:23Z",
+        "post_ts": "2026-05-06T17:25:31Z",
+        "views": 63178,
+        "parent_url": "https://x.com/TeslaHype/status/2052076759852445986",
+        "parent_handle": "@TeslaHype",
+        "parent_text": "As long as we don't build Skynet, we are good",
+        "views_at_save": 63178,
+        "age_at_save_hours": 21.65
       }
     ],
     "earlier": []
   },
   "sports": {
     "stories": [
-      {
-        "headline": "Stephen A. Polls on 2026 Midterm Issues",
-        "handle": "@stephenasmith",
-        "url": "https://x.com/stephenasmith/status/2052040386206416960",
-        "body": "Stephen A.. Smith asks followers what top issue would drive them to polls if 2026 midterms were tomorrow.",
-        "engagement": "1.1K likes, 482 reposts",
-        "honesty": "7/10",
-        "notes": "Opinion poll on politics, no factual claims.",
-        "posted": "2026-05-07T04:35:16Z",
-        "post_ts": "2026-05-06T14:58:47Z",
-        "views": 500397,
-        "views_at_save": 500397,
-        "age_at_save_hours": 13.61
-      },
       {
         "headline": "Knicks Lead 2-0 Over 76ers",
         "handle": "@BleacherReport",
@@ -263,7 +342,7 @@
         "post_ts": "2026-05-07T01:59:52Z",
         "views": 137084,
         "views_at_save": 137084,
-        "age_at_save_hours": 2.59
+        "age_at_save_hours": 13.08
       },
       {
         "headline": "2026 NFLPA Rookie Premiere player list announced",
@@ -277,7 +356,21 @@
         "post_ts": "2026-05-06T15:06:51Z",
         "views": 248673,
         "views_at_save": 248673,
-        "age_at_save_hours": 13.47
+        "age_at_save_hours": 23.96
+      },
+      {
+        "headline": "Cowherd Blasts SGA's Flopping in NBA",
+        "handle": "@TheHerd",
+        "url": "https://x.com/TheHerd/status/2052077553246969921",
+        "body": "Colin Cowherd criticizes Shai Gilgeous-Alexander's flopping as damaging to NBA's creativity.",
+        "engagement": "9.5K likes, 796 reposts",
+        "honesty": "8/10",
+        "notes": "Opinion on player behavior based on observed game footage.",
+        "posted": "2026-05-07T15:04:23Z",
+        "post_ts": "2026-05-06T17:26:29Z",
+        "views": 379065,
+        "views_at_save": 379065,
+        "age_at_save_hours": 21.63
       }
     ],
     "earlier": []
@@ -285,42 +378,102 @@
   "allin": {
     "stories": [
       {
-        "headline": "Chain Stores Face Contradictory Urban Backlash",
+        "headline": "Chain Stores Face Hypocrisy in Urban Complaints",
         "handle": "@pmarca",
         "url": "https://x.com/pmarca/status/2052207384622469303",
-        "body": "The worst thing a chain store can do is open in a city; the other worst is to close, highlighting inconsistent local policies.",
-        "engagement": "598 likes, 44 retweets, 30 replies",
+        "body": "Marc Andreessen points out the contradiction in criticizing chain stores for both opening and closing in cities, echoing Atlas Shrugged themes.",
+        "engagement": "1.4K likes, 89 retweets, 46 replies",
         "honesty": "7/10",
-        "notes": "Contrarian take on urban economic politics.",
-        "posted": "2026-05-07T04:35:16Z",
+        "notes": "Contrarian opinion on economic policy.",
+        "posted": "2026-05-07T15:04:23Z",
         "post_ts": "2026-05-07T02:02:23Z",
-        "views": 40141,
-        "views_at_save": 40141,
-        "age_at_save_hours": 2.55
+        "views": 69255,
+        "views_at_save": 69255,
+        "age_at_save_hours": 13.03
       },
       {
-        "headline": "AI Strategy: Optimism Meets Cynicism",
+        "headline": "Balanced Approach to AI Strategy Essential for Enterprises",
         "handle": "@chamath",
         "url": "https://x.com/chamath/status/2052056698437927186",
-        "body": "Successful AI adoption requires optimism but cynicism about current capabilities to avoid SaaS issues like vendor lock-in and high maintenance.",
-        "engagement": "235 likes, 14 retweets, 30 replies",
-        "honesty": "8/10",
-        "notes": "Opinion on balanced AI implementation strategy.",
-        "posted": "2026-05-07T04:35:16Z",
+        "body": "Chamath praises progress at 8090 while warning that without a coherent AI strategy, adoption risks repeating SaaS issues like vendor lock-in and high...",
+        "engagement": "301 likes, 18 retweets, 33 replies",
+        "honesty": "7/10",
+        "notes": "Opinion on AI adoption strategy.",
+        "posted": "2026-05-07T15:04:23Z",
         "post_ts": "2026-05-06T16:03:36Z",
-        "views": 74895,
-        "views_at_save": 74895,
-        "age_at_save_hours": 12.53
+        "views": 87588,
+        "views_at_save": 87588,
+        "age_at_save_hours": 23.01
+      },
+      {
+        "headline": "Mocking Anti-Tech Populism in Trucking Debate",
+        "handle": "@PalmerLuckey",
+        "url": "https://x.com/PalmerLuckey/status/2052223712422961384",
+        "body": "Responding to criticism of Tom Steyer's opposition to autonomous trucks as illiterate third-worldism, Palmer Luckey sarcastically suggests 'Give them...",
+        "engagement": "113 likes, 1 retweets, 6 replies",
+        "honesty": "7/10",
+        "notes": "Sarcastic opinion on job protection.",
+        "posted": "2026-05-07T15:04:24Z",
+        "post_ts": "2026-05-07T03:07:16Z",
+        "views": 6332,
+        "parent_url": "https://x.com/JTLonsdale/status/2051865389257105438",
+        "parent_handle": "@JTLonsdale",
+        "parent_text": "What extreme left wing populist sentiment will Steyer not echo to get elected - is there any line in this direction of illiterate third-worldism that he won\u2019t cross? Maybe do some Jew-baiting stuff next, would be appropriate?",
+        "views_at_save": 6332,
+        "age_at_save_hours": 11.95
       }
     ],
     "earlier": []
   },
   "pods": {
-    "stories": [],
+    "stories": [
+      {
+        "headline": "Farmer Bankruptcies Surge 46% Amid Costs",
+        "handle": "@patrickbetdavid",
+        "url": "https://x.com/patrickbetdavid/status/2052147386374303948",
+        "body": "Patrick Bet-David reports 46% rise in U.S.. farmer bankruptcies, with 70% unable to afford fertilizer now costing $600 per ton.",
+        "engagement": "2.9K likes, 504 reposts, 275 replies",
+        "honesty": "9/10",
+        "notes": "Verifiable economic data with light commentary.",
+        "posted": "2026-05-07T15:04:24Z",
+        "post_ts": "2026-05-06T22:03:58Z",
+        "views": 103404,
+        "views_at_save": 103404,
+        "age_at_save_hours": 17.01
+      }
+    ],
     "earlier": []
   },
   "business": {
     "stories": [
+      {
+        "headline": "Principles for Senior Management",
+        "handle": "@RayDalio",
+        "url": "https://x.com/RayDalio/status/2052393989957898466",
+        "body": "Choose senior managers who can own entire areas, design, hire, and distinguish goals from tasks\u2014innate ability key to success.",
+        "engagement": "108 likes, 19 retweets, 12 replies",
+        "honesty": "7/10",
+        "notes": "Opinion on effective management principles.",
+        "posted": "2026-05-07T15:04:24Z",
+        "post_ts": "2026-05-07T14:23:53Z",
+        "views": 15419,
+        "views_at_save": 15419,
+        "age_at_save_hours": 0.68
+      },
+      {
+        "headline": "Jobless Claims Rise Unexpectedly",
+        "handle": "@LizAnnSonders",
+        "url": "https://x.com/LizAnnSonders/status/2052368903423099324",
+        "body": "Initial jobless claims hit 200k vs.. 205k est.",
+        "engagement": "58 likes, 12 retweets, 6 replies",
+        "honesty": "10/10",
+        "notes": "Direct labor market data report, verifiable facts.",
+        "posted": "2026-05-07T15:04:24Z",
+        "post_ts": "2026-05-07T12:44:12Z",
+        "views": 7331,
+        "views_at_save": 7331,
+        "age_at_save_hours": 2.34
+      },
       {
         "headline": "Altman Firing Texts Revealed in Trial",
         "handle": "@StockMKTNewz",
@@ -333,35 +486,7 @@
         "post_ts": "2026-05-07T02:18:03Z",
         "views": 32455,
         "views_at_save": 32455,
-        "age_at_save_hours": 2.29
-      },
-      {
-        "headline": "AI Adoption Surges Among US Workers",
-        "handle": "@unusual_whales",
-        "url": "https://x.com/unusual_whales/status/2052014769435971827",
-        "body": "Half of employed US adults now use AI occasionally, up from 46% last quarter, signaling rapid integration into the workforce per Gallup.",
-        "engagement": "277 likes, 29 retweets, 85 replies",
-        "honesty": "9/10",
-        "notes": "Verified statistical fact from Gallup survey.",
-        "posted": "2026-05-06T16:45:44Z",
-        "post_ts": "2026-05-06T13:17:00Z",
-        "views": 55258,
-        "views_at_save": 55258,
-        "age_at_save_hours": 15.3
-      },
-      {
-        "headline": "Record 55% of Americans See Finances Worsening",
-        "handle": "@LizAnnSonders",
-        "url": "https://x.com/LizAnnSonders/status/2051976509087170836",
-        "body": "Gallup poll reveals fifth straight year where more Americans expect their financial situation to decline than improve.",
-        "engagement": "196 likes, 66 reposts, 26 replies",
-        "honesty": "9/10",
-        "notes": "Verified poll data with light framing.",
-        "posted": "2026-05-06T15:58:08Z",
-        "post_ts": "2026-05-06T10:44:58Z",
-        "views": 23028,
-        "views_at_save": 23028,
-        "age_at_save_hours": 17.84
+        "age_at_save_hours": 12.77
       }
     ],
     "earlier": []
@@ -380,21 +505,7 @@
         "post_ts": "2026-05-06T16:19:29Z",
         "views": 15504447,
         "views_at_save": 15504447,
-        "age_at_save_hours": 12.26
-      },
-      {
-        "headline": "Chaos at JP Morgan Goes Viral",
-        "handle": "@corporatedudes",
-        "url": "https://x.com/corporatedudes/status/2051995481006371051",
-        "body": "A hilarious image sparks 'WTF' reactions to bizarre happenings at JP Morgan.",
-        "engagement": "16K likes, 630 reposts, 108 quotes, 325 replies",
-        "honesty": "7/10",
-        "notes": "Opinion - humorous take on corporate scene, no lies.",
-        "posted": "2026-05-06T17:20:07Z",
-        "post_ts": "2026-05-06T12:00:21Z",
-        "views": 588372,
-        "views_at_save": 588372,
-        "age_at_save_hours": 16.58
+        "age_at_save_hours": 22.75
       },
       {
         "headline": "eBay Insiders Sell $120M While Buying None",
@@ -408,7 +519,7 @@
         "post_ts": "2026-05-06T16:13:54Z",
         "views": 139683,
         "views_at_save": 139683,
-        "age_at_save_hours": 12.36
+        "age_at_save_hours": 22.84
       }
     ],
     "earlier": []
@@ -416,32 +527,18 @@
   "msm": {
     "stories": [
       {
-        "headline": "FBI Raids Virginia Democrat Senator's Office in Corruption Probe",
-        "handle": "@BillMelugin_",
-        "url": "https://x.com/BillMelugin_/status/2052038354930192470",
-        "body": "FBI raids office of VA Senate Pro Tempore Louise Lucas and adjacent cannabis dispensary in major corruption investigation opened under Biden...",
-        "engagement": "24.7K likes, 7.5K reposts, 2.1K replies",
-        "honesty": "10/10",
-        "notes": "Verified on-scene breaking news report.",
-        "posted": "2026-05-07T04:35:17Z",
-        "post_ts": "2026-05-06T14:50:43Z",
-        "views": 3992831,
-        "views_at_save": 3992831,
-        "age_at_save_hours": 13.74
-      },
-      {
-        "headline": "Tim Walz Pardons Illegal with Assault Convictions to Block Deportation",
+        "headline": "Tim Walz Pardons Illegal with Assault Convictions to Shield from Deportation",
         "handle": "@libsoftiktok",
         "url": "https://x.com/libsoftiktok/status/2052188118321659981",
-        "body": "Gov.. Tim Walz pardons Laotian illegal Xayasounethone Chandee, who has three assault convictions, seemingly to protect him from deportation.",
-        "engagement": "8.3K likes, 3.3K reposts, 607 replies",
-        "honesty": "10/10",
-        "notes": "Factual report on official pardon action.",
-        "posted": "2026-05-07T04:35:18Z",
+        "body": "Governor Walz grants pardon to Laos national Xayasounethone Chandee, convicted of three assaults, to block ICE removal.",
+        "engagement": "16K likes, 7K reposts, 300 quotes, 900 replies",
+        "honesty": "9/10",
+        "notes": "Documented pardon action with criminal and immigration details.",
+        "posted": "2026-05-07T15:04:24Z",
         "post_ts": "2026-05-07T00:45:49Z",
-        "views": 185646,
-        "views_at_save": 185646,
-        "age_at_save_hours": 3.82
+        "views": 297979,
+        "views_at_save": 297979,
+        "age_at_save_hours": 14.31
       },
       {
         "headline": "LA Housing Official Exposes Embezzlement of Homelessness Funds",
@@ -458,13 +555,27 @@
         "parent_handle": "@KarenBassLA",
         "parent_text": "Building more housing to make LA more affordable. Thousands of houses and apartments are already under construction.",
         "views_at_save": 28801,
-        "age_at_save_hours": 3.73
+        "age_at_save_hours": 14.21
       }
     ],
     "earlier": []
   },
   "pg6": {
     "stories": [
+      {
+        "headline": "Kylie Jenner and Timoth\u00e9e Chalamet PDA at Knicks Game",
+        "handle": "@PageSix",
+        "url": "https://x.com/PageSix/status/2052368870707503155",
+        "body": "Kylie Jenner and Timoth\u00e9e Chalamet were spotted showing PDA at a Knicks game.",
+        "engagement": "1.5K likes, 87 reposts, 21 quotes, 9 replies",
+        "honesty": "9/10",
+        "notes": "Verified celebrity sighting with photos.",
+        "posted": "2026-05-07T15:04:24Z",
+        "post_ts": "2026-05-07T12:44:04Z",
+        "views": 59552,
+        "views_at_save": 59552,
+        "age_at_save_hours": 2.34
+      },
       {
         "headline": "Q'orianka Kilcher Sues James Cameron Over Avatar Likeness",
         "handle": "@Variety",
@@ -477,21 +588,7 @@
         "post_ts": "2026-05-07T00:18:29Z",
         "views": 229319,
         "views_at_save": 229319,
-        "age_at_save_hours": 4.28
-      },
-      {
-        "headline": "Hayden Panettiere Comes Out as Bisexual in New Interview",
-        "handle": "@enews",
-        "url": "https://x.com/enews/status/2052011422221992228",
-        "body": "Hayden Panettiere publicly comes out as bisexual during a candid interview about her personal life.",
-        "engagement": "446 likes, 47 reposts, 54 quotes, 58 replies",
-        "honesty": "9/10",
-        "notes": "Verified celebrity statement reported accurately.",
-        "posted": "2026-05-06T16:50:37Z",
-        "post_ts": "2026-05-06T13:03:42Z",
-        "views": 58302,
-        "views_at_save": 58302,
-        "age_at_save_hours": 15.53
+        "age_at_save_hours": 14.77
       },
       {
         "headline": "BLACKPINK's Met Gala Reunion Selfie",
@@ -505,7 +602,7 @@
         "post_ts": "2026-05-06T23:14:24Z",
         "views": 170887,
         "views_at_save": 170887,
-        "age_at_save_hours": 5.35
+        "age_at_save_hours": 15.83
       }
     ],
     "earlier": []
@@ -524,7 +621,7 @@
         "post_ts": "2026-05-06T16:43:06Z",
         "views": 2477,
         "views_at_save": 2477,
-        "age_at_save_hours": 11.87
+        "age_at_save_hours": 22.36
       },
       {
         "headline": "Cheesy Ground Beef Zucchini",
@@ -538,13 +635,27 @@
         "post_ts": "2026-05-06T16:33:02Z",
         "views": 338,
         "views_at_save": 338,
-        "age_at_save_hours": 12.04
+        "age_at_save_hours": 22.52
       }
     ],
     "earlier": []
   },
   "science": {
     "stories": [
+      {
+        "headline": "'Dark Proteome' Discovery Expands Human Genome Understanding",
+        "handle": "@EricTopol",
+        "url": "https://x.com/EricTopol/status/2052385247833321760",
+        "body": "New research uncovers a 'dark proteome' of microproteins and peptideins encoded in the human genome, potentially transforming disease insights.",
+        "engagement": "26 likes, 9 reposts",
+        "honesty": "9/10",
+        "notes": "Accurate reporting of a peer-reviewed Nature paper on novel proteome components.",
+        "posted": "2026-05-07T15:04:25Z",
+        "post_ts": "2026-05-07T13:49:09Z",
+        "views": 4967,
+        "views_at_save": 4967,
+        "age_at_save_hours": 1.25
+      },
       {
         "headline": "Faster Emergence of Massive Star Clusters",
         "handle": "@NASAWebb",
@@ -557,7 +668,7 @@
         "post_ts": "2026-05-06T13:36:57Z",
         "views": 58344,
         "views_at_save": 58344,
-        "age_at_save_hours": 14.97
+        "age_at_save_hours": 25.46
       },
       {
         "headline": "New AI Technique Solves Inverse Equations",
@@ -571,21 +682,7 @@
         "post_ts": "2026-05-07T00:50:00Z",
         "views": 2586,
         "views_at_save": 2586,
-        "age_at_save_hours": 3.76
-      },
-      {
-        "headline": "Study Links Physical Activity to Improved Affective Well-Being",
-        "handle": "@EricTopol",
-        "url": "https://x.com/EricTopol/status/2052019211862766006",
-        "body": "Analysis of over 8,000 participants with accelerometers and 330,000 well-being ratings shows positive changes in affective well-being after physical...",
-        "engagement": "75 likes, 16 reposts",
-        "honesty": "10/10",
-        "notes": "Cites peer-reviewed Nature study with empirical data on activity and well-being.",
-        "posted": "2026-05-06T17:20:09Z",
-        "post_ts": "2026-05-06T13:34:39Z",
-        "views": 11009,
-        "views_at_save": 11009,
-        "age_at_save_hours": 15.01
+        "age_at_save_hours": 14.24
       }
     ],
     "earlier": []
@@ -611,35 +708,35 @@
         "parent_handle": "@KarenBassLA",
         "parent_text": "State of emergency on day one. Creating LA\u2019s first program to get encampments cleared and put people inside. Down two years in a row, down 18%.",
         "views_at_save": 39676,
-        "age_at_save_hours": 3.59
+        "age_at_save_hours": 14.08
       },
       {
-        "headline": "Suppressed Iran Attack Damage Exposed by Satellite Imagery",
-        "handle": "@ggreenwald",
-        "url": "https://x.com/ggreenwald/status/2052003858948272345",
-        "body": "Satellite images show Iran inflicted far more damage on US military assets than admitted by the White House and Pentagon.",
-        "engagement": "1081 likes, 283 reposts, 62 replies",
-        "honesty": "9/10",
-        "notes": "Reports verifiable WaPo investigation with published satellite evidence, adding commentary on official underreporting without introducing falsehoods.",
-        "posted": "2026-05-06T17:20:10Z",
-        "post_ts": "2026-05-06T12:33:39Z",
-        "views": 59894,
-        "views_at_save": 59894,
-        "age_at_save_hours": 16.03
-      },
-      {
-        "headline": "$100M Fire Aid Concert Funds Laundered to Nonprofits",
-        "handle": "@WallStreetApes",
-        "url": "https://x.com/WallStreetApes/status/2051980304227655987",
-        "body": "California Rep.. Kevin Kiley reveals $100M raised for Pacific Palisades fire victims was diverted to nonprofits for voter programs, immigrant aid,...",
-        "engagement": "1.8K likes, 1K reposts, 133 replies",
+        "headline": "Massive SNAP Fraud: 186K Dead People Still Collecting Benefits",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2052121467769196745",
+        "body": "Federal fraud task force uncovers 186,000 deceased individuals receiving SNAP benefits, contradicting Democrat claims of no widespread fraud.",
+        "engagement": "27K likes, 5.3K reposts, 97 quotes, 793 replies",
         "honesty": "8/10",
-        "notes": "Cites specific nonprofit allocations and amounts from investigation, though sourcing is congressional statement.",
-        "posted": "2026-05-06T13:04:34Z",
-        "post_ts": "2026-05-06T11:00:03Z",
-        "views": 23542,
-        "views_at_save": 23542,
-        "age_at_save_hours": 17.59
+        "notes": "Specific verifiable data point from JD Vance citing federal task force findings on welfare fraud.",
+        "posted": "2026-05-07T15:04:26Z",
+        "post_ts": "2026-05-06T20:20:59Z",
+        "views": 369173,
+        "views_at_save": 369173,
+        "age_at_save_hours": 18.72
+      },
+      {
+        "headline": "FBI Raids VA Senator Over Marijuana Bribery Probe",
+        "handle": "@BillMelugin_",
+        "url": "https://x.com/BillMelugin_/status/2052085122178900046",
+        "body": "Ongoing FBI investigation into corruption and bribery involving state Senate President Louise Lucas and marijuana dispensary licensing, started under...",
+        "engagement": "1.9K likes, 493 reposts, 58 quotes, 108 replies",
+        "honesty": "8/10",
+        "notes": "Factual summary of NYT reporting on federal investigation with sources familiar to the case.",
+        "posted": "2026-05-07T15:04:26Z",
+        "post_ts": "2026-05-06T17:56:33Z",
+        "views": 210828,
+        "views_at_save": 210828,
+        "age_at_save_hours": 21.13
       }
     ],
     "earlier": []
@@ -658,7 +755,7 @@
         "post_ts": "2026-05-07T01:24:31Z",
         "views": 705,
         "views_at_save": 705,
-        "age_at_save_hours": 3.18
+        "age_at_save_hours": 13.67
       },
       {
         "headline": "AI Standup Comedy Agent",
@@ -672,7 +769,7 @@
         "post_ts": "2026-05-06T14:02:09Z",
         "views": 1322,
         "views_at_save": 1322,
-        "age_at_save_hours": 14.55
+        "age_at_save_hours": 25.04
       },
       {
         "headline": "Dave Chappelle brings Ye onstage at comedy show",
@@ -686,7 +783,7 @@
         "post_ts": "2026-05-04T18:48:01Z",
         "views": 798875,
         "views_at_save": 798875,
-        "age_at_save_hours": 57.79
+        "age_at_save_hours": 68.27
       }
     ],
     "earlier": []
