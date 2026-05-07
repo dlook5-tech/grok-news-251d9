@@ -2,10 +2,11 @@ name: eXpressO News Cron
 
 on:
   schedule:
-    # 4 crons/day at 6am, 10am, 2pm, 6pm Pacific Time.
-    # PDT (UTC-7, summer Mar-Nov): 13, 17, 21, 01 UTC
-    # PST (UTC-8, winter Nov-Mar): 14, 18, 22, 02 UTC — fires 1hr earlier in PT (5/9/1/5)
-    - cron: '0 1,13,17,21 * * *'
+    # 4 crons/day. Times shifted to :17 minutes past the hour because GitHub Actions
+    # scheduled workflows are heavily delayed at top-of-hour (high-load window).
+    # Mid-hour fires get scheduled within ~5 min instead of 30+ min.
+    # PDT (UTC-7, summer): 13:17, 17:17, 21:17, 01:17 UTC = ~6:17am, 10:17am, 2:17pm, 6:17pm PT
+    - cron: '17 1,13,17,21 * * *'
   workflow_dispatch:  # Manual trigger from the Actions tab
 
 # Prevent overlap if a previous run is still going
