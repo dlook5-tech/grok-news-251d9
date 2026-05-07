@@ -1828,11 +1828,13 @@ for _tab in ('world', 'usa'):
                 if isinstance(s, dict) and len([p for p in s.get('perspectives', []) or []
                                                   if isinstance(p, dict) and p.get('url')]) >= 3]
     # World/USA: skip commentator enrichment (perspectives ARE the take layer).
-    # max_age_h enforces the per-tab cap (24h news, 72h ref) AT THE VELOCITY-HOLD
-    # LEVEL — old stories drop even if they have proven 4h-delta growth.
-    _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 24)
+    # 2026-05-07: User clarification — velocity ranking alone is the right rule.
+    # If an old story's 4h-growth still beats fresh candidates' velocity, keep it
+    # regardless of age. No per-tab age cap at velocity-hold level. (MAX_HOLD_HOURS=168
+    # remains as absolute ceiling.) The age cap is only used for FLOOR backfill below.
     _picked = curation.curate(_tab, _current, _candidates,
-                              top_n=_TAB_N[_tab], enrich=False, history=_history, max_age_h=_wu_age_cap)
+                              top_n=_TAB_N[_tab], enrich=False, history=_history)
+    _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 24)  # used for backfill below
     # Drop same-topic duplicates (handle-side repetition + headline overlap).
     _picked = _enforce_topic_diversity(_picked, label=_tab)
     # CLAUDE.md hard rule: never empty + (2026-05-06) every World/USA story MUST have
@@ -1878,13 +1880,27 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
     # Topic-diversity dedup: drops same-author-twice + same-headline (the @ocregister
     # Laguna Beach Forest Avenue trees 2d/5d duplicate problem).
     _picked = _enforce_topic_diversity(_picked, label=_tab)
-    # Floor enforcement (CLAUDE.md: never empty). Elon tab gets target=10 from _TAB_N
-    # but the FLOOR is 3 — only triggers backfill if we're under 3.
+    # Floor enforcement (CLAUDE.md: never empty). Two-pass backfill:
+    #   Pass 1: strict (24h on news tabs) — preferred fresh content
+    #   Pass 2: lenient (72h fallback) — only if still under floor, honors "never empty"
+    _backfill_pool = _current + (_existing.get(_tab, {}).get('earlier', []) or [])
     if len(_picked) < _TAB_FLOOR:
-        _picked = _topup_to_floor(_picked, _current + (_existing.get(_tab, {}).get('earlier', []) or []),
+        _picked = _topup_to_floor(_picked, _backfill_pool,
                                   top_n=_TAB_FLOOR, max_age_h=_backfill_age)
-        # Re-run dedup after backfill (backfill may have re-added duplicates).
         _picked = _enforce_topic_diversity(_picked, label=_tab)
+    # Pass 2 — extend to 72h ONLY if strict pass left us empty/short.
+    if len(_picked) < _TAB_FLOOR:
+        _picked = _topup_to_floor(_picked, _backfill_pool,
+                                  top_n=_TAB_FLOOR, max_age_h=72)
+        _picked = _enforce_topic_diversity(_picked, label=_tab)
+    # Pass 3 — deep snapshot scan (last 30 crons of history) as final fallback.
+    if len(_picked) < _TAB_FLOOR:
+        _picked = _topup_to_floor(_picked, _scan_snapshots_for_tab(_tab),
+                                  top_n=_TAB_FLOOR, max_age_h=72)
+        _picked = _enforce_topic_diversity(_picked, label=_tab)
+        if len(_picked) < _TAB_FLOOR:
+            print(f"  WARN {_tab}: only {len(_picked)}/{_TAB_FLOOR} after 3-pass backfill",
+                  file=sys.stderr)
     curation.stamp_view_history(_picked)
     _output_v5[_tab] = {'stories': _picked, 'earlier': []}
 

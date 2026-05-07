@@ -93,7 +93,7 @@ CORE RULES:
 8. FALLBACK: If <3 valid results in last 12h, expand to 24h. If still nothing, expand to 48h. NEVER pick anything >48h on news tabs.
 
 PURE VIEWS SPEC (May 2026-05-04 — this OVERRIDES any conflicting earlier guidance):
-The selection rule is **highest views**, period. No subjective curation. No "what's interesting." No "what has insight." No quality-bar judgment about MSM-bait or announcement-style. Just: from the approved handles, return the posts with the highest x_search view count in the last 24 hours.
+The selection rule is **highest views**, period. No subjective curation. No "what's interesting." No quality-bar judgment. Just: return the posts with the highest x_search view count in the tab's scope from the last 24 hours, regardless of whether the handle is on a suggested list.
 
 Python sorts and ranks. You return 8-10 candidates per tab. We pick the top by views.
 
@@ -106,7 +106,7 @@ Per-tab counts:
 Each pick MUST have: url, handle, body, views, engagement, honesty score, notes (1-line on score).
 
 APPROVED HANDLES (anti-hallucination defense):
-Each tab's prompt below contains an "APPROVED HANDLES" list. You may ONLY pick posts authored by handles from that list. NEVER fabricate a handle that isn't on the approved list. Within the approved list, pick by VIEWS — top viewed always wins.
+Each tab's prompt contains a SUGGESTED HANDLES list — these are good defaults for that scope. But the rule is OPENNESS: pick whatever post has the highest views in the tab's scope, even if from a handle NOT on the suggested list. The handle must EXIST (real account, real post in x_search results), but it doesn't have to be on the suggested list. Spencer Pratt for celebrity gossip, LA mayoral candidates for Local, anyone — if their post has the views, pick them. The anti-hallucination defense is the post URL existing in x_search results + oEmbed verification, not a handle whitelist.
 
 VIEWS IS A HARD JSON CONTRACT (the only metric that matters):
 **Every post returned MUST include a "views" field as a raw integer.** Like this:
@@ -278,9 +278,9 @@ Find the TOP 3 INTERNATIONAL news stories by views in the last 24 hours.
 PURE VIEWS SPEC + 3-PERSPECTIVE REQUIREMENT (2026-05-06 user mandate):
 Rank candidate topics by total views across all relevant posts. Pick topics that have substantive Conservative + Democrat + Independent takes available. **Every story you return MUST have all 3 perspectives populated.** A story with only 1 or 2 perspectives is NOT quality enough — drop it and pick a different topic.
 
-If you cannot find a topic with all 3 perspective slots filled by approved handles, return FEWER stories rather than ship a partial one. Better 1 fully-three-sided story than 3 half-baked ones.
+If you cannot find a topic with all 3 perspective slots filled by recognizable conservative+democrat+independent voices, return FEWER stories rather than ship a partial one. Better 1 fully-three-sided story than 3 half-baked ones.
 
-APPROVED HANDLES (use ONLY these per perspective slot, when present):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most views, even if not listed):
   Conservative (hawkish/interventionist + mainstream conservative media): @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @SenTomCotton, @LindseyGrahamSC, @SecPompeo, @TomFitton, @JesseBWatters, @IngrahamAngle, @WarMonitors, @sentdefender, @CriticalThreats, @WhiteHouse, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews, @nypost, @washingtonexaminer
   Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews
   Independent/Analyst (incl. non-interventionist right): @TuckerCarlson, @HamidRezaAz, @TheStudyofWar, @vtchakarova, @RayDalio, @dalperovitch, @InsightGL, @KimZetter, @Snowden, @ggreenwald
@@ -315,9 +315,9 @@ Find the TOP 3 US NATIONAL news stories by views in the last 24 hours (domestic 
 PURE VIEWS SPEC + 3-PERSPECTIVE REQUIREMENT (2026-05-06 user mandate):
 Rank candidate topics by total views across all relevant posts. Pick topics that have substantive Conservative + Democrat + Independent takes available. **Every story you return MUST have all 3 perspectives populated.** A story with only 1 or 2 perspectives is NOT quality enough — drop it and pick a different topic.
 
-If you cannot find a topic with all 3 perspective slots filled by approved handles, return FEWER stories rather than ship a partial one. Better 1 fully-three-sided story than 3 half-baked ones.
+If you cannot find a topic with all 3 perspective slots filled by recognizable conservative+democrat+independent voices, return FEWER stories rather than ship a partial one. Better 1 fully-three-sided story than 3 half-baked ones.
 
-APPROVED HANDLES (use ONLY these per perspective slot, when present):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most views, even if not listed):
   Conservative (incl. mainstream conservative media): @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @SenTomCotton, @LindseyGrahamSC, @SecPompeo, @TomFitton, @JesseBWatters, @IngrahamAngle, @WhiteHouse, @MariaBartiromo, @SteveScalise, @SpeakerJohnson, @LeaderMcConnell, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews, @nypost, @DailyCaller, @theblaze, @townhallcom, @washingtonexaminer
   Democrat (incl. left-leaning major media): @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews, @SenSchumer, @SpeakerPelosi, @SenSanders, @repjayapal, @SenCoryBooker, @SenWhitehouse, @MSNBC, @TheAtlantic, @MotherJones, @TheNation, @NewYorker, @nytimes, @washingtonpost
   Independent/Analyst (centrist news + non-interventionist right + investigative): @TuckerCarlson, @MattTaibbi, @bariweiss, @FareedZakaria, @semaforben, @axios, @thehill, @mediaite, @PunchbowlNews, @semaforpolitics, @SCOTUSblog, @KimZetter, @Snowden, @ggreenwald, @InsightGL, @TheStudyofWar, @CNN, @Reuters, @AP
@@ -433,7 +433,7 @@ cat > /tmp/grok_p_allin.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION: Find the 3 MOST THOUGHT-PROVOKING posts from billionaire operators — ORIGINAL INSIGHT, contrarian takes, deep framing. NOT generic "interesting" or "agree" reactions.
 
-APPROVED HANDLES (use ONLY these — pick 3 DIFFERENT handles):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
 @chamath, @DavidSacks, @pmarca, @PalmerLuckey, @friedberg
 
 Search EACH person separately, prefer mode: "Latest" for freshness + insight keywords:
@@ -449,7 +449,7 @@ QUALITY BAR — pick ONLY posts with novel angle, sharp contrarian view, or deep
 
 CONTEXT RULE: ORIGINAL posts or quote-tweets only. NO context-less replies (starting with "@someone" or "that isn't true").
 
-Pick 3 posts from 3 DIFFERENT approved handles — strongest ORIGINAL INSIGHT (highest combined likes+retweets+replies among substantive posts) from each.
+Pick 3 posts from 3 DIFFERENT handles — strongest ORIGINAL INSIGHT (highest combined likes+retweets+replies among substantive posts) from each.
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "5.2K likes, 800 retweets, 200 replies").
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
@@ -473,7 +473,7 @@ cat > /tmp/grok_p_msm.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION: Stories blowing up on X that MSM is IGNORING or UNDERREPORTING — the juicier, more suppressed the better. Prefer NOVEL ANGLES, exposé-style reporting, undercover footage, data that contradicts official narratives.
 
-APPROVED HANDLES (use ONLY these):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most viral recipe):
 @BillMelugin_, @MattWalshBlog, @TimcastNews, @TheRabbitHole84, @SCOTUSblog, @InsightGL, @JamesOKeefeIII, @LibsOfTikTok, @RealSaavedra, @collinrugg, @EndWokeness, @WallStreetApes
 
 CRITICAL DIVERSITY RULE: 3 DIFFERENT handles. NO repeats. If you've used @MattWalshBlog for one story, use a different handle for the others. The user has flagged that we keep returning the same handle (Matt Walsh) for every story — STOP DOING THAT.
@@ -490,7 +490,7 @@ FALLBACK: If a handle has no Latest results, try mode: "Top" with same min_faves
 
 QUALITY BAR: pick posts with a SPECIFIC STORY that MSM isn't covering — not hot takes ABOUT the media. Actual events, data, undercover footage, specific officials doing specific things.
 
-PICK 3 posts from 3 DIFFERENT approved handles — HIGHEST ENGAGEMENT post from each. Verify the 3 handles are not identical before returning.
+PICK 3 posts from 3 DIFFERENT handles — HIGHEST ENGAGEMENT post from each. Verify the 3 handles are not identical before returning.
 
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "47K likes, 12K retweets, 3.2K replies").
@@ -503,7 +503,7 @@ cat > /tmp/grok_p_business.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION: 3 MOST THOUGHT-PROVOKING business/markets posts. Original analysis, contrarian calls, macro insight, hidden story behind the numbers — NOT generic "stocks up today" headlines.
 
-APPROVED HANDLES (use ONLY these — pick 3 DIFFERENT handles):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
 @DowdEdward, @RayDalio, @Stocktwits, @StockMKTNewz, @WatcherGuru, @unusual_whales, @TruthGundlach, @LizAnnSonders, @elerianm
 
 Must be stocks, markets, finance, crypto, deals, or macro. NOT geopolitics/military.
@@ -524,7 +524,7 @@ If the topic is political, it belongs in the USA tab (which has 3-perspective fo
 
 QUOTED-MSM REJECTION: REJECT any post whose body is primarily a quoted passage from TIME, NY Times, WaPo, Washington Post, NPR, Reuters, AP, etc. (look for "per TIME" / "per NYT" / "per WaPo" patterns or text that opens with a quote). These are amplifications, not analysis.
 
-Pick 3 posts from 3 DIFFERENT approved handles — STRONGEST INSIGHT (highest combined likes+retweets+replies) per handle.
+Pick 3 posts from 3 DIFFERENT handles — STRONGEST INSIGHT (highest combined likes+retweets+replies) per handle.
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "12K likes, 3K retweets, 800 replies").
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
@@ -535,7 +535,7 @@ PROMPT
 cat > /tmp/grok_p_sports.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 
-APPROVED HANDLES (use ONLY these):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most viral recipe):
 @ShamsCharania, @wojespn, @ClutchPoints, @BleacherReport, @CourtsideBuzzX, @TheAthletic, @ESPNStatsInfo, @AdamSchefter, @stephenasmith, @TheHerd, @colincowherd
 
 EXACT structure — return EXACTLY 4 posts in this order:
@@ -562,22 +562,22 @@ cat > /tmp/grok_p_pods.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 CRITICAL MISSION: Find the 3 MOST VIRAL podcast clip moments on X right now. The user specifically complains that we've been returning mediocre clips — they want MASSIVELY VIRAL moments (100K+ views, 5K+ likes minimum for major podcasts, or peak engagement for the day).
 
-APPROVED HANDLES (use ONLY these — 3 DIFFERENT shows):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most viral podcast clip, even other shows):
 @joerogan, @joeroganhq, @JREClips, @TuckerCarlson, @theallinpod, @lexfridman, @fridmanclips, @CallHerDaddy, @adamcarolla, @PBDPodcast, @patrickbetdavid, @ShawnRyanShow, @MegynKellyShow, @LouderWithCrowder, @RussellBrand
 
 A clip is a 30-sec to 3-min specific moment that went viral. NOT a full-episode announcement.
 
 PRIMARY SEARCH (broad viral clips from approved shows):
-"(from:joerogan OR from:JREClips OR from:TuckerCarlson OR from:lexfridman OR from:fridmanclips OR from:theallinpod OR from:CallHerDaddy OR from:adamcarolla OR from:PBDPodcast OR from:patrickbetdavid OR from:ShawnRyanShow OR from:MegynKellyShow OR from:LouderWithCrowder OR from:RussellBrand) lang:en since:$YESTERDAY min_faves:1000", mode: "Top", limit: 25
+"(from:joerogan OR from:JREClips OR from:TuckerCarlson OR from:lexfridman OR from:fridmanclips OR from:theallinpod OR from:CallHerDaddy OR from:adamcarolla OR from:PBDPodcast OR from:patrickbetdavid OR from:ShawnRyanShow OR from:MegynKellyShow OR from:LouderWithCrowder OR from:RussellBrand) lang:en since:$YESTERDAY min_faves:300", mode: "Top", limit: 30
 
 SUPPLEMENT WITH per-show searches, prefer high-engagement:
-"from:JREClips OR from:joerogan since:$YESTERDAY min_faves:2000"
-"from:fridmanclips OR from:lexfridman since:$YESTERDAY min_faves:1000"
-"from:theallinpod since:$YESTERDAY min_faves:1000"
-"from:TuckerCarlson OR from:RussellBrand OR from:MegynKellyShow since:$YESTERDAY min_faves:2000"
-"from:PBDPodcast OR from:patrickbetdavid since:$YESTERDAY min_faves:1000"
-"from:ShawnRyanShow since:$YESTERDAY min_faves:1000"
-"from:LouderWithCrowder OR from:adamcarolla OR from:CallHerDaddy since:$YESTERDAY min_faves:1000"
+"from:JREClips OR from:joerogan since:$YESTERDAY min_faves:500"
+"from:fridmanclips OR from:lexfridman since:$YESTERDAY min_faves:300"
+"from:theallinpod since:$YESTERDAY min_faves:300"
+"from:TuckerCarlson OR from:RussellBrand OR from:MegynKellyShow since:$YESTERDAY min_faves:500"
+"from:PBDPodcast OR from:patrickbetdavid since:$YESTERDAY min_faves:300"
+"from:ShawnRyanShow since:$YESTERDAY min_faves:300"
+"from:LouderWithCrowder OR from:adamcarolla OR from:CallHerDaddy since:$YESTERDAY min_faves:300"
 
 FILTERING: REJECT "new episode", "full interview", "full episode", "out now", "tune in", "dropping soon". KEEP specific-moment headlines — someone saying something shocking, a host reaction, a heated exchange, a reveal.
 
@@ -598,13 +598,13 @@ cat > /tmp/grok_p_pg6.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION: JUICIEST celebrity gossip — SURPRISING reveals, dramatic takes, "wait, what?" moments. NOT red-carpet appearances or generic promo.
 
-APPROVED HANDLES (use ONLY these — pick 3 DIFFERENT handles):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
 @PopCrave, @enews, @JustJared, @etnow, @TMZ, @DeuxMoi, @PageSix, @Variety
 
 Search mode: "Latest" for fresh + juicy:
 "(from:PopCrave OR from:TMZ OR from:DeuxMoi OR from:enews OR from:JustJared OR from:PageSix OR from:Variety OR from:etnow) since:$YESTERDAY min_faves:500", mode: "Latest", limit: 20.
 ALSO search mode: "Top" for highest-engagement: "(from:PopCrave OR from:TMZ OR from:DeuxMoi OR from:etnow) since:$YESTERDAY min_faves:1000", limit: 15.
-FALLBACK: If <3 from approved handles, retry with min_faves:200.
+FALLBACK: If <3 strong picks, retry with min_faves:200.
 
 QUALITY BAR: unexpected reveals, dramatic feuds, surprise engagements/breakups, cryptic posts that went viral, specific quotes from celebs. REJECT magazine-cover announcements and PR-rep releases.
 
@@ -618,7 +618,7 @@ The user is explicit: NO crime-blotter content on Pg.6. Pick redemption stories,
 
 ENGLISH-ONLY: All posts must be in English OR have a complete English translation in the "translation" field. NO untranslated foreign-language content. If a post body is in Portuguese/Spanish/French/etc and you can't translate, SKIP it.
 
-Pick the 3 HIGHEST-ENGAGEMENT (combined likes+retweets+replies) UNEXPECTED/dramatic celebrity posts. 3 DIFFERENT approved handles.
+Pick the 3 HIGHEST-ENGAGEMENT (combined likes+retweets+replies) UNEXPECTED/dramatic celebrity posts. 3 DIFFERENT handles.
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "47K likes, 8K retweets, 3K replies").
 Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
@@ -630,12 +630,12 @@ cat > /tmp/grok_p_recipe.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 Actual FOOD RECIPES you can cook. NOT product lists, NOT gadget ads.
 
-APPROVED HANDLES (use ONLY these — pick 3 DIFFERENT handles):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
 @tasteofhome, @FoodNetwork, @thekitchn, @HBHarvest, @halfbakedharvest, @foodandwine, @tasty, @KitchenSanc2ary, @budgetbytes, @BonAppetit, @RecipeTinEats
 
 Search 1: "from:FoodNetwork OR from:tasty OR from:halfbakedharvest OR from:HBHarvest OR from:budgetbytes OR from:foodandwine since:$YESTERDAY", mode: "Top", limit: 15.
 Search 2: "from:tasteofhome OR from:KitchenSanc2ary OR from:thekitchn OR from:BonAppetit OR from:RecipeTinEats since:$YESTERDAY", mode: "Top", limit: 15.
-FALLBACK: If <3 from approved handles, retry with last 3 days.
+FALLBACK: If <3 strong picks, retry with last 3 days.
 Body must name the dish. Skip non-recipe posts.
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "5K likes, 1K retweets, 200 replies").
@@ -685,7 +685,7 @@ GEOGRAPHY RULE (STRICT): Stories MUST be Newport Beach, Costa Mesa, Huntington B
 - LA-wide breaking-news tickers
 - Federal political stories that just happen to be in California
 
-APPROVED HANDLES (use ONLY these — pick 3 DIFFERENT handles):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
 @DailyPilot, @OC_Scanner, @OCRegister, @NBPDsocial, @CityofNewportBeach, @hbpd, @CityofHB, @cityofIrvine, @CMPD_NewsInfo, @oclnews, @CdMHigh, @newportharborhs
 
 PRIORITY ORDER:
@@ -713,7 +713,7 @@ cat > /tmp/grok_p_conspiracy.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION: 3 posts going DEEP behind the biggest stories of the day — investigative threads, suppressed angles, undercover footage, court documents, document dumps, FOIA results, contradictions in official narratives, things mainstream media is NOT asking. The vibe is "in search of the truth behind the biggest stories."
 
-APPROVED HANDLES (use ONLY these — pick 3 DIFFERENT handles):
+SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
 @JackPosobiec, @JamesOKeefeIII, @TomFitton, @WallStreetApes, @TheRabbitHole84, @CollinRugg, @libsoftiktok, @EndWokeness, @DropSiteNews, @Snowden, @ggreenwald, @ProPublica, @KimZetter, @disclosetv, @megynkelly, @SecularTalk, @MariaBartiromo, @JulianAssange, @BillMelugin_
 
 QUALITY BAR — what counts as a "conspiracy / truth-behind" post:
