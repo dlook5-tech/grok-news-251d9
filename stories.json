@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-07T19:04:18Z",
+  "lastUpdated": "2026-05-07T22:19:51Z",
   "world": {
     "stories": [
       {
@@ -16,7 +16,7 @@
             "views": 358724,
             "notes": "Reports verifiable details of US proposal from sources without introducing false claims.",
             "views_at_save": 358724,
-            "age_at_save_hours": 8.77
+            "age_at_save_hours": 12.03
           },
           {
             "label": "Democrat",
@@ -28,7 +28,7 @@
             "views": 21502,
             "notes": "Highlights economic impacts with verifiable gas price data and calls for ending the war.",
             "views_at_save": 21502,
-            "age_at_save_hours": 4.88
+            "age_at_save_hours": 8.14
           },
           {
             "label": "Independent",
@@ -40,7 +40,7 @@
             "views": 135447,
             "notes": "Provides contrarian analysis of negotiations based on reporting, but includes opinionated critique of sources.",
             "views_at_save": 135447,
-            "age_at_save_hours": 30.68
+            "age_at_save_hours": 33.94
           }
         ],
         "footnotes": [
@@ -52,13 +52,61 @@
         "body": "Three-perspective roundup.",
         "posted": "5/7/2026 7:04 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 8.77
+        "age_at_save_hours": 12.03
       }
     ],
     "earlier": []
   },
   "usa": {
     "stories": [
+      {
+        "headline": "Trump's $1.5 Trillion Defense Budget Proposal",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@SecWar",
+            "url": "https://x.com/SecWar/status/2052396775797891417",
+            "text": "Thanks to President Trump\u2019s $1.5 trillion defense budget, this War Department has moved from bureaucracy to business.. This is a FISCALLY RESPONSIBLE...",
+            "engagement": "22K likes, 4K reposts",
+            "honesty": "8/10",
+            "views": 1413217,
+            "notes": "Administration official praising the budget proposal; factual core accurate with partisan spin.",
+            "views_at_save": 1413217,
+            "age_at_save_hours": 7.75
+          },
+          {
+            "label": "Democrat",
+            "handle": "@mctaytelbaum",
+            "url": "https://x.com/mctaytelbaum/status/2052140109789585662",
+            "text": "$1.5 trillion military budget must be rejected, say Dem Sen.. Time to talk for Dems and Reps on balances and specifics, when absorbtion costs are...",
+            "engagement": "",
+            "honesty": "6/10",
+            "views": 3,
+            "notes": "Opinion calling for rejection, referencing Democratic senator; no factual errors but speculative on costs.",
+            "views_at_save": 3,
+            "age_at_save_hours": 24.75
+          },
+          {
+            "label": "Independent",
+            "handle": "@x4secular",
+            "url": "https://x.com/x4secular/status/2052424193497854449",
+            "text": "Trump's \"$1.5T Defense Bonanza: From Paper-Pushing to Profit Machine?\" \ud83d\udea8They call it a \"fiscally responsible investment\" in the \"Arsenal of Freedom.\"...",
+            "engagement": "",
+            "honesty": "7/10",
+            "views": 14,
+            "notes": "Critical analysis with verifiable data points on spending comparisons; opinionated but defensible.",
+            "views_at_save": 14,
+            "age_at_save_hours": 5.93
+          }
+        ],
+        "footnotes": [],
+        "notes": "Limited high-view posts from Democrat and Independent perspectives available in search results; selected based on relevance.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/7/2026 10:19 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 7.75
+      },
       {
         "headline": "Trump Immigration Enforcement Faces Court and State Pushback",
         "honesty": "8/10",
@@ -73,7 +121,7 @@
             "views": 13985,
             "notes": "Reports administration's adjustment to ICE training policy; factual with light positive spin.",
             "views_at_save": 13985,
-            "age_at_save_hours": 10.57
+            "age_at_save_hours": 13.83
           },
           {
             "label": "Democrat",
@@ -85,7 +133,7 @@
             "views": 101093,
             "notes": "Cites economic study on raid impacts; critical framing but underlying data verifiable.",
             "views_at_save": 101093,
-            "age_at_save_hours": 32.07
+            "age_at_save_hours": 35.33
           },
           {
             "label": "Independent",
@@ -97,7 +145,7 @@
             "views": 15019,
             "notes": "Neutral reporting of federal court decision against ICE policy.",
             "views_at_save": 15019,
-            "age_at_save_hours": 20.63
+            "age_at_save_hours": 23.89
           }
         ],
         "footnotes": [],
@@ -105,13 +153,64 @@
         "body": "Three-perspective roundup.",
         "posted": "5/7/2026 3:31 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 10.57
+        "age_at_save_hours": 13.83
       }
     ],
     "earlier": []
   },
   "elon": {
     "stories": [
+      {
+        "headline": "Utterly Evil Cultural Policy",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052482175979950165",
+        "body": "Elon Musk calls it utterly evil to emasculate and feminize boys while mass importing barbarians from the third world.",
+        "engagement": "6.5K likes, 257 reposts, 18 quotes, 323 replies",
+        "honesty": "7/10",
+        "notes": "Strong opinion on societal and immigration issues with no factual claims.",
+        "posted": "2026-05-07T22:19:51Z",
+        "post_ts": "2026-05-07T20:14:18Z",
+        "views": 99966,
+        "parent_url": "https://x.com/NMoonitz/status/2052162789029110158",
+        "parent_handle": "@NMoonitz",
+        "parent_text": "It\u2019s a special kind of evil to emasculate and feminize our boys as we mass import barbarians from the third world.",
+        "views_at_save": 99966,
+        "age_at_save_hours": 2.09
+      },
+      {
+        "headline": "Grok AI Development Update",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052269744120869106",
+        "body": "Elon Musk defends Grok by noting multiple models training in Colossus 2 and progress on Grok Built harness in response to premature death...",
+        "engagement": "8.7K likes, 521 reposts, 64 quotes, 689 replies",
+        "honesty": "9/10",
+        "notes": "Factual update on xAI progress with no misleading claims.",
+        "posted": "2026-05-07T22:19:51Z",
+        "post_ts": "2026-05-07T06:10:10Z",
+        "views": 378585,
+        "parent_url": "https://x.com/mark_k/status/2052113900846395885",
+        "parent_handle": "@mark_k",
+        "parent_text": "Retards are already announcing the death of Grok. \ud83e\udd26\u200d\u2642\ufe0f",
+        "views_at_save": 378585,
+        "age_at_save_hours": 16.16
+      },
+      {
+        "headline": "LAPD Policy Change Reaction",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052474508255400153",
+        "body": "Elon Musk reacts with 'Wow' to LAPD banning traffic stops for minor vehicle violations like expired tags or broken lights due to disproportionate...",
+        "engagement": "2.4K likes, 107 reposts, 7 quotes, 218 replies",
+        "honesty": "8/10",
+        "notes": "Reaction to verifiable policy change without introducing false claims.",
+        "posted": "2026-05-07T22:19:51Z",
+        "post_ts": "2026-05-07T19:43:50Z",
+        "views": 35274,
+        "parent_url": "https://x.com/varrock/status/2052290532936651003",
+        "parent_handle": "@varrock",
+        "parent_text": "As of today, LAPD is not allowed to pull anyone over for: - Expired tags - Non-functioning tail lights - Cracked windshield - Broken sideview mirrors - Illegal tint - Loud exhaust - Missing license plate Because it \"disproportionately affects Black and Brown people.\"",
+        "views_at_save": 35274,
+        "age_at_save_hours": 2.6
+      },
       {
         "headline": "Incentives Drive Bold Innovation",
         "handle": "@elonmusk",
@@ -124,7 +223,7 @@
         "post_ts": "2026-05-07T05:21:12Z",
         "views": 10801275,
         "views_at_save": 10801275,
-        "age_at_save_hours": 13.72
+        "age_at_save_hours": 16.98
       },
       {
         "headline": "Hamill Joins the Dark Side with Trump Hate",
@@ -141,24 +240,7 @@
         "parent_handle": "@MarioNawfal",
         "parent_text": "\ud83c\uddfa\ud83c\uddf8 Star Wars actor Mark Hamill posted \u201cif only\u201d with an image of Trump, dead in a grave\u2026 unbelievable\n\nObi-Wan Kenobi once said to Luke Skywalker:\n\n\u201cDon\u2019t give in to hate. That leads to the dark side.\u201d\n\nSeems Luke did not listen.",
         "views_at_save": 18356,
-        "age_at_save_hours": 0.17
-      },
-      {
-        "headline": "Grok Models Advancing in Colossus 2",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2052269744120869106",
-        "body": "Elon Musk states multiple Grok models are training in Colossus 2 and will succeed, dismissing early death claims for the AI.",
-        "engagement": "7.4K likes, 446 reposts, 629 replies",
-        "honesty": "9/10",
-        "notes": "Factual update on AI development with confident prediction, no errors.",
-        "posted": "2026-05-07T15:29:32Z",
-        "post_ts": "2026-05-07T06:10:10Z",
-        "views": 288404,
-        "parent_url": "https://x.com/mark_k/status/2052113900846395885",
-        "parent_handle": "@mark_k",
-        "parent_text": "Retards are already announcing the death of Grok. \ud83e\udd26\u200d\u2642\ufe0f",
-        "views_at_save": 288404,
-        "age_at_save_hours": 12.9
+        "age_at_save_hours": 3.43
       },
       {
         "headline": "Honesty Essential for AI Safety",
@@ -175,7 +257,7 @@
         "parent_handle": "@TeslaHype",
         "parent_text": "As long as we don't build Skynet, we are good",
         "views_at_save": 63416,
-        "age_at_save_hours": 25.65
+        "age_at_save_hours": 28.91
       },
       {
         "headline": "Vintage Clip on Industry Choices",
@@ -189,7 +271,7 @@
         "post_ts": "2026-05-07T05:50:02Z",
         "views": 16432722,
         "views_at_save": 16432722,
-        "age_at_save_hours": 13.24
+        "age_at_save_hours": 16.5
       },
       {
         "headline": "Dems Importing Voters for One-Party Rule",
@@ -206,7 +288,7 @@
         "parent_handle": "@jgebbia",
         "parent_text": "Illuminating speech by Schumer worth watching. Dems used to be against illegal immigration. What changed?",
         "views_at_save": 92978,
-        "age_at_save_hours": 27.09
+        "age_at_save_hours": 30.35
       },
       {
         "headline": "Positive on Anthropic AI Partnership",
@@ -223,24 +305,7 @@
         "parent_handle": "@nottombrown",
         "parent_text": "In the next few days we'll be ramping up Claude inference on Colossus. \n\nGrateful to be partnering with SpaceX here. We are going to need to move a lot of atoms in order to keep up with AI demand, and there's nobody better at quickly moving atoms (on or off planet Earth)",
         "views_at_save": 20335,
-        "age_at_save_hours": 26.15
-      },
-      {
-        "headline": "Elon on ironic reparations advocate",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2051922953118556645",
-        "body": "Replying to comment on Green Party reparations officer descended from slave traders, Elon says most ironic outcome is most likely.",
-        "engagement": "7.4K likes, 318 reposts, 428 replies",
-        "honesty": "8/10",
-        "notes": "Agreeing with ironic political situation, pure commentary without false claims.",
-        "posted": "2026-05-06T16:50:34Z",
-        "post_ts": "2026-05-06T07:12:09Z",
-        "views": 109252,
-        "parent_url": "https://x.com/wil_da_beast630/status/2051629932493582523",
-        "parent_handle": "@wil_da_beast630",
-        "parent_text": "This is very funny.",
-        "views_at_save": 109252,
-        "age_at_save_hours": 35.87
+        "age_at_save_hours": 29.41
       },
       {
         "headline": "Space for AI Compute",
@@ -254,21 +319,7 @@
         "post_ts": "2026-05-06T19:20:43Z",
         "views": 30854378,
         "views_at_save": 30854378,
-        "age_at_save_hours": 23.73
-      },
-      {
-        "headline": "Marco Rubio on America's Boundless Opportunity",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2052129757098295732",
-        "body": "Elon shares Marco Rubio's eloquent defense of American exceptionalism, highlighting how the U.S.. allows anyone from anywhere to achieve anything...",
-        "engagement": "259K likes, 35K reposts, 1.6K quotes, 9.9K replies",
-        "honesty": "9/10",
-        "notes": "Accurately shares verifiable speech from Rubio on U.S. history and promise, with no false claims added.",
-        "posted": "2026-05-07T15:20:29Z",
-        "post_ts": "2026-05-06T20:53:55Z",
-        "views": 27931354,
-        "views_at_save": 27931354,
-        "age_at_save_hours": 22.17
+        "age_at_save_hours": 26.99
       }
     ],
     "earlier": []
@@ -276,32 +327,32 @@
   "sports": {
     "stories": [
       {
-        "headline": "Stephen A. Smith Claps Back at Jaylen Brown's Retirement Challenge",
+        "headline": "Stephen A. Smith Claps Back at Jaylen Brown's Retirement Taunt",
         "handle": "@stephenasmith",
         "url": "https://x.com/stephenasmith/status/2052456605439193572",
-        "body": "Smith responds to Brown's call for him to retire, urging the Celtics star to reflect after their first-round playoff exit.",
-        "engagement": "1.7K likes, 136 reposts",
-        "honesty": "8/10",
-        "notes": "Opinionated retort to athlete's quote, grounded in recent playoff events.",
-        "posted": "2026-05-07T19:04:20Z",
+        "body": "Smith tells Jaylen Brown to enjoy his offseason after Celtics' playoff loss, brushing off the retire challenge.",
+        "engagement": "15.7K likes, 974 reposts, 490 quotes, 1485 replies",
+        "honesty": "7/10",
+        "notes": "Strong opinion take on NBA player's comments post-playoff elimination.",
+        "posted": "2026-05-07T22:19:52Z",
         "post_ts": "2026-05-07T18:32:42Z",
-        "views": 217680,
-        "views_at_save": 217680,
-        "age_at_save_hours": 0.53
+        "views": 2938729,
+        "views_at_save": 2938729,
+        "age_at_save_hours": 3.79
       },
       {
-        "headline": "Insights from 2025 World Series Managers on New Podcast Episode",
+        "headline": "Inside 2025 World Series Strategies from Dodgers and Blue Jays Managers",
         "handle": "@wojespn",
         "url": "https://x.com/wojespn/status/2052427825504780689",
-        "body": "Wojnarowski promotes episode of The Program featuring Jeff Passan interviewing Dodgers and Blue Jays managers on World Series strategies.",
-        "engagement": "67 likes, 6 reposts",
-        "honesty": "9/10",
-        "notes": "Factual promo of podcast content based on real interviews.",
-        "posted": "2026-05-07T19:04:19Z",
+        "body": "Wojnarowski highlights podcast episode with Jeff Passan analyzing dramatic strategies from the 2025 World Series.",
+        "engagement": "82 likes, 6 reposts, 0 quotes, 7 replies",
+        "honesty": "8/10",
+        "notes": "Promotes factual podcast content on MLB event analysis.",
+        "posted": "2026-05-07T22:19:52Z",
         "post_ts": "2026-05-07T16:38:20Z",
-        "views": 93855,
-        "views_at_save": 93855,
-        "age_at_save_hours": 2.43
+        "views": 110372,
+        "views_at_save": 110372,
+        "age_at_save_hours": 5.69
       },
       {
         "headline": "Knicks Lead 2-0 Over 76ers",
@@ -315,7 +366,7 @@
         "post_ts": "2026-05-07T01:59:52Z",
         "views": 137084,
         "views_at_save": 137084,
-        "age_at_save_hours": 17.07
+        "age_at_save_hours": 20.33
       }
     ],
     "earlier": []
@@ -323,18 +374,18 @@
   "allin": {
     "stories": [
       {
-        "headline": "Warning on AI Investment Hype",
+        "headline": "pmarca Critiques AI Investment Hype",
         "handle": "@pmarca",
         "url": "https://x.com/pmarca/status/2052411582236487882",
-        "body": "Marc Andreessen cautions investors against thinking AI is 'this time different,' calling it the most dangerous phrase.",
-        "engagement": "1.1K likes, 70 retweets, 112 replies",
+        "body": "Marc Andreessen warns that 'this time is different' is the most dangerous phrase in AI investing, humorously extending the investing adage.",
+        "engagement": "1.3K likes, 81 retweets, 124 replies",
         "honesty": "7/10",
-        "notes": "Opinion",
-        "posted": "2026-05-07T19:04:20Z",
+        "notes": "Opinion on market psychology.",
+        "posted": "2026-05-07T22:19:52Z",
         "post_ts": "2026-05-07T15:33:47Z",
-        "views": 167719,
-        "views_at_save": 167719,
-        "age_at_save_hours": 3.51
+        "views": 217478,
+        "views_at_save": 217478,
+        "age_at_save_hours": 6.77
       },
       {
         "headline": "Endorsing Spencer Pratt for LA Mayor",
@@ -348,7 +399,7 @@
         "post_ts": "2026-05-07T16:21:13Z",
         "views": 116577,
         "views_at_save": 116577,
-        "age_at_save_hours": 2.72
+        "age_at_save_hours": 5.98
       },
       {
         "headline": "Mocking Anti-Tech Populism in Trucking Debate",
@@ -365,27 +416,13 @@
         "parent_handle": "@JTLonsdale",
         "parent_text": "What extreme left wing populist sentiment will Steyer not echo to get elected - is there any line in this direction of illiterate third-worldism that he won\u2019t cross? Maybe do some Jew-baiting stuff next, would be appropriate?",
         "views_at_save": 6332,
-        "age_at_save_hours": 15.95
+        "age_at_save_hours": 19.21
       }
     ],
     "earlier": []
   },
   "pods": {
     "stories": [
-      {
-        "headline": "PBD on Farmer Bankruptcies Surge",
-        "handle": "@patrickbetdavid",
-        "url": "https://x.com/patrickbetdavid/status/2052147386374303948",
-        "body": "Patrick Bet-David discusses 46% rise in farmer bankruptcies and doubling fertilizer costs straining American agriculture.",
-        "engagement": "3.1K likes, 546 reposts, 297 replies",
-        "honesty": "9/10",
-        "notes": "Reports verifiable economic data with light analysis.",
-        "posted": "2026-05-07T19:04:20Z",
-        "post_ts": "2026-05-06T22:03:58Z",
-        "views": 111146,
-        "views_at_save": 111146,
-        "age_at_save_hours": 21.01
-      },
       {
         "headline": "Tucker on Massie Testing Trump's GOP",
         "handle": "@TuckerCarlson",
@@ -398,7 +435,21 @@
         "post_ts": "2026-05-07T00:38:09Z",
         "views": 989436,
         "views_at_save": 989436,
-        "age_at_save_hours": 18.44
+        "age_at_save_hours": 21.7
+      },
+      {
+        "headline": "PBD on Farmer Bankruptcies Surge",
+        "handle": "@patrickbetdavid",
+        "url": "https://x.com/patrickbetdavid/status/2052147386374303948",
+        "body": "Patrick Bet-David discusses 46% rise in farmer bankruptcies and doubling fertilizer costs straining American agriculture.",
+        "engagement": "3.1K likes, 546 reposts, 297 replies",
+        "honesty": "9/10",
+        "notes": "Reports verifiable economic data with light analysis.",
+        "posted": "2026-05-07T19:04:20Z",
+        "post_ts": "2026-05-06T22:03:58Z",
+        "views": 111146,
+        "views_at_save": 111146,
+        "age_at_save_hours": 24.27
       }
     ],
     "earlier": []
@@ -417,7 +468,7 @@
         "post_ts": "2026-05-07T14:12:22Z",
         "views": 27414,
         "views_at_save": 27414,
-        "age_at_save_hours": 4.87
+        "age_at_save_hours": 8.13
       },
       {
         "headline": "Principles for Senior Management",
@@ -431,7 +482,7 @@
         "post_ts": "2026-05-07T14:23:53Z",
         "views": 15419,
         "views_at_save": 15419,
-        "age_at_save_hours": 4.67
+        "age_at_save_hours": 7.93
       },
       {
         "headline": "Jobless Claims Rise Unexpectedly",
@@ -445,13 +496,41 @@
         "post_ts": "2026-05-07T12:44:12Z",
         "views": 7331,
         "views_at_save": 7331,
-        "age_at_save_hours": 6.34
+        "age_at_save_hours": 9.59
       }
     ],
     "earlier": []
   },
   "top": {
     "stories": [
+      {
+        "headline": "Elon Praises Cybertruck After Critic's Purchase",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052463759860576415",
+        "body": "Elon Musk extols the Cybertruck's safety and sports car-like performance after a vocal critic buys one for his family's protection.",
+        "engagement": "49K likes, 5K reposts",
+        "honesty": "8/10",
+        "notes": "Fact of purchase and safety ratings with Elon's opinion on design and performance.",
+        "posted": "2026-05-07T22:19:53Z",
+        "post_ts": "2026-05-07T19:01:07Z",
+        "views": 12500044,
+        "views_at_save": 12500044,
+        "age_at_save_hours": 3.31
+      },
+      {
+        "headline": "Efficiency of 10K Steps Calorie Burn",
+        "handle": "@kleeposting",
+        "url": "https://x.com/kleeposting/status/2052467469659283733",
+        "body": "10,000 steps burn only 250 calories, a testament to the human body's incredible efficiency amid complaints of exertion.",
+        "engagement": "33K likes, 897 reposts",
+        "honesty": "8/10",
+        "notes": "Factual calorie estimate with opinion on bodily efficiency.",
+        "posted": "2026-05-07T22:19:53Z",
+        "post_ts": "2026-05-07T19:15:52Z",
+        "views": 1034507,
+        "views_at_save": 1034507,
+        "age_at_save_hours": 3.07
+      },
       {
         "headline": "Claude AI integrates with Microsoft Office apps",
         "handle": "@claudeai",
@@ -464,36 +543,7 @@
         "post_ts": "2026-05-07T17:49:42Z",
         "views": 568836,
         "views_at_save": 568836,
-        "age_at_save_hours": 1.24
-      },
-      {
-        "headline": "Karina and Faker team up for Google Play",
-        "handle": "@ujiminphoria",
-        "url": "https://x.com/ujiminphoria/status/2052408365742207160",
-        "body": "Karina from aespa and League pro Faker appear together in an exciting Google Play advertisement.",
-        "engagement": "41K likes, 6.4K reposts, 1.9K quotes, 287 replies",
-        "honesty": "9/10",
-        "notes": "Fact with enthusiastic editorializing",
-        "posted": "2026-05-07T19:04:21Z",
-        "post_ts": "2026-05-07T15:21:00Z",
-        "views": 1123176,
-        "views_at_save": 1123176,
-        "age_at_save_hours": 3.72
-      },
-      {
-        "headline": "Humor on Lithium in Old Oil Field",
-        "handle": "@uncledoomer",
-        "url": "https://x.com/uncledoomer/status/2052355974485168484",
-        "body": "Satirical post highlights lithium discovery in a former German oil field, joking Mother Earth insists on cars.",
-        "engagement": "5K likes, 263 reposts",
-        "honesty": "8/10",
-        "notes": "Fact+opinion mix",
-        "posted": "2026-05-07T15:29:34Z",
-        "post_ts": "2026-05-07T11:52:49Z",
-        "views": 92247,
-        "translation": "Quoted (translated from German): In Germany, 43 million tons of lithium have been discovered. In Saxony-Anhalt, an old gas field is to supply the battery raw material for electric cars. Author caption (English): >excavate field >theres oil >oil falls out of favor >now need lithium for electric cars >dig further down in the same field >theres lithium mother earth wants us, above all else, to drive cars",
-        "views_at_save": 92247,
-        "age_at_save_hours": 7.19
+        "age_at_save_hours": 4.5
       }
     ],
     "earlier": []
@@ -501,18 +551,18 @@
   "msm": {
     "stories": [
       {
-        "headline": "Minnesota Fraudster Avoids Jail in Medicaid Scam",
+        "headline": "ACLU Voting Rights Organizer Arrested on Child Porn Charges",
         "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2052417781673365707",
-        "body": "Somali man guilty of massive Medicaid fraud receives no prison time via plea deal from AG Keith Ellison, gets probation instead.",
-        "engagement": "6K likes, 3K reposts, 280 quotes, 820 replies",
-        "honesty": "9/10",
-        "notes": "Verified reporting on plea deal in confirmed fraud case.",
-        "posted": "2026-05-07T19:04:21Z",
-        "post_ts": "2026-05-07T15:58:25Z",
-        "views": 118983,
-        "views_at_save": 118983,
-        "age_at_save_hours": 3.1
+        "url": "https://x.com/libsoftiktok/status/2052495177214771341",
+        "body": "Evan Altman, ACLU voting rights organizer and ex-National Democrat Training Committee member, arrested for child pornography.",
+        "engagement": "8K likes, 3K reposts, 313 quotes, 605 replies",
+        "honesty": "10/10",
+        "notes": "Verified arrest fact from public records.",
+        "posted": "2026-05-07T22:19:53Z",
+        "post_ts": "2026-05-07T21:05:58Z",
+        "views": 98089,
+        "views_at_save": 98089,
+        "age_at_save_hours": 1.23
       },
       {
         "headline": "LA Housing Official Exposes Embezzlement of Homelessness Funds",
@@ -529,13 +579,41 @@
         "parent_handle": "@KarenBassLA",
         "parent_text": "Building more housing to make LA more affordable. Thousands of houses and apartments are already under construction.",
         "views_at_save": 28801,
-        "age_at_save_hours": 18.21
+        "age_at_save_hours": 21.47
       }
     ],
     "earlier": []
   },
   "pg6": {
     "stories": [
+      {
+        "headline": "Zo\u00eb Kravitz Slams Hulu Post as Tacky",
+        "handle": "@PopCrave",
+        "url": "https://x.com/PopCrave/status/2052502447084687747",
+        "body": "Zo\u00eb Kravitz calls out Hulu for a tacky post suggesting her 'High Fidelity' character listens to fianc\u00e9 Harry Styles.",
+        "engagement": "5K likes, 72 reposts, 158 quotes, 111 replies",
+        "honesty": "10/10",
+        "notes": "Verified celebrity reaction quote.",
+        "posted": "2026-05-07T22:19:53Z",
+        "post_ts": "2026-05-07T21:34:51Z",
+        "views": 299420,
+        "views_at_save": 299420,
+        "age_at_save_hours": 0.75
+      },
+      {
+        "headline": "Hollywood Stars Fear Blacklisting Over Merger",
+        "handle": "@Variety",
+        "url": "https://x.com/Variety/status/2052481595341209758",
+        "body": "Mark Ruffalo says many actors won't publicly oppose the Paramount-Warner Bros.. merger due to fear of studio retribution.",
+        "engagement": "1K likes, 178 reposts, 20 quotes, 39 replies",
+        "honesty": "9/10",
+        "notes": "Accurate quote from New York Times interview.",
+        "posted": "2026-05-07T22:19:53Z",
+        "post_ts": "2026-05-07T20:12:00Z",
+        "views": 45989,
+        "views_at_save": 45989,
+        "age_at_save_hours": 2.13
+      },
       {
         "headline": "Dianna Russini and Mike Vrabel Boat Day Video",
         "handle": "@TMZ",
@@ -548,41 +626,27 @@
         "post_ts": "2026-05-07T17:20:21Z",
         "views": 3311783,
         "views_at_save": 3311783,
-        "age_at_save_hours": 1.73
-      },
-      {
-        "headline": "Kylie Jenner and Timoth\u00e9e Chalamet PDA at Knicks",
-        "handle": "@PageSix",
-        "url": "https://x.com/PageSix/status/2052368870707503155",
-        "body": "Kylie Jenner and Timoth\u00e9e Chalamet share affectionate moments courtside at the Knicks game.",
-        "engagement": "4.5K likes, 229 reposts, 30 replies",
-        "honesty": "8/10",
-        "notes": "Photos verify PDA with mild suggestive emoji.",
-        "posted": "2026-05-07T19:04:22Z",
-        "post_ts": "2026-05-07T12:44:04Z",
-        "views": 195027,
-        "views_at_save": 195027,
-        "age_at_save_hours": 6.34
-      },
-      {
-        "headline": "Melissa Barrera Stars in New Horror Film 'Inhabit'",
-        "handle": "@Variety",
-        "url": "https://x.com/Variety/status/2052368706802487346",
-        "body": "Melissa Barrera returns to horror as lead in 'Inhabit,' a chilling exploration of trauma and power.",
-        "engagement": "608 likes, 97 retweets, 34 replies",
-        "honesty": "9/10",
-        "notes": "Exclusive casting fact with descriptive summary.",
-        "posted": "2026-05-07T15:29:35Z",
-        "post_ts": "2026-05-07T12:43:25Z",
-        "views": 29624,
-        "views_at_save": 29624,
-        "age_at_save_hours": 6.35
+        "age_at_save_hours": 4.99
       }
     ],
     "earlier": []
   },
   "recipe": {
     "stories": [
+      {
+        "headline": "Tuna Fish Cakes",
+        "handle": "@KitchenSanc2ary",
+        "url": "https://x.com/KitchenSanc2ary/status/2052395528151830559",
+        "body": "Quick tuna fish cakes using tinned tuna, mashed potato, sweetcorn, and cheddar.",
+        "engagement": "38 likes, 7 retweets, 1 replies",
+        "honesty": "10/10",
+        "notes": "Detailed recipe with ingredients and method.",
+        "posted": "2026-05-07T22:19:54Z",
+        "post_ts": "2026-05-07T14:30:00Z",
+        "views": 2992,
+        "views_at_save": 2992,
+        "age_at_save_hours": 7.83
+      },
       {
         "headline": "Chopped Steak Salad with Queso Fresco & Tostones",
         "handle": "@Soulfoodiiee",
@@ -595,21 +659,7 @@
         "post_ts": "2026-05-07T16:55:34Z",
         "views": 7306,
         "views_at_save": 7306,
-        "age_at_save_hours": 2.15
-      },
-      {
-        "headline": "Tuna Fish Cakes",
-        "handle": "@KitchenSanc2ary",
-        "url": "https://x.com/KitchenSanc2ary/status/2052395528151830559",
-        "body": "Quick tuna fish cakes using canned tuna, mashed potatoes, and sweetcorn.",
-        "engagement": "25 likes, 6 reposts, 1 replies",
-        "honesty": "10/10",
-        "notes": "Simple video recipe for tuna fish cakes.",
-        "posted": "2026-05-07T19:04:23Z",
-        "post_ts": "2026-05-07T14:30:00Z",
-        "views": 2319,
-        "views_at_save": 2319,
-        "age_at_save_hours": 4.57
+        "age_at_save_hours": 5.41
       },
       {
         "headline": "Sriracha Lime Lettuce Wraps",
@@ -623,13 +673,27 @@
         "post_ts": "2026-05-07T12:50:59Z",
         "views": 13654,
         "views_at_save": 13654,
-        "age_at_save_hours": 6.22
+        "age_at_save_hours": 9.48
       }
     ],
     "earlier": []
   },
   "science": {
     "stories": [
+      {
+        "headline": "NASA Achieves Supersonic Speeds in Mars Helicopter Test",
+        "handle": "@NASAMars",
+        "url": "https://x.com/NASAMars/status/2052486624282607817",
+        "body": "NASA's recent test at JPL pushed Mars helicopter rotor blades to Mach 1.08, breaking the sound barrier for future aerial missions.",
+        "engagement": "716 likes, 87 reposts",
+        "honesty": "10/10",
+        "notes": "Direct NASA report of verifiable test achievement.",
+        "posted": "2026-05-07T22:19:54Z",
+        "post_ts": "2026-05-07T20:31:59Z",
+        "views": 53609,
+        "views_at_save": 53609,
+        "age_at_save_hours": 1.8
+      },
       {
         "headline": "Anthropic Develops Autoencoders to Decode AI Thoughts",
         "handle": "@AnthropicAI",
@@ -642,7 +706,7 @@
         "post_ts": "2026-05-07T17:08:35Z",
         "views": 245034,
         "views_at_save": 245034,
-        "age_at_save_hours": 1.93
+        "age_at_save_hours": 5.19
       },
       {
         "headline": "New 'Dark Proteome' Discovered",
@@ -656,27 +720,41 @@
         "post_ts": "2026-05-07T13:49:09Z",
         "views": 5615,
         "views_at_save": 5615,
-        "age_at_save_hours": 5.25
-      },
-      {
-        "headline": "Faster Emergence of Massive Star Clusters",
-        "handle": "@NASAWebb",
-        "url": "https://x.com/NASAWebb/status/2052019791586566555",
-        "body": "Webb's data from nearly 9000 star clusters in four nearby galaxies shows more massive clusters emerge more quickly from their birth clouds.",
-        "engagement": "946 likes, 170 reposts, 4 quotes, 25 replies",
-        "honesty": "10/10",
-        "notes": "Verifiable astronomical research from JWST data.",
-        "posted": "2026-05-07T04:13:29Z",
-        "post_ts": "2026-05-06T13:36:57Z",
-        "views": 58344,
-        "views_at_save": 58344,
-        "age_at_save_hours": 29.46
+        "age_at_save_hours": 8.51
       }
     ],
     "earlier": []
   },
   "local": {
     "stories": [
+      {
+        "headline": "OC Settles Dog Bite Lawsuit in Tustin",
+        "handle": "@ocregister",
+        "url": "https://x.com/ocregister/status/2052480343299526667",
+        "body": "Orange County agrees to pay $450,000 to shelter volunteer mauled by dog at Tustin animal care facility.",
+        "engagement": "0 likes, 1 reposts, 0 replies",
+        "honesty": "10/10",
+        "notes": "Verifiable local news on court settlement from credible source.",
+        "posted": "2026-05-07T22:19:54Z",
+        "post_ts": "2026-05-07T20:07:01Z",
+        "views": 401,
+        "views_at_save": 401,
+        "age_at_save_hours": 2.21
+      },
+      {
+        "headline": "Boys VB Semifinals at Huntington Beach",
+        "handle": "@breezepreps",
+        "url": "https://x.com/breezepreps/status/2052505830982041930",
+        "body": "Mira Costa plays Huntington Beach in Division 1 boys volleyball semifinals on Saturday at 1 p.m.",
+        "engagement": "0 likes, 0 reposts, 0 replies",
+        "honesty": "10/10",
+        "notes": "Straightforward announcement of local high school sports event.",
+        "posted": "2026-05-07T22:19:54Z",
+        "post_ts": "2026-05-07T21:48:18Z",
+        "views": 49,
+        "views_at_save": 49,
+        "age_at_save_hours": 0.53
+      },
       {
         "headline": "Anaheim Hospital ER Suspended",
         "handle": "@OC_Scanner",
@@ -689,35 +767,7 @@
         "post_ts": "2026-05-07T05:02:53Z",
         "views": 498081,
         "views_at_save": 498081,
-        "age_at_save_hours": 14.03
-      },
-      {
-        "headline": "California Primary Voting Guide",
-        "handle": "@ocregister",
-        "url": "https://x.com/ocregister/status/2052178629786808414",
-        "body": "OC Register provides essential tips for California primary election voters on registration, ballots, and deadlines.",
-        "engagement": "0 likes, 0 retweets, 0 replies",
-        "honesty": "10/10",
-        "notes": "Verifiable voter information shared by local news outlet.",
-        "posted": "2026-05-07T19:04:24Z",
-        "post_ts": "2026-05-07T00:08:07Z",
-        "views": 671,
-        "views_at_save": 671,
-        "age_at_save_hours": 18.94
-      },
-      {
-        "headline": "Oregon coaches scout talent at Huntington Beach high school showcase",
-        "handle": "@mtorressports",
-        "url": "https://x.com/mtorressports/status/2052185425167761832",
-        "body": "Oregon's Tony Tuioti and Chris Hampton attend joint showcase featuring Huntington Beach alongside Sierra Canyon prospects.",
-        "engagement": "81 likes, 4 reposts, 1 reply",
-        "honesty": "10/10",
-        "notes": "Factual update on local high school sports recruiting event.",
-        "posted": "2026-05-07T15:29:35Z",
-        "post_ts": "2026-05-07T00:35:07Z",
-        "views": 3154,
-        "views_at_save": 3154,
-        "age_at_save_hours": 18.49
+        "age_at_save_hours": 17.28
       }
     ],
     "earlier": []
@@ -739,7 +789,7 @@
         "parent_handle": "@KarenBassLA",
         "parent_text": "State of emergency on day one. Creating LA\u2019s first program to get encampments cleared and put people inside. Down two years in a row, down 18%.",
         "views_at_save": 62014,
-        "age_at_save_hours": 18.08
+        "age_at_save_hours": 21.34
       },
       {
         "headline": "Massive SNAP Fraud: 186K Dead People Still Collecting Benefits",
@@ -753,7 +803,7 @@
         "post_ts": "2026-05-06T20:20:59Z",
         "views": 369173,
         "views_at_save": 369173,
-        "age_at_save_hours": 22.72
+        "age_at_save_hours": 25.98
       },
       {
         "headline": "FBI Raids VA Senator's Office in Corruption Probe",
@@ -767,7 +817,7 @@
         "post_ts": "2026-05-06T17:56:33Z",
         "views": 211546,
         "views_at_save": 211546,
-        "age_at_save_hours": 25.13
+        "age_at_save_hours": 28.39
       }
     ],
     "earlier": []
@@ -786,7 +836,7 @@
         "post_ts": "2026-05-07T01:24:31Z",
         "views": 705,
         "views_at_save": 705,
-        "age_at_save_hours": 17.66
+        "age_at_save_hours": 20.92
       },
       {
         "headline": "AI Standup Comedy Agent",
@@ -800,7 +850,7 @@
         "post_ts": "2026-05-06T14:02:09Z",
         "views": 1322,
         "views_at_save": 1322,
-        "age_at_save_hours": 29.04
+        "age_at_save_hours": 32.3
       },
       {
         "headline": "Paul Atreides 'Let\u2019s Go Knicks' Subtitle Meme",
@@ -814,7 +864,7 @@
         "post_ts": "2026-05-07T02:27:26Z",
         "views": 1371794,
         "views_at_save": 1371794,
-        "age_at_save_hours": 16.62
+        "age_at_save_hours": 19.87
       }
     ],
     "earlier": []
