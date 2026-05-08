@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-08T18:47:34Z",
+  "lastUpdated": "2026-05-08T22:16:12Z",
   "world": {
     "stories": [
       {
@@ -16,7 +16,7 @@
             "views": 36402,
             "notes": "Defensible non-interventionist conservative opinion with no factual errors",
             "views_at_save": 36402,
-            "age_at_save_hours": 1.06
+            "age_at_save_hours": 4.54
           },
           {
             "label": "Democrat",
@@ -28,7 +28,7 @@
             "views": 41774,
             "notes": "Partisan critique of war costs; gas price increase is verifiable but attribution to war is opinionated",
             "views_at_save": 41774,
-            "age_at_save_hours": 0.83
+            "age_at_save_hours": 4.31
           },
           {
             "label": "Independent",
@@ -40,7 +40,7 @@
             "views": 195792,
             "notes": "Verifiable factual reporting of official statements and events from credible sources",
             "views_at_save": 195792,
-            "age_at_save_hours": 18.22
+            "age_at_save_hours": 21.7
           }
         ],
         "footnotes": [
@@ -52,7 +52,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/8/2026 6:47 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 1.06
+        "age_at_save_hours": 4.54
       }
     ],
     "earlier": []
@@ -60,7 +60,55 @@
   "usa": {
     "stories": [
       {
-        "headline": "Virginia Supreme Court Strikes Down Voter-Approved Redistricting Plan",
+        "headline": "Trump Administration Expands Denaturalization Efforts Against Criminal Immigrants",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@TheJusticeDept",
+            "url": "https://x.com/TheJusticeDept/status/2052826007195771266",
+            "text": "TODAY: Justice Department filed denaturalization actions in various U.S.. district courts against 12 individuals accused of serious offenses...",
+            "engagement": "1.8K likes, 575 reposts, 55 quotes, 177 replies",
+            "honesty": "10/10",
+            "views": 122058,
+            "notes": "Official announcement of actions, verifiable",
+            "views_at_save": 122058,
+            "age_at_save_hours": 3.26
+          },
+          {
+            "label": "Democrat",
+            "handle": "@washingtonpost",
+            "url": "https://x.com/washingtonpost/status/2052863636897411487",
+            "text": "The Justice Department announced a dozen new denaturalization cases, the latest step in the Trump administration\u2019s push to strip U.S.. citizenship...",
+            "engagement": "23 likes, 15 reposts, 2 quotes, 21 replies",
+            "honesty": "9/10",
+            "views": 12979,
+            "notes": "Reports the announcement with note on critics' concerns, accurate",
+            "views_at_save": 12979,
+            "age_at_save_hours": 0.77
+          },
+          {
+            "label": "Independent",
+            "handle": "@CBSNews",
+            "url": "https://x.com/CBSNews/status/2052812138117320775",
+            "text": "BREAKING: The DOJ expands its denaturalization campaign, targeting U.S.. citizens accused of crimes, fraud and terrorism.",
+            "engagement": "1.7K likes, 265 reposts, 83 quotes, 566 replies",
+            "honesty": "10/10",
+            "views": 158934,
+            "notes": "Neutral breaking news report",
+            "views_at_save": 158934,
+            "age_at_save_hours": 4.18
+          }
+        ],
+        "footnotes": [],
+        "notes": "Federal policy on immigration enforcement with multi-perspective coverage",
+        "body": "Three-perspective roundup.",
+        "posted": "5/8/2026 10:16 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 3.26
+      },
+      {
+        "headline": "Virginia Supreme Court Strikes Down Democratic Redistricting Plan",
         "honesty": "8/10",
         "perspectives": [
           {
@@ -68,44 +116,44 @@
             "handle": "@FoxNews",
             "url": "https://x.com/FoxNews/status/2052761060231233741",
             "text": "\ud83d\udea8 BREAKING: Virginia Supreme Court strikes down Democrats' controversial redistricting referendum, ruling it unconstitutional.. \"This violation...",
-            "engagement": "5.9K likes, 803 reposts",
+            "engagement": "7K likes, 964 reposts, 106 quotes, 366 replies",
             "honesty": "9/10",
-            "views": 397776,
-            "notes": "Verifiable court ruling reported accurately with conservative emphasis on Democrat gerrymandering.",
-            "views_at_save": 397776,
-            "age_at_save_hours": 4.08
+            "views": 457868,
+            "notes": "Accurate reporting of the court ruling with positive framing for Republicans",
+            "views_at_save": 457868,
+            "age_at_save_hours": 7.56
           },
           {
             "label": "Democrat",
             "handle": "@nytimes",
             "url": "https://x.com/nytimes/status/2052763322575978526",
             "text": "Breaking News: The Virginia Supreme Court struck down Democrats\u2019 redrawn House map, in a major victory for Republicans.....",
-            "engagement": "410 likes, 83 reposts",
-            "honesty": "10/10",
-            "views": 133285,
-            "notes": "Straightforward reporting of the court decision without factual errors.",
-            "views_at_save": 133285,
-            "age_at_save_hours": 3.93
+            "engagement": "485 likes, 97 reposts, 31 quotes, 116 replies",
+            "honesty": "9/10",
+            "views": 155543,
+            "notes": "Factual reporting highlighting it as a victory for Republicans, from a left-leaning outlet",
+            "views_at_save": 155543,
+            "age_at_save_hours": 7.41
           },
           {
             "label": "Independent",
             "handle": "@AP",
             "url": "https://x.com/AP/status/2052756392340021396",
             "text": "BREAKING: The Virginia Supreme Court strikes down voter-approved congressional redistricting plan, dealing a major blow to Democrats.....",
-            "engagement": "2.4K likes, 691 reposts",
+            "engagement": "2.5K likes, 745 reposts, 447 quotes, 856 replies",
             "honesty": "10/10",
-            "views": 577568,
-            "notes": "Neutral and verifiable breaking news from a credible wire service.",
-            "views_at_save": 577568,
-            "age_at_save_hours": 4.39
+            "views": 728065,
+            "notes": "Straightforward breaking news fact from wire service",
+            "views_at_save": 728065,
+            "age_at_save_hours": 7.87
           }
         ],
         "footnotes": [],
-        "notes": "This ruling restores the previous map, impacting the 2026 midterms by preventing Democrats from gaining seats.",
+        "notes": "High-view story on key federal policy impact via state court ruling",
         "body": "Three-perspective roundup.",
-        "posted": "5/8/2026 6:47 PM",
+        "posted": "5/8/2026 10:16 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 4.08
+        "age_at_save_hours": 7.56
       }
     ],
     "earlier": []
@@ -113,18 +161,36 @@
   "elon": {
     "stories": [
       {
-        "headline": "Trolling Smug Libs is Too Easy",
+        "headline": "Trolling Smug Libs is Too Easy But Fun",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2052647951508644185",
         "body": "Elon Musk says it's too easy to troll smug liberals but admits it's so fun.",
-        "engagement": "216K likes, 15.5K reposts, 1.2K quotes, 10.3K replies",
+        "engagement": "243K likes, 17K reposts, 1K quotes, 11K replies",
         "honesty": "7/10",
-        "notes": "Lighthearted opinion on political trolling with no factual assertions.",
-        "posted": "2026-05-08T18:47:34Z",
+        "notes": "Pure opinion on political trolling; no factual assertions.",
+        "posted": "2026-05-08T22:16:13Z",
         "post_ts": "2026-05-08T07:13:02Z",
-        "views": 32747608,
-        "views_at_save": 32747608,
-        "age_at_save_hours": 11.58
+        "views": 38791947,
+        "views_at_save": 38791947,
+        "age_at_save_hours": 15.05
+      },
+      {
+        "headline": "Elon Mocks French Prosecutors Over X Probe",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052858294981779762",
+        "body": "Elon Musk insults French prosecutors investigating X for child sexual abuse imagery and Grok AI for denying crimes against humanity.",
+        "engagement": "8K likes, 655 reposts, 119 quotes, 715 replies",
+        "honesty": "7/10",
+        "notes": "Opinionated insult with no factual claims; satirical critique of government action.",
+        "posted": "2026-05-08T22:16:13Z",
+        "post_ts": "2026-05-08T21:08:52Z",
+        "views": 145545,
+        "translation": "Translation from French: They are faker than a chocolate euro and gayer than a flamingo in a fluorescent tutu!",
+        "parent_url": "https://x.com/xDaily/status/2052736728134304178",
+        "parent_handle": "@xDaily",
+        "parent_text": "NEWS: French prosecutors have opened an investigation into X, seeking charges against Elon Musk and the platform for child sexual abuse imagery, deepfakes, and complicity in denying crimes against humanity via the Grok AI system. The Paris public prosecutor\u2019s office stated the in",
+        "views_at_save": 145545,
+        "age_at_save_hours": 1.12
       },
       {
         "headline": "Bernie Sanders' Contribution: Memes",
@@ -141,7 +207,7 @@
         "parent_handle": "@Rothmus",
         "parent_text": "Bernie Sanders has been a politician for 45 years.  What has he contributed to society?",
         "views_at_save": 1621470,
-        "age_at_save_hours": 15.91
+        "age_at_save_hours": 19.39
       },
       {
         "headline": "Elon Condemns Cultural Policies",
@@ -158,7 +224,7 @@
         "parent_handle": "@NMoonitz",
         "parent_text": "It\u2019s a special kind of evil to emasculate and feminize our boys as we mass import barbarians from the third world.",
         "views_at_save": 174442,
-        "age_at_save_hours": 22.55
+        "age_at_save_hours": 26.03
       },
       {
         "headline": "LAPD Policy Change Reaction",
@@ -175,7 +241,7 @@
         "parent_handle": "@varrock",
         "parent_text": "As of today, LAPD is not allowed to pull anyone over for: - Expired tags - Non-functioning tail lights - Cracked windshield - Broken sideview mirrors - Illegal tint - Loud exhaust - Missing license plate Because it \"disproportionately affects Black and Brown people.\"",
         "views_at_save": 35274,
-        "age_at_save_hours": 23.06
+        "age_at_save_hours": 26.54
       },
       {
         "headline": "Hamill Joins the Dark Side with Trump Hate",
@@ -192,7 +258,7 @@
         "parent_handle": "@MarioNawfal",
         "parent_text": "\ud83c\uddfa\ud83c\uddf8 Star Wars actor Mark Hamill posted \u201cif only\u201d with an image of Trump, dead in a grave\u2026 unbelievable\n\nObi-Wan Kenobi once said to Luke Skywalker:\n\n\u201cDon\u2019t give in to hate. That leads to the dark side.\u201d\n\nSeems Luke did not listen.",
         "views_at_save": 18356,
-        "age_at_save_hours": 23.89
+        "age_at_save_hours": 27.37
       },
       {
         "headline": "Tweaking the Commies",
@@ -209,7 +275,21 @@
         "parent_handle": "@growing_daniel",
         "parent_text": "elon rarely tweets, wonder what he's up to",
         "views_at_save": 46586,
-        "age_at_save_hours": 11.46
+        "age_at_save_hours": 14.93
+      },
+      {
+        "headline": "Satirical Take: All Socialists are Hitler",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052629745616163036",
+        "body": "Elon Musk uses reductio ad Hitlerum satire: since Hitler was a socialist, all socialists are Hitler.",
+        "engagement": "481K likes, 51K reposts, 9K quotes, 29K replies",
+        "honesty": "8/10",
+        "notes": "Satirical commentary based on the historical fact that Nazis called themselves socialists; hyperbole for effect.",
+        "posted": "2026-05-08T22:16:14Z",
+        "post_ts": "2026-05-08T06:00:42Z",
+        "views": 69723902,
+        "views_at_save": 69723902,
+        "age_at_save_hours": 16.26
       }
     ],
     "earlier": []
@@ -217,18 +297,18 @@
   "sports": {
     "stories": [
       {
-        "headline": "NFL schedule release confirmed for May 14",
+        "headline": "NFL Schedule Release Confirmed for May 14",
         "handle": "@AdamSchefter",
         "url": "https://x.com/AdamSchefter/status/2052793402777895142",
-        "body": "NFL confirms 2026 schedule release next Thursday, May 14.",
-        "engagement": "8K likes, 1.5K reposts",
+        "body": "NFL has confirmed that the 2026 schedule release will be next Thursday, May 14.",
+        "engagement": "9.9K likes, 1.8K reposts, 444 quotes, 274 replies",
         "honesty": "10/10",
-        "notes": "Official confirmation from NFL via ESPN insider.",
-        "posted": "2026-05-08T18:47:35Z",
+        "notes": "Verified fact from NFL insider.",
+        "posted": "2026-05-08T22:16:14Z",
         "post_ts": "2026-05-08T16:51:00Z",
-        "views": 957453,
-        "views_at_save": 957453,
-        "age_at_save_hours": 1.94
+        "views": 1454490,
+        "views_at_save": 1454490,
+        "age_at_save_hours": 5.42
       },
       {
         "headline": "Stephen A. Mocks Skip Bayless' First Take Prep",
@@ -242,7 +322,21 @@
         "post_ts": "2026-05-08T13:44:48Z",
         "views": 204072,
         "views_at_save": 204072,
-        "age_at_save_hours": 5.05
+        "age_at_save_hours": 8.52
+      },
+      {
+        "headline": "2026 NBA Draft Lacks Clear Top Pick",
+        "handle": "@TheAthletic",
+        "url": "https://x.com/TheAthletic/status/2052765594794229820",
+        "body": "The 2026 NBA Draft class is deep but lacks a singular star like LeBron or Wemby, with four players claiming No.. 1 spot.",
+        "engagement": "7 likes, 0 reposts",
+        "honesty": "8/10",
+        "notes": "Factual reporting on draft analysis with minor opinion.",
+        "posted": "2026-05-08T22:16:14Z",
+        "post_ts": "2026-05-08T15:00:30Z",
+        "views": 7441,
+        "views_at_save": 7441,
+        "age_at_save_hours": 7.26
       }
     ],
     "earlier": []
@@ -250,21 +344,21 @@
   "allin": {
     "stories": [
       {
-        "headline": "Palmer Luckey Challenges AOC on Billionaire Wealth",
+        "headline": "Palmer Luckey Defends Billionaire Wealth Creation",
         "handle": "@PalmerLuckey",
         "url": "https://x.com/PalmerLuckey/status/2052621193082294494",
-        "body": "Palmer Luckey counters AOC's claim that billionaires exploit workers, citing JK Rowling's books and his VR innovations as value creation.",
-        "engagement": "32.7K likes, 1.7K reposts, 745 replies",
+        "body": "Palmer Luckey rebuts AOC's assertion that billionaire wealth is unearned exploitation, pointing to JK Rowling's books and his VR innovations as value...",
+        "engagement": "33.6K likes, 1.8K retweets, 753 replies",
         "honesty": "7/10",
-        "notes": "Opinion disputing political narrative on wealth origins without factual errors.",
-        "posted": "2026-05-08T18:47:35Z",
+        "notes": "Opinion countering political narrative on wealth origins.",
+        "posted": "2026-05-08T22:16:15Z",
         "post_ts": "2026-05-08T05:26:42Z",
-        "views": 559660,
+        "views": 592476,
         "parent_url": "https://x.com/AOC/status/2052529622655402174",
         "parent_handle": "@AOC",
         "parent_text": "The single largest form of theft in America is wage theft. $50 billion a year are stolen from American workers. If a billionaire amasses their wealth by underpaying their full-time workers so severely that they must rely on food assistance and government programs to survive, then",
-        "views_at_save": 559660,
-        "age_at_save_hours": 13.35
+        "views_at_save": 592476,
+        "age_at_save_hours": 16.83
       },
       {
         "headline": "Marc Andreessen on Corporate Overstaffing and AI Layoffs",
@@ -278,7 +372,7 @@
         "post_ts": "2026-05-07T23:14:18Z",
         "views": 634567,
         "views_at_save": 634567,
-        "age_at_save_hours": 19.55
+        "age_at_save_hours": 23.03
       },
       {
         "headline": "Spencer Pratt for LA Mayor",
@@ -292,27 +386,13 @@
         "post_ts": "2026-05-07T16:21:13Z",
         "views": 315916,
         "views_at_save": 315916,
-        "age_at_save_hours": 26.44
+        "age_at_save_hours": 29.92
       }
     ],
     "earlier": []
   },
   "pods": {
     "stories": [
-      {
-        "headline": "PBD: Politicians Missing How Wealth Moves in 2026",
-        "handle": "@patrickbetdavid",
-        "url": "https://x.com/patrickbetdavid/status/2052505214117085649",
-        "body": "Patrick Bet-David explains that with 90% of S&P 500 wealth now intangible, capital can easily leave if politicians bully the wealthy.",
-        "engagement": "3.2K likes, 451 retweets, 135 replies",
-        "honesty": "9/10",
-        "notes": "Based on verifiable economic data.",
-        "posted": "2026-05-08T18:47:35Z",
-        "post_ts": "2026-05-07T21:45:51Z",
-        "views": 107546,
-        "views_at_save": 107546,
-        "age_at_save_hours": 21.03
-      },
       {
         "headline": "Tucker: Israel Depends on U.S. for Defense",
         "handle": "@MegynKellyShow",
@@ -325,7 +405,21 @@
         "post_ts": "2026-05-08T00:12:18Z",
         "views": 200364,
         "views_at_save": 200364,
-        "age_at_save_hours": 18.59
+        "age_at_save_hours": 22.07
+      },
+      {
+        "headline": "PBD: Politicians Missing How Wealth Moves in 2026",
+        "handle": "@patrickbetdavid",
+        "url": "https://x.com/patrickbetdavid/status/2052505214117085649",
+        "body": "Patrick Bet-David explains that with 90% of S&P 500 wealth now intangible, capital can easily leave if politicians bully the wealthy.",
+        "engagement": "3.2K likes, 451 retweets, 135 replies",
+        "honesty": "9/10",
+        "notes": "Based on verifiable economic data.",
+        "posted": "2026-05-08T18:47:35Z",
+        "post_ts": "2026-05-07T21:45:51Z",
+        "views": 107546,
+        "views_at_save": 107546,
+        "age_at_save_hours": 24.51
       },
       {
         "headline": "Shawn Ryan: Most Dangerous Place on Earth",
@@ -339,13 +433,41 @@
         "post_ts": "2026-05-07T16:15:00Z",
         "views": 22329,
         "views_at_save": 22329,
-        "age_at_save_hours": 26.54
+        "age_at_save_hours": 30.02
       }
     ],
     "earlier": []
   },
   "business": {
     "stories": [
+      {
+        "headline": "Canadian Youth Unemployment Surges to Near Record",
+        "handle": "@unusual_whales",
+        "url": "https://x.com/unusual_whales/status/2052852036006547739",
+        "body": "Youth unemployment for ages 15-19 hits 19.5%, up 57% in three years with 437,000 seeking work, per Fraser Institute.",
+        "engagement": "827 likes, 107 reposts, 136 replies",
+        "honesty": "9/10",
+        "notes": "Verifiable macro data with interpretive framing from Fraser Institute.",
+        "posted": "2026-05-08T22:16:15Z",
+        "post_ts": "2026-05-08T20:44:00Z",
+        "views": 65977,
+        "views_at_save": 65977,
+        "age_at_save_hours": 1.54
+      },
+      {
+        "headline": "Tech Sector Job Cuts Accelerate in April",
+        "handle": "@LizAnnSonders",
+        "url": "https://x.com/LizAnnSonders/status/2052710166512996839",
+        "body": "Tech announced 33,361 job cuts in April, YTD total 85,411, highest since 2023 per Challenger Gray.",
+        "engagement": "119 likes, 39 reposts, 10 replies",
+        "honesty": "9/10",
+        "notes": "Factual job cut data from Challenger Gray report.",
+        "posted": "2026-05-08T22:16:15Z",
+        "post_ts": "2026-05-08T11:20:15Z",
+        "views": 16635,
+        "views_at_save": 16635,
+        "age_at_save_hours": 10.93
+      },
       {
         "headline": "Beware of Fast-Growing Market Sectors",
         "handle": "@TruthGundlach",
@@ -358,35 +480,7 @@
         "post_ts": "2026-05-07T22:08:53Z",
         "views": 71593,
         "views_at_save": 71593,
-        "age_at_save_hours": 20.65
-      },
-      {
-        "headline": "China vs West: Question System Trade-offs",
-        "handle": "@RayDalio",
-        "url": "https://x.com/RayDalio/status/2052495487895302563",
-        "body": "Rather than debating winners between China and the West, analyze how their systems operate and the trade-offs involved, informed by historical...",
-        "engagement": "998 likes, 167 retweets, 112 replies",
-        "honesty": "8/10",
-        "notes": "Macro analysis blending historical facts with interpretive opinion.",
-        "posted": "2026-05-08T15:06:27Z",
-        "post_ts": "2026-05-07T21:07:12Z",
-        "views": 137216,
-        "views_at_save": 137216,
-        "age_at_save_hours": 21.67
-      },
-      {
-        "headline": "Tech Layoffs Surge in April",
-        "handle": "@LizAnnSonders",
-        "url": "https://x.com/LizAnnSonders/status/2052710166512996839",
-        "body": "Tech sector cut 33,361 jobs in April, totaling 85,411 YTD and highest since 2023, per Challenger Gray.",
-        "engagement": "115 likes, 36 retweets, 1 quote, 9 replies",
-        "honesty": "9/10",
-        "notes": "Direct reporting of verifiable job cut data from Challenger Gray.",
-        "posted": "2026-05-08T18:47:36Z",
-        "post_ts": "2026-05-08T11:20:15Z",
-        "views": 15897,
-        "views_at_save": 15897,
-        "age_at_save_hours": 7.46
+        "age_at_save_hours": 24.12
       }
     ],
     "earlier": []
@@ -394,52 +488,66 @@
   "top": {
     "stories": [
       {
-        "headline": "Defiant Swimsuit Statement",
-        "handle": "@localsweety",
-        "url": "https://x.com/localsweety/status/2052778783640285236",
-        "body": "Responding to a mom's complaint about thong bikinis at family pools, user says her swimsuits won't be family-friendly and to teach sons about...",
-        "engagement": "6.6K likes, 55 reposts",
-        "honesty": "7/10",
-        "notes": "Opinion.",
-        "posted": "2026-05-08T18:47:36Z",
-        "post_ts": "2026-05-08T15:52:55Z",
-        "views": 413565,
-        "views_at_save": 413565,
-        "age_at_save_hours": 2.91
+        "headline": "Starlink Team Congrats",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052864242915893568",
+        "body": "Elon praises Starlink engineers and production team after touring the Redmond line.",
+        "engagement": "16K likes, 1.2K reposts",
+        "honesty": "9/10",
+        "notes": "Fact of visit with positive editorializing.",
+        "posted": "2026-05-08T22:16:15Z",
+        "post_ts": "2026-05-08T21:32:30Z",
+        "views": 1796611,
+        "views_at_save": 1796611,
+        "age_at_save_hours": 0.73
       },
       {
-        "headline": "Summer Dresses Video",
-        "handle": "@TheNayaV",
-        "url": "https://x.com/TheNayaV/status/2052746246117380154",
-        "body": "Naya Vee shares a video showcasing summer dresses in response to requests.",
-        "engagement": "2K likes, 63 reposts",
-        "honesty": "7/10",
-        "notes": "Opinion; casual share",
-        "posted": "2026-05-08T15:06:27Z",
-        "post_ts": "2026-05-08T13:43:37Z",
-        "views": 39322,
-        "views_at_save": 39322,
-        "age_at_save_hours": 5.07
+        "headline": "Playlist Building Fun",
+        "handle": "@Spotify",
+        "url": "https://x.com/Spotify/status/2052824140176826874",
+        "body": "Spotify invites users to build a collaborative playlist in the replies.",
+        "engagement": "3.4K likes, 260 reposts",
+        "honesty": "10/10",
+        "notes": "Verified invitation fact.",
+        "posted": "2026-05-08T22:16:15Z",
+        "post_ts": "2026-05-08T18:53:09Z",
+        "views": 304536,
+        "views_at_save": 304536,
+        "age_at_save_hours": 3.39
       },
       {
-        "headline": "Goku's Iconic Pose",
-        "handle": "@speedoru",
-        "url": "https://x.com/speedoru/status/2052719542678204792",
-        "body": "User expresses liking for Goku's standing pose in an image from Dragon Ball.",
-        "engagement": "8.7K likes, 606 reposts",
+        "headline": "Peak Love Language",
+        "handle": "@thetopshelfmen",
+        "url": "https://x.com/thetopshelfmen/status/2052818939780935864",
+        "body": "User shares an image exemplifying peak love language.",
+        "engagement": "5.3K likes, 241 reposts",
         "honesty": "7/10",
-        "notes": "Opinion; personal appreciation",
-        "posted": "2026-05-08T15:06:27Z",
-        "post_ts": "2026-05-08T11:57:31Z",
-        "views": 82716,
-        "views_at_save": 82716,
-        "age_at_save_hours": 6.83
+        "notes": "Opinion on romantic gesture.",
+        "posted": "2026-05-08T22:16:16Z",
+        "post_ts": "2026-05-08T18:32:29Z",
+        "views": 78037,
+        "views_at_save": 78037,
+        "age_at_save_hours": 3.73
       }
     ],
     "earlier": []
   },
   "msm": {
     "stories": [
+      {
+        "headline": "Whitmer Appointee Indicted for $20M State Grant Fraud",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2052616888585216078",
+        "body": "Libs of TikTok exposes Gretchen Whitmer's friend Fay Beydoun indicted on 16 felonies for stealing $20M in grants via forged documents.",
+        "engagement": "24K likes, 10K reposts, 1.3K replies",
+        "honesty": "9/10",
+        "notes": "Reports official indictment details, fact with political highlighting.",
+        "posted": "2026-05-08T22:16:16Z",
+        "post_ts": "2026-05-08T05:09:36Z",
+        "views": 439050,
+        "views_at_save": 439050,
+        "age_at_save_hours": 17.11
+      },
       {
         "headline": "UK's First Gay Surrogate Parent Charged with Rape and Trafficking",
         "handle": "@CollinRugg",
@@ -452,7 +560,7 @@
         "post_ts": "2026-05-08T16:10:28Z",
         "views": 527243,
         "views_at_save": 527243,
-        "age_at_save_hours": 2.62
+        "age_at_save_hours": 6.1
       },
       {
         "headline": "Virginia Supreme Court Strikes Down Democratic Gerrymander",
@@ -466,21 +574,7 @@
         "post_ts": "2026-05-08T14:15:46Z",
         "views": 39710,
         "views_at_save": 39710,
-        "age_at_save_hours": 4.53
-      },
-      {
-        "headline": "EXPOSED: Rep. Justin Pearson's Hypocrisy from 2016 to 2026",
-        "handle": "@EndWokeness",
-        "url": "https://x.com/EndWokeness/status/2052550720444920063",
-        "body": "Video juxtaposes Tennessee Rep.. Justin Pearson's past and current statements, revealing a stark shift in his positions.",
-        "engagement": "12K likes, 2.7K reposts, 1.4K replies",
-        "honesty": "9/10",
-        "notes": "Verifiable video clips showing the representative's own words over time.",
-        "posted": "2026-05-08T04:28:02Z",
-        "post_ts": "2026-05-08T00:46:40Z",
-        "views": 539321,
-        "views_at_save": 539321,
-        "age_at_save_hours": 18.02
+        "age_at_save_hours": 8.01
       }
     ],
     "earlier": []
@@ -488,46 +582,46 @@
   "pg6": {
     "stories": [
       {
-        "headline": "Jennifer Hudson Tears Up Over Son's Mother's Day Surprise",
-        "handle": "@PageSix",
-        "url": "https://x.com/PageSix/status/2052784764046754147",
-        "body": "Jennifer Hudson burst into tears when her son David Jr.. surprised her onstage for Mother's Day on her talk show.",
-        "engagement": "2.6K likes, 85 reposts, 13 quotes, 9 replies",
-        "honesty": "9/10",
-        "notes": "Reported emotional event fact.",
-        "posted": "2026-05-08T18:47:36Z",
-        "post_ts": "2026-05-08T16:16:41Z",
-        "views": 185744,
-        "views_at_save": 185744,
-        "age_at_save_hours": 2.52
-      },
-      {
-        "headline": "Mariah Carey and Anderson .Paak's Surprise Date Night",
+        "headline": "Mariah Carey and Anderson .Paak Go on Romantic Date Night",
         "handle": "@TMZ",
         "url": "https://x.com/TMZ/status/2052795981725340064",
-        "body": "Mariah Carey and Anderson .Paak were seen holding hands on a date night months after his hangouts with Jeannie Mai.",
-        "engagement": "787 likes, 52 reposts, 70 quotes, 44 replies",
+        "body": "The singers were seen holding hands months after Paak's hangouts with Jeannie Mai.",
+        "engagement": "3.4K likes, 211 reposts, 245 quotes, 128 replies",
         "honesty": "9/10",
-        "notes": "Exclusive sighting reported as fact.",
-        "posted": "2026-05-08T18:47:36Z",
+        "notes": "Exclusive TMZ report on celebrity sighting, fact with light editorializing.",
+        "posted": "2026-05-08T22:16:16Z",
         "post_ts": "2026-05-08T17:01:15Z",
-        "views": 113971,
-        "views_at_save": 113971,
-        "age_at_save_hours": 1.77
+        "views": 660340,
+        "views_at_save": 660340,
+        "age_at_save_hours": 5.25
       },
       {
-        "headline": "Zo\u00eb Kravitz Slams Hulu Post as Tacky",
-        "handle": "@PopCrave",
-        "url": "https://x.com/PopCrave/status/2052502447084687747",
-        "body": "Zo\u00eb Kravitz calls out Hulu for a tacky post suggesting her 'High Fidelity' character listens to fianc\u00e9 Harry Styles.",
-        "engagement": "5K likes, 72 reposts, 158 quotes, 111 replies",
+        "headline": "Jennifer Hudson Tears Up as Son Surprises Her on Mother's Day Show",
+        "handle": "@PageSix",
+        "url": "https://x.com/PageSix/status/2052784764046754147",
+        "body": "David Jr.. walked onstage for an emotional Mother's Day surprise during her talk show.",
+        "engagement": "6.3K likes, 231 reposts, 26 quotes, 21 replies",
         "honesty": "10/10",
-        "notes": "Verified celebrity reaction quote.",
-        "posted": "2026-05-07T22:19:53Z",
-        "post_ts": "2026-05-07T21:34:51Z",
-        "views": 299420,
-        "views_at_save": 299420,
-        "age_at_save_hours": 21.21
+        "notes": "Verified emotional moment from the show.",
+        "posted": "2026-05-08T22:16:16Z",
+        "post_ts": "2026-05-08T16:16:41Z",
+        "views": 386679,
+        "views_at_save": 386679,
+        "age_at_save_hours": 5.99
+      },
+      {
+        "headline": "Stars of 'The Devil Wears Prada 2' Secure Equal $12.5M Paychecks",
+        "handle": "@Variety",
+        "url": "https://x.com/Variety/status/2052836046463750515",
+        "body": "Meryl Streep, Anne Hathaway, and Emily Blunt negotiated identical salaries with potential $20M bonuses.",
+        "engagement": "1.1K likes, 107 reposts, 14 quotes, 37 replies",
+        "honesty": "10/10",
+        "notes": "Exclusive verifiable salary details from sources.",
+        "posted": "2026-05-08T22:16:16Z",
+        "post_ts": "2026-05-08T19:40:27Z",
+        "views": 144897,
+        "views_at_save": 144897,
+        "age_at_save_hours": 2.6
       }
     ],
     "earlier": []
@@ -546,7 +640,7 @@
         "post_ts": "2026-05-08T17:46:01Z",
         "views": 3179,
         "views_at_save": 3179,
-        "age_at_save_hours": 1.03
+        "age_at_save_hours": 4.5
       },
       {
         "headline": "Tuna Fish Cakes",
@@ -560,7 +654,7 @@
         "post_ts": "2026-05-07T14:30:00Z",
         "views": 3922,
         "views_at_save": 3922,
-        "age_at_save_hours": 28.29
+        "age_at_save_hours": 31.77
       },
       {
         "headline": "Chopped Steak Salad with Queso Fresco & Tostones",
@@ -574,13 +668,27 @@
         "post_ts": "2026-05-07T16:55:34Z",
         "views": 7306,
         "views_at_save": 7306,
-        "age_at_save_hours": 25.87
+        "age_at_save_hours": 29.35
       }
     ],
     "earlier": []
   },
   "science": {
     "stories": [
+      {
+        "headline": "Natural Language Autoencoders interpret AI activations",
+        "handle": "@AnthropicAI",
+        "url": "https://x.com/AnthropicAI/status/2052435436157452769",
+        "body": "Anthropic trained Claude to translate its numerical activations into readable text for understanding internal thoughts.",
+        "engagement": "14K likes, 1.4K reposts",
+        "honesty": "9/10",
+        "notes": "Direct announcement of new AI interpretability research method.",
+        "posted": "2026-05-08T22:16:17Z",
+        "post_ts": "2026-05-07T17:08:35Z",
+        "views": 1857561,
+        "views_at_save": 1857561,
+        "age_at_save_hours": 29.13
+      },
       {
         "headline": "Mars helicopter blades exceed sound barrier",
         "handle": "@NASAMars",
@@ -593,21 +701,7 @@
         "post_ts": "2026-05-07T20:31:59Z",
         "views": 191853,
         "views_at_save": 191853,
-        "age_at_save_hours": 22.26
-      },
-      {
-        "headline": "Anthropic Creates Tool to Decode AI Internal Thoughts",
-        "handle": "@AnthropicAI",
-        "url": "https://x.com/AnthropicAI/status/2052435436157452769",
-        "body": "Anthropic's research introduces natural language autoencoders that translate AI model activations into readable English text.",
-        "engagement": "13K likes, 1.3K reposts",
-        "honesty": "9/10",
-        "notes": "Describes novel AI interpretability technique developed by Anthropic researchers.",
-        "posted": "2026-05-08T15:06:29Z",
-        "post_ts": "2026-05-07T17:08:35Z",
-        "views": 1606880,
-        "views_at_save": 1606880,
-        "age_at_save_hours": 25.65
+        "age_at_save_hours": 25.74
       },
       {
         "headline": "Hydrogenobody Drives Livestock Methane",
@@ -621,7 +715,7 @@
         "post_ts": "2026-05-08T01:23:06Z",
         "views": 7909,
         "views_at_save": 7909,
-        "age_at_save_hours": 17.41
+        "age_at_save_hours": 20.89
       }
     ],
     "earlier": []
@@ -629,18 +723,32 @@
   "local": {
     "stories": [
       {
-        "headline": "Secret Spot in Laguna Beach",
+        "headline": "Hidden Gem in Laguna Beach",
         "handle": "@lalovestrump",
         "url": "https://x.com/lalovestrump/status/2052806421696397339",
-        "body": "Video exposes a hidden, gated part of Laguna Beach that locals attempt to keep private.",
-        "engagement": "96 likes, 6 retweets, 8 replies",
+        "body": "Video reveals a scenic, lesser-known part of Laguna Beach that locals attempt to gatekeep from tourists.",
+        "engagement": "1.8K likes, 75 retweets, 80 replies",
         "honesty": "8/10",
-        "notes": "Descriptive video of local spot with no false claims, though subjective on 'gatekeeping'.",
-        "posted": "2026-05-08T18:47:38Z",
+        "notes": "Personal video showcase with light commentary; accurate depiction of local area.",
+        "posted": "2026-05-08T22:16:17Z",
         "post_ts": "2026-05-08T17:42:44Z",
-        "views": 7625,
-        "views_at_save": 7625,
-        "age_at_save_hours": 1.08
+        "views": 265338,
+        "views_at_save": 265338,
+        "age_at_save_hours": 4.56
+      },
+      {
+        "headline": "After-Hours Theft at Huntington Beach Walmart",
+        "handle": "@squirtletcgoc2",
+        "url": "https://x.com/squirtletcgoc2/status/2052777700079833326",
+        "body": "Individual allegedly entered Huntington Beach Walmart after closing hours and cleared out all Destined Rivals Elite Trainer Boxes.",
+        "engagement": "275 likes, 18 retweets, 46 replies",
+        "honesty": "8/10",
+        "notes": "Video evidence supports claim of unauthorized access and removal of products.",
+        "posted": "2026-05-08T22:16:17Z",
+        "post_ts": "2026-05-08T15:48:37Z",
+        "views": 67464,
+        "views_at_save": 67464,
+        "age_at_save_hours": 6.46
       },
       {
         "headline": "OC Settles Dog Bite Lawsuit in Tustin",
@@ -654,27 +762,41 @@
         "post_ts": "2026-05-07T20:07:01Z",
         "views": 401,
         "views_at_save": 401,
-        "age_at_save_hours": 22.68
-      },
-      {
-        "headline": "Boys VB Semifinals at Huntington Beach",
-        "handle": "@breezepreps",
-        "url": "https://x.com/breezepreps/status/2052505830982041930",
-        "body": "Mira Costa plays Huntington Beach in Division 1 boys volleyball semifinals on Saturday at 1 p.m.",
-        "engagement": "0 likes, 0 reposts, 0 replies",
-        "honesty": "10/10",
-        "notes": "Straightforward announcement of local high school sports event.",
-        "posted": "2026-05-07T22:19:54Z",
-        "post_ts": "2026-05-07T21:48:18Z",
-        "views": 49,
-        "views_at_save": 49,
-        "age_at_save_hours": 20.99
+        "age_at_save_hours": 26.15
       }
     ],
     "earlier": []
   },
   "conspiracy": {
     "stories": [
+      {
+        "headline": "Utah Justice Resigns Amid Romantic Affair Probe",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2052847024790257787",
+        "body": "Supreme Court Justice Diana Hagen quits following investigation into alleged affair with lawyer arguing Democrats' redistricting case she supported.",
+        "engagement": "7.2K likes, 1.9K retweets, 505 replies",
+        "honesty": "9/10",
+        "notes": "Verifiable report of resignation linked to ethics investigation into conflict of interest.",
+        "posted": "2026-05-08T22:16:18Z",
+        "post_ts": "2026-05-08T20:24:05Z",
+        "views": 99750,
+        "views_at_save": 99750,
+        "age_at_save_hours": 1.87
+      },
+      {
+        "headline": "Virginia Supreme Court Strikes Down Democratic Gerrymander",
+        "handle": "@BillMelugin_",
+        "url": "https://x.com/BillMelugin_/status/2052754337189748824",
+        "body": "Court invalidates VA's 10-1 congressional map as unconstitutional, linking to full decision document.",
+        "engagement": "3.9K likes, 919 retweets, 230 replies",
+        "honesty": "10/10",
+        "notes": "Verifiable court ruling directly linked to official decision PDF.",
+        "posted": "2026-05-08T22:16:18Z",
+        "post_ts": "2026-05-08T14:15:46Z",
+        "views": 123096,
+        "views_at_save": 123096,
+        "age_at_save_hours": 8.01
+      },
       {
         "headline": "Leaked Footage Shows Israeli Police Beating Prosecutor",
         "handle": "@DropSiteNews",
@@ -687,41 +809,27 @@
         "post_ts": "2026-05-08T15:24:08Z",
         "views": 57075,
         "views_at_save": 57075,
-        "age_at_save_hours": 3.39
-      },
-      {
-        "headline": "LA School District Probed for Shielding Abusive Teachers",
-        "handle": "@WallStreetApes",
-        "url": "https://x.com/WallStreetApes/status/2052543600354025740",
-        "body": "Federal investigation accuses Los Angeles Unified School District of protecting teachers accused of sexual misconduct by reassigning them to paid...",
-        "engagement": "2K likes, 1K reposts, 100 replies",
-        "honesty": "8/10",
-        "notes": "Cites specific federal probe details and district practices, supported by video evidence of reporting.",
-        "posted": "2026-05-08T15:06:30Z",
-        "post_ts": "2026-05-08T00:18:23Z",
-        "views": 31312,
-        "views_at_save": 31312,
-        "age_at_save_hours": 18.49
-      },
-      {
-        "headline": "Whitmer Ally Indicted in $20M Michigan Grant Fraud",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2052616888585216078",
-        "body": "Gov.. Whitmer-appointed Fay Beydoun faces 16 felonies for forging documents to secure $20 million state grant, diverting funds to personal expenses...",
-        "engagement": "15K likes, 6K reposts, 800 replies",
-        "honesty": "9/10",
-        "notes": "Details indictment with specific charges, amount, and Whitmer connection based on public records.",
-        "posted": "2026-05-08T15:06:30Z",
-        "post_ts": "2026-05-08T05:09:36Z",
-        "views": 195600,
-        "views_at_save": 195600,
-        "age_at_save_hours": 13.63
+        "age_at_save_hours": 6.87
       }
     ],
     "earlier": []
   },
   "comedy": {
     "stories": [
+      {
+        "headline": "Chappelle's Epic Tales with Murphy and Dylan",
+        "handle": "@eMTBrides",
+        "url": "https://x.com/eMTBrides/status/2052819920660939199",
+        "body": "Dave Chappelle recounts hilarious encounters with Eddie Murphy and Bob Dylan in stand-up style storytelling.",
+        "engagement": "208 likes, 26 reposts",
+        "honesty": "9/10",
+        "notes": "Performative comedy clip from verified comedian, minor editorializing.",
+        "posted": "2026-05-08T22:16:18Z",
+        "post_ts": "2026-05-08T18:36:23Z",
+        "views": 16402,
+        "views_at_save": 16402,
+        "age_at_save_hours": 3.67
+      },
       {
         "headline": "Paul Atreides Forces Knicks Chant in Subtitles",
         "handle": "@timoatreides",
@@ -734,7 +842,7 @@
         "post_ts": "2026-05-07T02:27:26Z",
         "views": 1620323,
         "views_at_save": 1620323,
-        "age_at_save_hours": 40.34
+        "age_at_save_hours": 43.81
       },
       {
         "headline": "Eddie Murphy SNL Holiday Short",
@@ -748,21 +856,7 @@
         "post_ts": "2026-05-07T01:24:31Z",
         "views": 705,
         "views_at_save": 705,
-        "age_at_save_hours": 41.39
-      },
-      {
-        "headline": "AI Standup Comedy Agent",
-        "handle": "@maxescu",
-        "url": "https://x.com/maxescu/status/2052026133063897175",
-        "body": "An AI agent performs a one-minute standup routine with jokes and generated visuals.",
-        "engagement": "18 likes, 2 reposts",
-        "honesty": "9/10",
-        "notes": "Demonstration of AI-generated comedy performance.",
-        "posted": "2026-05-06T16:50:43Z",
-        "post_ts": "2026-05-06T14:02:09Z",
-        "views": 1322,
-        "views_at_save": 1322,
-        "age_at_save_hours": 52.76
+        "age_at_save_hours": 44.86
       }
     ],
     "earlier": []
