@@ -1,64 +1,164 @@
 {
-  "lastUpdated": "2026-05-07T22:19:51Z",
+  "lastUpdated": "2026-05-08T04:27:59Z",
   "world": {
     "stories": [
       {
-        "headline": "Iran Rejects US Peace Proposal on Strait of Hormuz",
+        "headline": "US-Iran Military Exchanges in Strait of Hormuz",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@WhiteHouse",
+            "url": "https://x.com/WhiteHouse/status/2052520547108765923",
+            "text": "\ud83d\udea8\u00a0\"Three World Class American Destroyers just transited, very successfully, out of the Strait of Hormuz, under fire.. There was no damage done to the...",
+            "engagement": "14954 likes, 4039 reposts, 253 quotes, 2078 replies",
+            "honesty": "8/10",
+            "views": 417817,
+            "notes": "Presidential statement aligns with CENTCOM reports on successful transit and strikes, though escalatory language is opinion.",
+            "views_at_save": 417817,
+            "age_at_save_hours": 5.69
+          },
+          {
+            "label": "Democrat",
+            "handle": "@DropSiteNews",
+            "url": "https://x.com/DropSiteNews/status/2052558643736764688",
+            "text": "\ud83d\udd34President Trump threatens Iran with a nuclear holocaust: \u201cIf there\u2019s no ceasefire\u2026 you\u2019re just going to have to look at one big glow coming out of...",
+            "engagement": "1705 likes, 787 reposts, 179 quotes, 283 replies",
+            "honesty": "9/10",
+            "views": 175666,
+            "notes": "Accurate reporting of Trump's Fox News statement, no factual errors introduced.",
+            "views_at_save": 175666,
+            "age_at_save_hours": 3.16
+          },
+          {
+            "label": "Independent",
+            "handle": "@TheStudyofWar",
+            "url": "https://x.com/TheStudyofWar/status/2052547655373398082",
+            "text": "NEW: US Central Command (CENTCOM) announced on May 7 that US forces \u201celiminated inbound threats\u201d and struck Iranian military facilities responsible...",
+            "engagement": "204 likes, 85 reposts, 15 quotes, 5 replies",
+            "honesty": "10/10",
+            "views": 79904,
+            "notes": "Factual summary of official statements from CENTCOM and Iranian media, verifiable sources.",
+            "views_at_save": 79904,
+            "age_at_save_hours": 3.89
+          }
+        ],
+        "footnotes": [
+          "Conservative: Official White House post emphasizing U.S. military success and pressure on Iran.",
+          "Democrat: Reporting on Trump's escalatory rhetoric from a progressive outlet.",
+          "Independent: Neutral analysis of events from a non-partisan think tank."
+        ],
+        "notes": "Escalating exchanges between U.S. and Iranian forces in the Strait of Hormuz, including missile and drone attacks on U.S. ships and retaliatory strikes on Iranian sites, amid stalled nuclear talks.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/8/2026 4:27 AM",
+        "views_at_save": 0,
+        "age_at_save_hours": 5.69
+      },
+      {
+        "headline": "Rubio Meets Pope Amid US-Vatican Tensions",
         "honesty": "8/10",
         "perspectives": [
           {
             "label": "Conservative",
             "handle": "@FoxNews",
-            "url": "https://x.com/FoxNews/status/2052332120513626460",
-            "text": "NEW: The U.S.. is reportedly laying out tough new conditions in a proposal to end the war with Iran \u2014 including a 20-year ban on uranium enrichment,...",
-            "engagement": "2.7K likes, 551 reposts, 35 quotes, 495 replies",
+            "url": "https://x.com/FoxNews/status/2052331456920195234",
+            "text": "JUST IN: Marco Rubio steps into the Vatican as high-level talks get underway between the United States and the Holy See.. The Secretary of State is...",
+            "engagement": "10847 likes, 1527 reposts, 110 quotes, 598 replies",
             "honesty": "9/10",
-            "views": 358724,
-            "notes": "Reports verifiable details of US proposal from sources without introducing false claims.",
-            "views_at_save": 358724,
-            "age_at_save_hours": 12.03
+            "views": 830380,
+            "notes": "Accurate reporting of the meeting, aligns with Vatican statements.",
+            "views_at_save": 830380,
+            "age_at_save_hours": 18.21
           },
           {
             "label": "Democrat",
-            "handle": "@SenWarren",
-            "url": "https://x.com/SenWarren/status/2052390905601012199",
-            "text": "Average gas prices are $4.50 per gallon.. Gas prices are up 50% since the start of Trump\u2019s war with Iran.",
-            "engagement": "640 likes, 147 reposts, 11 quotes, 326 replies",
-            "honesty": "8/10",
-            "views": 21502,
-            "notes": "Highlights economic impacts with verifiable gas price data and calls for ending the war.",
-            "views_at_save": 21502,
-            "age_at_save_hours": 8.14
+            "handle": "@OccupyDemocrats",
+            "url": "https://x.com/OccupyDemocrats/status/2052460470058303892",
+            "text": "BREAKING: Pope Leo XIV trolls warmonger Marco Rubio during their big meeting at the Vatican by presenting him with the PERFECT gift.. You are...",
+            "engagement": "2079 likes, 575 reposts, 28 quotes, 68 replies",
+            "honesty": "5/10",
+            "views": 59192,
+            "notes": "Partisan opinion piece with hyperbolic language and unverified dialogue; factual core of meeting and gifts verifiable, but 'trolls' and 'monsters' are spin.",
+            "views_at_save": 59192,
+            "age_at_save_hours": 9.67
           },
           {
             "label": "Independent",
-            "handle": "@ggreenwald",
-            "url": "https://x.com/ggreenwald/status/2052001331729068089",
-            "text": "The \"former\" Israeli spy and IDF soldier @BarakRavid has spent 15 months serving as the main propaganda arm for Netanyahu and Trump on Iran (he...",
-            "engagement": "3K likes, 747 reposts, 16 quotes, 61 replies",
-            "honesty": "7/10",
-            "views": 135447,
-            "notes": "Provides contrarian analysis of negotiations based on reporting, but includes opinionated critique of sources.",
-            "views_at_save": 135447,
-            "age_at_save_hours": 33.94
+            "handle": "@VaticanNews",
+            "url": "https://x.com/VaticanNews/status/2052339041975103944",
+            "text": "Pope Leo received Marco Rubio, US Secretary of State, in the Vatican this morning.",
+            "engagement": "7406 likes, 1247 reposts, 149 quotes, 327 replies",
+            "honesty": "10/10",
+            "views": 407756,
+            "notes": "Official Vatican announcement of the meeting, straightforward fact.",
+            "views_at_save": 407756,
+            "age_at_save_hours": 17.71
           }
         ],
         "footnotes": [
-          "Conservative perspective focuses on strong US demands and ongoing Israeli actions.",
-          "Democrat view emphasizes domestic economic costs and calls to end the conflict.",
-          "Independent take critiques media narratives and compares to past deals."
+          "Conservative: Coverage from Fox News highlighting diplomatic engagement.",
+          "Democrat: Critical take from progressive account framing the meeting as a rebuke to U.S. policy.",
+          "Independent: Neutral report from Vatican official source."
         ],
-        "notes": "Iran's rejection of the US proposal escalates tensions over the Strait of Hormuz, affecting global oil supplies and markets amid ongoing negotiations.",
+        "notes": "U.S. Secretary of State Marco Rubio meets Pope Leo XIV at the Vatican to address tensions over U.S. foreign policy, particularly the Iran conflict, with discussions on peace and humanitarian issues.",
         "body": "Three-perspective roundup.",
-        "posted": "5/7/2026 7:04 PM",
+        "posted": "5/8/2026 4:28 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 12.03
+        "age_at_save_hours": 18.21
       }
     ],
     "earlier": []
   },
   "usa": {
     "stories": [
+      {
+        "headline": "Trump Briefed on Deadly Hantavirus Outbreak from Cruise Ship",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@FoxNews",
+            "url": "https://x.com/FoxNews/status/2052556049006084477",
+            "text": "NEW: President Trump says he's been briefed on Hantavirus.. \"It's very much, we hope, under control.\" \"I think we're going to make a full report...",
+            "engagement": "5K likes, 721 reposts",
+            "honesty": "9/10",
+            "views": 1178874,
+            "notes": "Accurate reporting of presidential briefing on public health crisis",
+            "views_at_save": 1178874,
+            "age_at_save_hours": 3.34
+          },
+          {
+            "label": "Democrat",
+            "handle": "@TheAtlantic",
+            "url": "https://x.com/TheAtlantic/status/2052203017361936649",
+            "text": "An outbreak of hantavirus is a sobering reminder that cruise ships can be the setting for infectious-disease nightmares, Katherine J.. Wu reports:...",
+            "engagement": "88 likes, 27 reposts",
+            "honesty": "9/10",
+            "views": 60898,
+            "notes": "Factual analysis of outbreak risks drawing parallels to past pandemics",
+            "views_at_save": 60898,
+            "age_at_save_hours": 26.72
+          },
+          {
+            "label": "Independent",
+            "handle": "@Acyn",
+            "url": "https://x.com/Acyn/status/2052547850232287483",
+            "text": "Trump on Hantavirus: We should be fine.. Reporter: Should Americans be concerned that it\u2019s going to spread?",
+            "engagement": "2.1K likes, 326 reposts",
+            "honesty": "10/10",
+            "views": 797405,
+            "notes": "Verbatim clip of press exchange on national health concern",
+            "views_at_save": 797405,
+            "age_at_save_hours": 3.88
+          }
+        ],
+        "footnotes": [],
+        "notes": "Outbreak linked to cruise ship has killed at least three, prompting global contact tracing efforts",
+        "body": "Three-perspective roundup.",
+        "posted": "5/8/2026 4:28 AM",
+        "views_at_save": 0,
+        "age_at_save_hours": 3.34
+      },
       {
         "headline": "Trump's $1.5 Trillion Defense Budget Proposal",
         "honesty": "8/10",
@@ -73,7 +173,7 @@
             "views": 1413217,
             "notes": "Administration official praising the budget proposal; factual core accurate with partisan spin.",
             "views_at_save": 1413217,
-            "age_at_save_hours": 7.75
+            "age_at_save_hours": 13.88
           },
           {
             "label": "Democrat",
@@ -85,7 +185,7 @@
             "views": 3,
             "notes": "Opinion calling for rejection, referencing Democratic senator; no factual errors but speculative on costs.",
             "views_at_save": 3,
-            "age_at_save_hours": 24.75
+            "age_at_save_hours": 30.88
           },
           {
             "label": "Independent",
@@ -97,7 +197,7 @@
             "views": 14,
             "notes": "Critical analysis with verifiable data points on spending comparisons; opinionated but defensible.",
             "views_at_save": 14,
-            "age_at_save_hours": 5.93
+            "age_at_save_hours": 12.07
           }
         ],
         "footnotes": [],
@@ -105,7 +205,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/7/2026 10:19 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 7.75
+        "age_at_save_hours": 13.88
       },
       {
         "headline": "Trump Immigration Enforcement Faces Court and State Pushback",
@@ -121,7 +221,7 @@
             "views": 13985,
             "notes": "Reports administration's adjustment to ICE training policy; factual with light positive spin.",
             "views_at_save": 13985,
-            "age_at_save_hours": 13.83
+            "age_at_save_hours": 19.97
           },
           {
             "label": "Democrat",
@@ -133,7 +233,7 @@
             "views": 101093,
             "notes": "Cites economic study on raid impacts; critical framing but underlying data verifiable.",
             "views_at_save": 101093,
-            "age_at_save_hours": 35.33
+            "age_at_save_hours": 41.46
           },
           {
             "label": "Independent",
@@ -145,7 +245,7 @@
             "views": 15019,
             "notes": "Neutral reporting of federal court decision against ICE policy.",
             "views_at_save": 15019,
-            "age_at_save_hours": 23.89
+            "age_at_save_hours": 30.03
           }
         ],
         "footnotes": [],
@@ -153,7 +253,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/7/2026 3:31 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 13.83
+        "age_at_save_hours": 19.97
       }
     ],
     "earlier": []
@@ -161,21 +261,38 @@
   "elon": {
     "stories": [
       {
-        "headline": "Utterly Evil Cultural Policy",
+        "headline": "Elon Jabs at Bernie Sanders",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052582492641882516",
+        "body": "Elon humorously replies that Bernie Sanders' contribution to society after 45 years in politics is memes.",
+        "engagement": "14K likes, 678 reposts",
+        "honesty": "7/10",
+        "notes": "Satirical opinion with no factual claims.",
+        "posted": "2026-05-08T04:28:00Z",
+        "post_ts": "2026-05-08T02:52:56Z",
+        "views": 277121,
+        "parent_url": "https://x.com/Rothmus/status/2052544274130952246",
+        "parent_handle": "@Rothmus",
+        "parent_text": "Bernie Sanders has been a politician for 45 years.\n\nWhat has he contributed to society?",
+        "views_at_save": 277121,
+        "age_at_save_hours": 1.58
+      },
+      {
+        "headline": "Elon Condemns Cultural Policies",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2052482175979950165",
-        "body": "Elon Musk calls it utterly evil to emasculate and feminize boys while mass importing barbarians from the third world.",
-        "engagement": "6.5K likes, 257 reposts, 18 quotes, 323 replies",
+        "body": "Elon agrees it's utterly evil to emasculate boys while mass importing from the third world.",
+        "engagement": "11K likes, 400 reposts",
         "honesty": "7/10",
-        "notes": "Strong opinion on societal and immigration issues with no factual claims.",
-        "posted": "2026-05-07T22:19:51Z",
+        "notes": "Strong subjective opinion on culture and immigration.",
+        "posted": "2026-05-08T04:28:00Z",
         "post_ts": "2026-05-07T20:14:18Z",
-        "views": 99966,
+        "views": 174442,
         "parent_url": "https://x.com/NMoonitz/status/2052162789029110158",
         "parent_handle": "@NMoonitz",
         "parent_text": "It\u2019s a special kind of evil to emasculate and feminize our boys as we mass import barbarians from the third world.",
-        "views_at_save": 99966,
-        "age_at_save_hours": 2.09
+        "views_at_save": 174442,
+        "age_at_save_hours": 8.23
       },
       {
         "headline": "Grok AI Development Update",
@@ -192,7 +309,7 @@
         "parent_handle": "@mark_k",
         "parent_text": "Retards are already announcing the death of Grok. \ud83e\udd26\u200d\u2642\ufe0f",
         "views_at_save": 378585,
-        "age_at_save_hours": 16.16
+        "age_at_save_hours": 22.3
       },
       {
         "headline": "LAPD Policy Change Reaction",
@@ -209,7 +326,7 @@
         "parent_handle": "@varrock",
         "parent_text": "As of today, LAPD is not allowed to pull anyone over for: - Expired tags - Non-functioning tail lights - Cracked windshield - Broken sideview mirrors - Illegal tint - Loud exhaust - Missing license plate Because it \"disproportionately affects Black and Brown people.\"",
         "views_at_save": 35274,
-        "age_at_save_hours": 2.6
+        "age_at_save_hours": 8.74
       },
       {
         "headline": "Incentives Drive Bold Innovation",
@@ -223,7 +340,7 @@
         "post_ts": "2026-05-07T05:21:12Z",
         "views": 10801275,
         "views_at_save": 10801275,
-        "age_at_save_hours": 16.98
+        "age_at_save_hours": 23.11
       },
       {
         "headline": "Hamill Joins the Dark Side with Trump Hate",
@@ -240,7 +357,7 @@
         "parent_handle": "@MarioNawfal",
         "parent_text": "\ud83c\uddfa\ud83c\uddf8 Star Wars actor Mark Hamill posted \u201cif only\u201d with an image of Trump, dead in a grave\u2026 unbelievable\n\nObi-Wan Kenobi once said to Luke Skywalker:\n\n\u201cDon\u2019t give in to hate. That leads to the dark side.\u201d\n\nSeems Luke did not listen.",
         "views_at_save": 18356,
-        "age_at_save_hours": 3.43
+        "age_at_save_hours": 9.57
       },
       {
         "headline": "Honesty Essential for AI Safety",
@@ -257,7 +374,7 @@
         "parent_handle": "@TeslaHype",
         "parent_text": "As long as we don't build Skynet, we are good",
         "views_at_save": 63416,
-        "age_at_save_hours": 28.91
+        "age_at_save_hours": 35.04
       },
       {
         "headline": "Vintage Clip on Industry Choices",
@@ -271,24 +388,7 @@
         "post_ts": "2026-05-07T05:50:02Z",
         "views": 16432722,
         "views_at_save": 16432722,
-        "age_at_save_hours": 16.5
-      },
-      {
-        "headline": "Dems Importing Voters for One-Party Rule",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2052055517300986240",
-        "body": "Elon accuses Democrats of using immigration to import voters for permanent one-party rule, responding to 2009 Schumer speech against illegal...",
-        "engagement": "12.4K likes, 1.2K reposts, 39 quotes, 630 replies",
-        "honesty": "7/10",
-        "notes": "Partisan opinion on immigration policy motives without factual errors, though interpretive claim about voter importation.",
-        "posted": "2026-05-06T17:20:04Z",
-        "post_ts": "2026-05-06T15:58:55Z",
-        "views": 92978,
-        "parent_url": "https://x.com/jgebbia/status/2052004555324313622",
-        "parent_handle": "@jgebbia",
-        "parent_text": "Illuminating speech by Schumer worth watching. Dems used to be against illegal immigration. What changed?",
-        "views_at_save": 92978,
-        "age_at_save_hours": 30.35
+        "age_at_save_hours": 22.63
       },
       {
         "headline": "Positive on Anthropic AI Partnership",
@@ -305,7 +405,7 @@
         "parent_handle": "@nottombrown",
         "parent_text": "In the next few days we'll be ramping up Claude inference on Colossus. \n\nGrateful to be partnering with SpaceX here. We are going to need to move a lot of atoms in order to keep up with AI demand, and there's nobody better at quickly moving atoms (on or off planet Earth)",
         "views_at_save": 20335,
-        "age_at_save_hours": 29.41
+        "age_at_save_hours": 35.55
       },
       {
         "headline": "Space for AI Compute",
@@ -319,7 +419,7 @@
         "post_ts": "2026-05-06T19:20:43Z",
         "views": 30854378,
         "views_at_save": 30854378,
-        "age_at_save_hours": 26.99
+        "age_at_save_hours": 33.12
       }
     ],
     "earlier": []
@@ -327,18 +427,18 @@
   "sports": {
     "stories": [
       {
-        "headline": "Stephen A. Smith Claps Back at Jaylen Brown's Retirement Taunt",
+        "headline": "Stephen A. Smith Responds to Jaylen Brown",
         "handle": "@stephenasmith",
         "url": "https://x.com/stephenasmith/status/2052456605439193572",
-        "body": "Smith tells Jaylen Brown to enjoy his offseason after Celtics' playoff loss, brushing off the retire challenge.",
-        "engagement": "15.7K likes, 974 reposts, 490 quotes, 1485 replies",
+        "body": "Stephen A.. Smith advises Jaylen Brown to enjoy offseason after Celtics blew 3-1 lead in playoffs.",
+        "engagement": "21.6K likes, 1.3K reposts, 583 quotes, 1.9K replies",
         "honesty": "7/10",
-        "notes": "Strong opinion take on NBA player's comments post-playoff elimination.",
-        "posted": "2026-05-07T22:19:52Z",
+        "notes": "Opinionated take on player's comments without factual errors.",
+        "posted": "2026-05-08T04:28:01Z",
         "post_ts": "2026-05-07T18:32:42Z",
-        "views": 2938729,
-        "views_at_save": 2938729,
-        "age_at_save_hours": 3.79
+        "views": 4628325,
+        "views_at_save": 4628325,
+        "age_at_save_hours": 9.92
       },
       {
         "headline": "Inside 2025 World Series Strategies from Dodgers and Blue Jays Managers",
@@ -352,27 +452,41 @@
         "post_ts": "2026-05-07T16:38:20Z",
         "views": 110372,
         "views_at_save": 110372,
-        "age_at_save_hours": 5.69
+        "age_at_save_hours": 11.83
       },
       {
-        "headline": "Knicks Lead 2-0 Over 76ers",
-        "handle": "@BleacherReport",
-        "url": "https://x.com/BleacherReport/status/2052206753576792259",
-        "body": "New York Knicks defeat Philadelphia 76ers in Game 2 of playoffs, taking 2-0 series lead with 26 points from Brunson.",
-        "engagement": "6K likes, 448 reposts",
-        "honesty": "9/10",
-        "notes": "Accurate recap of NBA playoff game with key stats.",
-        "posted": "2026-05-07T04:35:16Z",
-        "post_ts": "2026-05-07T01:59:52Z",
-        "views": 137084,
-        "views_at_save": 137084,
-        "age_at_save_hours": 20.33
+        "headline": "Cowherd on Aaron Rodgers Steelers Deal",
+        "handle": "@TheHerd",
+        "url": "https://x.com/TheHerd/status/2052439248146477307",
+        "body": "Colin Cowherd says Steelers will cave and give Aaron Rodgers more money after his sample year.",
+        "engagement": "283 likes, 11 reposts",
+        "honesty": "6/10",
+        "notes": "Speculative opinion on contract extension based on assumed news.",
+        "posted": "2026-05-08T04:28:01Z",
+        "post_ts": "2026-05-07T17:23:43Z",
+        "views": 44500,
+        "views_at_save": 44500,
+        "age_at_save_hours": 11.07
       }
     ],
     "earlier": []
   },
   "allin": {
     "stories": [
+      {
+        "headline": "Chamath Palihapitiya Endorses Spencer Pratt for LA Mayor",
+        "handle": "@chamath",
+        "url": "https://x.com/chamath/status/2052423519565422917",
+        "body": "Chamath calls Spencer Pratt coherent and reasonable, predicting he could restore safety and greatness to Los Angeles as mayor.",
+        "engagement": "11.9K likes, 914 reposts, 221 replies",
+        "honesty": "7/10",
+        "notes": "Contrarian opinion endorsing unconventional candidate.",
+        "posted": "2026-05-08T04:28:01Z",
+        "post_ts": "2026-05-07T16:21:13Z",
+        "views": 246608,
+        "views_at_save": 246608,
+        "age_at_save_hours": 12.11
+      },
       {
         "headline": "pmarca Critiques AI Investment Hype",
         "handle": "@pmarca",
@@ -385,21 +499,7 @@
         "post_ts": "2026-05-07T15:33:47Z",
         "views": 217478,
         "views_at_save": 217478,
-        "age_at_save_hours": 6.77
-      },
-      {
-        "headline": "Endorsing Spencer Pratt for LA Mayor",
-        "handle": "@chamath",
-        "url": "https://x.com/chamath/status/2052423519565422917",
-        "body": "Chamath Palihapitiya endorses Spencer Pratt for LA mayor, saying he can restore safety and greatness to the city.",
-        "engagement": "5.2K likes, 413 retweets, 138 replies",
-        "honesty": "7/10",
-        "notes": "Opinion",
-        "posted": "2026-05-07T19:04:20Z",
-        "post_ts": "2026-05-07T16:21:13Z",
-        "views": 116577,
-        "views_at_save": 116577,
-        "age_at_save_hours": 5.98
+        "age_at_save_hours": 12.9
       },
       {
         "headline": "Mocking Anti-Tech Populism in Trucking Debate",
@@ -416,7 +516,7 @@
         "parent_handle": "@JTLonsdale",
         "parent_text": "What extreme left wing populist sentiment will Steyer not echo to get elected - is there any line in this direction of illiterate third-worldism that he won\u2019t cross? Maybe do some Jew-baiting stuff next, would be appropriate?",
         "views_at_save": 6332,
-        "age_at_save_hours": 19.21
+        "age_at_save_hours": 25.35
       }
     ],
     "earlier": []
@@ -435,7 +535,7 @@
         "post_ts": "2026-05-07T00:38:09Z",
         "views": 989436,
         "views_at_save": 989436,
-        "age_at_save_hours": 21.7
+        "age_at_save_hours": 27.83
       },
       {
         "headline": "PBD on Farmer Bankruptcies Surge",
@@ -449,7 +549,7 @@
         "post_ts": "2026-05-06T22:03:58Z",
         "views": 111146,
         "views_at_save": 111146,
-        "age_at_save_hours": 24.27
+        "age_at_save_hours": 30.4
       }
     ],
     "earlier": []
@@ -468,7 +568,7 @@
         "post_ts": "2026-05-07T14:12:22Z",
         "views": 27414,
         "views_at_save": 27414,
-        "age_at_save_hours": 8.13
+        "age_at_save_hours": 14.26
       },
       {
         "headline": "Principles for Senior Management",
@@ -482,7 +582,7 @@
         "post_ts": "2026-05-07T14:23:53Z",
         "views": 15419,
         "views_at_save": 15419,
-        "age_at_save_hours": 7.93
+        "age_at_save_hours": 14.07
       },
       {
         "headline": "Jobless Claims Rise Unexpectedly",
@@ -496,7 +596,7 @@
         "post_ts": "2026-05-07T12:44:12Z",
         "views": 7331,
         "views_at_save": 7331,
-        "age_at_save_hours": 9.59
+        "age_at_save_hours": 15.73
       }
     ],
     "earlier": []
@@ -515,7 +615,7 @@
         "post_ts": "2026-05-07T19:01:07Z",
         "views": 12500044,
         "views_at_save": 12500044,
-        "age_at_save_hours": 3.31
+        "age_at_save_hours": 9.45
       },
       {
         "headline": "Efficiency of 10K Steps Calorie Burn",
@@ -529,7 +629,7 @@
         "post_ts": "2026-05-07T19:15:52Z",
         "views": 1034507,
         "views_at_save": 1034507,
-        "age_at_save_hours": 3.07
+        "age_at_save_hours": 9.2
       },
       {
         "headline": "Claude AI integrates with Microsoft Office apps",
@@ -543,7 +643,7 @@
         "post_ts": "2026-05-07T17:49:42Z",
         "views": 568836,
         "views_at_save": 568836,
-        "age_at_save_hours": 4.5
+        "age_at_save_hours": 10.64
       }
     ],
     "earlier": []
@@ -551,35 +651,32 @@
   "msm": {
     "stories": [
       {
-        "headline": "ACLU Voting Rights Organizer Arrested on Child Porn Charges",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2052495177214771341",
-        "body": "Evan Altman, ACLU voting rights organizer and ex-National Democrat Training Committee member, arrested for child pornography.",
-        "engagement": "8K likes, 3K reposts, 313 quotes, 605 replies",
-        "honesty": "10/10",
-        "notes": "Verified arrest fact from public records.",
-        "posted": "2026-05-07T22:19:53Z",
-        "post_ts": "2026-05-07T21:05:58Z",
-        "views": 98089,
-        "views_at_save": 98089,
-        "age_at_save_hours": 1.23
+        "headline": "EXPOSED: Rep. Justin Pearson's Hypocrisy from 2016 to 2026",
+        "handle": "@EndWokeness",
+        "url": "https://x.com/EndWokeness/status/2052550720444920063",
+        "body": "Video juxtaposes Tennessee Rep.. Justin Pearson's past and current statements, revealing a stark shift in his positions.",
+        "engagement": "12K likes, 2.7K reposts, 1.4K replies",
+        "honesty": "9/10",
+        "notes": "Verifiable video clips showing the representative's own words over time.",
+        "posted": "2026-05-08T04:28:02Z",
+        "post_ts": "2026-05-08T00:46:40Z",
+        "views": 539321,
+        "views_at_save": 539321,
+        "age_at_save_hours": 3.69
       },
       {
-        "headline": "LA Housing Official Exposes Embezzlement of Homelessness Funds",
-        "handle": "@JamesOKeefeIII",
-        "url": "https://x.com/JamesOKeefeIII/status/2052189604774596900",
-        "body": "LAHD official admits no knowledge of where homelessness money goes and accuses LAHSA of embezzlement under Mayor Karen Bass's administration.",
-        "engagement": "4.4K likes, 975 reposts, 24 replies",
-        "honesty": "9/10",
-        "notes": "Expos\u00e9 video with factual claims and light editorializing.",
-        "posted": "2026-05-07T04:35:18Z",
-        "post_ts": "2026-05-07T00:51:44Z",
-        "views": 28801,
-        "parent_url": "https://x.com/KarenBassLA/status/2052188463446065512",
-        "parent_handle": "@KarenBassLA",
-        "parent_text": "Building more housing to make LA more affordable. Thousands of houses and apartments are already under construction.",
-        "views_at_save": 28801,
-        "age_at_save_hours": 21.47
+        "headline": "'Muslims Only' Waterpark Organizer Runs Shady Learning Center",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2052582413990089011",
+        "body": "The Texas event organizer behind the exclusive waterpark also operates a learning center, sparking concerns over affiliations.",
+        "engagement": "8K likes, 2.5K reposts, 281 replies",
+        "honesty": "8/10",
+        "notes": "Fact-based reporting on public affiliations with light interpretive framing.",
+        "posted": "2026-05-08T04:28:02Z",
+        "post_ts": "2026-05-08T02:52:37Z",
+        "views": 100001,
+        "views_at_save": 100001,
+        "age_at_save_hours": 1.59
       }
     ],
     "earlier": []
@@ -598,7 +695,7 @@
         "post_ts": "2026-05-07T21:34:51Z",
         "views": 299420,
         "views_at_save": 299420,
-        "age_at_save_hours": 0.75
+        "age_at_save_hours": 6.89
       },
       {
         "headline": "Hollywood Stars Fear Blacklisting Over Merger",
@@ -612,7 +709,7 @@
         "post_ts": "2026-05-07T20:12:00Z",
         "views": 45989,
         "views_at_save": 45989,
-        "age_at_save_hours": 2.13
+        "age_at_save_hours": 8.27
       },
       {
         "headline": "Dianna Russini and Mike Vrabel Boat Day Video",
@@ -626,7 +723,7 @@
         "post_ts": "2026-05-07T17:20:21Z",
         "views": 3311783,
         "views_at_save": 3311783,
-        "age_at_save_hours": 4.99
+        "age_at_save_hours": 11.13
       }
     ],
     "earlier": []
@@ -645,7 +742,7 @@
         "post_ts": "2026-05-07T14:30:00Z",
         "views": 2992,
         "views_at_save": 2992,
-        "age_at_save_hours": 7.83
+        "age_at_save_hours": 13.97
       },
       {
         "headline": "Chopped Steak Salad with Queso Fresco & Tostones",
@@ -659,7 +756,7 @@
         "post_ts": "2026-05-07T16:55:34Z",
         "views": 7306,
         "views_at_save": 7306,
-        "age_at_save_hours": 5.41
+        "age_at_save_hours": 11.54
       },
       {
         "headline": "Sriracha Lime Lettuce Wraps",
@@ -673,13 +770,41 @@
         "post_ts": "2026-05-07T12:50:59Z",
         "views": 13654,
         "views_at_save": 13654,
-        "age_at_save_hours": 9.48
+        "age_at_save_hours": 15.62
       }
     ],
     "earlier": []
   },
   "science": {
     "stories": [
+      {
+        "headline": "AI Activations Translated to Text",
+        "handle": "@AnthropicAI",
+        "url": "https://x.com/AnthropicAI/status/2052435436157452769",
+        "body": "Anthropic's research introduces Natural Language Autoencoders to convert Claude AI's internal activations into human-readable text.",
+        "engagement": "10K likes, 1K reposts, 352 quotes, 372 replies",
+        "honesty": "10/10",
+        "notes": "Direct presentation of novel AI interpretability method.",
+        "posted": "2026-05-08T04:28:03Z",
+        "post_ts": "2026-05-07T17:08:35Z",
+        "views": 1024222,
+        "views_at_save": 1024222,
+        "age_at_save_hours": 11.32
+      },
+      {
+        "headline": "Hydrogenobody Drives Livestock Methane",
+        "handle": "@ScienceMagazine",
+        "url": "https://x.com/ScienceMagazine/status/2052559885749911645",
+        "body": "Researchers identified the hydrogenobody, a new organelle in rumen ciliates that fuels methane production in livestock guts.",
+        "engagement": "26 likes, 5 reposts, 0 quotes, 6 replies",
+        "honesty": "9/10",
+        "notes": "Accurate reporting of new cellular discovery in microbiology.",
+        "posted": "2026-05-08T04:28:03Z",
+        "post_ts": "2026-05-08T01:23:06Z",
+        "views": 7909,
+        "views_at_save": 7909,
+        "age_at_save_hours": 3.08
+      },
       {
         "headline": "NASA Achieves Supersonic Speeds in Mars Helicopter Test",
         "handle": "@NASAMars",
@@ -692,35 +817,7 @@
         "post_ts": "2026-05-07T20:31:59Z",
         "views": 53609,
         "views_at_save": 53609,
-        "age_at_save_hours": 1.8
-      },
-      {
-        "headline": "Anthropic Develops Autoencoders to Decode AI Thoughts",
-        "handle": "@AnthropicAI",
-        "url": "https://x.com/AnthropicAI/status/2052435436157452769",
-        "body": "Anthropic researchers created natural language autoencoders that translate Claude AI's internal activations into human-readable text.",
-        "engagement": "4K likes, 452 reposts",
-        "honesty": "9/10",
-        "notes": "Direct announcement of new AI interpretability research from the company conducting it, verifiable via linked details.",
-        "posted": "2026-05-07T19:04:23Z",
-        "post_ts": "2026-05-07T17:08:35Z",
-        "views": 245034,
-        "views_at_save": 245034,
-        "age_at_save_hours": 5.19
-      },
-      {
-        "headline": "New 'Dark Proteome' Discovered",
-        "handle": "@EricTopol",
-        "url": "https://x.com/EricTopol/status/2052385247833321760",
-        "body": "Researchers found the human genome encodes a new category of molecules called the 'dark proteome' that upends understanding of human disease.",
-        "engagement": "28 likes, 10 reposts",
-        "honesty": "9/10",
-        "notes": "Accurately reports Nature paper on microproteins and peptideins in the proteome.",
-        "posted": "2026-05-07T15:29:35Z",
-        "post_ts": "2026-05-07T13:49:09Z",
-        "views": 5615,
-        "views_at_save": 5615,
-        "age_at_save_hours": 8.51
+        "age_at_save_hours": 7.93
       }
     ],
     "earlier": []
@@ -739,7 +836,7 @@
         "post_ts": "2026-05-07T20:07:01Z",
         "views": 401,
         "views_at_save": 401,
-        "age_at_save_hours": 2.21
+        "age_at_save_hours": 8.35
       },
       {
         "headline": "Boys VB Semifinals at Huntington Beach",
@@ -753,7 +850,7 @@
         "post_ts": "2026-05-07T21:48:18Z",
         "views": 49,
         "views_at_save": 49,
-        "age_at_save_hours": 0.53
+        "age_at_save_hours": 6.66
       },
       {
         "headline": "Anaheim Hospital ER Suspended",
@@ -767,13 +864,42 @@
         "post_ts": "2026-05-07T05:02:53Z",
         "views": 498081,
         "views_at_save": 498081,
-        "age_at_save_hours": 17.28
+        "age_at_save_hours": 23.42
       }
     ],
     "earlier": []
   },
   "conspiracy": {
     "stories": [
+      {
+        "headline": "LA School District Probed for Shielding Accused Teacher Predators",
+        "handle": "@WallStreetApes",
+        "url": "https://x.com/WallStreetApes/status/2052543600354025740",
+        "body": "Federal investigation uncovers LAUSD practice of reassigning teachers accused of sexual misconduct to paid home work or idle rooms instead of firing...",
+        "engagement": "1.5K likes, 696 retweets, 78 replies",
+        "honesty": "8/10",
+        "notes": "Based on federal investigation reports, highlighting policy failures in protecting students.",
+        "posted": "2026-05-08T04:28:04Z",
+        "post_ts": "2026-05-08T00:18:23Z",
+        "views": 24566,
+        "views_at_save": 24566,
+        "age_at_save_hours": 4.16
+      },
+      {
+        "headline": "Hondurasgate Leaks Expose Disinformation Plot Against Latin American Left",
+        "handle": "@DropSiteNews",
+        "url": "https://x.com/DropSiteNews/status/2052517608411250891",
+        "body": "Leaked audios reveal former Honduran president Hern\u00e1ndez coordinating with Trump allies and Milei to fund U.S.-based anti-left disinformation...",
+        "engagement": "2.1K likes, 732 retweets, 18 replies",
+        "honesty": "9/10",
+        "notes": "Reports on leaked audio recordings from credible outlet El Pa\u00eds, with specific details on funding and targets.",
+        "posted": "2026-05-08T04:28:04Z",
+        "post_ts": "2026-05-07T22:35:06Z",
+        "views": 81642,
+        "translation": "Quoted (translated from Spanish): \u2018Hondurasgate\u2019, the alleged meddling plot by the United States and Israel to destabilize Mexico and other progressive governments https://elpais.com/mexico/2026-05-07/hondurasgate-la-supuesta-trama-injerencista-de-estados-unidos-e-israel-para-desestabilizar-a-mexico-y-otros-gobiernos-progresistas.html?ssm=x_SMAM. Author caption (English): \ud83d\uddde\ufe0f NEW: Leaked audio recordings released through the \u201cHondurasgate\u201dleaks project and reported by Diario Red allegedly expose a covert network involving former Honduran president Juan Orlando Hern\u00e1ndez, Trump-aligned Republicans, and allies of Argentine President Javier Milei discussing plans to fund a U.S.-based disinformation operation targeting the left-wing governments of Mexico, Colombia, and Honduras, according to a report by Spanish outlet El Pa\u00eds. \ud83d\udd39The recordings allegedly capture Hern\u00e1ndez requesting funds from current Honduran officials to establish a U.S.-based digital media operation aimed at spreading anti-left narratives and destabilizing regional governments. \ud83d\udd39In one alleged exchange, Hern\u00e1ndez claims Milei pledged $350,000 in support and says \u201cfiles\u201d were being prepared against the governments of Mexican President Claudia Sheinbaum and Colombian President Gustavo Petro. \ud83d\udd39Another recording, previously reported by Drop Site, allegedly shows Hern\u00e1ndez claiming Israeli-linked donors and \u201ca group of rabbis\u201d helped finance his pardon by President Donald Trump after his U.S. narcotrafficking conviction. \ud83d\udd39Hern\u00e1ndez also allegedly claimed Israeli Prime Minister Benjamin Netanyahu played a role in securing his release. Full report below \u2b07\ufe0f",
+        "views_at_save": 81642,
+        "age_at_save_hours": 5.88
+      },
       {
         "headline": "LA Mayor's Homelessness Reduction Claims Contradicted by Skid Row Reality",
         "handle": "@JamesOKeefeIII",
@@ -789,41 +915,27 @@
         "parent_handle": "@KarenBassLA",
         "parent_text": "State of emergency on day one. Creating LA\u2019s first program to get encampments cleared and put people inside. Down two years in a row, down 18%.",
         "views_at_save": 62014,
-        "age_at_save_hours": 21.34
-      },
-      {
-        "headline": "Massive SNAP Fraud: 186K Dead People Still Collecting Benefits",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2052121467769196745",
-        "body": "Federal fraud task force uncovers 186,000 deceased individuals receiving SNAP benefits, contradicting Democrat claims of no widespread fraud.",
-        "engagement": "27K likes, 5.3K reposts, 97 quotes, 793 replies",
-        "honesty": "8/10",
-        "notes": "Specific verifiable data point from JD Vance citing federal task force findings on welfare fraud.",
-        "posted": "2026-05-07T15:04:26Z",
-        "post_ts": "2026-05-06T20:20:59Z",
-        "views": 369173,
-        "views_at_save": 369173,
-        "age_at_save_hours": 25.98
-      },
-      {
-        "headline": "FBI Raids VA Senator's Office in Corruption Probe",
-        "handle": "@BillMelugin_",
-        "url": "https://x.com/BillMelugin_/status/2052085122178900046",
-        "body": "Details FBI search of Sen.. Louise Lucas's office tied to Biden-era investigation into marijuana dispensary bribery and corruption.",
-        "engagement": "2K likes, 494 reposts, 108 replies",
-        "honesty": "8/10",
-        "notes": "Accurate reporting of verified FBI action from NYT sources, though relies on secondary confirmation.",
-        "posted": "2026-05-07T15:20:31Z",
-        "post_ts": "2026-05-06T17:56:33Z",
-        "views": 211546,
-        "views_at_save": 211546,
-        "age_at_save_hours": 28.39
+        "age_at_save_hours": 27.47
       }
     ],
     "earlier": []
   },
   "comedy": {
     "stories": [
+      {
+        "headline": "Hilarious Dune Scene: Chalamet Makes Fan Chant for Knicks",
+        "handle": "@timoatreides",
+        "url": "https://x.com/timoatreides/status/2052213689357303830",
+        "body": "In a funny out-of-context clip, Paul Atreides forces a man to stand and cheer 'Let\u2019s Go Knicks' via subtitles.",
+        "engagement": "40K likes, 1.2K reposts, 152 quotes, 7 replies",
+        "honesty": "9/10",
+        "notes": "Presents a verified movie scene as a comedic moment with minimal editorializing.",
+        "posted": "2026-05-08T04:28:04Z",
+        "post_ts": "2026-05-07T02:27:26Z",
+        "views": 1582215,
+        "views_at_save": 1582215,
+        "age_at_save_hours": 26.01
+      },
       {
         "headline": "Eddie Murphy SNL Holiday Short",
         "handle": "@FirstNameJ0hn",
@@ -836,7 +948,7 @@
         "post_ts": "2026-05-07T01:24:31Z",
         "views": 705,
         "views_at_save": 705,
-        "age_at_save_hours": 20.92
+        "age_at_save_hours": 27.06
       },
       {
         "headline": "AI Standup Comedy Agent",
@@ -850,21 +962,7 @@
         "post_ts": "2026-05-06T14:02:09Z",
         "views": 1322,
         "views_at_save": 1322,
-        "age_at_save_hours": 32.3
-      },
-      {
-        "headline": "Paul Atreides 'Let\u2019s Go Knicks' Subtitle Meme",
-        "handle": "@timoatreides",
-        "url": "https://x.com/timoatreides/status/2052213689357303830",
-        "body": "Funny edit shows Paul Atreides standing to chant 'Let\u2019s Go Knicks' prompted by subtitles.",
-        "engagement": "35K likes, 1K reposts",
-        "honesty": "8/10",
-        "notes": "Humorous fan clip with performative comedy elements.",
-        "posted": "2026-05-07T19:04:25Z",
-        "post_ts": "2026-05-07T02:27:26Z",
-        "views": 1371794,
-        "views_at_save": 1371794,
-        "age_at_save_hours": 19.87
+        "age_at_save_hours": 38.43
       }
     ],
     "earlier": []
