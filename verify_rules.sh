@@ -119,6 +119,50 @@ fi
 check "prompt:views-as-metric"          update.sh        "VIEWS REQUIREMENT|VIEWS IS THE METRIC|views.*integer" exists
 check "prompt:pure-views-spec"          update.sh        "PURE VIEWS SPEC"                                     exists
 
+# --- ABSOLUTE BLOCKER: news tabs 24h cap, reference tabs 72h cap ---
+# 2026-05-09: User caught Claude removing the 24h cap silently in conflict with
+# CLAUDE.md line 274. This audit makes the rule un-bypassable. parse_grok.py MUST
+# pass max_age_h to curation.curate, and _BACKFILL_AGE_BY_TAB must define the right
+# values. If any of these checks fail, the cron aborts pre-flight.
+check "freshness:news-tabs-24h"         parse_grok.py    "'world':\s*24"                                       exists
+check "freshness:reference-72h-recipe"  parse_grok.py    "'recipe':\s*72"                                      exists
+check "freshness:reference-72h-science" parse_grok.py    "'science':\s*72"                                     exists
+check "freshness:reference-72h-comedy"  parse_grok.py    "'comedy':\s*72"                                      exists
+# Use Python to check every curation.curate() call has max_age_h argument.
+# Skips comments. Walks paren-matching for multi-line calls.
+if python3 -c "
+import sys
+text = open('parse_grok.py').read()
+# Strip comments line by line so we don't match curation.curate inside docstrings/comments
+lines = []
+for line in text.split('\n'):
+    stripped = line.lstrip()
+    if stripped.startswith('#'): continue
+    lines.append(line)
+clean = '\n'.join(lines)
+# Find each call and check for max_age_h
+i = 0; missing = []
+while True:
+    idx = clean.find('curation.curate(', i)
+    if idx == -1: break
+    depth = 1; j = idx + len('curation.curate(')
+    while j < len(clean) and depth > 0:
+        if clean[j] == '(': depth += 1
+        elif clean[j] == ')': depth -= 1
+        j += 1
+    call = clean[idx:j]
+    if 'max_age_h' not in call:
+        missing.append(call[:150])
+    i = j
+sys.exit(0 if not missing else 1)
+" 2>/dev/null; then
+  printf '${GREEN}PASS${NC} %-50s %s\n' "freshness:every-curate-has-cap" "parse_grok.py"
+  PASS=$((PASS+1))
+else
+  printf '${RED}FAIL${NC} %-50s %s\n' "freshness:every-curate-has-cap" "parse_grok.py"
+  FAIL=$((FAIL+1)); FAILED_RULES+=("freshness:every-curate-has-cap")
+fi
+
 # --- ABSOLUTE BLOCKER: no git merge conflict markers in any deployed file ---
 # 2026-05-07: a leftover `<<<<<<<` in index.html broke JavaScript parsing for ALL visitors.
 # Site showed "Loading stories..." forever. This check makes that mistake un-shippable.
