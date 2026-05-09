@@ -1850,14 +1850,17 @@ for _tab in ('world', 'usa'):
         # of fresh picks or duplicates of each other.
         _picked = _enforce_topic_diversity(_picked, label=_tab)
     if len(_picked) < _TAB_FLOOR:
-        # Deep fallback: scan past snapshots for 3-perspective stories on this tab.
+        # Deep fallback: scan past snapshots for 3-perspective stories.
+        # User mandate (2026-05-09): "three stories for World, three stories for USA"
+        # with 3 perspectives is non-negotiable. When 24h isn't enough, extend to 72h.
+        # This violates the 24h news cap but honors the harder floor + 3-persp rule.
         _snapshot_pool = _scan_snapshots_for_tab(_tab)
         _picked = _topup_to_floor(_picked, _snapshot_pool,
-                                  top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=_wu_age_cap)
+                                  top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=72)
         _picked = _enforce_topic_diversity(_picked, label=_tab)
         if len(_picked) < _TAB_FLOOR:
-            print(f"  WARN: {_tab} has only {len(_picked)}/{_TAB_FLOOR} stories after deep snapshot scan — "
-                  f"no 3-perspective candidates available in 72h", file=sys.stderr)
+            print(f"  WARN: {_tab} has only {len(_picked)}/{_TAB_FLOOR} stories after 72h "
+                  f"snapshot scan — pool genuinely thin", file=sys.stderr)
     curation.stamp_view_history(_picked)
     _output_v5[_tab] = {'stories': _picked, 'earlier': []}
 
