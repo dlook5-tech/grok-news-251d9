@@ -1804,7 +1804,8 @@ def _topup_to_floor(picked, existing_stories, top_n=_TAB_FLOOR, max_age_h=_TAB_F
         if a > max_age_h:
             continue
         candidates.append(s)
-    candidates.sort(key=lambda s: curation.story_velocity(s), reverse=True)
+    # Pass history so cascade ranks by real 4h delta, not lifetime avg.
+    candidates.sort(key=lambda s: curation.story_velocity(s, history=_history), reverse=True)
     return picked + candidates[: max(0, top_n - len(picked))]
 
 # ---- World/USA tabs (perspective-shaped stories: each story has Cons/Indep/Dem) ----

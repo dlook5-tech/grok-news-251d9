@@ -200,8 +200,11 @@ def story_velocity(story, history=None):
                 if u: break
         return u
 
-    # TIER 1a: real 4h delta when prior snapshot exists. Applies at any age — proves
-    # an old story is still gaining traction.
+    # MODE 1: real 4h delta when prior snapshot exists.
+    # If story is actively growing, return the real 4h growth rate.
+    # If flatlined (delta=0), return 0 — fresh content with views > 0 should beat it.
+    # User (2026-05-09): old viral was winning indefinitely because flatlined returned
+    # 1.0 floor, beating fresh 4-24h posts ranked at 1/age (=0.05).
     if history and views > 0:
         prev = history.get(_url())
         if prev:
@@ -210,23 +213,23 @@ def story_velocity(story, history=None):
             elapsed = age - prev_age
             if elapsed > 0 and prev_views > 0:
                 delta_4h = (views - prev_views) / elapsed * 4
-                # Returned in same range as fresh views/4h, so directly comparable
-                return max(delta_4h, 1.0)  # min positive so the story isn't dropped
+                return max(delta_4h, 0.0)  # 0 if flatlined → fresh wins
 
-    # TIER 1b: ≤4h fresh post with views. views per 4-hour window.
-    if age <= 4 and views > 0:
+    # MODE 2: ≤24h with views (any age in window). Use views/age*4 as 4h-window
+    # estimate (lifetime average). Fresh viral content beats stale with this metric
+    # because age is small while views are large.
+    if age <= 24 and views > 0:
         return views / age * 4
 
-    # TIER 1b': ≤4h with no view metric — small positive so it can fill if needed
+    # MODE 3: ≤4h with no view metric — recency rank, small positive
     if age <= 4:
         return 100.0 / age
 
-    # TIER 2: 4-24h, no growth-proof. Recency-only filler. Below all Tier 1.
-    # Returned values 0.04-0.25 — far below any view-bearing post.
+    # MODE 4: 4-24h without views — recency, lower priority
     if age <= 24:
-        return 1.0 / age
+        return 5.0 / age
 
-    # >24h — drop unless explicit floor backfill rescues it later.
+    # >24h without growth proof — drop. Can't evaluate without history.
     return -1
 
 
