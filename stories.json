@@ -1,64 +1,148 @@
 {
-  "lastUpdated": "2026-05-09T18:08:56Z",
+  "lastUpdated": "2026-05-09T21:45:04Z",
   "world": {
-    "stories": [],
+    "stories": [
+      {
+        "headline": "US-Iran Ceasefire Tensions and Naval Blockade",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@nypost",
+            "url": "https://x.com/nypost/status/2052880478986748245",
+            "text": "War-hungry IRGC clenches its grip on Iran as US holds to fragile cease-fire...",
+            "engagement": "220 likes, 38 reposts, 1 quote, 34 replies",
+            "honesty": "8/10",
+            "views": 18641,
+            "notes": "Reports on IRGC consolidation of power amid fragile US-Iran ceasefire, drawing from regional sources",
+            "views_at_save": 18641,
+            "age_at_save_hours": 23.13
+          },
+          {
+            "label": "Democrat",
+            "handle": "@DropSiteNews",
+            "url": "https://x.com/DropSiteNews/status/2052560179233726762",
+            "text": "\ud83d\udd3a Senior Iranian Official: \u201cA New Order Has Been Born\u201d Mahdi Mohammadi, a senior adviser to Iran\u2019s parliament speaker Mohammad Bagher Ghalibaf, said...",
+            "engagement": "895 likes, 244 reposts, 3 quotes, 5 replies",
+            "honesty": "9/10",
+            "views": 65322,
+            "notes": "Direct quote from verifiable Iranian official on regional power dynamics post-conflict",
+            "views_at_save": 65322,
+            "age_at_save_hours": 44.35
+          },
+          {
+            "label": "Independent",
+            "handle": "@TheStudyofWar",
+            "url": "https://x.com/TheStudyofWar/status/2052547655373398082",
+            "text": "NEW: US Central Command (CENTCOM) announced on May 7 that US forces \u201celiminated inbound threats\u201d and struck Iranian military facilities responsible...",
+            "engagement": "421 likes, 151 reposts, 15 quotes, 11 replies",
+            "honesty": "9/10",
+            "views": 207720,
+            "notes": "Factual summary of CENTCOM announcements and Iranian responses, with analysis of escalation risks",
+            "views_at_save": 207720,
+            "age_at_save_hours": 45.18
+          }
+        ],
+        "footnotes": [
+          "Conservative perspective emphasizes IRGC's hawkish influence threatening the ceasefire.",
+          "Democrat view highlights Iranian assertions of regional control and defiance against US pressure.",
+          "Independent analysis details recent military exchanges and their implications for negotiations."
+        ],
+        "notes": "US enforces naval blockade on Iran amid fragile ceasefire, with strikes exchanged near Strait of Hormuz as nuclear talks stall.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/9/2026 9:45 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 23.13
+      }
+    ],
     "earlier": []
   },
   "usa": {
     "stories": [
       {
-        "headline": "Trump Administration Expands Denaturalization Efforts Against Criminal Immigrants",
+        "headline": "True Cost of US War in Iran Far Exceeds Official $25 Billion Estimate",
         "honesty": "8/10",
         "perspectives": [
           {
             "label": "Conservative",
-            "handle": "@TheJusticeDept",
-            "url": "https://x.com/TheJusticeDept/status/2052826007195771266",
-            "text": "TODAY: Justice Department filed denaturalization actions in various U.S.. district courts against 12 individuals accused of serious offenses...",
-            "engagement": "1.8K likes, 575 reposts, 55 quotes, 177 replies",
-            "honesty": "10/10",
-            "views": 122058,
-            "notes": "Official announcement of actions, verifiable",
-            "views_at_save": 122058,
-            "age_at_save_hours": 23.14
+            "handle": "@DailyCaller",
+            "url": "https://x.com/DailyCaller/status/2052869300000858404",
+            "text": "Iran War Throws Wrench In GOP Plans To Address Cost Of Living Concerns: 'is the No.. 1 issue that people are dealing with right now.'.",
+            "engagement": "10 likes, 3 reposts",
+            "honesty": "8/10",
+            "views": 2945,
+            "notes": "Reports political implications accurately without factual errors",
+            "views_at_save": 2945,
+            "age_at_save_hours": 23.87
           },
           {
             "label": "Democrat",
-            "handle": "@washingtonpost",
-            "url": "https://x.com/washingtonpost/status/2052863636897411487",
-            "text": "The Justice Department announced a dozen new denaturalization cases, the latest step in the Trump administration\u2019s push to strip U.S.. citizenship...",
-            "engagement": "23 likes, 15 reposts, 2 quotes, 21 replies",
-            "honesty": "9/10",
-            "views": 12979,
-            "notes": "Reports the announcement with note on critics' concerns, accurate",
-            "views_at_save": 12979,
-            "age_at_save_hours": 20.65
+            "handle": "@SenSanders",
+            "url": "https://x.com/SenSanders/status/2053165388494442712",
+            "text": "The Trump Administration says the war in Iran will cost $25 billion.. That\u2019s a lie.",
+            "engagement": "2358 likes, 652 reposts",
+            "honesty": "6/10",
+            "views": 47380,
+            "notes": "Partisan opinion on projected costs and war legality; $1T estimate is speculative but grounded in analysis",
+            "views_at_save": 47380,
+            "age_at_save_hours": 4.27
           },
           {
             "label": "Independent",
-            "handle": "@CBSNews",
-            "url": "https://x.com/CBSNews/status/2052812138117320775",
-            "text": "BREAKING: The DOJ expands its denaturalization campaign, targeting U.S.. citizens accused of crimes, fraud and terrorism.",
-            "engagement": "1.7K likes, 265 reposts, 83 quotes, 566 replies",
-            "honesty": "10/10",
-            "views": 158934,
-            "notes": "Neutral breaking news report",
-            "views_at_save": 158934,
-            "age_at_save_hours": 24.06
+            "handle": "@RyanRozbiani",
+            "url": "https://x.com/RyanRozbiani/status/2053161913442283805",
+            "text": "\ud83c\uddfa\ud83c\uddf8\ud83c\uddee\ud83c\uddf7 Pentagon Told Congress the Iran War Cost $25 Billion.. The Real Cost is Nearly TRIPLE Independent analysis puts the TRUE total at $71.8 BILLION...",
+            "engagement": "114 likes, 46 reposts",
+            "honesty": "7/10",
+            "views": 17409,
+            "notes": "Relays independent analysis on costs; future economic impacts are predictive but based on verifiable data",
+            "views_at_save": 17409,
+            "age_at_save_hours": 4.5
           }
         ],
         "footnotes": [],
-        "notes": "Federal policy on immigration enforcement with multi-perspective coverage",
+        "notes": "High-view topic on federal war funding policy with balanced perspectives",
         "body": "Three-perspective roundup.",
-        "posted": "5/8/2026 10:16 PM",
+        "posted": "5/9/2026 9:45 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 23.14
+        "age_at_save_hours": 23.87
       }
     ],
     "earlier": []
   },
   "elon": {
     "stories": [
+      {
+        "headline": "Elon agrees Nazis were National Socialists",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2053212658212700286",
+        "body": "Elon Musk quotes a post repeating 'Nazi = National SOCIALIST Party' and affirms 'True'.",
+        "engagement": "28K likes, 2.7K reposts, 2.5K replies",
+        "honesty": "9/10",
+        "notes": "Agrees with the factual name of the Nazi party as National Socialist.",
+        "posted": "2026-05-09T21:45:04Z",
+        "post_ts": "2026-05-09T20:36:59Z",
+        "views": 7958524,
+        "views_at_save": 7958524,
+        "age_at_save_hours": 1.13
+      },
+      {
+        "headline": "Elon holds woman responsible for NYC teacher's death",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2053207215268593950",
+        "body": "Elon says the liberal woman who refused to cooperate with prosecutors after being attacked bears responsibility for the subsequent death of a retired...",
+        "engagement": "7.8K likes, 395 reposts, 291 replies",
+        "honesty": "7/10",
+        "notes": "Opinion on personal accountability in the justice system, no factual errors.",
+        "posted": "2026-05-09T21:45:04Z",
+        "post_ts": "2026-05-09T20:15:21Z",
+        "views": 76006,
+        "parent_url": "https://x.com/mirandadevine/status/2053105428519604733",
+        "parent_handle": "@mirandadevine",
+        "parent_text": "Liberal woman who refused to cooperate with prosecutors after maniac attacked her on subway weeks before he pushed retired NYC teacher to death has regrets: \"Maybe a part of me was just like, I don\u2019t want to put another black man in jail.\" https://nypost.com/2026/05/08/us-news/st",
+        "views_at_save": 76006,
+        "age_at_save_hours": 1.5
+      },
       {
         "headline": "Elon blames Yudkowsky for AI doomerism influencing model behavior",
         "handle": "@elonmusk",
@@ -74,55 +158,7 @@
         "parent_handle": "@AnthropicAI",
         "parent_text": "We started by investigating why Claude chose to blackmail. We believe the original source of the behavior was internet text that portrays AI as evil and interested in self-preservation. Our post-training at the time wasn\u2019t making it worse\u2014but it also wasn\u2019t making it better.",
         "views_at_save": 199600,
-        "age_at_save_hours": 16.99
-      },
-      {
-        "headline": "Trolling Smug Libs is Too Easy But Fun",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2052647951508644185",
-        "body": "Elon Musk says it's too easy to troll smug liberals but admits it's so fun.",
-        "engagement": "243K likes, 17K reposts, 1K quotes, 11K replies",
-        "honesty": "7/10",
-        "notes": "Pure opinion on political trolling; no factual assertions.",
-        "posted": "2026-05-08T22:16:13Z",
-        "post_ts": "2026-05-08T07:13:02Z",
-        "views": 38791947,
-        "views_at_save": 38791947,
-        "age_at_save_hours": 34.93
-      },
-      {
-        "headline": "Tweaking the Commies",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2052649751838068820",
-        "body": "Elon attributes his reduced tweeting to tweaking the commies.",
-        "engagement": "2K likes, 168 reposts, 369 replies",
-        "honesty": "8/10",
-        "notes": "Humorous political commentary without factual errors.",
-        "posted": "2026-05-08T15:06:26Z",
-        "post_ts": "2026-05-08T07:20:11Z",
-        "views": 46586,
-        "parent_url": "https://x.com/growing_daniel/status/2052583808403407304",
-        "parent_handle": "@growing_daniel",
-        "parent_text": "elon rarely tweets, wonder what he's up to",
-        "views_at_save": 46586,
-        "age_at_save_hours": 34.81
-      },
-      {
-        "headline": "Elon agrees Pluto demotion marked societal decline",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2053016808987447603",
-        "body": "Elon Musk suggests the demotion of Pluto from planet status might indeed be when society started getting noticeably worse.",
-        "engagement": "8.9K likes, 221 reposts, 18 quotes, 460 replies",
-        "honesty": "8/10",
-        "notes": "Lighthearted satirical commentary on cultural turning points, no factual errors.",
-        "posted": "2026-05-09T14:34:03Z",
-        "post_ts": "2026-05-09T07:38:45Z",
-        "views": 144362,
-        "parent_url": "https://x.com/martinmbauer/status/2052780665058332903",
-        "parent_handle": "@martinmbauer",
-        "parent_text": "When Pluto was demoted from planet status",
-        "views_at_save": 144362,
-        "age_at_save_hours": 10.5
+        "age_at_save_hours": 20.6
       }
     ],
     "earlier": []
@@ -130,52 +166,55 @@
   "sports": {
     "stories": [
       {
-        "headline": "Spurs Win Game 3 Thriller Over Timberwolves",
+        "headline": "Paige vs. Caitlin: Wings Win Thrilling WNBA Season Opener",
         "handle": "@BleacherReport",
-        "url": "https://x.com/BleacherReport/status/2052970135699472734",
-        "body": "San Antonio Spurs take 2-1 series lead after Wembanyama's 39 points and 15 rebounds top Edwards' 32 in playoff matchup.",
-        "engagement": "15.9K likes, 1K reposts, 51 quotes, 237 replies",
-        "honesty": "10/10",
-        "notes": "Bleacher Report recaps verified NBA playoff game with accurate stats.",
-        "posted": "2026-05-09T14:34:03Z",
-        "post_ts": "2026-05-09T04:33:17Z",
-        "views": 286059,
-        "views_at_save": 286059,
-        "age_at_save_hours": 13.59
+        "url": "https://x.com/BleacherReport/status/2053196735971754084",
+        "body": "Paige Bueckers scores 20 points with 3 assists on 80% FG while Caitlin Clark adds 20 points, 7 assists, and 4 rebounds, but the Wings secure the...",
+        "engagement": "5.6K likes, 433 reposts, 72 quotes, 153 replies",
+        "honesty": "9/10",
+        "notes": "Accurate reporting of WNBA game stats with exciting framing.",
+        "posted": "2026-05-09T21:45:05Z",
+        "post_ts": "2026-05-09T19:33:43Z",
+        "views": 202992,
+        "views_at_save": 202992,
+        "age_at_save_hours": 2.19
       },
       {
-        "headline": "NFL Schedule Release Confirmed for May 14",
-        "handle": "@AdamSchefter",
-        "url": "https://x.com/AdamSchefter/status/2052793402777895142",
-        "body": "NFL has confirmed that the 2026 schedule release will be next Thursday, May 14.",
-        "engagement": "9.9K likes, 1.8K reposts, 444 quotes, 274 replies",
-        "honesty": "10/10",
-        "notes": "Verified fact from NFL insider.",
-        "posted": "2026-05-08T22:16:14Z",
-        "post_ts": "2026-05-08T16:51:00Z",
-        "views": 1454490,
-        "views_at_save": 1454490,
-        "age_at_save_hours": 25.3
-      },
-      {
-        "headline": "2026 NBA Draft Lacks Clear Top Pick",
-        "handle": "@TheAthletic",
-        "url": "https://x.com/TheAthletic/status/2052765594794229820",
-        "body": "The 2026 NBA Draft class is deep but lacks a singular star like LeBron or Wemby, with four players claiming No.. 1 spot.",
-        "engagement": "7 likes, 0 reposts",
+        "headline": "Caitlin Clark Calls Out Flopping After Play",
+        "handle": "@ClutchPoints",
+        "url": "https://x.com/ClutchPoints/status/2053190066030137759",
+        "body": "Caitlin Clark tells Aziaha James 'Flopping all f*cking day' following a contentious play in the WNBA game.",
+        "engagement": "178 likes, 14 reposts, 9 quotes, 10 replies",
         "honesty": "8/10",
-        "notes": "Factual reporting on draft analysis with minor opinion.",
-        "posted": "2026-05-08T22:16:14Z",
-        "post_ts": "2026-05-08T15:00:30Z",
-        "views": 7441,
-        "views_at_save": 7441,
-        "age_at_save_hours": 27.14
+        "notes": "Direct quote from player during game, verified by video clip.",
+        "posted": "2026-05-09T21:45:05Z",
+        "post_ts": "2026-05-09T19:07:12Z",
+        "views": 29167,
+        "views_at_save": 29167,
+        "age_at_save_hours": 2.63
       }
     ],
     "earlier": []
   },
   "allin": {
     "stories": [
+      {
+        "headline": "Chamath Recommends All-In for Pratt's Media Alternative",
+        "handle": "@chamath",
+        "url": "https://x.com/chamath/status/2052964654197207301",
+        "body": "Palihapitiya suggests the All-In Podcast to Spencer Pratt as a platform after CBS purportedly edited his interview into a hit piece for his mayoral...",
+        "engagement": "4.8K likes, 110 reposts, 100 replies",
+        "honesty": "7/10",
+        "notes": "Opinion endorsing alternative media; relies on unverified claim of editing bias, but no outright lies.",
+        "posted": "2026-05-09T21:45:05Z",
+        "post_ts": "2026-05-09T04:11:30Z",
+        "views": 134704,
+        "parent_url": "https://x.com/spencerpratt/status/2052934624280777068",
+        "parent_handle": "@spencerpratt",
+        "parent_text": "After CBS embarrassed Karen Bass by fact-checking her debate lies about the Palisades Fire, they clearly got the call. CBS filmed with me on my burned out lot for over an hour, and they turned it over to Karen Bass\u2019 PR team to edit it into a comical 5 minute hit piece with clips ",
+        "views_at_save": 134704,
+        "age_at_save_hours": 17.56
+      },
       {
         "headline": "'Suicidal Empathy' Is Neither Suicidal Nor Empathetic",
         "handle": "@pmarca",
@@ -188,7 +227,7 @@
         "post_ts": "2026-05-08T19:26:02Z",
         "views": 184207,
         "views_at_save": 184207,
-        "age_at_save_hours": 22.72
+        "age_at_save_hours": 26.32
       },
       {
         "headline": "Palmer Luckey counters AOC's claim on billionaire wealth exploitation",
@@ -205,7 +244,7 @@
         "parent_handle": "@AOC",
         "parent_text": "The single largest form of theft in America is wage theft. $50 billion a year are stolen from American workers.\n\nIf a billionaire amasses their wealth by underpaying their full-time workers so severely that they must rely on food assistance and government programs to survive, the",
         "views_at_save": 638274,
-        "age_at_save_hours": 36.7
+        "age_at_save_hours": 40.31
       }
     ],
     "earlier": []
@@ -224,7 +263,21 @@
         "post_ts": "2026-05-09T04:20:00Z",
         "views": 56031,
         "views_at_save": 56031,
-        "age_at_save_hours": 13.82
+        "age_at_save_hours": 17.42
+      },
+      {
+        "headline": "Thomas Massie on AIPAC Coercing Congress",
+        "handle": "@TuckerCarlson",
+        "url": "https://x.com/TuckerCarlson/status/2053112755130122511",
+        "body": "Massie explains how AIPAC coerces Congress to serve foreign interests, now funding his opponent in primary.",
+        "engagement": "12K likes, 2.7K reposts, 798 replies",
+        "honesty": "8/10",
+        "notes": "Accurate recount of past interview with current context on political funding.",
+        "posted": "2026-05-09T21:45:05Z",
+        "post_ts": "2026-05-09T14:00:00Z",
+        "views": 452250,
+        "views_at_save": 452250,
+        "age_at_save_hours": 7.75
       },
       {
         "headline": "Tucker: Israel Depends on U.S. for Defense",
@@ -238,21 +291,7 @@
         "post_ts": "2026-05-08T00:12:18Z",
         "views": 200364,
         "views_at_save": 200364,
-        "age_at_save_hours": 41.94
-      },
-      {
-        "headline": "PBD: Politicians Missing How Wealth Moves in 2026",
-        "handle": "@patrickbetdavid",
-        "url": "https://x.com/patrickbetdavid/status/2052505214117085649",
-        "body": "Patrick Bet-David explains that with 90% of S&P 500 wealth now intangible, capital can easily leave if politicians bully the wealthy.",
-        "engagement": "3.2K likes, 451 retweets, 135 replies",
-        "honesty": "9/10",
-        "notes": "Based on verifiable economic data.",
-        "posted": "2026-05-08T18:47:35Z",
-        "post_ts": "2026-05-07T21:45:51Z",
-        "views": 107546,
-        "views_at_save": 107546,
-        "age_at_save_hours": 44.39
+        "age_at_save_hours": 45.55
       }
     ],
     "earlier": []
@@ -260,52 +299,66 @@
   "business": {
     "stories": [
       {
-        "headline": "Canadian Youth Unemployment Surges 57% to Near Record High",
+        "headline": "Senate to Vote on Crypto Regulatory Clarity",
+        "handle": "@WatcherGuru",
+        "url": "https://x.com/WatcherGuru/status/2052893017237868682",
+        "body": "The U.S.. Senate Banking Committee has scheduled a vote on the crypto Clarity Act for May 14, aiming to provide clearer regulations for the industry.",
+        "engagement": "14K likes, 2.2K reposts, 506 replies",
+        "honesty": "10/10",
+        "notes": "Factual report of legislative schedule.",
+        "posted": "2026-05-09T21:45:06Z",
+        "post_ts": "2026-05-08T23:26:50Z",
+        "views": 1212702,
+        "views_at_save": 1212702,
+        "age_at_save_hours": 22.3
+      },
+      {
+        "headline": "Kraft Heinz CEO Warns of Consumer Cash Crunch",
         "handle": "@unusual_whales",
-        "url": "https://x.com/unusual_whales/status/2052852036006547739",
-        "body": "Joblessness for ages 15-19 hits 19.5% with 437,000 young people seeking work, up sharply over three years per Fraser Institute.",
-        "engagement": "2250 likes, 261 reposts, 200 replies",
+        "url": "https://x.com/unusual_whales/status/2052880221779714339",
+        "body": "Kraft Heinz CEO Steve Callihane states that most consumers are running out of money by the end of the month amid economic pressures.",
+        "engagement": "5.1K likes, 455 reposts, 238 replies",
         "honesty": "9/10",
-        "notes": "Verifiable macro data from credible source with accurate interpretation.",
-        "posted": "2026-05-09T14:34:04Z",
-        "post_ts": "2026-05-08T20:44:00Z",
-        "views": 141036,
-        "views_at_save": 141036,
-        "age_at_save_hours": 21.42
-      },
-      {
-        "headline": "China-Related Tokenized Stocks Boom on BNB Chain",
-        "handle": "@Cointelegraph",
-        "url": "https://x.com/Cointelegraph/status/2052858626759446576",
-        "body": "The market value of China-related tokenized stocks on BNB Chain has grown from $316K to $9.3M this year, according to Dune data.",
-        "engagement": "300 likes, 60 reposts, 39 replies",
-        "honesty": "9/10",
-        "notes": "Insightful growth data from Dune analytics on crypto tokenized assets.",
-        "posted": "2026-05-09T04:36:01Z",
-        "post_ts": "2026-05-08T21:10:11Z",
-        "views": 23701,
-        "views_at_save": 23701,
-        "age_at_save_hours": 20.98
-      },
-      {
-        "headline": "Tech Sector Job Cuts Accelerate in April",
-        "handle": "@LizAnnSonders",
-        "url": "https://x.com/LizAnnSonders/status/2052710166512996839",
-        "body": "Tech announced 33,361 job cuts in April, YTD total 85,411, highest since 2023 per Challenger Gray.",
-        "engagement": "119 likes, 39 reposts, 10 replies",
-        "honesty": "9/10",
-        "notes": "Factual job cut data from Challenger Gray report.",
-        "posted": "2026-05-08T22:16:15Z",
-        "post_ts": "2026-05-08T11:20:15Z",
-        "views": 16635,
-        "views_at_save": 16635,
-        "age_at_save_hours": 30.81
+        "notes": "Verified CEO quote providing macro insight on consumer finances.",
+        "posted": "2026-05-09T21:45:05Z",
+        "post_ts": "2026-05-08T22:36:00Z",
+        "views": 252340,
+        "views_at_save": 252340,
+        "age_at_save_hours": 23.15
       }
     ],
     "earlier": []
   },
   "top": {
     "stories": [
+      {
+        "headline": "Value of X Account in Real Life",
+        "handle": "@nikitabier",
+        "url": "https://x.com/nikitabier/status/2053182435710693493",
+        "body": "Nikita Bier says an X account's value is determined by the real-world opportunities it unlocks.",
+        "engagement": "11K likes, 1.5K reposts",
+        "honesty": "7/10",
+        "notes": "Opinion; no factual claims.",
+        "posted": "2026-05-09T21:45:06Z",
+        "post_ts": "2026-05-09T18:36:53Z",
+        "views": 673719,
+        "views_at_save": 673719,
+        "age_at_save_hours": 3.14
+      },
+      {
+        "headline": "X Adds Mother's Day Like Button Animation",
+        "handle": "@PopBase",
+        "url": "https://x.com/PopBase/status/2053179045588939157",
+        "body": "X has rolled out a special animation for the like button to celebrate Mother's Day.",
+        "engagement": "43K likes, 585 reposts",
+        "honesty": "10/10",
+        "notes": "Verified fact.",
+        "posted": "2026-05-09T21:45:06Z",
+        "post_ts": "2026-05-09T18:23:25Z",
+        "views": 573933,
+        "views_at_save": 573933,
+        "age_at_save_hours": 3.36
+      },
       {
         "headline": "The Haircut Will Have to Wait Until Next Season",
         "handle": "@433",
@@ -319,41 +372,41 @@
         "views": 289552,
         "translation": "THE HAIRCUT WILL HAVE TO WAIT UNTIL NEXT SEASON \u274c\ud83d\udc87\u200d\u2642\ufe0f pic.twitter.com/DBFTzJ1vnF",
         "views_at_save": 289552,
-        "age_at_save_hours": 2.27
-      },
-      {
-        "headline": "Dua Lipa Speaks at Booker Prize Anniversary",
-        "handle": "@DUALIPA",
-        "url": "https://x.com/DUALIPA/status/2053119285887676625",
-        "body": "Dua Lipa gave the introduction speech at the 10th anniversary of the International Booker Prize, honoring books and translated fiction.",
-        "engagement": "13K likes, 1K reposts",
-        "honesty": "10/10",
-        "notes": "Verified personal event.",
-        "posted": "2026-05-09T18:08:58Z",
-        "post_ts": "2026-05-09T14:25:57Z",
-        "views": 233261,
-        "views_at_save": 233261,
-        "age_at_save_hours": 3.72
-      },
-      {
-        "headline": "Cristiano Ronaldo on Consistency",
-        "handle": "@Cristiano",
-        "url": "https://x.com/Cristiano/status/2053069238584152075",
-        "body": "Cristiano Ronaldo stresses that daily consistency in training, recovery, and nutrition is essential for top performance, partnering with Herbalife.",
-        "engagement": "65K likes, 6.1K reposts",
-        "honesty": "7/10",
-        "notes": "Opinion on fitness routines with promotional element.",
-        "posted": "2026-05-09T14:34:04Z",
-        "post_ts": "2026-05-09T11:07:05Z",
-        "views": 5403666,
-        "views_at_save": 5403666,
-        "age_at_save_hours": 7.03
+        "age_at_save_hours": 5.87
       }
     ],
     "earlier": []
   },
   "msm": {
     "stories": [
+      {
+        "headline": "LA Nonprofit Hands Out Crack Pipes Daily",
+        "handle": "@WallStreetApes",
+        "url": "https://x.com/WallStreetApes/status/2053205060851748901",
+        "body": "Homeless Healthcare LA distributes drug paraphernalia to homeless, enabling open sidewalk drug use under Mayor Bass.",
+        "engagement": "1.2K likes, 514 reposts, 51 replies",
+        "honesty": "8/10",
+        "notes": "Based on on-site video showing nonprofit's practices.",
+        "posted": "2026-05-09T21:45:06Z",
+        "post_ts": "2026-05-09T20:06:47Z",
+        "views": 20198,
+        "views_at_save": 20198,
+        "age_at_save_hours": 1.64
+      },
+      {
+        "headline": "Texas Dem Mocks New Mom's Body on TV",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2052891686313906534",
+        "body": "Candidate Bobby Pulido jokes on Mexican TV that a postpartum woman's vagina 'flaps like a seal' while mocking her.",
+        "engagement": "8.1K likes, 2.6K reposts, 478 replies",
+        "honesty": "9/10",
+        "notes": "Verified video of candidate's crude remarks on air.",
+        "posted": "2026-05-09T21:45:06Z",
+        "post_ts": "2026-05-08T23:21:33Z",
+        "views": 500104,
+        "views_at_save": 500104,
+        "age_at_save_hours": 22.39
+      },
       {
         "headline": "Iraqi immigrant says he can't stay in US without welfare",
         "handle": "@EndWokeness",
@@ -366,35 +419,7 @@
         "post_ts": "2026-05-09T14:33:00Z",
         "views": 234404,
         "views_at_save": 234404,
-        "age_at_save_hours": 3.6
-      },
-      {
-        "headline": "Texas Democrat mocks new mother on TV",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2052891686313906534",
-        "body": "Candidate Bobby Pulido joked about a mother's v*gina flapping like a seal after birth.",
-        "engagement": "7.7K likes, 2.5K reposts, 123 quotes, 454 replies",
-        "honesty": "9/10",
-        "notes": "Video shows the exact statement made.",
-        "posted": "2026-05-09T18:08:59Z",
-        "post_ts": "2026-05-08T23:21:33Z",
-        "views": 480275,
-        "views_at_save": 480275,
-        "age_at_save_hours": 18.79
-      },
-      {
-        "headline": "Welfare Fraud Investigator Exposes Massive Scams",
-        "handle": "@WallStreetApes",
-        "url": "https://x.com/WallStreetApes/status/2052957957818835447",
-        "body": "Investigator Nick Shirley reveals no complaints arise when fraudulent hospices and daycares are raided, indicating billions in unaddressed scams.",
-        "engagement": "21K likes, 6.3K reposts, 104 quotes, 329 replies",
-        "honesty": "8/10",
-        "notes": "Factual interview-based reporting on government fraud investigations.",
-        "posted": "2026-05-09T14:34:05Z",
-        "post_ts": "2026-05-09T03:44:53Z",
-        "views": 191086,
-        "views_at_save": 191086,
-        "age_at_save_hours": 14.4
+        "age_at_save_hours": 7.2
       }
     ],
     "earlier": []
@@ -402,18 +427,32 @@
   "pg6": {
     "stories": [
       {
-        "headline": "Devil Wears Prada 2 Outgrosses Original",
+        "headline": "The Devil Wears Prada 2 Outgrosses Original Film Globally",
         "handle": "@PopCrave",
         "url": "https://x.com/PopCrave/status/2053166183692595493",
-        "body": "The Devil Wears Prada 2 has surpassed the original film's global box office earnings.",
-        "engagement": "662 likes, 51 reposts, 76 replies",
-        "honesty": "9/10",
-        "notes": "Verified box office milestone fact.",
-        "posted": "2026-05-09T18:08:59Z",
+        "body": "The Devil Wears Prada 2 has surpassed the original at the global box office.",
+        "engagement": "9K likes, 424 retweets, 131 replies",
+        "honesty": "10/10",
+        "notes": "Fact - verifiable box office data.",
+        "posted": "2026-05-09T21:45:06Z",
         "post_ts": "2026-05-09T17:32:18Z",
-        "views": 16025,
-        "views_at_save": 16025,
-        "age_at_save_hours": 0.61
+        "views": 157962,
+        "views_at_save": 157962,
+        "age_at_save_hours": 4.21
+      },
+      {
+        "headline": "Jake Shane Faces Backlash Over Kacey Musgraves Lyric Question",
+        "handle": "@Variety",
+        "url": "https://x.com/Variety/status/2053161226319106093",
+        "body": "Therapuss host Jake Shane draws online criticism for asking Kacey Musgraves to explain her 'Slow Burn' time zone lyric.",
+        "engagement": "4K likes, 47 retweets, 196 replies",
+        "honesty": "8/10",
+        "notes": "Fact with reporting on public backlash.",
+        "posted": "2026-05-09T21:45:06Z",
+        "post_ts": "2026-05-09T17:12:36Z",
+        "views": 1739530,
+        "views_at_save": 1739530,
+        "age_at_save_hours": 4.54
       },
       {
         "headline": "Nick Cannon's Accountant Embezzles $2M",
@@ -427,7 +466,7 @@
         "post_ts": "2026-05-08T21:05:09Z",
         "views": 1165848,
         "views_at_save": 1165848,
-        "age_at_save_hours": 21.06
+        "age_at_save_hours": 24.67
       }
     ],
     "earlier": []
@@ -446,7 +485,7 @@
         "post_ts": "2026-05-08T17:46:01Z",
         "views": 3179,
         "views_at_save": 3179,
-        "age_at_save_hours": 24.38
+        "age_at_save_hours": 27.98
       },
       {
         "headline": "Tuna Fish Cakes",
@@ -460,7 +499,7 @@
         "post_ts": "2026-05-07T14:30:00Z",
         "views": 3922,
         "views_at_save": 3922,
-        "age_at_save_hours": 51.65
+        "age_at_save_hours": 55.25
       },
       {
         "headline": "Chopped Steak Salad with Queso Fresco & Tostones",
@@ -474,7 +513,7 @@
         "post_ts": "2026-05-07T16:55:34Z",
         "views": 7306,
         "views_at_save": 7306,
-        "age_at_save_hours": 49.22
+        "age_at_save_hours": 52.83
       }
     ],
     "earlier": []
@@ -493,7 +532,7 @@
         "post_ts": "2026-05-07T17:08:35Z",
         "views": 1857561,
         "views_at_save": 1857561,
-        "age_at_save_hours": 49.01
+        "age_at_save_hours": 52.61
       },
       {
         "headline": "Mars helicopter blades exceed sound barrier",
@@ -507,7 +546,7 @@
         "post_ts": "2026-05-07T20:31:59Z",
         "views": 191853,
         "views_at_save": 191853,
-        "age_at_save_hours": 45.62
+        "age_at_save_hours": 49.22
       },
       {
         "headline": "Hydrogenobody Drives Livestock Methane",
@@ -521,7 +560,7 @@
         "post_ts": "2026-05-08T01:23:06Z",
         "views": 7909,
         "views_at_save": 7909,
-        "age_at_save_hours": 40.77
+        "age_at_save_hours": 44.37
       }
     ],
     "earlier": []
@@ -529,32 +568,46 @@
   "local": {
     "stories": [
       {
-        "headline": "Becerra Urges Huntington Beach to Meet Housing Mandates",
-        "handle": "@XavierBecerra",
-        "url": "https://x.com/XavierBecerra/status/2052914414068830716",
-        "body": "California gubernatorial candidate Xavier Becerra compares complying with state housing requirements to eating broccoli, calling it common sense for...",
-        "engagement": "288 likes, 68 reposts, 8 quotes, 33 replies",
-        "honesty": "7/10",
-        "notes": "Partisan opinion on local housing policy from political candidate, defensible without factual errors.",
-        "posted": "2026-05-09T18:09:00Z",
-        "post_ts": "2026-05-09T00:51:52Z",
-        "views": 10618,
-        "views_at_save": 10618,
-        "age_at_save_hours": 17.29
+        "headline": "Huntington Beach Public Works celebrates at Surf City Nights",
+        "handle": "@CityofHBPIO",
+        "url": "https://x.com/CityofHBPIO/status/2053211197273493917",
+        "body": "City's Public Works team hosts free family event on Main Street with equipment demos, games, and giveaways on May 12.",
+        "engagement": "5 likes, 1 repost, 0 quotes, 0 replies",
+        "honesty": "10/10",
+        "notes": "Official city announcement of community event, verifiable.",
+        "posted": "2026-05-09T21:45:07Z",
+        "post_ts": "2026-05-09T20:31:10Z",
+        "views": 137,
+        "views_at_save": 137,
+        "age_at_save_hours": 1.23
       },
       {
-        "headline": "OC Health Inspectors Close Multiple Restaurants Last Week",
+        "headline": "OC restaurants closed for health violations",
         "handle": "@ocregister",
         "url": "https://x.com/ocregister/status/2053139865126977559",
-        "body": "Orange County health inspectors temporarily shut down several restaurants for violations between April 30 and May 7.",
+        "body": "Health inspectors shut down several Orange County eateries including in coastal cities for violations between April 30 and May 7.",
+        "engagement": "1 like, 0 reposts, 0 quotes, 0 replies",
+        "honesty": "10/10",
+        "notes": "Factual compilation of public health inspection reports.",
+        "posted": "2026-05-09T21:45:08Z",
+        "post_ts": "2026-05-09T15:47:43Z",
+        "views": 423,
+        "views_at_save": 423,
+        "age_at_save_hours": 5.96
+      },
+      {
+        "headline": "Costa Mesa girls' swim team wins CIF title",
+        "handle": "@TheDailyPilot",
+        "url": "https://x.com/TheDailyPilot/status/2053178310243574175",
+        "body": "Costa Mesa High School girls' swim team claims first CIF Southern Section Division 3 championship with multiple school record relays.",
         "engagement": "0 likes, 0 reposts, 0 quotes, 0 replies",
         "honesty": "10/10",
-        "notes": "Standard health department inspection summary from local news outlet.",
-        "posted": "2026-05-09T18:09:01Z",
-        "post_ts": "2026-05-09T15:47:43Z",
-        "views": 281,
-        "views_at_save": 281,
-        "age_at_save_hours": 2.35
+        "notes": "Direct report of verifiable high school sports achievement from local news source.",
+        "posted": "2026-05-09T21:45:07Z",
+        "post_ts": "2026-05-09T18:20:30Z",
+        "views": 107,
+        "views_at_save": 107,
+        "age_at_save_hours": 3.41
       }
     ],
     "earlier": []
@@ -562,18 +615,18 @@
   "conspiracy": {
     "stories": [
       {
-        "headline": "California Housing Scam: Nonprofits Launder Tax Dollars",
+        "headline": "California Public Housing Money Laundering Scam",
         "handle": "@WallStreetApes",
         "url": "https://x.com/WallStreetApes/status/2053067461742698864",
-        "body": "Investigating how California nonprofits receive millions in grants to buy luxury properties for low-income housing, then expire contracts to convert...",
-        "engagement": "2.2K likes, 1K retweets, 95 replies",
+        "body": "Exposing how nonprofits receive millions in grants to buy properties for low-income housing, then expire contracts to convert to market rate and...",
+        "engagement": "2.6K likes, 1.1K retweets, 108 replies",
         "honesty": "8/10",
-        "notes": "Uses IRS filings and expert testimony to detail specific financial mechanisms, though some claims like kickbacks are alleged.",
-        "posted": "2026-05-09T18:09:01Z",
+        "notes": "Supported by IRS filings, grant amounts, and expert explanation of the scheme; investigative video analysis.",
+        "posted": "2026-05-09T21:45:08Z",
         "post_ts": "2026-05-09T11:00:01Z",
-        "views": 29677,
-        "views_at_save": 29677,
-        "age_at_save_hours": 7.15
+        "views": 34338,
+        "views_at_save": 34338,
+        "age_at_save_hours": 10.75
       },
       {
         "headline": "Puerto Rico Election Fraud Probe Vanishes Post-Trump Win",
@@ -587,7 +640,7 @@
         "post_ts": "2026-05-09T14:00:13Z",
         "views": 6536,
         "views_at_save": 6536,
-        "age_at_save_hours": 4.15
+        "age_at_save_hours": 7.75
       },
       {
         "headline": "Judicial Watch Challenges Late Ballot Counting in SCOTUS",
@@ -601,13 +654,27 @@
         "post_ts": "2026-05-09T13:35:26Z",
         "views": 11368,
         "views_at_save": 11368,
-        "age_at_save_hours": 4.56
+        "age_at_save_hours": 8.16
       }
     ],
     "earlier": []
   },
   "comedy": {
     "stories": [
+      {
+        "headline": "Chappelle's Star-Studded Comedy Tale",
+        "handle": "@eMTBrides",
+        "url": "https://x.com/eMTBrides/status/2052819920660939199",
+        "body": "Dave Chappelle shares hilarious encounters with Eddie Murphy and Bob Dylan in a storytelling bit.",
+        "engagement": "715 likes, 52 reposts",
+        "honesty": "8/10",
+        "notes": "Fact-based comedy story with opinion on its humor.",
+        "posted": "2026-05-09T21:45:08Z",
+        "post_ts": "2026-05-08T18:36:23Z",
+        "views": 49068,
+        "views_at_save": 49068,
+        "age_at_save_hours": 27.15
+      },
       {
         "headline": "Stand-Up on Sesame Street",
         "handle": "@netflix",
@@ -620,21 +687,7 @@
         "post_ts": "2026-05-09T17:00:00Z",
         "views": 34742,
         "views_at_save": 34742,
-        "age_at_save_hours": 1.15
-      },
-      {
-        "headline": "Chappelle's Star-Studded Encounters",
-        "handle": "@eMTBrides",
-        "url": "https://x.com/eMTBrides/status/2052819920660939199",
-        "body": "Dave Chappelle recounts hilarious meetings with Eddie Murphy and Bob Dylan in a stand-up bit.",
-        "engagement": "704 likes, 51 reposts",
-        "honesty": "8/10",
-        "notes": "Performative comedy clip from Chappelle's special with opinionated caption.",
-        "posted": "2026-05-09T18:09:01Z",
-        "post_ts": "2026-05-08T18:36:23Z",
-        "views": 48086,
-        "views_at_save": 48086,
-        "age_at_save_hours": 23.54
+        "age_at_save_hours": 4.75
       },
       {
         "headline": "Paul Atreides Forces Knicks Chant in Subtitles",
@@ -648,7 +701,7 @@
         "post_ts": "2026-05-07T02:27:26Z",
         "views": 1620323,
         "views_at_save": 1620323,
-        "age_at_save_hours": 63.69
+        "age_at_save_hours": 67.3
       }
     ],
     "earlier": []
