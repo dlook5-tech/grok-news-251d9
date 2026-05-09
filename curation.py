@@ -200,11 +200,17 @@ def story_velocity(story, history=None):
                 if u: break
         return u
 
-    # MODE 1: real 4h delta when prior snapshot exists.
-    # If story is actively growing, return the real 4h growth rate.
-    # If flatlined (delta=0), return 0 — fresh content with views > 0 should beat it.
-    # User (2026-05-09): old viral was winning indefinitely because flatlined returned
-    # 1.0 floor, beating fresh 4-24h posts ranked at 1/age (=0.05).
+    # THE ONE RULE (user spec, 2026-05-09): "the most high-velocity story for that
+    # four-hour period." Velocity = views gained in the last 4 hours. Top 3 win.
+    #
+    #   Case A: ≤4h old — all views ARE last-4h views. Return views directly.
+    #   Case B: >4h old + prior snapshot — real delta scaled to 4h window.
+    #   Case C: >4h old + no snapshot — estimate as lifetime per-4h average.
+    #   Case D: no view metric — tiny recency score (won't beat anything real).
+
+    if age <= 4:
+        return float(views) if views > 0 else (100.0 / max(age, 0.1))
+
     if history and views > 0:
         prev = history.get(_url())
         if prev:
@@ -212,25 +218,12 @@ def story_velocity(story, history=None):
             prev_age = float(prev.get('age_at_save_hours', age))
             elapsed = age - prev_age
             if elapsed > 0 and prev_views > 0:
-                delta_4h = (views - prev_views) / elapsed * 4
-                return max(delta_4h, 0.0)  # 0 if flatlined → fresh wins
+                return max((views - prev_views) * (4.0 / elapsed), 0.0)
 
-    # MODE 2: ≤24h with views (any age in window). Use views/age*4 as 4h-window
-    # estimate (lifetime average). Fresh viral content beats stale with this metric
-    # because age is small while views are large.
-    if age <= 24 and views > 0:
+    if views > 0:
         return views / age * 4
 
-    # MODE 3: ≤4h with no view metric — recency rank, small positive
-    if age <= 4:
-        return 100.0 / age
-
-    # MODE 4: 4-24h without views — recency, lower priority
-    if age <= 24:
-        return 5.0 / age
-
-    # >24h without growth proof — drop. Can't evaluate without history.
-    return -1
+    return 1.0 / max(age, 0.1)
 
 
 # ============================================================
@@ -294,9 +287,10 @@ def apply_velocity_hold(current, candidates, top_n=DEFAULT_TOP_N, history=None, 
             seen[k] = s
     pool = list(seen.values())
 
-    # Filter out -1 (explicit drop signal from story_velocity for stale-no-views)
+    # Sort by 4h velocity (views gained in last 4 hours), highest first. Top N win.
+    # max_age_h was already applied during pool construction above, so no further
+    # filtering needed.
     ranked = sorted(pool, key=lambda s: story_velocity(s, history=history), reverse=True)
-    ranked = [s for s in ranked if story_velocity(s, history=history) >= 0]
     return ranked[:top_n]
 
 
