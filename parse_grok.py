@@ -1829,13 +1829,13 @@ for _tab in ('world', 'usa'):
                 if isinstance(s, dict) and len([p for p in s.get('perspectives', []) or []
                                                   if isinstance(p, dict) and p.get('url')]) >= 3]
     # World/USA: skip commentator enrichment (perspectives ARE the take layer).
-    # 2026-05-07: User clarification — velocity ranking alone is the right rule.
-    # If an old story's 4h-growth still beats fresh candidates' velocity, keep it
-    # regardless of age. No per-tab age cap at velocity-hold level. (MAX_HOLD_HOURS=168
-    # remains as absolute ceiling.) The age cap is only used for FLOOR backfill below.
+    # 2026-05-09 — CLAUDE.md ground truth (line 274): news tabs 24h max, reference 72h.
+    # Velocity rule applies WITHIN the cap, not beyond it. (Removed temporary May-7
+    # "no hard cap" change which conflicted with the documented rule.)
+    _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 24)
     _picked = curation.curate(_tab, _current, _candidates,
-                              top_n=_TAB_N[_tab], enrich=False, history=_history)
-    _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 24)  # used for backfill below
+                              top_n=_TAB_N[_tab], enrich=False, history=_history,
+                              max_age_h=_wu_age_cap)
     # Drop same-topic duplicates (handle-side repetition + headline overlap).
     _picked = _enforce_topic_diversity(_picked, label=_tab)
     # CLAUDE.md hard rule: never empty + (2026-05-06) every World/USA story MUST have
