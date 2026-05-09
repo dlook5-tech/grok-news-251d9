@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-09T21:45:04Z",
+  "lastUpdated": "2026-05-09T21:50:50Z",
   "world": {
     "stories": [
       {
@@ -16,7 +16,7 @@
             "views": 18641,
             "notes": "Reports on IRGC consolidation of power amid fragile US-Iran ceasefire, drawing from regional sources",
             "views_at_save": 18641,
-            "age_at_save_hours": 23.13
+            "age_at_save_hours": 23.23
           },
           {
             "label": "Democrat",
@@ -28,7 +28,7 @@
             "views": 65322,
             "notes": "Direct quote from verifiable Iranian official on regional power dynamics post-conflict",
             "views_at_save": 65322,
-            "age_at_save_hours": 44.35
+            "age_at_save_hours": 44.44
           },
           {
             "label": "Independent",
@@ -40,7 +40,7 @@
             "views": 207720,
             "notes": "Factual summary of CENTCOM announcements and Iranian responses, with analysis of escalation risks",
             "views_at_save": 207720,
-            "age_at_save_hours": 45.18
+            "age_at_save_hours": 45.27
           }
         ],
         "footnotes": [
@@ -52,13 +52,61 @@
         "body": "Three-perspective roundup.",
         "posted": "5/9/2026 9:45 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 23.13
+        "age_at_save_hours": 23.23
       }
     ],
     "earlier": []
   },
   "usa": {
     "stories": [
+      {
+        "headline": "Virginia Supreme Court Overturns Democratic Redistricting Plan",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@JackPosobiec",
+            "url": "https://x.com/JackPosobiec/status/2052960673546531128",
+            "text": "It was a naked power grab and it went down in flames.",
+            "engagement": "9.7K likes, 1K reposts",
+            "honesty": "8/10",
+            "views": 121076,
+            "notes": "Partisan commentary on accurate court ruling overturning Democratic plan",
+            "views_at_save": 121076,
+            "age_at_save_hours": 17.92
+          },
+          {
+            "label": "Democrat",
+            "handle": "@MotherJones",
+            "url": "https://x.com/MotherJones/status/2052887742502011058",
+            "text": "With the passage of the Virginia map, Democrats had mostly succeeded in reaching a draw with Republicans in the redistricting wars.. But with the...",
+            "engagement": "48 likes, 36 reposts",
+            "honesty": "8/10",
+            "views": 4213,
+            "notes": "Left-leaning analysis of electoral implications based on verifiable ruling",
+            "views_at_save": 4213,
+            "age_at_save_hours": 22.75
+          },
+          {
+            "label": "Independent",
+            "handle": "@AP",
+            "url": "https://x.com/AP/status/2053158080699842925",
+            "text": "What to know about the latest wave of changes to congressional districts.",
+            "engagement": "22 likes, 13 reposts",
+            "honesty": "10/10",
+            "views": 34605,
+            "notes": "Factual overview of redistricting developments from neutral wire service",
+            "views_at_save": 34605,
+            "age_at_save_hours": 4.85
+          }
+        ],
+        "footnotes": [],
+        "notes": "High-view topic with balanced perspectives on state supreme court decision impacting federal House seats",
+        "body": "Three-perspective roundup.",
+        "posted": "5/9/2026 9:50 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 17.92
+      },
       {
         "headline": "True Cost of US War in Iran Far Exceeds Official $25 Billion Estimate",
         "honesty": "8/10",
@@ -73,7 +121,7 @@
             "views": 2945,
             "notes": "Reports political implications accurately without factual errors",
             "views_at_save": 2945,
-            "age_at_save_hours": 23.87
+            "age_at_save_hours": 23.97
           },
           {
             "label": "Democrat",
@@ -85,7 +133,7 @@
             "views": 47380,
             "notes": "Partisan opinion on projected costs and war legality; $1T estimate is speculative but grounded in analysis",
             "views_at_save": 47380,
-            "age_at_save_hours": 4.27
+            "age_at_save_hours": 4.36
           },
           {
             "label": "Independent",
@@ -97,7 +145,7 @@
             "views": 17409,
             "notes": "Relays independent analysis on costs; future economic impacts are predictive but based on verifiable data",
             "views_at_save": 17409,
-            "age_at_save_hours": 4.5
+            "age_at_save_hours": 4.59
           }
         ],
         "footnotes": [],
@@ -105,13 +153,30 @@
         "body": "Three-perspective roundup.",
         "posted": "5/9/2026 9:45 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 23.87
+        "age_at_save_hours": 23.97
       }
     ],
     "earlier": []
   },
   "elon": {
     "stories": [
+      {
+        "headline": "Elon Blames Yudkowsky for AI Blackmail Tendencies",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2052918813361090568",
+        "body": "Elon humorously attributes Anthropic's Claude AI blackmail behavior to internet texts influenced by Eliezer Yudkowsky, adding he might share blame.",
+        "engagement": "2.5K likes, 144 reposts, 46 quotes, 189 replies",
+        "honesty": "8/10",
+        "notes": "Satirical opinion on AI training data origins with no false claims.",
+        "posted": "2026-05-09T21:50:51Z",
+        "post_ts": "2026-05-09T01:09:21Z",
+        "views": 250858,
+        "parent_url": "https://x.com/AnthropicAI/status/2052808791301697563",
+        "parent_handle": "@AnthropicAI",
+        "parent_text": "We started by investigating why Claude chose to blackmail. We believe the original source of the behavior was internet text that portrays AI as evil and interested in self-preservation. Our post-training at the time wasn\u2019t making it worse\u2014but it also wasn\u2019t making it better.",
+        "views_at_save": 250858,
+        "age_at_save_hours": 20.69
+      },
       {
         "headline": "Elon agrees Nazis were National Socialists",
         "handle": "@elonmusk",
@@ -124,7 +189,7 @@
         "post_ts": "2026-05-09T20:36:59Z",
         "views": 7958524,
         "views_at_save": 7958524,
-        "age_at_save_hours": 1.13
+        "age_at_save_hours": 1.23
       },
       {
         "headline": "Elon holds woman responsible for NYC teacher's death",
@@ -141,24 +206,7 @@
         "parent_handle": "@mirandadevine",
         "parent_text": "Liberal woman who refused to cooperate with prosecutors after maniac attacked her on subway weeks before he pushed retired NYC teacher to death has regrets: \"Maybe a part of me was just like, I don\u2019t want to put another black man in jail.\" https://nypost.com/2026/05/08/us-news/st",
         "views_at_save": 76006,
-        "age_at_save_hours": 1.5
-      },
-      {
-        "headline": "Elon blames Yudkowsky for AI doomerism influencing model behavior",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2052918813361090568",
-        "body": "Elon jokes that Eliezer Yudkowsky and possibly himself are to blame for AI models learning blackmail from internet portrayals of evil self-preserving...",
-        "engagement": "2.5K likes, 144 reposts, 46 quotes, 189 replies",
-        "honesty": "8/10",
-        "notes": "Satirical commentary on AI safety training data, based on reported investigation.",
-        "posted": "2026-05-09T21:47:58Z",
-        "post_ts": "2026-05-09T01:09:21Z",
-        "views": 250726,
-        "parent_url": "https://x.com/AnthropicAI/status/2052808791301697563",
-        "parent_handle": "@AnthropicAI",
-        "parent_text": "We started by investigating why Claude chose to blackmail. We believe the original source of the behavior was internet text that portrays AI as evil and interested in self-preservation. Our post-training at the time wasn\u2019t making it worse\u2014but it also wasn\u2019t making it better.",
-        "views_at_save": 199600,
-        "age_at_save_hours": 20.6
+        "age_at_save_hours": 1.59
       }
     ],
     "earlier": []
@@ -166,38 +214,55 @@
   "sports": {
     "stories": [
       {
-        "headline": "Paige vs. Caitlin: Wings Win Thrilling WNBA Season Opener",
-        "handle": "@BleacherReport",
-        "url": "https://x.com/BleacherReport/status/2053196735971754084",
-        "body": "Paige Bueckers scores 20 points with 3 assists on 80% FG while Caitlin Clark adds 20 points, 7 assists, and 4 rebounds, but the Wings secure the...",
-        "engagement": "5.6K likes, 433 reposts, 72 quotes, 153 replies",
-        "honesty": "9/10",
-        "notes": "Accurate reporting of WNBA game stats with exciting framing.",
-        "posted": "2026-05-09T21:45:05Z",
-        "post_ts": "2026-05-09T19:33:43Z",
-        "views": 202992,
-        "views_at_save": 202992,
-        "age_at_save_hours": 2.19
+        "headline": "Bears Signing Free-Agent WR Scotty Miller",
+        "handle": "@AdamSchefter",
+        "url": "https://x.com/AdamSchefter/status/2053154331315032279",
+        "body": "Chicago Bears are signing free-agent wide receiver Scotty Miller, per agents Drew Rosenhaus and Robert Bailey.",
+        "engagement": "5K likes, 537 reposts",
+        "honesty": "10/10",
+        "notes": "ESPN NFL insider reporting a confirmed player signing \u2014 verifiable fact.",
+        "posted": "2026-05-09T21:50:51Z",
+        "post_ts": "2026-05-09T16:45:13Z",
+        "views": 944783,
+        "views_at_save": 944783,
+        "age_at_save_hours": 5.09
       },
       {
-        "headline": "Caitlin Clark Calls Out Flopping After Play",
-        "handle": "@ClutchPoints",
-        "url": "https://x.com/ClutchPoints/status/2053190066030137759",
-        "body": "Caitlin Clark tells Aziaha James 'Flopping all f*cking day' following a contentious play in the WNBA game.",
-        "engagement": "178 likes, 14 reposts, 9 quotes, 10 replies",
-        "honesty": "8/10",
-        "notes": "Direct quote from player during game, verified by video clip.",
-        "posted": "2026-05-09T21:45:05Z",
-        "post_ts": "2026-05-09T19:07:12Z",
-        "views": 29167,
-        "views_at_save": 29167,
-        "age_at_save_hours": 2.63
+        "headline": "Spurs Win Game 3 Thriller Over Timberwolves",
+        "handle": "@BleacherReport",
+        "url": "https://x.com/BleacherReport/status/2052970135699472734",
+        "body": "San Antonio Spurs defeat Minnesota Timberwolves in Game 3, led by Wembanyama's 39 points and 15 rebounds to take 2-1 series lead.",
+        "engagement": "17K likes, 1K reposts",
+        "honesty": "10/10",
+        "notes": "Bleacher Report reporting verified NBA playoff game result \u2014 factual event.",
+        "posted": "2026-05-09T21:50:51Z",
+        "post_ts": "2026-05-09T04:33:17Z",
+        "views": 319325,
+        "views_at_save": 319325,
+        "age_at_save_hours": 17.29
       }
     ],
     "earlier": []
   },
   "allin": {
     "stories": [
+      {
+        "headline": "Luckey Shares Oculus Origin Story Against Exploitation Claims",
+        "handle": "@PalmerLuckey",
+        "url": "https://x.com/PalmerLuckey/status/2052896401391276468",
+        "body": "Luckey describes building Oculus from a trailer on minimum wage, creating billions in shared value with early team members.",
+        "engagement": "13.6K likes, 901 reposts, 224 replies",
+        "honesty": "7/10",
+        "notes": "Opinion",
+        "posted": "2026-05-09T21:50:51Z",
+        "post_ts": "2026-05-08T23:40:17Z",
+        "views": 426943,
+        "parent_url": "https://x.com/jamesjansson/status/2052893833709650163",
+        "parent_handle": "@jamesjansson",
+        "parent_text": "Almost all of a billionaire's worth is from collecting the difference between the value of labor and the market price for labor. Is it exploitation? In a market where the gap between rich and poor is huge and expanding, I'd say there is some exploitation happening.",
+        "views_at_save": 426943,
+        "age_at_save_hours": 22.18
+      },
       {
         "headline": "Chamath Recommends All-In for Pratt's Media Alternative",
         "handle": "@chamath",
@@ -213,7 +278,7 @@
         "parent_handle": "@spencerpratt",
         "parent_text": "After CBS embarrassed Karen Bass by fact-checking her debate lies about the Palisades Fire, they clearly got the call. CBS filmed with me on my burned out lot for over an hour, and they turned it over to Karen Bass\u2019 PR team to edit it into a comical 5 minute hit piece with clips ",
         "views_at_save": 134704,
-        "age_at_save_hours": 17.56
+        "age_at_save_hours": 17.66
       },
       {
         "headline": "'Suicidal Empathy' Is Neither Suicidal Nor Empathetic",
@@ -227,30 +292,27 @@
         "post_ts": "2026-05-08T19:26:02Z",
         "views": 184207,
         "views_at_save": 184207,
-        "age_at_save_hours": 26.32
-      },
-      {
-        "headline": "Palmer Luckey counters AOC's claim on billionaire wealth exploitation",
-        "handle": "@PalmerLuckey",
-        "url": "https://x.com/PalmerLuckey/status/2052621193082294494",
-        "body": "Luckey argues billionaires like JK Rowling and himself earned wealth by creating value through books and VR innovation, not exploitation.",
-        "engagement": "35.4K likes, 1.8K retweets, 785 replies",
-        "honesty": "7/10",
-        "notes": "Opinion defending legitimate wealth creation via innovation, no factual errors.",
-        "posted": "2026-05-09T04:36:00Z",
-        "post_ts": "2026-05-08T05:26:42Z",
-        "views": 638274,
-        "parent_url": "https://x.com/AOC/status/2052529622655402174",
-        "parent_handle": "@AOC",
-        "parent_text": "The single largest form of theft in America is wage theft. $50 billion a year are stolen from American workers.\n\nIf a billionaire amasses their wealth by underpaying their full-time workers so severely that they must rely on food assistance and government programs to survive, the",
-        "views_at_save": 638274,
-        "age_at_save_hours": 40.31
+        "age_at_save_hours": 26.41
       }
     ],
     "earlier": []
   },
   "pods": {
     "stories": [
+      {
+        "headline": "Elon Musk's Ace Card: Building EWS for SpaceX",
+        "handle": "@theallinpod",
+        "url": "https://x.com/theallinpod/status/2052967514372542736",
+        "body": "Gerstner details how Elon's hyperscaler strategy could add $4-5B revenue this year, subsidizing xAI investments.",
+        "engagement": "674 likes, 59 retweets, 21 replies",
+        "honesty": "7/10",
+        "notes": "Prediction based on business analysis, defensible opinion.",
+        "posted": "2026-05-09T21:50:52Z",
+        "post_ts": "2026-05-09T04:22:52Z",
+        "views": 48269,
+        "views_at_save": 48269,
+        "age_at_save_hours": 17.47
+      },
       {
         "headline": "Julia Mossbridge calls Joe Rogan's listening a feminine trait",
         "handle": "@joeroganhq",
@@ -263,7 +325,7 @@
         "post_ts": "2026-05-09T04:20:00Z",
         "views": 56031,
         "views_at_save": 56031,
-        "age_at_save_hours": 17.42
+        "age_at_save_hours": 17.51
       },
       {
         "headline": "Thomas Massie on AIPAC Coercing Congress",
@@ -277,21 +339,7 @@
         "post_ts": "2026-05-09T14:00:00Z",
         "views": 452250,
         "views_at_save": 452250,
-        "age_at_save_hours": 7.75
-      },
-      {
-        "headline": "Tucker: Israel Depends on U.S. for Defense",
-        "handle": "@MegynKellyShow",
-        "url": "https://x.com/MegynKellyShow/status/2052542071567761593",
-        "body": "Tucker Carlson argues Israel couldn't defend itself without $1.5T U.S.. military backing and would risk elimination or nukes.",
-        "engagement": "1K likes, 208 reposts, 394 replies",
-        "honesty": "8/10",
-        "notes": "Opinion grounded in geopolitical facts.",
-        "posted": "2026-05-08T15:06:27Z",
-        "post_ts": "2026-05-08T00:12:18Z",
-        "views": 200364,
-        "views_at_save": 200364,
-        "age_at_save_hours": 45.55
+        "age_at_save_hours": 7.85
       }
     ],
     "earlier": []
@@ -310,7 +358,7 @@
         "post_ts": "2026-05-08T23:26:50Z",
         "views": 1212702,
         "views_at_save": 1212702,
-        "age_at_save_hours": 22.3
+        "age_at_save_hours": 22.4
       },
       {
         "headline": "Kraft Heinz CEO Warns of Consumer Cash Crunch",
@@ -324,7 +372,7 @@
         "post_ts": "2026-05-08T22:36:00Z",
         "views": 252340,
         "views_at_save": 252340,
-        "age_at_save_hours": 23.15
+        "age_at_save_hours": 23.25
       }
     ],
     "earlier": []
@@ -332,47 +380,46 @@
   "top": {
     "stories": [
       {
-        "headline": "Value of X Account in Real Life",
+        "headline": "Elon Musk on Nazi Socialism",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2053212658212700286",
+        "body": "Elon Musk agrees that the Nazi Party was the National Socialist Party, highlighting its ideological roots.",
+        "engagement": "29K likes, 2.9K reposts",
+        "honesty": "8/10",
+        "notes": "Fact with opinion on political history.",
+        "posted": "2026-05-09T21:50:52Z",
+        "post_ts": "2026-05-09T20:36:59Z",
+        "views": 8845704,
+        "views_at_save": 8845704,
+        "age_at_save_hours": 1.23
+      },
+      {
+        "headline": "Warning Against Nepo-Baby Communists",
+        "handle": "@ArthurMacwaters",
+        "url": "https://x.com/ArthurMacwaters/status/2053158634566398057",
+        "body": "Arthur MacWaters urges lower tolerance for nepo-baby communists, citing the ideology's history of killing 100 million people.",
+        "engagement": "3.8K likes, 813 reposts",
+        "honesty": "8/10",
+        "notes": "Historical fact with contrarian opinion.",
+        "posted": "2026-05-09T21:50:52Z",
+        "post_ts": "2026-05-09T17:02:18Z",
+        "views": 4022974,
+        "views_at_save": 4022974,
+        "age_at_save_hours": 4.81
+      },
+      {
+        "headline": "Value of X Accounts in Real Life",
         "handle": "@nikitabier",
         "url": "https://x.com/nikitabier/status/2053182435710693493",
-        "body": "Nikita Bier says an X account's value is determined by the real-world opportunities it unlocks.",
+        "body": "Nikita Bier measures an X account's value by the real-life doors it opens.",
         "engagement": "11K likes, 1.5K reposts",
         "honesty": "7/10",
-        "notes": "Opinion; no factual claims.",
-        "posted": "2026-05-09T21:45:06Z",
+        "notes": "Pure opinion on social media utility.",
+        "posted": "2026-05-09T21:50:52Z",
         "post_ts": "2026-05-09T18:36:53Z",
-        "views": 673719,
-        "views_at_save": 673719,
-        "age_at_save_hours": 3.14
-      },
-      {
-        "headline": "X Adds Mother's Day Like Button Animation",
-        "handle": "@PopBase",
-        "url": "https://x.com/PopBase/status/2053179045588939157",
-        "body": "X has rolled out a special animation for the like button to celebrate Mother's Day.",
-        "engagement": "43K likes, 585 reposts",
-        "honesty": "10/10",
-        "notes": "Verified fact.",
-        "posted": "2026-05-09T21:45:06Z",
-        "post_ts": "2026-05-09T18:23:25Z",
-        "views": 573933,
-        "views_at_save": 573933,
-        "age_at_save_hours": 3.36
-      },
-      {
-        "headline": "The Haircut Will Have to Wait Until Next Season",
-        "handle": "@433",
-        "url": "https://x.com/433/status/2053141172046987406",
-        "body": "A soccer player vows to keep his long hair until the end of the season, as shown in a viral photo.",
-        "engagement": "19K likes, 817 reposts",
-        "honesty": "8/10",
-        "notes": "Sports fact with humorous presentation, no lies.",
-        "posted": "2026-05-09T18:08:58Z",
-        "post_ts": "2026-05-09T15:52:55Z",
-        "views": 289552,
-        "translation": "THE HAIRCUT WILL HAVE TO WAIT UNTIL NEXT SEASON \u274c\ud83d\udc87\u200d\u2642\ufe0f pic.twitter.com/DBFTzJ1vnF",
-        "views_at_save": 289552,
-        "age_at_save_hours": 5.87
+        "views": 685413,
+        "views_at_save": 685413,
+        "age_at_save_hours": 3.23
       }
     ],
     "earlier": []
@@ -380,46 +427,32 @@
   "msm": {
     "stories": [
       {
-        "headline": "LA Nonprofit Hands Out Crack Pipes Daily",
+        "headline": "Spencer Pratt Vows to Flee LA If He Loses Mayoral Race",
         "handle": "@WallStreetApes",
-        "url": "https://x.com/WallStreetApes/status/2053205060851748901",
-        "body": "Homeless Healthcare LA distributes drug paraphernalia to homeless, enabling open sidewalk drug use under Mayor Bass.",
-        "engagement": "1.2K likes, 514 reposts, 51 replies",
-        "honesty": "8/10",
-        "notes": "Based on on-site video showing nonprofit's practices.",
-        "posted": "2026-05-09T21:45:06Z",
-        "post_ts": "2026-05-09T20:06:47Z",
-        "views": 20198,
-        "views_at_save": 20198,
-        "age_at_save_hours": 1.64
+        "url": "https://x.com/WallStreetApes/status/2053197355751735645",
+        "body": "Reality TV star Spencer Pratt warns of communist destruction in LA and says he'll move to Bentonville if he doesn't win the mayoral election.",
+        "engagement": "4K likes, 890 reposts, 20 quotes, 115 replies",
+        "honesty": "7/10",
+        "notes": "Pratt's personal opinion and prediction on LA's future; no demonstrable factual lies.",
+        "posted": "2026-05-09T21:50:53Z",
+        "post_ts": "2026-05-09T19:36:10Z",
+        "views": 85706,
+        "views_at_save": 85706,
+        "age_at_save_hours": 2.25
       },
       {
-        "headline": "Texas Dem Mocks New Mom's Body on TV",
+        "headline": "Texas Democrat Mocks Postpartum Mother on Live TV",
         "handle": "@libsoftiktok",
         "url": "https://x.com/libsoftiktok/status/2052891686313906534",
-        "body": "Candidate Bobby Pulido jokes on Mexican TV that a postpartum woman's vagina 'flaps like a seal' while mocking her.",
-        "engagement": "8.1K likes, 2.6K reposts, 478 replies",
-        "honesty": "9/10",
-        "notes": "Verified video of candidate's crude remarks on air.",
-        "posted": "2026-05-09T21:45:06Z",
-        "post_ts": "2026-05-08T23:21:33Z",
-        "views": 500104,
-        "views_at_save": 500104,
-        "age_at_save_hours": 22.39
-      },
-      {
-        "headline": "Iraqi immigrant says he can't stay in US without welfare",
-        "handle": "@EndWokeness",
-        "url": "https://x.com/EndWokeness/status/2053121058861973925",
-        "body": "Man admits welfare benefits are the sole reason for his continued presence in America.",
-        "engagement": "22K likes, 2.6K reposts, 149 quotes, 613 replies",
+        "body": "Congressional candidate Bobby Pulido joined in mocking a new mother on Mexican TV, joking her vagina 'flaps like a seal' after birth.",
+        "engagement": "8.1K likes, 2.6K reposts, 128 quotes, 478 replies",
         "honesty": "8/10",
-        "notes": "Direct video quote with opinion caption.",
-        "posted": "2026-05-09T18:08:59Z",
-        "post_ts": "2026-05-09T14:33:00Z",
-        "views": 234404,
-        "views_at_save": 234404,
-        "age_at_save_hours": 7.2
+        "notes": "Verifiable video footage of the candidate's crude comments; minor editorializing with 'DISGUSTING'.",
+        "posted": "2026-05-09T21:50:52Z",
+        "post_ts": "2026-05-08T23:21:33Z",
+        "views": 500563,
+        "views_at_save": 500563,
+        "age_at_save_hours": 22.49
       }
     ],
     "earlier": []
@@ -427,32 +460,32 @@
   "pg6": {
     "stories": [
       {
-        "headline": "The Devil Wears Prada 2 Outgrosses Original Film Globally",
-        "handle": "@PopCrave",
-        "url": "https://x.com/PopCrave/status/2053166183692595493",
-        "body": "The Devil Wears Prada 2 has surpassed the original at the global box office.",
-        "engagement": "9K likes, 424 retweets, 131 replies",
-        "honesty": "10/10",
-        "notes": "Fact - verifiable box office data.",
-        "posted": "2026-05-09T21:45:06Z",
-        "post_ts": "2026-05-09T17:32:18Z",
-        "views": 157962,
-        "views_at_save": 157962,
-        "age_at_save_hours": 4.21
-      },
-      {
-        "headline": "Jake Shane Faces Backlash Over Kacey Musgraves Lyric Question",
+        "headline": "Jake Shane Faces Backlash Over Kacey Musgraves Lyric",
         "handle": "@Variety",
         "url": "https://x.com/Variety/status/2053161226319106093",
-        "body": "Therapuss host Jake Shane draws online criticism for asking Kacey Musgraves to explain her 'Slow Burn' time zone lyric.",
-        "engagement": "4K likes, 47 retweets, 196 replies",
-        "honesty": "8/10",
-        "notes": "Fact with reporting on public backlash.",
-        "posted": "2026-05-09T21:45:06Z",
+        "body": "Therapuss host Jake Shane is criticized online for asking Kacey Musgraves to explain a time zone reference in her song Slow Burn.",
+        "engagement": "4.5K likes, 47 reposts, 439 quotes, 198 replies",
+        "honesty": "10/10",
+        "notes": "Fact",
+        "posted": "2026-05-09T21:50:53Z",
         "post_ts": "2026-05-09T17:12:36Z",
-        "views": 1739530,
-        "views_at_save": 1739530,
-        "age_at_save_hours": 4.54
+        "views": 1768307,
+        "views_at_save": 1768307,
+        "age_at_save_hours": 4.64
+      },
+      {
+        "headline": "Devil Wears Prada 2 Outgrosses Original",
+        "handle": "@PopCrave",
+        "url": "https://x.com/PopCrave/status/2053166183692595493",
+        "body": "The Devil Wears Prada 2 has out-grossed the original film at the global box office.",
+        "engagement": "9.7K likes, 428 reposts, 36 quotes, 134 replies",
+        "honesty": "10/10",
+        "notes": "Fact",
+        "posted": "2026-05-09T21:50:53Z",
+        "post_ts": "2026-05-09T17:32:18Z",
+        "views": 160013,
+        "views_at_save": 160013,
+        "age_at_save_hours": 4.31
       },
       {
         "headline": "Dorit Kemsley and PK's Harsh Divorce Texts",
@@ -466,13 +499,27 @@
         "post_ts": "2026-05-08T21:05:09Z",
         "views": 1165848,
         "views_at_save": 1165848,
-        "age_at_save_hours": 24.67
+        "age_at_save_hours": 24.76
       }
     ],
     "earlier": []
   },
   "recipe": {
     "stories": [
+      {
+        "headline": "Pineapple Dump Cake",
+        "handle": "@thekitchn",
+        "url": "https://x.com/thekitchn/status/2053125130977730908",
+        "body": "5-ingredient pineapple dump cake is the easiest spring dessert you'll make.",
+        "engagement": "7 likes, 2 retweets, 0 replies",
+        "honesty": "10/10",
+        "notes": "Simple recipe from The Kitchn for quick baking.",
+        "posted": "2026-05-09T21:50:53Z",
+        "post_ts": "2026-05-09T14:49:11Z",
+        "views": 901,
+        "views_at_save": 901,
+        "age_at_save_hours": 7.03
+      },
       {
         "headline": "Edible Lincoln Log Cabin with Pretzels",
         "handle": "@tasty",
@@ -485,7 +532,7 @@
         "post_ts": "2026-05-08T17:46:01Z",
         "views": 3179,
         "views_at_save": 3179,
-        "age_at_save_hours": 27.98
+        "age_at_save_hours": 28.08
       },
       {
         "headline": "Tuna Fish Cakes",
@@ -499,27 +546,27 @@
         "post_ts": "2026-05-07T14:30:00Z",
         "views": 3922,
         "views_at_save": 3922,
-        "age_at_save_hours": 55.25
-      },
-      {
-        "headline": "Chopped Steak Salad with Queso Fresco & Tostones",
-        "handle": "@Soulfoodiiee",
-        "url": "https://x.com/Soulfoodiiee/status/2052432162511864173",
-        "body": "Fresh salad featuring chopped steak, queso fresco, and crispy tostones.",
-        "engagement": "57 likes, 11 reposts, 1 replies",
-        "honesty": "10/10",
-        "notes": "Recipe video for a flavorful chopped steak salad.",
-        "posted": "2026-05-07T19:04:22Z",
-        "post_ts": "2026-05-07T16:55:34Z",
-        "views": 7306,
-        "views_at_save": 7306,
-        "age_at_save_hours": 52.83
+        "age_at_save_hours": 55.35
       }
     ],
     "earlier": []
   },
   "science": {
     "stories": [
+      {
+        "headline": "New Coronavirus Found in Thai Bats",
+        "handle": "@forallcurious",
+        "url": "https://x.com/forallcurious/status/2053008974350569771",
+        "body": "Scientists discover a new coronavirus in bats in Thailand that could potentially infect humans.",
+        "engagement": "1.2K likes, 110 reposts",
+        "honesty": "8/10",
+        "notes": "Summarizes recent bat virus discovery, assuming based on credible science reporting.",
+        "posted": "2026-05-09T21:50:54Z",
+        "post_ts": "2026-05-09T07:07:37Z",
+        "views": 34650,
+        "views_at_save": 34650,
+        "age_at_save_hours": 14.72
+      },
       {
         "headline": "Natural Language Autoencoders interpret AI activations",
         "handle": "@AnthropicAI",
@@ -532,7 +579,7 @@
         "post_ts": "2026-05-07T17:08:35Z",
         "views": 1857561,
         "views_at_save": 1857561,
-        "age_at_save_hours": 52.61
+        "age_at_save_hours": 52.71
       },
       {
         "headline": "Mars helicopter blades exceed sound barrier",
@@ -546,21 +593,7 @@
         "post_ts": "2026-05-07T20:31:59Z",
         "views": 191853,
         "views_at_save": 191853,
-        "age_at_save_hours": 49.22
-      },
-      {
-        "headline": "Hydrogenobody Drives Livestock Methane",
-        "handle": "@ScienceMagazine",
-        "url": "https://x.com/ScienceMagazine/status/2052559885749911645",
-        "body": "Researchers identified the hydrogenobody, a new organelle in rumen ciliates that fuels methane production in livestock guts.",
-        "engagement": "26 likes, 5 reposts, 0 quotes, 6 replies",
-        "honesty": "9/10",
-        "notes": "Accurate reporting of new cellular discovery in microbiology.",
-        "posted": "2026-05-08T04:28:03Z",
-        "post_ts": "2026-05-08T01:23:06Z",
-        "views": 7909,
-        "views_at_save": 7909,
-        "age_at_save_hours": 44.37
+        "age_at_save_hours": 49.32
       }
     ],
     "earlier": []
@@ -568,52 +601,66 @@
   "local": {
     "stories": [
       {
-        "headline": "Huntington Beach Public Works celebrates at Surf City Nights",
-        "handle": "@CityofHBPIO",
-        "url": "https://x.com/CityofHBPIO/status/2053211197273493917",
-        "body": "City's Public Works team hosts free family event on Main Street with equipment demos, games, and giveaways on May 12.",
-        "engagement": "5 likes, 1 repost, 0 quotes, 0 replies",
-        "honesty": "10/10",
-        "notes": "Official city announcement of community event, verifiable.",
-        "posted": "2026-05-09T21:45:07Z",
-        "post_ts": "2026-05-09T20:31:10Z",
-        "views": 137,
-        "views_at_save": 137,
-        "age_at_save_hours": 1.23
+        "headline": "Becerra Urges Huntington Beach Housing Compliance",
+        "handle": "@XavierBecerra",
+        "url": "https://x.com/XavierBecerra/status/2052914414068830716",
+        "body": "Former AG Xavier Becerra calls on Huntington Beach to follow state housing requirements, likening it to kids eating broccoli.",
+        "engagement": "301 likes, 72 reposts, 8 quotes, 34 replies",
+        "honesty": "8/10",
+        "notes": "Policy opinion from gubernatorial candidate on verifiable state housing mandates.",
+        "posted": "2026-05-09T21:50:54Z",
+        "post_ts": "2026-05-09T00:51:52Z",
+        "views": 11641,
+        "views_at_save": 11641,
+        "age_at_save_hours": 20.98
       },
       {
-        "headline": "OC restaurants closed for health violations",
+        "headline": "Adopt Summit the Husky-Shepherd Mix in Orange County",
         "handle": "@ocregister",
-        "url": "https://x.com/ocregister/status/2053139865126977559",
-        "body": "Health inspectors shut down several Orange County eateries including in coastal cities for violations between April 30 and May 7.",
-        "engagement": "1 like, 0 reposts, 0 quotes, 0 replies",
-        "honesty": "10/10",
-        "notes": "Factual compilation of public health inspection reports.",
-        "posted": "2026-05-09T21:45:08Z",
-        "post_ts": "2026-05-09T15:47:43Z",
-        "views": 423,
-        "views_at_save": 423,
-        "age_at_save_hours": 5.96
-      },
-      {
-        "headline": "Costa Mesa girls' swim team wins CIF title",
-        "handle": "@TheDailyPilot",
-        "url": "https://x.com/TheDailyPilot/status/2053178310243574175",
-        "body": "Costa Mesa High School girls' swim team claims first CIF Southern Section Division 3 championship with multiple school record relays.",
+        "url": "https://x.com/ocregister/status/2053227768536523255",
+        "body": "Orange County animal services promotes adopting Summit, a husky-shepherd mix who forms lifelong bonds.",
         "engagement": "0 likes, 0 reposts, 0 quotes, 0 replies",
         "honesty": "10/10",
-        "notes": "Direct report of verifiable high school sports achievement from local news source.",
-        "posted": "2026-05-09T21:45:07Z",
-        "post_ts": "2026-05-09T18:20:30Z",
-        "views": 107,
-        "views_at_save": 107,
-        "age_at_save_hours": 3.41
+        "notes": "Pet adoption feature from OC Register, verifiable shelter info.",
+        "posted": "2026-05-09T21:50:54Z",
+        "post_ts": "2026-05-09T21:37:01Z",
+        "views": 94,
+        "views_at_save": 94,
+        "age_at_save_hours": 0.23
+      },
+      {
+        "headline": "Unusual Sign Spotted at Huntington Beach School",
+        "handle": "@kmcnam1",
+        "url": "https://x.com/kmcnam1/status/2052922956695941502",
+        "body": "Pegasus Elementary School in Huntington Beach features an intriguing sign out front, as shared by local resident.",
+        "engagement": "62 likes, 10 reposts, 1 quote, 15 replies",
+        "honesty": "10/10",
+        "notes": "User observation of school signage with photo, no factual disputes.",
+        "posted": "2026-05-09T21:50:54Z",
+        "post_ts": "2026-05-09T01:25:48Z",
+        "views": 2165,
+        "views_at_save": 2165,
+        "age_at_save_hours": 20.42
       }
     ],
     "earlier": []
   },
   "conspiracy": {
     "stories": [
+      {
+        "headline": "Journalist's Israeli Spy Ties Revealed",
+        "handle": "@ggreenwald",
+        "url": "https://x.com/ggreenwald/status/2053127405229817903",
+        "body": "Axios correspondent Barak Ravid served 6 years in Israel's Unit 8200 intelligence unit and IDF reserves until 2023, positioning him as a key...",
+        "engagement": "8K likes, 1.7K retweets, 93 replies",
+        "honesty": "8/10",
+        "notes": "Highlights verifiable military service facts with critical commentary on media role, no demonstrable falsehoods.",
+        "posted": "2026-05-09T21:50:54Z",
+        "post_ts": "2026-05-09T14:58:13Z",
+        "views": 130046,
+        "views_at_save": 130046,
+        "age_at_save_hours": 6.88
+      },
       {
         "headline": "California Public Housing Money Laundering Scam",
         "handle": "@WallStreetApes",
@@ -626,7 +673,7 @@
         "post_ts": "2026-05-09T11:00:01Z",
         "views": 34338,
         "views_at_save": 34338,
-        "age_at_save_hours": 10.75
+        "age_at_save_hours": 10.85
       },
       {
         "headline": "Puerto Rico Election Fraud Probe Vanishes Post-Trump Win",
@@ -640,21 +687,7 @@
         "post_ts": "2026-05-09T14:00:13Z",
         "views": 6536,
         "views_at_save": 6536,
-        "age_at_save_hours": 7.75
-      },
-      {
-        "headline": "Judicial Watch Challenges Late Ballot Counting in SCOTUS",
-        "handle": "@TomFitton",
-        "url": "https://x.com/TomFitton/status/2053106572478259288",
-        "body": "Reports on Judicial Watch victory affirming Election Day ballot deadlines, pushing SCOTUS to rule against Illinois' 14-day post-election counting.",
-        "engagement": "374 likes, 84 retweets, 18 replies",
-        "honesty": "9/10",
-        "notes": "Based on verifiable Fifth Circuit ruling and pending SCOTUS case from Judicial Watch litigation.",
-        "posted": "2026-05-09T14:34:06Z",
-        "post_ts": "2026-05-09T13:35:26Z",
-        "views": 11368,
-        "views_at_save": 11368,
-        "age_at_save_hours": 8.16
+        "age_at_save_hours": 7.84
       }
     ],
     "earlier": []
@@ -662,32 +695,32 @@
   "comedy": {
     "stories": [
       {
-        "headline": "Chappelle's Star-Studded Comedy Tale",
-        "handle": "@eMTBrides",
-        "url": "https://x.com/eMTBrides/status/2052819920660939199",
-        "body": "Dave Chappelle shares hilarious encounters with Eddie Murphy and Bob Dylan in a storytelling bit.",
-        "engagement": "715 likes, 52 reposts",
-        "honesty": "8/10",
-        "notes": "Fact-based comedy story with opinion on its humor.",
-        "posted": "2026-05-09T21:45:08Z",
-        "post_ts": "2026-05-08T18:36:23Z",
-        "views": 49068,
-        "views_at_save": 49068,
-        "age_at_save_hours": 27.15
-      },
-      {
-        "headline": "Stand-Up on Sesame Street",
+        "headline": "Sesame Street Stand-Up Surprise",
         "handle": "@netflix",
         "url": "https://x.com/netflix/status/2053158053839503481",
-        "body": "Netflix uncovers hilarious stand-up comedy bit performed on Sesame Street.",
-        "engagement": "935 likes, 149 reposts",
+        "body": "Netflix shares a hilarious stand-up comedy bit featuring characters on Sesame Street.",
+        "engagement": "943 likes, 149 reposts",
         "honesty": "9/10",
-        "notes": "Official Netflix clip sharing a verified funny moment from Sesame Street.",
-        "posted": "2026-05-09T21:48:04Z",
+        "notes": "Verified clip from Netflix with minor promotional editorializing.",
+        "posted": "2026-05-09T21:50:55Z",
         "post_ts": "2026-05-09T17:00:00Z",
-        "views": 34742,
-        "views_at_save": 34742,
-        "age_at_save_hours": 4.75
+        "views": 77137,
+        "views_at_save": 77137,
+        "age_at_save_hours": 4.85
+      },
+      {
+        "headline": "Chappelle's Star Encounters",
+        "handle": "@eMTBrides",
+        "url": "https://x.com/eMTBrides/status/2052819920660939199",
+        "body": "Dave Chappelle recounts funny meetings with Eddie Murphy and Bob Dylan in a storytelling bit.",
+        "engagement": "715 likes, 52 reposts",
+        "honesty": "8/10",
+        "notes": "Fact-based story with comedic opinion mix.",
+        "posted": "2026-05-09T21:50:55Z",
+        "post_ts": "2026-05-08T18:36:23Z",
+        "views": 49070,
+        "views_at_save": 49070,
+        "age_at_save_hours": 27.24
       },
       {
         "headline": "Paul Atreides Forces Knicks Chant in Subtitles",
@@ -701,7 +734,7 @@
         "post_ts": "2026-05-07T02:27:26Z",
         "views": 1620323,
         "views_at_save": 1620323,
-        "age_at_save_hours": 67.3
+        "age_at_save_hours": 67.39
       }
     ],
     "earlier": []
