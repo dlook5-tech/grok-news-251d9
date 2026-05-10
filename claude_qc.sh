@@ -47,7 +47,8 @@ for tab in ('world','usa'):
         "Empty [] if none. Only the JSON, no prose.\n\n"
         + "\n".join(f"#{i+1}: {h}" for i,h in headlines)
     )
-    body = json.dumps({"model":"claude-3-5-sonnet-20241022","max_tokens":200,
+    # Use a current Claude model. Try sonnet-4-5 first (good cost/quality for this), fall back if model changes.
+    body = json.dumps({"model":"claude-sonnet-4-5","max_tokens":200,
                        "messages":[{"role":"user","content":prompt}]}).encode()
     req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body, method="POST",
         headers={"x-api-key": key, "anthropic-version":"2023-06-01", "content-type":"application/json"})
@@ -151,11 +152,16 @@ for url in urls:
         broken.append((url, str(e)[:50]))
 
 if broken:
-    if len(broken) > 5:
-        errors.append(f"{len(broken)}/{len(urls)} URLs failed oEmbed check (sample: {broken[:5]})")
+    # Individual URL failures are expected (deleted tweets, geoblocked, transient).
+    # Only BLOCK deploy if >5% of URLs fail — a real systemic issue. Otherwise WARN
+    # and let the deploy proceed; the broken-link fallback in the frontend handles it.
+    fail_pct = len(broken) / max(len(urls), 1) * 100
+    if fail_pct > 5:
+        errors.append(f"{len(broken)}/{len(urls)} URLs ({fail_pct:.0f}%) failed oEmbed — systemic issue, blocking deploy")
     else:
-        for url, status in broken:
-            errors.append(f"oEmbed FAIL ({status}): {url}")
+        warnings.append(f"{len(broken)}/{len(urls)} URLs failed oEmbed ({fail_pct:.0f}%, under 5% threshold — non-blocking; frontend shows fallback)")
+        for url, status in broken[:3]:
+            warnings.append(f"  · {url} ({status})")
 
 print(f"[claude-qc] URL verify: {verified}/{len(urls)} passed")
 
