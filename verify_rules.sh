@@ -119,15 +119,18 @@ fi
 check "prompt:views-as-metric"          update.sh        "VIEWS REQUIREMENT|VIEWS IS THE METRIC|views.*integer" exists
 check "prompt:pure-views-spec"          update.sh        "PURE VIEWS SPEC"                                     exists
 
-# --- ABSOLUTE BLOCKER: news tabs 24h cap, reference tabs 72h cap ---
+# --- ABSOLUTE BLOCKER: news tabs 24h cap, reference tabs 24h cap ---
 # 2026-05-09: User caught Claude removing the 24h cap silently in conflict with
 # CLAUDE.md line 274. This audit makes the rule un-bypassable. parse_grok.py MUST
 # pass max_age_h to curation.curate, and _BACKFILL_AGE_BY_TAB must define the right
 # values. If any of these checks fail, the cron aborts pre-flight.
+# 2026-05-10: Reference tabs tightened from 72h → 24h after Comedy showed a 2d-old
+# story. Cascade still extends to 72h internally if floor unmet, but the configured
+# preference is 24h.
 check "freshness:news-tabs-24h"         parse_grok.py    "'world':\s*24"                                       exists
-check "freshness:reference-72h-recipe"  parse_grok.py    "'recipe':\s*72"                                      exists
-check "freshness:reference-72h-science" parse_grok.py    "'science':\s*72"                                     exists
-check "freshness:reference-72h-comedy"  parse_grok.py    "'comedy':\s*72"                                      exists
+check "freshness:reference-24h-recipe"  parse_grok.py    "'recipe':\s*24"                                      exists
+check "freshness:reference-24h-science" parse_grok.py    "'science':\s*24"                                     exists
+check "freshness:reference-24h-comedy"  parse_grok.py    "'comedy':\s*24"                                      exists
 # Use Python to check every curation.curate() call has max_age_h argument.
 # Skips comments. Walks paren-matching for multi-line calls.
 if python3 -c "

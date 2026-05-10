@@ -108,12 +108,42 @@ for s in d.get('elon', {}).get('stories', []):
 # User mandate (2026-05-10): "Just force three-story floor." Elon is exempt
 # because the user wants all of his latest posts in the last 4 hours, however
 # many that is — the floor concept doesn't apply.
+#
+# AUTO-PROMOTE strategy (2026-05-10): if a tab is sub-floor but its `earlier`
+# array has unused stories, promote them into `stories` to meet floor instead
+# of blocking the deploy. Reasoning: blocking deploy means PRIOR cron's stale
+# content stays live; auto-promoting at least keeps the tab full and fresh-ish.
+# Only emit a hard error if floor is unmeetable even after promotion (truly
+# no candidates anywhere — that's a real systemic issue worth blocking on).
 FLOOR_TABS = ('world', 'usa', 'local', 'business', 'sports', 'pods', 'allin',
               'msm', 'conspiracy', 'pg6', 'comedy', 'recipe', 'top', 'science')
+floor_modified = False
 for tab in FLOOR_TABS:
-    n = len(d.get(tab, {}).get('stories', []))
+    stories = d.get(tab, {}).get('stories', [])
+    earlier = d.get(tab, {}).get('earlier', [])
+    n = len(stories)
     if n < 3:
-        errors.append(f"{tab}: {n}/3 stories — below floor")
+        # Try to promote from earlier (skip ones already in stories by URL)
+        seen_urls = {s.get('url') for s in stories if s.get('url')}
+        promoted = 0
+        for e in earlier:
+            if len(stories) >= 3: break
+            if e.get('url') in seen_urls: continue
+            stories.append(e)
+            seen_urls.add(e.get('url'))
+            promoted += 1
+        if promoted:
+            d[tab]['stories'] = stories
+            # Remove promoted items from earlier
+            d[tab]['earlier'] = [e for e in earlier if e.get('url') not in seen_urls or e in stories[:-promoted]]
+            warnings.append(f"{tab}: promoted {promoted} from earlier to meet 3-floor (was {n}/3)")
+            floor_modified = True
+        if len(stories) < 3:
+            # Genuine systemic issue — block deploy
+            errors.append(f"{tab}: {len(stories)}/3 stories — below floor (no earlier fillers available)")
+if floor_modified:
+    with open('stories.json','w') as f: json.dump(d, f, indent=2)
+    print("[claude-qc] stories.json updated (floor auto-promotion)")
 
 # ---- Check 2: World/USA SHOULD have 3 perspectives per story (warn, not block) ----
 # 2026-05-10: User mandate "just force three-story floor" prioritizes floor > perspectives
