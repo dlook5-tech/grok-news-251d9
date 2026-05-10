@@ -275,21 +275,26 @@ except Exception: print('0')
 cat > /tmp/grok_p_world.txt <<'PROMPT'
 Find the TOP 3 INTERNATIONAL news stories by views in the last 24 hours.
 
-PURE VIEWS SPEC + 3-PERSPECTIVE REQUIREMENT (2026-05-06 user mandate):
-Rank candidate topics by total views across all relevant posts. Pick topics that have substantive Conservative + Democrat + Independent takes available. **Every story you return MUST have all 3 perspectives populated.** A story with only 1 or 2 perspectives is NOT quality enough — drop it and pick a different topic.
+3-PERSPECTIVE BAR IS LOW (user mandate 2026-05-10):
+The bar for each perspective is ANY post with ≥10 views from that ideological lean on the topic. Not high engagement. Not from a famous handle. Just a real conservative-leaning take, a real independent-leaning take, a real democrat-leaning take, all on the same news event, each with at least 10 views.
 
-If you cannot find a topic with all 3 perspective slots filled by recognizable conservative+democrat+independent voices, return FEWER stories rather than ship a partial one. Better 1 fully-three-sided story than 3 half-baked ones.
+For ANY major international/US story (Iran, Ukraine, China, SCOTUS, etc.) this is trivially findable. Random people on X with 10+ views talking about Iran from each side? There are hundreds. Find them.
+
+GOAL: 3 different stories, each with 3 perspectives. **DO NOT return fewer than 3 stories** unless x_search literally returns nothing for major news.
 
 SUGGESTED HANDLES (prefer these — but pick whoever has the most views, even if not listed):
   Conservative (hawkish/interventionist + mainstream conservative media): @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @SenTomCotton, @LindseyGrahamSC, @SecPompeo, @TomFitton, @JesseBWatters, @IngrahamAngle, @WarMonitors, @sentdefender, @CriticalThreats, @WhiteHouse, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews, @nypost, @washingtonexaminer
   Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews
   Independent/Analyst (incl. non-interventionist right): @TuckerCarlson, @HamidRezaAz, @TheStudyofWar, @vtchakarova, @RayDalio, @dalperovitch, @InsightGL, @KimZetter, @Snowden, @ggreenwald
 
-PROCESS (find topics that have all 3 perspectives — this is HARDER but required):
+PROCESS:
 1. x_search broadly: "(Iran OR Israel OR China OR Russia OR Ukraine OR Europe OR Middle East OR war OR geopolitics) lang:en since:$YESTERDAY", mode:Top, limit:50
-2. From results, identify candidate topics with high view counts.
-3. For each candidate topic, run THREE focused searches — one per perspective slot. Only keep the topic if all 3 return viable posts.
-4. If a topic only has 1 or 2 perspective slots filled, **DROP IT and try a different topic.** Repeat until you find topics with full 3-perspective coverage.
+2. Pick the 3 highest-view topics.
+3. For each topic, run 3 broad searches to find ANY post with ≥10 views from each ideological side:
+   - Conservative side: "(topic_keywords) (republican OR conservative OR right OR maga OR trump OR gop) min_faves:1 lang:en", mode:Top, limit:30
+   - Democrat side:    "(topic_keywords) (democrat OR liberal OR left OR progressive OR resist) min_faves:1 lang:en", mode:Top, limit:30
+   - Independent side: "(topic_keywords) (analysis OR analyst OR foreign policy OR nonpartisan OR independent) min_faves:1 lang:en", mode:Top, limit:30
+4. Pick the highest-viewed post from each side that has ≥10 views. If you can't find one, expand search terms (synonyms, broader keywords) — don't give up. The bar is genuinely low.
 
 VIEWS REQUIREMENT (HARD CONTRACT):
 - Each perspective MUST include `"views": <integer>` from x_search's view_count field
@@ -312,10 +317,12 @@ PROMPT
 cat > /tmp/grok_p_usa.txt <<'PROMPT'
 Find the TOP 3 US NATIONAL news stories by views in the last 24 hours (domestic politics, SCOTUS, Congress, federal policy — NOT foreign affairs).
 
-PURE VIEWS SPEC + 3-PERSPECTIVE REQUIREMENT (2026-05-06 user mandate):
-Rank candidate topics by total views across all relevant posts. Pick topics that have substantive Conservative + Democrat + Independent takes available. **Every story you return MUST have all 3 perspectives populated.** A story with only 1 or 2 perspectives is NOT quality enough — drop it and pick a different topic.
+3-PERSPECTIVE BAR IS LOW (user mandate 2026-05-10):
+The bar for each perspective is ANY post with ≥10 views from that ideological lean on the topic. Not high engagement. Not from a famous handle. Just a real conservative-leaning take, a real independent-leaning take, a real democrat-leaning take, all on the same news event, each with at least 10 views.
 
-If you cannot find a topic with all 3 perspective slots filled by recognizable conservative+democrat+independent voices, return FEWER stories rather than ship a partial one. Better 1 fully-three-sided story than 3 half-baked ones.
+For ANY major international/US story (Iran, Ukraine, China, SCOTUS, etc.) this is trivially findable. Random people on X with 10+ views talking about Iran from each side? There are hundreds. Find them.
+
+GOAL: 3 different stories, each with 3 perspectives. **DO NOT return fewer than 3 stories** unless x_search literally returns nothing for major news.
 
 SUGGESTED HANDLES (prefer these — but pick whoever has the most views, even if not listed):
   Conservative (incl. mainstream conservative media): @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @SenTomCotton, @LindseyGrahamSC, @SecPompeo, @TomFitton, @JesseBWatters, @IngrahamAngle, @WhiteHouse, @MariaBartiromo, @SteveScalise, @SpeakerJohnson, @LeaderMcConnell, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews, @nypost, @DailyCaller, @theblaze, @townhallcom, @washingtonexaminer
