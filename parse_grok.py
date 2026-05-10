@@ -1642,8 +1642,9 @@ _BACKFILL_AGE_BY_TAB = {
     'pg6': 24, 'local': 24, 'conspiracy': 24, 'allin': 24, 'pods': 24,
     # Elon — slightly looser (his tab is "every world-engaged post"; 36h)
     'elon': 12,  # User mandate (2026-05-10): 12h window for Elon — "he's such a great poster"
-    # Reference tabs — evergreen content, 72h
-    'recipe': 72, 'science': 72, 'comedy': 72,
+    # Reference tabs — prefer ≤24h, cascade extends to 72h if needed for floor.
+    # User mandate (2026-05-10): don't show 2-day-old content when fresher exists.
+    'recipe': 24, 'science': 24, 'comedy': 24,
 }
 _TAB_FLOOR_AGE_HOURS = 24  # default if tab not in map
 
