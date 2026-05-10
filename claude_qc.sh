@@ -88,6 +88,22 @@ warnings = []
 with open('stories.json') as f:
     d = json.load(f)
 
+# ---- Check 0: Elon posts must all be ≤4 hours old ----
+# User mandate: "Elon just needs to post all of his latest stories in the last four hours."
+import re, datetime
+def url_age_h(url):
+    if not url: return None
+    m = re.search(r'/status/(\d+)', url)
+    if not m: return None
+    sid = int(m.group(1))
+    ts_ms = (sid >> 22) + 1288834974657
+    return (datetime.datetime.now() - datetime.datetime.fromtimestamp(ts_ms/1000)).total_seconds()/3600
+
+for s in d.get('elon', {}).get('stories', []):
+    age = url_age_h(s.get('url',''))
+    if age is not None and age > 4:
+        warnings.append(f"elon: '{s.get('headline','')[:50]}' is {age:.1f}h old (Elon cap is 4h)")
+
 # ---- Check 1: 3-story floor on every tab except Elon ----
 # User mandate (2026-05-10): "Just force three-story floor." Elon is exempt
 # because the user wants all of his latest posts in the last 4 hours, however

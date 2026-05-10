@@ -1641,7 +1641,7 @@ _BACKFILL_AGE_BY_TAB = {
     'world': 24, 'usa': 24, 'business': 24, 'top': 24, 'msm': 24, 'sports': 24,
     'pg6': 24, 'local': 24, 'conspiracy': 24, 'allin': 24, 'pods': 24,
     # Elon — slightly looser (his tab is "every world-engaged post"; 36h)
-    'elon': 36,
+    'elon': 4,   # User mandate (2026-05-09): "Elon just needs to post all of his latest stories in the last four hours."
     # Reference tabs — evergreen content, 72h
     'recipe': 72, 'science': 72, 'comedy': 72,
 }
