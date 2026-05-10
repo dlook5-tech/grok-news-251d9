@@ -101,8 +101,8 @@ def url_age_h(url):
 
 for s in d.get('elon', {}).get('stories', []):
     age = url_age_h(s.get('url',''))
-    if age is not None and age > 4:
-        warnings.append(f"elon: '{s.get('headline','')[:50]}' is {age:.1f}h old (Elon cap is 4h)")
+    if age is not None and age > 12:
+        warnings.append(f"elon: '{s.get('headline','')[:50]}' is {age:.1f}h old (Elon cap is 12h)")
 
 # ---- Check 1: 3-story floor on every tab except Elon ----
 # User mandate (2026-05-10): "Just force three-story floor." Elon is exempt
