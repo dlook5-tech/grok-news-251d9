@@ -1879,16 +1879,43 @@ for _tab in ('world', 'usa'):
     # Velocity rule applies WITHIN the cap, not beyond it. (Removed temporary May-7
     # "no hard cap" change which conflicted with the documented rule.)
     _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 24)
-    # User mandate (2026-05-10): "I want diversity of candidates... but if they
-    # don't have the highest velocity, then they're not in. Whoever has the highest
-    # velocity gets in." Velocity is the ONLY rule. NO forced rotation away from
-    # recurring voices. Topic-dedup REMOVED for World/USA — it was over-rejecting
-    # backfill candidates that shared common political voices (@WhiteHouse,
-    # @ggreenwald, etc.) with current picks. URL-exact dedup remains via curate's
-    # internal pool dedup.
+    # User: velocity-only ranking, no forced rotation away from recurring voices.
+    # BUT obvious topic duplicates (same news event, slightly different headline)
+    # still need filtering. User caught (2026-05-10): "Iran Responds to US Peace
+    # Proposal" + "Iran Sends Response to US Proposal" are the same story.
     _picked = curation.curate(_tab, _current, _candidates,
                               top_n=_TAB_N[_tab], enrich=False, history=_history,
                               max_age_h=_wu_age_cap)
+    # NEAR-DUPLICATE headline filter (only catches very-similar topics, not just
+    # same-handle). Threshold: 65% word overlap on the smaller word set.
+    def _headline_words(h):
+        STOP = {'the','and','for','are','but','not','you','all','can','had','her','was','one','our','out',
+                'has','his','how','its','may','new','now','old','see','way','who','did','get','let','say',
+                'she','too','use','with','from','have','this','that','will','each','make','like','just',
+                'over','such','take','than','them','very','when','come','could','would','about','after',
+                'being','their','there','these','those','which','other','into','more','some','what',
+                'been','were','then','also','most','must','upon','up','to','of','on','in','at','as','an',
+                'or','if','is','it','a','i','by','be'}
+        return set(w for w in re.split(r'[^a-z0-9]+', (h or '').lower())
+                   if len(w) >= 4 and w not in STOP)
+    _kept_after_dup = []
+    _kept_word_sets = []
+    for _s in _picked:
+        _ws = _headline_words(_s.get('headline', ''))
+        _is_dup = False
+        for _prev in _kept_word_sets:
+            if not _ws or not _prev: continue
+            _overlap = len(_ws & _prev)
+            _smaller = min(len(_ws), len(_prev))
+            if _smaller >= 3 and _overlap / _smaller >= 0.65:
+                _is_dup = True
+                print(f"  [near-dup] {_tab}: drop '{_s.get('headline','')[:50]}' "
+                      f"({_overlap}/{_smaller} word overlap)", file=sys.stderr)
+                break
+        if not _is_dup:
+            _kept_after_dup.append(_s)
+            _kept_word_sets.append(_ws)
+    _picked = _kept_after_dup
     # Floor backfill chain (3-persp gate intact, but no topic-dedup):
     if len(_picked) < _TAB_FLOOR:
         _picked = _topup_to_floor(_picked, _current + (_existing.get(_tab, {}).get('earlier', []) or []),
