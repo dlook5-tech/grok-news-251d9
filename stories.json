@@ -1,7 +1,57 @@
 {
-  "lastUpdated": "2026-05-10T16:16:48Z",
+  "lastUpdated": "2026-05-10T16:37:34Z",
   "world": {
     "stories": [
+      {
+        "headline": "Israeli Strikes in Lebanon",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@IsraelWarRoom",
+            "url": "https://x.com/IsraelWarRoom/status/2053505188913189146",
+            "text": "\ud83d\udea8 ALERT: Sirens warn of another drone attack in northern Israel.",
+            "engagement": "68 likes, 8 reposts, 0 quotes, 3 replies",
+            "honesty": "10/10",
+            "views": 6007,
+            "notes": "Direct reporting of security alert, verifiable event",
+            "views_at_save": 6007,
+            "age_at_save_hours": 0.64
+          },
+          {
+            "label": "Democrat",
+            "handle": "@PalestineDays",
+            "url": "https://x.com/PalestineDays/status/2053407195404829043",
+            "text": "\ud83d\udea8At least 24 people have been killed in Lebanon on Saturday as Israel announced it hit 85 different locations in a 24-hour period, mostly across the...",
+            "engagement": "0 likes, 0 reposts, 0 quotes, 1 reply",
+            "honesty": "8/10",
+            "views": 29,
+            "notes": "Reports casualties from official sources, perspective highlights civilian impact",
+            "views_at_save": 29,
+            "age_at_save_hours": 7.13
+          },
+          {
+            "label": "Independent",
+            "handle": "@euronews",
+            "url": "https://x.com/euronews/status/2053453914205258083",
+            "text": "Despite a three-week-old ceasefire, Israel struck Lebanon repeatedly on Saturday killing at least thirty-nine people, while Hezbollah retaliated with...",
+            "engagement": "11 likes, 4 reposts, 1 quote, 0 replies",
+            "honesty": "10/10",
+            "views": 1563,
+            "notes": "Balanced reporting of events from both sides with link to article",
+            "views_at_save": 1563,
+            "age_at_save_hours": 4.03
+          }
+        ],
+        "footnotes": [
+          "Conservative focuses on Israeli security threats; Democrat emphasizes Lebanese casualties; Independent provides neutral overview of exchanges"
+        ],
+        "notes": "Escalation despite ceasefire, with Israeli strikes killing dozens and Hezbollah drone responses amid broader regional tensions",
+        "body": "Three-perspective roundup.",
+        "posted": "5/10/2026 4:37 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 0.64
+      },
       {
         "headline": "Iran Responds to US Peace Proposal Amid Strait of Hormuz Tensions",
         "honesty": "8/10",
@@ -16,7 +66,7 @@
             "views": 135986,
             "notes": "Reports Iranian response accurately based on state media, adds pro-Trump opinion without factual errors.",
             "views_at_save": 135986,
-            "age_at_save_hours": 2.65
+            "age_at_save_hours": 2.99
           },
           {
             "label": "Democrat",
@@ -28,7 +78,7 @@
             "views": 2431,
             "notes": "Partisan opinion criticizing Trump's war decisions; references verifiable statements but uses hyperbolic phrasing.",
             "views_at_save": 2431,
-            "age_at_save_hours": 27.2
+            "age_at_save_hours": 27.55
           },
           {
             "label": "Independent",
@@ -40,7 +90,7 @@
             "views": 102044,
             "notes": "Factual reporting of Iranian state TV claim on proposal contents, no added opinion or errors.",
             "views_at_save": 102044,
-            "age_at_save_hours": 1.7
+            "age_at_save_hours": 2.05
           }
         ],
         "footnotes": [
@@ -52,7 +102,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/10/2026 3:49 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 2.65
+        "age_at_save_hours": 2.99
       },
       {
         "headline": "North Korea Amends Constitution for Automatic Nuclear Strike if Kim Assassinated",
@@ -68,7 +118,7 @@
             "views": 56409,
             "notes": "Verifiable report with conservative surprise framing.",
             "views_at_save": 56409,
-            "age_at_save_hours": 12.08
+            "age_at_save_hours": 12.43
           },
           {
             "label": "Democrat",
@@ -80,7 +130,7 @@
             "views": 63,
             "notes": "Partisan opinion blaming Trump, defensible prediction.",
             "views_at_save": 63,
-            "age_at_save_hours": 3.58
+            "age_at_save_hours": 3.93
           },
           {
             "label": "Independent",
@@ -92,7 +142,7 @@
             "views": 145685,
             "notes": "Factual reporting with neutral expression of concern.",
             "views_at_save": 145685,
-            "age_at_save_hours": 4.93
+            "age_at_save_hours": 5.28
           }
         ],
         "footnotes": [
@@ -104,8 +154,10 @@
         "body": "Three-perspective roundup.",
         "posted": "5/10/2026 4:16 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 12.08
-      },
+        "age_at_save_hours": 12.43
+      }
+    ],
+    "earlier": [
       {
         "headline": "Iran Sends Response to US Proposal on Ending War and Reopening Strait of Hormuz",
         "honesty": "8/10",
@@ -158,11 +210,106 @@
         "views_at_save": 0,
         "age_at_save_hours": 15.78
       }
-    ],
-    "earlier": []
+    ]
   },
   "usa": {
     "stories": [
+      {
+        "headline": "Trump Leaves Door Open for Son Barron Entering Politics",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@Osint613",
+            "url": "https://x.com/Osint613/status/2053497706711019713",
+            "text": "Trump on Barron potentially entering politics: \"Maybe.. He's certainly a popular guy.\".",
+            "engagement": "387 likes, 26 reposts",
+            "honesty": "10/10",
+            "views": 26196,
+            "notes": "Direct quote from Trump; verifiable statement.",
+            "views_at_save": 26196,
+            "age_at_save_hours": 1.13
+          },
+          {
+            "label": "Democrat",
+            "handle": "@remarks",
+            "url": "https://x.com/remarks/status/2053493743936782836",
+            "text": "JUST IN: \ud83c\uddfa\ud83c\uddf8 President Trump says \"maybe\" when asked if his son Barron could go into politics someday.. \"He's certainly a popular guy.\".",
+            "engagement": "763 likes, 45 reposts",
+            "honesty": "10/10",
+            "views": 19346,
+            "notes": "Neutral reporting of quote; no bias or error.",
+            "views_at_save": 19346,
+            "age_at_save_hours": 1.39
+          },
+          {
+            "label": "Independent",
+            "handle": "@TND",
+            "url": "https://x.com/TND/status/2053513097680191790",
+            "text": "Does President Trump think that the Democrats will try to impeach him again?. Full Measure\u2019s Sharyl Attkisson asked Trump about Republicans\u2019 chance...",
+            "engagement": "0 likes, 0 reposts",
+            "honesty": "10/10",
+            "views": 58,
+            "notes": "Reports interview context including Barron question; factual.",
+            "views_at_save": 58,
+            "age_at_save_hours": 0.11
+          }
+        ],
+        "footnotes": [],
+        "notes": "Domestic politics on potential family involvement in government; limited partisan takes in last 24h.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/10/2026 4:37 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 1.13
+      },
+      {
+        "headline": "Trump Confirms Donation of Presidential Salary to White House Preservation",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@EricLDaugh",
+            "url": "https://x.com/EricLDaugh/status/2053493359612715010",
+            "text": "\ud83d\udea8 IT\u2019S OFFICIAL: President Trump is DONATING his presidential salary to preserving the White House Patriot \ud83c\uddfa\ud83c\uddf8  \u201cDo you still donate your salary, and...",
+            "engagement": "2702 likes, 707 reposts",
+            "honesty": "9/10",
+            "views": 45342,
+            "notes": "Direct quote from Trump; verifiable statement in interview.",
+            "views_at_save": 45342,
+            "age_at_save_hours": 1.42
+          },
+          {
+            "label": "Democrat",
+            "handle": "@marlene4719",
+            "url": "https://x.com/marlene4719/status/2053499571339210936",
+            "text": "Question Do you still donate your salary and if so who\u2019s it going to?. Trump I do most of it goes to the White House preservation.",
+            "engagement": "63 likes, 12 reposts",
+            "honesty": "6/10",
+            "views": 814,
+            "notes": "Quotes Trump accurately but skeptical opinion; $3B enrichment claim is exaggerated estimate, not verified fact.",
+            "views_at_save": 814,
+            "age_at_save_hours": 1.01
+          },
+          {
+            "label": "Independent",
+            "handle": "@atrupar",
+            "url": "https://x.com/atrupar/status/2053489184573174150",
+            "text": "ATTKISSON: Do you still donate your salary, and if so who is it going to?. TRUMP: I do.",
+            "engagement": "353 likes, 95 reposts",
+            "honesty": "10/10",
+            "views": 42716,
+            "notes": "Verbatim quote from interview; pure factual reporting.",
+            "views_at_save": 42716,
+            "age_at_save_hours": 1.7
+          }
+        ],
+        "footnotes": [],
+        "notes": "Federal policy on presidential compensation and public funds use.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/10/2026 4:37 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 1.42
+      },
       {
         "headline": "Trump Hints at Possible Audit of Fort Knox Gold Reserves",
         "honesty": "8/10",
@@ -177,7 +324,7 @@
             "views": 10381,
             "notes": "Accurately quotes Trump and expresses support for audit without introducing false facts.",
             "views_at_save": 10381,
-            "age_at_save_hours": 1.29
+            "age_at_save_hours": 1.63
           },
           {
             "label": "Democrat",
@@ -189,7 +336,7 @@
             "views": 79820,
             "notes": "Presents unedited video clip of the interview for viewers to judge.",
             "views_at_save": 79820,
-            "age_at_save_hours": 1.42
+            "age_at_save_hours": 1.76
           },
           {
             "label": "Independent",
@@ -201,7 +348,7 @@
             "views": 39587,
             "notes": "Shares the clip with neutral caption but includes analytical thread viewing response as evasive.",
             "views_at_save": 39587,
-            "age_at_save_hours": 1.31
+            "age_at_save_hours": 1.66
           }
         ],
         "footnotes": [],
@@ -209,8 +356,10 @@
         "body": "Three-perspective roundup.",
         "posted": "5/10/2026 3:46 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 1.29
-      },
+        "age_at_save_hours": 1.63
+      }
+    ],
+    "earlier": [
       {
         "headline": "Trump Honors Angel Moms Amid Immigration Policy Focus",
         "honesty": "8/10",
@@ -306,9 +455,7 @@
         "posted": "5/10/2026 4:16 PM",
         "views_at_save": 0,
         "age_at_save_hours": 2.37
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "James Comey Trial Date Set for July",
         "honesty": "8/10",
@@ -362,18 +509,32 @@
   "elon": {
     "stories": [
       {
-        "headline": "Restoration of Dignity Needed",
+        "headline": "Bitches Money No Taxes Party",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2053341186530947337",
+        "body": "Elon Musk posts enigmatic list 'Bitches Money No Taxes Party' on Mother's Day, interpreted as satirical commentary on lifestyle or politics.",
+        "engagement": "421K likes, 43K reposts, 7.4K quotes, 24K replies",
+        "honesty": "8/10",
+        "notes": "Humorous satire with no demonstrably false claims.",
+        "posted": "2026-05-10T16:37:36Z",
+        "post_ts": "2026-05-10T05:07:42Z",
+        "views": 66443137,
+        "views_at_save": 66443137,
+        "age_at_save_hours": 11.5
+      },
+      {
+        "headline": "Perhaps a Restoration of Dignity Is in Order",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2053484280052076966",
-        "body": "Elon Musk calls for a restoration of dignity, likely commenting on current societal or political issues.",
-        "engagement": "58K likes, 4.6K reposts, 641 quotes, 7.1K replies",
-        "honesty": "8/10",
-        "notes": "Opinion on societal dignity with no false claims.",
-        "posted": "2026-05-10T15:49:45Z",
+        "body": "Elon Musk calls for a restoration of dignity amid current societal or cultural issues.",
+        "engagement": "85K likes, 6.5K reposts, 822 quotes, 8.6K replies",
+        "honesty": "7/10",
+        "notes": "Pure opinion on societal dignity without any factual assertions.",
+        "posted": "2026-05-10T16:37:36Z",
         "post_ts": "2026-05-10T14:36:18Z",
-        "views": 6997000,
-        "views_at_save": 6997000,
-        "age_at_save_hours": 1.68
+        "views": 11813967,
+        "views_at_save": 11813967,
+        "age_at_save_hours": 2.02
       },
       {
         "headline": "Comedic Timing Reflection",
@@ -390,21 +551,7 @@
         "parent_handle": "@heavypulp",
         "parent_text": "Happy Mother\u2019s Day",
         "views_at_save": 400713,
-        "age_at_save_hours": 3.42
-      },
-      {
-        "headline": "Bitches Money No Taxes Party Meme",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2053341186530947337",
-        "body": "Elon Musk posts provocative phrase 'Bitches Money No Taxes Party' as a satirical take on politics or culture.",
-        "engagement": "397K likes, 40K reposts, 7K quotes, 23K replies",
-        "honesty": "7/10",
-        "notes": "Satirical opinion with no verifiable facts, presented as humor.",
-        "posted": "2026-05-10T15:49:46Z",
-        "post_ts": "2026-05-10T05:07:42Z",
-        "views": 62881110,
-        "views_at_save": 62881110,
-        "age_at_save_hours": 11.15
+        "age_at_save_hours": 3.76
       },
       {
         "headline": "Elon warns against self-weakening",
@@ -421,7 +568,7 @@
         "parent_handle": "@elonmusk",
         "parent_text": "Bitches\nMoney\nNo Taxes\nParty",
         "views_at_save": 2719507,
-        "age_at_save_hours": 11.1
+        "age_at_save_hours": 11.45
       },
       {
         "headline": "Elon Doubts Nolan Crusades Film",
@@ -438,7 +585,7 @@
         "parent_handle": "@ThePosieParker",
         "parent_text": "Wonder if Christopher Nolan would be brave enough to make a truthful film about the Crusades.",
         "views_at_save": 252129,
-        "age_at_save_hours": 15.5
+        "age_at_save_hours": 15.84
       },
       {
         "headline": "Free Market Capitalism Endorsed",
@@ -455,7 +602,7 @@
         "parent_handle": "@wholemars",
         "parent_text": "We must preach the gospel of free market capitalism to all who will listen. It is the answer to our problems.",
         "views_at_save": 148481,
-        "age_at_save_hours": 16.14
+        "age_at_save_hours": 16.48
       },
       {
         "headline": "Affirms Nazis Were National Socialists",
@@ -469,7 +616,7 @@
         "post_ts": "2026-05-09T20:36:59Z",
         "views": 12950440,
         "views_at_save": 12950440,
-        "age_at_save_hours": 19.66
+        "age_at_save_hours": 20.01
       },
       {
         "headline": "Backs Crackdown on Nepo-Baby Communists",
@@ -483,7 +630,7 @@
         "post_ts": "2026-05-09T18:37:30Z",
         "views": 4279459,
         "views_at_save": 4279459,
-        "age_at_save_hours": 21.66
+        "age_at_save_hours": 22.0
       },
       {
         "headline": "Holds Woman Responsible for Teacher's Death",
@@ -497,7 +644,7 @@
         "post_ts": "2026-05-09T20:15:21Z",
         "views": 105711,
         "views_at_save": 105711,
-        "age_at_save_hours": 20.02
+        "age_at_save_hours": 20.37
       },
       {
         "headline": "Calls for Execution of Proven Torturers",
@@ -514,13 +661,27 @@
         "parent_handle": "@IterIntellectus",
         "parent_text": "why can\u2019t we just execute these people? no one on earth has a valid reason to keep them alive, what\u2019s stopping us from just get rid of them on the spot? there\u2019s literally no reason not to",
         "views_at_save": 64227,
-        "age_at_save_hours": 18.43
+        "age_at_save_hours": 18.78
       }
     ],
     "earlier": []
   },
   "sports": {
     "stories": [
+      {
+        "headline": "Steve Kerr Signs as NBA's Highest-Paid Head Coach",
+        "handle": "@ShamsCharania",
+        "url": "https://x.com/ShamsCharania/status/2053485896993824836",
+        "body": "Steve Kerr has agreed to a new deal to return to the Warriors as the highest-paid NBA head coach.",
+        "engagement": "938 likes, 76 reposts",
+        "honesty": "10/10",
+        "notes": "ESPN NBA insider reporting verified contract extension.",
+        "posted": "2026-05-10T16:37:37Z",
+        "post_ts": "2026-05-10T14:42:44Z",
+        "views": 168288,
+        "views_at_save": 168288,
+        "age_at_save_hours": 1.91
+      },
       {
         "headline": "Cowherd on Thunder's Unique Challenge",
         "handle": "@colincowherd",
@@ -533,7 +694,7 @@
         "post_ts": "2026-05-10T10:44:28Z",
         "views": 255912,
         "views_at_save": 255912,
-        "age_at_save_hours": 5.54
+        "age_at_save_hours": 5.89
       },
       {
         "headline": "Thunder One Win from Sweeping Lakers",
@@ -547,8 +708,10 @@
         "post_ts": "2026-05-10T02:59:33Z",
         "views": 182402,
         "views_at_save": 182402,
-        "age_at_save_hours": 13.29
-      },
+        "age_at_save_hours": 13.63
+      }
+    ],
+    "earlier": [
       {
         "headline": "Steve Kerr Agrees to Two-Year Extension with Warriors",
         "handle": "@ShamsCharania",
@@ -562,9 +725,7 @@
         "views": 5604967,
         "views_at_save": 5604967,
         "age_at_save_hours": 15.96
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Bears Signing Free-Agent WR Scotty Miller",
         "handle": "@AdamSchefter",
@@ -584,18 +745,32 @@
   "allin": {
     "stories": [
       {
-        "headline": "Chamath's Media Transparency Hack",
+        "headline": "Chamath advises self-recording interviews to counter media bias",
         "handle": "@chamath",
         "url": "https://x.com/chamath/status/2053495876585451928",
-        "body": "Chamath advises political candidates to record their own interviews to counter media editing and ensure truthfulness.",
-        "engagement": "852 likes, 69 retweets, 45 replies",
-        "honesty": "7/10",
-        "notes": "Opinion offering practical strategy against media bias.",
-        "posted": "2026-05-10T16:16:51Z",
+        "body": "Chamath Palihapitiya urges political candidates to always record their own interviews, releasing full versions if media edits distort the truth.",
+        "engagement": "1.9K likes, 156 reposts, 71 replies",
+        "honesty": "8/10",
+        "notes": "Opinion on media practices with defensible reasoning.",
+        "posted": "2026-05-10T16:37:37Z",
         "post_ts": "2026-05-10T15:22:23Z",
-        "views": 51447,
-        "views_at_save": 51447,
-        "age_at_save_hours": 0.91
+        "views": 81797,
+        "views_at_save": 81797,
+        "age_at_save_hours": 1.25
+      },
+      {
+        "headline": "Marc Andreessen dubs wealth redistribution demands 'suicidal empathy'",
+        "handle": "@pmarca",
+        "url": "https://x.com/pmarca/status/2053279320668553665",
+        "body": "Marc Andreessen critiques calls for billionaires to forgo inheritance in favor of societal donations as misguided 'suicidal empathy'.",
+        "engagement": "1.6K likes, 58 reposts, 189 replies",
+        "honesty": "7/10",
+        "notes": "Contrarian opinion on inheritance and empathy without factual errors.",
+        "posted": "2026-05-10T16:37:37Z",
+        "post_ts": "2026-05-10T01:01:52Z",
+        "views": 96875,
+        "views_at_save": 96875,
+        "age_at_save_hours": 15.6
       },
       {
         "headline": "Palmer Luckey Defends His Innovation Legacy",
@@ -612,8 +787,10 @@
         "parent_handle": "@matthewstoller",
         "parent_text": "You\u2019re missing my point. You compared yourself to JK Rowling who sold 600m books. You never did anything close to that even though you could and should have. Why? A billionaire stopped you from redefining computing. I know you created products, you are enormously impressive. You ",
         "views_at_save": 99784,
-        "age_at_save_hours": 18.86
-      },
+        "age_at_save_hours": 19.21
+      }
+    ],
+    "earlier": [
       {
         "headline": "pmarca on AI Knowledge Gap",
         "handle": "@pmarca",
@@ -628,24 +805,23 @@
         "views_at_save": 140702,
         "age_at_save_hours": 7.81
       }
-    ],
-    "earlier": []
+    ]
   },
   "pods": {
     "stories": [
       {
-        "headline": "Sacks on Anthropic as Potential Monopoly",
+        "headline": "Sacks Warns of Anthropic Monopoly",
         "handle": "@theallinpod",
         "url": "https://x.com/theallinpod/status/2053303230927392967",
-        "body": "David Sacks warns that Anthropic's explosive growth could make it the most powerful monopoly ever, likening it to a PR-savvy Standard Oil.",
-        "engagement": "1K likes, 83 reposts, 14 quotes, 56 replies",
+        "body": "David Sacks compares Anthropic's rapid growth to Standard Oil, predicting it could become history's most powerful monopoly with superior PR.",
+        "engagement": "1K likes, 84 reposts, 56 replies",
         "honesty": "7/10",
-        "notes": "Opinion and prediction on AI market consolidation.",
-        "posted": "2026-05-10T16:16:51Z",
+        "notes": "Speculative opinion on AI market consolidation, supported by revenue data.",
+        "posted": "2026-05-10T16:37:38Z",
         "post_ts": "2026-05-10T02:36:53Z",
-        "views": 86479,
-        "views_at_save": 86479,
-        "age_at_save_hours": 13.67
+        "views": 87744,
+        "views_at_save": 87744,
+        "age_at_save_hours": 14.01
       },
       {
         "headline": "PBD on Mindset Shaping Reality",
@@ -659,7 +835,7 @@
         "post_ts": "2026-05-09T15:58:06Z",
         "views": 101362,
         "views_at_save": 101362,
-        "age_at_save_hours": 24.31
+        "age_at_save_hours": 24.66
       },
       {
         "headline": "Massie exposes AIPAC coercion of Congress",
@@ -673,27 +849,13 @@
         "post_ts": "2026-05-09T14:00:00Z",
         "views": 463154,
         "views_at_save": 463154,
-        "age_at_save_hours": 26.28
+        "age_at_save_hours": 26.63
       }
     ],
     "earlier": []
   },
   "business": {
     "stories": [
-      {
-        "headline": "Explosive Options Gains in Micron and TSMC",
-        "handle": "@unusual_whales",
-        "url": "https://x.com/unusual_whales/status/2053265510653976626",
-        "body": "Micron 400 calls have surged from $18.65 to $328 while TSMC 370 calls rose from $14.15 to $52.5, marking unusual market activity.",
-        "engagement": "1142 likes, 74 reposts, 91 replies",
-        "honesty": "8/10",
-        "notes": "Factual reporting of options price movements with 'unusual' framing.",
-        "posted": "2026-05-10T16:16:52Z",
-        "post_ts": "2026-05-10T00:07:00Z",
-        "views": 227604,
-        "views_at_save": 227604,
-        "age_at_save_hours": 16.16
-      },
       {
         "headline": "Fink Predicts Compute Futures Asset Class",
         "handle": "@StockMKTNewz",
@@ -706,8 +868,38 @@
         "post_ts": "2026-05-10T13:40:01Z",
         "views": 52828,
         "views_at_save": 52828,
-        "age_at_save_hours": 2.61
+        "age_at_save_hours": 2.96
       },
+      {
+        "headline": "Ease Up on Investing After $100K to Enjoy Life",
+        "handle": "@GuyTalksFinance",
+        "url": "https://x.com/GuyTalksFinance/status/2053462539678151004",
+        "body": "Once invested $100K, reduce the grind to balance life enjoyment over extreme early retirement sacrifices.",
+        "engagement": "286 likes, 7 reposts, 51 replies",
+        "honesty": "7/10",
+        "notes": "Pure opinion on personal finance lifestyle balance.",
+        "posted": "2026-05-10T16:37:39Z",
+        "post_ts": "2026-05-10T13:09:55Z",
+        "views": 30558,
+        "views_at_save": 30558,
+        "age_at_save_hours": 3.46
+      },
+      {
+        "headline": "Explosive Options Gains in Micron and TSMC",
+        "handle": "@unusual_whales",
+        "url": "https://x.com/unusual_whales/status/2053265510653976626",
+        "body": "Micron 400 calls have surged from $18.65 to $328 while TSMC 370 calls rose from $14.15 to $52.5, marking unusual market activity.",
+        "engagement": "1142 likes, 74 reposts, 91 replies",
+        "honesty": "8/10",
+        "notes": "Factual reporting of options price movements with 'unusual' framing.",
+        "posted": "2026-05-10T16:16:52Z",
+        "post_ts": "2026-05-10T00:07:00Z",
+        "views": 227604,
+        "views_at_save": 227604,
+        "age_at_save_hours": 16.51
+      }
+    ],
+    "earlier": [
       {
         "headline": "$LAB Token Set for Hard Crash Due to Team Control",
         "handle": "@Crypto__Haris",
@@ -721,9 +913,7 @@
         "views": 38701,
         "views_at_save": 38701,
         "age_at_save_hours": 8.15
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Private Credit Transparency Push",
         "handle": "@TruthGundlach",
@@ -754,7 +944,21 @@
         "post_ts": "2026-05-10T14:36:18Z",
         "views": 9897865,
         "views_at_save": 9897865,
-        "age_at_save_hours": 1.68
+        "age_at_save_hours": 2.02
+      },
+      {
+        "headline": "Barack Obama Honors Michelle on Mother's Day",
+        "handle": "@BarackObama",
+        "url": "https://x.com/BarackObama/status/2053468813736210603",
+        "body": "Barack Obama wishes all moms a happy Mother's Day and thanks Michelle for her family support.",
+        "engagement": "192K likes, 11K reposts",
+        "honesty": "9/10",
+        "notes": "Fact - personal well-wishes with minor sentiment",
+        "posted": "2026-05-10T16:37:39Z",
+        "post_ts": "2026-05-10T13:34:51Z",
+        "views": 8053981,
+        "views_at_save": 8053981,
+        "age_at_save_hours": 3.05
       },
       {
         "headline": "Rahul Gandhi humorously urges advisor to boost investment returns",
@@ -768,8 +972,10 @@
         "post_ts": "2026-05-10T13:37:24Z",
         "views": 1107249,
         "views_at_save": 1107249,
-        "age_at_save_hours": 2.66
-      },
+        "age_at_save_hours": 3.0
+      }
+    ],
+    "earlier": [
       {
         "headline": "Ryan Garcia's $10K Giveaway",
         "handle": "@RyanGarcia",
@@ -783,9 +989,7 @@
         "views": 2635956,
         "views_at_save": 2635956,
         "age_at_save_hours": 11.33
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Humorous Mother's Day twist on Elon's post",
         "handle": "@heavypulp",
@@ -818,6 +1022,50 @@
   },
   "msm": {
     "stories": [
+      {
+        "headline": "Donor Surprises NC State Grads by Paying Off Their Senior Debts",
+        "handle": "@CollinRugg",
+        "url": "https://x.com/CollinRugg/status/2053504283044438341",
+        "body": "Anil Kochhar announces during commencement that he and his wife will cover senior year tuition for all 200 graduates.",
+        "engagement": "895 likes, 117 reposts, 9 quotes, 49 replies",
+        "honesty": "10/10",
+        "notes": "Verifiable positive citizen generosity event.",
+        "posted": "2026-05-10T16:37:39Z",
+        "post_ts": "2026-05-10T15:55:47Z",
+        "views": 53233,
+        "views_at_save": 53233,
+        "age_at_save_hours": 0.7
+      },
+      {
+        "headline": "LAFD Charity Misused to Hire PR Firm Covering Up Fire Failures",
+        "handle": "@WallStreetApes",
+        "url": "https://x.com/WallStreetApes/status/2053477658676396086",
+        "body": "The LAFD Foundation used donation money to pay a PR firm that edited the Pacific Palisades fire report to reduce criticism of Mayor Karen Bass.",
+        "engagement": "4.8K likes, 2.1K reposts, 39 quotes, 92 replies",
+        "honesty": "9/10",
+        "notes": "Fact-based expos\u00e9 on charity fund misuse with light opinion.",
+        "posted": "2026-05-10T16:37:39Z",
+        "post_ts": "2026-05-10T14:10:00Z",
+        "views": 47380,
+        "views_at_save": 47380,
+        "age_at_save_hours": 2.46
+      },
+      {
+        "headline": "Trans Athlete Crushes Girls' Track Events in California Meet",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2053303799352021476",
+        "body": "AB Hernandez dominates long jump, triple jump, and ties high jump in girls' postseason jumping competition.",
+        "engagement": "2.6K likes, 509 reposts, 41 quotes, 368 replies",
+        "honesty": "8/10",
+        "notes": "Verified athletic results with editorial bias on gender identity.",
+        "posted": "2026-05-10T16:37:39Z",
+        "post_ts": "2026-05-10T02:39:08Z",
+        "views": 118838,
+        "views_at_save": 118838,
+        "age_at_save_hours": 13.98
+      }
+    ],
+    "earlier": [
       {
         "headline": "Stockton Vice Mayor Pushes $58M Taxpayer Grant for His Own NGO",
         "handle": "@WallStreetApes",
@@ -859,9 +1107,7 @@
         "views": 2523947,
         "views_at_save": 2523947,
         "age_at_save_hours": 23.08
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Tower Hamlets Election Labeled 'Conquest' by Large Crowd",
         "handle": "@EndWokeness",
@@ -884,16 +1130,46 @@
         "headline": "Dua Lipa Sues Samsung for $15M",
         "handle": "@PopCrave",
         "url": "https://x.com/PopCrave/status/2053295897715277880",
-        "body": "Dua Lipa files $15 million lawsuit against Samsung for using her face to promote TVs without permission.",
-        "engagement": "140K likes, 4K reposts, 2K replies",
+        "body": "Dua Lipa files $15 million lawsuit against Samsung alleging unauthorized use of her face to sell TVs.",
+        "engagement": "142K likes, 4K retweets, 2K replies",
         "honesty": "10/10",
-        "notes": "Fact: Verified lawsuit details from reliable source.",
-        "posted": "2026-05-10T16:16:53Z",
+        "notes": "Verified fact from lawsuit documents.",
+        "posted": "2026-05-10T16:37:39Z",
         "post_ts": "2026-05-10T02:07:45Z",
-        "views": 7841730,
-        "views_at_save": 7841730,
-        "age_at_save_hours": 14.15
+        "views": 8068164,
+        "views_at_save": 8068164,
+        "age_at_save_hours": 14.5
       },
+      {
+        "headline": "James Charles Admits Privilege Mistake",
+        "handle": "@TMZ",
+        "url": "https://x.com/TMZ/status/2053253542887252238",
+        "body": "James Charles issues mea culpa, admitting he let privilege influence his harsh response to a desperate fan seeking help.",
+        "engagement": "711 likes, 18 retweets, 175 replies",
+        "honesty": "9/10",
+        "notes": "Fact based on his own video statement with light analysis.",
+        "posted": "2026-05-10T16:37:39Z",
+        "post_ts": "2026-05-09T23:19:26Z",
+        "views": 214021,
+        "views_at_save": 214021,
+        "age_at_save_hours": 17.3
+      },
+      {
+        "headline": "Indian Star Vijay Becomes Chief Minister",
+        "handle": "@Variety",
+        "url": "https://x.com/Variety/status/2053356931801125203",
+        "body": "Film star Vijay is sworn in as Tamil Nadu Chief Minister following days of political drama.",
+        "engagement": "8K likes, 2.3K retweets, 46 quotes, 49 replies",
+        "honesty": "10/10",
+        "notes": "Verified political appointment.",
+        "posted": "2026-05-10T15:49:48Z",
+        "post_ts": "2026-05-10T06:10:16Z",
+        "views": 93031,
+        "views_at_save": 93031,
+        "age_at_save_hours": 10.46
+      }
+    ],
+    "earlier": [
       {
         "headline": "Cardi B Kisses Stefon Diggs Post-Acquittal",
         "handle": "@TMZ",
@@ -922,22 +1198,6 @@
         "views_at_save": 227557,
         "age_at_save_hours": 16.79
       }
-    ],
-    "earlier": [
-      {
-        "headline": "Indian Star Vijay Becomes Chief Minister",
-        "handle": "@Variety",
-        "url": "https://x.com/Variety/status/2053356931801125203",
-        "body": "Film star Vijay is sworn in as Tamil Nadu Chief Minister following days of political drama.",
-        "engagement": "8K likes, 2.3K retweets, 46 quotes, 49 replies",
-        "honesty": "10/10",
-        "notes": "Verified political appointment.",
-        "posted": "2026-05-10T15:49:48Z",
-        "post_ts": "2026-05-10T06:10:16Z",
-        "views": 93031,
-        "views_at_save": 93031,
-        "age_at_save_hours": 9.66
-      }
     ]
   },
   "recipe": {
@@ -954,21 +1214,7 @@
         "post_ts": "2026-05-10T14:07:00Z",
         "views": 1842,
         "views_at_save": 1842,
-        "age_at_save_hours": 2.16
-      },
-      {
-        "headline": "Crab Crusted Grouper",
-        "handle": "@foodandwine",
-        "url": "https://x.com/foodandwine/status/2053052378996236693",
-        "body": "Sweet lump crabmeat crowns blackened grouper fillets in this elegant, weeknight-friendly seafood dinner.",
-        "engagement": "31 likes, 6 retweets, 1 reply",
-        "honesty": "10/10",
-        "notes": "Verifiable recipe from established food publication.",
-        "posted": "2026-05-10T16:16:53Z",
-        "post_ts": "2026-05-09T10:00:05Z",
-        "views": 5853,
-        "views_at_save": 5853,
-        "age_at_save_hours": 30.28
+        "age_at_save_hours": 2.51
       },
       {
         "headline": "Salted Butter Pancakes",
@@ -982,10 +1228,8 @@
         "post_ts": "2026-05-10T13:30:21Z",
         "views": 628,
         "views_at_save": 628,
-        "age_at_save_hours": 2.78
-      }
-    ],
-    "earlier": [
+        "age_at_save_hours": 3.12
+      },
       {
         "headline": "Moroccan-Inspired Rainbow Carrot",
         "handle": "@tasty",
@@ -998,7 +1242,23 @@
         "post_ts": "2026-05-08T17:01:43Z",
         "views": 6510,
         "views_at_save": 6510,
-        "age_at_save_hours": 46.8
+        "age_at_save_hours": 47.6
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "Crab Crusted Grouper",
+        "handle": "@foodandwine",
+        "url": "https://x.com/foodandwine/status/2053052378996236693",
+        "body": "Sweet lump crabmeat crowns blackened grouper fillets in this elegant, weeknight-friendly seafood dinner.",
+        "engagement": "31 likes, 6 retweets, 1 reply",
+        "honesty": "10/10",
+        "notes": "Verifiable recipe from established food publication.",
+        "posted": "2026-05-10T16:16:53Z",
+        "post_ts": "2026-05-09T10:00:05Z",
+        "views": 5853,
+        "views_at_save": 5853,
+        "age_at_save_hours": 30.28
       },
       {
         "headline": "How to Make Gravy",
@@ -1019,33 +1279,49 @@
   "science": {
     "stories": [
       {
-        "headline": "Bacteria Eat Cancer Cells from Inside",
+        "headline": "Earth's Eighth Continent Confirmed",
+        "handle": "@forallcurious",
+        "url": "https://x.com/forallcurious/status/2053433529493758435",
+        "body": "Scientists confirmed Earth has an eighth continent, Zealandia, mostly underwater near New Zealand.",
+        "engagement": "15K likes, 675 reposts",
+        "honesty": "8/10",
+        "notes": "References established geological research with recent confirmation, no major inaccuracies.",
+        "posted": "2026-05-10T16:37:41Z",
+        "post_ts": "2026-05-10T11:14:39Z",
+        "views": 1085898,
+        "views_at_save": 1085898,
+        "age_at_save_hours": 5.38
+      },
+      {
+        "headline": "Bacteria Engineered to Eat Cancer Cells",
         "handle": "@DailyLoud",
         "url": "https://x.com/DailyLoud/status/2053474207434944573",
-        "body": "University of Illinois Chicago scientists engineered bacteria that consume cancer cells internally, offering a new targeted treatment approach.",
-        "engagement": "9.4K likes, 665 reposts, 133 quotes, 389 replies",
-        "honesty": "8/10",
-        "notes": "Accurately summarizes university research development, assuming verification from source.",
-        "posted": "2026-05-10T15:49:49Z",
+        "body": "University of Illinois Chicago scientists developed bacteria that consume cancer cells from inside out.",
+        "engagement": "16K likes, 1.1K reposts",
+        "honesty": "9/10",
+        "notes": "Breaking news on new cancer research from university scientists, accurate summary.",
+        "posted": "2026-05-10T16:37:40Z",
         "post_ts": "2026-05-10T13:56:17Z",
-        "views": 293814,
-        "views_at_save": 293814,
-        "age_at_save_hours": 2.34
+        "views": 538834,
+        "views_at_save": 538834,
+        "age_at_save_hours": 2.69
       },
       {
         "headline": "AI Outperforms Doctors in ER Diagnoses",
         "handle": "@ScienceMagazine",
         "url": "https://x.com/ScienceMagazine/status/2053223003366781363",
-        "body": "Large language models diagnosed complex ER conditions 67% accurately vs physicians' 50-55%.",
-        "engagement": "893 likes, 294 reposts",
+        "body": "Large language models diagnosed complex ER conditions like heart issues with 67% accuracy vs.. physicians' 50-55%.",
+        "engagement": "904 likes, 300 reposts",
         "honesty": "9/10",
-        "notes": "Reports verifiable research from Science journal on AI diagnostic performance.",
-        "posted": "2026-05-10T16:16:54Z",
+        "notes": "Reports verifiable research findings from a credible journal without factual errors.",
+        "posted": "2026-05-10T16:37:40Z",
         "post_ts": "2026-05-09T21:18:05Z",
-        "views": 100016,
-        "views_at_save": 100016,
-        "age_at_save_hours": 18.98
-      },
+        "views": 103802,
+        "views_at_save": 103802,
+        "age_at_save_hours": 19.33
+      }
+    ],
+    "earlier": [
       {
         "headline": "New Coronavirus Found in Thailand Bats",
         "handle": "@forallcurious",
@@ -1059,9 +1335,7 @@
         "views": 41619,
         "views_at_save": 41619,
         "age_at_save_hours": 33.15
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Tesla AI Vision Breakthrough",
         "handle": "@elonmusk",
@@ -1081,6 +1355,34 @@
   "local": {
     "stories": [
       {
+        "headline": "UC Irvine Volleyball Championship",
+        "handle": "@HawaiiNewsNow",
+        "url": "https://x.com/HawaiiNewsNow/status/2053333370201936074",
+        "body": "UC Irvine advances to NCAA men's volleyball final after defeating Hawaii.",
+        "engagement": "43 likes, 5 retweets, 1 quotes, 2 replies",
+        "honesty": "10/10",
+        "notes": "Factual report of NCAA semifinal match outcome.",
+        "posted": "2026-05-10T16:37:41Z",
+        "post_ts": "2026-05-10T04:36:39Z",
+        "views": 2457,
+        "views_at_save": 2457,
+        "age_at_save_hours": 12.02
+      },
+      {
+        "headline": "Newport Beach TV Festival",
+        "handle": "@ashleypaddila",
+        "url": "https://x.com/ashleypaddila/status/2053343190523032042",
+        "body": "Ashley Padilla scheduled to attend Newport Beach TV Fest Awards in June.",
+        "engagement": "49 likes, 1 retweets, 0 quotes, 2 replies",
+        "honesty": "7/10",
+        "notes": "Fan account update on celebrity event in Newport Beach.",
+        "posted": "2026-05-10T16:37:41Z",
+        "post_ts": "2026-05-10T05:15:40Z",
+        "views": 1764,
+        "views_at_save": 1764,
+        "age_at_save_hours": 11.37
+      },
+      {
         "headline": "Great Park Live Music Season in Irvine",
         "handle": "@ocregister",
         "url": "https://x.com/ocregister/status/2053494797701206503",
@@ -1092,8 +1394,10 @@
         "post_ts": "2026-05-10T15:18:06Z",
         "views": 246,
         "views_at_save": 246,
-        "age_at_save_hours": 0.98
-      },
+        "age_at_save_hours": 1.33
+      }
+    ],
+    "earlier": [
       {
         "headline": "UC Irvine Volleyball Championship",
         "handle": "@12brecht",
@@ -1122,11 +1426,24 @@
         "views_at_save": 41089,
         "age_at_save_hours": 11.69
       }
-    ],
-    "earlier": []
+    ]
   },
   "conspiracy": {
     "stories": [
+      {
+        "headline": "AOC's Hypocrisy on Israel Criticism vs MTG",
+        "handle": "@ggreenwald",
+        "url": "https://x.com/ggreenwald/status/2053181261263548487",
+        "body": "Analyzes differences where AOC protects Democrats on Israel funding while smearing GOP critics, contrasting MTG's consistent opposition including a...",
+        "engagement": "7.3K likes, 1.6K reposts, 242 replies",
+        "honesty": "8/10",
+        "notes": "Draws on verifiable legislative actions like MTG's bill and AOC's vote against it, with accurate public statements.",
+        "posted": "2026-05-10T16:37:42Z",
+        "post_ts": "2026-05-09T18:32:13Z",
+        "views": 270588,
+        "views_at_save": 270588,
+        "age_at_save_hours": 22.09
+      },
       {
         "headline": "79 Children Hurt by Tear Gas in Trump Deportation Raids",
         "handle": "@propublica",
@@ -1139,7 +1456,7 @@
         "post_ts": "2026-05-10T14:53:30Z",
         "views": 8899,
         "views_at_save": 8899,
-        "age_at_save_hours": 1.39
+        "age_at_save_hours": 1.74
       },
       {
         "headline": "Jan 6 Narrative Correction on Officer Sicknick's Death",
@@ -1153,8 +1470,10 @@
         "post_ts": "2026-05-09T22:55:57Z",
         "views": 64684,
         "views_at_save": 64684,
-        "age_at_save_hours": 17.35
-      },
+        "age_at_save_hours": 17.7
+      }
+    ],
+    "earlier": [
       {
         "headline": "Judicial Watch Pushes SCOTUS to Ban Post-Election Day Ballot Counting",
         "handle": "@TomFitton",
@@ -1169,11 +1488,54 @@
         "views_at_save": 57673,
         "age_at_save_hours": 26.69
       }
-    ],
-    "earlier": []
+    ]
   },
   "comedy": {
     "stories": [
+      {
+        "headline": "Liam Gallagher on his documentary as romantic comedy",
+        "handle": "@liamgallagher",
+        "url": "https://x.com/liamgallagher/status/2053013288993083538",
+        "body": "Liam describes his documentary as a romantic comedy with rock n roll elements.",
+        "engagement": "22K likes, 3K reposts",
+        "honesty": "8/10",
+        "notes": "Self-description of documentary with humorous framing.",
+        "posted": "2026-05-10T16:37:42Z",
+        "post_ts": "2026-05-09T07:24:45Z",
+        "views": 442805,
+        "views_at_save": 442805,
+        "age_at_save_hours": 33.22
+      },
+      {
+        "headline": "TWICE's JEONGYEON in upcoming comedy horror film",
+        "handle": "@godmitzu",
+        "url": "https://x.com/godmitzu/status/2052966677751414978",
+        "body": "JEONGYEON debuts in comedy horror movie 'New Recruit: Haunted Military Hospital' Q4 2026.",
+        "engagement": "13K likes, 2K reposts",
+        "honesty": "9/10",
+        "notes": "Announcement of actress's role in comedy film.",
+        "posted": "2026-05-10T16:37:42Z",
+        "post_ts": "2026-05-09T04:19:32Z",
+        "views": 177757,
+        "views_at_save": 177757,
+        "age_at_save_hours": 36.3
+      },
+      {
+        "headline": "Meme mocking conservative comedy style",
+        "handle": "@_sn_n",
+        "url": "https://x.com/_sn_n/status/2052930010583888062",
+        "body": "Post highlights how conservative comedy repeats the same joke endlessly.",
+        "engagement": "15K likes, 1K reposts",
+        "honesty": "7/10",
+        "notes": "Satirical opinion on comedy genre.",
+        "posted": "2026-05-10T16:37:42Z",
+        "post_ts": "2026-05-09T01:53:50Z",
+        "views": 118459,
+        "views_at_save": 118459,
+        "age_at_save_hours": 38.73
+      }
+    ],
+    "earlier": [
       {
         "headline": "Sesame Street Stand-Up Bit",
         "handle": "@netflix",
@@ -1215,50 +1577,6 @@
         "views": 13499,
         "views_at_save": 13499,
         "age_at_save_hours": 24.72
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Liam Gallagher's Documentary Joke",
-        "handle": "@liamgallagher",
-        "url": "https://x.com/liamgallagher/status/2053013288993083538",
-        "body": "Liam Gallagher humorously describes his documentary as a romantic comedy with rock n roll elements.",
-        "engagement": "22K likes, 3K reposts",
-        "honesty": "8/10",
-        "notes": "Humorous self-description of documentary, performative opinion.",
-        "posted": "2026-05-10T15:49:49Z",
-        "post_ts": "2026-05-09T07:24:45Z",
-        "views": 440461,
-        "views_at_save": 440461,
-        "age_at_save_hours": 32.42
-      },
-      {
-        "headline": "Jeongyeon's Comedy Horror Film",
-        "handle": "@godmitzu",
-        "url": "https://x.com/godmitzu/status/2052966677751414978",
-        "body": "TWICE member Jeongyeon debuts in comedy horror movie 'New Recruit: Haunted Military Hospital' in Q4 2026.",
-        "engagement": "13K likes, 2.8K reposts",
-        "honesty": "9/10",
-        "notes": "Factual announcement of upcoming film with light promotion.",
-        "posted": "2026-05-10T15:49:50Z",
-        "post_ts": "2026-05-09T04:19:32Z",
-        "views": 176981,
-        "views_at_save": 176981,
-        "age_at_save_hours": 35.5
-      },
-      {
-        "headline": "Critique of Conservative Comedy",
-        "handle": "@_sn_n",
-        "url": "https://x.com/_sn_n/status/2052930010583888062",
-        "body": "Sean satirizes conservative comedy as repeating the same joke endlessly.",
-        "engagement": "15K likes, 1K reposts",
-        "honesty": "7/10",
-        "notes": "Pure opinion and satire on comedy style.",
-        "posted": "2026-05-10T15:49:50Z",
-        "post_ts": "2026-05-09T01:53:50Z",
-        "views": 118402,
-        "views_at_save": 118402,
-        "age_at_save_hours": 37.93
       }
     ]
   },
