@@ -33,12 +33,16 @@ warnings = []
 with open('stories.json') as f:
     d = json.load(f)
 
-# ---- Check 1: floor counts ----
-FLOOR = {'world': 3, 'usa': 3, 'local': 3, 'business': 3}
-for tab, required in FLOOR.items():
+# ---- Check 1: 3-story floor on every tab except Elon ----
+# User mandate (2026-05-10): "Just force three-story floor." Elon is exempt
+# because the user wants all of his latest posts in the last 4 hours, however
+# many that is — the floor concept doesn't apply.
+FLOOR_TABS = ('world', 'usa', 'local', 'business', 'sports', 'pods', 'allin',
+              'msm', 'conspiracy', 'pg6', 'comedy', 'recipe', 'top', 'science')
+for tab in FLOOR_TABS:
     n = len(d.get(tab, {}).get('stories', []))
-    if n < required:
-        errors.append(f"{tab}: {n}/{required} stories — below floor")
+    if n < 3:
+        errors.append(f"{tab}: {n}/3 stories — below floor")
 
 # ---- Check 2: World/USA must have 3 perspectives per story ----
 for tab in ('world', 'usa'):

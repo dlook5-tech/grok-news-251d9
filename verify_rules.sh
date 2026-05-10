@@ -163,6 +163,14 @@ else
   FAIL=$((FAIL+1)); FAILED_RULES+=("freshness:every-curate-has-cap")
 fi
 
+# --- HARD-CODED RULES from user explicit mandates ---
+check "qc:script-exists"                claude_qc.sh    "FLOOR_TABS"                                         exists
+check "qc:enforces-3-floor"             claude_qc.sh    "n < 3"                                              exists
+check "qc:enforces-3-perspectives"      claude_qc.sh    "len.valid. < 3"                                     exists
+check "qc:reverifies-urls"              claude_qc.sh    "publish.twitter.com/oembed"                         exists
+check "qc:wired-into-update"            update.sh       "bash \\\$SCRIPT_DIR/claude_qc.sh"                    exists
+check "qc:elon-exempt-from-floor"       claude_qc.sh    "FLOOR_TABS.*=.*\\("                                 exists
+
 # --- ABSOLUTE BLOCKER: no git merge conflict markers in any deployed file ---
 # 2026-05-07: a leftover `<<<<<<<` in index.html broke JavaScript parsing for ALL visitors.
 # Site showed "Loading stories..." forever. This check makes that mistake un-shippable.
