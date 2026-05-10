@@ -1647,6 +1647,52 @@ _BACKFILL_AGE_BY_TAB = {
 }
 _TAB_FLOOR_AGE_HOURS = 24  # default if tab not in map
 
+def _build_earlier(tab_key, picked, prior_existing):
+    """Build the Earlier array for a tab. Stories that were on the tab last cron
+    but didn't make this cron's top picks rotate into 'earlier'. Caps at 10.
+
+    User mandate (2026-05-10): "the earlier tab doesn't have any of the older
+    posts. It's supposed to hold all the older posts that day."
+
+    Resets are NOT done here — the index.html `checkMidnightRotation` function
+    handles per-day reset on the frontend by clearing earlier when the date changes.
+    """
+    picked_urls = set()
+    for s in picked or []:
+        if not isinstance(s, dict): continue
+        u = s.get('url') or ''
+        if u: picked_urls.add(u)
+        for p in s.get('perspectives', []) or []:
+            pu = (p or {}).get('url') or ''
+            if pu: picked_urls.add(pu)
+
+    earlier = []
+    seen_earlier_urls = set()
+    # 1. Stories that were on the tab in the prior cron but aren't in this cron's picks
+    for s in (prior_existing.get('stories') or []):
+        if not isinstance(s, dict): continue
+        u = s.get('url') or ''
+        if not u:
+            for p in s.get('perspectives', []) or []:
+                u = (p or {}).get('url') or ''
+                if u: break
+        if not u or u in picked_urls or u in seen_earlier_urls: continue
+        earlier.append(s)
+        seen_earlier_urls.add(u)
+    # 2. Existing earlier stories that haven't been re-promoted to picks
+    for s in (prior_existing.get('earlier') or []):
+        if not isinstance(s, dict): continue
+        u = s.get('url') or ''
+        if not u:
+            for p in s.get('perspectives', []) or []:
+                u = (p or {}).get('url') or ''
+                if u: break
+        if not u or u in picked_urls or u in seen_earlier_urls: continue
+        earlier.append(s)
+        seen_earlier_urls.add(u)
+    return earlier[:10]
+
+
 def _scan_snapshots_for_tab(tab_key, max_snapshots=30):
     """Pull stories for a tab from the last N desktop snapshots. Used as deep-history
     fallback when both stories.json and earlier are too thin to fill the floor.
@@ -1833,28 +1879,23 @@ for _tab in ('world', 'usa'):
     # Velocity rule applies WITHIN the cap, not beyond it. (Removed temporary May-7
     # "no hard cap" change which conflicted with the documented rule.)
     _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 24)
+    # User mandate (2026-05-10): "I want diversity of candidates... but if they
+    # don't have the highest velocity, then they're not in. Whoever has the highest
+    # velocity gets in." Velocity is the ONLY rule. NO forced rotation away from
+    # recurring voices. Topic-dedup REMOVED for World/USA — it was over-rejecting
+    # backfill candidates that shared common political voices (@WhiteHouse,
+    # @ggreenwald, etc.) with current picks. URL-exact dedup remains via curate's
+    # internal pool dedup.
     _picked = curation.curate(_tab, _current, _candidates,
                               top_n=_TAB_N[_tab], enrich=False, history=_history,
                               max_age_h=_wu_age_cap)
-    # Drop same-topic duplicates (handle-side repetition + headline overlap).
-    _picked = _enforce_topic_diversity(_picked, label=_tab)
-    # CLAUDE.md hard rule: never empty + (2026-05-06) every World/USA story MUST have
-    # all 3 perspectives. Floor backfill chain:
-    #   1. existing stories.json (from prior cron) — 3-perspective only
-    #   2. earlier archive — 3-perspective only
-    #   3. desktop snapshots (last ~30 crons of history) — 3-perspective only, ≤72h old
+    # Floor backfill chain (3-persp gate intact, but no topic-dedup):
     if len(_picked) < _TAB_FLOOR:
         _picked = _topup_to_floor(_picked, _current + (_existing.get(_tab, {}).get('earlier', []) or []),
                                   top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=_wu_age_cap)
-        # Re-run topic-dedup after backfill — backfill may have added duplicates
-        # of fresh picks or duplicates of each other.
-        _picked = _enforce_topic_diversity(_picked, label=_tab)
     if len(_picked) < _TAB_FLOOR:
-        # Deep fallback: scan past snapshots for 3-perspective stories.
-        _snapshot_pool = _scan_snapshots_for_tab(_tab)
-        _picked = _topup_to_floor(_picked, _snapshot_pool,
+        _picked = _topup_to_floor(_picked, _scan_snapshots_for_tab(_tab),
                                   top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=72)
-        _picked = _enforce_topic_diversity(_picked, label=_tab)
     # FINAL RESORT (user mandate 2026-05-10: "hard coded so I don't have these
     # conversations every day"): if cascade still hasn't filled the 3-floor for
     # World/USA, accept 3-perspective snapshot stories WITHOUT topic-dedup. Common
@@ -1880,7 +1921,7 @@ for _tab in ('world', 'usa'):
             print(f"  WARN: {_tab} {len(_picked)}/{_TAB_FLOOR} after final resort — "
                   f"snapshot pool genuinely lacks 3 different 3-persp stories", file=sys.stderr)
     curation.stamp_view_history(_picked)
-    _output_v5[_tab] = {'stories': _picked, 'earlier': []}
+    _output_v5[_tab] = {'stories': _picked, 'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
 
 # ---- Flat tabs (one post per slot) ----
 for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
@@ -1924,7 +1965,7 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
             print(f"  WARN {_tab}: only {len(_picked)}/{_TAB_FLOOR} after 3-pass backfill",
                   file=sys.stderr)
     curation.stamp_view_history(_picked)
-    _output_v5[_tab] = {'stories': _picked, 'earlier': []}
+    _output_v5[_tab] = {'stories': _picked, 'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
 
 # ---- Static tabs (user-curated, never auto-populated) ----
 for _static in ('freespeech',):

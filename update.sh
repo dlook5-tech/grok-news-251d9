@@ -1355,6 +1355,25 @@ echo "Parse done."
 # bash $SCRIPT_DIR/claude_critic.sh   # bypassed per user pure-views pick
 echo "Claude critic: bypassed (pure views spec)"
 
+# ============================================================
+# CLAUDE QC PASS — gate deploy on quality checks
+# ============================================================
+# User mandate (2026-05-10): "Claude needs to do a full quality check and click on
+# everything before final upload to website."
+#
+# claude_qc.sh enforces:
+#   - World/USA/Local/Business floor of 3 stories each
+#   - World/USA: every story has 3 perspectives
+#   - Within-story URL uniqueness
+#   - Every URL re-verified via oEmbed ("click everything")
+#
+# Exit non-zero = abort deploy, keep prior site live.
+echo "Running Claude QC pass (mechanical pre-deploy verification)..."
+if ! bash $SCRIPT_DIR/claude_qc.sh; then
+    echo "[update.sh] ABORT: claude_qc.sh failed. Site NOT deployed. Prior version stays live."
+    exit 1
+fi
+
 # Legacy qc_critic.sh — also disabled.
 # bash $SCRIPT_DIR/qc_critic.sh
 
