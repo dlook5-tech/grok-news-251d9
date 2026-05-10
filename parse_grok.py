@@ -1896,30 +1896,55 @@ for _tab in ('world', 'usa'):
     if len(_picked) < _TAB_FLOOR:
         _picked = _topup_to_floor(_picked, _scan_snapshots_for_tab(_tab),
                                   top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=72)
-    # FINAL RESORT (user mandate 2026-05-10: "hard coded so I don't have these
-    # conversations every day"): if cascade still hasn't filled the 3-floor for
-    # World/USA, accept 3-perspective snapshot stories WITHOUT topic-dedup. Common
-    # voices (@WhiteHouse, @ggreenwald, etc.) appear repeatedly across topics;
-    # dedup was wrongly rejecting them. Only URL-exact dupes get filtered here.
+    # FINAL RESORT (user 2026-05-10: "Just force three-story floor"):
+    # Floor wins over 3-perspective. Two-pass:
+    #   A. Try 3-persp from snapshots (preferred)
+    #   B. Accept 1-2 perspective stories from this cron's Grok output
     if len(_picked) < _TAB_FLOOR:
         _seen_urls = set()
         for _s in _picked:
             for _p in (_s.get('perspectives') or []):
                 if _p.get('url'): _seen_urls.add(_p['url'])
+        # Pass A — 3-persp from snapshots
         for _s in _scan_snapshots_for_tab(_tab):
             if len(_picked) >= _TAB_FLOOR: break
             _persps = _s.get('perspectives', []) or []
-            if len([p for p in _persps if isinstance(p, dict) and p.get('url')]) < 3:
-                continue  # 3-persp still required
-            if curation.story_age_hours(_s) > 72:
-                continue
+            if len([p for p in _persps if isinstance(p, dict) and p.get('url')]) < 3: continue
+            if curation.story_age_hours(_s) > 72: continue
             _urls = {p.get('url') for p in _persps if p.get('url')}
-            if _urls & _seen_urls: continue  # exact URL dup only
+            if _urls & _seen_urls: continue
             _picked.append(_s)
             _seen_urls.update(_urls)
+        # Pass B — accept 1-2 perspective stories from Grok output (clean_world rejected
+        # these for <3 perspectives; resurrect them as fillers)
         if len(_picked) < _TAB_FLOOR:
-            print(f"  WARN: {_tab} {len(_picked)}/{_TAB_FLOOR} after final resort — "
-                  f"snapshot pool genuinely lacks 3 different 3-persp stories", file=sys.stderr)
+            for _w in _items:
+                if len(_picked) >= _TAB_FLOOR: break
+                if not isinstance(_w, dict): continue
+                _persps = []
+                for key, label in [('conservative','Conservative'), ('democrat','Democrat'), ('independent','Independent')]:
+                    p = _w.get(key, {})
+                    if not isinstance(p, dict) or not p.get('handle') or not p.get('url'): continue
+                    if '/status/' not in p.get('url',''): continue
+                    _persps.append({'label': label, 'handle': p['handle'], 'url': p['url'],
+                                    'text': trim_text((p.get('quote') or p.get('body') or p.get('text') or '').strip(),
+                                                       max_sentences=2, max_chars=150),
+                                    'engagement': str(p.get('engagement','')),
+                                    'honesty': str(p.get('honesty', _w.get('honesty', '8/10')))})
+                    if 'views' in p: _persps[-1]['views'] = p['views']
+                if not _persps: continue
+                _urls = {p['url'] for p in _persps}
+                if _urls & _seen_urls: continue
+                _picked.append({'headline': str(_w.get('headline','Untitled')),
+                                'honesty': str(_w.get('honesty','8/10')),
+                                'perspectives': _persps,
+                                'footnotes': [], 'notes': '',
+                                'body': f'{len(_persps)}-perspective coverage.',
+                                'posted': now.strftime('%-m/%-d/%Y %-I:%M %p')})
+                _seen_urls.update(_urls)
+        if len(_picked) < _TAB_FLOOR:
+            print(f"  WARN: {_tab} {len(_picked)}/{_TAB_FLOOR} after all fallbacks — "
+                  f"genuinely no more candidates available", file=sys.stderr)
     curation.stamp_view_history(_picked)
     _output_v5[_tab] = {'stories': _picked, 'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
 
