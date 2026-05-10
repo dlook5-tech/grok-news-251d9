@@ -1851,16 +1851,34 @@ for _tab in ('world', 'usa'):
         _picked = _enforce_topic_diversity(_picked, label=_tab)
     if len(_picked) < _TAB_FLOOR:
         # Deep fallback: scan past snapshots for 3-perspective stories.
-        # User mandate (2026-05-09): "three stories for World, three stories for USA"
-        # with 3 perspectives is non-negotiable. When 24h isn't enough, extend to 72h.
-        # This violates the 24h news cap but honors the harder floor + 3-persp rule.
         _snapshot_pool = _scan_snapshots_for_tab(_tab)
         _picked = _topup_to_floor(_picked, _snapshot_pool,
                                   top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=72)
         _picked = _enforce_topic_diversity(_picked, label=_tab)
+    # FINAL RESORT (user mandate 2026-05-10: "hard coded so I don't have these
+    # conversations every day"): if cascade still hasn't filled the 3-floor for
+    # World/USA, accept 3-perspective snapshot stories WITHOUT topic-dedup. Common
+    # voices (@WhiteHouse, @ggreenwald, etc.) appear repeatedly across topics;
+    # dedup was wrongly rejecting them. Only URL-exact dupes get filtered here.
+    if len(_picked) < _TAB_FLOOR:
+        _seen_urls = set()
+        for _s in _picked:
+            for _p in (_s.get('perspectives') or []):
+                if _p.get('url'): _seen_urls.add(_p['url'])
+        for _s in _scan_snapshots_for_tab(_tab):
+            if len(_picked) >= _TAB_FLOOR: break
+            _persps = _s.get('perspectives', []) or []
+            if len([p for p in _persps if isinstance(p, dict) and p.get('url')]) < 3:
+                continue  # 3-persp still required
+            if curation.story_age_hours(_s) > 72:
+                continue
+            _urls = {p.get('url') for p in _persps if p.get('url')}
+            if _urls & _seen_urls: continue  # exact URL dup only
+            _picked.append(_s)
+            _seen_urls.update(_urls)
         if len(_picked) < _TAB_FLOOR:
-            print(f"  WARN: {_tab} has only {len(_picked)}/{_TAB_FLOOR} stories after 72h "
-                  f"snapshot scan — pool genuinely thin", file=sys.stderr)
+            print(f"  WARN: {_tab} {len(_picked)}/{_TAB_FLOOR} after final resort — "
+                  f"snapshot pool genuinely lacks 3 different 3-persp stories", file=sys.stderr)
     curation.stamp_view_history(_picked)
     _output_v5[_tab] = {'stories': _picked, 'earlier': []}
 
