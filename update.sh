@@ -289,7 +289,11 @@ SUGGESTED HANDLES (prefer these — but pick whoever has the most views, even if
 
 PROCESS:
 1. x_search broadly: "(Iran OR Israel OR China OR Russia OR Ukraine OR Europe OR Middle East OR war OR geopolitics) lang:en since:$YESTERDAY", mode:Top, limit:50
-2. Pick the 3 highest-view topics.
+2. Pick the 3 highest-view DIFFERENT EVENTS. Critical: "US-Iran Ceasefire" and
+   "Iran Responds to US Peace Proposal" are the SAME event — count as 1 topic, not 2.
+   Pick events that are genuinely DIFFERENT news (e.g., Iran-US deal AND
+   Israeli strikes in Lebanon AND North Korea constitution change — three
+   different events).
 3. For each topic, run 3 broad searches to find ANY post with ≥10 views from each ideological side:
    - Conservative side: "(topic_keywords) (republican OR conservative OR right OR maga OR trump OR gop) min_faves:1 lang:en", mode:Top, limit:30
    - Democrat side:    "(topic_keywords) (democrat OR liberal OR left OR progressive OR resist) min_faves:1 lang:en", mode:Top, limit:30

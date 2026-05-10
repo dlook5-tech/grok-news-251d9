@@ -24,6 +24,60 @@ if [ ! -f stories.json ]; then
     exit 1
 fi
 
+# ---- SEMANTIC DEDUP — ask Claude API "are any of these stories the same event?"
+# Catches semantic duplicates that word-overlap can't (e.g. "US-Iran Ceasefire
+# Negotiations" + "Iran Responds to US Peace Proposal" = same event, no shared words).
+if [ -n "$ANTHROPIC_API_KEY" ]; then
+python3 <<'SDPY'
+import json, urllib.request, os, sys
+key = os.environ.get("ANTHROPIC_API_KEY","")
+if not key: sys.exit(0)
+with open('stories.json') as f: d = json.load(f)
+modified = False
+for tab in ('world','usa'):
+    stories = d.get(tab,{}).get('stories',[])
+    if len(stories) < 2: continue
+    headlines = [(i, s.get('headline','')) for i,s in enumerate(stories)]
+    prompt = (
+        "These are headlines from a news site's " + tab.upper() + " tab. "
+        "Identify any pair that describes the SAME news event (even if worded differently). "
+        "Examples of same-event pairs: 'US-Iran Ceasefire Negotiations' and 'Iran Responds to US Peace Proposal'. "
+        "Different events: 'US-Iran ceasefire' and 'Israeli strikes in Lebanon'. "
+        "Return STRICTLY a JSON array of pairs to drop, e.g. [[1,3]] means drop story #3 because it dupes #1. "
+        "Empty [] if none. Only the JSON, no prose.\n\n"
+        + "\n".join(f"#{i+1}: {h}" for i,h in headlines)
+    )
+    body = json.dumps({"model":"claude-3-5-sonnet-20241022","max_tokens":200,
+                       "messages":[{"role":"user","content":prompt}]}).encode()
+    req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body, method="POST",
+        headers={"x-api-key": key, "anthropic-version":"2023-06-01", "content-type":"application/json"})
+    try:
+        r = json.loads(urllib.request.urlopen(req, timeout=20).read())
+        text = r.get("content",[{}])[0].get("text","[]").strip()
+        # Extract JSON array
+        import re
+        m = re.search(r'\[[^\]]*\]', text, re.DOTALL)
+        pairs = json.loads(m.group(0)) if m else []
+    except Exception as e:
+        print(f"[semantic-dedup] {tab}: API error {e} — skipping", file=sys.stderr)
+        continue
+    if not pairs: continue
+    # Drop the higher-index (later) story in each pair (lower-velocity by ranking position)
+    drop_idxs = sorted({pair[1]-1 for pair in pairs if isinstance(pair,list) and len(pair)==2}, reverse=True)
+    for idx in drop_idxs:
+        if 0 <= idx < len(stories):
+            print(f"[semantic-dedup] {tab}: drop '{stories[idx].get('headline','')[:50]}' (semantic dup)", file=sys.stderr)
+            stories.pop(idx)
+            modified = True
+    d[tab]['stories'] = stories
+if modified:
+    with open('stories.json','w') as f: json.dump(d, f, indent=2)
+    print("[semantic-dedup] stories.json updated")
+SDPY
+else
+    echo "[semantic-dedup] skipped (no ANTHROPIC_API_KEY)"
+fi
+
 python3 <<'PYEOF'
 import json, sys, urllib.request, urllib.parse
 

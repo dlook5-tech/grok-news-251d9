@@ -43,6 +43,7 @@ jobs:
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           # On CI, the user-global Mac settings.json doesn't exist — skip the audit's
           # hard-fail behavior so the pipeline runs. Audit still logs PASS/FAIL.
           RULE_AUDIT_SOFT: '1'
