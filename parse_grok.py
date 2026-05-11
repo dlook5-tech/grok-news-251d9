@@ -2019,13 +2019,16 @@ for _tab in ('world', 'usa'):
         if _cleaned and _belongs_on_tab(_tab, _cleaned):
             _candidates.append(_cleaned)
     _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 4)
-    # 2026-05-11 (user re-instated hold rule): pass last cron's picks as
-    # `current` so they HOLD their slot until a fresh candidate's views
-    # exceeds their frozen views_at_save score. Held cap = 23h.
     _held = _existing.get(_tab, {}).get('stories', []) or []
+    # PASS 1: top 3 in 4h window (preferred).
     _picked = curation.curate(_tab, _held, _candidates,
                               top_n=_TAB_N[_tab], enrich=False, history=_history,
                               max_age_h=_wu_age_cap)
+    # PASS 2: if <3, widen window to 24h. User mandate "3 stories always".
+    if len(_picked) < 3:
+        _picked = curation.curate(_tab, _held, _candidates,
+                                  top_n=_TAB_N[_tab], enrich=False, history=_history,
+                                  max_age_h=24)
     curation.stamp_view_history(_picked)
     # Overflow: Grok candidates we DIDN'T pick. claude_qc can pull from here when
     # semantic-dedup creates a gap (user 2026-05-10: "go back to crock and find the
@@ -2121,19 +2124,20 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
         continue
 
     if _tab in _NEWS_TABS_NO_PAD:
-        # News tabs (Business, Top, MSM, Conspiracy, Local). HOLD RULE active:
-        # held stories from prior cron compete on frozen velocity against fresh.
         _held = _existing.get(_tab, {}).get('stories', []) or []
         if _tab == 'local':
             _held = _local_quality_filter(_held)
+        # PASS 1: top 3 in 4h window (preferred).
         _picked = curation.curate(_tab, _held, _candidates,
                                   top_n=_TAB_N.get(_tab, 3), enrich=True, history=_history,
                                   max_age_h=_backfill_age)
+        # PASS 2: if <3, widen window to 24h. User mandate "3 stories always".
+        # (Local is exception — keep 24h or its native cap; sparse content.)
+        if len(_picked) < 3 and _tab != 'local':
+            _picked = curation.curate(_tab, _held, _candidates,
+                                      top_n=_TAB_N.get(_tab, 3), enrich=True, history=_history,
+                                      max_age_h=24)
         curation.stamp_view_history(_picked)
-        # Save unused candidates as _overflow so claude_qc can refill from them
-        # if the final review drops any picks. User mandate (2026-05-11): "go
-        # back out to Grok and search for another story" — these ARE Grok's
-        # other candidates from this same cron, just unused.
         _picked_urls_n = {s.get('url','') for s in _picked if s.get('url')}
         _overflow_n = [c for c in _candidates
                        if c.get('url') and c.get('url') not in _picked_urls_n][:5]

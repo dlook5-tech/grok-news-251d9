@@ -172,27 +172,30 @@ def story_age_hours(story):
 
 
 def story_velocity(story, history=None):
-    """RANK BY VIEWS, WITH 23H HOLD RULE — user (2026-05-11):
-    "If no new post # views has superseded or gone higher than the original
-    stories chosen for their velocity in that tab, then those stories stay
-    for 23 hours, or until a story comes along with higher velocity."
+    """RANK BY VIEWS, WITH 23H HOLD + 24H FALLBACK — user (2026-05-11):
+    "3 stories always."
 
-      - Fresh (age ≤ 4h): score = current views (combined X+Y if QT-enhanced)
-      - Held (age > 4h, has views_at_save from prior pickup): score = frozen
-        views_at_save. The story holds until a fresh candidate beats this.
-      - Old (age > 4h, no views_at_save — never picked): score = -1, drops.
-
-    MAX_HOLD_HOURS (=23) applied in apply_velocity_hold caps the held duration.
+    Layered scoring:
+      - Fresh (age ≤ 4h): score = current views (combined X+Y if QT-enhanced).
+        Highest priority — this is the ideal "most-watched-in-4h" pick.
+      - Held (age > 4h, has views_at_save): score = frozen views_at_save.
+        Holds slot until beaten or 23h URL age.
+      - Older fresh-Grok candidate (4h < age ≤ 24h, no views_at_save):
+        score = views. Eligible as fallback when ≤4h pool can't fill 3 slots.
+      - Past 24h with no views_at_save: -1 (drops).
     """
     age = story_age_hours(story)
     views = story_views(story)
     if age <= 4:
         return float(views) if views > 0 else 0.0
-    # Held story: use saved combined score from when it was picked.
+    # Held story (was picked in a prior cron): use frozen saved score
     saved = story.get('views_at_save')
     if saved is not None:
         try: return float(saved)
         except (ValueError, TypeError): return -1.0
+    # Older fresh-Grok candidate, never picked yet: eligible up to 24h
+    if age <= 24 and views > 0:
+        return float(views)
     return -1.0
 
 
