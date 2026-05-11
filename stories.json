@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-11T15:25:53Z",
+  "lastUpdated": "2026-05-11T15:55:43Z",
   "world": {
     "stories": [
       {
@@ -16,7 +16,7 @@
             "views": 564,
             "notes": "Claims outbreak is hoax to target Trump, false narrative despite real event.",
             "views_at_save": 564,
-            "age_at_save_hours": 0.68
+            "age_at_save_hours": 1.18
           },
           {
             "label": "Democrat",
@@ -28,7 +28,7 @@
             "views": 1298,
             "notes": "Critiques Trump administration's handling of CDC, defensible opinion.",
             "views_at_save": 1298,
-            "age_at_save_hours": 3.34
+            "age_at_save_hours": 3.83
           },
           {
             "label": "Independent",
@@ -40,7 +40,7 @@
             "views": 75,
             "notes": "Scientific preliminary analysis of virus sequences, verifiable fact.",
             "views_at_save": 75,
-            "age_at_save_hours": 4.14
+            "age_at_save_hours": 4.64
           }
         ],
         "footnotes": [
@@ -52,7 +52,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/11/2026 3:25 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 0.68
+        "age_at_save_hours": 1.18
       },
       {
         "headline": "Trump Rejects Iran's Demands in Peace Proposal",
@@ -68,7 +68,7 @@
             "views": 34545,
             "notes": "Reports Trump's rejection accurately with pro-Trump commentary, no false claims.",
             "views_at_save": 34545,
-            "age_at_save_hours": 0.92
+            "age_at_save_hours": 1.41
           },
           {
             "label": "Democrat",
@@ -80,7 +80,7 @@
             "views": 145,
             "notes": "Partisan rant criticizing Trump, hyperbolic but no specific factual lies.",
             "views_at_save": 145,
-            "age_at_save_hours": 20.01
+            "age_at_save_hours": 20.51
           },
           {
             "label": "Independent",
@@ -92,7 +92,7 @@
             "views": 177250,
             "notes": "In-depth geopolitical analysis with verifiable insights on energy markets and escalation risks.",
             "views_at_save": 177250,
-            "age_at_save_hours": 15.93
+            "age_at_save_hours": 16.43
           }
         ],
         "footnotes": [
@@ -104,7 +104,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/11/2026 3:25 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 0.92
+        "age_at_save_hours": 1.41
       },
       {
         "headline": "Russia-Ukraine Ceasefire Holds but Frontline Clashes Continue",
@@ -120,7 +120,7 @@
             "views": 24111,
             "notes": "Cites bank analysis on ceasefire fragility; opinionated but grounded in economic report, no factual errors.",
             "views_at_save": 24111,
-            "age_at_save_hours": 11.8
+            "age_at_save_hours": 12.29
           },
           {
             "label": "Democrat",
@@ -132,7 +132,7 @@
             "views": 20816,
             "notes": "Verifiable quote from Zelenskiy on ceasefire status.",
             "views_at_save": 20816,
-            "age_at_save_hours": 12.11
+            "age_at_save_hours": 12.61
           },
           {
             "label": "Independent",
@@ -144,7 +144,7 @@
             "views": 17194,
             "notes": "Accurate summary of Zelenskiy's statement with analytical framing on mutual restraint.",
             "views_at_save": 17194,
-            "age_at_save_hours": 13.03
+            "age_at_save_hours": 13.53
           }
         ],
         "footnotes": [
@@ -156,7 +156,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/11/2026 4:25 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 11.8
+        "age_at_save_hours": 12.29
       }
     ],
     "earlier": [
@@ -372,6 +372,54 @@
   "usa": {
     "stories": [
       {
+        "headline": "Suspect in White House Correspondents' Dinner assassination attempt pleads not guilty",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@NEWSMAX",
+            "url": "https://x.com/NEWSMAX/status/2053848963330306378",
+            "text": "BREAKING: A man accused of storming the White House Correspondents\u2019 Association dinner while armed with guns and knives pleaded not guilty on Monday...",
+            "engagement": "19 likes, 2 reposts",
+            "honesty": "10/10",
+            "views": 7290,
+            "notes": "Verifiable breaking news report of court proceedings.",
+            "views_at_save": 7290,
+            "age_at_save_hours": 1.17
+          },
+          {
+            "label": "Democrat",
+            "handle": "@nytimes",
+            "url": "https://x.com/nytimes/status/2053859130184544711",
+            "text": "Breaking News: The man charged with attempting to kill President Trump at the White House Correspondents\u2019 dinner pleaded not guilty to all charges.",
+            "engagement": "37 likes, 7 reposts",
+            "honesty": "10/10",
+            "views": 27544,
+            "notes": "Verifiable breaking news report of court proceedings.",
+            "views_at_save": 27544,
+            "age_at_save_hours": 0.5
+          },
+          {
+            "label": "Independent",
+            "handle": "@AP",
+            "url": "https://x.com/AP/status/2053838448067252662",
+            "text": "The man charged with attempting to kill President Trump at the White House Correspondents' Association dinner pleads not guilty.",
+            "engagement": "138 likes, 49 reposts",
+            "honesty": "10/10",
+            "views": 61452,
+            "notes": "Verifiable breaking news report of court proceedings.",
+            "views_at_save": 61452,
+            "age_at_save_hours": 1.87
+          }
+        ],
+        "footnotes": [],
+        "notes": "High-velocity story on domestic security and politics with balanced perspectives.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/11/2026 3:55 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 1.17
+      },
+      {
         "headline": "Trump Administration Launches Moms.gov and Expands Fertility Benefits",
         "honesty": "8/10",
         "perspectives": [
@@ -385,7 +433,7 @@
             "views": 76971,
             "notes": "Official White House announcement of new resource website - verifiable fact.",
             "views_at_save": 76971,
-            "age_at_save_hours": 1.03
+            "age_at_save_hours": 1.52
           },
           {
             "label": "Democrat",
@@ -397,7 +445,7 @@
             "views": 17514,
             "notes": "Factual reporting on administration policy announcement from credible outlet.",
             "views_at_save": 17514,
-            "age_at_save_hours": 2.18
+            "age_at_save_hours": 2.68
           },
           {
             "label": "Independent",
@@ -409,7 +457,7 @@
             "views": 9265,
             "notes": "Straightforward announcement of presidential event - verifiable fact.",
             "views_at_save": 9265,
-            "age_at_save_hours": 0.31
+            "age_at_save_hours": 0.8
           }
         ],
         "footnotes": [],
@@ -417,55 +465,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/11/2026 3:25 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 1.03
-      },
-      {
-        "headline": "Suspect in White House Correspondents' Dinner Shooting Pleads Not Guilty",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@nypost",
-            "url": "https://x.com/nypost/status/2053829266437964024",
-            "text": "Accused WHCD shooter Cole Allen pleads not guilty to attempting to assassinate Trump...",
-            "engagement": "11 likes, 7 retweets",
-            "honesty": "10/10",
-            "views": 7254,
-            "notes": "Factual reporting on court plea from credible outlet.",
-            "views_at_save": 7254,
-            "age_at_save_hours": 1.98
-          },
-          {
-            "label": "Democrat",
-            "handle": "@CBSNews",
-            "url": "https://x.com/CBSNews/status/2053839936982229199",
-            "text": "BREAKING: Cole Allen, the accused White House Correspondents' Dinner shooter, has pleaded not guilty to all the charges against him through his...",
-            "engagement": "12 likes, 6 retweets",
-            "honesty": "10/10",
-            "views": 10659,
-            "notes": "Straight news update on legal proceedings.",
-            "views_at_save": 10659,
-            "age_at_save_hours": 1.27
-          },
-          {
-            "label": "Independent",
-            "handle": "@NBCNews",
-            "url": "https://x.com/NBCNews/status/2053832943089438933",
-            "text": "NEW: The man charged with allegedly attempting to assassinate President Trump at a White House Correspondents\u2019 Association dinner last month pleads...",
-            "engagement": "14 likes, 5 retweets",
-            "honesty": "10/10",
-            "views": 8705,
-            "notes": "Objective coverage of the arraignment outcome.",
-            "views_at_save": 8705,
-            "age_at_save_hours": 1.74
-          }
-        ],
-        "footnotes": [],
-        "notes": "Update on federal case related to April shooting incident targeting President Trump.",
-        "body": "Three-perspective roundup.",
-        "posted": "5/11/2026 3:25 PM",
-        "views_at_save": 0,
-        "age_at_save_hours": 1.98
+        "age_at_save_hours": 1.52
       },
       {
         "headline": "Redistricting Battles After SCOTUS Ruling",
@@ -956,6 +956,20 @@
   "elon": {
     "stories": [
       {
+        "headline": "Happy Mother's Day to Mom",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2053599965994504240",
+        "body": "Elon wishes his mother a happy Mother's Day in response to her thanks for flowers.",
+        "engagement": "121K likes, 8K reposts, 258 quotes, 4.4K replies",
+        "honesty": "10/10",
+        "notes": "Personal family message with no factual claims or opinions.",
+        "posted": "2026-05-11T04:13:16Z",
+        "post_ts": "2026-05-10T22:16:00Z",
+        "views": 9633915,
+        "views_at_save": 9633915,
+        "age_at_save_hours": 17.66
+      },
+      {
         "headline": "Elon Slams Achilles Revisionism",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2053597902539575459",
@@ -970,7 +984,7 @@
         "parent_handle": "@HomerPavlos",
         "parent_text": "What we\u2019re seeing on X these past few days is insane. > They\u2019re trying like maniacs to convince you that Achilles is not a hero or a role model, even though he was the greatest role model in the West for 3,000 years. > They\u2019re trying to convince you that he had a sexual relations",
         "views_at_save": 93167,
-        "age_at_save_hours": 17.3
+        "age_at_save_hours": 17.8
       },
       {
         "headline": "Happy Mother's Day Appreciation",
@@ -984,8 +998,10 @@
         "post_ts": "2026-05-10T21:20:39Z",
         "views": 23152558,
         "views_at_save": 23152558,
-        "age_at_save_hours": 18.09
-      },
+        "age_at_save_hours": 18.58
+      }
+    ],
+    "earlier": [
       {
         "headline": "Motherhood as Important as Career",
         "handle": "@elonmusk",
@@ -1000,53 +1016,37 @@
         "views_at_save": 17039044,
         "age_at_save_hours": 17.88
       }
-    ],
-    "earlier": [
-      {
-        "headline": "Happy Mother's Day to Mom",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2053599965994504240",
-        "body": "Elon wishes his mother a happy Mother's Day in response to her thanks for flowers.",
-        "engagement": "121K likes, 8K reposts, 258 quotes, 4.4K replies",
-        "honesty": "10/10",
-        "notes": "Personal family message with no factual claims or opinions.",
-        "posted": "2026-05-11T04:13:16Z",
-        "post_ts": "2026-05-10T22:16:00Z",
-        "views": 9633915,
-        "views_at_save": 9633915,
-        "age_at_save_hours": 6.87
-      }
     ]
   },
   "sports": {
     "stories": [
       {
-        "headline": "Chargers Sign TE David Njoku",
+        "headline": "Chargers Sign David Njoku to One-Year Deal",
         "handle": "@AdamSchefter",
         "url": "https://x.com/AdamSchefter/status/2053846787379589286",
-        "body": "Los Angeles Chargers agree to one-year deal with former Browns TE David Njoku worth up to $8 million.",
-        "engagement": "725 likes, 55 reposts",
-        "honesty": "10/10",
-        "notes": "ESPN NFL insider reporting verified signing agreement.",
-        "posted": "2026-05-11T15:25:57Z",
+        "body": "Los Angeles Chargers agree to terms with former Browns TE David Njoku on a one-year contract worth up to $8 million.",
+        "engagement": "809 likes, 62 reposts",
+        "honesty": "9/10",
+        "notes": "Verified NFL insider reporting a player signing with source link.",
+        "posted": "2026-05-11T15:55:44Z",
         "post_ts": "2026-05-11T14:36:47Z",
-        "views": 277354,
-        "views_at_save": 277354,
-        "age_at_save_hours": 0.82
+        "views": 334991,
+        "views_at_save": 334991,
+        "age_at_save_hours": 1.32
       },
       {
-        "headline": "Stephen A on Wemby's Ejection",
+        "headline": "Stephen A. on Wemby Ejection",
         "handle": "@stephenasmith",
         "url": "https://x.com/stephenasmith/status/2053642032833540273",
-        "body": "Stephen A.. Smith says Victor Wembanyama's elbow swing ejection was warranted but hopes for no suspension.",
+        "body": "Stephen A.. Smith calls Victor Wembanyama's elbow swing ejection warranted and intentional but prays for no suspension.",
         "engagement": "5.3K likes, 216 reposts",
-        "honesty": "7/10",
-        "notes": "Opinionated take on NBA ejection incident without factual errors.",
-        "posted": "2026-05-11T15:25:57Z",
+        "honesty": "8/10",
+        "notes": "Opinionated take on NBA referee call without factual errors.",
+        "posted": "2026-05-11T15:55:44Z",
         "post_ts": "2026-05-11T01:03:10Z",
-        "views": 470175,
-        "views_at_save": 470175,
-        "age_at_save_hours": 14.38
+        "views": 472459,
+        "views_at_save": 472459,
+        "age_at_save_hours": 14.88
       },
       {
         "headline": "Wembanyama Ejected for Elbowing Naz Reid",
@@ -1060,7 +1060,7 @@
         "post_ts": "2026-05-11T00:30:27Z",
         "views": 357216,
         "views_at_save": 357216,
-        "age_at_save_hours": 14.92
+        "age_at_save_hours": 15.42
       }
     ],
     "earlier": [
@@ -1209,19 +1209,49 @@
   "allin": {
     "stories": [
       {
-        "headline": "Data Center Boom: 2-Year Payback on $50B Investment",
+        "headline": "Sacks Breaks Down Data Center Economics",
         "handle": "@DavidSacks",
         "url": "https://x.com/DavidSacks/status/2053573251419230702",
-        "body": "David Sacks provides back-of-envelope math showing a 1GW data center's $50B capex could yield $25-30B annual revenue with $1-2B electricity costs for...",
-        "engagement": "11.2K likes, 830 retweets, 534 replies",
-        "honesty": "8/10",
-        "notes": "Analytical opinion on AI infrastructure economics with reasonable estimates.",
-        "posted": "2026-05-11T15:25:57Z",
+        "body": "A 1GW data center requires $50B capex but yields $25-30B annual revenue and $1-2B electricity costs for a 2-year payback.",
+        "engagement": "11.3K likes, 834 retweets, 535 replies",
+        "honesty": "7/10",
+        "notes": "Opinion with back-of-envelope estimates",
+        "posted": "2026-05-11T15:55:44Z",
         "post_ts": "2026-05-10T20:29:51Z",
-        "views": 1721273,
-        "views_at_save": 1721273,
-        "age_at_save_hours": 18.94
+        "views": 1746677,
+        "views_at_save": 1746677,
+        "age_at_save_hours": 19.43
       },
+      {
+        "headline": "Luckey on Autonomous Trucking and Climate",
+        "handle": "@PalmerLuckey",
+        "url": "https://x.com/PalmerLuckey/status/2053579523434983464",
+        "body": "Climate-focused leaders should back autonomous logistics to slash emissions, as electric autonomous vehicles emit 1/20th the carbon of human-driven...",
+        "engagement": "3.4K likes, 118 retweets, 100 replies",
+        "honesty": "7/10",
+        "notes": "Opinion on environmental benefits",
+        "posted": "2026-05-11T15:55:44Z",
+        "post_ts": "2026-05-10T20:54:46Z",
+        "views": 233623,
+        "views_at_save": 233623,
+        "age_at_save_hours": 19.02
+      },
+      {
+        "headline": "Chamath Urges Politicians to Record Interviews",
+        "handle": "@chamath",
+        "url": "https://x.com/chamath/status/2053495876585451928",
+        "body": "Candidates with political ambitions must record interviews themselves to force media truth or release full tapes.",
+        "engagement": "10.7K likes, 967 retweets, 212 replies",
+        "honesty": "7/10",
+        "notes": "Opinion on combating media bias.",
+        "posted": "2026-05-11T05:08:06Z",
+        "post_ts": "2026-05-10T15:22:23Z",
+        "views": 396302,
+        "views_at_save": 396302,
+        "age_at_save_hours": 24.56
+      }
+    ],
+    "earlier": [
       {
         "headline": "Ban Junk Mail: End the USPS Spam Empire",
         "handle": "@PalmerLuckey",
@@ -1249,22 +1279,6 @@
         "views": 140702,
         "views_at_save": 140702,
         "age_at_save_hours": 30.96
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Chamath Urges Politicians to Record Interviews",
-        "handle": "@chamath",
-        "url": "https://x.com/chamath/status/2053495876585451928",
-        "body": "Candidates with political ambitions must record interviews themselves to force media truth or release full tapes.",
-        "engagement": "10.7K likes, 967 retweets, 212 replies",
-        "honesty": "7/10",
-        "notes": "Opinion on combating media bias.",
-        "posted": "2026-05-11T05:08:06Z",
-        "post_ts": "2026-05-10T15:22:23Z",
-        "views": 396302,
-        "views_at_save": 396302,
-        "age_at_save_hours": 13.76
       },
       {
         "headline": "Marc Andreessen dubs wealth redistribution demands 'suicidal empathy'",
@@ -1301,6 +1315,36 @@
   },
   "pods": {
     "stories": [
+      {
+        "headline": "Kill Tony Comedian's Shocking George Floyd Joke",
+        "handle": "@joeroganhq",
+        "url": "https://x.com/joeroganhq/status/2053808904082252064",
+        "body": "Comedian on Kill Tony says 'The black community is so proud of you\u2026 right now George Floyd is looking up at us all laughing so hard he can\u2019t...",
+        "engagement": "4.9K likes, 233 reposts, 48 replies",
+        "honesty": "7/10",
+        "notes": "Satirical comedy bit, opinion-based with no factual claims.",
+        "posted": "2026-05-11T15:55:44Z",
+        "post_ts": "2026-05-11T12:06:15Z",
+        "views": 258599,
+        "views_at_save": 258599,
+        "age_at_save_hours": 3.82
+      },
+      {
+        "headline": "Megyn Kelly Slams Blake Lively's Appeal",
+        "handle": "@MegynKellyShow",
+        "url": "https://x.com/MegynKellyShow/status/2053580840534225164",
+        "body": "Megyn Kelly says Blake Lively has no broad audience beyond 10 woke women on Manhattan's Upper West Side, predicting career struggles.",
+        "engagement": "1.7K likes, 83 reposts, 133 replies",
+        "honesty": "7/10",
+        "notes": "Partisan opinion on celebrity popularity, no factual claims.",
+        "posted": "2026-05-11T05:08:06Z",
+        "post_ts": "2026-05-10T21:00:00Z",
+        "views": 79040,
+        "views_at_save": 79040,
+        "age_at_save_hours": 18.93
+      }
+    ],
+    "earlier": [
       {
         "headline": "Jensen Huang on Helping Elon Musk Build Tesla Computers",
         "handle": "@joeroganhq",
@@ -1342,9 +1386,7 @@
         "views": 59712,
         "views_at_save": 59712,
         "age_at_save_hours": 20.2
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Elon Musk on $12B Submarine Scandal",
         "handle": "@joeroganhq",
@@ -1358,20 +1400,6 @@
         "views": 158743,
         "views_at_save": 158743,
         "age_at_save_hours": 3.13
-      },
-      {
-        "headline": "Megyn Kelly Slams Blake Lively's Appeal",
-        "handle": "@MegynKellyShow",
-        "url": "https://x.com/MegynKellyShow/status/2053580840534225164",
-        "body": "Megyn Kelly says Blake Lively has no broad audience beyond 10 woke women on Manhattan's Upper West Side, predicting career struggles.",
-        "engagement": "1.7K likes, 83 reposts, 133 replies",
-        "honesty": "7/10",
-        "notes": "Partisan opinion on celebrity popularity, no factual claims.",
-        "posted": "2026-05-11T05:08:06Z",
-        "post_ts": "2026-05-10T21:00:00Z",
-        "views": 79040,
-        "views_at_save": 79040,
-        "age_at_save_hours": 8.14
       },
       {
         "headline": "Spencer Pratt Fights Evil in LA",
@@ -1403,22 +1431,38 @@
         "post_ts": "2026-05-11T12:17:00Z",
         "views": 271941,
         "views_at_save": 271941,
-        "age_at_save_hours": 3.15
+        "age_at_save_hours": 3.65
       },
       {
-        "headline": "Private Credit Fund NAV Drops to 77 Amid Loan Loss Questions",
+        "headline": "Private Credit Woes Deepen as Fund NAV Drops to 77",
         "handle": "@TruthGundlach",
         "url": "https://x.com/TruthGundlach/status/2053677024607383801",
-        "body": "Jeffrey Gundlach notes a large private credit fund marked its NAV down to 77 from 100, questioning whether losses are evenly distributed or...",
-        "engagement": "1.7K likes, 205 reposts, 0 replies",
-        "honesty": "7/10",
-        "notes": "Opinion-based analysis on credit market risks without factual errors.",
-        "posted": "2026-05-11T15:25:58Z",
+        "body": "A large private credit fund marked its NAV down to 77 from 100, raising questions on whether loan losses are uniform at 23% or concentrated in fewer...",
+        "engagement": "1.7K likes, 208 retweets, 0 replies",
+        "honesty": "8/10",
+        "notes": "Fact-based analysis of NAV markdown with interpretive questions, no factual errors.",
+        "posted": "2026-05-11T15:55:44Z",
         "post_ts": "2026-05-11T03:22:12Z",
-        "views": 210652,
-        "views_at_save": 210652,
-        "age_at_save_hours": 12.06
+        "views": 216974,
+        "views_at_save": 216974,
+        "age_at_save_hours": 12.56
       },
+      {
+        "headline": "Historic Low Recession Odds in Prediction Markets",
+        "handle": "@APompliano",
+        "url": "https://x.com/APompliano/status/2053519546514878626",
+        "body": "Prediction markets now show only a 17% chance of recession, the lowest level in history.",
+        "engagement": "711 likes, 43 retweets, 132 replies",
+        "honesty": "8/10",
+        "notes": "Fact-based insight from prediction market data with neutral framing.",
+        "posted": "2026-05-11T05:08:07Z",
+        "post_ts": "2026-05-10T16:56:27Z",
+        "views": 44453,
+        "views_at_save": 44453,
+        "age_at_save_hours": 22.99
+      }
+    ],
+    "earlier": [
       {
         "headline": "Bitcoin's Mother's Day Price Evolution",
         "handle": "@WatcherGuru",
@@ -1432,52 +1476,6 @@
         "views": 338021,
         "views_at_save": 338021,
         "age_at_save_hours": 16.86
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Warren Buffett on Market Dynamics",
-        "handle": "@unusual_whales",
-        "url": "https://x.com/unusual_whales/status/2053550891207184526",
-        "body": "Warren Buffett likens the stock market to a church with an increasingly attractive casino attached.",
-        "engagement": "3.3K likes, 239 retweets, 160 replies",
-        "honesty": "9/10",
-        "notes": "Verifiable quote from Warren Buffett on market behavior.",
-        "posted": "2026-05-11T15:30:37Z",
-        "post_ts": "2026-05-10T19:01:00Z",
-        "views": 382347,
-        "views_at_save": 382347,
-        "age_at_save_hours": 20.49
-      },
-      {
-        "headline": "OpenAI Employees Sell $6.6B in Shares",
-        "handle": "@StockMKTNewz",
-        "url": "https://x.com/StockMKTNewz/status/2053642952459591689",
-        "body": "Over 600 OpenAI employees cashed out $6.6 billion in shares at a $400B valuation, averaging $11M each.",
-        "engagement": "684 likes, 38 retweets, 35 replies",
-        "honesty": "9/10",
-        "notes": "Factual reporting of share sale per WSJ.",
-        "posted": "2026-05-11T15:30:37Z",
-        "post_ts": "2026-05-11T01:06:49Z",
-        "views": 88380,
-        "views_at_save": 88380,
-        "age_at_save_hours": 14.4
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Historic Low Recession Odds in Prediction Markets",
-        "handle": "@APompliano",
-        "url": "https://x.com/APompliano/status/2053519546514878626",
-        "body": "Prediction markets now show only a 17% chance of recession, the lowest level in history.",
-        "engagement": "711 likes, 43 retweets, 132 replies",
-        "honesty": "8/10",
-        "notes": "Fact-based insight from prediction market data with neutral framing.",
-        "posted": "2026-05-11T05:08:07Z",
-        "post_ts": "2026-05-10T16:56:27Z",
-        "views": 44453,
-        "views_at_save": 44453,
-        "age_at_save_hours": 12.19
       },
       {
         "headline": "BlackRock CEO Flags AI Resource Shortages",
@@ -1582,19 +1580,49 @@
   "top": {
     "stories": [
       {
-        "headline": "Lewandowski unsure on future, eyes lower league",
+        "headline": "K-pop Idol Defends Body Positivity",
+        "handle": "@icurina",
+        "url": "https://x.com/icurina/status/2053795178809549066",
+        "body": "Karina responds to body shaming by asserting everyone can show their body without judgment in a fiery clip.",
+        "engagement": "49K likes, 8K reposts",
+        "honesty": "8/10",
+        "notes": "Fact - direct quote from video clip with opinion on body shaming.",
+        "posted": "2026-05-11T15:55:45Z",
+        "post_ts": "2026-05-11T11:11:42Z",
+        "views": 1282852,
+        "views_at_save": 1282852,
+        "age_at_save_hours": 4.73
+      },
+      {
+        "headline": "Lewandowski Eyes Lower League Move",
         "handle": "@FabrizioRomano",
         "url": "https://x.com/FabrizioRomano/status/2053769078922183065",
-        "body": "Robert Lewandowski states he doesn't know his future yet and is considering options in a lower-level league despite being almost 38.",
-        "engagement": "19K likes, 1K reposts",
-        "honesty": "10/10",
-        "notes": "Fact - direct quote from the player reported accurately.",
-        "posted": "2026-05-11T15:25:58Z",
+        "body": "Robert Lewandowski, nearing 38, considers playing in a lower-level league and will review more offers.",
+        "engagement": "20K likes, 1K reposts",
+        "honesty": "9/10",
+        "notes": "Fact - direct quote from the player on his future plans.",
+        "posted": "2026-05-11T15:55:45Z",
         "post_ts": "2026-05-11T09:28:00Z",
-        "views": 906085,
-        "views_at_save": 906085,
-        "age_at_save_hours": 5.97
+        "views": 940134,
+        "views_at_save": 940134,
+        "age_at_save_hours": 6.46
       },
+      {
+        "headline": "Benson's Music Drop Today",
+        "handle": "@BNXN",
+        "url": "https://x.com/BNXN/status/2053824352248852532",
+        "body": "Benson announces his new music release at 5pm today, urging fans to give music a chance.",
+        "engagement": "8K likes, 1K reposts",
+        "honesty": "9/10",
+        "notes": "Fact - artist's announcement of release timing.",
+        "posted": "2026-05-11T15:55:45Z",
+        "post_ts": "2026-05-11T13:07:38Z",
+        "views": 163529,
+        "views_at_save": 163529,
+        "age_at_save_hours": 2.8
+      }
+    ],
+    "earlier": [
       {
         "headline": "Dressing the Colonel art series",
         "handle": "@talanya_",
@@ -1622,9 +1650,7 @@
         "views": 177673,
         "views_at_save": 177673,
         "age_at_save_hours": 5.62
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Elon Musk celebrates Mother's Day",
         "handle": "@elonmusk",
@@ -1736,53 +1762,55 @@
         "views": 1748153,
         "views_at_save": 1748153,
         "age_at_save_hours": 8.48
-      },
-      {
-        "headline": "Barack Obama Honors Michelle on Mother's Day",
-        "handle": "@BarackObama",
-        "url": "https://x.com/BarackObama/status/2053468813736210603",
-        "body": "Barack Obama wishes all moms a happy Mother's Day and thanks Michelle for her family support.",
-        "engagement": "192K likes, 11K reposts",
-        "honesty": "9/10",
-        "notes": "Fact - personal well-wishes with minor sentiment",
-        "posted": "2026-05-10T16:37:39Z",
-        "post_ts": "2026-05-10T13:34:51Z",
-        "views": 8053981,
-        "views_at_save": 8053981,
-        "age_at_save_hours": 14.05
-      },
-      {
-        "headline": "Ryan Garcia's $10K Giveaway",
-        "handle": "@RyanGarcia",
-        "url": "https://x.com/RyanGarcia/status/2053338493049282920",
-        "body": "Ryan Garcia promises to give $10k to one person who likes and follows after winning $120k.",
-        "engagement": "99K likes, 4.4K reposts",
-        "honesty": "7/10",
-        "notes": "Opinion",
-        "posted": "2026-05-10T16:16:52Z",
-        "post_ts": "2026-05-10T04:57:00Z",
-        "views": 2635956,
-        "views_at_save": 2635956,
-        "age_at_save_hours": 18.47
       }
     ]
   },
   "msm": {
     "stories": [
       {
-        "headline": "Spencer Pratt's LA Cleanup Plan",
+        "headline": "Spencer Pratt's Bold Plan to Restore Order in Los Angeles",
         "handle": "@CollinRugg",
         "url": "https://x.com/CollinRugg/status/2053598622391157066",
-        "body": "Spencer Pratt proposes a three-week grace period in LA to end nudity, drug use, and crime before enforcing laws strictly.",
-        "engagement": "43K likes, 4.7K reposts, 823 replies",
+        "body": "Spencer Pratt proposes a three-week grace period in LA before enforcing laws against public nudity, drug use, robbery, and abuse to clean up the...",
+        "engagement": "43K likes, 4.8K retweets, 831 replies",
         "honesty": "8/10",
-        "notes": "Accurately quotes celebrity's mayoral campaign statements.",
-        "posted": "2026-05-11T15:25:58Z",
+        "notes": "Fact-based report of celebrity's statements on urban issues.",
+        "posted": "2026-05-11T15:55:45Z",
         "post_ts": "2026-05-10T22:10:40Z",
-        "views": 2410842,
-        "views_at_save": 2410842,
-        "age_at_save_hours": 17.26
+        "views": 2446841,
+        "views_at_save": 2446841,
+        "age_at_save_hours": 17.75
       },
+      {
+        "headline": "Chart Exposes the Decline of Marriage in America",
+        "handle": "@EndWokeness",
+        "url": "https://x.com/EndWokeness/status/2053658837194797453",
+        "body": "Insane chart reveals sharp drop in marriage rates, highlighting cultural shifts underreported by mainstream media.",
+        "engagement": "11K likes, 1.4K retweets, 533 replies",
+        "honesty": "8/10",
+        "notes": "Presents verifiable data with interpretive commentary.",
+        "posted": "2026-05-11T15:55:45Z",
+        "post_ts": "2026-05-11T02:09:56Z",
+        "views": 862814,
+        "views_at_save": 862814,
+        "age_at_save_hours": 13.76
+      },
+      {
+        "headline": "Trump's Reflecting Pool Sparks Widespread Mockery",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2053797516106408095",
+        "body": "Viral image of Trump's reflecting pool goes viral for looking utterly ridiculous, drawing laughs online.",
+        "engagement": "19K likes, 3.9K retweets, 261 replies",
+        "honesty": "8/10",
+        "notes": "Shares photo and public reaction accurately.",
+        "posted": "2026-05-11T15:55:45Z",
+        "post_ts": "2026-05-11T11:21:00Z",
+        "views": 196130,
+        "views_at_save": 196130,
+        "age_at_save_hours": 4.58
+      }
+    ],
+    "earlier": [
       {
         "headline": "Gretchen Whitmer's Friend Indicted for $20M Theft",
         "handle": "@libsoftiktok",
@@ -1810,22 +1838,6 @@
         "views": 174068,
         "views_at_save": 174068,
         "age_at_save_hours": 13.91
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Chart Shows Plummeting U.S. Marriage Rates Over Decades",
-        "handle": "@EndWokeness",
-        "url": "https://x.com/EndWokeness/status/2053658837194797453",
-        "body": "Insane chart illustrates sharp decline in marriage, highlighting broader societal changes.",
-        "engagement": "3.7K likes, 476 retweets, 257 replies",
-        "honesty": "9/10",
-        "notes": "Presents demographic data chart; verifiable trends with light commentary.",
-        "posted": "2026-05-11T05:08:07Z",
-        "post_ts": "2026-05-11T02:09:56Z",
-        "views": 300508,
-        "views_at_save": 300508,
-        "age_at_save_hours": 2.97
       },
       {
         "headline": "Walgreens Closes Chicago Store After $1M Theft Loss",
@@ -1938,25 +1950,55 @@
         "views": 141377,
         "views_at_save": 141377,
         "age_at_save_hours": 15.51
-      },
-      {
-        "headline": "LAFD Charity Misused to Hire PR Firm Covering Up Fire Failures",
-        "handle": "@WallStreetApes",
-        "url": "https://x.com/WallStreetApes/status/2053477658676396086",
-        "body": "The LAFD Foundation used donation money to pay a PR firm that edited the Pacific Palisades fire report to reduce criticism of Mayor Karen Bass.",
-        "engagement": "4.8K likes, 2.1K reposts, 39 quotes, 92 replies",
-        "honesty": "9/10",
-        "notes": "Fact-based expos\u00e9 on charity fund misuse with light opinion.",
-        "posted": "2026-05-10T16:37:39Z",
-        "post_ts": "2026-05-10T14:10:00Z",
-        "views": 47380,
-        "views_at_save": 47380,
-        "age_at_save_hours": 2.46
       }
     ]
   },
   "pg6": {
     "stories": [
+      {
+        "headline": "Exclusive: Dianna Russini and Mike Vrabel's Cozy Super Bowl Moment",
+        "handle": "@TMZ",
+        "url": "https://x.com/TMZ/status/2053835516957901016",
+        "body": "TMZ shares exclusive photo of Dianna Russini wrapping her arm around Mike Vrabel during a 2022 Super Bowl party chat.",
+        "engagement": "5.2K likes, 334 reposts, 515 replies",
+        "honesty": "8/10",
+        "notes": "Fact plus gossip implication on possible romance.",
+        "posted": "2026-05-11T15:55:45Z",
+        "post_ts": "2026-05-11T13:52:00Z",
+        "views": 1407823,
+        "views_at_save": 1407823,
+        "age_at_save_hours": 2.06
+      },
+      {
+        "headline": "Ian McKellen Reveals Alec Guinness's Anti-Activism Advice",
+        "handle": "@Variety",
+        "url": "https://x.com/Variety/status/2053802297793138922",
+        "body": "Ian McKellen discloses that Obi-Wan actor Alec Guinness urged him to avoid gay rights activism as unseemly for actors.",
+        "engagement": "7.8K likes, 300 reposts, 77 replies",
+        "honesty": "10/10",
+        "notes": "Verified fact from McKellen's interview.",
+        "posted": "2026-05-11T15:55:45Z",
+        "post_ts": "2026-05-11T11:40:00Z",
+        "views": 586854,
+        "views_at_save": 586854,
+        "age_at_save_hours": 4.26
+      },
+      {
+        "headline": "Dua Lipa Files $15M Lawsuit Against Samsung",
+        "handle": "@PopCrave",
+        "url": "https://x.com/PopCrave/status/2053295897715277880",
+        "body": "Dua Lipa sues Samsung for $15 million alleging unauthorized use of her likeness in TV advertisements.",
+        "engagement": "162K likes, 5K retweets, 2K replies",
+        "honesty": "10/10",
+        "notes": "Verified fact about lawsuit filing.",
+        "posted": "2026-05-10T23:25:20Z",
+        "post_ts": "2026-05-10T02:07:45Z",
+        "views": 11003557,
+        "views_at_save": 11003557,
+        "age_at_save_hours": 37.8
+      }
+    ],
+    "earlier": [
       {
         "headline": "Dianna Russini Cozies Up to Mike Vrabel",
         "handle": "@TMZ",
@@ -1998,25 +2040,7 @@
         "views": 1492,
         "views_at_save": 1492,
         "age_at_save_hours": 1.45
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Brianne Howey Pregnant",
-        "handle": "@PopCrave",
-        "url": "https://x.com/PopCrave/status/2053648252059169169",
-        "body": "Ginny & Georgia star Brianne Howey announces her pregnancy on Mother's Day.",
-        "engagement": "17K likes, 574 retweets, 190 replies",
-        "honesty": "9/10",
-        "notes": "Verified fact from celebrity announcement.",
-        "posted": "2026-05-11T05:08:07Z",
-        "post_ts": "2026-05-11T01:27:52Z",
-        "views": 328559,
-        "views_at_save": 328559,
-        "age_at_save_hours": 14.05
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Kevin Hart Katt Williams Reconcile",
         "handle": "@Variety",
@@ -2074,20 +2098,6 @@
         "age_at_save_hours": 8.52
       },
       {
-        "headline": "Dua Lipa Files $15M Lawsuit Against Samsung",
-        "handle": "@PopCrave",
-        "url": "https://x.com/PopCrave/status/2053295897715277880",
-        "body": "Dua Lipa sues Samsung for $15 million alleging unauthorized use of her likeness in TV advertisements.",
-        "engagement": "162K likes, 5K retweets, 2K replies",
-        "honesty": "10/10",
-        "notes": "Verified fact about lawsuit filing.",
-        "posted": "2026-05-10T23:25:20Z",
-        "post_ts": "2026-05-10T02:07:45Z",
-        "views": 11003557,
-        "views_at_save": 11003557,
-        "age_at_save_hours": 26.09
-      },
-      {
         "headline": "Martin Short Reveals Daughter's Tragic Story",
         "handle": "@Variety",
         "url": "https://x.com/Variety/status/2053525392498299319",
@@ -2128,20 +2138,6 @@
         "views": 7819214,
         "views_at_save": 7819214,
         "age_at_save_hours": 27.49
-      },
-      {
-        "headline": "Supriya Ganesh Stunned by Fan Backlash to 'The Pitt' Exit",
-        "handle": "@Variety",
-        "url": "https://x.com/Variety/status/2053558147617620118",
-        "body": "Supriya Ganesh calls the overwhelming online reaction to her departure from HBO's 'The Pitt' surreal as her name trended.",
-        "engagement": "8.8K likes, 348 retweets, 39 replies",
-        "honesty": "9/10",
-        "notes": "Direct quote from actress on real event.",
-        "posted": "2026-05-10T23:25:20Z",
-        "post_ts": "2026-05-10T19:29:50Z",
-        "views": 345845,
-        "views_at_save": 345845,
-        "age_at_save_hours": 3.93
       }
     ]
   },
@@ -2159,7 +2155,21 @@
         "post_ts": "2026-05-11T12:24:05Z",
         "views": 4931,
         "views_at_save": 4931,
-        "age_at_save_hours": 3.03
+        "age_at_save_hours": 3.53
+      },
+      {
+        "headline": "Honey Garlic Pork Chops",
+        "handle": "@summer_food",
+        "url": "https://x.com/summer_food/status/2053506347711517121",
+        "body": "Easy honey garlic pork chops that are juicy and full of flavor.",
+        "engagement": "349 likes, 49 retweets, 7 replies",
+        "honesty": "10/10",
+        "notes": "Promoted recipe link, verifiable.",
+        "posted": "2026-05-11T15:55:46Z",
+        "post_ts": "2026-05-10T16:04:00Z",
+        "views": 11194,
+        "views_at_save": 11194,
+        "age_at_save_hours": 23.86
       },
       {
         "headline": "Coconut Curry Ramen",
@@ -2174,36 +2184,6 @@
         "views": 926,
         "views_at_save": 926,
         "age_at_save_hours": 5.12
-      },
-      {
-        "headline": "Juicy Honey Garlic Pork Chops",
-        "handle": "@summer_food",
-        "url": "https://x.com/summer_food/status/2053506347711517121",
-        "body": "Easy recipe for juicy honey garlic pork chops full of flavor.",
-        "engagement": "238 likes, 33 reposts, 5 replies",
-        "honesty": "10/10",
-        "notes": "Recipe promo with link, standard accurate sharing.",
-        "posted": "2026-05-11T05:11:05Z",
-        "post_ts": "2026-05-10T16:04:00Z",
-        "views": 8620,
-        "views_at_save": 8620,
-        "age_at_save_hours": 13.12
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Homemade Copycat Snack Recipes",
-        "handle": "@Allrecipes",
-        "url": "https://x.com/Allrecipes/status/2053535585629782265",
-        "body": "Recipes to make iconic snack foods better than store-bought at home.",
-        "engagement": "4 likes, 0 reposts, 0 replies",
-        "honesty": "10/10",
-        "notes": "Link to copycat recipes, reliable source.",
-        "posted": "2026-05-11T05:11:06Z",
-        "post_ts": "2026-05-10T18:00:11Z",
-        "views": 1406,
-        "views_at_save": 1406,
-        "age_at_save_hours": 21.51
       }
     ],
     "earlier": [
@@ -2297,6 +2277,34 @@
   "science": {
     "stories": [
       {
+        "headline": "Quantum Computing Crafts Novel Half-M\u00f6bius Molecule",
+        "handle": "@SciTechera",
+        "url": "https://x.com/SciTechera/status/2053559273138036850",
+        "body": "Researchers used IBM\u2019s quantum processor to design C13Cl2, a switchable half-M\u00f6bius topology molecule.",
+        "engagement": "387 likes, 92 reposts",
+        "honesty": "9/10",
+        "notes": "Details breakthrough in quantum simulation enabling new molecular designs.",
+        "posted": "2026-05-11T15:55:47Z",
+        "post_ts": "2026-05-10T19:34:18Z",
+        "views": 56154,
+        "views_at_save": 56154,
+        "age_at_save_hours": 20.36
+      },
+      {
+        "headline": "Engineered Bacteria Devours Cancer Cells Internally",
+        "handle": "@forallcurious",
+        "url": "https://x.com/forallcurious/status/2053523938924507225",
+        "body": "Scientists from the University of Illinois developed bacteria that eats cancer cells from the inside out.",
+        "engagement": "2.3K likes, 245 reposts",
+        "honesty": "8/10",
+        "notes": "Accurately summarizes new research on cancer-targeting bacteria from University of Illinois.",
+        "posted": "2026-05-11T15:55:46Z",
+        "post_ts": "2026-05-10T17:13:54Z",
+        "views": 40705,
+        "views_at_save": 40705,
+        "age_at_save_hours": 22.7
+      },
+      {
         "headline": "Mitochondria Communicate Using Light",
         "handle": "@forallcurious",
         "url": "https://x.com/forallcurious/status/2053555809142055161",
@@ -2309,7 +2317,9 @@
         "views": 227766,
         "views_at_save": 227766,
         "age_at_save_hours": 20.09
-      },
+      }
+    ],
+    "earlier": [
       {
         "headline": "Natural Quantum Spin Liquids Found in Earth Crystals",
         "handle": "@newscientist",
@@ -2337,9 +2347,7 @@
         "views": 19719,
         "views_at_save": 19719,
         "age_at_save_hours": 17.57
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Bacteria Engineered to Eat Cancer Cells",
         "handle": "@EricTopol",
@@ -2411,34 +2419,6 @@
         "age_at_save_hours": 12.63
       },
       {
-        "headline": "Bacteria Engineered to Eat Cancer Cells from Inside",
-        "handle": "@forallcurious",
-        "url": "https://x.com/forallcurious/status/2053523938924507225",
-        "body": "Scientists from the University of Illinois developed bacteria that eats cancer cells from the inside out.",
-        "engagement": "1.5K likes, 172 reposts",
-        "honesty": "8/10",
-        "notes": "Summarizes recent university research on engineered bacteria for cancer treatment.",
-        "posted": "2026-05-11T04:17:02Z",
-        "post_ts": "2026-05-10T17:13:54Z",
-        "views": 27675,
-        "views_at_save": 27675,
-        "age_at_save_hours": 11.05
-      },
-      {
-        "headline": "Tesla AI Vision Breakthrough",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2053141290989318335",
-        "body": "Tesla engineers leveraged real-world crash data and AI vision to accelerate restraint deployment, reducing predicted injury severity across all crash...",
-        "engagement": "30K likes, 5.6K reposts, 92 quotes, 2.6K replies",
-        "honesty": "9/10",
-        "notes": "Describes verifiable engineering research and deployment using fleet data and simulations, with no false claims.",
-        "posted": "2026-05-10T15:49:48Z",
-        "post_ts": "2026-05-09T15:53:23Z",
-        "views": 13089411,
-        "views_at_save": 13089411,
-        "age_at_save_hours": 36.39
-      },
-      {
         "headline": "AI Outperforms Doctors in ER Diagnoses",
         "handle": "@ScienceMagazine",
         "url": "https://x.com/ScienceMagazine/status/2053223003366781363",
@@ -2452,7 +2432,8 @@
         "views_at_save": 121097,
         "age_at_save_hours": 20.86
       }
-    ]
+    ],
+    "_overflow": []
   },
   "local": {
     "stories": [
@@ -2468,7 +2449,7 @@
         "post_ts": "2026-05-10T20:46:45Z",
         "views": 76544,
         "views_at_save": 76544,
-        "age_at_save_hours": 18.65
+        "age_at_save_hours": 19.15
       },
       {
         "headline": "Del Taco History Clarified by OC Food Expert",
@@ -2482,7 +2463,7 @@
         "post_ts": "2026-05-10T17:44:09Z",
         "views": 43876,
         "views_at_save": 43876,
-        "age_at_save_hours": 21.7
+        "age_at_save_hours": 22.19
       },
       {
         "headline": "USC Commit Impresses at Huntington Beach 7v7",
@@ -2496,7 +2477,7 @@
         "post_ts": "2026-05-10T04:35:39Z",
         "views": 41089,
         "views_at_save": 41089,
-        "age_at_save_hours": 34.84
+        "age_at_save_hours": 35.34
       }
     ],
     "earlier": [
@@ -2617,6 +2598,34 @@
   "conspiracy": {
     "stories": [
       {
+        "headline": "Widespread Sexual Abuse in Israeli Detention Exposed",
+        "handle": "@DropSiteNews",
+        "url": "https://x.com/DropSiteNews/status/2053840843971166523",
+        "body": "Interviews reveal rape and sexual torture against Palestinians in Israeli facilities, normalized per UN and human rights reports, detailed in NYT...",
+        "engagement": "381 likes, 192 reposts, 10 quotes, 4 replies",
+        "honesty": "9/10",
+        "notes": "Based on journalist interviews with victims and corroborated by multiple human rights organizations and UN reports.",
+        "posted": "2026-05-11T15:55:47Z",
+        "post_ts": "2026-05-11T14:13:10Z",
+        "views": 23897,
+        "views_at_save": 23897,
+        "age_at_save_hours": 1.71
+      },
+      {
+        "headline": "NYPD Fails to Review Thousands of Searches",
+        "handle": "@propublica",
+        "url": "https://x.com/propublica/status/2053766441564811754",
+        "body": "America\u2019s largest police department failed to properly review thousands of searches by officers in an aggressive unit, according to a court-appointed...",
+        "engagement": "169 likes, 94 reposts, 6 quotes, 2 replies",
+        "honesty": "9/10",
+        "notes": "ProPublica investigation based on court monitor findings, verifiable evidence.",
+        "posted": "2026-05-11T15:55:47Z",
+        "post_ts": "2026-05-11T09:17:31Z",
+        "views": 10520,
+        "views_at_save": 10520,
+        "age_at_save_hours": 6.64
+      },
+      {
         "headline": "Exclusive: No Taxpayer Funds for Sec. Duffy's Road Trip",
         "handle": "@libsoftiktok",
         "url": "https://x.com/libsoftiktok/status/2053642208302043624",
@@ -2628,8 +2637,10 @@
         "post_ts": "2026-05-11T01:03:51Z",
         "views": 124369,
         "views_at_save": 124369,
-        "age_at_save_hours": 14.37
-      },
+        "age_at_save_hours": 14.87
+      }
+    ],
+    "earlier": [
       {
         "headline": "Satirical Take on Netanyahu's Employee Treatment",
         "handle": "@ggreenwald",
@@ -2657,9 +2668,7 @@
         "views": 431359,
         "views_at_save": 431359,
         "age_at_save_hours": 13.82
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "LAFD Charity Funds Used to Cover Up Fire Failures",
         "handle": "@WallStreetApes",
@@ -2758,8 +2767,7 @@
         "views_at_save": 64684,
         "age_at_save_hours": 24.49
       }
-    ],
-    "_overflow": []
+    ]
   },
   "comedy": {
     "stories": [
@@ -2775,7 +2783,7 @@
         "post_ts": "2026-05-11T10:31:23Z",
         "views": 20229,
         "views_at_save": 20229,
-        "age_at_save_hours": 4.91
+        "age_at_save_hours": 5.41
       },
       {
         "headline": "Patrice O'Neal Trolls Dave Chappelle",
@@ -2789,8 +2797,24 @@
         "post_ts": "2026-05-11T03:09:43Z",
         "views": 3,
         "views_at_save": 3,
-        "age_at_save_hours": 12.27
+        "age_at_save_hours": 12.77
       },
+      {
+        "headline": "Tim Conway's dentist skit from Carol Burnett",
+        "handle": "@HistoryGuy510",
+        "url": "https://x.com/HistoryGuy510/status/2053585625324867652",
+        "body": "Classic comedy sketch features Tim Conway as a clumsy dentist causing chaos for patient Harvey Korman.",
+        "engagement": "2 likes, 0 reposts",
+        "honesty": "9/10",
+        "notes": "Sharing a well-known verified comedy sketch from The Carol Burnett Show.",
+        "posted": "2026-05-11T04:13:20Z",
+        "post_ts": "2026-05-10T21:19:01Z",
+        "views": 47,
+        "views_at_save": 47,
+        "age_at_save_hours": 18.61
+      }
+    ],
+    "earlier": [
       {
         "headline": "Hysterical SNL Skit",
         "handle": "@charles_lush",
@@ -2804,22 +2828,6 @@
         "views": 15,
         "views_at_save": 15,
         "age_at_save_hours": 23.63
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Tim Conway's dentist skit from Carol Burnett",
-        "handle": "@HistoryGuy510",
-        "url": "https://x.com/HistoryGuy510/status/2053585625324867652",
-        "body": "Classic comedy sketch features Tim Conway as a clumsy dentist causing chaos for patient Harvey Korman.",
-        "engagement": "2 likes, 0 reposts",
-        "honesty": "9/10",
-        "notes": "Sharing a well-known verified comedy sketch from The Carol Burnett Show.",
-        "posted": "2026-05-11T04:13:20Z",
-        "post_ts": "2026-05-10T21:19:01Z",
-        "views": 47,
-        "views_at_save": 47,
-        "age_at_save_hours": 7.82
       },
       {
         "headline": "Ron Taylor's stand-up on crazy old kids movies",
@@ -2890,20 +2898,6 @@
         "views": 150168,
         "views_at_save": 150168,
         "age_at_save_hours": 23.28
-      },
-      {
-        "headline": "Dave Chappelle's Arrest Story",
-        "handle": "@FunnyChappelle",
-        "url": "https://x.com/FunnyChappelle/status/2053136372911972785",
-        "body": "Chappelle shares funny tale of nearly getting arrested after a Hollywood club night.",
-        "engagement": "269 likes, 35 reposts",
-        "honesty": "9/10",
-        "notes": "Accurate excerpt from Chappelle's stand-up special with performative storytelling.",
-        "posted": "2026-05-10T16:16:55Z",
-        "post_ts": "2026-05-09T15:33:51Z",
-        "views": 13499,
-        "views_at_save": 13499,
-        "age_at_save_hours": 24.72
       }
     ]
   },
