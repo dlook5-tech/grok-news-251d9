@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-11T19:08:01Z",
+  "lastUpdated": "2026-05-11T19:15:44Z",
   "world": {
     "stories": [],
     "earlier": [],
@@ -8,7 +8,7 @@
   "usa": {
     "stories": [
       {
-        "headline": "Trump Backs Suspending Federal Gas Tax",
+        "headline": "Trump Proposes Suspension of Federal Gas Tax",
         "honesty": "8/10",
         "perspectives": [
           {
@@ -16,24 +16,24 @@
             "handle": "@NEWSMAX",
             "url": "https://x.com/NEWSMAX/status/2053868007949287796",
             "text": "President Donald Trump said Monday he wants to temporarily suspend the federal gas tax as Americans face surging fuel prices tied to the Iran war.....",
-            "engagement": "114 likes, 21 reposts",
+            "engagement": "117 likes, 22 reposts",
             "honesty": "9/10",
-            "views": 9096,
-            "notes": "Accurate reporting of Trump's statement with link to article, no false claims.",
-            "views_at_save": 9096,
-            "age_at_save_hours": 3.12
+            "views": 9175,
+            "notes": "Reports Trump's announcement factually with source link; no false claims.",
+            "views_at_save": 9175,
+            "age_at_save_hours": 3.24
           },
           {
             "label": "Democrat",
             "handle": "@allenanalysis",
             "url": "https://x.com/allenanalysis/status/2053874972301427145",
-            "text": "\ud83d\udea8NEW: Trump just announced plans to slash the federal gas tax.. \u201cAs soon as Iran is over, you\u2019re gonna see oil and gas drop like a rock.\u201d December:...",
-            "engagement": "2384 likes, 654 reposts",
-            "honesty": "7/10",
-            "views": 284188,
-            "notes": "Partisan framing blames Trump for war and price rise, but gas price data verifiable; opinion on causation defensible without lies.",
-            "views_at_save": 284188,
-            "age_at_save_hours": 2.65
+            "text": "\ud83d\udea8NEW: Trump just announced plans to slash the federal gas tax.. \u201cAs soon as Iran is over, you\u2019re gonna see oil and gas drop like a rock.\u201d\n\nDecember:...",
+            "engagement": "2.5K likes, 676 reposts",
+            "honesty": "8/10",
+            "views": 303690,
+            "notes": "Provides price data and critique; war attribution is opinionated but aligns with context of Iran conflict.",
+            "views_at_save": 303690,
+            "age_at_save_hours": 2.78
           },
           {
             "label": "Independent",
@@ -42,19 +42,21 @@
             "text": "BREAKING: Trump backs federal gas tax suspension https://www.axios.com/2026/05/11/trump-suspend-federal-gas-tax.",
             "engagement": "31 likes, 7 reposts",
             "honesty": "10/10",
-            "views": 11297,
-            "notes": "Straightforward breaking news report with link to article, verifiable fact.",
-            "views_at_save": 11297,
-            "age_at_save_hours": 3.67
+            "views": 11332,
+            "notes": "Neutral breaking news report with article link; verifiable fact.",
+            "views_at_save": 11332,
+            "age_at_save_hours": 3.8
           }
         ],
         "footnotes": [],
-        "notes": "High-velocity story on federal policy with balanced perspectives exceeding view thresholds.",
+        "notes": "High-velocity story on Trump's gas tax proposal with perspectives from all sides.",
         "body": "Three-perspective roundup.",
-        "posted": "5/11/2026 7:08 PM",
+        "posted": "5/11/2026 7:15 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 3.12
-      },
+        "age_at_save_hours": 3.24
+      }
+    ],
+    "earlier": [
       {
         "headline": "Trump Appears to Nod Off at Maternal Health Event",
         "honesty": "8/10",
@@ -104,107 +106,60 @@
         "age_at_save_hours": 0.69
       }
     ],
-    "earlier": [
-      {
-        "headline": "Trump Proposes Reverse Psychology on Democrats for Legislation",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@EricLDaugh",
-            "url": "https://x.com/EricLDaugh/status/2053856070129393937",
-            "text": "\ud83d\udea8 JUST IN: President Trump announces a NEW PLAN to get 100% of his policies through Congress\n\n\"Trump Derangement Syndrome I'm hearing is ACTUALLY a...",
-            "engagement": "2168 likes, 364 reposts",
-            "honesty": "9/10",
-            "views": 81192,
-            "notes": "Accurate quote of Trump's humorous remarks with positive spin.",
-            "views_at_save": 81192,
-            "age_at_save_hours": 1.6
-          },
-          {
-            "label": "Democrat",
-            "handle": "@EdKrassen",
-            "url": "https://x.com/EdKrassen/status/2053856175783841952",
-            "text": "TRUMP: \u201cThey\u2019ve got serious Trump Derangement Syndrome, which actually is a disease.. I\u2019m hearing it\u2019s actually a disease.\u201d\n\nIf it actually is a...",
-            "engagement": "284 likes, 59 reposts",
-            "honesty": "7/10",
-            "views": 6610,
-            "notes": "Critiques Trump's statement with counter-opinion, no factual lies.",
-            "views_at_save": 6610,
-            "age_at_save_hours": 1.59
-          },
-          {
-            "label": "Independent",
-            "handle": "@clashreport",
-            "url": "https://x.com/clashreport/status/2053855631996584079",
-            "text": "Trump jokes:\n\nI hear that Trump Derangement Syndrome is actually a disease.. I am honored.",
-            "engagement": "29 likes, 4 reposts",
-            "honesty": "10/10",
-            "views": 8743,
-            "notes": "Direct quote of joke without added bias.",
-            "views_at_save": 8743,
-            "age_at_save_hours": 1.63
-          }
-        ],
-        "footnotes": [],
-        "notes": "Humorous take on congressional gridlock draws cross-aisle reactions.",
-        "body": "Three-perspective roundup.",
-        "posted": "5/11/2026 4:14 PM",
-        "views_at_save": 0,
-        "age_at_save_hours": 1.6
-      }
-    ],
     "_overflow": []
   },
   "elon": {
     "stories": [
       {
-        "headline": "Elon Slams Trans Achilles Casting Idea",
+        "headline": "Critique of Trans Casting in Odyssey",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2053903859798393136",
-        "body": "Elon calls the suggestion of trans actor Elliot Page playing Achilles in a new Odyssey film one of the dumbest and twisted things he's heard.",
-        "engagement": "10.9K likes, 538 reposts, 703 replies",
+        "body": "Elon Musk calls the suggestion of trans actor Elliot Page playing Achilles in the new Odyssey film adaptation one of the dumbest and twisted things...",
+        "engagement": "12.7K likes, 608 reposts, 28 quotes, 771 replies",
         "honesty": "8/10",
-        "notes": "Sharp cultural critique with no factual inaccuracies.",
-        "posted": "2026-05-11T19:08:03Z",
+        "notes": "Opinion-based cultural critique with no factual inaccuracies.",
+        "posted": "2026-05-11T19:15:45Z",
         "post_ts": "2026-05-11T18:23:34Z",
-        "views": 105841,
+        "views": 123278,
         "parent_url": "https://x.com/unherd/status/2053890401791082830",
         "parent_handle": "@unherd",
         "parent_text": "Over the weekend, online reports suggested that Achilles might be played by trans actor Elliot Page in the new film adaptation of The Odyssey. The idea isn't as outrageous as it seems, writes @SpencerKlavan \ud83d\udc47 https://unherd.com/newsroom/elliot-page-as-achilles-is-not-as-far-fetch",
-        "views_at_save": 105841,
-        "age_at_save_hours": 0.74
+        "views_at_save": 123278,
+        "age_at_save_hours": 0.87
       },
       {
-        "headline": "Elon Comments on Trigger Warnings in Old Media",
+        "headline": "Trigger Warnings in Media",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2053900609800069444",
-        "body": "Elon observes that many classic movies are now prefaced with trigger warnings for depictions of marginalized groups, agreeing with Marc Andreessen's...",
-        "engagement": "1.8K likes, 133 reposts, 408 replies",
-        "honesty": "7/10",
-        "notes": "Defensible opinion on cultural shifts in media sensitivity, presented as observation.",
-        "posted": "2026-05-11T19:08:04Z",
+        "body": "Elon Musk observes that many old movies now carry trigger warnings for depictions of marginalized groups, relating to complaints about a book's...",
+        "engagement": "1.9K likes, 137 reposts, 19 quotes, 413 replies",
+        "honesty": "8/10",
+        "notes": "Commentary on cultural trends in media sensitivity, no false claims.",
+        "posted": "2026-05-11T19:15:45Z",
         "post_ts": "2026-05-11T18:10:39Z",
-        "views": 88623,
-        "views_at_save": 88623,
-        "age_at_save_hours": 0.96
+        "views": 92297,
+        "parent_url": "https://x.com/pmarca/status/2053670363775844710",
+        "parent_handle": "@pmarca",
+        "parent_text": "1 Open 2026 30th Anniversary edition of David Foster Wallace\u2019s \u201cInfinite Jest\u201d. 2 First page of new Introduction gratuitously attacks men. 3 Hurl Kindle at wall.",
+        "views_at_save": 92297,
+        "age_at_save_hours": 1.09
       },
       {
-        "headline": "Elon Highlights Iliad's Key Plot Points",
+        "headline": "Iliad Plot Points on Relationships",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2053901717805133948",
-        "body": "Responding to criticism of modern interpretations, Elon emphasizes the Iliad's central heterosexual motivations: war over Helen and Achilles' anger...",
-        "engagement": "2.8K likes, 194 reposts, 424 replies",
+        "body": "Elon Musk emphasizes the Iliad's central plot points involving heterosexual motivations, countering portrayals of Achilles and Patroclus as gay...",
+        "engagement": "3.3K likes, 216 reposts, 29 quotes, 440 replies",
         "honesty": "9/10",
-        "notes": "Accurate summary of classical literature plot points with contrarian cultural take.",
-        "posted": "2026-05-11T19:08:04Z",
+        "notes": "Accurate summary of Iliad's key events from classical literature, presented as factual correction.",
+        "posted": "2026-05-11T19:15:45Z",
         "post_ts": "2026-05-11T18:15:03Z",
-        "views": 57227,
+        "views": 64598,
         "parent_url": "https://x.com/TWarPhilosopher/status/2053637655389163893",
         "parent_handle": "@TWarPhilosopher",
         "parent_text": "These two books were disastrous for humanity and study of the Ancients. Miller convinced leftists Achilles and Patroclus were gay lovers and Wilson translated the Iliad to implicitly hint at this. Christopher Nolan\u2019s Odyssey is the final straw to ruin Homer.",
-        "views_at_save": 57227,
-        "age_at_save_hours": 0.88
+        "views_at_save": 64598,
+        "age_at_save_hours": 1.01
       }
     ],
     "earlier": [
@@ -272,18 +227,18 @@
   "sports": {
     "stories": [
       {
-        "headline": "Bucks Open to Giannis Antetokounmpo Trade Offers",
+        "headline": "Bucks Open to Trading Giannis Antetokounmpo",
         "handle": "@ShamsCharania",
         "url": "https://x.com/ShamsCharania/status/2053876566615044190",
-        "body": "Milwaukee Bucks are open for trade calls and offers for two-time MVP Giannis Antetokounmpo ahead of NBA draft.",
+        "body": "The Milwaukee Bucks are entertaining trade offers for two-time MVP Giannis Antetokounmpo, sources say.",
         "engagement": "15K likes, 2K reposts",
         "honesty": "10/10",
-        "notes": "Verified insider report from ESPN sources on trade availability.",
-        "posted": "2026-05-11T19:08:04Z",
+        "notes": "Insider reporting from ESPN sources on trade availability.",
+        "posted": "2026-05-11T19:15:46Z",
         "post_ts": "2026-05-11T16:35:07Z",
-        "views": 4415692,
-        "views_at_save": 4415692,
-        "age_at_save_hours": 2.55
+        "views": 4536957,
+        "views_at_save": 4536957,
+        "age_at_save_hours": 2.68
       },
       {
         "headline": "Steelers Extend Kicker Chris Boswell for $28M",
@@ -297,7 +252,7 @@
         "post_ts": "2026-05-11T16:17:28Z",
         "views": 426274,
         "views_at_save": 426274,
-        "age_at_save_hours": 2.84
+        "age_at_save_hours": 2.97
       },
       {
         "headline": "No Further Discipline for Victor Wembanyama",
@@ -447,32 +402,32 @@
   "allin": {
     "stories": [
       {
-        "headline": "AI Data Centers: $50B Build, $25-30B Annual Revenue",
-        "handle": "@DavidSacks",
-        "url": "https://x.com/DavidSacks/status/2053573251419230702",
-        "body": "A 1GW data center requires $50B capex but yields $25-30B yearly revenue and $1-2B electricity cost for a 2-year payback.",
-        "engagement": "11.6K likes, 874 retweets, 549 replies",
-        "honesty": "8/10",
-        "notes": "Back-of-envelope analysis with reasonable estimates.",
-        "posted": "2026-05-11T19:08:05Z",
-        "post_ts": "2026-05-10T20:29:51Z",
-        "views": 1867363,
-        "views_at_save": 1867363,
-        "age_at_save_hours": 22.64
-      },
-      {
-        "headline": "USPS Monopoly Enables Junk Mail Waste",
+        "headline": "Ban Junk Mail to Save Resources",
         "handle": "@PalmerLuckey",
         "url": "https://x.com/PalmerLuckey/status/2053651657934954970",
-        "body": "Ban junk mail via USPS to match spam regulations, saving 100M trees yearly and billions in lost productivity time.",
-        "engagement": "36.9K likes, 3K retweets, 2.6K replies",
+        "body": "Palmer Luckey proposes banning junk mail, citing its waste of 100 million trees yearly and comparing it to regulated digital spam.",
+        "engagement": "37K likes, 3K retweets, 2.6K replies",
         "honesty": "7/10",
-        "notes": "Policy opinion highlighting environmental and efficiency issues.",
-        "posted": "2026-05-11T19:08:05Z",
+        "notes": "Opinion on policy and efficiency.",
+        "posted": "2026-05-11T19:15:46Z",
         "post_ts": "2026-05-11T01:41:24Z",
-        "views": 749808,
-        "views_at_save": 749808,
-        "age_at_save_hours": 17.44
+        "views": 752205,
+        "views_at_save": 752205,
+        "age_at_save_hours": 17.57
+      },
+      {
+        "headline": "Data Center Boom Economics",
+        "handle": "@DavidSacks",
+        "url": "https://x.com/DavidSacks/status/2053573251419230702",
+        "body": "David Sacks shares back-of-envelope calculations showing 1GW data centers could pay back $50B capex in 2 years with $25-30B annual revenue.",
+        "engagement": "11.6K likes, 875 retweets, 549 replies",
+        "honesty": "8/10",
+        "notes": "Fact-based analysis with opinion on industry boom.",
+        "posted": "2026-05-11T19:15:46Z",
+        "post_ts": "2026-05-10T20:29:51Z",
+        "views": 1871495,
+        "views_at_save": 1871495,
+        "age_at_save_hours": 22.77
       },
       {
         "headline": "pmarca on AI Knowledge Gap",
@@ -486,7 +441,7 @@
         "post_ts": "2026-05-10T08:28:04Z",
         "views": 140702,
         "views_at_save": 140702,
-        "age_at_save_hours": 34.67
+        "age_at_save_hours": 34.8
       }
     ],
     "earlier": [
@@ -565,21 +520,21 @@
         "post_ts": "2026-05-11T16:15:00Z",
         "views": 5904,
         "views_at_save": 5904,
-        "age_at_save_hours": 2.88
+        "age_at_save_hours": 3.01
       },
       {
-        "headline": "Jeffrey Tucker Claims Lockdowns Prepared for Vaccines",
+        "headline": "Jeffrey Tucker on COVID Lockdown Purpose",
         "handle": "@joeroganhq",
         "url": "https://x.com/joeroganhq/status/2053845079698096297",
-        "body": "Jeffrey Tucker argues COVID lockdowns kept people apart to prevent natural immunity and prepare the population for shots.",
-        "engagement": "402 likes, 100 reposts, 18 replies",
+        "body": "Jeffrey Tucker claims COVID lockdowns aimed to prevent natural immunity and prepare people for vaccines.",
+        "engagement": "407 likes, 105 reposts, 18 replies",
         "honesty": "5/10",
-        "notes": "Conspiratorial opinion on policy intent, defensible take.",
-        "posted": "2026-05-11T19:08:05Z",
+        "notes": "Contrarian interpretation of policy intent without direct evidence.",
+        "posted": "2026-05-11T19:15:47Z",
         "post_ts": "2026-05-11T14:30:00Z",
-        "views": 15762,
-        "views_at_save": 15762,
-        "age_at_save_hours": 4.63
+        "views": 15881,
+        "views_at_save": 15881,
+        "age_at_save_hours": 4.76
       }
     ],
     "earlier": [
@@ -626,20 +581,6 @@
         "age_at_save_hours": 4.58
       },
       {
-        "headline": "Adam Carolla spotlights Biden admin vaccine cover-up claims",
-        "handle": "@adamcarolla",
-        "url": "https://x.com/adamcarolla/status/2053554221291864498",
-        "body": "Adam Carolla amplifies Sen.. Ron Johnson's evidence of the Biden administration allegedly covering up COVID vaccine safety signals and silencing a...",
-        "engagement": "3.2K likes, 732 reposts, 106 replies",
-        "honesty": "7/10",
-        "notes": "Opinion amplifying whistleblower claims from Sen. Johnson; potential for partisan spin but based on reported evidence.",
-        "posted": "2026-05-11T04:29:02Z",
-        "post_ts": "2026-05-10T19:14:14Z",
-        "views": 59712,
-        "views_at_save": 59712,
-        "age_at_save_hours": 20.2
-      },
-      {
         "headline": "Elon Musk on $12B Submarine Scandal",
         "handle": "@joeroganhq",
         "url": "https://x.com/joeroganhq/status/2053656339738513588",
@@ -670,7 +611,8 @@
     ]
   },
   "business": {
-    "stories": [
+    "stories": [],
+    "earlier": [
       {
         "headline": "Burry's Contrarian Stock Advice",
         "handle": "@unusual_whales",
@@ -698,9 +640,7 @@
         "views": 122036,
         "views_at_save": 122036,
         "age_at_save_hours": 1.84
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Avoid Panic Selling Long-Term Stocks",
         "handle": "@mikealfred",
@@ -733,6 +673,50 @@
   },
   "top": {
     "stories": [
+      {
+        "headline": "Karpathy predicts AI outputs evolving to interactive videos",
+        "handle": "@karpathy",
+        "url": "https://x.com/karpathy/status/2053872850101285137",
+        "body": "AI interfaces will progress from text and markdown to HTML and eventually interactive neural videos for optimal human-AI communication.",
+        "engagement": "5.8K likes, 533 reposts",
+        "honesty": "7/10",
+        "notes": "Opinion on future AI output formats.",
+        "posted": "2026-05-11T19:15:47Z",
+        "post_ts": "2026-05-11T16:20:21Z",
+        "views": 460591,
+        "views_at_save": 460591,
+        "age_at_save_hours": 2.92
+      },
+      {
+        "headline": "Elliot Page as Achilles not far-fetched, per analysis",
+        "handle": "@unherd",
+        "url": "https://x.com/unherd/status/2053890401791082830",
+        "body": "Online reports suggest trans actor Elliot Page may play Achilles in The Odyssey adaptation, an idea explored in new article.",
+        "engagement": "225 likes, 18 reposts",
+        "honesty": "8/10",
+        "notes": "Fact reporting rumor with linked opinion piece.",
+        "posted": "2026-05-11T19:15:48Z",
+        "post_ts": "2026-05-11T17:30:05Z",
+        "views": 129684,
+        "views_at_save": 129684,
+        "age_at_save_hours": 1.76
+      },
+      {
+        "headline": "Pedri's hilarious surprised reaction to praise",
+        "handle": "@433",
+        "url": "https://x.com/433/status/2053885220588286089",
+        "body": "Barcelona's Pedri reacts comically as if shocked by the compliments in this viral clip.",
+        "engagement": "8.3K likes, 444 reposts",
+        "honesty": "9/10",
+        "notes": "Fact sports video with light caption.",
+        "posted": "2026-05-11T19:15:48Z",
+        "post_ts": "2026-05-11T17:09:30Z",
+        "views": 112777,
+        "views_at_save": 112777,
+        "age_at_save_hours": 2.1
+      }
+    ],
+    "earlier": [
       {
         "headline": "Elon Calls Out Selective Outrage on Flags",
         "handle": "@elonmusk",
@@ -774,9 +758,7 @@
         "views": 528018,
         "views_at_save": 528018,
         "age_at_save_hours": 0.52
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Gracie Abrams Announces New Album",
         "handle": "@gracieabrams",
@@ -810,18 +792,32 @@
   "msm": {
     "stories": [
       {
-        "headline": "Government Prepares to Seize Homes for Georgia Data Center",
+        "headline": "Georgia Power Seizes Homes for Data Center",
         "handle": "@WallStreetApes",
         "url": "https://x.com/WallStreetApes/status/2053887249801244737",
-        "body": "Georgia Power plans to use eminent domain to take over 330 private properties for power lines linked to a massive hyperscale data center campus amid...",
-        "engagement": "7.1K likes, 4K reposts, 280 quotes, 633 replies",
+        "body": "Government uses eminent domain to take over 330 private properties in Coweta County for a massive data center campus.",
+        "engagement": "7.8K likes, 4.4K retweets, 677 replies",
         "honesty": "9/10",
-        "notes": "Reports specific, verifiable local government action with video evidence.",
-        "posted": "2026-05-11T19:08:07Z",
+        "notes": "Factual reporting of local eminent domain case with video evidence.",
+        "posted": "2026-05-11T19:15:48Z",
         "post_ts": "2026-05-11T17:17:34Z",
-        "views": 209781,
-        "views_at_save": 209781,
-        "age_at_save_hours": 1.84
+        "views": 227038,
+        "views_at_save": 227038,
+        "age_at_save_hours": 1.97
+      },
+      {
+        "headline": "Biden CHNV Program Fraud Exposed",
+        "handle": "@BillMelugin_",
+        "url": "https://x.com/BillMelugin_/status/2053894383200780437",
+        "body": "Biden's parole program flew 500K+ migrants into US with fraud, no tracking, and led to crimes like a Haitian rapist case.",
+        "engagement": "3.5K likes, 1.3K retweets, 92 replies",
+        "honesty": "8/10",
+        "notes": "Cites DHS IG report and specific crime instance accurately.",
+        "posted": "2026-05-11T19:15:48Z",
+        "post_ts": "2026-05-11T17:45:55Z",
+        "views": 109011,
+        "views_at_save": 109011,
+        "age_at_save_hours": 1.5
       },
       {
         "headline": "AOC's Ironic Attack on Tennessee Redistricting",
@@ -836,7 +832,9 @@
         "views": 76711,
         "views_at_save": 76711,
         "age_at_save_hours": 0.92
-      },
+      }
+    ],
+    "earlier": [
       {
         "headline": "Musician Denied US Entry Over Girlfriend's Trump Assassination Threat",
         "handle": "@libsoftiktok",
@@ -852,7 +850,6 @@
         "age_at_save_hours": 1.21
       }
     ],
-    "earlier": [],
     "_overflow": []
   },
   "pg6": {
@@ -869,7 +866,7 @@
         "post_ts": "2026-05-11T17:28:42Z",
         "views": 5000000,
         "views_at_save": 5000000,
-        "age_at_save_hours": 1.66
+        "age_at_save_hours": 1.79
       },
       {
         "headline": "Dakota Johnson Engagement Farming Exposed",
@@ -883,7 +880,7 @@
         "post_ts": "2026-05-11T17:54:08Z",
         "views": 1000000,
         "views_at_save": 1000000,
-        "age_at_save_hours": 1.23
+        "age_at_save_hours": 1.36
       },
       {
         "headline": "Cut Jokes from Kevin Hart Roast Exposed",
@@ -897,7 +894,7 @@
         "post_ts": "2026-05-11T16:03:24Z",
         "views": 40360,
         "views_at_save": 40360,
-        "age_at_save_hours": 3.08
+        "age_at_save_hours": 3.21
       }
     ],
     "earlier": [
@@ -1057,7 +1054,21 @@
         "post_ts": "2026-05-11T15:20:07Z",
         "views": 92,
         "views_at_save": 92,
-        "age_at_save_hours": 3.8
+        "age_at_save_hours": 3.93
+      },
+      {
+        "headline": "One Pot Rigatoni Alfredo with Chicken and Kale",
+        "handle": "@KitchenSanc2ary",
+        "url": "https://x.com/KitchenSanc2ary/status/2053840298112098445",
+        "body": "Prepare this comforting one-pot rigatoni alfredo with chicken and kale in garlic parmesan sauce.",
+        "engagement": "33 likes, 6 retweets, 0 replies",
+        "honesty": "10/10",
+        "notes": "Easy comfort food recipe shared.",
+        "posted": "2026-05-11T19:15:49Z",
+        "post_ts": "2026-05-11T14:11:00Z",
+        "views": 1380,
+        "views_at_save": 1380,
+        "age_at_save_hours": 5.08
       },
       {
         "headline": "Grilled Salmon with Salsa Verde",
@@ -1071,8 +1082,10 @@
         "post_ts": "2026-05-11T00:00:05Z",
         "views": 5741,
         "views_at_save": 5741,
-        "age_at_save_hours": 19.13
-      },
+        "age_at_save_hours": 19.26
+      }
+    ],
+    "earlier": [
       {
         "headline": "Coconut Curry Ramen",
         "handle": "@KitchenSanc2ary",
@@ -1086,52 +1099,6 @@
         "views": 1235,
         "views_at_save": 1235,
         "age_at_save_hours": 8.82
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Mother's Day Cake",
-        "handle": "@tasty",
-        "url": "https://x.com/tasty/status/2053845956055945578",
-        "body": "Bake this delightful Mother's Day cake using a straightforward recipe video guide.",
-        "engagement": "12 likes, 2 retweets, 0 replies",
-        "honesty": "10/10",
-        "notes": "Holiday-specific cake recipe, verifiable steps.",
-        "posted": "2026-05-11T16:59:36Z",
-        "post_ts": "2026-05-11T14:33:29Z",
-        "views": 4446,
-        "views_at_save": 4446,
-        "age_at_save_hours": 4.64
-      },
-      {
-        "headline": "Original 1800s Texas Chili Recipe",
-        "handle": "@jwalkermobile",
-        "url": "https://x.com/jwalkermobile/status/2053843317956243963",
-        "body": "This recipe recreates the original Texas Chili from the 1800s using traditional ingredients for an authentic bold flavor.",
-        "engagement": "62 likes, 8 reposts, 11 replies",
-        "honesty": "10/10",
-        "notes": "Provides historical recipe with supporting images, no factual errors.",
-        "posted": "2026-05-11T17:02:39Z",
-        "post_ts": "2026-05-11T14:23:00Z",
-        "views": 2607,
-        "views_at_save": 2607,
-        "age_at_save_hours": 4.82
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "One Pot Rigatoni Alfredo with Chicken and Kale",
-        "handle": "@KitchenSanc2ary",
-        "url": "https://x.com/KitchenSanc2ary/status/2053840298112098445",
-        "body": "Enjoy comfort food with one-pot rigatoni alfredo featuring chicken and kale in creamy sauce.",
-        "engagement": "21 likes, 5 retweets, 2 replies",
-        "honesty": "10/10",
-        "notes": "Complete pasta dish recipe, no misleading claims.",
-        "posted": "2026-05-11T16:59:37Z",
-        "post_ts": "2026-05-11T14:11:00Z",
-        "views": 888,
-        "views_at_save": 888,
-        "age_at_save_hours": 2.94
       },
       {
         "headline": "Coconut Cod Shakshuka Recipe",
@@ -1236,18 +1203,18 @@
   "science": {
     "stories": [
       {
-        "headline": "38 New Deep-Sea Species Discovered",
+        "headline": "38 New Deep-Sea Species Found Near Japan",
         "handle": "@forallcurious",
         "url": "https://x.com/forallcurious/status/2053881070735802727",
         "body": "Scientists discovered 38 new species of deep-sea organisms in waters near Japan.",
-        "engagement": "1.1K likes, 118 reposts",
+        "engagement": "1.2K likes, 125 reposts, 18 quotes, 30 replies",
         "honesty": "8/10",
-        "notes": "Announces recent biological discovery, likely based on research publication.",
-        "posted": "2026-05-11T19:08:08Z",
+        "notes": "Reports recent biological discovery; assumes accuracy from scientific context.",
+        "posted": "2026-05-11T19:15:50Z",
         "post_ts": "2026-05-11T16:53:01Z",
-        "views": 29343,
-        "views_at_save": 29343,
-        "age_at_save_hours": 2.25
+        "views": 33257,
+        "views_at_save": 33257,
+        "age_at_save_hours": 2.38
       },
       {
         "headline": "New Anti-Aging Framework Targets Cellular Systems",
@@ -1261,7 +1228,7 @@
         "post_ts": "2026-05-11T04:49:31Z",
         "views": 5279,
         "views_at_save": 5279,
-        "age_at_save_hours": 14.31
+        "age_at_save_hours": 14.44
       },
       {
         "headline": "Human Genome Encodes Novel Molecule Category",
@@ -1275,7 +1242,7 @@
         "post_ts": "2026-05-11T11:03:49Z",
         "views": 57,
         "views_at_save": 57,
-        "age_at_save_hours": 8.07
+        "age_at_save_hours": 8.2
       }
     ],
     "earlier": [
@@ -1428,18 +1395,32 @@
   "conspiracy": {
     "stories": [
       {
-        "headline": "Microsoft Ousts Israel Chief Over IDF Surveillance Probe",
+        "headline": "Musician denied US entry over girlfriend's Trump assassination post",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2053867580570427879",
+        "body": "Australian Keli Holiday barred at border due to partner Abbie Chatfield's social media call for Trump's assassination, exposing entry vetting...",
+        "engagement": "11K likes, 1.2K reposts, 702 replies",
+        "honesty": "8/10",
+        "notes": "Incident confirmed with video of the offending post and denial report.",
+        "posted": "2026-05-11T19:15:52Z",
+        "post_ts": "2026-05-11T15:59:24Z",
+        "views": 336339,
+        "views_at_save": 336339,
+        "age_at_save_hours": 3.27
+      },
+      {
+        "headline": "Microsoft ousts Israel chief after probe into IDF surveillance ties",
         "handle": "@DropSiteNews",
         "url": "https://x.com/DropSiteNews/status/2053876171205689854",
-        "body": "Investigating Microsoft's ousting of Israel manager after probe revealed secret IDF Unit 8200 mass surveillance of Palestinians on Azure servers.",
-        "engagement": "903 likes, 460 reposts, 37 quotes, 31 replies",
+        "body": "Internal investigation uncovers Unit 8200's secret use of Azure for mass Palestinian phone surveillance, leading to leadership shakeup and fears of...",
+        "engagement": "942 likes, 475 reposts, 31 replies",
         "honesty": "9/10",
-        "notes": "Based on reports from Israeli outlets citing internal investigation findings; verifiable sources.",
-        "posted": "2026-05-11T19:08:10Z",
+        "notes": "Reports verifiable via Israeli media Globes and Ynet on the investigation findings.",
+        "posted": "2026-05-11T19:15:52Z",
         "post_ts": "2026-05-11T16:33:33Z",
-        "views": 41100,
-        "views_at_save": 41100,
-        "age_at_save_hours": 2.58
+        "views": 42567,
+        "views_at_save": 42567,
+        "age_at_save_hours": 2.71
       }
     ],
     "earlier": [
@@ -1501,22 +1482,38 @@
         "post_ts": "2026-05-11T16:13:06Z",
         "views": 4,
         "views_at_save": 4,
-        "age_at_save_hours": 2.92
+        "age_at_save_hours": 3.05
       },
       {
-        "headline": "Tony Hinchcliffe Roasts Pete Davidson at Kevin Hart Roast",
+        "headline": "Tony Hinchcliffe Roasts Sheryl Underwood",
+        "handle": "@FearedBuck",
+        "url": "https://x.com/FearedBuck/status/2053652763196698959",
+        "body": "Tony Hinchcliffe delivers savage joke about Sheryl Underwood's marriage at Kevin Hart roast.",
+        "engagement": "30K likes, 627 reposts",
+        "honesty": "9/10",
+        "notes": "Verified clip from Netflix's Kevin Hart roast event.",
+        "posted": "2026-05-11T19:15:52Z",
+        "post_ts": "2026-05-11T01:45:48Z",
+        "views": 5324622,
+        "views_at_save": 5324622,
+        "age_at_save_hours": 17.5
+      },
+      {
+        "headline": "Hinchcliffe Hits Pete Davidson Hard",
         "handle": "@ayekeeno",
         "url": "https://x.com/ayekeeno/status/2053695772709867876",
-        "body": "Tony Hinchcliffe delivers savage joke about Pete Davidson and Kim Kardashian during the Kevin Hart Netflix roast.",
-        "engagement": "14K likes, 337 reposts",
+        "body": "Tony Hinchcliffe roasts Pete Davidson with crude Kim Kardashian reference at Kevin Hart roast.",
+        "engagement": "14K likes, 344 reposts",
         "honesty": "9/10",
-        "notes": "Authentic clip from the official Netflix roast event.",
-        "posted": "2026-05-11T19:08:11Z",
+        "notes": "Accurate excerpt from the live comedy roast.",
+        "posted": "2026-05-11T19:15:52Z",
         "post_ts": "2026-05-11T04:36:42Z",
-        "views": 1823214,
-        "views_at_save": 1823214,
-        "age_at_save_hours": 14.52
-      },
+        "views": 1834955,
+        "views_at_save": 1834955,
+        "age_at_save_hours": 14.65
+      }
+    ],
+    "earlier": [
       {
         "headline": "Kevin Hart and Katt Williams Squash Beef on Stage",
         "handle": "@FearedBuck",
@@ -1530,9 +1527,7 @@
         "views": 1389566,
         "views_at_save": 1389566,
         "age_at_save_hours": 16.8
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Biblically Accurate TV Clip",
         "handle": "@phtv_nocontext",
@@ -1658,20 +1653,6 @@
         "views": 15,
         "views_at_save": 15,
         "age_at_save_hours": 23.63
-      },
-      {
-        "headline": "Ron Taylor's stand-up on crazy old kids movies",
-        "handle": "@StevenBiko",
-        "url": "https://x.com/StevenBiko/status/2053478662469497241",
-        "body": "Comedian Ron Taylor delivers hilarious commentary on bizarre aspects of classic children's films in this stand-up clip.",
-        "engagement": "0 likes, 0 reposts",
-        "honesty": "9/10",
-        "notes": "Sharing a verified stand-up comedy video link with no factual errors.",
-        "posted": "2026-05-11T04:13:19Z",
-        "post_ts": "2026-05-10T14:13:59Z",
-        "views": 66,
-        "views_at_save": 66,
-        "age_at_save_hours": 14.77
       }
     ]
   },
