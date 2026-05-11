@@ -387,6 +387,74 @@ if broken:
 
 print(f"[claude-qc] URL verify: {verified}/{len(urls)} passed")
 
+# ---- Check 5: Final Claude holistic review (user mandate 2026-05-11) ----
+# "Python should tell Claude to quality check everything at the completion of
+# that cron to make sure: no duplicate stories, nothing nonsensical, mechanics
+# work, everything looks good."
+# Sends a compact summary of every tab's picks to Claude and asks for issues.
+# Findings logged as warnings (non-blocking) — Claude is a second pair of eyes,
+# not a deploy gate.
+key2 = os.environ.get("ANTHROPIC_API_KEY","")
+if key2:
+    REVIEW_TABS = ['world','usa','business','sports','elon','allin','pods',
+                   'msm','conspiracy','pg6','comedy','recipe','science',
+                   'local','top']
+    summary_lines = []
+    total_stories = 0
+    for tab in REVIEW_TABS:
+        stories = d.get(tab, {}).get('stories', []) or []
+        for s in stories:
+            total_stories += 1
+            headline = (s.get('headline','') or '?')[:90]
+            handle = s.get('handle','') or ''
+            if not handle:
+                ps = s.get('perspectives', []) or []
+                if ps and isinstance(ps[0], dict):
+                    handle = '+'.join((p.get('handle','') or '') for p in ps[:3] if isinstance(p, dict))
+            url = (s.get('url','') or '')[-50:] if s.get('url') else 'PERSPS'
+            summary_lines.append(f"  [{tab}] {headline} | {handle} | …{url}")
+    if total_stories >= 1:
+        review_prompt = (
+            "Final QC review of an X-curated news site. Below is every story "
+            "currently on the site, one per line, format: [tab] headline | handle | URL-tail.\n\n"
+            + "\n".join(summary_lines) +
+            "\n\nFlag any of:\n"
+            "  1. DUPLICATE stories appearing across multiple tabs (same event "
+            "in World AND USA, or same post in Business AND Top, etc.).\n"
+            "  2. Picks that DON'T MAKE SENSE for their tab (e.g., a recipe on "
+            "World, a sports story on Business, an obviously off-topic post).\n"
+            "  3. MECHANICAL problems (malformed URL, missing handle, "
+            "garbled-looking headline, suspicious empty fields).\n"
+            "  4. Anything else that looks broken or wrong to a human reader.\n\n"
+            "Return STRICTLY a JSON array of issues. Each issue is:\n"
+            "  {\"type\": \"duplicate|off-topic|mechanical|other\", "
+            "\"tab\": \"<tab name>\", \"detail\": \"<one-line explanation>\"}\n"
+            "Empty array [] if no issues. NO PROSE outside the JSON."
+        )
+        body = json.dumps({"model":"claude-sonnet-4-5","max_tokens":800,
+                           "messages":[{"role":"user","content":review_prompt}]}).encode()
+        req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body, method="POST",
+            headers={"x-api-key": key2, "anthropic-version":"2023-06-01", "content-type":"application/json"})
+        try:
+            r = json.loads(urllib.request.urlopen(req, timeout=30).read())
+            text = r.get("content",[{}])[0].get("text","[]").strip()
+            import re as _re5
+            m = _re5.search(r'\[.*\]', text, _re5.DOTALL)
+            issues = json.loads(m.group(0)) if m else []
+        except Exception as e:
+            print(f"[final-review] API error {e} — skipping", file=sys.stderr)
+            issues = []
+        if issues:
+            print(f"[final-review] Claude flagged {len(issues)} issue(s):", file=sys.stderr)
+            for issue in issues:
+                if not isinstance(issue, dict): continue
+                itype = issue.get('type','?')
+                itab  = issue.get('tab','?')
+                idtl  = issue.get('detail','')[:200]
+                warnings.append(f"final-review [{itype}/{itab}] {idtl}")
+        else:
+            print(f"[final-review] Claude reviewed {total_stories} stories — no issues", file=sys.stderr)
+
 # ---- Report ----
 if warnings:
     print(f"\n[claude-qc] {len(warnings)} warning(s) (non-blocking):", file=sys.stderr)
