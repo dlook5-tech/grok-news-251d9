@@ -3,6 +3,54 @@
   "world": {
     "stories": [
       {
+        "headline": "US-Iran Ceasefire Tensions",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@nypost",
+            "url": "https://x.com/nypost/status/2053919654016385500",
+            "text": "President Trump said Monday that the month-long cease-fire between the US and Iran \u201cis on massive life support\u201d after Tehran\u2019s latest peace offer...",
+            "engagement": "23 likes, 8 reposts, 17 replies",
+            "honesty": "8/10",
+            "views": 7904,
+            "notes": "Accurate summary of Trump's statement with added context on proposal contents, light conservative framing",
+            "views_at_save": 7904,
+            "age_at_save_hours": 1.8
+          },
+          {
+            "label": "Democrat",
+            "handle": "@MiddleEastEye",
+            "url": "https://x.com/MiddleEastEye/status/2053731700312584688",
+            "text": "\ud83d\udd34 Morning update: \u2022 Trump rejects Iran\u2019s latest ceasefire response, calling it \u201ctotally unacceptable\u201d \u2022 Iran demands sovereignty guarantees over...",
+            "engagement": "3 likes, 4 reposts, 1 replies",
+            "honesty": "8/10",
+            "views": 1768,
+            "notes": "Balanced update including both US and Iran positions, factual without bias",
+            "views_at_save": 1768,
+            "age_at_save_hours": 14.25
+          },
+          {
+            "label": "Independent",
+            "handle": "@Reuters",
+            "url": "https://x.com/Reuters/status/2053897929174188187",
+            "text": "President Trump said the ceasefire with Iran was 'on massive life support' after dismissing Tehran's response to a US peace proposal as 'stupid' and...",
+            "engagement": "93 likes, 26 reposts, 27 replies",
+            "honesty": "9/10",
+            "views": 34673,
+            "notes": "Direct reporting of Trump's words and implications, verifiable facts",
+            "views_at_save": 34673,
+            "age_at_save_hours": 3.24
+          }
+        ],
+        "footnotes": [],
+        "notes": "Trump criticizes Iran's proposal, raising fears of renewed conflict; perspectives highlight diplomatic standoff",
+        "body": "Three-perspective roundup.",
+        "posted": "5/11/2026 9:14 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 1.8
+      },
+      {
         "headline": "EU Sanctions on Russia for Ukrainian Children",
         "honesty": "8/10",
         "perspectives": [
@@ -194,7 +242,7 @@
   "usa": {
     "stories": [
       {
-        "headline": "Trump Backs Suspension of Federal Gas Tax Amid Iran War Price Surge",
+        "headline": "Trump Endorses Federal Gas Tax Holiday Amid Surging Prices",
         "honesty": "8/10",
         "perspectives": [
           {
@@ -211,10 +259,10 @@
           },
           {
             "label": "Democrat",
-            "handle": "@washingtonpost",
-            "url": "https://x.com/washingtonpost/status/2053906611169611822",
-            "text": "Breaking news: President Trump said he will suspend the federal gas tax for an unspecified period as the Iran war continues to push pump prices...",
-            "engagement": "32 likes, 11 reposts",
+            "handle": "@samstein",
+            "url": "https://x.com/samstein/status/2053860405089350023",
+            "text": "what is old is new again.. 2022-- Biden calls for an 18 cent gas tax holiday.",
+            "engagement": "218 likes, 35 reposts",
             "honesty": "10/10",
             "views": 14775,
             "notes": "Factual breaking news report with context on popularity impact; verifiable.",
@@ -223,10 +271,10 @@
           },
           {
             "label": "Independent",
-            "handle": "@AP",
-            "url": "https://x.com/AP/status/2053898448823267664",
-            "text": "President Donald Trump said he supports suspending the federal tax on gasoline to help Americans shoulder surging fuel prices caused by the Iran...",
-            "engagement": "89 likes, 29 reposts",
+            "handle": "@politico",
+            "url": "https://x.com/politico/status/2053901271082668063",
+            "text": "Gas tax holiday momentum grows with Trump support...",
+            "engagement": "80 likes, 13 reposts",
             "honesty": "10/10",
             "views": 39799,
             "notes": "Pure verifiable fact from AP wire service.",
@@ -235,9 +283,9 @@
           }
         ],
         "footnotes": [],
-        "notes": "",
+        "notes": "Highest velocity topic with balanced perspectives in available data.",
         "body": "Three-perspective roundup.",
-        "posted": "5/11/2026 7:58 PM",
+        "posted": "5/11/2026 9:14 PM",
         "views_at_save": 0,
         "age_at_save_hours": 5.11
       },
@@ -694,18 +742,18 @@
         "age_at_save_hours": 24.63
       },
       {
-        "headline": "Marc Andreessen dubs wealth redistribution demands 'suicidal empathy'",
-        "handle": "@pmarca",
-        "url": "https://x.com/pmarca/status/2053279320668553665",
-        "body": "Marc Andreessen critiques calls for billionaires to forgo inheritance in favor of societal donations as misguided 'suicidal empathy'.",
-        "engagement": "1.6K likes, 58 reposts, 189 replies",
+        "headline": "Data Centers Offer Rapid Payback Amid AI Boom",
+        "handle": "@DavidSacks",
+        "url": "https://x.com/DavidSacks/status/2053573251419230702",
+        "body": "David Sacks shares back-of-envelope calculations showing 1GW data centers cost $50B to build but generate $25-30B yearly revenue with $1-2B...",
+        "engagement": "11.7K likes, 879 retweets, 551 replies",
         "honesty": "7/10",
-        "notes": "Contrarian opinion on inheritance and empathy without factual errors.",
-        "posted": "2026-05-10T16:37:37Z",
-        "post_ts": "2026-05-10T01:01:52Z",
-        "views": 96875,
-        "views_at_save": 96875,
-        "age_at_save_hours": 22.39
+        "notes": "Opinion based on estimates; reasonable prediction without factual errors.",
+        "posted": "2026-05-11T20:01:35Z",
+        "post_ts": "2026-05-10T20:29:51Z",
+        "views": 1895742,
+        "views_at_save": 1895742,
+        "age_at_save_hours": 24.74
       }
     ],
     "earlier": [
@@ -732,28 +780,28 @@
   "pods": {
     "stories": [
       {
-        "headline": "Zelensky Secrets Exposed by Ex-Aide",
+        "headline": "Zelensky Press Secretary Exposes Corruption",
         "handle": "@TuckerCarlson",
         "url": "https://x.com/TuckerCarlson/status/2053883236984520746",
-        "body": "Zelensky's longtime press secretary reveals corruption, drugs, and greed in the dictator's inner world.",
-        "engagement": "6K likes, 1.5K retweets, 491 replies",
-        "honesty": "8/10",
-        "notes": "Reports verifiable interview claims with partisan framing; factual core intact.",
-        "posted": "2026-05-11T19:53:35Z",
+        "body": "Volodymyr Zelensky\u2019s longtime press secretary reveals secret corruption, drugs, and greed in Ukraine's leadership.",
+        "engagement": "7.9K likes, 2.1K reposts, 707 replies",
+        "honesty": "7/10",
+        "notes": "Insider opinion with potential bias, no major factual lies evident.",
+        "posted": "2026-05-11T21:14:21Z",
         "post_ts": "2026-05-11T17:01:37Z",
         "views": 370072,
         "views_at_save": 370072,
         "age_at_save_hours": 4.1
       },
       {
-        "headline": "Spencer Pratt Reveals NGO Theft in LA Fire Aid",
+        "headline": "Spencer Pratt on NGO Theft in LA",
         "handle": "@theallinpod",
         "url": "https://x.com/theallinpod/status/2053887945740800403",
-        "body": "Spencer Pratt describes how NGOs raised $100M after the Palisades fire but stole it, giving nothing directly to victims.",
-        "engagement": "515 likes, 108 retweets, 13 replies",
+        "body": "Spencer Pratt details how NGOs stole $100M in fire aid without aiding victims.",
+        "engagement": "711 likes, 144 reposts, 17 replies",
         "honesty": "8/10",
-        "notes": "Personal testimony on NGO scandal, supported by public investigations.",
-        "posted": "2026-05-11T19:31:46Z",
+        "notes": "Personal firsthand account of scandal, verifiable elements.",
+        "posted": "2026-05-11T21:14:21Z",
         "post_ts": "2026-05-11T17:20:20Z",
         "views": 18851,
         "views_at_save": 18851,
@@ -878,14 +926,14 @@
         "age_at_save_hours": 8.84
       },
       {
-        "headline": "Vitalik envisions ZK-payments as future crypto standard in AI era",
+        "headline": "Vitalik Buterin on Future of Crypto Payments",
         "handle": "@Cointelegraph",
         "url": "https://x.com/Cointelegraph/status/2053772252546470164",
-        "body": "Vitalik Buterin says ZK-payments could become the next standard for crypto payments in the AI-driven agentic era.",
-        "engagement": "1.6K likes, 227 retweets, 229 replies",
+        "body": "Vitalik Buterin predicts ZK-payments could become the standard for crypto in the AI-driven agentic era.",
+        "engagement": "1.6K likes, 231 reposts, 64 quotes, 234 replies",
         "honesty": "9/10",
-        "notes": "Direct insight from Ethereum co-founder Vitalik Buterin on emerging technology.",
-        "posted": "2026-05-11T20:01:36Z",
+        "notes": "Reports expert opinion on emerging crypto technology - factual reporting of prediction.",
+        "posted": "2026-05-11T21:14:21Z",
         "post_ts": "2026-05-11T09:40:36Z",
         "views": 142533,
         "views_at_save": 142533,
@@ -1144,20 +1192,6 @@
         "views": 10808537,
         "views_at_save": 10808537,
         "age_at_save_hours": 1.43
-      },
-      {
-        "headline": "Ryan Garcia Sets Giveaway Winner Deadline",
-        "handle": "@RyanGarcia",
-        "url": "https://x.com/RyanGarcia/status/2053869177350627645",
-        "body": "Ryan Garcia announces he will select a $10K giveaway winner by 5pm PST.",
-        "engagement": "45K likes, 1.6K reposts",
-        "honesty": "8/10",
-        "notes": "Fact of giveaway timeline.",
-        "posted": "2026-05-11T19:08:06Z",
-        "post_ts": "2026-05-11T16:05:45Z",
-        "views": 3603822,
-        "views_at_save": 3603822,
-        "age_at_save_hours": 3.04
       },
       {
         "headline": "Lamine Yamal's Cheeky Shirt Message to Madrid",
@@ -1726,6 +1760,22 @@
         "age_at_save_hours": 18.62
       },
       {
+        "headline": "Mosquitoes Invade Iceland in Ecological Shift",
+        "handle": "@ScienceMagazine",
+        "url": "https://x.com/ScienceMagazine/status/2053593948564648240",
+        "body": "Iceland no longer mosquito-free as detection north of Reykjav\u00edk signals ongoing Arctic ecological changes.",
+        "engagement": "299 likes, 153 reposts",
+        "honesty": "9/10",
+        "notes": "Accurate report of verified ecological observation in Science editorial.",
+        "posted": "2026-05-11T21:14:23Z",
+        "post_ts": "2026-05-10T21:52:05Z",
+        "views": 33759,
+        "views_at_save": 33759,
+        "age_at_save_hours": 23.37
+      }
+    ],
+    "earlier": [
+      {
         "headline": "New Anti-Aging Framework Targets Cellular Systems",
         "handle": "@SciTechera",
         "url": "https://x.com/SciTechera/status/2053698996687016282",
@@ -1838,20 +1888,6 @@
         "views": 40705,
         "views_at_save": 40705,
         "age_at_save_hours": 22.7
-      },
-      {
-        "headline": "Mosquitoes Reach Iceland",
-        "handle": "@ScienceMagazine",
-        "url": "https://x.com/ScienceMagazine/status/2053593948564648240",
-        "body": "Iceland no longer mosquito-free as detection north of Reykjav\u00edk signals ecological shift.",
-        "engagement": "166 likes, 90 reposts",
-        "honesty": "9/10",
-        "notes": "Accurate summary of Science editorial on verified ecological change.",
-        "posted": "2026-05-11T05:08:08Z",
-        "post_ts": "2026-05-10T21:52:05Z",
-        "views": 19719,
-        "views_at_save": 19719,
-        "age_at_save_hours": 17.57
       },
       {
         "headline": "Sudden Acceleration in Sea Level Rise",
@@ -2022,14 +2058,14 @@
   "comedy": {
     "stories": [
       {
-        "headline": "Tony Hinchcliffe roasts Sheryl Underwood at Kevin Hart event",
+        "headline": "Tony Hinchcliffe Brutal Roast of Sheryl Underwood",
         "handle": "@FearedBuck",
         "url": "https://x.com/FearedBuck/status/2053652763196698959",
-        "body": "Hinchcliffe quips on Sheryl's husband's suicide lasting longer than expected in brutal roast.",
-        "engagement": "31K likes, 635 reposts",
+        "body": "Tony Hinchcliffe jokes about Sheryl Underwood's late husband at Kevin Hart Roast.",
+        "engagement": "32K likes, 659 reposts",
         "honesty": "9/10",
-        "notes": "Verified clip from roast with added emoji for humor.",
-        "posted": "2026-05-11T19:40:14Z",
+        "notes": "Verified clip from the live roast event, comedic exaggeration typical of roasts.",
+        "posted": "2026-05-11T21:14:24Z",
         "post_ts": "2026-05-11T01:45:48Z",
         "views": 5418313,
         "views_at_save": 5418313,
