@@ -107,6 +107,56 @@
     "stories": [],
     "earlier": [
       {
+        "headline": "Trump Labels Comey a 'Dirty Cop' in Oval Office Address",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@EricLDaugh",
+            "url": "https://x.com/EricLDaugh/status/2053870083659723212",
+            "text": "\ud83d\udea8 PRESIDENT TRUMP IN THE OVAL OFFICE: \"If James Comey ever went to jail, would you ever let him out?\"\n\n\"Ehh...that might be a hard one for me.....",
+            "engagement": "1.1K likes, 221 reposts",
+            "honesty": "9/10",
+            "views": 17705,
+            "notes": "Accurately reports Trump's direct quote with supporting video; opinionated call to action but factual core intact",
+            "views_at_save": 17705,
+            "age_at_save_hours": 0.89
+          },
+          {
+            "label": "Democrat",
+            "handle": "@allenanalysis",
+            "url": "https://x.com/allenanalysis/status/2053873040530792740",
+            "text": "Trump in the Oval Office today:\n\n\u201cIf James Comey ever went to jail, would you ever let him out?\u201d\n\n\u201cEhh\u2026 that might be a hard one for me.. He\u2019s a...",
+            "engagement": "126 likes, 49 reposts",
+            "honesty": "7/10",
+            "views": 4858,
+            "notes": "Provides context on indictments and frames as authoritarian fantasy; assumes 'seashells' indictment details without verification but no outright lies",
+            "views_at_save": 4858,
+            "age_at_save_hours": 0.69
+          },
+          {
+            "label": "Independent",
+            "handle": "@Gatewayxchange_",
+            "url": "https://x.com/Gatewayxchange_/status/2053872638758384046",
+            "text": "Trump unloading on James Comey again, calling him a \u201cdirty cop\u201d and saying pardoning him would be \u201ca hard one.\u201d\nThe animosity runs deep \u2014 from the...",
+            "engagement": "3 likes",
+            "honesty": "8/10",
+            "views": 33,
+            "notes": "Neutral summary of event with historical context; no false claims, though low engagement",
+            "views_at_save": 33,
+            "age_at_save_hours": 0.72
+          }
+        ],
+        "footnotes": [],
+        "notes": "Single story due to limited high-velocity 3-perspective coverage in search results; selected for recency and relevance to federal politics",
+        "body": "Three-perspective roundup.",
+        "posted": "5/11/2026 5:02 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 0.89
+      }
+    ],
+    "earlier": [
+      {
         "headline": "Trump Administration Expands Fertility Benefits",
         "honesty": "8/10",
         "perspectives": [
@@ -836,9 +886,7 @@
         "views": 150072,
         "views_at_save": 150072,
         "age_at_save_hours": 1.52
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Benson's Music Drop Today",
         "handle": "@BNXN",
@@ -885,20 +933,6 @@
         "views": 112768,
         "views_at_save": 112768,
         "age_at_save_hours": 3.65
-      },
-      {
-        "headline": "Musician Denied US Entry Over Girlfriend's Trump Threat",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2053867580570427879",
-        "body": "Australian Keli Holiday barred after partner Abbie Chatfield posted online call to assassinate President Trump.",
-        "engagement": "3K likes, 312 reposts, 22 quotes, 215 replies",
-        "honesty": "10/10",
-        "notes": "Breaking report of specific incident with named individuals; verifiable fact.",
-        "posted": "2026-05-11T16:49:36Z",
-        "post_ts": "2026-05-11T15:59:24Z",
-        "views": 101334,
-        "views_at_save": 101334,
-        "age_at_save_hours": 0.84
       }
     ],
     "earlier": [],
@@ -1112,11 +1146,11 @@
         "headline": "Original 1800s Texas Chili Recipe",
         "handle": "@jwalkermobile",
         "url": "https://x.com/jwalkermobile/status/2053843317956243963",
-        "body": "Discover the supposed original Texas chili recipe from the 1800s with simple ingredients.",
-        "engagement": "60 likes, 6 reposts, 5 quotes, 10 replies",
-        "honesty": "9/10",
-        "notes": "Historical recipe claim, photos of dish; accuracy of 'original' unverified but presented as such.",
-        "posted": "2026-05-11T16:49:37Z",
+        "body": "This recipe recreates the original Texas Chili from the 1800s using traditional ingredients for an authentic bold flavor.",
+        "engagement": "62 likes, 8 reposts, 11 replies",
+        "honesty": "10/10",
+        "notes": "Provides historical recipe with supporting images, no factual errors.",
+        "posted": "2026-05-11T17:02:39Z",
         "post_ts": "2026-05-11T14:23:00Z",
         "views": 2607,
         "views_at_save": 2607,
@@ -1142,16 +1176,18 @@
         "headline": "Glazed Blueberry Bread Recipe",
         "handle": "@ann_ann886",
         "url": "https://x.com/ann_ann886/status/2053618335427023026",
-        "body": "Bake this warm blueberry bread topped with sweet glaze for a delightful treat.",
-        "engagement": "109 likes, 18 reposts, 1 quote, 1 reply",
+        "body": "Bake this warm blueberry bread and drizzle it with a sweet glaze for a comforting baked treat.",
+        "engagement": "109 likes, 18 reposts, 1 replies",
         "honesty": "10/10",
-        "notes": "Inviting recipe share with image and link.",
-        "posted": "2026-05-11T16:49:37Z",
+        "notes": "Links to a complete recipe video, legitimate share.",
+        "posted": "2026-05-11T17:02:39Z",
         "post_ts": "2026-05-10T23:29:00Z",
-        "views": 2585,
-        "views_at_save": 2585,
-        "age_at_save_hours": 17.34
-      },
+        "views": 2604,
+        "views_at_save": 2604,
+        "age_at_save_hours": 17.56
+      }
+    ],
+    "earlier": [
       {
         "headline": "Coconut Cod Shakshuka Recipe",
         "handle": "@FoodieChefs_wow",
@@ -1452,8 +1488,7 @@
         "views_at_save": 33353,
         "age_at_save_hours": 12.63
       }
-    ],
-    "_overflow": []
+    ]
   },
   "local": {
     "stories": [],
@@ -1552,6 +1587,20 @@
   "comedy": {
     "stories": [
       {
+        "headline": "Biblically Accurate TV Clip",
+        "handle": "@phtv_nocontext",
+        "url": "https://x.com/phtv_nocontext/status/2053843242039521527",
+        "body": "Out-of-context Philippine TV segment reimagined biblically accurate in funny video.",
+        "engagement": "16K likes, 4.5K reposts",
+        "honesty": "9/10",
+        "notes": "Shares entertaining media clip without misleading claims.",
+        "posted": "2026-05-11T17:02:41Z",
+        "post_ts": "2026-05-11T14:22:42Z",
+        "views": 206364,
+        "views_at_save": 206364,
+        "age_at_save_hours": 2.67
+      },
+      {
         "headline": "Mark Normand Shocks Gen Z",
         "handle": "@JaySmit4047421",
         "url": "https://x.com/JaySmit4047421/status/2053871026694398176",
@@ -1565,6 +1614,22 @@
         "views_at_save": 4,
         "age_at_save_hours": 0.78
       },
+      {
+        "headline": "Flustered K-Pop Moment",
+        "handle": "@Namkook_delulul",
+        "url": "https://x.com/Namkook_delulul/status/2053533333431222556",
+        "body": "Jungkook hilariously flustered by Namjoon's wink in viral fan clip.",
+        "engagement": "6.5K likes, 739 reposts",
+        "honesty": "8/10",
+        "notes": "Fan-shared comedic reaction video, accurate depiction.",
+        "posted": "2026-05-11T17:02:41Z",
+        "post_ts": "2026-05-10T17:51:14Z",
+        "views": 50919,
+        "views_at_save": 50919,
+        "age_at_save_hours": 23.19
+      }
+    ],
+    "earlier": [
       {
         "headline": "Butch Blankie Stand-Up Bit",
         "handle": "@MaddieMorrisVA",
@@ -1706,34 +1771,6 @@
         "views": 58,
         "views_at_save": 58,
         "age_at_save_hours": 17.83
-      },
-      {
-        "headline": "Matt Rife's Epic Improv Roast",
-        "handle": "@Brian_stone_9",
-        "url": "https://x.com/Brian_stone_9/status/2053403981586784508",
-        "body": "Matt Rife delivers hilarious improv crowd work and roast in this comedy clip.",
-        "engagement": "441 likes, 70 reposts",
-        "honesty": "8/10",
-        "notes": "Sharing a real comedy performance clip with light commentary.",
-        "posted": "2026-05-10T18:09:53Z",
-        "post_ts": "2026-05-10T09:17:14Z",
-        "views": 13484,
-        "views_at_save": 13484,
-        "age_at_save_hours": 18.35
-      },
-      {
-        "headline": "Robot's Hilarious Stand-Up Attempt",
-        "handle": "@pukerrainbrow",
-        "url": "https://x.com/pukerrainbrow/status/2053383351797711256",
-        "body": "A robot performs stand-up comedy, leading to funny moments before GTA 6.",
-        "engagement": "73 likes, 1 repost",
-        "honesty": "8/10",
-        "notes": "Video of novel AI comedy experiment, factual share.",
-        "posted": "2026-05-10T18:09:53Z",
-        "post_ts": "2026-05-10T07:55:15Z",
-        "views": 3254,
-        "views_at_save": 3254,
-        "age_at_save_hours": 19.71
       }
     ]
   },
