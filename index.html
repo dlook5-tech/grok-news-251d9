@@ -875,6 +875,14 @@ function renderContent() {
     h += '<div id="submitConfirm" style="display:none;margin-top:12px;padding:10px 14px;background:#e8f5e9;border-radius:6px;color:#2e7d32;font-size:0.85rem;font-weight:500;"></div>';
     h += '</form>';
 
+    // "Show my saved submissions" — surfaces what's in this browser's localStorage
+    // so users can recover their own submissions without DevTools.
+    // (User mandate 2026-05-11: "I don't want to type anything in the command line.")
+    h += '<div style="margin-top:14px;font-size:0.8rem;">';
+    h += '<a href="#" onclick="event.preventDefault();showMyLocalSubs();" style="color:#2980b9;text-decoration:underline;cursor:pointer;">Show my saved submissions (from this browser)</a>';
+    h += '<div id="localSubsOutput" style="display:none;margin-top:10px;padding:12px;background:#fbf7ec;border:1px solid #d4b896;border-radius:6px;font-family:monospace;font-size:0.78rem;line-height:1.5;color:#3d3029;white-space:pre-wrap;word-break:break-all;"></div>';
+    h += '</div>';
+
     // Cron-curated submissions (server-side, from submissions.json — visible to everyone).
     // ≤24h since submitted: active block. 24-72h: earlier block. >72h: archived.
     var curatedActive = (NEWS_DATA.submit && NEWS_DATA.submit.stories) || [];
@@ -972,6 +980,35 @@ function renderContent() {
 // ---- Submissions ----
 var submissions = [];
 try { submissions = JSON.parse(localStorage.getItem('grokSubs') || '[]'); } catch(e) {}
+
+// "Show my saved submissions" handler — prints localStorage contents on the page,
+// no DevTools/command-line needed. User clicks the link → sees their stuff.
+function showMyLocalSubs() {
+  var out = document.getElementById('localSubsOutput');
+  if (!out) return;
+  var subs = [];
+  try { subs = JSON.parse(localStorage.getItem('grokSubs') || '[]'); } catch(e) {}
+  out.style.display = 'block';
+  if (!subs.length) {
+    out.textContent = 'No saved submissions in this browser.\n\nThings to check:\n  • Did you submit from a different device? (localStorage is per-device.)\n  • Did your browser clear site data recently?\n  • If you used "Private Browsing", submissions never persist.';
+    return;
+  }
+  var lines = ['Found ' + subs.length + ' saved submission(s) in this browser:\n'];
+  subs.forEach(function(s, i) {
+    lines.push('#' + (i+1));
+    lines.push('  URL:   ' + (s.url || '(none)'));
+    if (s.notes && s.notes.length) {
+      s.notes.forEach(function(n) { lines.push('  Note:  ' + n); });
+    }
+    lines.push('  Votes: ' + (s.votes || 1));
+    lines.push('  Saved: ' + (s.timestamp || '?'));
+    lines.push('');
+  });
+  lines.push('---');
+  lines.push('To make these visible to everyone (server-side), re-submit each URL via the form above.');
+  lines.push('The previous submit was broken — Netlify Forms is now enabled, so resubmissions will persist.');
+  out.textContent = lines.join('\n');
+}
 
 function handleSubmit(e) {
   e.preventDefault();
