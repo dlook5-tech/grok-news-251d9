@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-11T16:59:30Z",
+  "lastUpdated": "2026-05-11T17:07:26Z",
   "world": {
     "stories": [],
     "earlier": [
@@ -56,105 +56,10 @@
         "age_at_save_hours": 0.98
       }
     ],
-    "_overflow": [
-      {
-        "headline": "Cruise Ship Hantavirus Outbreak",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@HustleBitch_",
-            "url": "https://x.com/HustleBitch_/status/2053497442927091725",
-            "text": "New footage of passengers evacuating the hantavirus cruise ship just released\u2026 and something about this does NOT look right.",
-            "engagement": "2999 likes, 754 reposts, 25 quotes, 166 replies",
-            "honesty": "5/10",
-            "views": 368968,
-            "notes": "Speculative take questioning official narrative without factual errors but promotes skepticism."
-          },
-          {
-            "label": "Democrat",
-            "handle": "@CBSNews",
-            "url": "https://x.com/CBSNews/status/2053498298019844097",
-            "text": "The 17 or so Americans on the hantavirus-hit MV Hondius will be the last to leave the ship today after it dropped anchor in the waters off Tenerife...",
-            "engagement": "81 likes, 28 reposts, 2 quotes, 19 replies",
-            "honesty": "9/10",
-            "views": 23421,
-            "notes": "Factual on-the-ground reporting of evacuation logistics and government responses."
-          },
-          {
-            "label": "Independent",
-            "handle": "@quay_dr",
-            "url": "https://x.com/quay_dr/status/2053668988585148811",
-            "text": "Andes Hantavirus analysis:\n\nThis chart suggests Cases 2-8 were all a single H-to-H jump from Case 1, since all of the incubation periods cluster at...",
-            "engagement": "1524 likes, 370 reposts, 43 quotes, 46 replies",
-            "honesty": "8/10",
-            "views": 139461,
-            "notes": "Scientific analysis of transmission patterns and quarantine recommendations based on data."
-          }
-        ],
-        "footnotes": [
-          "Conservative perspective raises doubts about the outbreak's authenticity and handling.",
-          "Democrat/mainstream view details the evacuation process and international coordination.",
-          "Independent expert analysis examines epidemiology and potential spread risks."
-        ],
-        "notes": "Outbreak on MV Hondius cruise ship leads to evacuations and quarantines; Andes strain confirmed with human-to-human transmission concerns.",
-        "body": "Three-perspective roundup.",
-        "posted": "5/11/2026 4:59 PM"
-      }
-    ]
+    "_overflow": []
   },
   "usa": {
     "stories": [],
-    "earlier": [
-      {
-        "headline": "Trump Labels Comey a 'Dirty Cop' in Oval Office Address",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@EricLDaugh",
-            "url": "https://x.com/EricLDaugh/status/2053870083659723212",
-            "text": "\ud83d\udea8 PRESIDENT TRUMP IN THE OVAL OFFICE: \"If James Comey ever went to jail, would you ever let him out?\"\n\n\"Ehh...that might be a hard one for me.....",
-            "engagement": "1.1K likes, 221 reposts",
-            "honesty": "9/10",
-            "views": 17705,
-            "notes": "Accurately reports Trump's direct quote with supporting video; opinionated call to action but factual core intact",
-            "views_at_save": 17705,
-            "age_at_save_hours": 0.89
-          },
-          {
-            "label": "Democrat",
-            "handle": "@allenanalysis",
-            "url": "https://x.com/allenanalysis/status/2053873040530792740",
-            "text": "Trump in the Oval Office today:\n\n\u201cIf James Comey ever went to jail, would you ever let him out?\u201d\n\n\u201cEhh\u2026 that might be a hard one for me.. He\u2019s a...",
-            "engagement": "126 likes, 49 reposts",
-            "honesty": "7/10",
-            "views": 4858,
-            "notes": "Provides context on indictments and frames as authoritarian fantasy; assumes 'seashells' indictment details without verification but no outright lies",
-            "views_at_save": 4858,
-            "age_at_save_hours": 0.69
-          },
-          {
-            "label": "Independent",
-            "handle": "@Gatewayxchange_",
-            "url": "https://x.com/Gatewayxchange_/status/2053872638758384046",
-            "text": "Trump unloading on James Comey again, calling him a \u201cdirty cop\u201d and saying pardoning him would be \u201ca hard one.\u201d\nThe animosity runs deep \u2014 from the...",
-            "engagement": "3 likes",
-            "honesty": "8/10",
-            "views": 33,
-            "notes": "Neutral summary of event with historical context; no false claims, though low engagement",
-            "views_at_save": 33,
-            "age_at_save_hours": 0.72
-          }
-        ],
-        "footnotes": [],
-        "notes": "Single story due to limited high-velocity 3-perspective coverage in search results; selected for recency and relevance to federal politics",
-        "body": "Three-perspective roundup.",
-        "posted": "5/11/2026 5:02 PM",
-        "views_at_save": 0,
-        "age_at_save_hours": 0.89
-      }
-    ],
     "earlier": [
       {
         "headline": "Trump Administration Expands Fertility Benefits",
@@ -317,7 +222,7 @@
         "post_ts": "2026-05-10T21:20:39Z",
         "views": 23152558,
         "views_at_save": 23152558,
-        "age_at_save_hours": 19.65
+        "age_at_save_hours": 19.78
       },
       {
         "headline": "Motherhood as Important as Career",
@@ -331,7 +236,7 @@
         "post_ts": "2026-05-10T21:33:20Z",
         "views": 17039044,
         "views_at_save": 17039044,
-        "age_at_save_hours": 19.44
+        "age_at_save_hours": 19.57
       },
       {
         "headline": "Happy Mother's Day to Mom",
@@ -345,7 +250,7 @@
         "post_ts": "2026-05-10T22:16:00Z",
         "views": 9633915,
         "views_at_save": 9633915,
-        "age_at_save_hours": 18.73
+        "age_at_save_hours": 18.86
       }
     ],
     "earlier": [
@@ -371,18 +276,18 @@
   "sports": {
     "stories": [
       {
-        "headline": "Victor Wembanyama Avoids Suspension for Elbowing Naz Reid",
+        "headline": "No Further Discipline for Victor Wembanyama",
         "handle": "@ShamsCharania",
         "url": "https://x.com/ShamsCharania/status/2053875284273721459",
-        "body": "Spurs star Victor Wembanyama faces no further discipline after ejection for elbowing Timberwolves' Naz Reid in Game 4.",
-        "engagement": "13K likes, 1.8K reposts",
-        "honesty": "10/10",
-        "notes": "Verified ESPN insider report on league decision.",
-        "posted": "2026-05-11T16:59:33Z",
+        "body": "Spurs star Victor Wembanyama will face no suspension or fine after his ejection for elbowing Naz Reid and plays in Game 5.",
+        "engagement": "16K likes, 2K reposts",
+        "honesty": "9/10",
+        "notes": "Verified reporting from ESPN sources on NBA disciplinary decision.",
+        "posted": "2026-05-11T17:07:28Z",
         "post_ts": "2026-05-11T16:30:01Z",
-        "views": 842995,
-        "views_at_save": 842995,
-        "age_at_save_hours": 0.49
+        "views": 1184288,
+        "views_at_save": 1184288,
+        "age_at_save_hours": 0.62
       },
       {
         "headline": "Steelers Extend Kicker Chris Boswell for $28M",
@@ -396,7 +301,7 @@
         "post_ts": "2026-05-11T16:17:28Z",
         "views": 426274,
         "views_at_save": 426274,
-        "age_at_save_hours": 0.7
+        "age_at_save_hours": 0.83
       },
       {
         "headline": "Chargers Sign TE David Njoku",
@@ -546,32 +451,32 @@
   "allin": {
     "stories": [
       {
-        "headline": "Banning Junk Mail: A Billion Hours Wasted Annually",
-        "handle": "@PalmerLuckey",
-        "url": "https://x.com/PalmerLuckey/status/2053651657934954970",
-        "body": "Palmer Luckey argues USPS should ban junk mail, which wastes 100 million trees yearly and costs Americans over a billion hours sorting spam.",
-        "engagement": "35.5K likes, 2.9K reposts, 2.5K replies",
-        "honesty": "7/10",
-        "notes": "Opinion on policy reform with reasonable estimates.",
-        "posted": "2026-05-11T16:59:33Z",
-        "post_ts": "2026-05-11T01:41:24Z",
-        "views": 704932,
-        "views_at_save": 704932,
-        "age_at_save_hours": 15.3
-      },
-      {
-        "headline": "Data Center Boom: 2-Year Payback on $50B Investment",
+        "headline": "Data Centers: 2-Year Payback Fuels AI Boom",
         "handle": "@DavidSacks",
         "url": "https://x.com/DavidSacks/status/2053573251419230702",
-        "body": "David Sacks shares back-of-envelope math showing 1GW data centers cost $50B to build but generate $25-30B yearly revenue with low electricity costs.",
-        "engagement": "11.4K likes, 848 reposts, 541 replies",
-        "honesty": "7/10",
-        "notes": "Opinion based on economic projections.",
-        "posted": "2026-05-11T16:59:33Z",
+        "body": "David Sacks outlines economics of 1GW data centers with $50B capex, $25-30B annual revenue, and $1-2B electricity costs for quick ROI.",
+        "engagement": "11.4K likes, 850 retweets, 541 replies",
+        "honesty": "8/10",
+        "notes": "Economic analysis mixing facts and bullish opinion on AI infrastructure.",
+        "posted": "2026-05-11T17:07:29Z",
         "post_ts": "2026-05-10T20:29:51Z",
-        "views": 1794487,
-        "views_at_save": 1794487,
-        "age_at_save_hours": 20.5
+        "views": 1798856,
+        "views_at_save": 1798856,
+        "age_at_save_hours": 20.63
+      },
+      {
+        "headline": "Ban Junk Mail to End USPS Waste",
+        "handle": "@PalmerLuckey",
+        "url": "https://x.com/PalmerLuckey/status/2053651657934954970",
+        "body": "Palmer Luckey urges banning junk mail, noting it wastes 100M trees yearly and billions of hours in sorting time.",
+        "engagement": "35.6K likes, 2.9K retweets, 2.5K replies",
+        "honesty": "7/10",
+        "notes": "Policy opinion supported by environmental and productivity facts.",
+        "posted": "2026-05-11T17:07:29Z",
+        "post_ts": "2026-05-11T01:41:24Z",
+        "views": 708689,
+        "views_at_save": 708689,
+        "age_at_save_hours": 15.43
       },
       {
         "headline": "pmarca on AI Knowledge Gap",
@@ -585,7 +490,7 @@
         "post_ts": "2026-05-10T08:28:04Z",
         "views": 140702,
         "views_at_save": 140702,
-        "age_at_save_hours": 32.52
+        "age_at_save_hours": 32.66
       }
     ],
     "earlier": [
@@ -664,21 +569,21 @@
         "post_ts": "2026-05-11T15:00:01Z",
         "views": 75084,
         "views_at_save": 75084,
-        "age_at_save_hours": 1.99
+        "age_at_save_hours": 2.12
       },
       {
-        "headline": "Surrendering to God with Mel Chancey",
+        "headline": "Mel Chancey explains surrendering to God",
         "handle": "@ShawnRyanShow",
         "url": "https://x.com/ShawnRyanShow/status/2053871503553474818",
-        "body": "Mel Chancey explains the profound meaning of truly surrendering to God in a revealing podcast discussion.",
-        "engagement": "50 likes, 1 repost, 0 quotes, 2 replies",
-        "honesty": "7/10",
-        "notes": "Personal opinion on spiritual surrender",
-        "posted": "2026-05-11T16:49:36Z",
+        "body": "Mel Chancey reveals the profound meaning of truly surrendering to God in life.",
+        "engagement": "70 likes, 4 reposts, 3 replies",
+        "honesty": "9/10",
+        "notes": "Spiritual opinion based on personal experience, no lies.",
+        "posted": "2026-05-11T17:07:29Z",
         "post_ts": "2026-05-11T16:15:00Z",
-        "views": 2600,
-        "views_at_save": 2600,
-        "age_at_save_hours": 0.74
+        "views": 3519,
+        "views_at_save": 3519,
+        "age_at_save_hours": 0.87
       },
       {
         "headline": "Megyn Kelly Slams Blake Lively's Appeal",
@@ -692,7 +597,7 @@
         "post_ts": "2026-05-10T21:00:00Z",
         "views": 79040,
         "views_at_save": 79040,
-        "age_at_save_hours": 19.99
+        "age_at_save_hours": 20.12
       }
     ],
     "earlier": [
@@ -846,6 +751,34 @@
   "top": {
     "stories": [
       {
+        "headline": "Ryan Garcia Giveaway Winner Announcement",
+        "handle": "@RyanGarcia",
+        "url": "https://x.com/RyanGarcia/status/2053869177350627645",
+        "body": "Ryan Garcia plans to select the winner of his $10,000 giveaway by 5pm PST after winning $120,000 himself.",
+        "engagement": "13K likes, 657 reposts",
+        "honesty": "8/10",
+        "notes": "Fact, but promotional with potential hype.",
+        "posted": "2026-05-11T17:07:29Z",
+        "post_ts": "2026-05-11T16:05:45Z",
+        "views": 692793,
+        "views_at_save": 692793,
+        "age_at_save_hours": 1.03
+      },
+      {
+        "headline": "Gracie Abrams Announces New Album",
+        "handle": "@gracieabrams",
+        "url": "https://x.com/gracieabrams/status/2053868023040418203",
+        "body": "Gracie Abrams reveals her third album 'Daughter from Hell' releases on July 17, with single 'Hit the Wall' dropping Thursday.",
+        "engagement": "23K likes, 6K reposts",
+        "honesty": "10/10",
+        "notes": "Fact, artist's official announcement.",
+        "posted": "2026-05-11T17:07:30Z",
+        "post_ts": "2026-05-11T16:01:10Z",
+        "views": 421973,
+        "views_at_save": 421973,
+        "age_at_save_hours": 1.11
+      },
+      {
         "headline": "Wordle Set for Primetime TV Show",
         "handle": "@PopCrave",
         "url": "https://x.com/PopCrave/status/2053825843164557531",
@@ -858,7 +791,9 @@
         "views": 1131289,
         "views_at_save": 1131289,
         "age_at_save_hours": 3.77
-      },
+      }
+    ],
+    "earlier": [
       {
         "headline": "Chargers Sign TE David Njoku",
         "handle": "@NFL",
@@ -907,18 +842,18 @@
   "msm": {
     "stories": [
       {
-        "headline": "Trump Eyes Venezuela as 51st State",
+        "headline": "Trump Eyes Venezuela as 51st US State for Oil",
         "handle": "@BillMelugin_",
         "url": "https://x.com/BillMelugin_/status/2053849060377759775",
-        "body": "President Trump tells Fox News he is seriously considering making Venezuela the 51st US state due to its $40 trillion in oil reserves and support for...",
-        "engagement": "4.3K likes, 831 reposts, 612 replies",
-        "honesty": "9/10",
-        "notes": "Reports direct quote from Trump to Fox News correspondent - verifiable statement with minor sensational framing.",
-        "posted": "2026-05-11T16:59:34Z",
+        "body": "President Trump tells Fox News he's seriously considering annexing Venezuela as the 51st state due to its $40 trillion in oil reserves.",
+        "engagement": "4.4K likes, 852 reposts, 625 replies",
+        "honesty": "8/10",
+        "notes": "Reports direct quote from Trump's phone interview with minor sensationalism.",
+        "posted": "2026-05-11T17:07:30Z",
         "post_ts": "2026-05-11T14:45:49Z",
-        "views": 567396,
-        "views_at_save": 567396,
-        "age_at_save_hours": 2.23
+        "views": 595938,
+        "views_at_save": 595938,
+        "age_at_save_hours": 2.36
       },
       {
         "headline": "Woman Claims Walgreens Locks Darker Makeup as Racism",
@@ -952,8 +887,38 @@
         "post_ts": "2026-05-11T14:15:11Z",
         "views": 2082873,
         "views_at_save": 2082873,
-        "age_at_save_hours": 2.74
+        "age_at_save_hours": 2.87
       },
+      {
+        "headline": "Cut Jokes from Kevin Hart Roast Exposed",
+        "handle": "@Variety",
+        "url": "https://x.com/Variety/status/2053868587182334305",
+        "body": "Revealed cut jokes from Kevin Hart's Netflix roast mock his cheating scandals and comedy career.",
+        "engagement": "213 likes, 13 reposts, 12 quotes, 10 replies",
+        "honesty": "8/10",
+        "notes": "Fact with opinion mix - direct quotes from roast.",
+        "posted": "2026-05-11T17:07:30Z",
+        "post_ts": "2026-05-11T16:03:24Z",
+        "views": 40360,
+        "views_at_save": 40360,
+        "age_at_save_hours": 1.07
+      },
+      {
+        "headline": "Stranger Things Stars Reportedly Dating",
+        "handle": "@foahthinker",
+        "url": "https://x.com/foahthinker/status/2053866179974832215",
+        "body": "Finn Wolfhard and Noah Schnapp from Stranger Things are reportedly in a relationship.",
+        "engagement": "689 likes, 66 reposts, 1 quotes, 6 replies",
+        "honesty": "7/10",
+        "notes": "Opinion - unconfirmed rumor.",
+        "posted": "2026-05-11T17:07:30Z",
+        "post_ts": "2026-05-11T15:53:50Z",
+        "views": 5463,
+        "views_at_save": 5463,
+        "age_at_save_hours": 1.23
+      }
+    ],
+    "earlier": [
       {
         "headline": "Ne-Yo's Polyamory Costs Him Work",
         "handle": "@enews",
@@ -981,9 +946,7 @@
         "views": 65881,
         "views_at_save": 65881,
         "age_at_save_hours": 12.72
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Singer Chike linked to TV host's wife in divorce scandal",
         "handle": "@Nimisioluwa",
@@ -1095,34 +1058,6 @@
         "views": 1492,
         "views_at_save": 1492,
         "age_at_save_hours": 1.45
-      },
-      {
-        "headline": "Kevin Hart Katt Williams Reconcile",
-        "handle": "@Variety",
-        "url": "https://x.com/Variety/status/2053668884775928271",
-        "body": "Kevin Hart and Katt Williams dramatically end their long feud during Netflix roast with surprise appearance and peace offering.",
-        "engagement": "553 likes, 66 retweets, 25 replies",
-        "honesty": "9/10",
-        "notes": "Reports verifiable event from the roast special.",
-        "posted": "2026-05-11T05:08:07Z",
-        "post_ts": "2026-05-11T02:49:52Z",
-        "views": 67252,
-        "views_at_save": 67252,
-        "age_at_save_hours": 2.3
-      },
-      {
-        "headline": "Nick Cannon and DDG Fire Shots in Wild 'N Out Battle",
-        "handle": "@TMZ",
-        "url": "https://x.com/TMZ/status/2053671967883219453",
-        "body": "Nick Cannon and DDG exchange intense disses during their Wild 'N Out performance in Los Angeles.",
-        "engagement": "315 likes, 28 reposts, 26 replies",
-        "honesty": "8/10",
-        "notes": "Report of the event with dramatic description.",
-        "posted": "2026-05-11T04:59:54Z",
-        "post_ts": "2026-05-11T03:02:07Z",
-        "views": 55583,
-        "views_at_save": 55583,
-        "age_at_save_hours": 1.96
       }
     ]
   },
@@ -1140,7 +1075,7 @@
         "post_ts": "2026-05-11T14:33:29Z",
         "views": 4446,
         "views_at_save": 4446,
-        "age_at_save_hours": 2.44
+        "age_at_save_hours": 2.57
       },
       {
         "headline": "Original 1800s Texas Chili Recipe",
@@ -1154,7 +1089,7 @@
         "post_ts": "2026-05-11T14:23:00Z",
         "views": 2607,
         "views_at_save": 2607,
-        "age_at_save_hours": 2.61
+        "age_at_save_hours": 2.74
       },
       {
         "headline": "One Pot Rigatoni Alfredo with Chicken and Kale",
@@ -1168,23 +1103,7 @@
         "post_ts": "2026-05-11T14:11:00Z",
         "views": 888,
         "views_at_save": 888,
-        "age_at_save_hours": 2.81
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Glazed Blueberry Bread Recipe",
-        "handle": "@ann_ann886",
-        "url": "https://x.com/ann_ann886/status/2053618335427023026",
-        "body": "Bake this warm blueberry bread and drizzle it with a sweet glaze for a comforting baked treat.",
-        "engagement": "109 likes, 18 reposts, 1 replies",
-        "honesty": "10/10",
-        "notes": "Links to a complete recipe video, legitimate share.",
-        "posted": "2026-05-11T17:02:39Z",
-        "post_ts": "2026-05-10T23:29:00Z",
-        "views": 2604,
-        "views_at_save": 2604,
-        "age_at_save_hours": 17.56
+        "age_at_save_hours": 2.94
       }
     ],
     "earlier": [
@@ -1319,18 +1238,32 @@
   "science": {
     "stories": [
       {
-        "headline": "New Anti-Aging Framework Targets Key Cellular Systems",
+        "headline": "New Anti-Aging Framework Targets Cellular Systems",
         "handle": "@SciTechera",
         "url": "https://x.com/SciTechera/status/2053698996687016282",
-        "body": "A 2026 study proposes an integrated anti-aging framework using NMN, PQQ, and Ergothioneine to support NAD+ homeostasis, mitochondrial function, and...",
-        "engagement": "152 likes, 29 reposts",
+        "body": "2026 study proposes anti-aging framework targeting NAD+ homeostasis, mitochondrial control, and redox stability with NMN, PQQ, and EGT.",
+        "engagement": "154 likes, 29 reposts",
         "honesty": "9/10",
-        "notes": "Accurately summarizes a published study on longevity compounds without exaggeration.",
-        "posted": "2026-05-11T16:59:37Z",
+        "notes": "Summarizes published study on interconnected aging processes and potential interventions.",
+        "posted": "2026-05-11T17:07:31Z",
         "post_ts": "2026-05-11T04:49:31Z",
-        "views": 4790,
-        "views_at_save": 4790,
-        "age_at_save_hours": 12.17
+        "views": 4813,
+        "views_at_save": 4813,
+        "age_at_save_hours": 12.3
+      },
+      {
+        "headline": "Human Genome Encodes Novel Molecule Category",
+        "handle": "@GlobalPHObserv",
+        "url": "https://x.com/GlobalPHObserv/status/2053793191044817148",
+        "body": "Research reveals the human genome encodes a new category of molecule with potential biological implications.",
+        "engagement": "2 likes, 2 reposts",
+        "honesty": "10/10",
+        "notes": "Directly links to credible Economist article on genomic discovery.",
+        "posted": "2026-05-11T17:07:31Z",
+        "post_ts": "2026-05-11T11:03:49Z",
+        "views": 57,
+        "views_at_save": 57,
+        "age_at_save_hours": 6.06
       },
       {
         "headline": "Longevity Gene Transfer from Mole Rats Boosts Mouse Health",
@@ -1344,8 +1277,10 @@
         "post_ts": "2026-05-11T00:32:58Z",
         "views": 1938,
         "views_at_save": 1938,
-        "age_at_save_hours": 16.44
-      },
+        "age_at_save_hours": 16.58
+      }
+    ],
+    "earlier": [
       {
         "headline": "Quantum Computing Designs Half-M\u00f6bius Topology Molecule",
         "handle": "@SciTechera",
@@ -1359,9 +1294,7 @@
         "views": 57305,
         "views_at_save": 57305,
         "age_at_save_hours": 21.26
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Mitochondria Communicate via Light",
         "handle": "@forallcurious",
@@ -1497,19 +1430,21 @@
   "conspiracy": {
     "stories": [
       {
-        "headline": "UFO Files Finally Released by Government",
-        "handle": "@megynkelly",
-        "url": "https://x.com/megynkelly/status/2053822434206204086",
-        "body": "Government releases UFO files, shedding light on long-suppressed information about unidentified aerial phenomena.",
-        "engagement": "210 likes, 12 reposts, 53 replies",
+        "headline": "Microsoft Fires Israel Head Over IDF Surveillance Probe on Azure",
+        "handle": "@DropSiteNews",
+        "url": "https://x.com/DropSiteNews/status/2053876171205689854",
+        "body": "Internal probe reveals Israeli Unit 8200 secretly used Azure for mass Palestinian phone surveillance, violating terms and leading to ousting of...",
+        "engagement": "128 likes, 56 reposts, 8 quotes, 5 replies",
         "honesty": "8/10",
-        "notes": "Covers actual release of UFO documents as part of a news update, verifiable event.",
-        "posted": "2026-05-11T16:59:38Z",
-        "post_ts": "2026-05-11T13:00:01Z",
-        "views": 39815,
-        "views_at_save": 39815,
-        "age_at_save_hours": 3.99
-      },
+        "notes": "Based on reports from Globes and Ynet detailing the investigation and Guardian revelation.",
+        "posted": "2026-05-11T17:07:32Z",
+        "post_ts": "2026-05-11T16:33:33Z",
+        "views": 8423,
+        "views_at_save": 8423,
+        "age_at_save_hours": 0.57
+      }
+    ],
+    "earlier": [
       {
         "headline": "Texas Sues Netflix for Spying on Children",
         "handle": "@libsoftiktok",
@@ -1537,9 +1472,7 @@
         "views": 184,
         "views_at_save": 184,
         "age_at_save_hours": 0.16
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Widespread Sexual Abuse in Israeli Detention Exposed",
         "handle": "@DropSiteNews",
@@ -1598,7 +1531,7 @@
         "post_ts": "2026-05-11T14:22:42Z",
         "views": 206364,
         "views_at_save": 206364,
-        "age_at_save_hours": 2.67
+        "age_at_save_hours": 2.75
       },
       {
         "headline": "Mark Normand Shocks Gen Z",
@@ -1612,8 +1545,24 @@
         "post_ts": "2026-05-11T16:13:06Z",
         "views": 4,
         "views_at_save": 4,
-        "age_at_save_hours": 0.78
+        "age_at_save_hours": 0.91
       },
+      {
+        "headline": "Crowd Stands for Robbed MVPs",
+        "handle": "@LukeGlanton88",
+        "url": "https://x.com/LukeGlanton88/status/2053814518568956357",
+        "body": "Fans hilariously stand up claiming they were robbed of NFL MVP awards like Lamar Jackson and Tom Brady.",
+        "engagement": "1K likes, 85 reposts",
+        "honesty": "9/10",
+        "notes": "Verified funny sports clip with no factual errors.",
+        "posted": "2026-05-11T17:07:32Z",
+        "post_ts": "2026-05-11T12:28:33Z",
+        "views": 27663,
+        "views_at_save": 27663,
+        "age_at_save_hours": 4.65
+      }
+    ],
+    "earlier": [
       {
         "headline": "Flustered K-Pop Moment",
         "handle": "@Namkook_delulul",
@@ -1627,39 +1576,7 @@
         "views": 50919,
         "views_at_save": 50919,
         "age_at_save_hours": 23.19
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Butch Blankie Stand-Up Bit",
-        "handle": "@MaddieMorrisVA",
-        "url": "https://x.com/MaddieMorrisVA/status/2053653741828444404",
-        "body": "Comic jokes about never meeting a butch without a blankie in relatable stand-up routine.",
-        "engagement": "1.2K likes, 75 reposts",
-        "honesty": "8/10",
-        "notes": "Recalls accurate comedy clip with personal take.",
-        "posted": "2026-05-11T16:49:42Z",
-        "post_ts": "2026-05-11T01:49:41Z",
-        "views": 21771,
-        "views_at_save": 21771,
-        "age_at_save_hours": 15.17
       },
-      {
-        "headline": "Ben Shapiro's Hilarious Reaction",
-        "handle": "@kevinnathan1",
-        "url": "https://x.com/kevinnathan1/status/2053670341868986523",
-        "body": "Ben Shapiro reacts to a stand-up joke, making the whole room laugh hard.",
-        "engagement": "0 likes",
-        "honesty": "8/10",
-        "notes": "Reaction to a factual comedy clip with opinionated humor.",
-        "posted": "2026-05-11T16:44:44Z",
-        "post_ts": "2026-05-11T02:55:39Z",
-        "views": 14,
-        "views_at_save": 14,
-        "age_at_save_hours": 14.07
-      }
-    ],
-    "earlier": [
       {
         "headline": "Kevin Hart Roast Funniest Ever",
         "handle": "@ThaRealKulture",
