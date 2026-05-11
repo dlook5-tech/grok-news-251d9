@@ -1,58 +1,110 @@
 {
-  "lastUpdated": "2026-05-11T15:55:43Z",
+  "lastUpdated": "2026-05-11T16:14:57Z",
   "world": {
     "stories": [
       {
-        "headline": "Hantavirus Outbreak Hits Cruise Ship, Evacuations Underway",
+        "headline": "Hantavirus Outbreak on Cruise Ship Prompts International Response",
         "honesty": "8/10",
         "perspectives": [
           {
             "label": "Conservative",
-            "handle": "@Aku_700",
-            "url": "https://x.com/Aku_700/status/2053848854512959572",
-            "text": "\ud83d\udea8 FAKE PANDEMIC ALERT: They\u2019re Scaring Us Again to Attack Trump!. This hantavirus \u201coutbreak\u201d on a cruise ship is pure BS \u2014 just another hoax to...",
-            "engagement": "46 likes, 21 reposts, 0 quotes, 11 replies",
-            "honesty": "3/10",
-            "views": 564,
-            "notes": "Claims outbreak is hoax to target Trump, false narrative despite real event.",
-            "views_at_save": 564,
-            "age_at_save_hours": 1.18
+            "handle": "@zerohedge",
+            "url": "https://x.com/zerohedge/status/2053858949569384900",
+            "text": "Moderna Extends Rally After Two More Cruise Ship Passengers Test Positive For Hantavirus...",
+            "engagement": "76 likes, 16 reposts, 6 quotes, 33 replies",
+            "honesty": "8/10",
+            "views": 31805,
+            "notes": "Links health news to market reaction, accurate facts with economic spin.",
+            "views_at_save": 31805,
+            "age_at_save_hours": 0.83
           },
           {
             "label": "Democrat",
-            "handle": "@KenRoth",
-            "url": "https://x.com/KenRoth/status/2053808788939923762",
-            "text": "As Trump has decimated the Centers for Disease Control, it is suddenly missing in action when needed, as people from the hantavirus cruise ship come...",
-            "engagement": "33 likes, 19 reposts, 0 quotes, 6 replies",
-            "honesty": "7/10",
-            "views": 1298,
-            "notes": "Critiques Trump administration's handling of CDC, defensible opinion.",
-            "views_at_save": 1298,
-            "age_at_save_hours": 3.83
+            "handle": "@CNN",
+            "url": "https://x.com/CNN/status/2053810881138479535",
+            "text": "One passenger on the plane carrying Americans from a hantavirus-hit cruise ship has tested positive for the virus, and another has mild symptoms, the...",
+            "engagement": "235 likes, 63 reposts, 7 quotes, 132 replies",
+            "honesty": "10/10",
+            "views": 105835,
+            "notes": "Direct reporting from health authorities, verifiable.",
+            "views_at_save": 105835,
+            "age_at_save_hours": 4.01
           },
           {
             "label": "Independent",
-            "handle": "@GlobalPHObserv",
-            "url": "https://x.com/GlobalPHObserv/status/2053796662494015532",
-            "text": "Preliminary analysis of Orthohantavirus andesense virus sequences from a cruise-ship related cluster, May 2026 - Hantavirus - Virological.",
-            "engagement": "4 likes, 2 reposts, 0 quotes, 0 replies",
+            "handle": "@CBSNews",
+            "url": "https://x.com/CBSNews/status/2053586376742813747",
+            "text": "French passenger of hantavirus cruise ship starts showing symptoms on evacuation flight, prime minister says...",
+            "engagement": "1222 likes, 480 reposts, 62 quotes, 209 replies",
             "honesty": "10/10",
-            "views": 75,
-            "notes": "Scientific preliminary analysis of virus sequences, verifiable fact.",
-            "views_at_save": 75,
-            "age_at_save_hours": 4.64
+            "views": 350621,
+            "notes": "Factual update on international case, no opinion.",
+            "views_at_save": 350621,
+            "age_at_save_hours": 18.88
           }
         ],
         "footnotes": [
-          "Conservative dismisses as hoax.",
-          "Democrat blames Trump/CDC cuts.",
-          "Independent offers virological analysis."
+          "Conservative view ties outbreak to stock market gains for vaccine makers.",
+          "Democrat view emphasizes US passenger health updates.",
+          "Independent reports on global evacuation and symptoms."
         ],
-        "notes": "International health crisis with evacuations from MV Hondius.",
+        "notes": "Outbreak on MV Hondius leads to deaths, positive tests, and coordinated evacuations across countries.",
         "body": "Three-perspective roundup.",
-        "posted": "5/11/2026 3:25 PM",
+        "posted": "5/11/2026 4:14 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 1.18
+        "age_at_save_hours": 0.83
+      },
+      {
+        "headline": "Trump-Xi Summit to Address Global Tensions",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@WSJ",
+            "url": "https://x.com/WSJ/status/2053857720239804835",
+            "text": "From @WSJopinion: Trump visits Xi Jinping in Beijing on Thursday, and the pre-meeting U.S.. spin is a search for \u201cstability.\u201d It\u2019s a nice idea, as...",
+            "engagement": "30 likes, 8 reposts, 0 quotes, 22 replies",
+            "honesty": "8/10",
+            "views": 17209,
+            "notes": "Opinion warns against over-reliance on personal diplomacy, defensible conservative take.",
+            "views_at_save": 17209,
+            "age_at_save_hours": 0.91
+          },
+          {
+            "label": "Democrat",
+            "handle": "@politico",
+            "url": "https://x.com/politico/status/2053762934946582899",
+            "text": "Here\u2019s how Trump\u2019s meeting with Xi could spark a crisis over Taiwan...",
+            "engagement": "18 likes, 3 reposts, 0 quotes, 12 replies",
+            "honesty": "7/10",
+            "views": 9946,
+            "notes": "Analysis on potential risks to Taiwan, opinion-based without factual errors.",
+            "views_at_save": 9946,
+            "age_at_save_hours": 7.19
+          },
+          {
+            "label": "Independent",
+            "handle": "@Reuters",
+            "url": "https://x.com/Reuters/status/2053813622195749354",
+            "text": "US President Donald Trump and Chinese President Xi Jinping are set to discuss Iran, Taiwan, trade, artificial intelligence, and nuclear weapons...",
+            "engagement": "437 likes, 92 reposts, 9 quotes, 35 replies",
+            "honesty": "10/10",
+            "views": 94293,
+            "notes": "Factual overview of summit agenda from credible wire service.",
+            "views_at_save": 94293,
+            "age_at_save_hours": 3.83
+          }
+        ],
+        "footnotes": [
+          "Conservative perspective cautions on Xi's intentions.",
+          "Democrat perspective highlights Taiwan crisis risks.",
+          "Independent provides neutral agenda summary."
+        ],
+        "notes": "Leaders to tackle Iran war, trade, and Taiwan amid heightened US-China rivalry.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/11/2026 4:14 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 0.91
       },
       {
         "headline": "Trump Rejects Iran's Demands in Peace Proposal",
@@ -105,7 +157,9 @@
         "posted": "5/11/2026 3:25 PM",
         "views_at_save": 0,
         "age_at_save_hours": 1.41
-      },
+      }
+    ],
+    "earlier": [
       {
         "headline": "Russia-Ukraine Ceasefire Holds but Frontline Clashes Continue",
         "honesty": "8/10",
@@ -157,9 +211,7 @@
         "posted": "5/11/2026 4:25 AM",
         "views_at_save": 0,
         "age_at_save_hours": 12.29
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "US Soldier Body Recovered During Morocco Exercises",
         "honesty": "8/10",
@@ -372,6 +424,102 @@
   "usa": {
     "stories": [
       {
+        "headline": "Trump Administration Expands Fertility Benefits",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@FoxNews",
+            "url": "https://x.com/FoxNews/status/2053856764450279879",
+            "text": "JUST NOW: President Trump announces a new rule from the Department of Labor to help expand fertility benefits for millions of Americans:\n\n\"This is a...",
+            "engagement": "280 likes, 67 reposts",
+            "honesty": "9/10",
+            "views": 32924,
+            "notes": "Accurate reporting of presidential announcement with supportive commentary, no factual errors.",
+            "views_at_save": 32924,
+            "age_at_save_hours": 0.98
+          },
+          {
+            "label": "Democrat",
+            "handle": "@washingtonpost",
+            "url": "https://x.com/washingtonpost/status/2053826225924145241",
+            "text": "The Trump administration said it was moving on an effort to expand access to fertility benefits to more Americans, announcing a new proposed rule...",
+            "engagement": "29 likes, 6 reposts",
+            "honesty": "10/10",
+            "views": 18534,
+            "notes": "Straightforward factual summary of the policy announcement.",
+            "views_at_save": 18534,
+            "age_at_save_hours": 3.0
+          },
+          {
+            "label": "Independent",
+            "handle": "@Reuters",
+            "url": "https://x.com/Reuters/status/2053854533714133368",
+            "text": "Trump participates in a maternal health care event https://twitter.com/i/broadcasts/1NxaraQYQXEKj.",
+            "engagement": "14 likes, 7 reposts",
+            "honesty": "10/10",
+            "views": 15283,
+            "notes": "Neutral coverage of the event without bias.",
+            "views_at_save": 15283,
+            "age_at_save_hours": 1.12
+          }
+        ],
+        "footnotes": [],
+        "notes": "High-velocity story on federal policy initiative with balanced perspectives.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/11/2026 4:14 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 0.98
+      },
+      {
+        "headline": "Trump Proposes Reverse Psychology on Democrats for Legislation",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@EricLDaugh",
+            "url": "https://x.com/EricLDaugh/status/2053856070129393937",
+            "text": "\ud83d\udea8 JUST IN: President Trump announces a NEW PLAN to get 100% of his policies through Congress\n\n\"Trump Derangement Syndrome I'm hearing is ACTUALLY a...",
+            "engagement": "2168 likes, 364 reposts",
+            "honesty": "9/10",
+            "views": 81192,
+            "notes": "Accurate quote of Trump's humorous remarks with positive spin.",
+            "views_at_save": 81192,
+            "age_at_save_hours": 1.02
+          },
+          {
+            "label": "Democrat",
+            "handle": "@EdKrassen",
+            "url": "https://x.com/EdKrassen/status/2053856175783841952",
+            "text": "TRUMP: \u201cThey\u2019ve got serious Trump Derangement Syndrome, which actually is a disease.. I\u2019m hearing it\u2019s actually a disease.\u201d\n\nIf it actually is a...",
+            "engagement": "284 likes, 59 reposts",
+            "honesty": "7/10",
+            "views": 6610,
+            "notes": "Critiques Trump's statement with counter-opinion, no factual lies.",
+            "views_at_save": 6610,
+            "age_at_save_hours": 1.02
+          },
+          {
+            "label": "Independent",
+            "handle": "@clashreport",
+            "url": "https://x.com/clashreport/status/2053855631996584079",
+            "text": "Trump jokes:\n\nI hear that Trump Derangement Syndrome is actually a disease.. I am honored.",
+            "engagement": "29 likes, 4 reposts",
+            "honesty": "10/10",
+            "views": 8743,
+            "notes": "Direct quote of joke without added bias.",
+            "views_at_save": 8743,
+            "age_at_save_hours": 1.05
+          }
+        ],
+        "footnotes": [],
+        "notes": "Humorous take on congressional gridlock draws cross-aisle reactions.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/11/2026 4:14 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 1.02
+      },
+      {
         "headline": "Suspect in White House Correspondents' Dinner assassination attempt pleads not guilty",
         "honesty": "8/10",
         "perspectives": [
@@ -385,7 +533,7 @@
             "views": 7290,
             "notes": "Verifiable breaking news report of court proceedings.",
             "views_at_save": 7290,
-            "age_at_save_hours": 1.17
+            "age_at_save_hours": 1.49
           },
           {
             "label": "Democrat",
@@ -397,7 +545,7 @@
             "views": 27544,
             "notes": "Verifiable breaking news report of court proceedings.",
             "views_at_save": 27544,
-            "age_at_save_hours": 0.5
+            "age_at_save_hours": 0.82
           },
           {
             "label": "Independent",
@@ -409,7 +557,7 @@
             "views": 61452,
             "notes": "Verifiable breaking news report of court proceedings.",
             "views_at_save": 61452,
-            "age_at_save_hours": 1.87
+            "age_at_save_hours": 2.19
           }
         ],
         "footnotes": [],
@@ -417,8 +565,10 @@
         "body": "Three-perspective roundup.",
         "posted": "5/11/2026 3:55 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 1.17
-      },
+        "age_at_save_hours": 1.49
+      }
+    ],
+    "earlier": [
       {
         "headline": "Trump Administration Launches Moms.gov and Expands Fertility Benefits",
         "honesty": "8/10",
@@ -514,9 +664,7 @@
         "posted": "5/11/2026 5:08 AM",
         "views_at_save": 0,
         "age_at_save_hours": 11.33
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Surge in Republican Election Odds for 2026",
         "honesty": "8/10",
@@ -901,60 +1049,68 @@
         "posted": "5/10/2026 4:37 PM",
         "views_at_save": 0,
         "age_at_save_hours": 1.13
-      },
+      }
+    ],
+    "_overflow": [
       {
-        "headline": "Trump Confirms Donation of Presidential Salary to White House Preservation",
+        "headline": "Virginia Supreme Court Blocks Redistricting Referendum",
         "honesty": "8/10",
         "perspectives": [
           {
             "label": "Conservative",
-            "handle": "@EricLDaugh",
-            "url": "https://x.com/EricLDaugh/status/2053493359612715010",
-            "text": "\ud83d\udea8 IT\u2019S OFFICIAL: President Trump is DONATING his presidential salary to preserving the White House Patriot \ud83c\uddfa\ud83c\uddf8  \u201cDo you still donate your salary, and...",
-            "engagement": "2702 likes, 707 reposts",
-            "honesty": "9/10",
-            "views": 45342,
-            "notes": "Direct quote from Trump; verifiable statement in interview.",
-            "views_at_save": 45342,
-            "age_at_save_hours": 1.42
+            "handle": "@JackDangerLIVE",
+            "url": "https://x.com/JackDangerLIVE/status/2053587410668118119",
+            "text": "\ud83d\udea8EXPLOSIVE: DEMOCRATS DISCUSSING REMOVING VIRGINIA SUPREME COURT JUSTICES TO CHANGE MAP RULING\ud83d\udea8\n\nAfter the Virginia Supreme Court blocked a...",
+            "engagement": "412 likes, 361 reposts",
+            "honesty": "7/10",
+            "views": 11036,
+            "translation": "\ud83d\udea8EXPLOSIVE: DEMOCRATS DISCUSSING REMOVING VIRGINIA SUPREME COURT JUSTICES TO CHANGE MAP RULING\ud83d\udea8\n\nAfter the Virginia Supreme Court blocked a redistricting push, reports are now circulating that top Democrats are discussing LOWERING the mandatory retirement age for justices so current members could be forced out\u2026 and replaced with judges more favorable to their agenda.\n\nNot because of corruption.\nNot because of criminal behavior.\nBecause the court ruled against them.\n\nThis is the kind of thing Americans are told only happens in \u201cthreats to democracy\u201d overseas\u2026 yet now political insiders are open",
+            "notes": "Strong opinion on reported discussions, verifiable ruling but speculative on motives."
           },
           {
             "label": "Democrat",
-            "handle": "@marlene4719",
-            "url": "https://x.com/marlene4719/status/2053499571339210936",
-            "text": "Question Do you still donate your salary and if so who\u2019s it going to?. Trump I do most of it goes to the White House preservation.",
-            "engagement": "63 likes, 12 reposts",
-            "honesty": "6/10",
-            "views": 814,
-            "notes": "Quotes Trump accurately but skeptical opinion; $3B enrichment claim is exaggerated estimate, not verified fact.",
-            "views_at_save": 814,
-            "age_at_save_hours": 1.01
+            "handle": "@nytimes",
+            "url": "https://x.com/nytimes/status/2053296477850484886",
+            "text": "In Opinion  \n  \nAfter the Virginia Supreme Court overturned the results of a state redistricting vote, \u201cthe correct response is to fight back in the...",
+            "engagement": "724 likes, 252 reposts",
+            "honesty": "8/10",
+            "views": 340678,
+            "notes": "Opinion advocating response to ruling, grounded in facts of the decision."
           },
           {
             "label": "Independent",
-            "handle": "@atrupar",
-            "url": "https://x.com/atrupar/status/2053489184573174150",
-            "text": "ATTKISSON: Do you still donate your salary, and if so who is it going to?. TRUMP: I do.",
-            "engagement": "353 likes, 95 reposts",
+            "handle": "@thehill",
+            "url": "https://x.com/thehill/status/2053576565582180518",
+            "text": "Virginia Democrat: \u2018All options on the table\u2019 after redistricting state Supreme Court decision...",
+            "engagement": "381 likes, 78 reposts",
             "honesty": "10/10",
-            "views": 42716,
-            "notes": "Verbatim quote from interview; pure factual reporting.",
-            "views_at_save": 42716,
-            "age_at_save_hours": 1.7
+            "views": 15087,
+            "notes": "Objective reporting of political statement post-ruling."
           }
         ],
         "footnotes": [],
-        "notes": "Federal policy on presidential compensation and public funds use.",
+        "notes": "Key congressional redistricting battle with multi-perspective coverage.",
         "body": "Three-perspective roundup.",
-        "posted": "5/10/2026 4:37 PM",
-        "views_at_save": 0,
-        "age_at_save_hours": 1.42
+        "posted": "5/11/2026 4:14 PM"
       }
-    ],
-    "_overflow": []
+    ]
   },
   "elon": {
     "stories": [
+      {
+        "headline": "Motherhood as Important as Career",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2053589229754781832",
+        "body": "Elon agrees that being a mom is just as important as any career.",
+        "engagement": "223K likes, 14K reposts, 351 quotes, 5.4K replies",
+        "honesty": "8/10",
+        "notes": "Defensible opinion on societal value of motherhood, no false claims.",
+        "posted": "2026-05-11T04:13:16Z",
+        "post_ts": "2026-05-10T21:33:20Z",
+        "views": 17039044,
+        "views_at_save": 17039044,
+        "age_at_save_hours": 18.69
+      },
       {
         "headline": "Happy Mother's Day to Mom",
         "handle": "@elonmusk",
@@ -967,7 +1123,7 @@
         "post_ts": "2026-05-10T22:16:00Z",
         "views": 9633915,
         "views_at_save": 9633915,
-        "age_at_save_hours": 17.66
+        "age_at_save_hours": 17.98
       },
       {
         "headline": "Elon Slams Achilles Revisionism",
@@ -984,8 +1140,10 @@
         "parent_handle": "@HomerPavlos",
         "parent_text": "What we\u2019re seeing on X these past few days is insane. > They\u2019re trying like maniacs to convince you that Achilles is not a hero or a role model, even though he was the greatest role model in the West for 3,000 years. > They\u2019re trying to convince you that he had a sexual relations",
         "views_at_save": 93167,
-        "age_at_save_hours": 17.8
-      },
+        "age_at_save_hours": 18.12
+      }
+    ],
+    "earlier": [
       {
         "headline": "Happy Mother's Day Appreciation",
         "handle": "@elonmusk",
@@ -1000,67 +1158,51 @@
         "views_at_save": 23152558,
         "age_at_save_hours": 18.58
       }
-    ],
-    "earlier": [
-      {
-        "headline": "Motherhood as Important as Career",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2053589229754781832",
-        "body": "Elon agrees that being a mom is just as important as any career.",
-        "engagement": "223K likes, 14K reposts, 351 quotes, 5.4K replies",
-        "honesty": "8/10",
-        "notes": "Defensible opinion on societal value of motherhood, no false claims.",
-        "posted": "2026-05-11T04:13:16Z",
-        "post_ts": "2026-05-10T21:33:20Z",
-        "views": 17039044,
-        "views_at_save": 17039044,
-        "age_at_save_hours": 17.88
-      }
     ]
   },
   "sports": {
     "stories": [
       {
-        "headline": "Chargers Sign David Njoku to One-Year Deal",
-        "handle": "@AdamSchefter",
-        "url": "https://x.com/AdamSchefter/status/2053846787379589286",
-        "body": "Los Angeles Chargers agree to terms with former Browns TE David Njoku on a one-year contract worth up to $8 million.",
-        "engagement": "809 likes, 62 reposts",
-        "honesty": "9/10",
-        "notes": "Verified NFL insider reporting a player signing with source link.",
-        "posted": "2026-05-11T15:55:44Z",
-        "post_ts": "2026-05-11T14:36:47Z",
-        "views": 334991,
-        "views_at_save": 334991,
-        "age_at_save_hours": 1.32
-      },
-      {
-        "headline": "Stephen A. on Wemby Ejection",
-        "handle": "@stephenasmith",
-        "url": "https://x.com/stephenasmith/status/2053642032833540273",
-        "body": "Stephen A.. Smith calls Victor Wembanyama's elbow swing ejection warranted and intentional but prays for no suspension.",
-        "engagement": "5.3K likes, 216 reposts",
-        "honesty": "8/10",
-        "notes": "Opinionated take on NBA referee call without factual errors.",
-        "posted": "2026-05-11T15:55:44Z",
-        "post_ts": "2026-05-11T01:03:10Z",
-        "views": 472459,
-        "views_at_save": 472459,
-        "age_at_save_hours": 14.88
-      },
-      {
-        "headline": "Wembanyama Ejected for Elbowing Naz Reid",
+        "headline": "Wemby Ejected for Elbowing Naz Reid",
         "handle": "@BleacherReport",
         "url": "https://x.com/BleacherReport/status/2053633802128216117",
-        "body": "Victor Wembanyama caught a flagrant 2 foul and was ejected for elbowing Naz Reid during the game.",
-        "engagement": "8.3K likes, 317 reposts, 76 quotes, 286 replies",
-        "honesty": "8/10",
-        "notes": "Accurate reporting of in-game referee decision with sensational framing.",
-        "posted": "2026-05-11T05:08:06Z",
+        "body": "Victor Wembanyama receives flagrant 2 foul and ejection for elbowing Naz Reid during playoff game.",
+        "engagement": "9.4K likes, 350 reposts",
+        "honesty": "10/10",
+        "notes": "Verified in-game event reported by major sports outlet.",
+        "posted": "2026-05-11T16:15:00Z",
         "post_ts": "2026-05-11T00:30:27Z",
-        "views": 357216,
-        "views_at_save": 357216,
-        "age_at_save_hours": 15.42
+        "views": 395587,
+        "views_at_save": 395587,
+        "age_at_save_hours": 15.74
+      },
+      {
+        "headline": "Chargers Sign TE David Njoku",
+        "handle": "@AdamSchefter",
+        "url": "https://x.com/AdamSchefter/status/2053846787379589286",
+        "body": "Los Angeles Chargers agree to one-year deal with ex-Browns tight end David Njoku worth up to $8M.",
+        "engagement": "856 likes, 65 reposts",
+        "honesty": "10/10",
+        "notes": "Reliable NFL insider sources confirm signing agreement.",
+        "posted": "2026-05-11T16:15:00Z",
+        "post_ts": "2026-05-11T14:36:47Z",
+        "views": 360186,
+        "views_at_save": 360186,
+        "age_at_save_hours": 1.64
+      },
+      {
+        "headline": "Stephen A. on Wemby's Ejection",
+        "handle": "@stephenasmith",
+        "url": "https://x.com/stephenasmith/status/2053642032833540273",
+        "body": "Stephen A.. Smith calls Wembanyama's elbow swing intentional and ejection warranted but hopes no suspension.",
+        "engagement": "5.3K likes, 216 reposts",
+        "honesty": "8/10",
+        "notes": "Fact-based opinion on verified playoff incident.",
+        "posted": "2026-05-11T16:15:00Z",
+        "post_ts": "2026-05-11T01:03:10Z",
+        "views": 474179,
+        "views_at_save": 474179,
+        "age_at_save_hours": 15.2
       }
     ],
     "earlier": [
@@ -1209,32 +1351,32 @@
   "allin": {
     "stories": [
       {
-        "headline": "Sacks Breaks Down Data Center Economics",
+        "headline": "Data Centers: $50B Build, 2-Year Payback",
         "handle": "@DavidSacks",
         "url": "https://x.com/DavidSacks/status/2053573251419230702",
-        "body": "A 1GW data center requires $50B capex but yields $25-30B annual revenue and $1-2B electricity costs for a 2-year payback.",
-        "engagement": "11.3K likes, 834 retweets, 535 replies",
-        "honesty": "7/10",
-        "notes": "Opinion with back-of-envelope estimates",
-        "posted": "2026-05-11T15:55:44Z",
+        "body": "1GW data centers cost $50B upfront but yield $25-30B annual revenue against $1-2B electricity, enabling rapid ROI in AI boom.",
+        "engagement": "11.3K likes, 839 retweets, 538 replies",
+        "honesty": "8/10",
+        "notes": "Fact-based estimates with opinion on industry growth.",
+        "posted": "2026-05-11T16:15:00Z",
         "post_ts": "2026-05-10T20:29:51Z",
-        "views": 1746677,
-        "views_at_save": 1746677,
-        "age_at_save_hours": 19.43
+        "views": 1761547,
+        "views_at_save": 1761547,
+        "age_at_save_hours": 19.75
       },
       {
-        "headline": "Luckey on Autonomous Trucking and Climate",
+        "headline": "Autonomous Trucks Beat Climate Job Worries",
         "handle": "@PalmerLuckey",
         "url": "https://x.com/PalmerLuckey/status/2053579523434983464",
-        "body": "Climate-focused leaders should back autonomous logistics to slash emissions, as electric autonomous vehicles emit 1/20th the carbon of human-driven...",
-        "engagement": "3.4K likes, 118 retweets, 100 replies",
+        "body": "Climate advocates should back autonomous logistics for massive emission cuts, far outweighing trucker job losses.",
+        "engagement": "3.4K likes, 120 retweets, 100 replies",
         "honesty": "7/10",
-        "notes": "Opinion on environmental benefits",
-        "posted": "2026-05-11T15:55:44Z",
+        "notes": "Contrarian opinion tying autonomy to environmental gains.",
+        "posted": "2026-05-11T16:15:00Z",
         "post_ts": "2026-05-10T20:54:46Z",
-        "views": 233623,
-        "views_at_save": 233623,
-        "age_at_save_hours": 19.02
+        "views": 234653,
+        "views_at_save": 234653,
+        "age_at_save_hours": 19.34
       },
       {
         "headline": "Chamath Urges Politicians to Record Interviews",
@@ -1311,7 +1453,8 @@
         "views_at_save": 100252,
         "age_at_save_hours": 20.74
       }
-    ]
+    ],
+    "_overflow": []
   },
   "pods": {
     "stories": [
@@ -1327,8 +1470,10 @@
         "post_ts": "2026-05-11T12:06:15Z",
         "views": 258599,
         "views_at_save": 258599,
-        "age_at_save_hours": 3.82
-      },
+        "age_at_save_hours": 4.15
+      }
+    ],
+    "earlier": [
       {
         "headline": "Megyn Kelly Slams Blake Lively's Appeal",
         "handle": "@MegynKellyShow",
@@ -1342,9 +1487,7 @@
         "views": 79040,
         "views_at_save": 79040,
         "age_at_save_hours": 18.93
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Jensen Huang on Helping Elon Musk Build Tesla Computers",
         "handle": "@joeroganhq",
@@ -1431,22 +1574,38 @@
         "post_ts": "2026-05-11T12:17:00Z",
         "views": 271941,
         "views_at_save": 271941,
-        "age_at_save_hours": 3.65
+        "age_at_save_hours": 3.97
       },
       {
-        "headline": "Private Credit Woes Deepen as Fund NAV Drops to 77",
+        "headline": "Private Credit Woes Deepen as Fund NAV Hits 77",
         "handle": "@TruthGundlach",
         "url": "https://x.com/TruthGundlach/status/2053677024607383801",
-        "body": "A large private credit fund marked its NAV down to 77 from 100, raising questions on whether loan losses are uniform at 23% or concentrated in fewer...",
+        "body": "A major private credit fund has marked its NAV down to 77 from 81 earlier this year, prompting questions on the severity and distribution of loan...",
         "engagement": "1.7K likes, 208 retweets, 0 replies",
         "honesty": "8/10",
-        "notes": "Fact-based analysis of NAV markdown with interpretive questions, no factual errors.",
-        "posted": "2026-05-11T15:55:44Z",
+        "notes": "Verifiable report of NAV markdown combined with analytical insight on potential loss scenarios.",
+        "posted": "2026-05-11T16:15:01Z",
         "post_ts": "2026-05-11T03:22:12Z",
-        "views": 216974,
-        "views_at_save": 216974,
-        "age_at_save_hours": 12.56
+        "views": 220917,
+        "views_at_save": 220917,
+        "age_at_save_hours": 12.88
       },
+      {
+        "headline": "Bitcoin's Mother's Day Price Evolution",
+        "handle": "@WatcherGuru",
+        "url": "https://x.com/WatcherGuru/status/2053604561290510468",
+        "body": "Bitcoin prices on Mother's Day have surged from $8 in 2011 to $81,700 in 2026, illustrating crypto's long-term growth amid volatility.",
+        "engagement": "5.1K likes, 440 reposts, 223 replies",
+        "honesty": "8/10",
+        "notes": "Factual historical data providing macro perspective on cryptocurrency performance.",
+        "posted": "2026-05-11T04:25:35Z",
+        "post_ts": "2026-05-10T22:34:16Z",
+        "views": 338021,
+        "views_at_save": 338021,
+        "age_at_save_hours": 17.68
+      }
+    ],
+    "earlier": [
       {
         "headline": "Historic Low Recession Odds in Prediction Markets",
         "handle": "@APompliano",
@@ -1460,22 +1619,6 @@
         "views": 44453,
         "views_at_save": 44453,
         "age_at_save_hours": 22.99
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Bitcoin's Mother's Day Price Evolution",
-        "handle": "@WatcherGuru",
-        "url": "https://x.com/WatcherGuru/status/2053604561290510468",
-        "body": "Bitcoin prices on Mother's Day have surged from $8 in 2011 to $81,700 in 2026, illustrating crypto's long-term growth amid volatility.",
-        "engagement": "5.1K likes, 440 reposts, 223 replies",
-        "honesty": "8/10",
-        "notes": "Factual historical data providing macro perspective on cryptocurrency performance.",
-        "posted": "2026-05-11T04:25:35Z",
-        "post_ts": "2026-05-10T22:34:16Z",
-        "views": 338021,
-        "views_at_save": 338021,
-        "age_at_save_hours": 16.86
       },
       {
         "headline": "BlackRock CEO Flags AI Resource Shortages",
@@ -1560,25 +1703,55 @@
         "views": 227604,
         "views_at_save": 227604,
         "age_at_save_hours": 18.05
-      },
-      {
-        "headline": "Private Credit Transparency Push",
-        "handle": "@TruthGundlach",
-        "url": "https://x.com/TruthGundlach/status/2053143268452622477",
-        "body": "A major private credit fund manager will mark-to-market all positions daily by year-end, highlighting current transparency gaps.",
-        "engagement": "857 likes, 80 retweets, 0 replies",
-        "honesty": "8/10",
-        "notes": "Fact-based report with opinion on implications; no lies.",
-        "posted": "2026-05-10T15:49:47Z",
-        "post_ts": "2026-05-09T16:01:15Z",
-        "views": 277080,
-        "views_at_save": 277080,
-        "age_at_save_hours": 23.81
       }
     ]
   },
   "top": {
     "stories": [
+      {
+        "headline": "Wordle Set for Primetime TV",
+        "handle": "@PopCrave",
+        "url": "https://x.com/PopCrave/status/2053825843164557531",
+        "body": "Wordle is becoming a primetime TV game show hosted by Savannah Guthrie on NBC, executive produced by Jimmy Fallon, premiering in 2027.",
+        "engagement": "5.3K likes, 174 reposts, 481 quotes, 360 replies",
+        "honesty": "10/10",
+        "notes": "Fact",
+        "posted": "2026-05-11T16:15:01Z",
+        "post_ts": "2026-05-11T13:13:33Z",
+        "views": 965937,
+        "views_at_save": 965937,
+        "age_at_save_hours": 3.02
+      },
+      {
+        "headline": "Happy by the Waves",
+        "handle": "@ai_hiyo_",
+        "url": "https://x.com/ai_hiyo_/status/2053818625119895554",
+        "body": "A joyful video captures the simple happiness of being present by the ocean waves.",
+        "engagement": "5.2K likes, 96 reposts, 7 quotes, 193 replies",
+        "honesty": "7/10",
+        "notes": "Opinion",
+        "posted": "2026-05-11T16:15:02Z",
+        "post_ts": "2026-05-11T12:44:52Z",
+        "views": 373826,
+        "views_at_save": 373826,
+        "age_at_save_hours": 3.5
+      },
+      {
+        "headline": "Lewandowski Eyes Lower-League Move",
+        "handle": "@FabrizioRomano",
+        "url": "https://x.com/FabrizioRomano/status/2053769078922183065",
+        "body": "Robert Lewandowski, almost 38, considers a lower-level league option while feeling physically good and awaiting more offers.",
+        "engagement": "20.5K likes, 1.1K reposts, 173 quotes, 795 replies",
+        "honesty": "10/10",
+        "notes": "Fact with direct quote",
+        "posted": "2026-05-11T16:15:01Z",
+        "post_ts": "2026-05-11T09:28:00Z",
+        "views": 957945,
+        "views_at_save": 957945,
+        "age_at_save_hours": 6.78
+      }
+    ],
+    "earlier": [
       {
         "headline": "K-pop Idol Defends Body Positivity",
         "handle": "@icurina",
@@ -1594,20 +1767,6 @@
         "age_at_save_hours": 4.73
       },
       {
-        "headline": "Lewandowski Eyes Lower League Move",
-        "handle": "@FabrizioRomano",
-        "url": "https://x.com/FabrizioRomano/status/2053769078922183065",
-        "body": "Robert Lewandowski, nearing 38, considers playing in a lower-level league and will review more offers.",
-        "engagement": "20K likes, 1K reposts",
-        "honesty": "9/10",
-        "notes": "Fact - direct quote from the player on his future plans.",
-        "posted": "2026-05-11T15:55:45Z",
-        "post_ts": "2026-05-11T09:28:00Z",
-        "views": 940134,
-        "views_at_save": 940134,
-        "age_at_save_hours": 6.46
-      },
-      {
         "headline": "Benson's Music Drop Today",
         "handle": "@BNXN",
         "url": "https://x.com/BNXN/status/2053824352248852532",
@@ -1620,9 +1779,7 @@
         "views": 163529,
         "views_at_save": 163529,
         "age_at_save_hours": 2.8
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Dressing the Colonel art series",
         "handle": "@talanya_",
@@ -1734,53 +1891,55 @@
         "views": 1240000,
         "views_at_save": 1240000,
         "age_at_save_hours": 4.52
-      },
-      {
-        "headline": "PM Modi urges sacrifices amid global crisis",
-        "handle": "@NewsAlgebraIND",
-        "url": "https://x.com/NewsAlgebraIND/status/2053507607873335584",
-        "body": "PM Modi appeals to Indians to skip gold for weddings, postpone foreign travel, work from home, and cut oil use for economic health.",
-        "engagement": "9.4K likes, 2.3K reposts",
-        "honesty": "9/10",
-        "notes": "Fact: Reports PM Modi's direct statements.",
-        "posted": "2026-05-11T04:25:35Z",
-        "post_ts": "2026-05-10T16:09:00Z",
-        "views": 780264,
-        "views_at_save": 780264,
-        "age_at_save_hours": 12.28
-      },
-      {
-        "headline": "Graduation Meme Comes True",
-        "handle": "@crushprints",
-        "url": "https://x.com/crushprints/status/2053561819663306915",
-        "body": "User announces graduation tomorrow, quoting their past plan to kiss bully on stage before homophobic parents.",
-        "engagement": "70K likes, 2K reposts",
-        "honesty": "7/10",
-        "notes": "Opinion and personal take",
-        "posted": "2026-05-11T04:13:17Z",
-        "post_ts": "2026-05-10T19:44:25Z",
-        "views": 1748153,
-        "views_at_save": 1748153,
-        "age_at_save_hours": 8.48
       }
     ]
   },
   "msm": {
     "stories": [
       {
-        "headline": "Spencer Pratt's Bold Plan to Restore Order in Los Angeles",
+        "headline": "Spencer Pratt's Plan to Restore LA Streets",
         "handle": "@CollinRugg",
         "url": "https://x.com/CollinRugg/status/2053598622391157066",
-        "body": "Spencer Pratt proposes a three-week grace period in LA before enforcing laws against public nudity, drug use, robbery, and abuse to clean up the...",
-        "engagement": "43K likes, 4.8K retweets, 831 replies",
-        "honesty": "8/10",
-        "notes": "Fact-based report of celebrity's statements on urban issues.",
-        "posted": "2026-05-11T15:55:45Z",
+        "body": "Spencer Pratt announces a three-week grace period before cracking down on crime, drugs, and nudity in Los Angeles to clean up the streets.",
+        "engagement": "43K likes, 4.8K reposts, 835 replies",
+        "honesty": "9/10",
+        "notes": "Verifiable statements from video clip with minor editorializing.",
+        "posted": "2026-05-11T16:15:02Z",
         "post_ts": "2026-05-10T22:10:40Z",
-        "views": 2446841,
-        "views_at_save": 2446841,
-        "age_at_save_hours": 17.75
+        "views": 2469476,
+        "views_at_save": 2469476,
+        "age_at_save_hours": 18.07
       },
+      {
+        "headline": "Woman Accuses Walgreens of Racism Over Locked Makeup",
+        "handle": "@EndWokeness",
+        "url": "https://x.com/EndWokeness/status/2053825062063505635",
+        "body": "A customer claims Walgreens is racist for securing only darker skin tone makeup due to theft, ignoring lighter shades.",
+        "engagement": "4.9K likes, 457 reposts, 491 replies",
+        "honesty": "8/10",
+        "notes": "Accurate depiction of viral incident video with opinion on theft rationale.",
+        "posted": "2026-05-11T16:15:02Z",
+        "post_ts": "2026-05-11T13:10:27Z",
+        "views": 97116,
+        "views_at_save": 97116,
+        "age_at_save_hours": 3.08
+      },
+      {
+        "headline": "Musician Denied US Entry Over Girlfriend's Trump Threat",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2053867580570427879",
+        "body": "Australian artist Keli Holiday barred from entering the US after girlfriend Abbie Chatfield's post calling for Trump's assassination.",
+        "engagement": "584 likes, 77 reposts, 79 replies",
+        "honesty": "8/10",
+        "notes": "Reports denial event based on public post, fact with light commentary.",
+        "posted": "2026-05-11T16:15:02Z",
+        "post_ts": "2026-05-11T15:59:24Z",
+        "views": 26571,
+        "views_at_save": 26571,
+        "age_at_save_hours": 0.26
+      }
+    ],
+    "earlier": [
       {
         "headline": "Chart Exposes the Decline of Marriage in America",
         "handle": "@EndWokeness",
@@ -1808,9 +1967,7 @@
         "views": 196130,
         "views_at_save": 196130,
         "age_at_save_hours": 4.58
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Gretchen Whitmer's Friend Indicted for $20M Theft",
         "handle": "@libsoftiktok",
@@ -1922,39 +2079,39 @@
         "views": 487513,
         "views_at_save": 487513,
         "age_at_save_hours": 2.23
-      },
-      {
-        "headline": "McDonald's Liquid Eggs Contain Citric Acid from Black Mold",
-        "handle": "@WallStreetApes",
-        "url": "https://x.com/WallStreetApes/status/2053504437185093721",
-        "body": "Liquid egg product used in McDonald's scrambled eggs includes citric acid produced via black mold fermentation under FDA GRAS loophole.",
-        "engagement": "850 likes, 281 reposts, 24 quotes, 263 replies",
-        "honesty": "9/10",
-        "notes": "Factual ingredients and FDA details with critical take on safety.",
-        "posted": "2026-05-10T18:09:51Z",
-        "post_ts": "2026-05-10T15:56:24Z",
-        "views": 316337,
-        "views_at_save": 316337,
-        "age_at_save_hours": 2.22
-      },
-      {
-        "headline": "Trans Male Athlete Dominates California Girls' Track",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2053303799352021476",
-        "body": "AB Hernandez wins long jump, triple jump, and ties high jump in girls' postseason meet.",
-        "engagement": "2.9K likes, 557 reposts, 43 quotes, 405 replies",
-        "honesty": "8/10",
-        "notes": "Accurate sports results with opinionated framing on gender.",
-        "posted": "2026-05-10T18:09:52Z",
-        "post_ts": "2026-05-10T02:39:08Z",
-        "views": 141377,
-        "views_at_save": 141377,
-        "age_at_save_hours": 15.51
       }
     ]
   },
   "pg6": {
     "stories": [
+      {
+        "headline": "Dianna Russini Cozy with Mike Vrabel",
+        "handle": "@TMZ",
+        "url": "https://x.com/TMZ/status/2053841350441795988",
+        "body": "Exclusive photos show ESPN reporter Dianna Russini wrapping her arm around ex-NFL coach Mike Vrabel at 2022 Super Bowl party.",
+        "engagement": "5.8K likes, 366 reposts, 567 replies",
+        "honesty": "10/10",
+        "notes": "Verified exclusive photos and report.",
+        "posted": "2026-05-11T16:15:02Z",
+        "post_ts": "2026-05-11T14:15:11Z",
+        "views": 1698131,
+        "views_at_save": 1698131,
+        "age_at_save_hours": 2.0
+      },
+      {
+        "headline": "Brianne Howey Announces Pregnancy",
+        "handle": "@PopCrave",
+        "url": "https://x.com/PopCrave/status/2053648252059169169",
+        "body": "Ginny & Georgia star Brianne Howey reveals she's pregnant on Mother's Day.",
+        "engagement": "40K likes, 1K reposts, 309 replies",
+        "honesty": "10/10",
+        "notes": "Verified fact from celebrity announcement.",
+        "posted": "2026-05-11T16:15:02Z",
+        "post_ts": "2026-05-11T01:27:52Z",
+        "views": 2577373,
+        "views_at_save": 2577373,
+        "age_at_save_hours": 14.79
+      },
       {
         "headline": "Exclusive: Dianna Russini and Mike Vrabel's Cozy Super Bowl Moment",
         "handle": "@TMZ",
@@ -1968,7 +2125,9 @@
         "views": 1407823,
         "views_at_save": 1407823,
         "age_at_save_hours": 2.06
-      },
+      }
+    ],
+    "earlier": [
       {
         "headline": "Ian McKellen Reveals Alec Guinness's Anti-Activism Advice",
         "handle": "@Variety",
@@ -1996,22 +2155,6 @@
         "views": 11003557,
         "views_at_save": 11003557,
         "age_at_save_hours": 37.8
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Dianna Russini Cozies Up to Mike Vrabel",
-        "handle": "@TMZ",
-        "url": "https://x.com/TMZ/status/2053841350441795988",
-        "body": "Exclusive photo reveals ESPN reporter Dianna Russini wrapping her arm around ex-NFL coach Mike Vrabel at 2022 Super Bowl party.",
-        "engagement": "3.9K likes, 259 reposts, 326 quotes, 419 replies",
-        "honesty": "9/10",
-        "notes": "Verified exclusive photo report from TMZ, implying romance without false claims.",
-        "posted": "2026-05-11T15:25:59Z",
-        "post_ts": "2026-05-11T14:15:11Z",
-        "views": 933630,
-        "views_at_save": 933630,
-        "age_at_save_hours": 1.18
       },
       {
         "headline": "Almod\u00f3var Slams Oscars Over Politics",
@@ -2110,36 +2253,9 @@
         "views": 5595232,
         "views_at_save": 5595232,
         "age_at_save_hours": 10.31
-      },
-      {
-        "headline": "Spencer Pratt's Heartfelt Post After Fire Loss",
-        "handle": "@TMZ",
-        "url": "https://x.com/TMZ/status/2053514149834129812",
-        "body": "Spencer Pratt shares emotional Mother's Day video of Heidi Montag with kids following Palisades fires that destroyed their home.",
-        "engagement": "6K likes, 600 retweets, 200 replies",
-        "honesty": "9/10",
-        "notes": "Fact - reports celebrity's personal message.",
-        "posted": "2026-05-11T03:38:05Z",
-        "post_ts": "2026-05-10T16:35:00Z",
-        "views": 402330,
-        "views_at_save": 402330,
-        "age_at_save_hours": 11.05
-      },
-      {
-        "headline": "British Celeb's Affair with Sports Star Leaked",
-        "handle": "@DailyMail",
-        "url": "https://x.com/DailyMail/status/2053265960409166122",
-        "body": "Thousands of intimate pictures and messages expose a huge British female celebrity's affair with a top sports star.",
-        "engagement": "1.3K likes, 87 reposts, 341 replies",
-        "honesty": "8/10",
-        "notes": "Reporting on leaked materials, fact-based.",
-        "posted": "2026-05-10T18:09:52Z",
-        "post_ts": "2026-05-10T00:08:47Z",
-        "views": 7819214,
-        "views_at_save": 7819214,
-        "age_at_save_hours": 27.49
       }
-    ]
+    ],
+    "_overflow": []
   },
   "recipe": {
     "stories": [
@@ -2155,7 +2271,21 @@
         "post_ts": "2026-05-11T12:24:05Z",
         "views": 4931,
         "views_at_save": 4931,
-        "age_at_save_hours": 3.53
+        "age_at_save_hours": 3.85
+      },
+      {
+        "headline": "Coconut Curry Ramen",
+        "handle": "@KitchenSanc2ary",
+        "url": "https://x.com/KitchenSanc2ary/status/2053781913186492689",
+        "body": "Coconut curry ramen with Vietnamese-style ground pork for a spicy comfort bowl.",
+        "engagement": "27 likes, 4 retweets, 0 replies",
+        "honesty": "10/10",
+        "notes": "Detailed recipe link for home cooking.",
+        "posted": "2026-05-11T15:26:00Z",
+        "post_ts": "2026-05-11T10:19:00Z",
+        "views": 926,
+        "views_at_save": 926,
+        "age_at_save_hours": 5.93
       },
       {
         "headline": "Honey Garlic Pork Chops",
@@ -2170,20 +2300,6 @@
         "views": 11194,
         "views_at_save": 11194,
         "age_at_save_hours": 23.86
-      },
-      {
-        "headline": "Coconut Curry Ramen",
-        "handle": "@KitchenSanc2ary",
-        "url": "https://x.com/KitchenSanc2ary/status/2053781913186492689",
-        "body": "Coconut curry ramen with Vietnamese-style ground pork for a spicy comfort bowl.",
-        "engagement": "27 likes, 4 retweets, 0 replies",
-        "honesty": "10/10",
-        "notes": "Detailed recipe link for home cooking.",
-        "posted": "2026-05-11T15:26:00Z",
-        "post_ts": "2026-05-11T10:19:00Z",
-        "views": 926,
-        "views_at_save": 926,
-        "age_at_save_hours": 5.12
       }
     ],
     "earlier": [
@@ -2277,6 +2393,50 @@
   "science": {
     "stories": [
       {
+        "headline": "Anti-Aging Framework Proposed",
+        "handle": "@SciTechera",
+        "url": "https://x.com/SciTechera/status/2053698996687016282",
+        "body": "2026 study outlines integrated anti-aging approach targeting NAD+, mitochondria, and redox with compounds like NMN and PQQ.",
+        "engagement": "146 likes, 29 reposts",
+        "honesty": "8/10",
+        "notes": "Summarizes published research on interconnected aging mechanisms and potential interventions.",
+        "posted": "2026-05-11T16:15:04Z",
+        "post_ts": "2026-05-11T04:49:31Z",
+        "views": 4636,
+        "views_at_save": 4636,
+        "age_at_save_hours": 11.43
+      },
+      {
+        "headline": "Quantum Spin Liquid Discovery",
+        "handle": "@newscientist",
+        "url": "https://x.com/newscientist/status/2053623881596826017",
+        "body": "Scientists provide proof of quantum spin liquids forming naturally in buried crystals, advancing quantum entanglement research.",
+        "engagement": "38 likes, 8 reposts",
+        "honesty": "9/10",
+        "notes": "Reports verifiable scientific claim from New Scientist article on quantum materials.",
+        "posted": "2026-05-11T16:15:03Z",
+        "post_ts": "2026-05-10T23:51:02Z",
+        "views": 5962,
+        "views_at_save": 5962,
+        "age_at_save_hours": 16.4
+      },
+      {
+        "headline": "Bacteria Engineered to Eat Cancer Cells",
+        "handle": "@EricTopol",
+        "url": "https://x.com/EricTopol/status/2053521137150394410",
+        "body": "University of Illinois researchers developed engineered bacteria that target and consume cancer cells from within.",
+        "engagement": "597 likes, 126 reposts",
+        "honesty": "9/10",
+        "notes": "Direct report of cancer research breakthrough from credible source.",
+        "posted": "2026-05-11T04:59:54Z",
+        "post_ts": "2026-05-10T17:02:46Z",
+        "views": 48252,
+        "views_at_save": 48252,
+        "age_at_save_hours": 23.2
+      }
+    ],
+    "earlier": [
+      {
         "headline": "Quantum Computing Crafts Novel Half-M\u00f6bius Molecule",
         "handle": "@SciTechera",
         "url": "https://x.com/SciTechera/status/2053559273138036850",
@@ -2317,22 +2477,6 @@
         "views": 227766,
         "views_at_save": 227766,
         "age_at_save_hours": 20.09
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Natural Quantum Spin Liquids Found in Earth Crystals",
-        "handle": "@newscientist",
-        "url": "https://x.com/newscientist/status/2053623881596826017",
-        "body": "A scientist claims proof of quantum spin liquids forming naturally in buried earth crystals.",
-        "engagement": "38 likes, 7 reposts",
-        "honesty": "9/10",
-        "notes": "Reputable outlet reporting on new research finding in quantum physics.",
-        "posted": "2026-05-11T15:26:00Z",
-        "post_ts": "2026-05-10T23:51:02Z",
-        "views": 5926,
-        "views_at_save": 5926,
-        "age_at_save_hours": 15.58
       },
       {
         "headline": "Mosquitoes Reach Iceland",
@@ -2347,20 +2491,6 @@
         "views": 19719,
         "views_at_save": 19719,
         "age_at_save_hours": 17.57
-      },
-      {
-        "headline": "Bacteria Engineered to Eat Cancer Cells",
-        "handle": "@EricTopol",
-        "url": "https://x.com/EricTopol/status/2053521137150394410",
-        "body": "University of Illinois researchers developed engineered bacteria that target and consume cancer cells from within.",
-        "engagement": "597 likes, 126 reposts",
-        "honesty": "9/10",
-        "notes": "Direct report of cancer research breakthrough from credible source.",
-        "posted": "2026-05-11T04:59:54Z",
-        "post_ts": "2026-05-10T17:02:46Z",
-        "views": 48252,
-        "views_at_save": 48252,
-        "age_at_save_hours": 12.09
       },
       {
         "headline": "Sudden Acceleration in Sea Level Rise",
@@ -2432,8 +2562,7 @@
         "views_at_save": 121097,
         "age_at_save_hours": 20.86
       }
-    ],
-    "_overflow": []
+    ]
   },
   "local": {
     "stories": [
@@ -2449,7 +2578,7 @@
         "post_ts": "2026-05-10T20:46:45Z",
         "views": 76544,
         "views_at_save": 76544,
-        "age_at_save_hours": 19.15
+        "age_at_save_hours": 19.47
       },
       {
         "headline": "Del Taco History Clarified by OC Food Expert",
@@ -2463,7 +2592,7 @@
         "post_ts": "2026-05-10T17:44:09Z",
         "views": 43876,
         "views_at_save": 43876,
-        "age_at_save_hours": 22.19
+        "age_at_save_hours": 22.52
       },
       {
         "headline": "USC Commit Impresses at Huntington Beach 7v7",
@@ -2477,7 +2606,7 @@
         "post_ts": "2026-05-10T04:35:39Z",
         "views": 41089,
         "views_at_save": 41089,
-        "age_at_save_hours": 35.34
+        "age_at_save_hours": 35.66
       }
     ],
     "earlier": [
@@ -2609,7 +2738,7 @@
         "post_ts": "2026-05-11T14:13:10Z",
         "views": 23897,
         "views_at_save": 23897,
-        "age_at_save_hours": 1.71
+        "age_at_save_hours": 2.03
       },
       {
         "headline": "NYPD Fails to Review Thousands of Searches",
@@ -2623,8 +2752,24 @@
         "post_ts": "2026-05-11T09:17:31Z",
         "views": 10520,
         "views_at_save": 10520,
-        "age_at_save_hours": 6.64
+        "age_at_save_hours": 6.96
       },
+      {
+        "headline": "Satirical Take on Netanyahu's Employee Treatment",
+        "handle": "@ggreenwald",
+        "url": "https://x.com/ggreenwald/status/2053513737135403136",
+        "body": "Greenwald highlights Netanyahu's frequent White House visits as treating employees well, contrasting political narratives.",
+        "engagement": "7.4K likes, 940 retweets, 31 quotes, 260 replies",
+        "honesty": "8/10",
+        "notes": "Satirical commentary on verifiable facts about visits, no lies but opinionated.",
+        "posted": "2026-05-11T03:38:08Z",
+        "post_ts": "2026-05-10T16:33:22Z",
+        "views": 381443,
+        "views_at_save": 381443,
+        "age_at_save_hours": 23.7
+      }
+    ],
+    "earlier": [
       {
         "headline": "Exclusive: No Taxpayer Funds for Sec. Duffy's Road Trip",
         "handle": "@libsoftiktok",
@@ -2638,22 +2783,6 @@
         "views": 124369,
         "views_at_save": 124369,
         "age_at_save_hours": 14.87
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Satirical Take on Netanyahu's Employee Treatment",
-        "handle": "@ggreenwald",
-        "url": "https://x.com/ggreenwald/status/2053513737135403136",
-        "body": "Greenwald highlights Netanyahu's frequent White House visits as treating employees well, contrasting political narratives.",
-        "engagement": "7.4K likes, 940 retweets, 31 quotes, 260 replies",
-        "honesty": "8/10",
-        "notes": "Satirical commentary on verifiable facts about visits, no lies but opinionated.",
-        "posted": "2026-05-11T03:38:08Z",
-        "post_ts": "2026-05-10T16:33:22Z",
-        "views": 381443,
-        "views_at_save": 381443,
-        "age_at_save_hours": 22.88
       },
       {
         "headline": "NYPD Captain Demoted for Criticizing Mayor Mamdani",
@@ -2783,7 +2912,7 @@
         "post_ts": "2026-05-11T10:31:23Z",
         "views": 20229,
         "views_at_save": 20229,
-        "age_at_save_hours": 5.41
+        "age_at_save_hours": 5.73
       },
       {
         "headline": "Patrice O'Neal Trolls Dave Chappelle",
@@ -2797,7 +2926,7 @@
         "post_ts": "2026-05-11T03:09:43Z",
         "views": 3,
         "views_at_save": 3,
-        "age_at_save_hours": 12.77
+        "age_at_save_hours": 13.09
       },
       {
         "headline": "Tim Conway's dentist skit from Carol Burnett",
@@ -2811,7 +2940,7 @@
         "post_ts": "2026-05-10T21:19:01Z",
         "views": 47,
         "views_at_save": 47,
-        "age_at_save_hours": 18.61
+        "age_at_save_hours": 18.93
       }
     ],
     "earlier": [
