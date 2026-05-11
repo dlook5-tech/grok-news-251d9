@@ -168,6 +168,8 @@ check "quality:combined-honesty-note"   update.sh        "HONESTY SCORING WHEN A
 check "elon:rolling-24h-window"         parse_grok.py    "\[elon-24h\] drop aged-out|\[elon\] prepended"      exists
 # 2026-05-11: Final Claude review pass — duplicates, sanity, mechanics
 check "qc:final-claude-review"          claude_qc.sh     "final-review|Final QC review of an X-curated"        exists
+# 2026-05-11: Final review now ACTS (drops bad picks), not just warns
+check "qc:final-review-drops"           claude_qc.sh     "final-review.*DROPPED|review_modified"               exists
 # 2026-05-11 (reversed): user dropped the hold rule, "too confusing, too much
 # code. Just find the three most popular stories." Each cron picks fresh top 3
 # in the last 4h. MAX_HOLD_HOURS = 4 (matches the window).

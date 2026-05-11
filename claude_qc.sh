@@ -387,24 +387,28 @@ if broken:
 
 print(f"[claude-qc] URL verify: {verified}/{len(urls)} passed")
 
-# ---- Check 5: Final Claude holistic review (user mandate 2026-05-11) ----
-# "Python should tell Claude to quality check everything at the completion of
-# that cron to make sure: no duplicate stories, nothing nonsensical, mechanics
-# work, everything looks good."
-# Sends a compact summary of every tab's picks to Claude and asks for issues.
-# Findings logged as warnings (non-blocking) — Claude is a second pair of eyes,
-# not a deploy gate.
+# ---- Check 5: Final Claude holistic review WITH AUTO-ACTION (user 2026-05-11) ----
+# User: "if any pick doesn't make sense, it won't do anything about it. It'll
+# just log it." → No. Claude's review now ACTS on findings, not just warns.
+#
+# For each issue Claude identifies, it tells us what to DO (drop / warn).
+# Python executes: removes flagged stories from stories.json.
+# Tabs end up with fewer stories rather than padded with junk (matches user's
+# "1-3 based on quality, never pad" mandate).
 key2 = os.environ.get("ANTHROPIC_API_KEY","")
 if key2:
     REVIEW_TABS = ['world','usa','business','sports','elon','allin','pods',
                    'msm','conspiracy','pg6','comedy','recipe','science',
                    'local','top']
+    # Build line→(tab, index) map so Claude can refer to stories by line number.
     summary_lines = []
-    total_stories = 0
+    line_map = {}    # line_number → (tab, index_in_stories)
+    line_num = 0
     for tab in REVIEW_TABS:
         stories = d.get(tab, {}).get('stories', []) or []
-        for s in stories:
-            total_stories += 1
+        for i, s in enumerate(stories):
+            line_num += 1
+            line_map[line_num] = (tab, i)
             headline = (s.get('headline','') or '?')[:90]
             handle = s.get('handle','') or ''
             if not handle:
@@ -412,26 +416,34 @@ if key2:
                 if ps and isinstance(ps[0], dict):
                     handle = '+'.join((p.get('handle','') or '') for p in ps[:3] if isinstance(p, dict))
             url = (s.get('url','') or '')[-50:] if s.get('url') else 'PERSPS'
-            summary_lines.append(f"  [{tab}] {headline} | {handle} | …{url}")
-    if total_stories >= 1:
+            summary_lines.append(f"L{line_num} [{tab}] {headline} | {handle} | …{url}")
+    if summary_lines:
         review_prompt = (
-            "Final QC review of an X-curated news site. Below is every story "
-            "currently on the site, one per line, format: [tab] headline | handle | URL-tail.\n\n"
+            "Final QC review of an X-curated news site. Each line is:\n"
+            "  L<N> [tab] headline | handle | url-tail\n\n"
             + "\n".join(summary_lines) +
-            "\n\nFlag any of:\n"
-            "  1. DUPLICATE stories appearing across multiple tabs (same event "
-            "in World AND USA, or same post in Business AND Top, etc.).\n"
-            "  2. Picks that DON'T MAKE SENSE for their tab (e.g., a recipe on "
-            "World, a sports story on Business, an obviously off-topic post).\n"
-            "  3. MECHANICAL problems (malformed URL, missing handle, "
-            "garbled-looking headline, suspicious empty fields).\n"
-            "  4. Anything else that looks broken or wrong to a human reader.\n\n"
-            "Return STRICTLY a JSON array of issues. Each issue is:\n"
-            "  {\"type\": \"duplicate|off-topic|mechanical|other\", "
-            "\"tab\": \"<tab name>\", \"detail\": \"<one-line explanation>\"}\n"
+            "\n\nReview every line. For each problem you find, decide whether\n"
+            "Python should DROP the offending pick or just WARN.\n\n"
+            "Issue types:\n"
+            "  - duplicate: same story/event appears on multiple tabs. Drop ONE\n"
+            "    of the lines (keep the one on the more-natural tab — e.g.,\n"
+            "    drop USA copy if same event is also on World).\n"
+            "  - off-topic: pick doesn't fit its tab (recipe on World, sports\n"
+            "    on Business, etc.). DROP.\n"
+            "  - mechanical: malformed URL, garbled headline, missing handle,\n"
+            "    empty fields. DROP.\n"
+            "  - nonsense: headline doesn't match body, body is gibberish,\n"
+            "    obvious AI hallucination. DROP.\n"
+            "  - borderline: looks suspicious but not clearly broken. WARN only.\n\n"
+            "Return STRICTLY a JSON array. Each issue object:\n"
+            "  {\"line\": <N>, \"action\": \"drop\" or \"warn\", "
+            "\"type\": \"duplicate|off-topic|mechanical|nonsense|borderline\", "
+            "\"reason\": \"<one short sentence>\"}\n"
+            "If a duplicate spans two lines, return ONE object for the line to\n"
+            "drop (mention both line numbers in `reason`).\n"
             "Empty array [] if no issues. NO PROSE outside the JSON."
         )
-        body = json.dumps({"model":"claude-sonnet-4-5","max_tokens":800,
+        body = json.dumps({"model":"claude-sonnet-4-5","max_tokens":1200,
                            "messages":[{"role":"user","content":review_prompt}]}).encode()
         req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body, method="POST",
             headers={"x-api-key": key2, "anthropic-version":"2023-06-01", "content-type":"application/json"})
@@ -444,16 +456,35 @@ if key2:
         except Exception as e:
             print(f"[final-review] API error {e} — skipping", file=sys.stderr)
             issues = []
-        if issues:
-            print(f"[final-review] Claude flagged {len(issues)} issue(s):", file=sys.stderr)
-            for issue in issues:
-                if not isinstance(issue, dict): continue
+        # ACT on the issues: sort by line DESC so pops don't shift lower indices.
+        drops = sorted([i for i in issues if isinstance(i, dict) and i.get('action') == 'drop'],
+                       key=lambda x: -(x.get('line') or 0))
+        warns = [i for i in issues if isinstance(i, dict) and i.get('action') == 'warn']
+        review_modified = False
+        for issue in drops:
+            line = issue.get('line')
+            if line not in line_map: continue
+            tab, idx = line_map[line]
+            stories = d.get(tab, {}).get('stories', [])
+            if 0 <= idx < len(stories):
+                removed = stories.pop(idx)
+                rmh = (removed.get('headline','') or '?')[:60]
+                rsn = (issue.get('reason','') or '')[:150]
                 itype = issue.get('type','?')
-                itab  = issue.get('tab','?')
-                idtl  = issue.get('detail','')[:200]
-                warnings.append(f"final-review [{itype}/{itab}] {idtl}")
-        else:
-            print(f"[final-review] Claude reviewed {total_stories} stories — no issues", file=sys.stderr)
+                print(f"[final-review] DROP L{line} {tab}[{idx}] [{itype}]: {rmh} — {rsn}", file=sys.stderr)
+                warnings.append(f"final-review DROPPED [{itype}/{tab}] '{rmh}' — {rsn}")
+                review_modified = True
+        for issue in warns:
+            line = issue.get('line')
+            tab = line_map.get(line, ('?',0))[0]
+            rsn = (issue.get('reason','') or '')[:150]
+            itype = issue.get('type','?')
+            warnings.append(f"final-review WARN [{itype}/{tab}] L{line}: {rsn}")
+        if review_modified:
+            with open('stories.json','w') as f: json.dump(d, f, indent=2)
+            print(f"[final-review] stories.json updated: dropped {len(drops)} pick(s)", file=sys.stderr)
+        elif not issues:
+            print(f"[final-review] Claude reviewed {len(summary_lines)} stories — no issues", file=sys.stderr)
 
 # ---- Report ----
 if warnings:
