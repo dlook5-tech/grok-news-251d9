@@ -150,6 +150,10 @@ check "world:overflow-promotion"        claude_qc.sh     "promoted_overflow|_ove
 check "world:cluster-dedup"             claude_qc.sh     "cluster_re|cluster dup"                              exists
 # 2026-05-10 night: Pods fresher search (min_faves lowered, mode:Latest primary)
 check "pods:mode-latest-search"         update.sh        "mode:\s*\"Latest\""                                  exists
+# 2026-05-10 night: User mandate "highest velocity, not a favor" — prompts must
+# use neutral "STARTING SEARCH SEEDS" language, not "SUGGESTED HANDLES (prefer)".
+check "no-favoritism:no-prefer-handles" update.sh        "SUGGESTED HANDLES \(prefer"                          missing
+check "no-favoritism:seeds-language"    update.sh        "STARTING SEARCH SEEDS"                               exists
 check "freshness:hard-expire-sweep"     parse_grok.py    "_final_hard_expire"                                  exists
 check "freshness:rebuild-age-check"     parse_grok.py    "_rebuild_fresh|REBUILD-SKIP"                         exists
 # 2026-05-10: Local min-views threshold (user: "Drake's at 3382 views, really?")

@@ -106,9 +106,25 @@ def is_human_change(subject, body):
 filtered = [c for c in commits if is_human_change(c[2], c[3])]
 filtered.sort(key=lambda c: c[1], reverse=True)  # newest first
 
+REPO_URL = "https://github.com/dlook5-tech/grok-news-251d9"
+LIVE_URL = "https://expresso-news.netlify.app"
+
 with open(OUT, "w", newline="", encoding="utf-8") as f:
     w = csv.writer(f)
-    w.writerow(["Date/Time", "Files Changed", "What Claude Did", "Why / Your Request", "Commit"])
+    w.writerow(["Date/Time", "Files Changed", "What Claude Did", "Why / Your Request",
+                "View Code (link)", "Commit"])
+    # Top row: today's snapshot — quick access to live site + current code, one
+    # entry per day so a lay reader can see "site as of today = this code".
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    head_sha = filtered[0][0] if filtered else ""
+    w.writerow([
+        f"{today} (TODAY'S SITE)",
+        "—",
+        f"Live site: {LIVE_URL}",
+        "Click 'View Code' to see the codebase as it is right now.",
+        f"{REPO_URL}/tree/{head_sha}" if head_sha else REPO_URL,
+        head_sha[:7] if head_sha else "",
+    ])
     for sha, ts, subject, body, files in filtered:
         # Reformat ISO timestamp → local-readable
         try:
@@ -121,6 +137,7 @@ with open(OUT, "w", newline="", encoding="utf-8") as f:
             summarize_files(files),
             clean_subject(subject),
             extract_user_request(body),
+            f"{REPO_URL}/commit/{sha}",  # full URL — clickable in Numbers/Excel
             sha[:7],
         ])
 

@@ -105,8 +105,8 @@ Per-tab counts:
 
 Each pick MUST have: url, handle, body, views, engagement, honesty score, notes (1-line on score).
 
-APPROVED HANDLES (anti-hallucination defense):
-Each tab's prompt contains a SUGGESTED HANDLES list — these are good defaults for that scope. But the rule is OPENNESS: pick whatever post has the highest views in the tab's scope, even if from a handle NOT on the suggested list. The handle must EXIST (real account, real post in x_search results), but it doesn't have to be on the suggested list. Spencer Pratt for celebrity gossip, LA mayoral candidates for Local, anyone — if their post has the views, pick them. The anti-hallucination defense is the post URL existing in x_search results + oEmbed verification, not a handle whitelist.
+SEARCH SEEDS, NOT FAVORITES (user mandate 2026-05-10):
+"You should be using for each tab the highest velocity story, not a favor. It's not pulling from favorites." Each tab's prompt contains STARTING SEARCH SEEDS — these are seed handles to FIND candidates via x_search. They are NOT a preference list and NOT weighted in selection. After searching, rank ALL results purely by view count. A no-name handle with 1M views WINS over a seed handle with 100K views, every time. Seeds exist because they reliably post in each tab's scope (so we don't miss candidates), but they have ZERO bonus at pick time. The anti-hallucination defense is post URL existing in x_search results + oEmbed verification, not a handle whitelist.
 
 VIEWS IS A HARD JSON CONTRACT (the only metric that matters):
 **Every post returned MUST include a "views" field as a raw integer.** Like this:
@@ -282,7 +282,7 @@ For ANY major international/US story (Iran, Ukraine, China, SCOTUS, etc.) this i
 
 GOAL: 3 different stories, each with 3 perspectives. **DO NOT return fewer than 3 stories** unless x_search literally returns nothing for major news.
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most views, even if not listed):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
   Conservative (hawkish/interventionist + mainstream conservative media): @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @SenTomCotton, @LindseyGrahamSC, @SecPompeo, @TomFitton, @JesseBWatters, @IngrahamAngle, @WarMonitors, @sentdefender, @CriticalThreats, @WhiteHouse, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews, @nypost, @washingtonexaminer
   Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews
   Independent/Analyst (incl. non-interventionist right): @TuckerCarlson, @HamidRezaAz, @TheStudyofWar, @vtchakarova, @RayDalio, @dalperovitch, @InsightGL, @KimZetter, @Snowden, @ggreenwald
@@ -342,7 +342,7 @@ For ANY major international/US story (Iran, Ukraine, China, SCOTUS, etc.) this i
 
 GOAL: 3 different stories, each with 3 perspectives. **DO NOT return fewer than 3 stories** unless x_search literally returns nothing for major news.
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most views, even if not listed):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
   Conservative (incl. mainstream conservative media): @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @SenTomCotton, @LindseyGrahamSC, @SecPompeo, @TomFitton, @JesseBWatters, @IngrahamAngle, @WhiteHouse, @MariaBartiromo, @SteveScalise, @SpeakerJohnson, @LeaderMcConnell, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews, @nypost, @DailyCaller, @theblaze, @townhallcom, @washingtonexaminer
   Democrat (incl. left-leaning major media): @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews, @SenSchumer, @SpeakerPelosi, @SenSanders, @repjayapal, @SenCoryBooker, @SenWhitehouse, @MSNBC, @TheAtlantic, @MotherJones, @TheNation, @NewYorker, @nytimes, @washingtonpost
   Independent/Analyst (centrist news + non-interventionist right + investigative): @TuckerCarlson, @MattTaibbi, @bariweiss, @FareedZakaria, @semaforben, @axios, @thehill, @mediaite, @PunchbowlNews, @semaforpolitics, @SCOTUSblog, @KimZetter, @Snowden, @ggreenwald, @InsightGL, @TheStudyofWar, @CNN, @Reuters, @AP
@@ -470,7 +470,7 @@ cat > /tmp/grok_p_allin.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION: Find the 3 MOST THOUGHT-PROVOKING posts from billionaire operators — ORIGINAL INSIGHT, contrarian takes, deep framing. NOT generic "interesting" or "agree" reactions.
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
 @chamath, @DavidSacks, @pmarca, @PalmerLuckey, @friedberg
 
 Search EACH person separately, prefer mode: "Latest" for freshness + insight keywords:
@@ -510,7 +510,7 @@ cat > /tmp/grok_p_msm.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION: Stories blowing up on X that MSM is IGNORING or UNDERREPORTING — the juicier, more suppressed the better. Prefer NOVEL ANGLES, exposé-style reporting, undercover footage, data that contradicts official narratives.
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most viral recipe):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is the most viral recipe, regardless of who posted):
 @BillMelugin_, @MattWalshBlog, @TimcastNews, @TheRabbitHole84, @SCOTUSblog, @InsightGL, @JamesOKeefeIII, @LibsOfTikTok, @RealSaavedra, @collinrugg, @EndWokeness, @WallStreetApes
 
 CRITICAL DIVERSITY RULE: 3 DIFFERENT handles. NO repeats. If you've used @MattWalshBlog for one story, use a different handle for the others. The user has flagged that we keep returning the same handle (Matt Walsh) for every story — STOP DOING THAT.
@@ -540,7 +540,7 @@ cat > /tmp/grok_p_business.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION: 3 MOST THOUGHT-PROVOKING business/markets posts. Original analysis, contrarian calls, macro insight, hidden story behind the numbers — NOT generic "stocks up today" headlines.
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
 @DowdEdward, @RayDalio, @Stocktwits, @StockMKTNewz, @WatcherGuru, @unusual_whales, @TruthGundlach, @LizAnnSonders, @elerianm
 
 Must be stocks, markets, finance, crypto, deals, or macro. NOT geopolitics/military.
@@ -572,7 +572,7 @@ PROMPT
 cat > /tmp/grok_p_sports.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most viral recipe):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is the most viral recipe, regardless of who posted):
 @ShamsCharania, @wojespn, @ClutchPoints, @BleacherReport, @CourtsideBuzzX, @TheAthletic, @ESPNStatsInfo, @AdamSchefter, @stephenasmith, @TheHerd, @colincowherd
 
 EXACT structure — return EXACTLY 4 posts in this order:
@@ -599,7 +599,7 @@ cat > /tmp/grok_p_pods.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 CRITICAL MISSION: Find the 3 MOST VIRAL podcast clip moments on X right now. The user specifically complains that we've been returning mediocre clips — they want MASSIVELY VIRAL moments (100K+ views, 5K+ likes minimum for major podcasts, or peak engagement for the day).
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most viral podcast clip, even other shows):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is the most viral clip, regardless of which show):
 @joerogan, @joeroganhq, @JREClips, @TuckerCarlson, @theallinpod, @lexfridman, @fridmanclips, @CallHerDaddy, @adamcarolla, @PBDPodcast, @patrickbetdavid, @ShawnRyanShow, @MegynKellyShow, @LouderWithCrowder, @RussellBrand
 
 A clip is a 30-sec to 3-min specific moment that went viral. NOT a full-episode announcement.
@@ -651,7 +651,7 @@ cat > /tmp/grok_p_pg6.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION: JUICIEST celebrity gossip — SURPRISING reveals, dramatic takes, "wait, what?" moments. NOT red-carpet appearances or generic promo.
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
 @PopCrave, @enews, @JustJared, @etnow, @TMZ, @DeuxMoi, @PageSix, @Variety
 
 Search mode: "Latest" for fresh + juicy:
@@ -683,7 +683,7 @@ cat > /tmp/grok_p_recipe.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 Actual FOOD RECIPES you can cook. NOT product lists, NOT gadget ads.
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
 @tasteofhome, @FoodNetwork, @thekitchn, @HBHarvest, @halfbakedharvest, @foodandwine, @tasty, @KitchenSanc2ary, @budgetbytes, @BonAppetit, @RecipeTinEats
 
 Search 1: "from:FoodNetwork OR from:tasty OR from:halfbakedharvest OR from:HBHarvest OR from:budgetbytes OR from:foodandwine since:$YESTERDAY", mode: "Top", limit: 15.
@@ -738,7 +738,7 @@ GEOGRAPHY RULE (STRICT): Stories MUST be Newport Beach, Costa Mesa, Huntington B
 - LA-wide breaking-news tickers
 - Federal political stories that just happen to be in California
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
 @DailyPilot, @OC_Scanner, @OCRegister, @NBPDsocial, @CityofNewportBeach, @hbpd, @CityofHB, @cityofIrvine, @CMPD_NewsInfo, @oclnews, @CdMHigh, @newportharborhs
 
 PRIORITY ORDER:
@@ -766,7 +766,7 @@ cat > /tmp/grok_p_conspiracy.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION: 3 posts going DEEP behind the biggest stories of the day — investigative threads, suppressed angles, undercover footage, court documents, document dumps, FOIA results, contradictions in official narratives, things mainstream media is NOT asking. The vibe is "in search of the truth behind the biggest stories."
 
-SUGGESTED HANDLES (prefer these — but pick whoever has the most views):
+STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
 @JackPosobiec, @JamesOKeefeIII, @TomFitton, @WallStreetApes, @TheRabbitHole84, @CollinRugg, @libsoftiktok, @EndWokeness, @DropSiteNews, @Snowden, @ggreenwald, @ProPublica, @KimZetter, @disclosetv, @megynkelly, @SecularTalk, @MariaBartiromo, @JulianAssange, @BillMelugin_
 
 QUALITY BAR — what counts as a "conspiracy / truth-behind" post:
