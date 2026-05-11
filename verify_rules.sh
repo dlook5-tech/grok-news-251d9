@@ -140,6 +140,10 @@ check "freshness:pods-soft-12h"         parse_grok.py    "'pods':\s*12"         
 check "freshness:pods-hard-24h"         parse_grok.py    "'pods':\s*24"                                        exists
 # 2026-05-10 evening: Elon no-promo filter (user: "No promo post like Drake's")
 check "elon:no-promo-filter"            parse_grok.py    "_is_elon_promo|_ELON_PROMO_KEYWORDS"                 exists
+# 2026-05-10 evening: User submissions ingestion + Claude review
+check "submit:netlify-form-schema"      index.html       "post-replace.*data-netlify|data-netlify.*post-replace" exists
+check "submit:cron-pulls-from-netlify"  update.sh        "pull_netlify_submissions"                            exists
+check "submit:claude-reviews-fit"       claude_qc.sh     "sub-review|EVALUATABLE_TABS"                         exists
 check "freshness:hard-expire-sweep"     parse_grok.py    "_final_hard_expire"                                  exists
 check "freshness:rebuild-age-check"     parse_grok.py    "_rebuild_fresh|REBUILD-SKIP"                         exists
 # 2026-05-10: Local min-views threshold (user: "Drake's at 3382 views, really?")

@@ -1373,6 +1373,12 @@ if [ $OEMBED_EXIT -eq 2 ]; then
     exit 1
 fi
 
+# Pull Netlify Form submissions into submissions.json BEFORE parse_grok runs.
+# parse_grok._process_submissions reads submissions.json and populates the
+# Post/Replace tab. Failures here are non-fatal — submissions just won't update.
+echo "[pull-submissions] checking Netlify Form queue..."
+python3 pull_netlify_submissions.py || echo "[pull-submissions] non-fatal failure, continuing"
+
 XAI_API_KEY="$XAI_API_KEY" cat /tmp/grok_raw.json | XAI_API_KEY="$XAI_API_KEY" python3 parse_grok.py
 
 if [ $? -ne 0 ]; then

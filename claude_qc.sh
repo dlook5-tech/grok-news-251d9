@@ -84,7 +84,7 @@ else
 fi
 
 python3 <<'PYEOF'
-import json, sys, urllib.request, urllib.parse
+import json, sys, urllib.request, urllib.parse, os
 
 errors = []
 warnings = []
@@ -197,6 +197,86 @@ for tab in FLOOR_TABS:
 if floor_modified:
     with open('stories.json','w') as f: json.dump(d, f, indent=2)
     print("[claude-qc] stories.json updated (floor auto-promotion)")
+
+# ---- Check 1b: Submission review — does any user submission fit a tab better? ----
+# User mandate (2026-05-10): "Claude should actually review [submissions] to see
+# if any of them make sense and fit better than the stories offered in any of the
+# tabs." Implementation: for each submission in submit.stories, ask Claude API
+# which tab (if any) it fits, and whether it's more interesting than that tab's
+# weakest current pick. If yes, swap: submission goes into the tab's stories,
+# tab's weakest pick moves to earlier. Submission stays in submit too (audit trail).
+key = os.environ.get("ANTHROPIC_API_KEY","")
+submissions = (d.get('submit', {}) or {}).get('stories', []) or []
+EVALUATABLE_TABS = ['world','usa','business','sports','elon','allin','pods','msm',
+                    'conspiracy','pg6','comedy','recipe','science','local','top']
+if key and submissions:
+    # Build compact context: each tab's lowest-views story (the swap target)
+    tab_weakest = {}
+    for tab in EVALUATABLE_TABS:
+        stories = d.get(tab, {}).get('stories', []) or []
+        if not stories: continue
+        # Find lowest-views story (use 0 if missing)
+        def _v(s):
+            if s.get('views'): return int(s.get('views') or 0)
+            ps = s.get('perspectives') or []
+            return min([int(p.get('views') or 0) for p in ps if p.get('views')], default=0)
+        weakest = min(stories, key=_v)
+        tab_weakest[tab] = {
+            'headline': weakest.get('headline','')[:80],
+            'views': _v(weakest),
+            'url': weakest.get('url',''),
+        }
+    for sub in submissions:
+        sub_url = sub.get('url','')
+        sub_headline = sub.get('headline') or sub.get('note') or sub.get('notes',[''])[0] if sub.get('notes') else 'user submission'
+        if not sub_url: continue
+        prompt = (
+            "You're reviewing a user-submitted X post against the weakest pick of each tab on a news site. "
+            "Each tab covers a specific scope (world=international news, usa=US politics, business=markets, "
+            "sports=NBA/NFL/MLB, elon=@elonmusk non-promo, allin=billionaire podcasters, pods=podcast clips, "
+            "msm=stories MSM ignores, conspiracy=alternative theories, pg6=celebrity gossip, comedy=humor clips, "
+            "recipe=cooking, science=research, local=Orange County/SoCal, top=most viral overall).\n\n"
+            f"SUBMISSION: '{sub_headline}'\nURL: {sub_url}\n\n"
+            "TAB WEAKEST PICKS (one per tab, the candidate for replacement):\n"
+            + "\n".join(f"  {t}: '{tw['headline']}' ({tw['views']} views)" for t,tw in tab_weakest.items())
+            + "\n\nRespond with STRICT JSON only:\n"
+              "  {\"tab\": \"<tab_name>\", \"swap\": true|false, \"reason\": \"<one line>\"}\n"
+              "  - tab: which tab the submission fits best (must be one of the listed tabs)\n"
+              "  - swap: true ONLY if the submission is clearly more interesting/viral than that tab's "
+              "weakest pick AND clearly fits the tab's scope. Be conservative — default to false unless obvious.\n"
+              "  - reason: one sentence justifying."
+        )
+        body = json.dumps({"model":"claude-sonnet-4-5","max_tokens":200,
+                           "messages":[{"role":"user","content":prompt}]}).encode()
+        req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body, method="POST",
+            headers={"x-api-key": key, "anthropic-version":"2023-06-01", "content-type":"application/json"})
+        try:
+            r = json.loads(urllib.request.urlopen(req, timeout=20).read())
+            text = r.get("content",[{}])[0].get("text","{}").strip()
+            import re as _re
+            m = _re.search(r'\{[^{}]*\}', text, _re.DOTALL)
+            verdict = json.loads(m.group(0)) if m else {}
+        except Exception as e:
+            print(f"[sub-review] API error {e} — skipping submission {sub_url[-30:]}", file=sys.stderr)
+            continue
+        tab = verdict.get('tab','')
+        if verdict.get('swap') and tab in tab_weakest:
+            stories = d.get(tab,{}).get('stories', []) or []
+            # Remove the weakest, move it to earlier; insert submission in front
+            target_url = tab_weakest[tab]['url']
+            removed = next((s for s in stories if s.get('url') == target_url), None)
+            if removed:
+                stories.remove(removed)
+                d[tab].setdefault('earlier', []).insert(0, removed)
+                d[tab]['earlier'] = d[tab]['earlier'][:10]  # cap earlier at 10
+            stories.insert(0, sub)
+            d[tab]['stories'] = stories
+            warnings.append(f"[sub-review] swapped submission '{sub_headline[:40]}' into {tab} "
+                            f"(replaced '{tab_weakest[tab]['headline'][:40]}'); reason: {verdict.get('reason','')[:80]}")
+            with open('stories.json','w') as f: json.dump(d, f, indent=2)
+        else:
+            warnings.append(f"[sub-review] submission '{sub_headline[:40]}' → no swap "
+                            f"({verdict.get('reason','no fit')[:80]})")
 
 # ---- Check 2: World/USA SHOULD have 3 perspectives per story (warn, not block) ----
 # 2026-05-10: User mandate "just force three-story floor" prioritizes floor > perspectives
