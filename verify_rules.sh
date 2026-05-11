@@ -170,6 +170,8 @@ check "elon:rolling-24h-window"         parse_grok.py    "\[elon-24h\] drop aged
 check "qc:final-claude-review"          claude_qc.sh     "final-review|Final QC review of an X-curated"        exists
 # 2026-05-11: Final review now ACTS (drops bad picks), not just warns
 check "qc:final-review-drops"           claude_qc.sh     "final-review.*DROPPED|review_modified"               exists
+# 2026-05-11: after drops, refill from _overflow (Grok's unused candidates this run)
+check "qc:refill-from-overflow"         claude_qc.sh     "REFILL.*pulled.*from overflow|_overflow"             exists
 # 2026-05-11 (reversed): user dropped the hold rule, "too confusing, too much
 # code. Just find the three most popular stories." Each cron picks fresh top 3
 # in the last 4h. MAX_HOLD_HOURS = 4 (matches the window).

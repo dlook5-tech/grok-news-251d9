@@ -2130,8 +2130,16 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
                                   top_n=_TAB_N.get(_tab, 3), enrich=True, history=_history,
                                   max_age_h=_backfill_age)
         curation.stamp_view_history(_picked)
+        # Save unused candidates as _overflow so claude_qc can refill from them
+        # if the final review drops any picks. User mandate (2026-05-11): "go
+        # back out to Grok and search for another story" — these ARE Grok's
+        # other candidates from this same cron, just unused.
+        _picked_urls_n = {s.get('url','') for s in _picked if s.get('url')}
+        _overflow_n = [c for c in _candidates
+                       if c.get('url') and c.get('url') not in _picked_urls_n][:5]
         _output_v5[_tab] = {'stories': _picked,
-                            'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
+                            'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {})),
+                            '_overflow': _overflow_n}
         continue
 
     # Non-news tabs (Elon, Sports, AllIn, Pods, PG6, Recipe, Science, Comedy):

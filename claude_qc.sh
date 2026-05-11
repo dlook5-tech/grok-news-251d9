@@ -461,6 +461,7 @@ if key2:
                        key=lambda x: -(x.get('line') or 0))
         warns = [i for i in issues if isinstance(i, dict) and i.get('action') == 'warn']
         review_modified = False
+        drops_per_tab = {}  # tab → count of drops, for refill
         for issue in drops:
             line = issue.get('line')
             if line not in line_map: continue
@@ -473,6 +474,7 @@ if key2:
                 itype = issue.get('type','?')
                 print(f"[final-review] DROP L{line} {tab}[{idx}] [{itype}]: {rmh} — {rsn}", file=sys.stderr)
                 warnings.append(f"final-review DROPPED [{itype}/{tab}] '{rmh}' — {rsn}")
+                drops_per_tab[tab] = drops_per_tab.get(tab, 0) + 1
                 review_modified = True
         for issue in warns:
             line = issue.get('line')
@@ -480,6 +482,46 @@ if key2:
             rsn = (issue.get('reason','') or '')[:150]
             itype = issue.get('type','?')
             warnings.append(f"final-review WARN [{itype}/{tab}] L{line}: {rsn}")
+
+        # REFILL from _overflow when drops happened (user 2026-05-11): "rather
+        # than dropping a story so there's fewer story blocks, why don't you go
+        # back out to Grok and search for another story?" The _overflow array
+        # holds Grok's other candidates from THIS SAME cron that we didn't
+        # initially pick — same Grok call, no additional API hit.
+        for tab, drop_count in drops_per_tab.items():
+            overflow = d.get(tab, {}).get('_overflow', []) or []
+            stories = d.get(tab, {}).get('stories', [])
+            existing_urls = set()
+            for s in stories:
+                if s.get('url'): existing_urls.add(s['url'])
+                for p in s.get('perspectives', []) or []:
+                    if isinstance(p, dict) and p.get('url'): existing_urls.add(p['url'])
+            refilled = 0
+            new_overflow = []
+            for cand in overflow:
+                if refilled >= drop_count:
+                    new_overflow.append(cand)
+                    continue
+                cand_urls = set()
+                if cand.get('url'): cand_urls.add(cand['url'])
+                for p in cand.get('perspectives', []) or []:
+                    if isinstance(p, dict) and p.get('url'): cand_urls.add(p['url'])
+                if cand_urls & existing_urls: continue  # dup
+                stories.append(cand)
+                existing_urls |= cand_urls
+                refilled += 1
+            d[tab]['_overflow'] = new_overflow
+            d[tab]['stories'] = stories
+            if refilled:
+                print(f"[final-review] REFILL {tab}: pulled {refilled} from overflow to replace dropped picks", file=sys.stderr)
+                warnings.append(f"final-review REFILLED {tab} ({refilled} from overflow)")
+            shortfall = drop_count - refilled
+            if shortfall > 0:
+                # Overflow exhausted. Note for explicit Grok-refill follow-up.
+                warnings.append(f"final-review NEEDS-GROK-REFILL {tab} (short {shortfall} after overflow drained)")
+                print(f"[final-review] {tab}: overflow exhausted, {shortfall} slot(s) short. "
+                      f"Next cron will pull fresh.", file=sys.stderr)
+
         if review_modified:
             with open('stories.json','w') as f: json.dump(d, f, indent=2)
             print(f"[final-review] stories.json updated: dropped {len(drops)} pick(s)", file=sys.stderr)
