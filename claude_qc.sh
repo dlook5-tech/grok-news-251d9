@@ -374,18 +374,39 @@ for url in urls:
         broken.append((url, str(e)[:50]))
 
 if broken:
-    # Individual URL failures are expected (deleted tweets, geoblocked, transient).
-    # Only BLOCK deploy if >5% of URLs fail — a real systemic issue. Otherwise WARN
-    # and let the deploy proceed; the broken-link fallback in the frontend handles it.
     fail_pct = len(broken) / max(len(urls), 1) * 100
-    if fail_pct > 5:
-        errors.append(f"{len(broken)}/{len(urls)} URLs ({fail_pct:.0f}%) failed oEmbed — systemic issue, blocking deploy")
+    if fail_pct > 50:
+        # Systemic issue (>50% URL failures means Twitter's oEmbed is down)
+        errors.append(f"{len(broken)}/{len(urls)} URLs ({fail_pct:.0f}%) failed oEmbed — systemic, blocking deploy")
     else:
-        warnings.append(f"{len(broken)}/{len(urls)} URLs failed oEmbed ({fail_pct:.0f}%, under 5% threshold — non-blocking; frontend shows fallback)")
-        for url, status in broken[:3]:
-            warnings.append(f"  · {url} ({status})")
+        # 2026-05-11 user mandate: "if something hits an error screen, it should
+        # be dumped, and you should go back and look for story number four."
+        # → DROP stories with any broken URL. Refill happens in Check 6 below.
+        broken_urls_set = {u for u, _ in broken}
+        url_drops = []  # (tab, story_index)
+        for tab in d:
+            tv = d.get(tab) or {}
+            if not isinstance(tv, dict): continue
+            stories = tv.get('stories', []) or []
+            for i, s in enumerate(stories):
+                story_urls = set()
+                if s.get('url'): story_urls.add(s['url'])
+                for p in s.get('perspectives', []) or []:
+                    if isinstance(p, dict) and p.get('url'): story_urls.add(p['url'])
+                if story_urls & broken_urls_set:
+                    url_drops.append((tab, i, story_urls & broken_urls_set))
+        # Sort by index DESC per tab so pops don't shift indices
+        url_drops.sort(key=lambda x: (x[0], -x[1]))
+        for tab, idx, broken_set in url_drops:
+            stories = d.get(tab, {}).get('stories', [])
+            if 0 <= idx < len(stories):
+                removed = stories.pop(idx)
+                rmh = (removed.get('headline','') or '?')[:50]
+                bu = (list(broken_set)[0] if broken_set else '')[-40:]
+                warnings.append(f"url-verify DROP {tab}[{idx}] '{rmh}' — broken URL …{bu}")
+                print(f"  [url-verify] DROP {tab}[{idx}]: {rmh} (broken: …{bu})", file=sys.stderr)
 
-print(f"[claude-qc] URL verify: {verified}/{len(urls)} passed")
+print(f"[claude-qc] URL verify: {verified}/{len(urls)} passed, {len(broken)} dropped")
 
 # ---- Check 5: Final Claude holistic review WITH AUTO-ACTION (user 2026-05-11) ----
 # User: "if any pick doesn't make sense, it won't do anything about it. It'll
@@ -483,50 +504,67 @@ if key2:
             itype = issue.get('type','?')
             warnings.append(f"final-review WARN [{itype}/{tab}] L{line}: {rsn}")
 
-        # REFILL from _overflow when drops happened (user 2026-05-11): "rather
-        # than dropping a story so there's fewer story blocks, why don't you go
-        # back out to Grok and search for another story?" The _overflow array
-        # holds Grok's other candidates from THIS SAME cron that we didn't
-        # initially pick — same Grok call, no additional API hit.
-        for tab, drop_count in drops_per_tab.items():
-            overflow = d.get(tab, {}).get('_overflow', []) or []
-            stories = d.get(tab, {}).get('stories', [])
-            existing_urls = set()
-            for s in stories:
-                if s.get('url'): existing_urls.add(s['url'])
-                for p in s.get('perspectives', []) or []:
-                    if isinstance(p, dict) and p.get('url'): existing_urls.add(p['url'])
-            refilled = 0
-            new_overflow = []
-            for cand in overflow:
-                if refilled >= drop_count:
-                    new_overflow.append(cand)
-                    continue
-                cand_urls = set()
-                if cand.get('url'): cand_urls.add(cand['url'])
-                for p in cand.get('perspectives', []) or []:
-                    if isinstance(p, dict) and p.get('url'): cand_urls.add(p['url'])
-                if cand_urls & existing_urls: continue  # dup
-                stories.append(cand)
-                existing_urls |= cand_urls
-                refilled += 1
-            d[tab]['_overflow'] = new_overflow
-            d[tab]['stories'] = stories
-            if refilled:
-                print(f"[final-review] REFILL {tab}: pulled {refilled} from overflow to replace dropped picks", file=sys.stderr)
-                warnings.append(f"final-review REFILLED {tab} ({refilled} from overflow)")
-            shortfall = drop_count - refilled
-            if shortfall > 0:
-                # Overflow exhausted. Note for explicit Grok-refill follow-up.
-                warnings.append(f"final-review NEEDS-GROK-REFILL {tab} (short {shortfall} after overflow drained)")
-                print(f"[final-review] {tab}: overflow exhausted, {shortfall} slot(s) short. "
-                      f"Next cron will pull fresh.", file=sys.stderr)
-
+        # Per-Check-5-drop refill removed in favor of universal Check 6 below
+        # (which catches drops from ALL sources: URL verify, semantic dedup,
+        # Claude review, anywhere). DRY.
         if review_modified:
             with open('stories.json','w') as f: json.dump(d, f, indent=2)
             print(f"[final-review] stories.json updated: dropped {len(drops)} pick(s)", file=sys.stderr)
         elif not issues:
             print(f"[final-review] Claude reviewed {len(summary_lines)} stories — no issues", file=sys.stderr)
+
+# ---- Check 6: UNIVERSAL OVERFLOW REFILL (user 2026-05-11) ----
+# "Seems like we've encountered this whack-a-mole before, where we end up with
+# just one story per tab... if something hits an error screen, it should be
+# dumped, and you should go back and look for story number four."
+# This is the catch-all: after every drop path (semantic dedup, URL verify,
+# Claude review, age sweep), check every tab against its target count. If
+# under target, pull from _overflow (Grok's unused 4-8 candidates from this
+# same cron) to fill the slot. Elon excluded (rolling 24h, no target N).
+REFILL_TARGETS = {
+    'world': 3, 'usa': 3, 'business': 3, 'top': 3, 'msm': 3, 'sports': 4,
+    'conspiracy': 3, 'pg6': 3, 'allin': 3, 'pods': 3, 'recipe': 3,
+    'science': 3, 'comedy': 3, 'local': 3,
+    # 'elon': intentionally absent (rolling chronological 24h list, not top-N)
+}
+universal_refill_modified = False
+for tab, target in REFILL_TARGETS.items():
+    stories = d.get(tab, {}).get('stories', []) or []
+    if len(stories) >= target: continue
+    overflow = d.get(tab, {}).get('_overflow', []) or []
+    if not overflow: continue
+    starting_count = len(stories)
+    existing_urls = set()
+    for s in stories:
+        if s.get('url'): existing_urls.add(s['url'])
+        for p in s.get('perspectives', []) or []:
+            if isinstance(p, dict) and p.get('url'): existing_urls.add(p['url'])
+    pulled = 0
+    new_overflow = []
+    for cand in overflow:
+        if len(stories) >= target:
+            new_overflow.append(cand); continue
+        cand_urls = set()
+        if cand.get('url'): cand_urls.add(cand['url'])
+        for p in cand.get('perspectives', []) or []:
+            if isinstance(p, dict) and p.get('url'): cand_urls.add(p['url'])
+        if cand_urls & existing_urls:
+            continue
+        stories.append(cand)
+        existing_urls |= cand_urls
+        pulled += 1
+    d[tab]['_overflow'] = new_overflow
+    d[tab]['stories'] = stories
+    if pulled:
+        warnings.append(f"refill {tab}: {starting_count}→{len(stories)} from overflow (target {target})")
+        print(f"[refill] {tab}: pulled {pulled} from overflow ({starting_count}/{target} → {len(stories)}/{target})", file=sys.stderr)
+        universal_refill_modified = True
+    if len(stories) < target:
+        # Overflow exhausted before target — log so we know next cron should look
+        warnings.append(f"refill {tab}: SHORT {len(stories)}/{target} (overflow drained)")
+if universal_refill_modified:
+    with open('stories.json','w') as f: json.dump(d, f, indent=2)
+    print(f"[refill] stories.json updated with overflow refills", file=sys.stderr)
 
 # ---- Report ----
 if warnings:
