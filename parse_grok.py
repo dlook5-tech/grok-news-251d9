@@ -1976,6 +1976,13 @@ def _topup_to_floor(picked, existing_stories, top_n=_TAB_FLOOR, max_age_h=_TAB_F
     return picked + candidates[: max(0, top_n - len(picked))]
 
 # ---- World/USA tabs (perspective-shaped stories: each story has Cons/Indep/Dem) ----
+# User mandate (2026-05-11): "Just what is the highest velocity story in the world
+# in the last four hours. Top three. Within those three, who are the top velocity
+# commentators for conservative, independent, and democrat? It's so fucking simple."
+# → No backfill, no near-dup heuristics, no snapshot resurrection. clean_world
+# enforces 3-perspective + no-wire-copy. curation.curate sorts by views in 4h
+# window and takes top 3. enrich_commentator handles the QT/RT trifecta swap.
+# That's it.
 for _tab in ('world', 'usa'):
     _raw = data.get(_tab, [])
     _items = _raw if isinstance(_raw, list) else [_raw]
@@ -1984,115 +1991,11 @@ for _tab in ('world', 'usa'):
         _cleaned = clean_world(_w) if _w else None
         if _cleaned and _belongs_on_tab(_tab, _cleaned):
             _candidates.append(_cleaned)
-    _current_raw = _existing.get(_tab, {}).get('stories', []) or []
-    # 2026-05-06: topic-diversity also applied — same handle in same perspective slot
-    # across stories means same topic. Drop dupes via _enforce_topic_diversity AFTER
-    # velocity ranking but BEFORE backfill (so duplicates don't poison the pool).
-    # 2026-05-06: 3-perspective gate also applies to existing stories carried via curate.
-    # curation.curate doesn't know about perspective requirements; it just velocity-ranks.
-    # So we pre-filter _current here to drop any <3-perspective stories before they have
-    # a chance to be carried over.
-    _current = [s for s in _current_raw
-                if isinstance(s, dict) and len([p for p in s.get('perspectives', []) or []
-                                                  if isinstance(p, dict) and p.get('url')]) >= 3]
-    # World/USA: skip commentator enrichment (perspectives ARE the take layer).
-    # 2026-05-09 — CLAUDE.md ground truth (line 274): news tabs 24h max, reference 72h.
-    # Velocity rule applies WITHIN the cap, not beyond it. (Removed temporary May-7
-    # "no hard cap" change which conflicted with the documented rule.)
-    _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 24)
-    # User: velocity-only ranking, no forced rotation away from recurring voices.
-    # BUT obvious topic duplicates (same news event, slightly different headline)
-    # still need filtering. User caught (2026-05-10): "Iran Responds to US Peace
-    # Proposal" + "Iran Sends Response to US Proposal" are the same story.
-    _picked = curation.curate(_tab, _current, _candidates,
+    _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 4)
+    # Rank by views in 4h window, take top 3.
+    _picked = curation.curate(_tab, [], _candidates,
                               top_n=_TAB_N[_tab], enrich=False, history=_history,
                               max_age_h=_wu_age_cap)
-    # NEAR-DUPLICATE headline filter (only catches very-similar topics, not just
-    # same-handle). Threshold: 65% word overlap on the smaller word set.
-    def _headline_words(h):
-        STOP = {'the','and','for','are','but','not','you','all','can','had','her','was','one','our','out',
-                'has','his','how','its','may','new','now','old','see','way','who','did','get','let','say',
-                'she','too','use','with','from','have','this','that','will','each','make','like','just',
-                'over','such','take','than','them','very','when','come','could','would','about','after',
-                'being','their','there','these','those','which','other','into','more','some','what',
-                'been','were','then','also','most','must','upon','up','to','of','on','in','at','as','an',
-                'or','if','is','it','a','i','by','be'}
-        return set(w for w in re.split(r'[^a-z0-9]+', (h or '').lower())
-                   if len(w) >= 4 and w not in STOP)
-    _kept_after_dup = []
-    _kept_word_sets = []
-    for _s in _picked:
-        _ws = _headline_words(_s.get('headline', ''))
-        _is_dup = False
-        for _prev in _kept_word_sets:
-            if not _ws or not _prev: continue
-            _overlap = len(_ws & _prev)
-            _smaller = min(len(_ws), len(_prev))
-            if _smaller >= 3 and _overlap / _smaller >= 0.65:
-                _is_dup = True
-                print(f"  [near-dup] {_tab}: drop '{_s.get('headline','')[:50]}' "
-                      f"({_overlap}/{_smaller} word overlap)", file=sys.stderr)
-                break
-        if not _is_dup:
-            _kept_after_dup.append(_s)
-            _kept_word_sets.append(_ws)
-    _picked = _kept_after_dup
-    # Floor backfill chain (3-persp gate intact, but no topic-dedup):
-    if len(_picked) < _TAB_FLOOR:
-        _picked = _topup_to_floor(_picked, _current + (_existing.get(_tab, {}).get('earlier', []) or []),
-                                  top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=_wu_age_cap)
-    if len(_picked) < _TAB_FLOOR:
-        _picked = _topup_to_floor(_picked, _scan_snapshots_for_tab(_tab),
-                                  top_n=_TAB_FLOOR, require_3_perspectives=True, max_age_h=72)
-    # FINAL RESORT (user 2026-05-10: "Just force three-story floor"):
-    # Floor wins over 3-perspective. Two-pass:
-    #   A. Try 3-persp from snapshots (preferred)
-    #   B. Accept 1-2 perspective stories from this cron's Grok output
-    if len(_picked) < _TAB_FLOOR:
-        _seen_urls = set()
-        for _s in _picked:
-            for _p in (_s.get('perspectives') or []):
-                if _p.get('url'): _seen_urls.add(_p['url'])
-        # Pass A — 3-persp from snapshots
-        for _s in _scan_snapshots_for_tab(_tab):
-            if len(_picked) >= _TAB_FLOOR: break
-            _persps = _s.get('perspectives', []) or []
-            if len([p for p in _persps if isinstance(p, dict) and p.get('url')]) < 3: continue
-            if curation.story_age_hours(_s) > 72: continue
-            _urls = {p.get('url') for p in _persps if p.get('url')}
-            if _urls & _seen_urls: continue
-            _picked.append(_s)
-            _seen_urls.update(_urls)
-        # Pass B — accept 1-2 perspective stories from Grok output (clean_world rejected
-        # these for <3 perspectives; resurrect them as fillers)
-        if len(_picked) < _TAB_FLOOR:
-            for _w in _items:
-                if len(_picked) >= _TAB_FLOOR: break
-                if not isinstance(_w, dict): continue
-                _persps = []
-                for key, label in [('conservative','Conservative'), ('democrat','Democrat'), ('independent','Independent')]:
-                    p = _w.get(key, {})
-                    if not isinstance(p, dict) or not p.get('handle') or not p.get('url'): continue
-                    if '/status/' not in p.get('url',''): continue
-                    _persps.append({'label': label, 'handle': p['handle'], 'url': p['url'],
-                                    'text': trim_text((p.get('quote') or p.get('body') or p.get('text') or '').strip(),
-                                                       max_sentences=2, max_chars=150),
-                                    'engagement': str(p.get('engagement','')),
-                                    'honesty': str(p.get('honesty', _w.get('honesty', '8/10')))})
-                    if 'views' in p: _persps[-1]['views'] = p['views']
-                if not _persps: continue
-                _urls = {p['url'] for p in _persps}
-                if _urls & _seen_urls: continue
-                _picked.append({'headline': str(_w.get('headline','Untitled')),
-                                'honesty': str(_w.get('honesty','8/10')),
-                                'perspectives': _persps,
-                                'footnotes': [], 'notes': '',
-                                'body': f'{len(_persps)}-perspective coverage.',
-                                'posted': now.strftime('%-m/%-d/%Y %-I:%M %p')})
-                _seen_urls.update(_urls)
-        if len(_picked) < _TAB_FLOOR:
-            print(f"  WARN: {_tab} {len(_picked)}/{_TAB_FLOOR} after all fallbacks — "
-                  f"genuinely no more candidates available", file=sys.stderr)
     curation.stamp_view_history(_picked)
     # Overflow: Grok candidates we DIDN'T pick. claude_qc can pull from here when
     # semantic-dedup creates a gap (user 2026-05-10: "go back to crock and find the
@@ -2127,6 +2030,10 @@ def _local_quality_filter(stories_list):
     and the backfill pool so junk doesn't persist across crons."""
     return [s for s in stories_list if (s.get('views') or 0) >= LOCAL_MIN_VIEWS]
 
+# News tabs follow user's strict rule (2026-05-11): top by velocity in 4h window,
+# no padding, no snapshot resurrection. Non-news tabs keep their backfill cascade.
+_NEWS_TABS_NO_PAD = {'business', 'top', 'msm', 'conspiracy', 'local'}
+
 for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
              'pg6', 'recipe', 'science', 'local', 'conspiracy', 'comedy'):
     _raw = data.get(_tab, [])
@@ -2141,46 +2048,44 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
         _candidates = _local_quality_filter(_candidates)
         if _before != len(_candidates):
             print(f"  [local-quality] dropped {_before - len(_candidates)} sub-{LOCAL_MIN_VIEWS}-view candidates", file=sys.stderr)
-    _current = _existing.get(_tab, {}).get('stories', []) or []
-    if _tab == 'local':
-        _current = _local_quality_filter(_current)
-    # Per-tab age cap enforced at velocity-hold level — drops stories beyond cap
-    # even if they show proven 4h-delta growth from prior snapshots.
     _backfill_age = _BACKFILL_AGE_BY_TAB.get(_tab, _TAB_FLOOR_AGE_HOURS)
+
+    if _tab in _NEWS_TABS_NO_PAD:
+        # News tabs (Business, Top, MSM, Conspiracy, Local) — user mandate:
+        # top by velocity in 4h window. No backfill, no snapshot resurrection.
+        # If <3 candidates exist in 4h, show fewer.
+        _picked = curation.curate(_tab, [], _candidates,
+                                  top_n=_TAB_N.get(_tab, 3), enrich=True, history=_history,
+                                  max_age_h=_backfill_age)
+        curation.stamp_view_history(_picked)
+        _output_v5[_tab] = {'stories': _picked,
+                            'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
+        continue
+
+    # Non-news tabs (Elon, Sports, AllIn, Pods, PG6, Recipe, Science, Comedy):
+    # keep the existing 3-pass cascade with snapshot backfill.
+    _current = _existing.get(_tab, {}).get('stories', []) or []
     _picked = curation.curate(_tab, _current, _candidates,
                               top_n=_TAB_N.get(_tab, 3), enrich=True, history=_history,
                               max_age_h=_backfill_age)
-    # Topic-diversity dedup: drops same-author-twice + same-headline (the @ocregister
-    # Laguna Beach Forest Avenue trees 2d/5d duplicate problem).
     _picked = _enforce_topic_diversity(_picked, label=_tab)
-    # Floor enforcement (CLAUDE.md: never empty). Two-tier cascade:
-    #   Pass 1: SOFT cap (TAB_AGE_OVERRIDE) — the preferred fresh window
-    #   Pass 2: HARD cap (TAB_HARD_CAP) — fallback up to absolute max, ONLY if floor unmet
-    # Elon's hard cap == soft cap (12h), so Pass 2 doesn't loosen Elon. Other tabs
-    # extend to 48h (72h for local) as a last resort to hold the floor.
     _backfill_pool = _current + (_existing.get(_tab, {}).get('earlier', []) or [])
-    if _tab == 'local':
-        _backfill_pool = _local_quality_filter(_backfill_pool)
     _hard_cap = TAB_HARD_CAP.get(_tab, DEFAULT_HARD_CAP_H)
     if len(_picked) < _TAB_FLOOR:
         _picked = _topup_to_floor(_picked, _backfill_pool,
                                   top_n=_TAB_FLOOR, max_age_h=_backfill_age)
         _picked = _enforce_topic_diversity(_picked, label=_tab)
-    # Pass 2 — extend up to hard cap (only triggers when soft pass left a gap)
     if len(_picked) < _TAB_FLOOR and _hard_cap > _backfill_age:
         _picked = _topup_to_floor(_picked, _backfill_pool,
                                   top_n=_TAB_FLOOR, max_age_h=_hard_cap)
         _picked = _enforce_topic_diversity(_picked, label=_tab)
-    # Pass 3 — deep snapshot scan at hard cap (last resort)
     if len(_picked) < _TAB_FLOOR:
         _picked = _topup_to_floor(_picked, _scan_snapshots_for_tab(_tab),
                                   top_n=_TAB_FLOOR, max_age_h=_hard_cap)
         _picked = _enforce_topic_diversity(_picked, label=_tab)
-        if len(_picked) < _TAB_FLOOR:
-            print(f"  WARN {_tab}: {len(_picked)}/{_TAB_FLOOR} after 3-pass backfill ({_backfill_age}h soft → {_hard_cap}h hard) — claude_qc will auto-promote from earlier",
-                  file=sys.stderr)
     curation.stamp_view_history(_picked)
-    _output_v5[_tab] = {'stories': _picked, 'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
+    _output_v5[_tab] = {'stories': _picked,
+                        'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
 
 # ---- Static tabs (user-curated, never auto-populated) ----
 for _static in ('freespeech',):

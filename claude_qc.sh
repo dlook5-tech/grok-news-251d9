@@ -178,8 +178,11 @@ if qc_modified:
 # AUTO-PROMOTE strategy: if a tab is sub-floor but its `earlier` array has
 # unused stories, promote them into `stories` to meet floor instead of blocking
 # the deploy. Only hard-errors if floor truly unmeetable.
-FLOOR_TABS = ('world', 'usa', 'business', 'sports', 'allin',
-              'msm', 'conspiracy', 'pg6', 'comedy', 'recipe', 'top', 'science')
+FLOOR_TABS = ('sports', 'allin', 'msm', 'pg6', 'comedy', 'recipe', 'top', 'science')
+# 2026-05-11: 'world', 'usa', 'business', 'conspiracy', 'local' removed from
+# FLOOR_TABS per user mandate: "Just what is the highest velocity story in the
+# world in the last four hours. Top three." If <3 exist in 4h, show fewer.
+# No more padding from earlier/overflow on news tabs.
 # Pods removed (2026-05-10 evening): if Grok can't find 3 fresh pod clips ≤24h,
 # show 1-2 rather than block deploy. User's "no 1d old" mandate means we can't
 # pad with 25h+ stuff; if there's no fresh, show fewer. Same logic as elon/local.
