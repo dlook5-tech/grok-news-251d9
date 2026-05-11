@@ -1644,11 +1644,11 @@ def clean_world(w):
         _filtered_perspectives.append(_p)
     perspectives = _filtered_perspectives
 
-    # 2026-05-06: 3-perspective requirement RESTORED. User reversed the May-4 relaxation:
-    # "every story needs all three plot points, otherwise it's not a quality worthy story."
-    # Stories with fewer than 3 perspectives drop at validation. Floor backfill only pulls
-    # from prior 3-perspective stories.
-    if len(perspectives) < 3:
+    # 2026-05-11 (user reversed again): "If one of the top three news stories
+    # does not have three perspectives, I guess that's okay." → Allow 1-2 persp
+    # stories. Velocity ranking + hold rule will surface 3-persp stories over
+    # time (they usually have higher total views anyway).
+    if len(perspectives) < 1:
         return None
 
     # 2026-05-11: STORY-LEVEL velocity floor (sum of all perspective views).
