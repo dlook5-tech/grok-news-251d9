@@ -112,6 +112,35 @@ Per-tab counts:
 
 Each pick MUST have: url, handle, body, views, engagement, honesty score, notes (1-line on score).
 
+QT/RT SEARCH IS REQUIRED FOR EVERY PICK (user mandate 2026-05-11):
+"If you find the most velocity post and someone has retweeted it who has
+something very interesting to say and adds to the velocity of that. That is
+the perfect trifecta."
+
+For EVERY post you're about to return, BEFORE finalizing, run:
+  x_search "url:<the_post_url>" mode:"Top" limit:10
+This finds quote-tweets (and retweets-with-comment) of that specific post.
+
+If ANY QT has BOTH:
+  (a) substantive commentary body (≥30 chars, real analysis — not "🔥",
+      not bare RT)
+  (b) higher views than the original alone OR adds meaningful color
+THEN swap the displayed URL to the QT and structure the pick as:
+  - "url"            = the QT's URL (the embed shows BOTH original + commentary)
+  - "handle"         = the QT author's handle
+  - "body"/"quote"   = the QT's commentary text (verbatim)
+  - "views"          = original_views + qt_views (COMBINED)
+  - "original_url"   = the original post's URL
+  - "original_handle"= the original author's handle
+  - "original_views" = just-the-original view count
+  - "qt_views"       = just-the-QT view count
+
+If no QT meets the bar (most posts have no viral QT), return the original
+post as-is — no fake QT fields, no fabrication.
+
+For World/USA tabs, apply this PER PERSPECTIVE (find QTs of each chosen
+conservative/independent/democrat post separately).
+
 HONESTY SCORING WHEN A QT/RT IS USED (user mandate 2026-05-11):
 "Grok scores the combined retweet and embedded post for honesty with one score
 (breaks down logic within the notes)."

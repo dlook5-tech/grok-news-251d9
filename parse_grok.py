@@ -1476,6 +1476,10 @@ def clean_story(s, tab=''):
     # Carry through Grok's explicit views field if present (for curation.story_views)
     if 'views' in s:
         out['views'] = s['views']
+    # 2026-05-11: pass through QT-enrichment fields when Grok did a QT swap
+    for qt_field in ('original_url', 'original_handle', 'original_views', 'qt_views'):
+        if qt_field in s:
+            out[qt_field] = s[qt_field]
     # Pass through Grok's translation field if present (for foreign-language posts/quote-tweets)
     if s.get('translation'):
         out['translation'] = str(s['translation'])
@@ -1604,6 +1608,9 @@ def clean_world(w):
         if 'views' in p: _persp['views'] = p['views']
         if p.get('translation'): _persp['translation'] = str(p['translation'])
         if p.get('notes'): _persp['notes'] = str(p['notes'])
+        # 2026-05-11: QT enrichment fields per perspective
+        for qt_field in ('original_url', 'original_handle', 'original_views', 'qt_views'):
+            if qt_field in p: _persp[qt_field] = p[qt_field]
         perspectives.append(_persp)
     # 2026-05-06: WITHIN-STORY URL DEDUP. Reject if two perspectives share a URL —
     # that's Grok hallucinating handle attribution (e.g. @AP's tweet labeled as @samstein
