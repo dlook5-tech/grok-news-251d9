@@ -1,14 +1,63 @@
 {
   "lastUpdated": "2026-05-11T19:31:43Z",
   "world": {
-    "stories": [],
+    "stories": [
+      {
+        "headline": "US-Iran Ceasefire Tensions",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@BullNakedCrypto",
+            "url": "https://x.com/BullNakedCrypto/status/2053880870743028005",
+            "text": "Here comes \n\n\"Strategic military strikes on Iranian missiles systems, but this is not breaking ceasfire cause this is very specific one round of...",
+            "engagement": "27 likes, 0 retweets, 1 replies",
+            "honesty": "8/10",
+            "views": 134431,
+            "notes": "Original (factual report of Trump's statement) = 9/10. QT (speculative opinion on potential actions) = 7/10. Combined = 8/10 \u2014 accurate core with partisan prediction.",
+            "views_at_save": 134431,
+            "age_at_save_hours": 2.7
+          },
+          {
+            "label": "Democrat",
+            "handle": "@luxeprogressive",
+            "url": "https://x.com/luxeprogressive/status/2053883727030222915",
+            "text": "We\u2019re about to do something very stupid.",
+            "engagement": "15 likes, 2 retweets, 1 replies",
+            "honesty": "7/10",
+            "views": 132938,
+            "notes": "Original factual = 9/10. QT opinionated criticism = 5/10 (partisan without evidence). Combined = 7/10 \u2014 facts solid, commentary subjective.",
+            "views_at_save": 132938,
+            "age_at_save_hours": 2.51
+          },
+          {
+            "label": "Independent",
+            "handle": "@KobeissiLetter",
+            "url": "https://x.com/KobeissiLetter/status/2053910380674757088",
+            "text": "BREAKING: Iran\u2019s Speaker of the Parliament releases a statement after President Trump says the US-Iran ceasefire is \u201con life support.\u201d\n\n\u201cOur armed...",
+            "engagement": "1232 likes, 150 retweets, 173 replies",
+            "honesty": "9/10",
+            "views": 103497,
+            "notes": "Direct quote of official statement \u2014 verifiable fact.",
+            "views_at_save": 103497,
+            "age_at_save_hours": 0.75
+          }
+        ],
+        "footnotes": [],
+        "notes": "Escalating rhetoric between US and Iran leaders heightens fears of renewed conflict in the Middle East.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/11/2026 7:34 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 2.7
+      }
+    ],
     "earlier": [],
     "_overflow": []
   },
   "usa": {
     "stories": [
       {
-        "headline": "Trump Proposes Suspension of Federal Gas Tax",
+        "headline": "Trump Backs Federal Gas Tax Suspension",
         "honesty": "8/10",
         "perspectives": [
           {
@@ -570,11 +619,11 @@
         "headline": "Jeffrey Tucker on COVID Lockdown Purpose",
         "handle": "@joeroganhq",
         "url": "https://x.com/joeroganhq/status/2053845079698096297",
-        "body": "Jeffrey Tucker claims COVID lockdowns aimed to prevent natural immunity and prepare people for vaccines.",
-        "engagement": "407 likes, 105 reposts, 18 replies",
-        "honesty": "5/10",
-        "notes": "Contrarian interpretation of policy intent without direct evidence.",
-        "posted": "2026-05-11T19:15:47Z",
+        "body": "Jeffrey Tucker claims the COVID lockdowns aimed to isolate people, preventing natural immunity to push vaccine uptake.",
+        "engagement": "418 likes, 106 reposts, 20 replies",
+        "honesty": "8/10",
+        "notes": "Guest's interpretive take on policy intent based on events, opinion mixed with facts.",
+        "posted": "2026-05-11T19:34:16Z",
         "post_ts": "2026-05-11T14:30:00Z",
         "views": 15881,
         "views_at_save": 15881,
@@ -683,20 +732,6 @@
         "views": 130574,
         "views_at_save": 130574,
         "age_at_save_hours": 1.7
-      },
-      {
-        "headline": "Cramer Spots Reversal Patterns",
-        "handle": "@jimcramer",
-        "url": "https://x.com/jimcramer/status/2053887228980416740",
-        "body": "Island reversal patterns are appearing widely, advising caution with gap-up stocks amid market risks.",
-        "engagement": "474 likes, 29 retweets, 45 quotes, 221 replies",
-        "honesty": "7/10",
-        "notes": "Technical market opinion based on observed patterns.",
-        "posted": "2026-05-11T19:08:06Z",
-        "post_ts": "2026-05-11T17:17:29Z",
-        "views": 122036,
-        "views_at_save": 122036,
-        "age_at_save_hours": 1.84
       },
       {
         "headline": "Avoid Panic Selling Long-Term Stocks",
@@ -1725,7 +1760,8 @@
         "views_at_save": 47,
         "age_at_save_hours": 18.93
       }
-    ]
+    ],
+    "_overflow": []
   },
   "freespeech": {
     "stories": [
