@@ -172,6 +172,8 @@ check "qc:final-claude-review"          claude_qc.sh     "final-review|Final QC 
 check "qc:final-review-drops"           claude_qc.sh     "final-review.*DROPPED|review_modified"               exists
 # 2026-05-11: after drops, refill from _overflow (Grok's unused candidates this run)
 check "qc:refill-from-overflow"         claude_qc.sh     "REFILL.*pulled.*from overflow|_overflow"             exists
+# 2026-05-11: last-resort same-headline dedup (catches dups that survived LLM cluster check)
+check "qc:same-headline-dedup"          claude_qc.sh     "same-headline-dedup|_norm_headline"                  exists
 # 2026-05-11 (reversed): user dropped the hold rule, "too confusing, too much
 # code. Just find the three most popular stories." Each cron picks fresh top 3
 # in the last 4h. MAX_HOLD_HOURS = 4 (matches the window).

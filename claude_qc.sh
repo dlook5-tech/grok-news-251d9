@@ -566,6 +566,46 @@ if universal_refill_modified:
     with open('stories.json','w') as f: json.dump(d, f, indent=2)
     print(f"[refill] stories.json updated with overflow refills", file=sys.stderr)
 
+# ---- Check 7: same-headline dedup (last-resort safety net) ----
+# User caught (2026-05-11): deployed World tab had "US-Iran Ceasefire Tensions"
+# TWICE with different URL sets. Cluster dedup ran but didn't catch it because
+# Claude returned them as one pair, dropping one — yet a second copy remained
+# (hold rule + fresh both kept different URL-sets for same event).
+# This last-pass dedup catches simple identical/near-identical headlines that
+# slipped through the LLM cluster check. Per-tab. Drops later occurrence.
+def _norm_headline(h):
+    import re as _r7
+    if not h: return ''
+    # Lowercase + collapse whitespace + strip punctuation
+    t = (h or '').lower()
+    t = _r7.sub(r'[^\w\s]', ' ', t)
+    t = _r7.sub(r'\s+', ' ', t).strip()
+    return t
+
+dedup_modified = False
+for tab in list(d.keys()):
+    if tab == 'elon': continue  # rolling list, dup-headlines unlikely
+    tv = d.get(tab) or {}
+    if not isinstance(tv, dict): continue
+    stories = tv.get('stories', []) or []
+    if len(stories) < 2: continue
+    seen_headlines = {}
+    kept = []
+    for i, s in enumerate(stories):
+        nh = _norm_headline(s.get('headline',''))
+        if nh and nh in seen_headlines:
+            print(f"[same-headline-dedup] {tab}[{i}] '{s.get('headline','')[:50]}' duplicates [{seen_headlines[nh]}], drop", file=sys.stderr)
+            warnings.append(f"same-headline-dedup DROP {tab}[{i}] '{s.get('headline','')[:50]}'")
+            dedup_modified = True
+            continue
+        if nh: seen_headlines[nh] = i
+        kept.append(s)
+    if len(kept) != len(stories):
+        d[tab]['stories'] = kept
+if dedup_modified:
+    with open('stories.json','w') as f: json.dump(d, f, indent=2)
+    print(f"[same-headline-dedup] stories.json updated", file=sys.stderr)
+
 # ---- Report ----
 if warnings:
     print(f"\n[claude-qc] {len(warnings)} warning(s) (non-blocking):", file=sys.stderr)
