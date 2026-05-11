@@ -105,6 +105,54 @@
   "usa": {
     "stories": [
       {
+        "headline": "Trump Backs Suspension of Federal Gas Tax Amid Iran War Price Surge",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@NEWSMAX",
+            "url": "https://x.com/NEWSMAX/status/2053868007949287796",
+            "text": "President Donald Trump said Monday he wants to temporarily suspend the federal gas tax as Americans face surging fuel prices tied to the Iran war.....",
+            "engagement": "123 likes, 25 reposts",
+            "honesty": "9/10",
+            "views": 9862,
+            "notes": "Accurate report of Trump's statement; conservative outlet but no false claims introduced.",
+            "views_at_save": 9862,
+            "age_at_save_hours": 3.95
+          },
+          {
+            "label": "Democrat",
+            "handle": "@washingtonpost",
+            "url": "https://x.com/washingtonpost/status/2053906611169611822",
+            "text": "Breaking news: President Trump said he will suspend the federal gas tax for an unspecified period as the Iran war continues to push pump prices...",
+            "engagement": "32 likes, 11 reposts",
+            "honesty": "10/10",
+            "views": 14775,
+            "notes": "Factual breaking news report with context on popularity impact; verifiable.",
+            "views_at_save": 14775,
+            "age_at_save_hours": 1.39
+          },
+          {
+            "label": "Independent",
+            "handle": "@AP",
+            "url": "https://x.com/AP/status/2053898448823267664",
+            "text": "President Donald Trump said he supports suspending the federal tax on gasoline to help Americans shoulder surging fuel prices caused by the Iran...",
+            "engagement": "89 likes, 29 reposts",
+            "honesty": "10/10",
+            "views": 39799,
+            "notes": "Pure verifiable fact from AP wire service.",
+            "views_at_save": 39799,
+            "age_at_save_hours": 1.93
+          }
+        ],
+        "footnotes": [],
+        "notes": "",
+        "body": "Three-perspective roundup.",
+        "posted": "5/11/2026 7:58 PM",
+        "views_at_save": 0,
+        "age_at_save_hours": 3.95
+      },
+      {
         "headline": "Trump Assassination Attempt Suspect Plea",
         "honesty": "8/10",
         "perspectives": [
@@ -216,7 +264,7 @@
             "views": 6968,
             "notes": "Defends Trump by contextualizing media focus on blink, verifiable event details but partisan media critique.",
             "views_at_save": 6968,
-            "age_at_save_hours": 1.28
+            "age_at_save_hours": 1.52
           },
           {
             "label": "Democrat",
@@ -228,7 +276,7 @@
             "views": 486034,
             "notes": "Video clip shows Trump appearing drowsy at event, accurate footage without fabrication.",
             "views_at_save": 486034,
-            "age_at_save_hours": 4.09
+            "age_at_save_hours": 4.33
           },
           {
             "label": "Independent",
@@ -240,7 +288,7 @@
             "views": 302430,
             "notes": "Neutral photo caption from Reuters event coverage, verifiable journalism.",
             "views_at_save": 302430,
-            "age_at_save_hours": 3.55
+            "age_at_save_hours": 3.79
           }
         ],
         "footnotes": [],
@@ -248,7 +296,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/11/2026 7:08 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 1.28
+        "age_at_save_hours": 1.52
       }
     ],
     "_overflow": []
@@ -486,20 +534,6 @@
         "age_at_save_hours": 15.74
       },
       {
-        "headline": "Stephen A. on Wemby's Ejection",
-        "handle": "@stephenasmith",
-        "url": "https://x.com/stephenasmith/status/2053642032833540273",
-        "body": "Stephen A.. Smith calls Wembanyama's elbow swing intentional and ejection warranted but hopes no suspension.",
-        "engagement": "5.3K likes, 216 reposts",
-        "honesty": "8/10",
-        "notes": "Fact-based opinion on verified playoff incident.",
-        "posted": "2026-05-11T16:15:00Z",
-        "post_ts": "2026-05-11T01:03:10Z",
-        "views": 474179,
-        "views_at_save": 474179,
-        "age_at_save_hours": 15.2
-      },
-      {
         "headline": "Harper Reacts to Wembanyama's Elbow",
         "handle": "@ClutchPoints",
         "url": "https://x.com/ClutchPoints/status/2053636256072901032",
@@ -541,8 +575,7 @@
         "views_at_save": 893560,
         "age_at_save_hours": 9.91
       }
-    ],
-    "_overflow": []
+    ]
   },
   "allin": {
     "stories": [
@@ -1008,14 +1041,14 @@
   "msm": {
     "stories": [
       {
-        "headline": "Local Hero Beats Tourist for Attacking Protected Monk Seal in Hawaii",
+        "headline": "Tourist Beats Down Seal Attacker in Hawaii",
         "handle": "@CollinRugg",
         "url": "https://x.com/CollinRugg/status/2053879419060764975",
-        "body": "Seattle man pummeled by Maui resident after throwing rock at endangered seal; attacker faces $50k fine, defender gets state recognition.",
-        "engagement": "10K likes, 725 reposts, 87 quotes, 518 replies",
+        "body": "Seattle tourist throws rock at protected monk seal on Maui, gets pummeled by local who receives state recognition.",
+        "engagement": "10K likes, 775 retweets, 93 quotes, 538 replies",
         "honesty": "9/10",
-        "notes": "Verified incident with video; reports facts on wildlife protection and legal outcomes accurately.",
-        "posted": "2026-05-11T19:43:45Z",
+        "notes": "Verified incident with video evidence and official response, minor editorializing.",
+        "posted": "2026-05-11T19:58:08Z",
         "post_ts": "2026-05-11T16:46:27Z",
         "views": 1355961,
         "views_at_save": 1355961,
@@ -1055,11 +1088,11 @@
         "headline": "Biden's CHNV Migrant Flights Exposed: Fraud, Overstays, and Crime",
         "handle": "@BillMelugin_",
         "url": "https://x.com/BillMelugin_/status/2053894383200780437",
-        "body": "Biden's CHNV program flew 500k+ migrants into US without vetting sponsors or tracking paroles, leading to fraud and crimes like a Haitian rapist...",
-        "engagement": "4.3K likes, 1.6K reposts, 59 quotes, 100 replies",
-        "honesty": "9/10",
-        "notes": "Original (denies program existence) = 2/10 (false claim). QT (cites DHS IG report, specific verified crime) = 10/10 (factual correction). Combined = 9/10 \u2014 accurate expos\u00e9 overriding denial.",
-        "posted": "2026-05-11T19:43:45Z",
+        "body": "Biden's CHNV program flew 500K+ migrants into US monthly without vetting, leading to fraud and overstays, DHS IG finds.",
+        "engagement": "4.7K likes, 1.7K retweets, 63 quotes, 104 replies",
+        "honesty": "8/10",
+        "notes": "Fact-based report on DHS Inspector General findings with added commentary on policy failures.",
+        "posted": "2026-05-11T19:58:08Z",
         "post_ts": "2026-05-11T17:45:55Z",
         "views": 133353,
         "views_at_save": 133353,
@@ -1911,7 +1944,8 @@
         "views_at_save": 3,
         "age_at_save_hours": 13.52
       }
-    ]
+    ],
+    "_overflow": []
   },
   "freespeech": {
     "stories": [
