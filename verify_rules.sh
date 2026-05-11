@@ -134,7 +134,7 @@ check "freshness:reference-24h-comedy"  parse_grok.py    "'comedy':\s*24"       
 # 2026-05-10: TAB_AGE_OVERRIDE single source of truth — anti-leak audit.
 # Previously two tables existed and disagreed (elon=96 vs elon=12), leaking 25h-old
 # Elon posts. Lock the values in TAB_AGE_OVERRIDE so any future loosening trips this.
-check "freshness:tab-age-elon-12h"      parse_grok.py    "'elon':\s*12"                                        exists
+check "freshness:tab-age-elon-4h"       parse_grok.py    "'elon':\s*4\b"                                       exists
 check "freshness:elon-hard-cap-24h"     parse_grok.py    "TAB_HARD_CAP.*\n.*'elon':\s*24|'elon':\s*24"         exists
 check "freshness:pods-soft-12h"         parse_grok.py    "'pods':\s*12"                                        exists
 check "freshness:pods-hard-24h"         parse_grok.py    "'pods':\s*24"                                        exists
@@ -162,6 +162,10 @@ check "quality:wire-copy-filter"        parse_grok.py    "_is_wire_copy|_WIRE_CO
 check "quality:few-words-filter"        parse_grok.py    "_is_few_words|_MIN_PROSE_CHARS"                      exists
 # 2026-05-11: user "add original + QT views for total score" — combined scoring
 check "quality:combined-qt-score"       curation.py      "combined_score|qt_views"                             exists
+# 2026-05-11: Honesty when QT used → ONE combined score + arithmetic breakdown in notes
+check "quality:combined-honesty-note"   update.sh        "HONESTY SCORING WHEN A QT"                           exists
+# 2026-05-11: Elon rolling 24h, fresh 4h window, post all non-promo
+check "elon:rolling-24h-window"         parse_grok.py    "\[elon-24h\] drop aged-out|\[elon\] prepended"      exists
 # 2026-05-11 (reversed): user dropped the hold rule, "too confusing, too much
 # code. Just find the three most popular stories." Each cron picks fresh top 3
 # in the last 4h. MAX_HOLD_HOURS = 4 (matches the window).

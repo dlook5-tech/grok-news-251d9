@@ -112,6 +112,23 @@ Per-tab counts:
 
 Each pick MUST have: url, handle, body, views, engagement, honesty score, notes (1-line on score).
 
+HONESTY SCORING WHEN A QT/RT IS USED (user mandate 2026-05-11):
+"Grok scores the combined retweet and embedded post for honesty with one score
+(breaks down logic within the notes)."
+- When a pick swaps in a QT/RT of the original, give ONE combined honesty
+  score (0-10) representing the QT-author-as-presenter of the original.
+- In `notes`, BREAK DOWN THE ARITHMETIC: separately rate the original's
+  factual core + the QT's added commentary, then state the combined score
+  and a one-sentence why. Examples:
+    notes: "Original (Reuters factual report) = 9/10 (verified fact).
+            QT (Posobiec opinion overlay) = 7/10 (partisan framing).
+            Combined view-weighted = 8/10 — solid facts presented through
+            a clearly-partisan lens."
+    notes: "Original (citizen video) = 8/10 (eyewitness clip, no claim).
+            QT (analyst thread) = 8/10 (clean analysis, no false claims).
+            Combined = 8/10 — both contributions clean."
+- When no QT is used, just one score + 1-line note as before.
+
 SEARCH SEEDS, NOT FAVORITES (user mandate 2026-05-10):
 "You should be using for each tab the highest velocity story, not a favor. It's not pulling from favorites." Each tab's prompt contains STARTING SEARCH SEEDS — these are seed handles to FIND candidates via x_search. They are NOT a preference list and NOT weighted in selection. After searching, rank ALL results purely by view count. A no-name handle with 1M views WINS over a seed handle with 100K views, every time. Seeds exist because they reliably post in each tab's scope (so we don't miss candidates), but they have ZERO bonus at pick time. The anti-hallucination defense is post URL existing in x_search results + oEmbed verification, not a handle whitelist.
 
@@ -482,7 +499,10 @@ PROMPT
 # --- ELON ---
 cat > /tmp/grok_p_elon.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
-MISSION (UPDATED 2026-05-02): Surface a block for EVERY Elon post in the last 24h that comments on something OUTSIDE pure Tesla / SpaceX / X-product promotion. The user wants to see all his world-engaged commentary — not just 3 hand-picked.
+MISSION (UPDATED 2026-05-11): Return EVERY Elon post and reply from the LAST 4 HOURS that isn't self-promotion of his companies. Python merges these fresh posts into the existing 24h rolling list (newest prepended chronologically; anything past 24h ages out).
+- If Elon hasn't posted in the last 4h, return an empty array. The tab will stay unchanged.
+- Do NOT pad with older posts to "fill" — Python handles continuity.
+- No top-N cap. Return ALL non-promo posts/replies he made in the last 4h, even if there are 10.
 
 INCLUDE (one block per qualifying post):
 - Political takes, policy commentary, election/government posts
@@ -508,31 +528,30 @@ one of his companies."
 - Pure text replies WITHOUT visible parent context (DROP)
 - One-word reactions, emoji-only ("true", "agreed", "🔥") (DROP)
 
-WINDOW (user mandate 2026-05-10 evening):
-"His starter window is 12 hours. If there's been no posts, extend to 24 hours."
-- PRIMARY search: "from:elonmusk since:<12h ago>" — fetch all his posts in
-  the last 12 hours, filter out promo per above, return whatever's left.
-- ONLY IF that returns 0 posts: extend to 24h.
-- DO NOT pull anything past 24h.
+WINDOW — LAST 4 HOURS ONLY (user mandate 2026-05-11):
+"post all of his posts and replies for that four-hour span, only removing
+tweets where he's promoting one of his companies. If nothing has been posted
+by Elon in that four-hour window, then everything should remain unchanged on
+the tab."
+
+Python merges these fresh posts into a rolling 24h list (newest prepended,
+anything past 24h ages out). YOUR job here is JUST the fresh-4h fetch.
 
 APPROVED HANDLE: @elonmusk only. Each post must be a DIFFERENT URL.
 
-NO ARBITRARY LIMIT: return ALL qualifying posts (typically 3-15 per day depending on his activity). The user wants every world-engaged post to get a block, not a hand-picked top 3.
+SEARCH:
+1. PRIMARY: mode:"Latest" "from:elonmusk" — return everything he's posted
+   in the last 4 hours (filter on your end by created_at if needed; only
+   include posts ≤4h old). Limit 50, no min_faves floor.
+2. INCLUDE REPLIES: Elon's replies count. Search "from:elonmusk
+   filter:replies" or simply include replies in the primary search results.
 
-RECENCY-FIRST SEARCH (May 2026-05-02 evening — user complained about 2-day-old picks while Elon posts hourly):
-Use mode "Latest" PRIMARILY — Elon posts every few hours, fresh content always exists. Don't let high min_faves threshold filter out the last 6 hours of posts (which haven't accumulated likes yet but are the most recent).
-
-Searches:
-1. PRIMARY: mode:"Latest" "from:elonmusk since:$TODAY", limit: 50 — get last 24h of EVERYTHING he posted, no min_faves floor
-2. SUPPLEMENT: mode:"Latest" "from:elonmusk since:$YESTERDAY min_faves:500", limit: 25 — yesterday's top-engaged
-3. SUPPLEMENT: mode:"Top" "from:elonmusk since:$YESTERDAY min_faves:2000", limit: 25 — highest engagement of last 48h
-
-FROM THE COMBINED RESULTS, prefer:
-- Posts from last 6 hours (slot 1 must be ≤6h if any qualifying exists)
-- Posts from last 24 hours (next slots)
-- Older posts ONLY as last resort if today is genuinely thin
-
-DO NOT default to picking high-engagement old posts when fresh substantive ones exist. Recency wins over accumulated likes when both are substantive.
+RETURN POLICY:
+- If he posted ≥1 non-promo post/reply in last 4h → return them ALL.
+- If he posted 0 in last 4h → return empty array []. Python will keep the
+  existing tab unchanged.
+- Sort the returned posts chronologically NEWEST FIRST (Python re-sorts but
+  consistency helps).
 
 POST TYPE GUIDANCE (Elon tab — no preference between originals and quote-tweets, judge each on its own merits):
 1. **Original substantive posts** (predictions, announcements, contrarian observations) — kept.

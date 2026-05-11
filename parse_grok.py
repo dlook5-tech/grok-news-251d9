@@ -29,7 +29,8 @@ TAB_AGE_OVERRIDE = {
     'conspiracy': 4, 'local': 4,
     # Reference + personality tabs keep their existing windows
     'recipe': 24, 'science': 24, 'comedy': 24,
-    'elon': 12,        # User: "post all his latest in last 12 hours"
+    'elon': 4,         # 2026-05-11: rolling 24h list, but fresh window is 4h.
+                       # Grok looks back 4h for NEW posts; old posts stay until 24h.
     'pods': 12,        # User: "no 1d old podcast posts"
     'allin': 24, 'pg6': 24,
     'freespeech': 8760,
@@ -1761,10 +1762,11 @@ def _belongs_on_tab(tab, story):
         return False
     return True
 
-# Per-tab story counts. Elon stays high because user wants "every world-engaged Elon post."
+# Per-tab story counts. User 2026-05-11: Elon should show ALL his non-promo
+# posts/replies in the last 24h, not a top-N. Set to 30 as a sanity ceiling.
 _TAB_N = {
     'world': 3, 'usa': 3, 'business': 3, 'top': 3, 'msm': 3, 'sports': 3,
-    'elon': 10, 'allin': 3, 'pods': 3, 'pg6': 3, 'recipe': 3, 'science': 3,
+    'elon': 30, 'allin': 3, 'pods': 3, 'pg6': 3, 'recipe': 3, 'science': 3,
     'local': 3, 'conspiracy': 3, 'comedy': 3,
 }
 
@@ -2074,6 +2076,46 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
         if _before != len(_candidates):
             print(f"  [local-quality] dropped {_before - len(_candidates)} sub-{LOCAL_MIN_VIEWS}-view candidates", file=sys.stderr)
     _backfill_age = _BACKFILL_AGE_BY_TAB.get(_tab, _TAB_FLOOR_AGE_HOURS)
+
+    # ELON SPECIAL CASE (user 2026-05-11): rolling 24h window with 4h fresh additions.
+    # - Grok scans last 4h for NEW posts
+    # - If new posts found → prepend chronologically (newest first) to existing list
+    # - If NO new posts → tab stays unchanged (only drops anything that aged past 24h)
+    # - Promo posts filtered via _belongs_on_tab/_is_elon_promo (already done above)
+    if _tab == 'elon':
+        _existing_elon = _existing.get('elon', {}).get('stories', []) or []
+        # Drop anything from existing that's now >24h old.
+        _kept_existing = []
+        for _s in _existing_elon:
+            _age = url_age_hours(_s.get('url','') or '') or 0
+            if _age <= 24:
+                _kept_existing.append(_s)
+            else:
+                print(f"  [elon-24h] drop aged-out: {_s.get('headline','')[:50]} ({_age:.1f}h)", file=sys.stderr)
+        # Fresh candidates = posts in last 4h that aren't already in existing
+        _existing_urls = {s.get('url') for s in _kept_existing if s.get('url')}
+        _fresh_new = []
+        for _c in _candidates:
+            _url = _c.get('url','') or ''
+            if _url in _existing_urls: continue
+            _age = url_age_hours(_url) or 0
+            if _age > 4: continue  # only "new" posts qualify as additions
+            _fresh_new.append(_c)
+        if _fresh_new:
+            # Sort fresh newest-first by URL snowflake age (ascending age = newest first)
+            _fresh_new.sort(key=lambda s: url_age_hours(s.get('url','') or '') or 0)
+            _picked = _fresh_new + _kept_existing
+            print(f"  [elon] prepended {len(_fresh_new)} fresh post(s); total {len(_picked)} on tab", file=sys.stderr)
+        else:
+            # No new posts → keep existing as-is (already aged-out filtered)
+            _picked = _kept_existing
+            print(f"  [elon] no new posts in last 4h; tab unchanged ({len(_picked)} stories)", file=sys.stderr)
+        # Sanity cap at 30 (in case Elon posts an absurd burst)
+        _picked = _picked[:30]
+        curation.stamp_view_history(_picked)
+        _output_v5['elon'] = {'stories': _picked,
+                              'earlier': _build_earlier('elon', _picked, _existing.get('elon', {}))}
+        continue
 
     if _tab in _NEWS_TABS_NO_PAD:
         # News tabs (Business, Top, MSM, Conspiracy, Local) — top by velocity
