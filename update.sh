@@ -60,8 +60,15 @@ Compelling > viral. Insight > announcement. Citizens before institutions; thread
 ==================== HARD REJECTIONS ====================
 NEVER pick:
 1. Bare announcements — "AMERICANS ARE WORKING AGAIN!", "JUST IN: <stat>", "BREAKING: <fact>", press releases
+   2026-05-11 USER CALLOUT: "The stories really seem boring and just like announcements." Recently rejected picks:
+     - @WhiteHouse press release: "Finally a one-stop home for all the resources..." (gov PR — REJECT)
+     - @CBSNews wire copy: "BREAKING: Cole Allen has pleaded not guilty..." (announcement — REJECT)
+     - @NBCNews wire copy: "NEW: The man charged with allegedly..." (announcement — REJECT)
+     - @zerohedge: "Rabobank: 'More War Seems Inevitable'." (5-word bare statement — REJECT)
+   THE FIX: never pick a post whose body is essentially the headline restated. If a citizen handle adds analysis, prefer THEM over the wire copy.
 2. Pure endorsements — "Congrats to X, fighting for Y", "REAL change", boilerplate praise
 3. MSM amplification — "per TIME", "per WaPo", "per NYT" — quoted articles with no original take from the handle
+3b. WIRE-COPY HANDLES posting bare announcements: @WhiteHouse, @POTUS, @CBSNews, @NBCNews, @ABCNews, @Reuters, @nypost, @CNN posting "BREAKING:" / "NEW:" / "JUST IN:" prefixed announcements with no analysis. ACCEPTABLE if the post is genuine analysis/scoop; REJECT if it's just a headline restatement.
 4. Generic holiday wishes — "Easter blessings", "Earth Day", "Good Friday"
 5. Recycled all-time-viral content (Artemis kid type) — must be FRESH (≤12hrs, ≤6hrs for #1 Pop)
 6. Context-less replies — "Might actually happen", "True", "🔥" without parent visible
@@ -275,10 +282,14 @@ except Exception: print('0')
 cat > /tmp/grok_p_world.txt <<'PROMPT'
 Find the TOP 3 INTERNATIONAL news stories by views in the last 24 hours.
 
-3-PERSPECTIVE BAR IS LOW (user mandate 2026-05-10):
-The bar for each perspective is ANY post with ≥10 views from that ideological lean on the topic. Not high engagement. Not from a famous handle. Just a real conservative-leaning take, a real independent-leaning take, a real democrat-leaning take, all on the same news event, each with at least 10 views.
+3-PERSPECTIVE BAR — HIGH VELOCITY ONLY (user mandate 2026-05-11):
+"Are the stories you're picking really the most high velocity because they really seem boring and just like announcements?" The previous very-low-bar wording (10 views minimum per side) let trash through (e.g., a Democrat slot with 145 views on Iran). NEW BAR:
 
-For ANY major international/US story (Iran, Ukraine, China, SCOTUS, etc.) this is trivially findable. Random people on X with 10+ views talking about Iran from each side? There are hundreds. Find them.
+  - EACH perspective MUST have ≥5,000 views from x_search's view_count.
+  - The STORY (sum of 3 perspectives) MUST exceed 30,000 views.
+  - If a topic doesn't have 3 perspectives all clearing 5K, DROP THE TOPIC and pick a different story. Don't return weak perspectives just to satisfy the slot.
+
+This is still findable for major news: Iran/Ukraine/SCOTUS will have many 5K+ takes from each side. Citizen voices with 10K, 50K, 200K views ARE the screenshot-test wins.
 
 GOAL: 3 different stories, each with 3 perspectives. **DO NOT return fewer than 3 stories** unless x_search literally returns nothing for major news.
 
@@ -308,11 +319,11 @@ PROCESS:
 
    The 3 stories must span 3 distinct news events. If only 1 international
    story is breaking that day, return 1 story (not 3 framings of it).
-3. For each topic, run 3 broad searches to find ANY post with ≥10 views from each ideological side:
+3. For each topic, run 3 broad searches to find the HIGHEST-VIEWED post with ≥5,000 views from each ideological side:
    - Conservative side: "(topic_keywords) (republican OR conservative OR right OR maga OR trump OR gop) min_faves:1 lang:en", mode:Top, limit:30
    - Democrat side:    "(topic_keywords) (democrat OR liberal OR left OR progressive OR resist) min_faves:1 lang:en", mode:Top, limit:30
    - Independent side: "(topic_keywords) (analysis OR analyst OR foreign policy OR nonpartisan OR independent) min_faves:1 lang:en", mode:Top, limit:30
-4. Pick the highest-viewed post from each side that has ≥10 views. If you can't find one, expand search terms (synonyms, broader keywords) — don't give up. The bar is genuinely low.
+4. Pick the highest-viewed post from each side that has ≥5,000 views. If you can't find one, EXPAND keywords/handles broadly. If a topic genuinely has no 5K+ post from any one side, DROP that topic and pick a different event. Do NOT return a sub-5K perspective just to fill a slot.
 
 VIEWS REQUIREMENT (HARD CONTRACT):
 - Each perspective MUST include `"views": <integer>` from x_search's view_count field
@@ -335,10 +346,14 @@ PROMPT
 cat > /tmp/grok_p_usa.txt <<'PROMPT'
 Find the TOP 3 US NATIONAL news stories by views in the last 24 hours (domestic politics, SCOTUS, Congress, federal policy — NOT foreign affairs).
 
-3-PERSPECTIVE BAR IS LOW (user mandate 2026-05-10):
-The bar for each perspective is ANY post with ≥10 views from that ideological lean on the topic. Not high engagement. Not from a famous handle. Just a real conservative-leaning take, a real independent-leaning take, a real democrat-leaning take, all on the same news event, each with at least 10 views.
+3-PERSPECTIVE BAR — HIGH VELOCITY ONLY (user mandate 2026-05-11):
+"Are the stories you're picking really the most high velocity because they really seem boring and just like announcements?" The previous very-low-bar wording (10 views minimum per side) let trash through (e.g., a Democrat slot with 145 views on Iran). NEW BAR:
 
-For ANY major international/US story (Iran, Ukraine, China, SCOTUS, etc.) this is trivially findable. Random people on X with 10+ views talking about Iran from each side? There are hundreds. Find them.
+  - EACH perspective MUST have ≥5,000 views from x_search's view_count.
+  - The STORY (sum of 3 perspectives) MUST exceed 30,000 views.
+  - If a topic doesn't have 3 perspectives all clearing 5K, DROP THE TOPIC and pick a different story. Don't return weak perspectives just to satisfy the slot.
+
+This is still findable for major news: Iran/Ukraine/SCOTUS will have many 5K+ takes from each side. Citizen voices with 10K, 50K, 200K views ARE the screenshot-test wins.
 
 GOAL: 3 different stories, each with 3 perspectives. **DO NOT return fewer than 3 stories** unless x_search literally returns nothing for major news.
 

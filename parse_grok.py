@@ -1487,6 +1487,40 @@ def clean_story(s, tab=''):
             out['parent_text'] = str(s['parent_text'])[:280]
     return out
 
+# 2026-05-11 user mandate ("really seem boring and just like announcements"):
+# Filters to enforce "high velocity + not wire copy" for World/USA perspectives.
+# Velocity floor — each perspective must have ≥5,000 views (was 10, way too low).
+WORLD_PERSP_MIN_VIEWS = 5000
+# Total story velocity floor — sum of all 3 perspective views must clear this.
+# Catches stories like Hantavirus (564+1298+75=1937 total — junk) before they ship.
+WORLD_STORY_MIN_TOTAL_VIEWS = 30000
+
+# Wire-copy / announcement detection: posts that just restate the headline with no
+# original take. User's specific recent rejects:
+#   - "BREAKING: Cole Allen pleads not guilty..."
+#   - "NEW: The man charged with allegedly..."
+#   - "Finally a one-stop home for all the resources..."  (@WhiteHouse press release)
+_WIRE_COPY_PREFIXES = (
+    'breaking:', 'just in:', 'new:', '🚨 breaking', '🚨 just in', '🚨 new',
+    'developing:', 'update:', 'happening now:', 'live:',
+)
+_WIRE_COPY_HANDLES = {  # mainstream wire copy when their post is just a headline
+    'whitehouse', 'potus', 'cbsnews', 'nbcnews', 'abcnews', 'ap', 'reuters',
+    'nypost', 'cnn', 'foxnews',
+}
+
+def _is_wire_copy(persp):
+    """True if perspective is bare wire-copy announcement (no original take).
+    Conservative: only flags when handle is known wire-copy source AND body starts
+    with a wire-copy prefix. Doesn't flag analysis/commentary from same handles."""
+    handle = (persp.get('handle','') or '').lower().lstrip('@').strip()
+    text = (persp.get('text') or persp.get('quote') or persp.get('body') or '').strip().lower()
+    if not handle or not text: return False
+    if handle not in _WIRE_COPY_HANDLES: return False
+    for prefix in _WIRE_COPY_PREFIXES:
+        if text.startswith(prefix): return True
+    return False
+
 def clean_world(w):
     """Validate a World/USA story (3-perspective shape). PURE VIEWS spec — only data
     validation, no judgment filters. Used to reject for is_announcement / is_cheerleading
@@ -1547,11 +1581,42 @@ def clean_world(w):
         _deduped_perspectives.append(_p)
     perspectives = _deduped_perspectives
 
+    # 2026-05-11: wire-copy and velocity filters (user: "really seem boring and just
+    # like announcements"). Drop perspectives that are bare wire-copy from announcement
+    # handles, AND drop perspectives with <5K views.
+    _filtered_perspectives = []
+    for _p in perspectives:
+        if _is_wire_copy(_p):
+            print(f"  REJECT world/USA persp [wire-copy]: @{_p.get('handle','?')} "
+                  f"'{(_p.get('text') or '')[:60]}'", file=sys.stderr)
+            continue
+        _v = _p.get('views')
+        try: _v = int(_v) if _v is not None else 0
+        except (ValueError, TypeError): _v = 0
+        if _v < WORLD_PERSP_MIN_VIEWS:
+            print(f"  REJECT world/USA persp [low-velocity {_v}<{WORLD_PERSP_MIN_VIEWS}]: "
+                  f"@{_p.get('handle','?')} '{(_p.get('text') or '')[:50]}'", file=sys.stderr)
+            continue
+        _filtered_perspectives.append(_p)
+    perspectives = _filtered_perspectives
+
     # 2026-05-06: 3-perspective requirement RESTORED. User reversed the May-4 relaxation:
     # "every story needs all three plot points, otherwise it's not a quality worthy story."
     # Stories with fewer than 3 perspectives drop at validation. Floor backfill only pulls
     # from prior 3-perspective stories.
     if len(perspectives) < 3:
+        return None
+
+    # 2026-05-11: STORY-LEVEL velocity floor (sum of all perspective views).
+    # Catches stories like Hantavirus (564+1298+75 = 1937 total — junk) that pass
+    # 3-persp gate but aren't actually viral.
+    _total_views = 0
+    for _p in perspectives:
+        try: _total_views += int(_p.get('views') or 0)
+        except (ValueError, TypeError): pass
+    if _total_views < WORLD_STORY_MIN_TOTAL_VIEWS:
+        print(f"  REJECT world/USA story [total-velocity {_total_views}<{WORLD_STORY_MIN_TOTAL_VIEWS}]: "
+              f"{headline[:60]}", file=sys.stderr)
         return None
 
     footnotes = w.get('footnotes', [])
