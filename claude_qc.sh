@@ -566,6 +566,116 @@ if universal_refill_modified:
     with open('stories.json','w') as f: json.dump(d, f, indent=2)
     print(f"[refill] stories.json updated with overflow refills", file=sys.stderr)
 
+# ---- Check 6b: LIVE GROK REFILL when overflow exhausted (user 2026-05-11) ----
+# "You're looking at five to eight, even if there's a duplicate or maybe five
+# duplicates, then you go back out and you find another story."
+# When overflow ran dry and tab is still < target, hit Grok API for a fresh
+# refill. Excludes URLs + headlines already on the tab.
+xai_key = os.environ.get("XAI_API_KEY","")
+SCOPE_BLURB = {
+    'world':     'international/foreign news event (NOT US domestic)',
+    'usa':       'US national news event (domestic politics, SCOTUS, federal)',
+    'business':  'business/finance/markets story',
+    'top':       'most viral post on X overall',
+    'msm':       'story mainstream media is underreporting',
+    'conspiracy':'alternative-theory or unverified-claim story',
+    'sports':    'sports headline (NBA/NFL/MLB/etc.)',
+    'allin':     'billionaire/VC podcaster take',
+    'pods':      'podcast clip moment',
+    'pg6':       'celebrity gossip / pop culture',
+    'comedy':    'humor clip',
+    'recipe':    'viral recipe',
+    'science':   'science/research finding',
+    'local':     'Orange County / SoCal local story',
+}
+NEEDS_PERSPECTIVES = {'world', 'usa'}
+grok_refill_modified = False
+for tab, target in REFILL_TARGETS.items():
+    stories = d.get(tab, {}).get('stories', []) or []
+    if len(stories) >= target: continue
+    if not xai_key:
+        warnings.append(f"refill {tab}: SHORT {len(stories)}/{target} (XAI_API_KEY missing, can't refill)")
+        continue
+    short_by = target - len(stories)
+    # Build exclusion list: existing URLs + headlines on this tab
+    excl_urls, excl_headlines = [], []
+    for s in stories:
+        if s.get('url'): excl_urls.append(s['url'])
+        for p in s.get('perspectives', []) or []:
+            if isinstance(p, dict) and p.get('url'): excl_urls.append(p['url'])
+        if s.get('headline'): excl_headlines.append(s.get('headline'))
+    scope = SCOPE_BLURB.get(tab, tab)
+    needs_persp = tab in NEEDS_PERSPECTIVES
+    persp_clause = (" Each story must include 3 perspectives: conservative, "
+                    "independent, democrat. Each perspective has url, handle, "
+                    "quote, views.") if needs_persp else (
+                    " Single post per story (url, handle, body, views, "
+                    "engagement, honesty, notes).")
+    grok_prompt = (
+        f"Find {short_by} more {scope}(s) from the last 24 hours. "
+        f"x_search mode:Top, lang:en, since:24h ago, limit:20. "
+        f"Sort by views, highest first. "
+        f"EXCLUDE these URLs (already used): {excl_urls[:10]}. "
+        f"EXCLUDE these topics/headlines (already covered): {excl_headlines}. "
+        f"Different event from each excluded headline.{persp_clause} "
+        f"Reject: bare announcements (BREAKING:/JUST IN:/NEW: prefix with <60 char body), "
+        f"video-with-few-words (<25 char body). "
+        f"Return STRICT JSON: {{\"{tab}\": [...]}} with {short_by} entries. "
+        f"NO PROSE outside the JSON."
+    )
+    body = json.dumps({
+        "model": "grok-4-fast",
+        "messages": [{"role":"user", "content": grok_prompt}],
+        "tools": [{"type":"x_search"}],
+    }).encode()
+    req = urllib.request.Request(
+        "https://api.x.ai/v1/chat/completions",
+        data=body, method="POST",
+        headers={"Authorization": f"Bearer {xai_key}", "Content-Type": "application/json"})
+    try:
+        r = json.loads(urllib.request.urlopen(req, timeout=90).read())
+        msg = r.get('choices',[{}])[0].get('message',{}).get('content','{}').strip()
+        # Strip markdown fences if present
+        import re as _rg
+        msg = _rg.sub(r'^```(?:json)?\s*|\s*```$', '', msg, flags=_rg.MULTILINE).strip()
+        # Extract first JSON object
+        m = _rg.search(r'\{.*\}', msg, _rg.DOTALL)
+        parsed = json.loads(m.group(0)) if m else {}
+        new_stories = parsed.get(tab, []) or []
+    except Exception as e:
+        warnings.append(f"grok-refill {tab}: API error {str(e)[:80]} — accepting {len(stories)}/{target}")
+        print(f"[grok-refill] {tab}: API error {e}", file=sys.stderr)
+        continue
+    added = 0
+    for ns in new_stories[:short_by]:
+        if not isinstance(ns, dict): continue
+        # Basic validate: must have URL with /status/ (or perspectives w/ URLs)
+        if needs_persp:
+            persps = []
+            for k, label in [('conservative','Conservative'),('democrat','Democrat'),('independent','Independent')]:
+                p = ns.get(k) or {}
+                if isinstance(p, dict) and p.get('url') and '/status/' in p.get('url',''):
+                    persps.append({'label': label, 'handle': p.get('handle',''), 'url': p['url'],
+                                   'text': (p.get('quote') or p.get('body') or p.get('text') or '')[:200],
+                                   'views': p.get('views',0), 'honesty': str(p.get('honesty','8/10')),
+                                   'engagement': str(p.get('engagement',''))})
+            if len(persps) < 3: continue
+            new_obj = {'headline': ns.get('headline','?'), 'perspectives': persps,
+                       'honesty': str(ns.get('honesty','8/10')), 'notes': ns.get('notes',''),
+                       'footnotes': [], 'body': '3-perspective coverage.'}
+        else:
+            if not ns.get('url') or '/status/' not in ns.get('url',''): continue
+            new_obj = ns
+        stories.append(new_obj)
+        added += 1
+    if added:
+        d[tab]['stories'] = stories
+        print(f"[grok-refill] {tab}: live Grok call added {added} more story/ies ({len(stories)}/{target})", file=sys.stderr)
+        warnings.append(f"grok-refill {tab}: live Grok added {added} ({len(stories)}/{target})")
+        grok_refill_modified = True
+if grok_refill_modified:
+    with open('stories.json','w') as f: json.dump(d, f, indent=2)
+
 # ---- Check 7: same-headline dedup (last-resort safety net) ----
 # User caught (2026-05-11): deployed World tab had "US-Iran Ceasefire Tensions"
 # TWICE with different URL sets. Cluster dedup ran but didn't catch it because
