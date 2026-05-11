@@ -2027,7 +2027,27 @@ for _tab in ('world', 'usa'):
             print(f"  WARN: {_tab} {len(_picked)}/{_TAB_FLOOR} after all fallbacks — "
                   f"genuinely no more candidates available", file=sys.stderr)
     curation.stamp_view_history(_picked)
-    _output_v5[_tab] = {'stories': _picked, 'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
+    # Overflow: Grok candidates we DIDN'T pick. claude_qc can pull from here when
+    # semantic-dedup creates a gap (user 2026-05-10: "go back to crock and find the
+    # next most popular velocity story"). Capped at 5 to keep stories.json compact.
+    _picked_urls = set()
+    for _s in _picked:
+        if _s.get('url'): _picked_urls.add(_s['url'])
+        for _p in _s.get('perspectives', []) or []:
+            if isinstance(_p, dict) and _p.get('url'): _picked_urls.add(_p['url'])
+    _overflow = []
+    for _c in _candidates:
+        _c_urls = set()
+        if _c.get('url'): _c_urls.add(_c['url'])
+        for _p in _c.get('perspectives', []) or []:
+            if isinstance(_p, dict) and _p.get('url'): _c_urls.add(_p['url'])
+        if _c_urls and not (_c_urls & _picked_urls):
+            _overflow.append(_c)
+    _output_v5[_tab] = {
+        'stories': _picked,
+        'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {})),
+        '_overflow': _overflow[:5],
+    }
 
 # ---- Flat tabs (one post per slot) ----
 # Min-views floor for Local. User mandate (2026-05-10): "Drake's at 3382 views,

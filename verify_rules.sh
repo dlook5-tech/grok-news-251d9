@@ -144,12 +144,18 @@ check "elon:no-promo-filter"            parse_grok.py    "_is_elon_promo|_ELON_P
 check "submit:netlify-form-schema"      index.html       "post-replace.*data-netlify|data-netlify.*post-replace" exists
 check "submit:cron-pulls-from-netlify"  update.sh        "pull_netlify_submissions"                            exists
 check "submit:claude-reviews-fit"       claude_qc.sh     "sub-review|EVALUATABLE_TABS"                         exists
+# 2026-05-10 night: Overflow + cluster dedup for World refill
+check "world:overflow-saved"            parse_grok.py    "_overflow.*=\s*\[\]|_overflow\[:5\]"                  exists
+check "world:overflow-promotion"        claude_qc.sh     "promoted_overflow|_overflow"                          exists
+check "world:cluster-dedup"             claude_qc.sh     "cluster_re|cluster dup"                              exists
+# 2026-05-10 night: Pods fresher search (min_faves lowered, mode:Latest primary)
+check "pods:mode-latest-search"         update.sh        "mode:\s*\"Latest\""                                  exists
 check "freshness:hard-expire-sweep"     parse_grok.py    "_final_hard_expire"                                  exists
 check "freshness:rebuild-age-check"     parse_grok.py    "_rebuild_fresh|REBUILD-SKIP"                         exists
 # 2026-05-10: Local min-views threshold (user: "Drake's at 3382 views, really?")
 check "quality:local-min-views"         parse_grok.py    "LOCAL_MIN_VIEWS\s*=\s*10000"                         exists
 # 2026-05-10: Semantic dedup regex fix — old regex matched inner array only, missing dups.
-check "qc:semantic-dedup-pair-regex"    claude_qc.sh     "pair_re\s*=\s*re\.compile"                           exists
+check "qc:semantic-dedup-cluster"       claude_qc.sh     "cluster_re\s*=\s*re\.compile"                        exists
 # 2026-05-10: Floor list excludes Elon and Local (both user mandates — quality > pad)
 check "floor:elon-not-in-floor-tabs"    claude_qc.sh     "FLOOR_TABS\s*=\s*\([^)]*'elon'"                      missing
 check "floor:local-not-in-floor-tabs"   claude_qc.sh     "FLOOR_TABS\s*=\s*\([^)]*'local'"                     missing

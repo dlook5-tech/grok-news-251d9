@@ -604,17 +604,33 @@ SUGGESTED HANDLES (prefer these — but pick whoever has the most viral podcast 
 
 A clip is a 30-sec to 3-min specific moment that went viral. NOT a full-episode announcement.
 
-PRIMARY SEARCH (broad viral clips from approved shows):
-"(from:joerogan OR from:JREClips OR from:TuckerCarlson OR from:lexfridman OR from:fridmanclips OR from:theallinpod OR from:CallHerDaddy OR from:adamcarolla OR from:PBDPodcast OR from:patrickbetdavid OR from:ShawnRyanShow OR from:MegynKellyShow OR from:LouderWithCrowder OR from:RussellBrand) lang:en since:$YESTERDAY min_faves:300", mode: "Top", limit: 30
+FRESHNESS REQUIREMENT (user mandate 2026-05-10 evening):
+"Are you telling me there's no other podcast posts today?" — when prior crons
+returned 25h+ clips, the user pushed back hard. Search MUST find clips ≤12h
+old as the primary target. Only fall back to 24h if 12h truly empty. NEVER
+return clips ≥24h old — parse_grok will drop them anyway and the tab goes
+empty.
 
-SUPPLEMENT WITH per-show searches, prefer high-engagement:
-"from:JREClips OR from:joerogan since:$YESTERDAY min_faves:500"
-"from:fridmanclips OR from:lexfridman since:$YESTERDAY min_faves:300"
-"from:theallinpod since:$YESTERDAY min_faves:300"
-"from:TuckerCarlson OR from:RussellBrand OR from:MegynKellyShow since:$YESTERDAY min_faves:500"
-"from:PBDPodcast OR from:patrickbetdavid since:$YESTERDAY min_faves:300"
-"from:ShawnRyanShow since:$YESTERDAY min_faves:300"
-"from:LouderWithCrowder OR from:adamcarolla OR from:CallHerDaddy since:$YESTERDAY min_faves:300"
+PRIMARY SEARCH (mode:Latest first — fresh clips that haven't accumulated likes yet):
+"(from:joerogan OR from:joeroganhq OR from:JREClips OR from:TuckerCarlson OR from:lexfridman OR from:fridmanclips OR from:theallinpod OR from:CallHerDaddy OR from:adamcarolla OR from:PBDPodcast OR from:patrickbetdavid OR from:ShawnRyanShow OR from:MegynKellyShow OR from:LouderWithCrowder OR from:RussellBrand) lang:en", mode: "Latest", limit: 50
+
+SECONDARY (mode:Top for accumulated engagement on 12-24h-old clips):
+"(from:joerogan OR from:joeroganhq OR from:JREClips OR from:TuckerCarlson OR from:lexfridman OR from:fridmanclips OR from:theallinpod OR from:CallHerDaddy OR from:adamcarolla OR from:PBDPodcast OR from:patrickbetdavid OR from:ShawnRyanShow OR from:MegynKellyShow OR from:LouderWithCrowder OR from:RussellBrand) lang:en since:$YESTERDAY min_faves:100", mode: "Top", limit: 30
+
+LOWERED min_faves to 100 (was 300-500): high thresholds biased toward older
+accumulated-engagement posts and missed fresh clips. Lower bar lets recent
+viral content through. The dedup + Python-side curation handles quality.
+
+SUPPLEMENT — per-show fresh search:
+"from:JREClips OR from:joerogan OR from:joeroganhq", mode: "Latest", limit: 15
+"from:theallinpod", mode: "Latest", limit: 15
+"from:TuckerCarlson", mode: "Latest", limit: 15
+"from:PBDPodcast OR from:patrickbetdavid", mode: "Latest", limit: 15
+"from:fridmanclips OR from:lexfridman", mode: "Latest", limit: 15
+"from:ShawnRyanShow OR from:MegynKellyShow OR from:RussellBrand OR from:adamcarolla OR from:LouderWithCrowder OR from:CallHerDaddy", mode: "Latest", limit: 25
+
+CRITICAL: prefer ANY fresh clip (≤12h) over older ones (12-24h). A 5h-old
+clip with 50 likes BEATS a 23h-old clip with 5000 likes.
 
 FILTERING: REJECT "new episode", "full interview", "full episode", "out now", "tune in", "dropping soon". KEEP specific-moment headlines — someone saying something shocking, a host reaction, a heated exchange, a reveal.
 

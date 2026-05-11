@@ -38,40 +38,56 @@ for tab in ('world','usa'):
     stories = d.get(tab,{}).get('stories',[])
     if len(stories) < 2: continue
     headlines = [(i, s.get('headline','')) for i,s in enumerate(stories)]
+    # Ask Claude to CLUSTER stories by event, not just identify pairs. Pair-only
+    # output missed 3-way dups (e.g. Iran×3 framings — Claude returned [[1,4]]
+    # and missed that #2 and #3 were also same-event). Cluster output keeps the
+    # FIRST story of each cluster (highest velocity, since stories are ranked),
+    # drops the rest.
     prompt = (
-        "These are headlines from a news site's " + tab.upper() + " tab. "
-        "Identify any pair that describes the SAME news event (even if worded differently). "
-        "Examples of same-event pairs: 'US-Iran Ceasefire Negotiations' and 'Iran Responds to US Peace Proposal'. "
-        "Different events: 'US-Iran ceasefire' and 'Israeli strikes in Lebanon'. "
-        "Return STRICTLY a JSON array of pairs to drop, e.g. [[1,3]] means drop story #3 because it dupes #1. "
-        "Empty [] if none. Only the JSON, no prose.\n\n"
+        "Headlines from " + tab.upper() + " tab on a news site. "
+        "GROUP them into clusters by underlying news event. "
+        "Two headlines are the SAME event if they describe the same incident, even with different framing or wording. "
+        "Examples that ARE same event:\n"
+        "  - 'US-Iran Ceasefire Negotiations' + 'Trump Rejects Iran Response' + 'US Rejects Iran Counterproposal' "
+        "→ ALL THREE are 'US-Iran ceasefire negotiations' (single event/news cycle).\n"
+        "  - 'Israel Strikes Hezbollah' + 'IDF Lebanon Operation' → same event.\n"
+        "Different events: 'US-Iran ceasefire' + 'Israeli strikes in Lebanon' (separate events).\n\n"
+        "Return STRICT JSON array of clusters. Each cluster is an array of 1-based story numbers that are the same event.\n"
+        "  Example: [[1], [2,3,4]] means story #1 is its own event, stories #2,#3,#4 are all the same event.\n"
+        "  EVERY story must appear in exactly one cluster. Singletons get their own cluster.\n"
+        "Only the JSON array, no prose.\n\n"
         + "\n".join(f"#{i+1}: {h}" for i,h in headlines)
     )
-    # Use a current Claude model. Try sonnet-4-5 first (good cost/quality for this), fall back if model changes.
-    body = json.dumps({"model":"claude-sonnet-4-5","max_tokens":200,
+    body = json.dumps({"model":"claude-sonnet-4-5","max_tokens":300,
                        "messages":[{"role":"user","content":prompt}]}).encode()
     req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body, method="POST",
         headers={"x-api-key": key, "anthropic-version":"2023-06-01", "content-type":"application/json"})
     try:
         r = json.loads(urllib.request.urlopen(req, timeout=20).read())
         text = r.get("content",[{}])[0].get("text","[]").strip()
-        # Extract JSON array of pairs. Previous regex r'\[[^\]]*\]' was buggy:
-        # for input "[[1,3],[2,4]]" it matched only "[1,3]" (the inner array),
-        # so pairs became [1,3] and isinstance(1,list) failed silently — no
-        # dedup ever happened. Fix: pull ALL "[a,b]" inner pairs explicitly.
-        # 2026-05-10: World tab was showing 3 Iran-ceasefire dups despite this code.
         import re
-        pair_re = re.compile(r'\[\s*(\d+)\s*,\s*(\d+)\s*\]')
-        pairs = [[int(a), int(b)] for a, b in pair_re.findall(text)]
+        # Parse cluster output: a list of lists of numbers, e.g. "[[1],[2,3,4]]"
+        # findall any inner list of integers
+        cluster_re = re.compile(r'\[(\s*\d+(?:\s*,\s*\d+)*\s*)\]')
+        clusters = []
+        for m in cluster_re.finditer(text):
+            nums = [int(x.strip()) for x in m.group(1).split(',') if x.strip()]
+            if nums: clusters.append(nums)
     except Exception as e:
         print(f"[semantic-dedup] {tab}: API error {e} — skipping", file=sys.stderr)
         continue
-    if not pairs: continue
-    # Drop the higher-index (later) story in each pair (lower-velocity by ranking position)
-    drop_idxs = sorted({pair[1]-1 for pair in pairs if isinstance(pair,list) and len(pair)==2}, reverse=True)
-    for idx in drop_idxs:
+    if not clusters: continue
+    # For each multi-story cluster, KEEP the lowest-numbered story (best by ranking)
+    # and DROP the rest. Singletons untouched.
+    drop_idxs = set()
+    for cluster in clusters:
+        if len(cluster) <= 1: continue
+        keep = min(cluster)  # lowest index = highest-ranked
+        for n in cluster:
+            if n != keep: drop_idxs.add(n - 1)  # convert 1-based to 0-based
+    for idx in sorted(drop_idxs, reverse=True):
         if 0 <= idx < len(stories):
-            print(f"[semantic-dedup] {tab}: drop '{stories[idx].get('headline','')[:50]}' (semantic dup)", file=sys.stderr)
+            print(f"[semantic-dedup] {tab}: drop '{stories[idx].get('headline','')[:50]}' (cluster dup)", file=sys.stderr)
             stories.pop(idx)
             modified = True
     d[tab]['stories'] = stories
@@ -171,21 +187,45 @@ floor_modified = False
 for tab in FLOOR_TABS:
     stories = d.get(tab, {}).get('stories', [])
     earlier = d.get(tab, {}).get('earlier', [])
+    overflow = d.get(tab, {}).get('_overflow', [])
     n = len(stories)
     if n < 3:
-        # Try to promote from earlier (skip ones already in stories by URL)
         seen_urls = {s.get('url') for s in stories if s.get('url')}
-        promoted = 0
+        # Helper: get all URLs in a story (story.url + perspective URLs)
+        def _all_urls(s):
+            us = set()
+            if s.get('url'): us.add(s['url'])
+            for p in s.get('perspectives', []) or []:
+                if isinstance(p, dict) and p.get('url'): us.add(p['url'])
+            return us
+        for s in stories:
+            seen_urls |= _all_urls(s)
+        promoted_overflow = 0
+        promoted_earlier = 0
+        # PRIORITY 1: overflow (this cron's unused Grok candidates — user mandate
+        # 2026-05-10: "go back to crock and find the next most popular velocity story")
+        for o in overflow:
+            if len(stories) >= 3: break
+            if _all_urls(o) & seen_urls: continue
+            stories.append(o)
+            seen_urls |= _all_urls(o)
+            promoted_overflow += 1
+        # PRIORITY 2: earlier (prior cron's picks)
         for e in earlier:
             if len(stories) >= 3: break
-            if e.get('url') in seen_urls: continue
+            if _all_urls(e) & seen_urls: continue
             stories.append(e)
-            seen_urls.add(e.get('url'))
-            promoted += 1
-        if promoted:
+            seen_urls |= _all_urls(e)
+            promoted_earlier += 1
+        if promoted_overflow or promoted_earlier:
             d[tab]['stories'] = stories
-            d[tab]['earlier'] = [e for e in earlier if e.get('url') not in seen_urls or e in stories[:-promoted]]
-            warnings.append(f"{tab}: promoted {promoted} from earlier to meet 3-floor (was {n}/3)")
+            d[tab]['earlier'] = [e for e in earlier if not (_all_urls(e) & seen_urls)]
+            d[tab]['_overflow'] = [o for o in overflow if not (_all_urls(o) & seen_urls)]
+            msg = f"{tab}: promoted"
+            if promoted_overflow: msg += f" {promoted_overflow}-from-overflow"
+            if promoted_earlier: msg += f" {promoted_earlier}-from-earlier"
+            msg += f" to meet 3-floor (was {n}/3)"
+            warnings.append(msg)
             floor_modified = True
         # POST-PROMOTE: still under floor → tier the response
         # 0 stories: HARD BLOCK (truly empty = real systemic issue)
