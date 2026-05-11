@@ -35,11 +35,14 @@ TAB_AGE_OVERRIDE = {
     'freespeech': 8760,
 }
 TAB_HARD_CAP = {
-    # HARD cap — anything past this gets dropped, no fallback. 2026-05-11: hard cap
-    # for news tabs == soft cap (no "extend to 24h" fallback). If Grok returns nothing
-    # in 4h, tab shows fewer stories. Per user "1-3 stories based on quality, never pad."
-    'world': 4, 'usa': 4, 'business': 4, 'top': 4, 'msm': 4,
-    'conspiracy': 4, 'local': 4,
+    # HARD cap — anything past this gets dropped by _final_hard_expire.
+    # 2026-05-11 UPDATED for hold rule: fresh candidates are still 4h-capped via
+    # TAB_AGE_OVERRIDE, but HELD stories (from prior cron) can survive up to 24h
+    # if their saved combined-score (X+Y) hasn't been beaten by a fresh candidate.
+    # Per user: "four hours later, the next story must overcome the combined X
+    # plus Y score to make it to a block." 24h is the outer "news cycle" bound.
+    'world': 24, 'usa': 24, 'business': 24, 'top': 24, 'msm': 24,
+    'conspiracy': 24, 'local': 24,
     # Reference + personality tabs keep their existing hard caps
     'elon': 24,        # 12h soft → 24h fallback when his prolific period ends
     'pods': 24,
@@ -2012,8 +2015,12 @@ for _tab in ('world', 'usa'):
         if _cleaned and _belongs_on_tab(_tab, _cleaned):
             _candidates.append(_cleaned)
     _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 4)
-    # Rank by views in 4h window, take top 3.
-    _picked = curation.curate(_tab, [], _candidates,
+    # HOLD RULE (user mandate 2026-05-11): "four hours later, the next story
+    # must overcome the combined X plus Y score to make it to a block." Pass
+    # last cron's picks as `current` — they hold their slot until a fresh
+    # candidate's score beats their saved combined-views score.
+    _held = _existing.get(_tab, {}).get('stories', []) or []
+    _picked = curation.curate(_tab, _held, _candidates,
                               top_n=_TAB_N[_tab], enrich=False, history=_history,
                               max_age_h=_wu_age_cap)
     curation.stamp_view_history(_picked)
@@ -2072,9 +2079,12 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
 
     if _tab in _NEWS_TABS_NO_PAD:
         # News tabs (Business, Top, MSM, Conspiracy, Local) — user mandate:
-        # top by velocity in 4h window. No backfill, no snapshot resurrection.
-        # If <3 candidates exist in 4h, show fewer.
-        _picked = curation.curate(_tab, [], _candidates,
+        # top by velocity in 4h window. HOLD RULE: held stories from last cron
+        # keep their slot until a fresh candidate's combined score beats them.
+        _held = _existing.get(_tab, {}).get('stories', []) or []
+        if _tab == 'local':
+            _held = _local_quality_filter(_held)
+        _picked = curation.curate(_tab, _held, _candidates,
                                   top_n=_TAB_N.get(_tab, 3), enrich=True, history=_history,
                                   max_age_h=_backfill_age)
         curation.stamp_view_history(_picked)
