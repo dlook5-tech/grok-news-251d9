@@ -1526,10 +1526,12 @@ def _is_wire_copy(persp):
 # 2026-05-11 user mandate: "Make sure, whichever post you choose, they don't
 # have the telltale signs of an announcement or breaking news or just posting
 # a video with a few words. That's not interesting."
-# → Drop perspectives where text body (excluding URLs/mentions/hashtags) is
-#   too short to be substantive analysis. Anything under 50 chars of actual
-#   prose is "few words" — likely video-with-caption or bare announcement.
-_MIN_PROSE_CHARS = 50
+# → Drop perspectives that look like raw video captions: ≤4 words AND
+#   <25 chars of prose. ("Watch this 🔥", "Look at her", "WOW.")
+#   Previous 50-char threshold was over-rejecting legit headlines (rejected
+#   "Trump backs federal gas tax suspension" — 8 words, substantive).
+_MIN_PROSE_WORDS = 5      # if fewer than 5 words, suspect video caption
+_MIN_PROSE_CHARS = 25     # AND under 25 chars of real prose
 
 def _strip_for_prose(text):
     """Remove URLs, @mentions, hashtags, leading emoji — what remains is prose."""
@@ -1541,10 +1543,12 @@ def _strip_for_prose(text):
 
 def _is_few_words(persp):
     """True if perspective is a 'video with a few words' / bare-caption post.
-    Heuristic: text body has <50 chars of prose after stripping URLs/mentions/emoji."""
+    Requires BOTH: fewer than 5 words AND under 25 chars of prose. Substantive
+    one-sentence posts pass; bare captions don't."""
     text = persp.get('text') or persp.get('quote') or persp.get('body') or ''
     prose = _strip_for_prose(text)
-    return len(prose) < _MIN_PROSE_CHARS
+    word_count = len(prose.split())
+    return word_count < _MIN_PROSE_WORDS and len(prose) < _MIN_PROSE_CHARS
 
 def clean_world(w):
     """Validate a World/USA story (3-perspective shape). PURE VIEWS spec — only data
