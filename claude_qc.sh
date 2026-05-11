@@ -102,17 +102,20 @@ def url_age_h(url):
     ts_ms = (sid >> 22) + 1288834974657
     return (datetime.datetime.now() - datetime.datetime.fromtimestamp(ts_ms/1000)).total_seconds()/3600
 
-# Cap per tab — keep in sync with TAB_AGE_OVERRIDE in parse_grok.py
+# HARD cap per tab — keep in sync with TAB_HARD_CAP in parse_grok.py.
+# This is the ABSOLUTE max; soft caps (24h preferred) live in parse_grok.py and
+# drive ranking, not blocking. QC only rejects past the hard cap.
 QC_TAB_CAP = {
-    'elon': 12, 'recipe': 24, 'science': 24, 'comedy': 24,
-    'allin': 24, 'pods': 24, 'pg6': 24, 'local': 72,
-    'conspiracy': 24,
-    # default for other tabs: 24h (news standard)
+    'elon': 12,        # USER-MANDATED HARD CAP — equal to soft. Zero exception.
+    'recipe': 48, 'science': 48, 'comedy': 48,
+    'allin': 48, 'pods': 48, 'pg6': 48, 'conspiracy': 48,
+    'local': 72,       # OC content sparse, wider fallback OK
+    # default for unlisted tabs (world/usa/business/sports/top/msm): 48h
 }
 qc_modified = False
 for tk, tv in d.items():
     if not isinstance(tv, dict): continue
-    cap = QC_TAB_CAP.get(tk, 24)
+    cap = QC_TAB_CAP.get(tk, 48)
     for bucket in ('stories', 'earlier'):
         kept = []
         for s in tv.get(bucket, []):

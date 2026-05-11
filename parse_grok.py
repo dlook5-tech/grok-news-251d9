@@ -12,26 +12,43 @@ import curation  # NEW (2026-05-04): pure-views selection lives here. See curati
 # Velocity exemption (see _likes_per_hour below) keeps still-hot older stories.
 # SAS/Cowherd exemption keeps Sports filled even when fresh content is sparse.
 MAX_AGE_HOURS = 24  # 24h news cap per CLAUDE.md
-# SINGLE SOURCE OF TRUTH for per-tab max age. User mandate (2026-05-10):
-# "Commit them to Python so we don't have to keep whack-a-mole-ing every other day."
-# Previously two tables existed (TAB_AGE_OVERRIDE + _BACKFILL_AGE_BY_TAB) and they
-# disagreed (elon=96 vs elon=12), causing 25h-old Elon posts to leak. Now ONE table,
-# enforced by a final hard sweep before output (see hard_expire_by_tab_cap below).
+# TWO-TIER age caps. User mandate (2026-05-10): "Commit them to Python so we don't
+# have to keep whack-a-mole-ing every other day."
+#   - TAB_AGE_OVERRIDE = SOFT cap (preferred max). Cascade Pass 1 uses this.
+#   - TAB_HARD_CAP = ABSOLUTE max (cascade Pass 2 + final sweep). Nothing past this
+#     ever appears in output.
+# Why two tiers: user wants "fresh ≤24h preferred" AND "always 3 stories per tab".
+# Single-tier hit a Catch-22 (run #52: dropped enough that pods went 0/3, deploy
+# blocked). Two-tier resolves it: prefer fresh, fall back to slightly older to hold
+# the floor, but never go full-stale.
 TAB_AGE_OVERRIDE = {
-    # Reference tabs — prefer fresh; cascade in code may extend if floor unmet
+    # SOFT cap — what cascade Pass 1 / curate() targets
     'recipe': 24,      # User: no 2-day-old recipes
     'science': 24,     # User: no 2-day-old research
     'comedy': 24,      # User: no 2-day-old comedy clips
-    'local': 72,       # OC content sparse, ref-tab cap stays at 72
-    # Personality / podcast tabs
+    'local': 24,       # prefer fresh; hard cap below allows 72h fallback
     'elon': 12,        # User mandate (2026-05-10): 12h hard cap, no exceptions
-    'allin': 24,       # tightened from 72 — fresh takes only
-    'pods': 24,        # tightened from 96
-    'pg6': 24,         # tightened from 72
-    # Special
+    'allin': 24,
+    'pods': 24,
+    'pg6': 24,
     'conspiracy': 24,
     'freespeech': 8760, # user-curated, indefinite (1 year)
 }
+TAB_HARD_CAP = {
+    # HARD cap — anything past this gets dropped by _final_hard_expire(), no fallback
+    'elon': 12,        # USER-MANDATED HARD CAP — equal to soft cap. No exceptions.
+    'recipe': 48,      # accept up to 2d if floor demands it (was 336h evergreen — too loose)
+    'science': 48,
+    'comedy': 48,
+    'local': 72,       # OC content sparse — needs the wider fallback
+    'allin': 48,
+    'pods': 48,
+    'pg6': 48,
+    'conspiracy': 48,
+    'freespeech': 8760,
+    # default for unlisted tabs (world/usa/business/sports/top/msm): 48h hard
+}
+DEFAULT_HARD_CAP_H = 48
 
 # ---- Handle → real-name display map (CLAUDE.md: "Headlines must use REAL NAMES, not handles") ----
 # Used by humanize_headline() to substitute @handles with display names.
@@ -2005,19 +2022,30 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
     # Topic-diversity dedup: drops same-author-twice + same-headline (the @ocregister
     # Laguna Beach Forest Avenue trees 2d/5d duplicate problem).
     _picked = _enforce_topic_diversity(_picked, label=_tab)
-    # Floor enforcement (CLAUDE.md: never empty). Three-pass backfill, ALL respecting
-    # the per-tab cap. 2026-05-10: user explicit — no more loose fallbacks above cap.
-    # If floor unmet at the cap, claude_qc auto-promotes from `earlier` (which is also
-    # cap-enforced). Better to show <3 than 25h-old Elon.
+    # Floor enforcement (CLAUDE.md: never empty). Two-tier cascade:
+    #   Pass 1: SOFT cap (TAB_AGE_OVERRIDE) — the preferred fresh window
+    #   Pass 2: HARD cap (TAB_HARD_CAP) — fallback up to absolute max, ONLY if floor unmet
+    # Elon's hard cap == soft cap (12h), so Pass 2 doesn't loosen Elon. Other tabs
+    # extend to 48h (72h for local) as a last resort to hold the floor.
     _backfill_pool = _current + (_existing.get(_tab, {}).get('earlier', []) or [])
+    _hard_cap = TAB_HARD_CAP.get(_tab, DEFAULT_HARD_CAP_H)
     if len(_picked) < _TAB_FLOOR:
         _picked = _topup_to_floor(_picked, _backfill_pool,
                                   top_n=_TAB_FLOOR, max_age_h=_backfill_age)
         _picked = _enforce_topic_diversity(_picked, label=_tab)
-    # Pass 2 — same cap, look at deep snapshots (NOT looser 72h).
+    # Pass 2 — extend up to hard cap (only triggers when soft pass left a gap)
+    if len(_picked) < _TAB_FLOOR and _hard_cap > _backfill_age:
+        _picked = _topup_to_floor(_picked, _backfill_pool,
+                                  top_n=_TAB_FLOOR, max_age_h=_hard_cap)
+        _picked = _enforce_topic_diversity(_picked, label=_tab)
+    # Pass 3 — deep snapshot scan at hard cap (last resort)
     if len(_picked) < _TAB_FLOOR:
-        print(f"  WARN {_tab}: only {len(_picked)}/{_TAB_FLOOR} after 2-pass backfill at {_backfill_age}h cap — claude_qc will auto-promote from earlier",
-              file=sys.stderr)
+        _picked = _topup_to_floor(_picked, _scan_snapshots_for_tab(_tab),
+                                  top_n=_TAB_FLOOR, max_age_h=_hard_cap)
+        _picked = _enforce_topic_diversity(_picked, label=_tab)
+        if len(_picked) < _TAB_FLOOR:
+            print(f"  WARN {_tab}: {len(_picked)}/{_TAB_FLOOR} after 3-pass backfill ({_backfill_age}h soft → {_hard_cap}h hard) — claude_qc will auto-promote from earlier",
+                  file=sys.stderr)
     curation.stamp_view_history(_picked)
     _output_v5[_tab] = {'stories': _picked, 'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
 
@@ -2121,10 +2149,13 @@ save_seen_history(SEEN_HISTORY)
 # upstream path leaks a stale story (rebuild, snapshot, manual edit), it gets dropped
 # here. ANY URL in stories[] or earlier[] older than the tab's cap is removed.
 def _final_hard_expire(output_dict):
+    # Uses TAB_HARD_CAP (absolute max). Anything past hard cap is dropped — but
+    # the soft cap (TAB_AGE_OVERRIDE) is what cascade prefers. So normal content
+    # stays in the soft window; only true outliers get swept here.
     swept = 0
     for tk, tv in output_dict.items():
         if not isinstance(tv, dict): continue
-        cap = TAB_AGE_OVERRIDE.get(tk, MAX_AGE_HOURS)
+        cap = TAB_HARD_CAP.get(tk, DEFAULT_HARD_CAP_H)
         for bucket in ('stories', 'earlier'):
             kept = []
             for s in tv.get(bucket, []):
@@ -2133,14 +2164,15 @@ def _final_hard_expire(output_dict):
                     urls = [p.get('url','') for p in s.get('perspectives', []) if isinstance(p, dict)]
                 else:
                     urls = [s.get('url','')]
-                too_old = False
+                too_old = False; max_age = 0
                 for u in urls:
                     a = url_age_hours(u) if u else None
+                    if a is not None and a > max_age: max_age = a
                     if a is not None and a > cap:
-                        too_old = True; break
+                        too_old = True
                 if too_old:
                     swept += 1
-                    print(f"  HARD-EXPIRE {tk}.{bucket}: {a:.1f}h>{cap}h cap — {s.get('headline','')[:50]}", file=sys.stderr)
+                    print(f"  HARD-EXPIRE {tk}.{bucket}: {max_age:.1f}h>{cap}h hard cap — {s.get('headline','')[:50]}", file=sys.stderr)
                 else:
                     kept.append(s)
             tv[bucket] = kept
