@@ -384,25 +384,12 @@ function setupSwipe() {
     var curIdx = -1;
     for (var i = 0; i < TABS.length; i++) { if (TABS[i].id === activeTab) { curIdx = i; break; } }
     if (curIdx < 0) return;
-    // Horizontal swipe: >= 60px, mostly horizontal (2:1), under 600ms
+    // Horizontal swipe ONLY: >= 60px, mostly horizontal (2:1), under 600ms.
+    // (2026-05-11) Vertical swipe-to-change-tabs removed per user — its "near
+    // top/bottom edge" logic was interfering with normal iOS scroll. Vertical
+    // motion is now pure native browser scroll, no gestures intercepted.
     if (Math.abs(dx) >= 60 && Math.abs(dx) >= Math.abs(dy) * 2 && dt < 600) {
       nextIdx = dx < 0 ? curIdx + 1 : curIdx - 1;  // left = next, right = prev
-    }
-    // Vertical swipe — uses industry-standard velocity + distance (TikTok / Instagram / Apple HIG ballpark):
-    //   Trigger if: distance >= 80px AND velocity >= 0.3 px/ms (fast flick), OR distance >= 180px (slow committed drag)
-    //   PLUS: must be near top/bottom edge of page (within 80px) so it doesn't fire during mid-page scrolling
-    else if (Math.abs(dy) >= Math.abs(dx) * 2) {
-      var velocity = dt > 0 ? Math.abs(dy) / dt : 0;
-      var isFlick = Math.abs(dy) >= 80 && velocity >= 0.3;
-      var isSlowDrag = Math.abs(dy) >= 180;
-      if (isFlick || isSlowDrag) {
-        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        var scrollH = document.documentElement.scrollHeight;
-        var nearTop = scrollTop <= 80;
-        var nearBottom = (window.innerHeight + scrollTop) >= (scrollH - 80);
-        if (dy < 0 && nearBottom) nextIdx = curIdx + 1;       // swipe up at bottom → next tab
-        else if (dy > 0 && nearTop) nextIdx = curIdx - 1;     // swipe down at top → previous tab
-      }
     }
     if (nextIdx === null || nextIdx < 0 || nextIdx >= TABS.length) return;
     activeTab = TABS[nextIdx].id;
