@@ -16,7 +16,7 @@
             "views": 134431,
             "notes": "Original (factual report of Trump's statement) = 9/10. QT (speculative opinion on potential actions) = 7/10. Combined = 8/10 \u2014 accurate core with partisan prediction.",
             "views_at_save": 134431,
-            "age_at_save_hours": 2.7
+            "age_at_save_hours": 2.8
           },
           {
             "label": "Democrat",
@@ -28,7 +28,7 @@
             "views": 132938,
             "notes": "Original factual = 9/10. QT opinionated criticism = 5/10 (partisan without evidence). Combined = 7/10 \u2014 facts solid, commentary subjective.",
             "views_at_save": 132938,
-            "age_at_save_hours": 2.51
+            "age_at_save_hours": 2.61
           },
           {
             "label": "Independent",
@@ -40,7 +40,7 @@
             "views": 103497,
             "notes": "Direct quote of official statement \u2014 verifiable fact.",
             "views_at_save": 103497,
-            "age_at_save_hours": 0.75
+            "age_at_save_hours": 0.84
           }
         ],
         "footnotes": [],
@@ -48,7 +48,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/11/2026 7:34 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 2.7
+        "age_at_save_hours": 2.8
       }
     ],
     "earlier": [],
@@ -70,7 +70,7 @@
             "views": 9537,
             "notes": "Reports Trump's statement accurately but frames it positively as relief from war-related prices",
             "views_at_save": 9537,
-            "age_at_save_hours": 3.51
+            "age_at_save_hours": 3.65
           },
           {
             "label": "Democrat",
@@ -82,7 +82,7 @@
             "views": 12996,
             "notes": "Factual reporting with neutral tone, notes impact on popularity",
             "views_at_save": 12996,
-            "age_at_save_hours": 0.95
+            "age_at_save_hours": 1.09
           },
           {
             "label": "Independent",
@@ -94,7 +94,7 @@
             "views": 35822,
             "notes": "Straightforward verifiable fact from AP wire",
             "views_at_save": 35822,
-            "age_at_save_hours": 1.49
+            "age_at_save_hours": 1.63
           }
         ],
         "footnotes": [],
@@ -157,6 +157,20 @@
   },
   "elon": {
     "stories": [
+      {
+        "headline": "Agreement on Selective Outrage",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2053893462622171438",
+        "body": "Elon agrees with critique of selective outrage over symbolic gestures depending on who's involved.",
+        "engagement": "35K likes, 3.6K reposts, 1.7K replies",
+        "honesty": "7/10",
+        "notes": "Endorsement of a political observation on hypocrisy.",
+        "posted": "2026-05-11T19:40:07Z",
+        "post_ts": "2026-05-11T17:42:15Z",
+        "views": 14714899,
+        "views_at_save": 14714899,
+        "age_at_save_hours": 1.96
+      },
       {
         "headline": "Recommending Suicidal Empathy",
         "handle": "@elonmusk",
@@ -288,7 +302,7 @@
   "sports": {
     "stories": [
       {
-        "headline": "Bucks Open to Trading Giannis Antetokounmpo",
+        "headline": "Bucks Entertaining Trade Offers for Giannis Antetokounmpo",
         "handle": "@ShamsCharania",
         "url": "https://x.com/ShamsCharania/status/2053876566615044190",
         "body": "Milwaukee Bucks are fielding trade offers for two-time MVP Giannis ahead of NBA combine and draft.",
@@ -532,7 +546,37 @@
         "post_ts": "2026-05-10T15:22:23Z",
         "views": 396302,
         "views_at_save": 396302,
-        "age_at_save_hours": 24.56
+        "age_at_save_hours": 28.3
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "pmarca on AI Knowledge Gap",
+        "handle": "@pmarca",
+        "url": "https://x.com/pmarca/status/2053391608457089163",
+        "body": "The dispersion of AI knowledge is unprecedented, with labs months ahead of SV, which leads NY and the world; people need to catch up.",
+        "engagement": "789 likes, 37 retweets, 79 replies",
+        "honesty": "7/10",
+        "notes": "Opinion/prediction on tech adoption gaps.",
+        "posted": "2026-05-10T15:49:46Z",
+        "post_ts": "2026-05-10T08:28:04Z",
+        "views": 140702,
+        "views_at_save": 140702,
+        "age_at_save_hours": 35.06
+      },
+      {
+        "headline": "Autonomous Trucks Beat Climate Job Worries",
+        "handle": "@PalmerLuckey",
+        "url": "https://x.com/PalmerLuckey/status/2053579523434983464",
+        "body": "Climate advocates should back autonomous logistics for massive emission cuts, far outweighing trucker job losses.",
+        "engagement": "3.4K likes, 120 retweets, 100 replies",
+        "honesty": "7/10",
+        "notes": "Contrarian opinion tying autonomy to environmental gains.",
+        "posted": "2026-05-11T16:15:00Z",
+        "post_ts": "2026-05-10T20:54:46Z",
+        "views": 234653,
+        "views_at_save": 234653,
+        "age_at_save_hours": 19.34
       },
       {
         "headline": "Marc Andreessen dubs wealth redistribution demands 'suicidal empathy'",
@@ -598,14 +642,14 @@
         "age_at_save_hours": 2.28
       },
       {
-        "headline": "Mel Chancey Explains Surrendering to God",
+        "headline": "Surrendering to God Explained",
         "handle": "@ShawnRyanShow",
         "url": "https://x.com/ShawnRyanShow/status/2053871503553474818",
-        "body": "Mel Chancey describes what it truly means to surrender to God in a personal testimony from his life.",
-        "engagement": "128 likes, 5 reposts, 5 replies",
-        "honesty": "9/10",
-        "notes": "Fact-based personal religious insight.",
-        "posted": "2026-05-11T19:08:05Z",
+        "body": "Mel Chancey describes what true surrender to God means in a personal spiritual context.",
+        "engagement": "130 likes, 5 reposts, 5 replies",
+        "honesty": "7/10",
+        "notes": "Personal religious opinion, no demonstrable falsehoods.",
+        "posted": "2026-05-11T19:40:08Z",
         "post_ts": "2026-05-11T16:15:00Z",
         "views": 5904,
         "views_at_save": 5904,
@@ -891,8 +935,7 @@
         "views_at_save": 421973,
         "age_at_save_hours": 1.11
       }
-    ],
-    "_overflow": []
+    ]
   },
   "msm": {
     "stories": [
@@ -987,14 +1030,14 @@
         "age_at_save_hours": 1.72
       },
       {
-        "headline": "Kroy Biermann Flirts with Kim Zolciak's Boyfriend's Ex-Wife",
+        "headline": "Kroy Biermann flirts with Kim Zolciak's boyfriend's ex",
         "handle": "@TMZ",
         "url": "https://x.com/TMZ/status/2053871619173417287",
-        "body": "Exclusive video captures Kim Zolciak's ex-husband Kroy Biermann getting close with the ex-wife of Kim's current boyfriend.",
-        "engagement": "763 likes, 43 retweets, 91 replies",
-        "honesty": "9/10",
-        "notes": "Fact-based exclusive video report from TMZ.",
-        "posted": "2026-05-11T19:31:47Z",
+        "body": "Exclusive: Kim Zolciak's ex Kroy was spotted getting close with the ex-wife of her boyfriend.",
+        "engagement": "789 likes, 43 retweets, 95 replies",
+        "honesty": "8/10",
+        "notes": "Reported celebrity drama with video evidence, factual sighting.",
+        "posted": "2026-05-11T19:40:10Z",
         "post_ts": "2026-05-11T16:15:27Z",
         "views": 457004,
         "views_at_save": 457004,
@@ -1590,6 +1633,20 @@
   "comedy": {
     "stories": [
       {
+        "headline": "Tony Hinchcliffe roasts Sheryl Underwood at Kevin Hart event",
+        "handle": "@FearedBuck",
+        "url": "https://x.com/FearedBuck/status/2053652763196698959",
+        "body": "Hinchcliffe quips on Sheryl's husband's suicide lasting longer than expected in brutal roast.",
+        "engagement": "31K likes, 635 reposts",
+        "honesty": "9/10",
+        "notes": "Verified clip from roast with added emoji for humor.",
+        "posted": "2026-05-11T19:40:14Z",
+        "post_ts": "2026-05-11T01:45:48Z",
+        "views": 5418313,
+        "views_at_save": 5418313,
+        "age_at_save_hours": 17.91
+      },
+      {
         "headline": "Handler Incinerates MAGA Comedian Hinchcliffe",
         "handle": "@OccupyDemocrats",
         "url": "https://x.com/OccupyDemocrats/status/2053868018917372127",
@@ -1773,8 +1830,7 @@
         "views_at_save": 47,
         "age_at_save_hours": 18.93
       }
-    ],
-    "_overflow": []
+    ]
   },
   "freespeech": {
     "stories": [
