@@ -171,7 +171,8 @@ check "qc:final-claude-review"          claude_qc.sh     "final-review|Final QC 
 # 2026-05-11 (reversed): user dropped the hold rule, "too confusing, too much
 # code. Just find the three most popular stories." Each cron picks fresh top 3
 # in the last 4h. MAX_HOLD_HOURS = 4 (matches the window).
-check "quality:no-cross-cron-hold"      curation.py      "MAX_HOLD_HOURS\s*=\s*4"                              exists
+check "quality:hold-23h-ceiling"        curation.py      "MAX_HOLD_HOURS\s*=\s*23"                             exists
+check "quality:held-story-velocity"     curation.py      "views_at_save"                                       exists
 check "prompt:no-≥10-views"             update.sh        "≥10 views"                                           missing
 # 2026-05-11: news tabs use 4h window per user "most watched in last four hours"
 check "freshness:world-4h-window"       parse_grok.py    "'world':\s*4"                                        exists

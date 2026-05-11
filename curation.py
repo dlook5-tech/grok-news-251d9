@@ -45,14 +45,14 @@ import datetime
 # Velocity hold absolute ceiling: a story can stay this long IF still beating
 # candidates on views/hr. Beyond this, drop regardless of velocity (otherwise
 # stale stories live forever).
-MAX_HOLD_HOURS = 4   # User reversed the hold-rule clarification 2026-05-11:
-                     # "forget I said any of that. That's too confusing, too
-                     # much code. Just find the three most popular stories,
-                     # and then within those stories you can do all the work
-                     # of finding retweets that make it more interesting and
-                     # even more velocity."
-                     # → No cross-cron hold. Each cron starts fresh; top 3 by
-                     #   velocity in the last 4h, QT enrichment within those.
+MAX_HOLD_HOURS = 23  # User (2026-05-11): "If no new post # views has
+                     # superseded or gone higher than the original stories
+                     # chosen for their velocity in that tab, then those
+                     # stories stay for 23 hours, or until a story comes
+                     # along with higher velocity."
+                     # → Held stories survive until either (a) a fresh
+                     #   candidate beats their frozen views_at_save score,
+                     #   or (b) they hit 23h URL age. Whichever first.
 
 # Number of stories per tab. Tab-specific overrides go below if needed.
 DEFAULT_TOP_N = 3
@@ -172,19 +172,28 @@ def story_age_hours(story):
 
 
 def story_velocity(story, history=None):
-    """RANK BY VIEWS IN LAST 4 HOURS — user (2026-05-11):
-    "Just find the three most popular stories, and then within those stories
-    you can do all the work of finding retweets that make it more interesting
-    and even more velocity."
+    """RANK BY VIEWS, WITH 23H HOLD RULE — user (2026-05-11):
+    "If no new post # views has superseded or gone higher than the original
+    stories chosen for their velocity in that tab, then those stories stay
+    for 23 hours, or until a story comes along with higher velocity."
 
-      - Age ≤ 4h → score = current views (combined X+Y if QT-enhanced)
-      - Age > 4h → score = -1, drops out (no cross-cron hold)
+      - Fresh (age ≤ 4h): score = current views (combined X+Y if QT-enhanced)
+      - Held (age > 4h, has views_at_save from prior pickup): score = frozen
+        views_at_save. The story holds until a fresh candidate beats this.
+      - Old (age > 4h, no views_at_save — never picked): score = -1, drops.
+
+    MAX_HOLD_HOURS (=23) applied in apply_velocity_hold caps the held duration.
     """
     age = story_age_hours(story)
-    if age > 4:
-        return -1.0
     views = story_views(story)
-    return float(views) if views > 0 else 0.0
+    if age <= 4:
+        return float(views) if views > 0 else 0.0
+    # Held story: use saved combined score from when it was picked.
+    saved = story.get('views_at_save')
+    if saved is not None:
+        try: return float(saved)
+        except (ValueError, TypeError): return -1.0
+    return -1.0
 
 
 # ============================================================
@@ -229,9 +238,9 @@ def apply_velocity_hold(current, candidates, top_n=DEFAULT_TOP_N, history=None, 
     # keep the candidate but INHERIT views_at_save + age_at_save_hours from current
     # so the 4h-delta computation has the prior snapshot to compare against.
     seen = {}
-    # 2026-05-11 (user reversed hold rule): both fresh candidates and any
-    # "current" stories from prior cron get age-filtered to max_age_h. No
-    # cross-cron hold; each cron starts fresh. Top 3 by velocity in 4h.
+    # 2026-05-11 (user re-instated hold rule): fresh candidates age-filtered
+    # to max_age_h (e.g. 4h for news). Held stories from prior cron bypass
+    # that filter — they're capped only by MAX_HOLD_HOURS (23).
     for s in (candidates or []):
         if story_age_hours(s) > max_age_h:
             continue
@@ -239,7 +248,7 @@ def apply_velocity_hold(current, candidates, top_n=DEFAULT_TOP_N, history=None, 
         if k not in seen:
             seen[k] = s
     for s in (current or []):
-        if story_age_hours(s) > max_age_h:
+        if story_age_hours(s) > MAX_HOLD_HOURS:
             continue
         k = keyfor(s)
         if k in seen:
