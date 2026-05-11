@@ -192,14 +192,19 @@
 </head>
 <body>
 <!-- Netlify Forms detection — submissions captured server-side so the cron
-     can pick them up via the Netlify API and put them in the Post/Replace tab
-     for every user (not just the device that submitted). The actual form the
-     user interacts with is rendered in JS (see handleSubmit), which AJAX-POSTs
-     here. This hidden form exists only so Netlify discovers the schema at
-     deploy time. (User mandate 2026-05-10: "Krons should pick up every
-     submitted post, put it there so they can click on the block and see the
-     suggestions.") -->
-<form name="post-replace" data-netlify="true" hidden>
+     picks them up via the Netlify API and shows them on the Post/Replace tab
+     for every user (not just the device that submitted).
+     Critical details for Netlify form-detection:
+     - NO `hidden` HTML attribute — Netlify's parser skips hidden forms (this
+       was why submissions weren't being collected before).
+     - Offscreen via CSS `position:absolute;left:-9999px` to hide from users.
+     - Hidden `form-name` input required for Netlify to route AJAX submissions.
+     - `netlify-honeypot` traps bots (filled bot-field → submission dropped).
+     (User mandate 2026-05-10: "Krons should pick up every submitted post,
+     put it there so they can click on the block and see the suggestions.") -->
+<form name="post-replace" data-netlify="true" netlify-honeypot="bot-field" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;">
+  <input type="hidden" name="form-name" value="post-replace" />
+  <input type="text" name="bot-field" />
   <input type="text" name="url" />
   <input type="text" name="note" />
 </form>
