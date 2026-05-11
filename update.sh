@@ -280,50 +280,71 @@ except Exception: print('0')
 
 # --- WORLD (3 stories × 3 perspectives) ---
 cat > /tmp/grok_p_world.txt <<'PROMPT'
-Find the TOP 3 INTERNATIONAL news stories by views in the last 24 hours.
+USER'S EXACT SPEC (2026-05-11) — FOLLOW LITERALLY, ADD NOTHING:
 
-3-PERSPECTIVE BAR — HIGH VELOCITY ONLY (user mandate 2026-05-11):
-"Are the stories you're picking really the most high velocity because they really seem boring and just like announcements?" The previous very-low-bar wording (10 views minimum per side) let trash through (e.g., a Democrat slot with 145 views on Iran). NEW BAR:
+STEP 1. Find the top 5-8 international news stories. Identify which have the
+        HIGHEST VELOCITY (most views in the last 4 hours). Curate the top 3
+        and **make sure they're not about the same subject matter** (no two
+        framings of the same event — e.g. don't return 3 Iran-ceasefire posts).
 
-  - EACH perspective MUST have ≥5,000 views from x_search's view_count.
-  - The STORY (sum of 3 perspectives) MUST exceed 30,000 views.
-  - If a topic doesn't have 3 perspectives all clearing 5K, DROP THE TOPIC and pick a different story. Don't return weak perspectives just to satisfy the slot.
+STEP 2. For EACH of the 3 topics, find the HIGHEST-VELOCITY coverage from
+        each viewpoint:
+          - Conservative viewpoint
+          - Independent viewpoint
+          - Democrat viewpoint
 
-This is still findable for major news: Iran/Ukraine/SCOTUS will have many 5K+ takes from each side. Citizen voices with 10K, 50K, 200K views ARE the screenshot-test wins.
+STEP 3. Once the (R, I, D) highest-velocity posts are found, go ONE STEP
+        FURTHER: check if any commentator on that same side of the political
+        spectrum has quote-tweeted/retweeted that post AND added substantive
+        commentary (not just an emoji or "fire").
+        - If YES, the QT/RT is the "perfect trifecta." Use the QT's URL
+          (the embed shows both the original AND the new commentary).
+        - Score the perspective as: original_views + QT_views (TOTAL).
+        - Keep the QT's body as the displayed text.
 
-GOAL: 3 different stories, each with 3 perspectives. **DO NOT return fewer than 3 stories** unless x_search literally returns nothing for major news.
+STEP 4. Reject ANY post — original OR QT — with telltale signs of:
+        - Announcements (e.g. "BREAKING:", "JUST IN:", "NEW:", press release)
+        - Wire copy from @WhiteHouse, @POTUS, @CBSNews, @NBCNews, @ABCNews,
+          @AP, @Reuters, @nypost, @CNN, @FoxNews when their body is just a
+          headline restatement
+        - Just a video clip with a few words ("Watch this", "Look at her",
+          one-line captions on top of an attached video — under ~50 chars of
+          text). User: "That's not interesting."
 
-STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
-  Conservative (hawkish/interventionist + mainstream conservative media): @JackPosobiec, @Cernovich, @RealCandaceO, @benshapiro, @DonaldJTrumpJr, @charliekirk11, @RealDailyWire, @JDVance1, @SenTedCruz, @SenTomCotton, @LindseyGrahamSC, @SecPompeo, @TomFitton, @JesseBWatters, @IngrahamAngle, @WarMonitors, @sentdefender, @CriticalThreats, @WhiteHouse, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews, @nypost, @washingtonexaminer
-  Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib, @ChrisMurphyCT, @SenWarren, @JoyceWhiteVance, @ProPublica, @DropSiteNews
-  Independent/Analyst (incl. non-interventionist right): @TuckerCarlson, @HamidRezaAz, @TheStudyofWar, @vtchakarova, @RayDalio, @dalperovitch, @InsightGL, @KimZetter, @Snowden, @ggreenwald
+SEARCH SEEDS (NOT preferences — just where to start looking, pick by velocity):
+  Conservative: @JackPosobiec, @Cernovich, @benshapiro, @DonaldJTrumpJr,
+    @charliekirk11, @JDVance1, @SenTedCruz, @SenTomCotton, @JesseBWatters,
+    @IngrahamAngle, @TuckerCarlson, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews,
+    @nypost
+  Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib,
+    @ChrisMurphyCT, @SenWarren, @SenSchumer, @ProPublica, @MSNBC, @TheAtlantic,
+    @MotherJones
+  Independent / Analyst: @MattTaibbi, @bariweiss, @FareedZakaria, @ggreenwald,
+    @semaforpolitics, @PunchbowlNews, @axios, @thehill, @SCOTUSblog, @Snowden,
+    @RayDalio, @TheStudyofWar, @CNN, @Reuters
 
-PROCESS:
-1. x_search broadly: "(Iran OR Israel OR China OR Russia OR Ukraine OR Europe OR Middle East OR war OR geopolitics) lang:en since:$YESTERDAY", mode:Top, limit:50
-2. Pick the 3 highest-view stories from 3 SEPARATE COUNTRIES/EVENTS.
+EXECUTION:
+  a. x_search "(international news keywords) lang:en since:4_hours_ago"
+     mode:Top, limit:50 → identify candidate events.
+  b. Cluster results by EVENT (not handle, not framing). Pick top 3 EVENTS
+     by combined view count.
+  c. For each event, run 3 sided searches (conservative/dem/indep keyword
+     filters) → find the highest-viewed take from each side.
+  d. For each chosen R/I/D post, look for QT/RTs of it with substantive bodies
+     (>=30 chars of real commentary). If found, swap URL to the QT and report
+     combined views (original + QT).
+  e. Apply Step 4 rejects. If a slot fails after enrichment, find a different
+     post for that slot.
 
-   ⚠️ ABSOLUTE RULE — IF YOU RETURN TWO STORIES ABOUT THE SAME EVENT, YOUR
-   OUTPUT IS REJECTED. The user has caught Iran×3 framings (different headlines,
-   same news event) THREE TIMES NOW. Stop.
+Each perspective in the output MUST include:
+  - "url": the post to display (QT URL if QT was used, else original)
+  - "views": total score (original + QT views combined, if QT used)
+  - "handle": author of the displayed post
+  - "quote": body of the displayed post
+  - "original_url" (only if QT used): the post the QT references
+  - "original_views" (only if QT used): just-the-original view count
+  - "qt_views" (only if QT used): just-the-QT view count
 
-   Test before returning: name the EVENT each story is about (one short noun
-   phrase, e.g. "US-Iran ceasefire", "Israel-Lebanon strikes", "China trade
-   deal"). If two of your three story names refer to the same underlying news
-   event, the output is wrong — pick a different second/third story. Examples
-   of REJECTED dup pairs the user has caught:
-     - "US-Iran Ceasefire Negotiations" + "Trump Rejects Iran's Response to
-       US Peace Proposal" + "US Rejects Iran's Ceasefire Counterproposal"
-       → ALL THE SAME EVENT (US-Iran negotiations). Pick ONE.
-     - "Iran Responds to US Proposal" + "US Replies to Iran's Counter"
-       → SAME EVENT. Pick ONE.
-
-   The 3 stories must span 3 distinct news events. If only 1 international
-   story is breaking that day, return 1 story (not 3 framings of it).
-3. For each topic, run 3 broad searches to find the HIGHEST-VIEWED post with ≥5,000 views from each ideological side:
-   - Conservative side: "(topic_keywords) (republican OR conservative OR right OR maga OR trump OR gop) min_faves:1 lang:en", mode:Top, limit:30
-   - Democrat side:    "(topic_keywords) (democrat OR liberal OR left OR progressive OR resist) min_faves:1 lang:en", mode:Top, limit:30
-   - Independent side: "(topic_keywords) (analysis OR analyst OR foreign policy OR nonpartisan OR independent) min_faves:1 lang:en", mode:Top, limit:30
-4. Pick the highest-viewed post from each side that has ≥5,000 views. If you can't find one, EXPAND keywords/handles broadly. If a topic genuinely has no 5K+ post from any one side, DROP that topic and pick a different event. Do NOT return a sub-5K perspective just to fill a slot.
 
 VIEWS REQUIREMENT (HARD CONTRACT):
 - Each perspective MUST include `"views": <integer>` from x_search's view_count field
@@ -344,6 +365,72 @@ PROMPT
 
 # --- USA (national US news — 3-perspective like World) ---
 cat > /tmp/grok_p_usa.txt <<'PROMPT'
+USER'S EXACT SPEC (2026-05-11) — FOLLOW LITERALLY, ADD NOTHING:
+
+STEP 1. Find the top 5-8 US national news stories (domestic politics, SCOTUS, Congress, federal policy). Identify which have the
+        HIGHEST VELOCITY (most views in the last 4 hours). Curate the top 3
+        and **make sure they're not about the same subject matter** (no two
+        framings of the same event — e.g. don't return 3 Iran-ceasefire posts).
+
+STEP 2. For EACH of the 3 topics, find the HIGHEST-VELOCITY coverage from
+        each viewpoint:
+          - Conservative viewpoint
+          - Independent viewpoint
+          - Democrat viewpoint
+
+STEP 3. Once the (R, I, D) highest-velocity posts are found, go ONE STEP
+        FURTHER: check if any commentator on that same side of the political
+        spectrum has quote-tweeted/retweeted that post AND added substantive
+        commentary (not just an emoji or "fire").
+        - If YES, the QT/RT is the "perfect trifecta." Use the QT's URL
+          (the embed shows both the original AND the new commentary).
+        - Score the perspective as: original_views + QT_views (TOTAL).
+        - Keep the QT's body as the displayed text.
+
+STEP 4. Reject ANY post — original OR QT — with telltale signs of:
+        - Announcements (e.g. "BREAKING:", "JUST IN:", "NEW:", press release)
+        - Wire copy from @WhiteHouse, @POTUS, @CBSNews, @NBCNews, @ABCNews,
+          @AP, @Reuters, @nypost, @CNN, @FoxNews when their body is just a
+          headline restatement
+        - Just a video clip with a few words ("Watch this", "Look at her",
+          one-line captions on top of an attached video — under ~50 chars of
+          text). User: "That's not interesting."
+
+SEARCH SEEDS (NOT preferences — just where to start looking, pick by velocity):
+  Conservative: @JackPosobiec, @Cernovich, @benshapiro, @DonaldJTrumpJr,
+    @charliekirk11, @JDVance1, @SenTedCruz, @SenTomCotton, @JesseBWatters,
+    @IngrahamAngle, @TuckerCarlson, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews,
+    @nypost
+  Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib,
+    @ChrisMurphyCT, @SenWarren, @SenSchumer, @ProPublica, @MSNBC, @TheAtlantic,
+    @MotherJones
+  Independent / Analyst: @MattTaibbi, @bariweiss, @FareedZakaria, @ggreenwald,
+    @semaforpolitics, @PunchbowlNews, @axios, @thehill, @SCOTUSblog, @Snowden,
+    @RayDalio, @TheStudyofWar, @CNN, @Reuters
+
+EXECUTION:
+  a. x_search "(US politics, SCOTUS, Congress, Trump, federal policy, ICE, DOJ, FBI) lang:en since:4_hours_ago"
+     mode:Top, limit:50 → identify candidate events.
+  b. Cluster results by EVENT (not handle, not framing). Pick top 3 EVENTS
+     by combined view count.
+  c. For each event, run 3 sided searches (conservative/dem/indep keyword
+     filters) → find the highest-viewed take from each side.
+  d. For each chosen R/I/D post, look for QT/RTs of it with substantive bodies
+     (>=30 chars of real commentary). If found, swap URL to the QT and report
+     combined views (original + QT).
+  e. Apply Step 4 rejects. If a slot fails after enrichment, find a different
+     post for that slot.
+
+Each perspective in the output MUST include:
+  - "url": the post to display (QT URL if QT was used, else original)
+  - "views": total score (original + QT views combined, if QT used)
+  - "handle": author of the displayed post
+  - "quote": body of the displayed post
+  - "original_url" (only if QT used): the post the QT references
+  - "original_views" (only if QT used): just-the-original view count
+  - "qt_views" (only if QT used): just-the-QT view count
+
+[OLD USA PROCESS BELOW — SUPERSEDED BY THE 4-STEP SPEC ABOVE]
 Find the TOP 3 US NATIONAL news stories by views in the last 24 hours (domestic politics, SCOTUS, Congress, federal policy — NOT foreign affairs).
 
 3-PERSPECTIVE BAR — HIGH VELOCITY ONLY (user mandate 2026-05-11):

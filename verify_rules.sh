@@ -158,6 +158,10 @@ check "no-favoritism:seeds-language"    update.sh        "STARTING SEARCH SEEDS"
 # and per-story view minimums were removed per user "Why do you keep making up your
 # own mind? I want the most watched in the last four hours."
 check "quality:wire-copy-filter"        parse_grok.py    "_is_wire_copy|_WIRE_COPY_PREFIXES"                   exists
+# 2026-05-11: user "no video with a few words" → body-prose-length filter
+check "quality:few-words-filter"        parse_grok.py    "_is_few_words|_MIN_PROSE_CHARS"                      exists
+# 2026-05-11: user "add original + QT views for total score" — combined scoring
+check "quality:combined-qt-score"       curation.py      "combined_score|qt_views"                             exists
 check "prompt:no-≥10-views"             update.sh        "≥10 views"                                           missing
 # 2026-05-11: news tabs use 4h window per user "most watched in last four hours"
 check "freshness:world-4h-window"       parse_grok.py    "'world':\s*4"                                        exists

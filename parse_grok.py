@@ -1523,6 +1523,29 @@ def _is_wire_copy(persp):
         if text.startswith(prefix): return True
     return False
 
+# 2026-05-11 user mandate: "Make sure, whichever post you choose, they don't
+# have the telltale signs of an announcement or breaking news or just posting
+# a video with a few words. That's not interesting."
+# → Drop perspectives where text body (excluding URLs/mentions/hashtags) is
+#   too short to be substantive analysis. Anything under 50 chars of actual
+#   prose is "few words" — likely video-with-caption or bare announcement.
+_MIN_PROSE_CHARS = 50
+
+def _strip_for_prose(text):
+    """Remove URLs, @mentions, hashtags, leading emoji — what remains is prose."""
+    t = re.sub(r'https?://\S+', '', text or '')
+    t = re.sub(r'@\w+', '', t)
+    t = re.sub(r'#\w+', '', t)
+    t = re.sub(r'[\U0001F300-\U0001FAFF\U00002600-\U000027BF]+', '', t)  # strip most emoji
+    return t.strip()
+
+def _is_few_words(persp):
+    """True if perspective is a 'video with a few words' / bare-caption post.
+    Heuristic: text body has <50 chars of prose after stripping URLs/mentions/emoji."""
+    text = persp.get('text') or persp.get('quote') or persp.get('body') or ''
+    prose = _strip_for_prose(text)
+    return len(prose) < _MIN_PROSE_CHARS
+
 def clean_world(w):
     """Validate a World/USA story (3-perspective shape). PURE VIEWS spec — only data
     validation, no judgment filters. Used to reject for is_announcement / is_cheerleading
@@ -1583,21 +1606,18 @@ def clean_world(w):
         _deduped_perspectives.append(_p)
     perspectives = _deduped_perspectives
 
-    # 2026-05-11: wire-copy and velocity filters (user: "really seem boring and just
-    # like announcements"). Drop perspectives that are bare wire-copy from announcement
-    # handles, AND drop perspectives with <5K views.
+    # 2026-05-11: user's two hard rejects for World/USA perspectives:
+    #   1. wire-copy announcements (BREAKING/NEW/JUST IN from gov+news handles)
+    #   2. "video with a few words" (text body <50 chars of prose)
     _filtered_perspectives = []
     for _p in perspectives:
         if _is_wire_copy(_p):
             print(f"  REJECT world/USA persp [wire-copy]: @{_p.get('handle','?')} "
                   f"'{(_p.get('text') or '')[:60]}'", file=sys.stderr)
             continue
-        _v = _p.get('views')
-        try: _v = int(_v) if _v is not None else 0
-        except (ValueError, TypeError): _v = 0
-        if _v < WORLD_PERSP_MIN_VIEWS:
-            print(f"  REJECT world/USA persp [low-velocity {_v}<{WORLD_PERSP_MIN_VIEWS}]: "
-                  f"@{_p.get('handle','?')} '{(_p.get('text') or '')[:50]}'", file=sys.stderr)
+        if _is_few_words(_p):
+            print(f"  REJECT world/USA persp [few-words/likely-video]: @{_p.get('handle','?')} "
+                  f"'{(_p.get('text') or '')[:50]}'", file=sys.stderr)
             continue
         _filtered_perspectives.append(_p)
     perspectives = _filtered_perspectives

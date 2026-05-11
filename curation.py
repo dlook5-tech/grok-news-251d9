@@ -271,12 +271,16 @@ def enrich_commentator(top_story, all_candidates):
     A 'quote tweet' is detected by a candidate whose body references the top_story's URL
     or headline AND contains substantive commentary (≥30 chars of body).
     """
-    # User mandate (2026-05-11): "if you can increase the most watched in four
-    # hours with someone embedding that post in an even somewhat viral comment
-    # or retweet, even better."
-    # → ANY higher-views QT/RT wins, no commentator whitelist. Removed the closed
-    # COMMENTATORS list — judgment of "is this person worth quoting" doesn't belong
-    # in the code. Velocity decides.
+    # User mandate (2026-05-11): "Once the 3 (R, I, D) highest-velocity viewpoint
+    # is found, now go one step further and find if any very interesting commentator
+    # on that side of the political spectrum has retweeted that post and embedded
+    # it with further more interesting commentary. You can add the number of views
+    # from the original post plus the views of the retweeted post for the total score."
+    #
+    # → If ANY QT/RT with substantive commentary (≥30 chars) exists, USE IT.
+    #   Do NOT require the QT to have more views than the original — the COMBINED
+    #   score (original + QT views) is what matters.
+    #   If multiple QTs exist, pick the highest-viewed one.
     if not top_story or not all_candidates:
         return top_story
     target_url = top_story.get('url', '')
@@ -286,7 +290,7 @@ def enrich_commentator(top_story, all_candidates):
 
     original_views = story_views(top_story)
     best_qt = None
-    best_qt_views = original_views  # only swap if the QT has MORE views
+    best_qt_views = 0  # any QT with substantive commentary qualifies — pick highest-viewed
 
     for cand in all_candidates:
         if cand is top_story:
@@ -308,14 +312,19 @@ def enrich_commentator(top_story, all_candidates):
     if not best_qt:
         return top_story
 
-    # Swap to the higher-views QT/RT, keeping the original on file for audit.
+    # Use the QT URL (embed shows both original and commentary). Score = combined.
     enriched = dict(top_story)
     enriched['original_url'] = top_story.get('url', '')
     enriched['original_handle'] = top_story.get('handle', '')
+    enriched['original_views'] = original_views
     enriched['url'] = best_qt.get('url', top_story.get('url', ''))
     enriched['handle'] = best_qt.get('handle', '')
     enriched['commentator_quote'] = (best_qt.get('body', '') or '')[:280]
     enriched['commentator_label'] = best_qt.get('handle', '')
+    enriched['qt_views'] = best_qt_views
+    enriched['combined_score'] = original_views + best_qt_views
+    # Update 'views' so ranking + display reflect combined velocity
+    enriched['views'] = enriched['combined_score']
     return enriched
 
 
