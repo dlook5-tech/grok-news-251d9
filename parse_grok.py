@@ -23,27 +23,29 @@ MAX_AGE_HOURS = 24  # 24h news cap per CLAUDE.md
 # the floor, but never go full-stale.
 TAB_AGE_OVERRIDE = {
     # SOFT cap — what cascade Pass 1 / curate() targets (the preferred fresh window)
+    # User mandate (2026-05-11): "I want the most watched in the last four hours."
+    # → 4h for news tabs (world/usa/business/top/msm/conspiracy/local).
+    'world': 4, 'usa': 4, 'business': 4, 'top': 4, 'msm': 4,
+    'conspiracy': 4, 'local': 4,
+    # Reference + personality tabs keep their existing windows
     'recipe': 24, 'science': 24, 'comedy': 24,
-    'local': 24,
-    'elon': 12,        # User mandate (2026-05-10): "post all his latest in last 12 hours"
-    'pods': 12,        # 2026-05-10 (later): user "1d old posts? are you telling me there's
-                       # no other podcast posts today?" Prefer fresh clips ≤12h.
-    'allin': 24, 'pg6': 24, 'conspiracy': 24,
+    'elon': 12,        # User: "post all his latest in last 12 hours"
+    'pods': 12,        # User: "no 1d old podcast posts"
+    'allin': 24, 'pg6': 24,
     'freespeech': 8760,
 }
 TAB_HARD_CAP = {
-    # HARD cap — anything past this gets dropped by _final_hard_expire(), no fallback.
-    # 2026-05-10 (later): user clarified Elon spec — "at least three of his stories in
-    # the last twelve hours. If not, keep going back to twenty four hours." So Elon's
-    # hard cap is now 24h (was 12h). 12h soft + 24h hard means cascade prefers ≤12h
-    # but extends to ≤24h to hit floor. Anything >24h still gets swept.
-    'elon': 24,
-    'pods': 24,        # tightened from 48 — user "no 1d old podcast posts"
+    # HARD cap — anything past this gets dropped, no fallback. 2026-05-11: hard cap
+    # for news tabs == soft cap (no "extend to 24h" fallback). If Grok returns nothing
+    # in 4h, tab shows fewer stories. Per user "1-3 stories based on quality, never pad."
+    'world': 4, 'usa': 4, 'business': 4, 'top': 4, 'msm': 4,
+    'conspiracy': 4, 'local': 4,
+    # Reference + personality tabs keep their existing hard caps
+    'elon': 24,        # 12h soft → 24h fallback when his prolific period ends
+    'pods': 24,
     'recipe': 48, 'science': 48, 'comedy': 48,
-    'local': 72,       # OC content sparse — needs the wider fallback
-    'allin': 48, 'pg6': 48, 'conspiracy': 48,
+    'allin': 48, 'pg6': 48,
     'freespeech': 8760,
-    # default for unlisted tabs (world/usa/business/sports/top/msm): 48h hard
 }
 DEFAULT_HARD_CAP_H = 48
 
@@ -1487,13 +1489,13 @@ def clean_story(s, tab=''):
             out['parent_text'] = str(s['parent_text'])[:280]
     return out
 
-# 2026-05-11 user mandate ("really seem boring and just like announcements"):
-# Filters to enforce "high velocity + not wire copy" for World/USA perspectives.
-# Velocity floor — each perspective must have ≥5,000 views (was 10, way too low).
-WORLD_PERSP_MIN_VIEWS = 5000
-# Total story velocity floor — sum of all 3 perspective views must clear this.
-# Catches stories like Hantavirus (564+1298+75=1937 total — junk) before they ship.
-WORLD_STORY_MIN_TOTAL_VIEWS = 30000
+# 2026-05-11 user mandate: "I want the most watched in the last four hours.
+# With the caveat no announcements." → Pure raw-views ranking in a 4h window,
+# wire-copy/announcement filter is the only quality filter. Previous per-perspective
+# (5K) and per-story (30K) view minimums were my addition — REMOVED. User: "Why do
+# you keep making up your own mind?" Stop adding thresholds.
+WORLD_PERSP_MIN_VIEWS = 0       # was 5000 — removed per 2026-05-11 user
+WORLD_STORY_MIN_TOTAL_VIEWS = 0 # was 30000 — removed per 2026-05-11 user
 
 # Wire-copy / announcement detection: posts that just restate the headline with no
 # original take. User's specific recent rejects:

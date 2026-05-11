@@ -154,12 +154,14 @@ check "pods:mode-latest-search"         update.sh        "mode:\s*\"Latest\""   
 # use neutral "STARTING SEARCH SEEDS" language, not "SUGGESTED HANDLES (prefer)".
 check "no-favoritism:no-prefer-handles" update.sh        "SUGGESTED HANDLES \(prefer"                          missing
 check "no-favoritism:seeds-language"    update.sh        "STARTING SEARCH SEEDS"                               exists
-# 2026-05-11: anti-announcement / velocity filters (user "boring announcements")
-check "quality:world-persp-min-views"   parse_grok.py    "WORLD_PERSP_MIN_VIEWS\s*=\s*5000"                    exists
-check "quality:world-story-min-total"   parse_grok.py    "WORLD_STORY_MIN_TOTAL_VIEWS\s*=\s*30000"             exists
+# 2026-05-11: anti-announcement filter (user "no announcements"). Per-perspective
+# and per-story view minimums were removed per user "Why do you keep making up your
+# own mind? I want the most watched in the last four hours."
 check "quality:wire-copy-filter"        parse_grok.py    "_is_wire_copy|_WIRE_COPY_PREFIXES"                   exists
 check "prompt:no-≥10-views"             update.sh        "≥10 views"                                           missing
-check "prompt:5000-views-bar"           update.sh        "5,000 views"                                         exists
+# 2026-05-11: news tabs use 4h window per user "most watched in last four hours"
+check "freshness:world-4h-window"       parse_grok.py    "'world':\s*4"                                        exists
+check "freshness:business-4h-window"    parse_grok.py    "'business':\s*4"                                     exists
 check "freshness:hard-expire-sweep"     parse_grok.py    "_final_hard_expire"                                  exists
 check "freshness:rebuild-age-check"     parse_grok.py    "_rebuild_fresh|REBUILD-SKIP"                         exists
 # 2026-05-10: Local min-views threshold (user: "Drake's at 3382 views, really?")

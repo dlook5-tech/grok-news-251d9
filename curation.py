@@ -165,65 +165,29 @@ def story_age_hours(story):
 
 
 def story_velocity(story, history=None):
-    """Growth-rate metric per user spec (2026-05-06):
+    """RANK BY RAW VIEWS IN LAST 4 HOURS — user mandate (2026-05-11):
+    "I want the most watched in the last four hours."
 
-    User exact words: "Nothing should be more than four hours old unless, again, the
-    story's velocity there is greater than the new story's velocity. If something
-    doesn't have the velocity, as an old story, in the new four hours, then keep the
-    story all the way up till 24 hours."
+    Previous implementation was a tiered formula that scaled views by age, which
+    made fresh press releases beat older citizen analysis. User pushed back:
+    "Why do you keep making up your own mind? I want the most watched in the
+    last four hours."
 
-    + CLAUDE.md "tabs MUST NEVER BE EMPTY" — 3-story floor is non-negotiable.
+    NEW RULE — dead simple:
+      - Age ≤ 4 hours → score = raw views
+      - Age > 4 hours → score = -1 (drop from pool)
 
-    Tiered ranking — higher tier wins, within tier sort by velocity:
+    Age-cap enforcement at the tab level (TAB_AGE_OVERRIDE in parse_grok)
+    still controls window per-tab. This function just answers "given a 4-hour
+    window, what's the most-watched post?"
 
-      TIER 1 (≤4h FRESH): views/hr × 4 = views per 4-hour window. Fresh content always
-      preferred over older, even if older has higher cumulative views.
-
-      TIER 1 (PROVEN GROWTH, any age): real (views_now − views_prior) / elapsed × 4
-      using prior snapshot from last cron. An old viral story that's still growing
-      measurably beats a fresh story with low absolute views.
-
-      TIER 2 (4-24h FILLER): rank by recency (1/age). Keeps the floor filled when
-      Grok hasn't returned enough fresh candidates this cycle. These never beat any
-      Tier 1 story but stay eligible.
-
-      DROP (>24h): -1, removed from pool unless explicit floor backfill puts it back.
+    history param is kept for signature compatibility but no longer used.
     """
-    age = max(story_age_hours(story), 0.1)
+    age = story_age_hours(story)
+    if age > 4:
+        return -1.0
     views = story_views(story)
-
-    def _url():
-        u = story.get('url') or ''
-        if not u:
-            for p in story.get('perspectives', []) or []:
-                u = p.get('url') or ''
-                if u: break
-        return u
-
-    # THE ONE RULE (user spec, 2026-05-09): "the most high-velocity story for that
-    # four-hour period." Velocity = views gained in the last 4 hours. Top 3 win.
-    #
-    #   Case A: ≤4h old — all views ARE last-4h views. Return views directly.
-    #   Case B: >4h old + prior snapshot — real delta scaled to 4h window.
-    #   Case C: >4h old + no snapshot — estimate as lifetime per-4h average.
-    #   Case D: no view metric — tiny recency score (won't beat anything real).
-
-    if age <= 4:
-        return float(views) if views > 0 else (100.0 / max(age, 0.1))
-
-    if history and views > 0:
-        prev = history.get(_url())
-        if prev:
-            prev_views = int(prev.get('views_at_save', 0))
-            prev_age = float(prev.get('age_at_save_hours', age))
-            elapsed = age - prev_age
-            if elapsed > 0 and prev_views > 0:
-                return max((views - prev_views) * (4.0 / elapsed), 0.0)
-
-    if views > 0:
-        return views / age * 4
-
-    return 1.0 / max(age, 0.1)
+    return float(views) if views > 0 else 0.0
 
 
 # ============================================================
@@ -307,6 +271,12 @@ def enrich_commentator(top_story, all_candidates):
     A 'quote tweet' is detected by a candidate whose body references the top_story's URL
     or headline AND contains substantive commentary (≥30 chars of body).
     """
+    # User mandate (2026-05-11): "if you can increase the most watched in four
+    # hours with someone embedding that post in an even somewhat viral comment
+    # or retweet, even better."
+    # → ANY higher-views QT/RT wins, no commentator whitelist. Removed the closed
+    # COMMENTATORS list — judgment of "is this person worth quoting" doesn't belong
+    # in the code. Velocity decides.
     if not top_story or not all_candidates:
         return top_story
     target_url = top_story.get('url', '')
@@ -314,17 +284,16 @@ def enrich_commentator(top_story, all_candidates):
     if not target_url and not target_headline:
         return top_story
 
+    original_views = story_views(top_story)
     best_qt = None
-    best_qt_views = -1
+    best_qt_views = original_views  # only swap if the QT has MORE views
+
     for cand in all_candidates:
         if cand is top_story:
             continue
-        handle = (cand.get('handle', '') or '').lower().lstrip('@')
-        if handle not in COMMENTATORS:
-            continue
         body = (cand.get('body', '') or '')
         if len(body.strip()) < 30:
-            continue  # not substantive commentary — skip
+            continue  # need actual commentary, not a bare RT
         body_l = body.lower()
         refs_url = bool(target_url and target_url.lower() in body_l)
         refs_headline = bool(target_headline and len(target_headline) > 12 and
@@ -339,17 +308,14 @@ def enrich_commentator(top_story, all_candidates):
     if not best_qt:
         return top_story
 
-    # Build enriched story: original story + commentator overlay
+    # Swap to the higher-views QT/RT, keeping the original on file for audit.
     enriched = dict(top_story)
     enriched['original_url'] = top_story.get('url', '')
     enriched['original_handle'] = top_story.get('handle', '')
     enriched['url'] = best_qt.get('url', top_story.get('url', ''))
     enriched['handle'] = best_qt.get('handle', '')
     enriched['commentator_quote'] = (best_qt.get('body', '') or '')[:280]
-    enriched['commentator_label'] = COMMENTATORS.get(
-        (best_qt.get('handle', '') or '').lower().lstrip('@'),
-        best_qt.get('handle', '')
-    )
+    enriched['commentator_label'] = best_qt.get('handle', '')
     return enriched
 
 
