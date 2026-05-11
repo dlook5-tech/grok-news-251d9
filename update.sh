@@ -450,14 +450,14 @@ Each perspective in the output MUST include:
 [OLD USA PROCESS BELOW — SUPERSEDED BY THE 4-STEP SPEC ABOVE]
 Find the TOP 3 US NATIONAL news stories by views in the last 24 hours (domestic politics, SCOTUS, Congress, federal policy — NOT foreign affairs).
 
-3-PERSPECTIVE BAR — HIGH VELOCITY ONLY (user mandate 2026-05-11):
-"Are the stories you're picking really the most high velocity because they really seem boring and just like announcements?" The previous very-low-bar wording (10 views minimum per side) let trash through (e.g., a Democrat slot with 145 views on Iran). NEW BAR:
-
-  - EACH perspective MUST have ≥5,000 views from x_search's view_count.
-  - The STORY (sum of 3 perspectives) MUST exceed 30,000 views.
-  - If a topic doesn't have 3 perspectives all clearing 5K, DROP THE TOPIC and pick a different story. Don't return weak perspectives just to satisfy the slot.
-
-This is still findable for major news: Iran/Ukraine/SCOTUS will have many 5K+ takes from each side. Citizen voices with 10K, 50K, 200K views ARE the screenshot-test wins.
+3-PERSPECTIVE REQUIREMENT (user 2026-05-11): "3 perspectives always, no 5k filter."
+  - Each story MUST have 3 perspectives (Conservative + Independent + Democrat).
+  - NO minimum view threshold per perspective. The highest-viewed take on
+    that side wins, even if low. (Wire-copy filter still drops "BREAKING:"
+    bare announcements from major news handles — but legitimate citizen
+    posts at any view level qualify.)
+  - If a topic truly can't have 3 perspectives (e.g., a side genuinely
+    didn't comment), pick a different topic.
 
 GOAL: 3 different stories, each with 3 perspectives. **DO NOT return fewer than 3 stories** unless x_search literally returns nothing for major news.
 
