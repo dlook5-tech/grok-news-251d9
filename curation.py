@@ -45,10 +45,14 @@ import datetime
 # Velocity hold absolute ceiling: a story can stay this long IF still beating
 # candidates on views/hr. Beyond this, drop regardless of velocity (otherwise
 # stale stories live forever).
-MAX_HOLD_HOURS = 24  # 2026-05-11: outer cap on held stories. User mandate
-                     # implies stories hold until beaten, but with a reasonable
-                     # outer bound — 24h matches the typical "news cycle".
-                     # Was 168 (1 week) — too loose for fresh news.
+MAX_HOLD_HOURS = 4   # User reversed the hold-rule clarification 2026-05-11:
+                     # "forget I said any of that. That's too confusing, too
+                     # much code. Just find the three most popular stories,
+                     # and then within those stories you can do all the work
+                     # of finding retweets that make it more interesting and
+                     # even more velocity."
+                     # → No cross-cron hold. Each cron starts fresh; top 3 by
+                     #   velocity in the last 4h, QT enrichment within those.
 
 # Number of stories per tab. Tab-specific overrides go below if needed.
 DEFAULT_TOP_N = 3
@@ -168,33 +172,19 @@ def story_age_hours(story):
 
 
 def story_velocity(story, history=None):
-    """RANK BY VIEWS — with hold rule per user (2026-05-11):
-    "Four hours later, the next story must overcome the combined X plus Y
-    score to make it to a block."
+    """RANK BY VIEWS IN LAST 4 HOURS — user (2026-05-11):
+    "Just find the three most popular stories, and then within those stories
+    you can do all the work of finding retweets that make it more interesting
+    and even more velocity."
 
-    Translation:
-      - Fresh post (age ≤ 4h): score = current views (combined X+Y if QT-enhanced)
-      - Held post (age > 4h, was picked in a prior cron): score = views_at_save
-        (the combined X+Y score from when it was picked). It HOLDS its slot until
-        a new candidate beats that score.
-      - Old post with no views_at_save (never picked): score = -1, drops out.
-
-    The held story's score is FROZEN at the time of pickup. New candidates'
-    fresh combined-view counts must exceed that frozen score to displace it.
-
-    history param is kept for signature compatibility but unused — views_at_save
-    is stored on the story dict itself by stamp_view_history.
+      - Age ≤ 4h → score = current views (combined X+Y if QT-enhanced)
+      - Age > 4h → score = -1, drops out (no cross-cron hold)
     """
     age = story_age_hours(story)
+    if age > 4:
+        return -1.0
     views = story_views(story)
-    if age <= 4:
-        return float(views) if views > 0 else 0.0
-    # Held story: use saved combined score from when it was picked.
-    saved = story.get('views_at_save')
-    if saved is not None:
-        try: return float(saved)
-        except (ValueError, TypeError): return -1.0
-    return -1.0
+    return float(views) if views > 0 else 0.0
 
 
 # ============================================================
@@ -239,25 +229,20 @@ def apply_velocity_hold(current, candidates, top_n=DEFAULT_TOP_N, history=None, 
     # keep the candidate but INHERIT views_at_save + age_at_save_hours from current
     # so the 4h-delta computation has the prior snapshot to compare against.
     seen = {}
-    # FRESH candidates: age-filter to last max_age_h (e.g., 4h for news tabs).
+    # 2026-05-11 (user reversed hold rule): both fresh candidates and any
+    # "current" stories from prior cron get age-filtered to max_age_h. No
+    # cross-cron hold; each cron starts fresh. Top 3 by velocity in 4h.
     for s in (candidates or []):
         if story_age_hours(s) > max_age_h:
             continue
         k = keyfor(s)
         if k not in seen:
             seen[k] = s
-    # CURRENT (held) stories: NO age filter — they hold their slot until beaten.
-    # User mandate (2026-05-11): "four hours later, the next story must overcome
-    # the combined X plus Y score to make it to a block." Held stories' scores
-    # come from views_at_save (set by stamp_view_history at prior pickup).
-    # Outer cap MAX_HOLD_HOURS still applies as a sanity bound.
     for s in (current or []):
-        if story_age_hours(s) > MAX_HOLD_HOURS:
+        if story_age_hours(s) > max_age_h:
             continue
         k = keyfor(s)
         if k in seen:
-            # Same URL appeared in both — let the candidate (fresh views) win,
-            # but inherit views_at_save so the saved-score logic still works.
             for fld in ('views_at_save', 'age_at_save_hours'):
                 if fld in s and fld not in seen[k]:
                     seen[k][fld] = s.get(fld)

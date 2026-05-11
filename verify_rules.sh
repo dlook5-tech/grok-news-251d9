@@ -162,10 +162,10 @@ check "quality:wire-copy-filter"        parse_grok.py    "_is_wire_copy|_WIRE_CO
 check "quality:few-words-filter"        parse_grok.py    "_is_few_words|_MIN_PROSE_CHARS"                      exists
 # 2026-05-11: user "add original + QT views for total score" — combined scoring
 check "quality:combined-qt-score"       curation.py      "combined_score|qt_views"                             exists
-# 2026-05-11: user "the next story must overcome the combined X plus Y score
-# to make it to a block." Hold rule = past picks stay until beaten.
-check "quality:hold-rule-views-saved"   curation.py      "views_at_save"                                       exists
-check "quality:hold-rule-24h-ceiling"   curation.py      "MAX_HOLD_HOURS\s*=\s*24"                             exists
+# 2026-05-11 (reversed): user dropped the hold rule, "too confusing, too much
+# code. Just find the three most popular stories." Each cron picks fresh top 3
+# in the last 4h. MAX_HOLD_HOURS = 4 (matches the window).
+check "quality:no-cross-cron-hold"      curation.py      "MAX_HOLD_HOURS\s*=\s*4"                              exists
 check "prompt:no-≥10-views"             update.sh        "≥10 views"                                           missing
 # 2026-05-11: news tabs use 4h window per user "most watched in last four hours"
 check "freshness:world-4h-window"       parse_grok.py    "'world':\s*4"                                        exists
