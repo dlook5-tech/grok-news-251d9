@@ -22,29 +22,23 @@ MAX_AGE_HOURS = 24  # 24h news cap per CLAUDE.md
 # blocked). Two-tier resolves it: prefer fresh, fall back to slightly older to hold
 # the floor, but never go full-stale.
 TAB_AGE_OVERRIDE = {
-    # SOFT cap — what cascade Pass 1 / curate() targets
-    'recipe': 24,      # User: no 2-day-old recipes
-    'science': 24,     # User: no 2-day-old research
-    'comedy': 24,      # User: no 2-day-old comedy clips
-    'local': 24,       # prefer fresh; hard cap below allows 72h fallback
-    'elon': 12,        # User mandate (2026-05-10): 12h hard cap, no exceptions
-    'allin': 24,
-    'pods': 24,
-    'pg6': 24,
-    'conspiracy': 24,
-    'freespeech': 8760, # user-curated, indefinite (1 year)
+    # SOFT cap — what cascade Pass 1 / curate() targets (the preferred fresh window)
+    'recipe': 24, 'science': 24, 'comedy': 24,
+    'local': 24,
+    'elon': 12,        # User mandate (2026-05-10): "post all his latest in last 12 hours"
+    'allin': 24, 'pods': 24, 'pg6': 24, 'conspiracy': 24,
+    'freespeech': 8760,
 }
 TAB_HARD_CAP = {
-    # HARD cap — anything past this gets dropped by _final_hard_expire(), no fallback
-    'elon': 12,        # USER-MANDATED HARD CAP — equal to soft cap. No exceptions.
-    'recipe': 48,      # accept up to 2d if floor demands it (was 336h evergreen — too loose)
-    'science': 48,
-    'comedy': 48,
+    # HARD cap — anything past this gets dropped by _final_hard_expire(), no fallback.
+    # 2026-05-10 (later): user clarified Elon spec — "at least three of his stories in
+    # the last twelve hours. If not, keep going back to twenty four hours." So Elon's
+    # hard cap is now 24h (was 12h). 12h soft + 24h hard means cascade prefers ≤12h
+    # but extends to ≤24h to hit floor. Anything >24h still gets swept.
+    'elon': 24,
+    'recipe': 48, 'science': 48, 'comedy': 48,
     'local': 72,       # OC content sparse — needs the wider fallback
-    'allin': 48,
-    'pods': 48,
-    'pg6': 48,
-    'conspiracy': 48,
+    'allin': 48, 'pods': 48, 'pg6': 48, 'conspiracy': 48,
     'freespeech': 8760,
     # default for unlisted tabs (world/usa/business/sports/top/msm): 48h hard
 }
@@ -2003,6 +1997,16 @@ for _tab in ('world', 'usa'):
     _output_v5[_tab] = {'stories': _picked, 'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
 
 # ---- Flat tabs (one post per slot) ----
+# Min-views floor for Local. User mandate (2026-05-10): "Drake's at 3382 views,
+# really? wtf." OC content that's genuinely viral clears 10k easily; below that
+# is restaurant-promo noise. Local is allowed to show <3 stories rather than pad
+# with low-velocity junk (per user memory: "1-3 stories based on quality, NEVER pad").
+LOCAL_MIN_VIEWS = 10000
+def _local_quality_filter(stories_list):
+    """Apply min-views threshold to Local stories. Used for both fresh candidates
+    and the backfill pool so junk doesn't persist across crons."""
+    return [s for s in stories_list if (s.get('views') or 0) >= LOCAL_MIN_VIEWS]
+
 for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
              'pg6', 'recipe', 'science', 'local', 'conspiracy', 'comedy'):
     _raw = data.get(_tab, [])
@@ -2012,7 +2016,14 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
         _cleaned = clean_story(_p, tab=_tab) if _p else None
         if _cleaned and _belongs_on_tab(_tab, _cleaned):
             _candidates.append(_cleaned)
+    if _tab == 'local':
+        _before = len(_candidates)
+        _candidates = _local_quality_filter(_candidates)
+        if _before != len(_candidates):
+            print(f"  [local-quality] dropped {_before - len(_candidates)} sub-{LOCAL_MIN_VIEWS}-view candidates", file=sys.stderr)
     _current = _existing.get(_tab, {}).get('stories', []) or []
+    if _tab == 'local':
+        _current = _local_quality_filter(_current)
     # Per-tab age cap enforced at velocity-hold level — drops stories beyond cap
     # even if they show proven 4h-delta growth from prior snapshots.
     _backfill_age = _BACKFILL_AGE_BY_TAB.get(_tab, _TAB_FLOOR_AGE_HOURS)
@@ -2028,6 +2039,8 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
     # Elon's hard cap == soft cap (12h), so Pass 2 doesn't loosen Elon. Other tabs
     # extend to 48h (72h for local) as a last resort to hold the floor.
     _backfill_pool = _current + (_existing.get(_tab, {}).get('earlier', []) or [])
+    if _tab == 'local':
+        _backfill_pool = _local_quality_filter(_backfill_pool)
     _hard_cap = TAB_HARD_CAP.get(_tab, DEFAULT_HARD_CAP_H)
     if len(_picked) < _TAB_FLOOR:
         _picked = _topup_to_floor(_picked, _backfill_pool,

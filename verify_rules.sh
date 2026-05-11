@@ -135,8 +135,16 @@ check "freshness:reference-24h-comedy"  parse_grok.py    "'comedy':\s*24"       
 # Previously two tables existed and disagreed (elon=96 vs elon=12), leaking 25h-old
 # Elon posts. Lock the values in TAB_AGE_OVERRIDE so any future loosening trips this.
 check "freshness:tab-age-elon-12h"      parse_grok.py    "'elon':\s*12"                                        exists
+check "freshness:elon-hard-cap-24h"     parse_grok.py    "TAB_HARD_CAP.*\n.*'elon':\s*24|'elon':\s*24"         exists
 check "freshness:hard-expire-sweep"     parse_grok.py    "_final_hard_expire"                                  exists
 check "freshness:rebuild-age-check"     parse_grok.py    "_rebuild_fresh|REBUILD-SKIP"                         exists
+# 2026-05-10: Local min-views threshold (user: "Drake's at 3382 views, really?")
+check "quality:local-min-views"         parse_grok.py    "LOCAL_MIN_VIEWS\s*=\s*10000"                         exists
+# 2026-05-10: Semantic dedup regex fix — old regex matched inner array only, missing dups.
+check "qc:semantic-dedup-pair-regex"    claude_qc.sh     "pair_re\s*=\s*re\.compile"                           exists
+# 2026-05-10: Floor list includes Elon, excludes Local
+check "floor:elon-in-floor-tabs"        claude_qc.sh     "FLOOR_TABS.*'elon'"                                  exists
+check "floor:local-not-in-floor-tabs"   claude_qc.sh     "FLOOR_TABS\s*=\s*\([^)]*'local'"                     missing
 # Use Python to check every curation.curate() call has max_age_h argument.
 # Skips comments. Walks paren-matching for multi-line calls.
 if python3 -c "

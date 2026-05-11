@@ -55,10 +55,14 @@ for tab in ('world','usa'):
     try:
         r = json.loads(urllib.request.urlopen(req, timeout=20).read())
         text = r.get("content",[{}])[0].get("text","[]").strip()
-        # Extract JSON array
+        # Extract JSON array of pairs. Previous regex r'\[[^\]]*\]' was buggy:
+        # for input "[[1,3],[2,4]]" it matched only "[1,3]" (the inner array),
+        # so pairs became [1,3] and isinstance(1,list) failed silently — no
+        # dedup ever happened. Fix: pull ALL "[a,b]" inner pairs explicitly.
+        # 2026-05-10: World tab was showing 3 Iran-ceasefire dups despite this code.
         import re
-        m = re.search(r'\[[^\]]*\]', text, re.DOTALL)
-        pairs = json.loads(m.group(0)) if m else []
+        pair_re = re.compile(r'\[\s*(\d+)\s*,\s*(\d+)\s*\]')
+        pairs = [[int(a), int(b)] for a, b in pair_re.findall(text)]
     except Exception as e:
         print(f"[semantic-dedup] {tab}: API error {e} — skipping", file=sys.stderr)
         continue
@@ -106,7 +110,7 @@ def url_age_h(url):
 # This is the ABSOLUTE max; soft caps (24h preferred) live in parse_grok.py and
 # drive ranking, not blocking. QC only rejects past the hard cap.
 QC_TAB_CAP = {
-    'elon': 12,        # USER-MANDATED HARD CAP — equal to soft. Zero exception.
+    'elon': 24,        # User: prefer 12h, extend to 24h if floor (3) unmet. Hard cap 24.
     'recipe': 48, 'science': 48, 'comedy': 48,
     'allin': 48, 'pods': 48, 'pg6': 48, 'conspiracy': 48,
     'local': 72,       # OC content sparse, wider fallback OK
@@ -139,18 +143,23 @@ if qc_modified:
     with open('stories.json','w') as f: json.dump(d, f, indent=2)
     print("[claude-qc] stories.json updated (hard-expire sweep)")
 
-# ---- Check 1: 3-story floor on every tab except Elon ----
-# User mandate (2026-05-10): "Just force three-story floor." Elon is exempt
-# because the user wants all of his latest posts in the last 4 hours, however
-# many that is — the floor concept doesn't apply.
+# ---- Check 1: 3-story floor on every tab except Local ----
+# User mandate (2026-05-10): "Just force three-story floor."
+# UPDATED (2026-05-10 later): "Elon... posting at least three of his stories in
+# the last twelve hours. If not, keep going back to twenty four hours." → Elon
+# now has a floor (was previously exempt). Cascade in parse_grok handles the
+# 12h→24h extension via TAB_HARD_CAP['elon']=24.
 #
-# AUTO-PROMOTE strategy (2026-05-10): if a tab is sub-floor but its `earlier`
-# array has unused stories, promote them into `stories` to meet floor instead
-# of blocking the deploy. Reasoning: blocking deploy means PRIOR cron's stale
-# content stays live; auto-promoting at least keeps the tab full and fresh-ish.
-# Only emit a hard error if floor is unmeetable even after promotion (truly
-# no candidates anywhere — that's a real systemic issue worth blocking on).
-FLOOR_TABS = ('world', 'usa', 'local', 'business', 'sports', 'pods', 'allin',
+# Local is REMOVED from floor: user feedback "World/Business/Local flexible
+# count — 1-3 stories based on quality, NEVER pad". When the user complained
+# "Drake's at 3382 views, really?" they're saying Local should show fewer
+# stories rather than pad with low-velocity content. The min-views filter in
+# parse_grok.py drops sub-10k-view OC content; whatever's left is what shows.
+#
+# AUTO-PROMOTE strategy: if a tab is sub-floor but its `earlier` array has
+# unused stories, promote them into `stories` to meet floor instead of blocking
+# the deploy. Only hard-errors if floor truly unmeetable (no candidates anywhere).
+FLOOR_TABS = ('world', 'usa', 'business', 'sports', 'elon', 'pods', 'allin',
               'msm', 'conspiracy', 'pg6', 'comedy', 'recipe', 'top', 'science')
 floor_modified = False
 for tab in FLOOR_TABS:
