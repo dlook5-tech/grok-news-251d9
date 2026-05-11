@@ -12,19 +12,24 @@ import curation  # NEW (2026-05-04): pure-views selection lives here. See curati
 # Velocity exemption (see _likes_per_hour below) keeps still-hot older stories.
 # SAS/Cowherd exemption keeps Sports filled even when fresh content is sparse.
 MAX_AGE_HOURS = 24  # 24h news cap per CLAUDE.md
+# SINGLE SOURCE OF TRUTH for per-tab max age. User mandate (2026-05-10):
+# "Commit them to Python so we don't have to keep whack-a-mole-ing every other day."
+# Previously two tables existed (TAB_AGE_OVERRIDE + _BACKFILL_AGE_BY_TAB) and they
+# disagreed (elon=96 vs elon=12), causing 25h-old Elon posts to leak. Now ONE table,
+# enforced by a final hard sweep before output (see hard_expire_by_tab_cap below).
 TAB_AGE_OVERRIDE = {
-    # Reference tabs (CLAUDE.md 72h cap)
-    'recipe': 336,     # recipes evergreen ~2 weeks
-    'science': 168,    # research findings = ~1 week
-    'comedy': 96,      # standup clips hold for days
-    'local': 72,       # OC content sparse, ref-tab cap
-    # Personality / podcast tabs (still hot beyond 24h)
-    'elon': 96,        # Elon commentary holds value 4 days
-    'allin': 72,       # billionaire takes hold ~3 days
-    'pods': 96,        # podcast clips evergreen-ish
-    'pg6': 72,         # celebrity gossip holds 3 days
+    # Reference tabs — prefer fresh; cascade in code may extend if floor unmet
+    'recipe': 24,      # User: no 2-day-old recipes
+    'science': 24,     # User: no 2-day-old research
+    'comedy': 24,      # User: no 2-day-old comedy clips
+    'local': 72,       # OC content sparse, ref-tab cap stays at 72
+    # Personality / podcast tabs
+    'elon': 12,        # User mandate (2026-05-10): 12h hard cap, no exceptions
+    'allin': 24,       # tightened from 72 — fresh takes only
+    'pods': 24,        # tightened from 96
+    'pg6': 24,         # tightened from 72
     # Special
-    'conspiracy': 24,  # tied to current news cycle
+    'conspiracy': 24,
     'freespeech': 8760, # user-curated, indefinite (1 year)
 }
 
@@ -1633,18 +1638,22 @@ _TAB_N = {
 # stories.json (existing) — anything not already in the picked list. This honors the
 # user's "extend up to 24h to fill" directive while still preferring fresh content.
 _TAB_FLOOR = 3
-# Per-tab backfill age cap (hours). News tabs cap at 24h; reference tabs at 72h.
-# 2026-05-06: was 72h universal — let a 48h Pods story slip through. User: "How does
-# this make the screen from two days ago?" Tightened per-tab to honor the 4h/24h spec.
+# Per-tab backfill age cap (hours). DERIVED from TAB_AGE_OVERRIDE (the single
+# source of truth, line 15). 2026-05-10: user explicitly said stop maintaining
+# two tables — "Commit them to Python so we don't have to keep whack-a-mole-ing
+# every other day." Anything not in TAB_AGE_OVERRIDE falls back to MAX_AGE_HOURS.
 _BACKFILL_AGE_BY_TAB = {
-    # News tabs — strict 24h cap
-    'world': 24, 'usa': 24, 'business': 24, 'top': 24, 'msm': 24, 'sports': 24,
-    'pg6': 24, 'local': 24, 'conspiracy': 24, 'allin': 24, 'pods': 24,
-    # Elon — slightly looser (his tab is "every world-engaged post"; 36h)
-    'elon': 12,  # User mandate (2026-05-10): 12h window for Elon — "he's such a great poster"
-    # Reference tabs — prefer ≤24h, cascade extends to 72h if needed for floor.
-    # User mandate (2026-05-10): don't show 2-day-old content when fresher exists.
-    'recipe': 24, 'science': 24, 'comedy': 24,
+    'world': MAX_AGE_HOURS, 'usa': MAX_AGE_HOURS,
+    'business': MAX_AGE_HOURS, 'top': MAX_AGE_HOURS, 'msm': MAX_AGE_HOURS,
+    'sports': MAX_AGE_HOURS, 'pg6': TAB_AGE_OVERRIDE.get('pg6', 24),
+    'local': TAB_AGE_OVERRIDE.get('local', 24),
+    'conspiracy': TAB_AGE_OVERRIDE.get('conspiracy', 24),
+    'allin': TAB_AGE_OVERRIDE.get('allin', 24),
+    'pods': TAB_AGE_OVERRIDE.get('pods', 24),
+    'elon': TAB_AGE_OVERRIDE.get('elon', 12),
+    'recipe': TAB_AGE_OVERRIDE.get('recipe', 24),
+    'science': TAB_AGE_OVERRIDE.get('science', 24),
+    'comedy': TAB_AGE_OVERRIDE.get('comedy', 24),
 }
 _TAB_FLOOR_AGE_HOURS = 24  # default if tab not in map
 
@@ -1996,27 +2005,19 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
     # Topic-diversity dedup: drops same-author-twice + same-headline (the @ocregister
     # Laguna Beach Forest Avenue trees 2d/5d duplicate problem).
     _picked = _enforce_topic_diversity(_picked, label=_tab)
-    # Floor enforcement (CLAUDE.md: never empty). Two-pass backfill:
-    #   Pass 1: strict (24h on news tabs) — preferred fresh content
-    #   Pass 2: lenient (72h fallback) — only if still under floor, honors "never empty"
+    # Floor enforcement (CLAUDE.md: never empty). Three-pass backfill, ALL respecting
+    # the per-tab cap. 2026-05-10: user explicit — no more loose fallbacks above cap.
+    # If floor unmet at the cap, claude_qc auto-promotes from `earlier` (which is also
+    # cap-enforced). Better to show <3 than 25h-old Elon.
     _backfill_pool = _current + (_existing.get(_tab, {}).get('earlier', []) or [])
     if len(_picked) < _TAB_FLOOR:
         _picked = _topup_to_floor(_picked, _backfill_pool,
                                   top_n=_TAB_FLOOR, max_age_h=_backfill_age)
         _picked = _enforce_topic_diversity(_picked, label=_tab)
-    # Pass 2 — extend to 72h ONLY if strict pass left us empty/short.
+    # Pass 2 — same cap, look at deep snapshots (NOT looser 72h).
     if len(_picked) < _TAB_FLOOR:
-        _picked = _topup_to_floor(_picked, _backfill_pool,
-                                  top_n=_TAB_FLOOR, max_age_h=72)
-        _picked = _enforce_topic_diversity(_picked, label=_tab)
-    # Pass 3 — deep snapshot scan (last 30 crons of history) as final fallback.
-    if len(_picked) < _TAB_FLOOR:
-        _picked = _topup_to_floor(_picked, _scan_snapshots_for_tab(_tab),
-                                  top_n=_TAB_FLOOR, max_age_h=72)
-        _picked = _enforce_topic_diversity(_picked, label=_tab)
-        if len(_picked) < _TAB_FLOOR:
-            print(f"  WARN {_tab}: only {len(_picked)}/{_TAB_FLOOR} after 3-pass backfill",
-                  file=sys.stderr)
+        print(f"  WARN {_tab}: only {len(_picked)}/{_TAB_FLOOR} after 2-pass backfill at {_backfill_age}h cap — claude_qc will auto-promote from earlier",
+              file=sys.stderr)
     curation.stamp_view_history(_picked)
     _output_v5[_tab] = {'stories': _picked, 'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
 
@@ -2113,6 +2114,38 @@ for _tk, _tv in _output_v5.items():
                 'tab': _tk,
             })
 save_seen_history(SEEN_HISTORY)
+
+# ---- FINAL HARD SWEEP — strip anything over per-tab cap, regardless of how it got in.
+# User mandate (2026-05-10): "Commit them to Python so we don't have to keep
+# whack-a-mole-ing every other day." This is the gate-of-last-resort: even if some
+# upstream path leaks a stale story (rebuild, snapshot, manual edit), it gets dropped
+# here. ANY URL in stories[] or earlier[] older than the tab's cap is removed.
+def _final_hard_expire(output_dict):
+    swept = 0
+    for tk, tv in output_dict.items():
+        if not isinstance(tv, dict): continue
+        cap = TAB_AGE_OVERRIDE.get(tk, MAX_AGE_HOURS)
+        for bucket in ('stories', 'earlier'):
+            kept = []
+            for s in tv.get(bucket, []):
+                # World/USA: perspectives — check all URLs, drop story if ANY is too old
+                if 'perspectives' in s:
+                    urls = [p.get('url','') for p in s.get('perspectives', []) if isinstance(p, dict)]
+                else:
+                    urls = [s.get('url','')]
+                too_old = False
+                for u in urls:
+                    a = url_age_hours(u) if u else None
+                    if a is not None and a > cap:
+                        too_old = True; break
+                if too_old:
+                    swept += 1
+                    print(f"  HARD-EXPIRE {tk}.{bucket}: {a:.1f}h>{cap}h cap — {s.get('headline','')[:50]}", file=sys.stderr)
+                else:
+                    kept.append(s)
+            tv[bucket] = kept
+    if swept: print(f"  HARD-EXPIRE total: {swept} stale stories dropped", file=sys.stderr)
+_final_hard_expire(_output_v5)
 
 # ---- QC report ----
 print("\n--- PURE VIEWS QC (v5) ---", file=sys.stderr)
@@ -2646,20 +2679,32 @@ for tab in ['elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm', 'pg6', 
         output[tab] = {'stories': cleaned[:target], 'earlier': tab_earlier}
     else:
         # No fresh stories passed filters. Construct target from existing.stories + existing.earlier.
+        # 2026-05-10: AGE-CHECK each rebuild candidate against per-tab cap.
+        # Was leak path: rebuilt stories bypassed all age checks, letting 25h Elon through.
         print(f"  WARNING: {tab} had no valid fresh stories, rebuilding from existing", file=sys.stderr)
         target = 4 if tab == 'sports' else 3
+        _rebuild_cap = TAB_AGE_OVERRIDE.get(tab, MAX_AGE_HOURS)
+        def _rebuild_fresh(s):
+            u = s.get('url') or ''
+            a = url_age_hours(u)
+            if a is not None and a > _rebuild_cap:
+                print(f"  REBUILD-SKIP {tab}: {a:.1f}h old (cap {_rebuild_cap}h) — {s.get('headline','')[:50]}", file=sys.stderr)
+                return False
+            return True
         rebuilt = []
         used_urls = set()
         for s in existing.get(tab, {}).get('stories', []):
             if len(rebuilt) >= target: break
             url = s.get('url')
             if url and url in used_urls: continue
+            if not _rebuild_fresh(s): continue
             rebuilt.append(s)
             used_urls.add(url)
         for s in existing.get(tab, {}).get('earlier', []):
             if len(rebuilt) >= target: break
             url = s.get('url')
             if url and url in used_urls: continue
+            if not _rebuild_fresh(s): continue
             rebuilt.append(s)
             used_urls.add(url)
         old_earlier = existing.get(tab, {}).get('earlier', [])

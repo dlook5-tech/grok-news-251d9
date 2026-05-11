@@ -88,8 +88,11 @@ warnings = []
 with open('stories.json') as f:
     d = json.load(f)
 
-# ---- Check 0: Elon posts must all be ≤4 hours old ----
-# User mandate: "Elon just needs to post all of his latest stories in the last four hours."
+# ---- Check 0: per-tab age cap enforcement (defense in depth) ----
+# parse_grok.py has its own final hard sweep; this is a belt-and-suspenders check
+# in case anything leaks through. Anything over the cap gets DROPPED here, not just
+# warned. User mandate (2026-05-10): "Commit them to Python so we don't have to
+# keep whack-a-mole-ing every other day."
 import re, datetime
 def url_age_h(url):
     if not url: return None
@@ -99,10 +102,39 @@ def url_age_h(url):
     ts_ms = (sid >> 22) + 1288834974657
     return (datetime.datetime.now() - datetime.datetime.fromtimestamp(ts_ms/1000)).total_seconds()/3600
 
-for s in d.get('elon', {}).get('stories', []):
-    age = url_age_h(s.get('url',''))
-    if age is not None and age > 12:
-        warnings.append(f"elon: '{s.get('headline','')[:50]}' is {age:.1f}h old (Elon cap is 12h)")
+# Cap per tab — keep in sync with TAB_AGE_OVERRIDE in parse_grok.py
+QC_TAB_CAP = {
+    'elon': 12, 'recipe': 24, 'science': 24, 'comedy': 24,
+    'allin': 24, 'pods': 24, 'pg6': 24, 'local': 72,
+    'conspiracy': 24,
+    # default for other tabs: 24h (news standard)
+}
+qc_modified = False
+for tk, tv in d.items():
+    if not isinstance(tv, dict): continue
+    cap = QC_TAB_CAP.get(tk, 24)
+    for bucket in ('stories', 'earlier'):
+        kept = []
+        for s in tv.get(bucket, []):
+            if 'perspectives' in s:
+                urls = [p.get('url','') for p in s.get('perspectives', []) if isinstance(p, dict)]
+            else:
+                urls = [s.get('url','')]
+            too_old = False; max_age = 0
+            for u in urls:
+                a = url_age_h(u) if u else None
+                if a is not None and a > max_age: max_age = a
+                if a is not None and a > cap:
+                    too_old = True
+            if too_old:
+                warnings.append(f"QC-EXPIRE {tk}.{bucket}: {max_age:.1f}h>{cap}h cap — '{s.get('headline','')[:50]}'")
+                qc_modified = True
+            else:
+                kept.append(s)
+        tv[bucket] = kept
+if qc_modified:
+    with open('stories.json','w') as f: json.dump(d, f, indent=2)
+    print("[claude-qc] stories.json updated (hard-expire sweep)")
 
 # ---- Check 1: 3-story floor on every tab except Elon ----
 # User mandate (2026-05-10): "Just force three-story floor." Elon is exempt

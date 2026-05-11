@@ -127,10 +127,16 @@ check "prompt:pure-views-spec"          update.sh        "PURE VIEWS SPEC"      
 # 2026-05-10: Reference tabs tightened from 72h → 24h after Comedy showed a 2d-old
 # story. Cascade still extends to 72h internally if floor unmet, but the configured
 # preference is 24h.
-check "freshness:news-tabs-24h"         parse_grok.py    "'world':\s*24"                                       exists
+check "freshness:news-tabs-24h"         parse_grok.py    "'world':\s*(24|MAX_AGE_HOURS)"                       exists
 check "freshness:reference-24h-recipe"  parse_grok.py    "'recipe':\s*24"                                      exists
 check "freshness:reference-24h-science" parse_grok.py    "'science':\s*24"                                     exists
 check "freshness:reference-24h-comedy"  parse_grok.py    "'comedy':\s*24"                                      exists
+# 2026-05-10: TAB_AGE_OVERRIDE single source of truth — anti-leak audit.
+# Previously two tables existed and disagreed (elon=96 vs elon=12), leaking 25h-old
+# Elon posts. Lock the values in TAB_AGE_OVERRIDE so any future loosening trips this.
+check "freshness:tab-age-elon-12h"      parse_grok.py    "'elon':\s*12"                                        exists
+check "freshness:hard-expire-sweep"     parse_grok.py    "_final_hard_expire"                                  exists
+check "freshness:rebuild-age-check"     parse_grok.py    "_rebuild_fresh|REBUILD-SKIP"                         exists
 # Use Python to check every curation.curate() call has max_age_h argument.
 # Skips comments. Walks paren-matching for multi-line calls.
 if python3 -c "
