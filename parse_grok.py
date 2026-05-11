@@ -1515,14 +1515,23 @@ _WIRE_COPY_HANDLES = {  # mainstream wire copy when their post is just a headlin
 
 def _is_wire_copy(persp):
     """True if perspective is bare wire-copy announcement (no original take).
-    Conservative: only flags when handle is known wire-copy source AND body starts
-    with a wire-copy prefix. Doesn't flag analysis/commentary from same handles."""
+    Requires:
+      1. Handle is in _WIRE_COPY_HANDLES (major news outlets)
+      2. Body starts with a wire-copy prefix (BREAKING:, JUST IN:, NEW:, etc.)
+      3. Body AFTER the prefix is SHORT (<60 chars) — bare announcement.
+    Substantive news scoops from same handles that happen to use BREAKING:
+    as a prefix and then provide real content/context still pass.
+    User caught (2026-05-11): @FoxNews / @AP scoops were getting rejected for
+    just starting with NEW:/JUST IN:, dropping the whole story for <3 persp."""
     handle = (persp.get('handle','') or '').lower().lstrip('@').strip()
     text = (persp.get('text') or persp.get('quote') or persp.get('body') or '').strip().lower()
     if not handle or not text: return False
     if handle not in _WIRE_COPY_HANDLES: return False
     for prefix in _WIRE_COPY_PREFIXES:
-        if text.startswith(prefix): return True
+        if text.startswith(prefix):
+            rest = text[len(prefix):].strip()
+            if len(rest) < 60:  # bare announcement, no substantive content after
+                return True
     return False
 
 # 2026-05-11 user mandate: "Make sure, whichever post you choose, they don't
