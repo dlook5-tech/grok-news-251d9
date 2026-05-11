@@ -136,14 +136,18 @@ check "freshness:reference-24h-comedy"  parse_grok.py    "'comedy':\s*24"       
 # Elon posts. Lock the values in TAB_AGE_OVERRIDE so any future loosening trips this.
 check "freshness:tab-age-elon-12h"      parse_grok.py    "'elon':\s*12"                                        exists
 check "freshness:elon-hard-cap-24h"     parse_grok.py    "TAB_HARD_CAP.*\n.*'elon':\s*24|'elon':\s*24"         exists
+check "freshness:pods-soft-12h"         parse_grok.py    "'pods':\s*12"                                        exists
+check "freshness:pods-hard-24h"         parse_grok.py    "'pods':\s*24"                                        exists
+# 2026-05-10 evening: Elon no-promo filter (user: "No promo post like Drake's")
+check "elon:no-promo-filter"            parse_grok.py    "_is_elon_promo|_ELON_PROMO_KEYWORDS"                 exists
 check "freshness:hard-expire-sweep"     parse_grok.py    "_final_hard_expire"                                  exists
 check "freshness:rebuild-age-check"     parse_grok.py    "_rebuild_fresh|REBUILD-SKIP"                         exists
 # 2026-05-10: Local min-views threshold (user: "Drake's at 3382 views, really?")
 check "quality:local-min-views"         parse_grok.py    "LOCAL_MIN_VIEWS\s*=\s*10000"                         exists
 # 2026-05-10: Semantic dedup regex fix — old regex matched inner array only, missing dups.
 check "qc:semantic-dedup-pair-regex"    claude_qc.sh     "pair_re\s*=\s*re\.compile"                           exists
-# 2026-05-10: Floor list includes Elon, excludes Local
-check "floor:elon-in-floor-tabs"        claude_qc.sh     "FLOOR_TABS.*'elon'"                                  exists
+# 2026-05-10: Floor list excludes Elon and Local (both user mandates — quality > pad)
+check "floor:elon-not-in-floor-tabs"    claude_qc.sh     "FLOOR_TABS\s*=\s*\([^)]*'elon'"                      missing
 check "floor:local-not-in-floor-tabs"   claude_qc.sh     "FLOOR_TABS\s*=\s*\([^)]*'local'"                     missing
 # Use Python to check every curation.curate() call has max_age_h argument.
 # Skips comments. Walks paren-matching for multi-line calls.

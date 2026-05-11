@@ -26,7 +26,9 @@ TAB_AGE_OVERRIDE = {
     'recipe': 24, 'science': 24, 'comedy': 24,
     'local': 24,
     'elon': 12,        # User mandate (2026-05-10): "post all his latest in last 12 hours"
-    'allin': 24, 'pods': 24, 'pg6': 24, 'conspiracy': 24,
+    'pods': 12,        # 2026-05-10 (later): user "1d old posts? are you telling me there's
+                       # no other podcast posts today?" Prefer fresh clips ≤12h.
+    'allin': 24, 'pg6': 24, 'conspiracy': 24,
     'freespeech': 8760,
 }
 TAB_HARD_CAP = {
@@ -36,9 +38,10 @@ TAB_HARD_CAP = {
     # hard cap is now 24h (was 12h). 12h soft + 24h hard means cascade prefers ≤12h
     # but extends to ≤24h to hit floor. Anything >24h still gets swept.
     'elon': 24,
+    'pods': 24,        # tightened from 48 — user "no 1d old podcast posts"
     'recipe': 48, 'science': 48, 'comedy': 48,
     'local': 72,       # OC content sparse — needs the wider fallback
-    'allin': 48, 'pods': 48, 'pg6': 48, 'conspiracy': 48,
+    'allin': 48, 'pg6': 48, 'conspiracy': 48,
     'freespeech': 8760,
     # default for unlisted tabs (world/usa/business/sports/top/msm): 48h hard
 }
@@ -1623,9 +1626,36 @@ _NON_LOCAL_OUTLETS = {
     'bbcworld','usatoday','axios','politico','thehill','bloomberg',
 }
 
+# User mandate (2026-05-10 evening): "No promo post like Drake's. Post everything
+# except posts where he's marketing one of his companies." Heuristic keyword filter
+# applied to Elon posts as a safety net even if Grok prompt fails.
+_ELON_PROMO_KEYWORDS = {
+    # Tesla
+    'cybertruck', 'cybersuv', 'model y', 'model x', 'model s', 'model 3',
+    'roadster', 'optimus', 'fsd', 'full self-driving', 'tesla bot',
+    'gigafactory', 'megapack', 'powerwall', 'tesla update',
+    # SpaceX
+    'falcon 9', 'falcon heavy', 'starship', 'starlink', 'dragon capsule',
+    'launch attempt', 'liftoff', 'static fire',
+    # xAI / Grok
+    'grok 3', 'grok 4', 'grok update', 'colossus', 'xai release',
+    # X platform
+    'x premium', 'x pro', 'x.com feature', 'try x', 'new on x',
+    # Other companies
+    'neuralink update', 'boring company',
+    # Generic marketing language
+    'preorder', 'available now', 'launching today', 'now shipping',
+    'pre-order', 'on sale', 'subscribe to',
+}
+
+def _is_elon_promo(story):
+    """True if Elon post looks like company marketing (drop it)."""
+    text = ((story.get('headline') or '') + ' ' + (story.get('body') or '')).lower()
+    return any(kw in text for kw in _ELON_PROMO_KEYWORDS)
+
 def _belongs_on_tab(tab, story):
     """True if story matches the tab's geographical/format scope. NOT a curation rule —
-    a definitional rule (Local = SoCal-only)."""
+    a definitional rule (Local = SoCal-only). Also enforces Elon no-promo rule."""
     if not isinstance(story, dict):
         return False
     if tab == 'local':
@@ -1635,6 +1665,9 @@ def _belongs_on_tab(tab, story):
         h = (story.get('handle') or '').lower().lstrip('@')
         if h in _NON_LOCAL_OUTLETS:
             return False
+    if tab == 'elon' and _is_elon_promo(story):
+        print(f"  [elon-no-promo] dropped: {story.get('headline','')[:60]}", file=sys.stderr)
+        return False
     return True
 
 # Per-tab story counts. Elon stays high because user wants "every world-engaged Elon post."

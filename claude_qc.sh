@@ -143,23 +143,26 @@ if qc_modified:
     with open('stories.json','w') as f: json.dump(d, f, indent=2)
     print("[claude-qc] stories.json updated (hard-expire sweep)")
 
-# ---- Check 1: 3-story floor on every tab except Local ----
+# ---- Check 1: 3-story floor (Local and Elon excluded) ----
 # User mandate (2026-05-10): "Just force three-story floor."
-# UPDATED (2026-05-10 later): "Elon... posting at least three of his stories in
-# the last twelve hours. If not, keep going back to twenty four hours." → Elon
-# now has a floor (was previously exempt). Cascade in parse_grok handles the
-# 12h→24h extension via TAB_HARD_CAP['elon']=24.
 #
-# Local is REMOVED from floor: user feedback "World/Business/Local flexible
-# count — 1-3 stories based on quality, NEVER pad". When the user complained
-# "Drake's at 3382 views, really?" they're saying Local should show fewer
-# stories rather than pad with low-velocity content. The min-views filter in
-# parse_grok.py drops sub-10k-view OC content; whatever's left is what shows.
+# Elon is EXCLUDED from floor (per user 2026-05-10 evening message):
+#   "post everything except posts where he's marketing one of his companies
+#    that was posted in the last 12 hours. If there's been no posts, extend
+#    to 24 hours."
+# Translation: aim for 3 Elon stories in 12h, extend cascade to 24h if needed,
+# but if he genuinely hasn't posted (0 stories) — accept that, don't block
+# deploy. The cascade in parse_grok (TAB_HARD_CAP['elon']=24) handles the
+# 12h→24h extension. claude_qc just doesn't error if Elon ends up empty.
+#
+# Local is EXCLUDED: user feedback "World/Business/Local flexible count — 1-3
+# stories based on quality, NEVER pad". Min-views filter in parse_grok.py
+# drops sub-10k-view OC content; whatever's left is what shows.
 #
 # AUTO-PROMOTE strategy: if a tab is sub-floor but its `earlier` array has
 # unused stories, promote them into `stories` to meet floor instead of blocking
-# the deploy. Only hard-errors if floor truly unmeetable (no candidates anywhere).
-FLOOR_TABS = ('world', 'usa', 'business', 'sports', 'elon', 'pods', 'allin',
+# the deploy. Only hard-errors if floor truly unmeetable.
+FLOOR_TABS = ('world', 'usa', 'business', 'sports', 'pods', 'allin',
               'msm', 'conspiracy', 'pg6', 'comedy', 'recipe', 'top', 'science')
 floor_modified = False
 for tab in FLOOR_TABS:

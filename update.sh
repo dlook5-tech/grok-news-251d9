@@ -289,11 +289,25 @@ SUGGESTED HANDLES (prefer these — but pick whoever has the most views, even if
 
 PROCESS:
 1. x_search broadly: "(Iran OR Israel OR China OR Russia OR Ukraine OR Europe OR Middle East OR war OR geopolitics) lang:en since:$YESTERDAY", mode:Top, limit:50
-2. Pick the 3 highest-view DIFFERENT EVENTS. Critical: "US-Iran Ceasefire" and
-   "Iran Responds to US Peace Proposal" are the SAME event — count as 1 topic, not 2.
-   Pick events that are genuinely DIFFERENT news (e.g., Iran-US deal AND
-   Israeli strikes in Lebanon AND North Korea constitution change — three
-   different events).
+2. Pick the 3 highest-view stories from 3 SEPARATE COUNTRIES/EVENTS.
+
+   ⚠️ ABSOLUTE RULE — IF YOU RETURN TWO STORIES ABOUT THE SAME EVENT, YOUR
+   OUTPUT IS REJECTED. The user has caught Iran×3 framings (different headlines,
+   same news event) THREE TIMES NOW. Stop.
+
+   Test before returning: name the EVENT each story is about (one short noun
+   phrase, e.g. "US-Iran ceasefire", "Israel-Lebanon strikes", "China trade
+   deal"). If two of your three story names refer to the same underlying news
+   event, the output is wrong — pick a different second/third story. Examples
+   of REJECTED dup pairs the user has caught:
+     - "US-Iran Ceasefire Negotiations" + "Trump Rejects Iran's Response to
+       US Peace Proposal" + "US Rejects Iran's Ceasefire Counterproposal"
+       → ALL THE SAME EVENT (US-Iran negotiations). Pick ONE.
+     - "Iran Responds to US Proposal" + "US Replies to Iran's Counter"
+       → SAME EVENT. Pick ONE.
+
+   The 3 stories must span 3 distinct news events. If only 1 international
+   story is breaking that day, return 1 story (not 3 framings of it).
 3. For each topic, run 3 broad searches to find ANY post with ≥10 views from each ideological side:
    - Conservative side: "(topic_keywords) (republican OR conservative OR right OR maga OR trump OR gop) min_faves:1 lang:en", mode:Top, limit:30
    - Democrat side:    "(topic_keywords) (democrat OR liberal OR left OR progressive OR resist) min_faves:1 lang:en", mode:Top, limit:30
@@ -379,13 +393,25 @@ INCLUDE (one block per qualifying post):
 - Comments on someone else's reporting / leak / investigation
 - Reactions to current events that go beyond emoji or single-word
 
-EXCLUDE (skip these — they're not what the user wants):
-- Pure Tesla product announcements ("Cybertruck delivery", "Model Y update")
-- Pure SpaceX launch updates ("Falcon 9 launched", "Starship test")
-- X platform marketing ("Try X Premium", "New X feature")
-- Pure ads / corporate boilerplate
-- Pure text replies WITHOUT visible parent context
-- One-word reactions, emoji-only ("true", "agreed", "🔥")
+EXCLUDE — ABSOLUTE NO-PROMO RULE (user mandate 2026-05-10 evening):
+"No promo post like Drake's. Post everything except posts where he's marketing
+one of his companies."
+- Tesla / Cybertruck / Model Y / FSD / Optimus / Roadster announcements (DROP)
+- SpaceX / Falcon 9 / Starship / Starlink launch updates (DROP)
+- xAI / Grok / Colossus product news (DROP)
+- X platform / X Premium / X feature marketing (DROP)
+- Boring Company / Neuralink product news (DROP)
+- ANY post that promotes/markets his companies (DROP) — even if substantive,
+  even if quote-tweeting praise, even if announcing new feature
+- Pure text replies WITHOUT visible parent context (DROP)
+- One-word reactions, emoji-only ("true", "agreed", "🔥") (DROP)
+
+WINDOW (user mandate 2026-05-10 evening):
+"His starter window is 12 hours. If there's been no posts, extend to 24 hours."
+- PRIMARY search: "from:elonmusk since:<12h ago>" — fetch all his posts in
+  the last 12 hours, filter out promo per above, return whatever's left.
+- ONLY IF that returns 0 posts: extend to 24h.
+- DO NOT pull anything past 24h.
 
 APPROVED HANDLE: @elonmusk only. Each post must be a DIFFERENT URL.
 
