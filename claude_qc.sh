@@ -162,8 +162,11 @@ if qc_modified:
 # AUTO-PROMOTE strategy: if a tab is sub-floor but its `earlier` array has
 # unused stories, promote them into `stories` to meet floor instead of blocking
 # the deploy. Only hard-errors if floor truly unmeetable.
-FLOOR_TABS = ('world', 'usa', 'business', 'sports', 'pods', 'allin',
+FLOOR_TABS = ('world', 'usa', 'business', 'sports', 'allin',
               'msm', 'conspiracy', 'pg6', 'comedy', 'recipe', 'top', 'science')
+# Pods removed (2026-05-10 evening): if Grok can't find 3 fresh pod clips ≤24h,
+# show 1-2 rather than block deploy. User's "no 1d old" mandate means we can't
+# pad with 25h+ stuff; if there's no fresh, show fewer. Same logic as elon/local.
 floor_modified = False
 for tab in FLOOR_TABS:
     stories = d.get(tab, {}).get('stories', [])
@@ -181,13 +184,16 @@ for tab in FLOOR_TABS:
             promoted += 1
         if promoted:
             d[tab]['stories'] = stories
-            # Remove promoted items from earlier
             d[tab]['earlier'] = [e for e in earlier if e.get('url') not in seen_urls or e in stories[:-promoted]]
             warnings.append(f"{tab}: promoted {promoted} from earlier to meet 3-floor (was {n}/3)")
             floor_modified = True
-        if len(stories) < 3:
-            # Genuine systemic issue — block deploy
-            errors.append(f"{tab}: {len(stories)}/3 stories — below floor (no earlier fillers available)")
+        # POST-PROMOTE: still under floor → tier the response
+        # 0 stories: HARD BLOCK (truly empty = real systemic issue)
+        # 1-2 stories: WARN ONLY (better to ship partial than block on stale)
+        if len(stories) == 0:
+            errors.append(f"{tab}: 0/3 stories — empty tab, blocking deploy")
+        elif len(stories) < 3:
+            warnings.append(f"{tab}: {len(stories)}/3 stories — under floor but shipping (better than stale)")
 if floor_modified:
     with open('stories.json','w') as f: json.dump(d, f, indent=2)
     print("[claude-qc] stories.json updated (floor auto-promotion)")
