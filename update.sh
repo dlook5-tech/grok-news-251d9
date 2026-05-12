@@ -155,6 +155,19 @@ post as-is — no fake QT fields, no fabrication.
 For World/USA tabs, apply this PER PERSPECTIVE (find QTs of each chosen
 conservative/independent/democrat post separately).
 
+HONESTY SCORING — WHAT TO GRADE (user 2026-05-11):
+Honesty grades the TRUTH of what was said, NOT whether they said it.
+- If the post contains video/audio of the person making the statement
+  (clip embedded in the tweet, screenshot of livestream, etc.), attribution
+  is VERIFIED. Do NOT say "appears fabricated" or "not verifiable" — the
+  video IS the verification. Score the CONTENT: is the claim factual,
+  opinion, exaggerated, false?
+- If the post is a transcript-only quote with no clip → THEN you can flag
+  attribution uncertainty as a factor.
+- Example: a video of Trump saying "You crazy crazy people" → score what
+  he said (a personal insult, opinion-level, ~7/10), NOT "fabricated"
+  (2/10). The video proves attribution.
+
 HONESTY SCORING WHEN A QT/RT IS USED (user mandate 2026-05-11):
 "Grok scores the combined retweet and embedded post for honesty with one score
 (breaks down logic within the notes)."
