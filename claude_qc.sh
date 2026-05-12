@@ -689,6 +689,99 @@ for tab, target in REFILL_TARGETS.items():
 if grok_refill_modified:
     with open('stories.json','w') as f: json.dump(d, f, indent=2)
 
+# ---- Check 6c: HONESTY SANITY CHECK (user 2026-05-12) ----
+# User: "How did 2/10 come to be?... I want some common sense, some AI looking
+# at these things, not just making up a score."
+# Send Claude every honesty score + the post body. Claude flags scores that
+# look wrong (e.g., "fabricated 2/10" when post has a video clip showing the
+# person actually saying it). Python overrides flagged scores.
+if key2:
+    # Collect every (tab, story_index, persp_label or '', body, score, notes)
+    scored = []
+    for tab in REVIEW_TABS:
+        stories = d.get(tab, {}).get('stories', []) or []
+        for i, s in enumerate(stories):
+            if 'perspectives' in s and s.get('perspectives'):
+                for j, p in enumerate(s.get('perspectives', []) or []):
+                    if isinstance(p, dict) and p.get('honesty'):
+                        body = (p.get('text') or p.get('quote') or p.get('body') or '')[:200]
+                        scored.append({'tab': tab, 'idx': i, 'persp': j,
+                                       'label': p.get('label',''), 'handle': p.get('handle',''),
+                                       'body': body, 'honesty': p.get('honesty',''),
+                                       'notes': p.get('notes','')[:200]})
+            elif s.get('honesty'):
+                body = (s.get('body') or '')[:200]
+                scored.append({'tab': tab, 'idx': i, 'persp': None,
+                               'label': '', 'handle': s.get('handle',''),
+                               'body': body, 'honesty': s.get('honesty',''),
+                               'notes': s.get('notes','')[:200]})
+    if scored:
+        # Format for Claude
+        lines = []
+        for k, sc in enumerate(scored):
+            label = f"/{sc['label']}" if sc['label'] else ''
+            lines.append(f"S{k} [{sc['tab']}{label}] @{sc['handle']} score={sc['honesty']} "
+                         f"notes='{sc['notes']}' body='{sc['body']}'")
+        prompt = (
+            "Honesty-score sanity check. Each line is a story/perspective with "
+            "a score Grok assigned (0-10). Flag any that look wrong, e.g.:\n"
+            "- Score says 'fabricated/unverifiable' but body has a video clip "
+            "of the person actually saying it (attribution is verified)\n"
+            "- Score is way off the content (factual report scored 3, or "
+            "wild conspiracy scored 9)\n"
+            "- Notes contradict the score\n\n"
+            + "\n".join(lines) +
+            "\n\nReturn JSON array of fixes:\n"
+            "  {\"id\": <S_number>, \"new_score\": \"X/10\", \"new_notes\": \"why\"}\n"
+            "Only return entries that need fixing. Empty [] if all reasonable. "
+            "NO PROSE outside JSON."
+        )
+        body_h = json.dumps({"model":"claude-sonnet-4-5","max_tokens":1500,
+                             "messages":[{"role":"user","content":prompt}]}).encode()
+        req_h = urllib.request.Request("https://api.anthropic.com/v1/messages",
+            data=body_h, method="POST",
+            headers={"x-api-key": key2, "anthropic-version":"2023-06-01",
+                     "content-type":"application/json"})
+        try:
+            r_h = json.loads(urllib.request.urlopen(req_h, timeout=45).read())
+            text_h = r_h.get("content",[{}])[0].get("text","[]").strip()
+            import re as _rh
+            m_h = _rh.search(r'\[.*\]', text_h, _rh.DOTALL)
+            fixes = json.loads(m_h.group(0)) if m_h else []
+        except Exception as e:
+            print(f"[honesty-qc] API error {e}", file=sys.stderr)
+            fixes = []
+        honesty_modified = False
+        for fix in fixes:
+            if not isinstance(fix, dict): continue
+            sid = fix.get('id')
+            if not isinstance(sid, int) or sid < 0 or sid >= len(scored): continue
+            sc = scored[sid]
+            new_score = fix.get('new_score', '')
+            new_notes = fix.get('new_notes', '')
+            if not new_score: continue
+            stories = d.get(sc['tab'], {}).get('stories', [])
+            if not (0 <= sc['idx'] < len(stories)): continue
+            target = stories[sc['idx']]
+            if sc['persp'] is not None:
+                persps = target.get('perspectives', []) or []
+                if 0 <= sc['persp'] < len(persps):
+                    persps[sc['persp']]['honesty'] = new_score
+                    if new_notes: persps[sc['persp']]['notes'] = new_notes
+                    honesty_modified = True
+                    print(f"[honesty-qc] {sc['tab']}/{sc['label']} @{sc['handle']}: "
+                          f"{sc['honesty']} → {new_score} ({new_notes[:80]})", file=sys.stderr)
+            else:
+                target['honesty'] = new_score
+                if new_notes: target['notes'] = new_notes
+                honesty_modified = True
+                print(f"[honesty-qc] {sc['tab']} @{sc['handle']}: "
+                      f"{sc['honesty']} → {new_score} ({new_notes[:80]})", file=sys.stderr)
+            warnings.append(f"honesty-qc {sc['tab']} @{sc['handle']}: {sc['honesty']}→{new_score}")
+        if honesty_modified:
+            with open('stories.json','w') as f: json.dump(d, f, indent=2)
+            print(f"[honesty-qc] stories.json updated with score corrections", file=sys.stderr)
+
 # ---- Check 7: same-headline dedup (last-resort safety net) ----
 # User caught (2026-05-11): deployed World tab had "US-Iran Ceasefire Tensions"
 # TWICE with different URL sets. Cluster dedup ran but didn't catch it because
