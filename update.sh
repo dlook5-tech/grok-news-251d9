@@ -340,61 +340,61 @@ except Exception: print('0')
 
 # --- WORLD (3 stories × 3 perspectives) ---
 cat > /tmp/grok_p_world.txt <<'PROMPT'
-USER'S EXACT SPEC (2026-05-11) — FOLLOW LITERALLY, ADD NOTHING:
+USER'S EXACT SPEC (2026-05-12) — FOLLOW THIS ORDER LITERALLY. DO NOT REORDER.
 
-STEP 1. Find the top 5-8 international news stories. Identify which have the
-        HIGHEST VELOCITY (most views in the last 4 hours). Curate the top 3
-        and **make sure they're not about the same subject matter** (no two
-        framings of the same event — e.g. don't return 3 Iran-ceasefire posts).
+STEP 1. STORIES ONLY (no perspectives yet, no politics yet).
+        x_search broadly for international news in the last 4 hours:
+          "(international OR world OR foreign OR war OR conflict OR
+            geopolitics OR Iran OR China OR Russia OR Ukraine OR
+            Israel OR Europe OR Asia) lang:en since:4_hours_ago"
+          mode:"Top", limit:50.
+        Cluster the results BY EVENT (not handle). Identify the top 5-8
+        events by total view count of their lead posts. **Do NOT look at
+        political perspectives in this step.** This is purely "what are
+        the biggest news events on X right now?"
 
-STEP 2. For EACH of the 3 topics, find the HIGHEST-VELOCITY coverage from
-        each viewpoint:
-          - Conservative viewpoint
-          - Independent viewpoint
-          - Democrat viewpoint
+STEP 2. PICK TOP 3 EVENTS BY VIEW COUNT.
+        Of the 5-8 events from Step 1, take the 3 with the highest lead-post
+        view counts. They must be 3 DIFFERENT subjects (no two framings of
+        the same event).
 
-STEP 3. Once the (R, I, D) highest-velocity posts are found, go ONE STEP
-        FURTHER: check if any commentator on that same side of the political
-        spectrum has quote-tweeted/retweeted that post AND added substantive
-        commentary (not just an emoji or "fire").
-        - If YES, the QT/RT is the "perfect trifecta." Use the QT's URL
-          (the embed shows both the original AND the new commentary).
-        - Score the perspective as: original_views + QT_views (TOTAL).
-        - Keep the QT's body as the displayed text.
+STEP 3. *NOW* search for perspectives — one event at a time.
+        For each of the 3 chosen events:
+          (a) x_search "(event keywords) (republican OR conservative OR maga
+              OR right) min_faves:1 lang:en" mode:Top, limit:30
+              → take the highest-viewed conservative-leaning post.
+          (b) x_search "(event keywords) (democrat OR liberal OR progressive
+              OR left) min_faves:1 lang:en" mode:Top, limit:30
+              → take the highest-viewed democrat-leaning post.
+          (c) x_search "(event keywords) (analysis OR analyst OR independent
+              OR centrist OR nonpartisan) min_faves:1 lang:en" mode:Top,
+              limit:30 → take the highest-viewed independent post.
+        If a side genuinely doesn't have a post on the event, OMIT THAT
+        PERSPECTIVE. Ship the story with 1 or 2 perspectives — user
+        explicitly said that's OK.
 
-STEP 4. Reject ANY post — original OR QT — with telltale signs of:
-        - Announcements (e.g. "BREAKING:", "JUST IN:", "NEW:", press release)
-        - Wire copy from @WhiteHouse, @POTUS, @CBSNews, @NBCNews, @ABCNews,
-          @AP, @Reuters, @nypost, @CNN, @FoxNews when their body is just a
-          headline restatement
-        - Just a video clip with a few words ("Watch this", "Look at her",
-          one-line captions on top of an attached video — under ~50 chars of
-          text). User: "That's not interesting."
+STEP 4. *THEN* for EACH chosen R/I/D post, find a QT/RT amplifier.
+        For each perspective post, run:
+          x_search "https://x.com/<handle>/status/<id>" mode:Top, limit:30
+          x_search "<status_id>" mode:Top, limit:30
+          x_search "<2-3 headline keywords> min_faves:1000" mode:Top, limit:30
+              (catches pundit pile-ons — Posobiec/AOC/etc. who QT viral)
+        If a QT/RT exists with substantive commentary (>=30 chars body, NOT
+        just emoji or "🔥"):
+          - swap "url" to the QT URL (Twitter embed shows the original
+            quoted inside the QT — user sees both)
+          - "handle" = QT author
+          - "quote" = QT body (verbatim)
+          - "views" = original_views + qt_views (COMBINED)
+          - record "original_url", "original_handle", "original_views", "qt_views"
+        If no QT meets the bar, return the original post as-is. No
+        fabricated QT fields.
 
-SEARCH SEEDS (NOT preferences — just where to start looking, pick by velocity):
-  Conservative: @JackPosobiec, @Cernovich, @benshapiro, @DonaldJTrumpJr,
-    @charliekirk11, @JDVance1, @SenTedCruz, @SenTomCotton, @JesseBWatters,
-    @IngrahamAngle, @TuckerCarlson, @NEWSMAX, @FoxNews, @OANN, @BreitbartNews,
-    @nypost
-  Democrat: @AOC, @Ilhan, @RBReich, @BernieSanders, @RashidaTlaib,
-    @ChrisMurphyCT, @SenWarren, @SenSchumer, @ProPublica, @MSNBC, @TheAtlantic,
-    @MotherJones
-  Independent / Analyst: @MattTaibbi, @bariweiss, @FareedZakaria, @ggreenwald,
-    @semaforpolitics, @PunchbowlNews, @axios, @thehill, @SCOTUSblog, @Snowden,
-    @RayDalio, @TheStudyofWar, @CNN, @Reuters
-
-EXECUTION:
-  a. x_search "(international news keywords) lang:en since:4_hours_ago"
-     mode:Top, limit:50 → identify candidate events.
-  b. Cluster results by EVENT (not handle, not framing). Pick top 3 EVENTS
-     by combined view count.
-  c. For each event, run 3 sided searches (conservative/dem/indep keyword
-     filters) → find the highest-viewed take from each side.
-  d. For each chosen R/I/D post, look for QT/RTs of it with substantive bodies
-     (>=30 chars of real commentary). If found, swap URL to the QT and report
-     combined views (original + QT).
-  e. Apply Step 4 rejects. If a slot fails after enrichment, find a different
-     post for that slot.
+STEP 5. REJECT (drop the post, find a different one for that slot):
+        - Bare announcements: handle in @WhiteHouse/@POTUS/@CBSNews/
+          @NBCNews/@ABCNews/@AP/@Reuters/@nypost/@CNN/@FoxNews AND body
+          starts with "BREAKING:"/"JUST IN:"/"NEW:" AND <60 chars after prefix
+        - Video-with-few-words: <5 words AND <25 chars of real text body
 
 Each perspective in the output MUST include:
   - "url": the post to display (QT URL if QT was used, else original)
