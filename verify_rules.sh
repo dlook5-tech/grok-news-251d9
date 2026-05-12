@@ -191,7 +191,8 @@ check "freshness:business-4h-window"    parse_grok.py    "'business':\s*4"      
 check "freshness:hard-expire-sweep"     parse_grok.py    "_final_hard_expire"                                  exists
 check "freshness:rebuild-age-check"     parse_grok.py    "_rebuild_fresh|REBUILD-SKIP"                         exists
 # 2026-05-10: Local min-views threshold (user: "Drake's at 3382 views, really?")
-check "quality:local-min-views"         parse_grok.py    "LOCAL_MIN_VIEWS\s*=\s*10000"                         exists
+# quality:local-min-views REMOVED 2026-05-12 (user: "No local stories. What the
+# fuck?") — 10K threshold killed all OC content. Now LOCAL_MIN_VIEWS=0.
 # 2026-05-10: Semantic dedup regex fix — old regex matched inner array only, missing dups.
 check "qc:semantic-dedup-cluster"       claude_qc.sh     "cluster_re\s*=\s*re\.compile"                        exists
 # 2026-05-10: Floor list excludes Elon and Local (both user mandates — quality > pad)
