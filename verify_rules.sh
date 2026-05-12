@@ -179,6 +179,11 @@ check "qc:honesty-sanity-check"         claude_qc.sh     "honesty-qc|Honesty-sco
 check "qc:honesty-override-log"         claude_qc.sh     "honesty_overrides\.csv"                              exists
 check "qc:honesty-log-auto-commit"      .github/workflows/cron.yml  "honesty_overrides\.csv"                   exists
 check "qc:honesty-log-desktop-mirror"   daily_backup.sh  "expresso_honesty_overrides\.csv"                     exists
+# 2026-05-12: strict honesty rubric — think tanks ≤8/10, 10/10 only for fact
+check "qc:honesty-rubric-thinktank"     update.sh        "think tanks|Think tanks|THINK TANKS"                 exists
+check "qc:honesty-rubric-thinktank-qc"  claude_qc.sh     "think tanks|Think tanks|THINK TANKS"                 exists
+check "qc:honesty-rubric-10-strict"     update.sh        "10 = VERIFIED FACT|10/10 is supposed to be VERIFIED" exists
+check "qc:honesty-rubric-attribution"   update.sh        "video.*proves attribution|attribution VERIFIED"     exists
 # 2026-05-11 (reversed): user dropped the hold rule, "too confusing, too much
 # code. Just find the three most popular stories." Each cron picks fresh top 3
 # in the last 4h. MAX_HOLD_HOURS = 4 (matches the window).
