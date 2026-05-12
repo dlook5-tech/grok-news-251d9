@@ -110,80 +110,22 @@ Per-tab counts:
 - World/USA: return 5-8 stories. Each story may have 1, 2, or 3 perspectives — ship whatever you find. Don't drop a high-view story because the third perspective is missing.
 - Sports: return 8-10 candidates (Python takes top 3)
 
-Each pick MUST have: url, handle, body, views, engagement, honesty score, notes (1-line on score).
+Each pick MUST have: url, handle, body, views.
 
-QT/RT SEARCH IS REQUIRED FOR EVERY PICK (user mandate 2026-05-11):
-"If you find the most velocity post and someone has retweeted it who has
-something very interesting to say and adds to the velocity of that. That is
-the perfect trifecta."
+THE THREE-STEP SPEC (user mandate 2026-05-12 — DO ONLY THIS):
 
-For EVERY post you're about to return, BEFORE finalizing, run TWO searches
-to find quote-tweets / amplifications:
+Step 1. Find the top 3 most-viewed stories.
+Step 2. For each, find the top-viewed Conservative, Independent, Democrat post.
+Step 3. For each of those posts, find the most-viewed QT/RT.
+        If a QT exists: swap URL to QT, set "views" = original + QT views,
+        record "original_url" + "original_views" + "qt_views".
 
-(a) PASS THE POST URL AS TEXT (catches QTs that auto-embed the URL):
-    x_search "https://x.com/<handle>/status/<id>" mode:"Top" limit:30 lang:en
+Nothing else. No honesty scoring. No filters. No "reject this". No "drop that".
 
-(b) PASS THE STATUS ID AS TEXT (catches QTs even if URL got shortened):
-    x_search "<status_id>" mode:"Top" limit:30 lang:en
-
-(c) PASS HEADLINE KEYWORDS + min_faves for pundit pile-ons (the user's
-    "political pundits don't tag on to a massively scaling post with high
-    velocity" check — they DO. Find them.):
-    x_search "<2-3 key headline words> min_faves:1000" mode:"Top" limit:30 lang:en
-    Then filter results to ones that REFERENCE the original (link, screenshot,
-    quoted text). Big-name pundits (@JackPosobiec, @Cernovich, @benshapiro,
-    @AOC, @RBReich, @TuckerCarlson, @MattTaibbi, etc.) routinely QT viral
-    stories within 1-2 hours. Look for them.
-
-If ANY QT has BOTH:
-  (a) substantive commentary body (≥30 chars, real analysis — not "🔥",
-      not bare RT)
-  (b) higher views than the original alone OR adds meaningful color
-THEN swap the displayed URL to the QT and structure the pick as:
-  - "url"            = the QT's URL (the embed shows BOTH original + commentary)
-  - "handle"         = the QT author's handle
-  - "body"/"quote"   = the QT's commentary text (verbatim)
-  - "views"          = original_views + qt_views (COMBINED)
-  - "original_url"   = the original post's URL
-  - "original_handle"= the original author's handle
-  - "original_views" = just-the-original view count
-  - "qt_views"       = just-the-QT view count
-
-If no QT meets the bar (most posts have no viral QT), return the original
-post as-is — no fake QT fields, no fabrication.
-
-For World/USA tabs, apply this PER PERSPECTIVE (find QTs of each chosen
-conservative/independent/democrat post separately).
-
-HONESTY SCORING — WHAT TO GRADE (user 2026-05-11):
-Honesty grades the TRUTH of what was said, NOT whether they said it.
-- If the post contains video/audio of the person making the statement
-  (clip embedded in the tweet, screenshot of livestream, etc.), attribution
-  is VERIFIED. Do NOT say "appears fabricated" or "not verifiable" — the
-  video IS the verification. Score the CONTENT: is the claim factual,
-  opinion, exaggerated, false?
-- If the post is a transcript-only quote with no clip → THEN you can flag
-  attribution uncertainty as a factor.
-- Example: a video of Trump saying "You crazy crazy people" → score what
-  he said (a personal insult, opinion-level, ~7/10), NOT "fabricated"
-  (2/10). The video proves attribution.
-
-HONESTY SCORING WHEN A QT/RT IS USED (user mandate 2026-05-11):
-"Grok scores the combined retweet and embedded post for honesty with one score
-(breaks down logic within the notes)."
-- When a pick swaps in a QT/RT of the original, give ONE combined honesty
-  score (0-10) representing the QT-author-as-presenter of the original.
-- In `notes`, BREAK DOWN THE ARITHMETIC: separately rate the original's
-  factual core + the QT's added commentary, then state the combined score
-  and a one-sentence why. Examples:
-    notes: "Original (Reuters factual report) = 9/10 (verified fact).
-            QT (Posobiec opinion overlay) = 7/10 (partisan framing).
-            Combined view-weighted = 8/10 — solid facts presented through
-            a clearly-partisan lens."
-    notes: "Original (citizen video) = 8/10 (eyewitness clip, no claim).
-            QT (analyst thread) = 8/10 (clean analysis, no false claims).
-            Combined = 8/10 — both contributions clean."
-- When no QT is used, just one score + 1-line note as before.
+QT search syntax — for each chosen post, run:
+  x_search "https://x.com/<handle>/status/<id>" mode:"Top" limit:30
+  x_search "<status_id>" mode:"Top" limit:30
+  x_search "<2-3 headline keywords> min_faves:1000" mode:"Top" limit:30
 
 SEARCH SEEDS, NOT FAVORITES (user mandate 2026-05-10):
 "You should be using for each tab the highest velocity story, not a favor. It's not pulling from favorites." Each tab's prompt contains STARTING SEARCH SEEDS — these are seed handles to FIND candidates via x_search. They are NOT a preference list and NOT weighted in selection. After searching, rank ALL results purely by view count. A no-name handle with 1M views WINS over a seed handle with 100K views, every time. Seeds exist because they reliably post in each tab's scope (so we don't miss candidates), but they have ZERO bonus at pick time. The anti-hallucination defense is post URL existing in x_search results + oEmbed verification, not a handle whitelist.
@@ -226,8 +168,6 @@ EXAMPLE — a reply post returned correctly (note all three parent_* fields pres
   "url": "https://x.com/elonmusk/status/2051644453044248858",
   "views": 547000,
   "engagement": "2K likes, 263 replies",
-  "honesty": "7/10",
-  "notes": "Defensible opinion, no factual error",
   "parent_url": "https://x.com/AuronMacintyre/status/2051600000000000000",
   "parent_handle": "@AuronMacintyre",
   "parent_text": "Self-serve drink stations and unattended produce stands disappear when a society loses its high-trust character"
@@ -431,7 +371,7 @@ CRITICAL — NO HALLUCINATION:
 
 Return JSON only. **MUST contain at least 1 story** unless x_search returned literally zero approved-handle results in 24h:
 {"world":[
-  {"headline":"short topic","conservative":{"handle":"@x","quote":"verbatim","url":"...","views":1234567,"engagement":"47K likes, 12K retweets, 3.2K replies","honesty":"X/10","notes":"why this score"},"democrat":{...},"independent":{...},"footnotes":["why each","..."],"notes":"summary"},
+  {"headline":"short topic","conservative":{"handle":"@x","quote":"verbatim","url":"...","views":1234567,"engagement":"47K likes, 12K retweets, 3.2K replies","notes":"why this score"},"democrat":{...},"independent":{...},"footnotes":["why each","..."],"notes":"summary"},
   ...up to 3 stories
 ]}
 PROMPT
@@ -547,7 +487,7 @@ CRITICAL — NO HALLUCINATION:
 
 Return JSON only. **MUST contain at least 1 story** with all 3 perspectives. If you genuinely cannot find ANY topic with 3-perspective coverage after a thorough search, return at least the BEST attempt as a single-story array — the empty array is the worst possible outcome:
 {"usa":[
-  {"headline":"short","conservative":{"handle":"@x","quote":"verbatim","url":"...","views":1234567,"engagement":"47K likes","honesty":"X/10","notes":"why this score"},"democrat":{...},"independent":{...},"footnotes":[...],"notes":"..."},
+  {"headline":"short","conservative":{"handle":"@x","quote":"verbatim","url":"...","views":1234567,"engagement":"47K likes","notes":"why this score"},"democrat":{...},"independent":{...},"footnotes":[...],"notes":"..."},
   ...up to 3 stories
 ]}
 PROMPT
@@ -639,7 +579,7 @@ HONESTY SCORING (apply rigorously, NOT auto-10):
 Most Elon posts are 7-9 (opinions, predictions, jokes). Reserve 10 for VERIFIABLE facts.
 Body: 1 sentence describing the take and (if reply) what he's responding to, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "147K likes, 22K retweets, 8K replies").
-Return JSON: {"elon":[{"headline":"...","handle":"@elonmusk","body":"...","views":1234567,"engagement":"147K likes, 22K retweets, 8K replies","url":"...","honesty":"X/10","notes":"why this score"},...]}
+Return JSON: {"elon":[{"headline":"...","handle":"@elonmusk","body":"...","views":1234567,"engagement":"147K likes, 22K retweets, 8K replies","url":"...","notes":"why this score"},...]}
 PROMPT
 
 # --- ALLIN ---
@@ -666,8 +606,7 @@ CONTEXT RULE: ORIGINAL posts or quote-tweets only. NO context-less replies (star
 Pick 3 posts from 3 DIFFERENT handles — strongest ORIGINAL INSIGHT (highest combined likes+retweets+replies among substantive posts) from each.
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "5.2K likes, 800 retweets, 200 replies").
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"allin":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"5.2K likes, 800 retweets, 200 replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"allin":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"5.2K likes, 800 retweets, 200 replies","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- TOP VIRAL ---
@@ -678,8 +617,7 @@ Primary search: "lang:en since:$TODAY", mode: "Top", limit: 10. Let X's ranking 
 Fallback: "lang:en since:$YESTERDAY min_faves:5000", mode: "Top", limit: 10.
 Pick the 3 highest-engagement posts. 3 DIFFERENT handles.
 Body: 1 sentence, under 120 chars.
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"top":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"top":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- MSM ---
@@ -708,8 +646,7 @@ PICK 3 posts from 3 DIFFERENT handles — HIGHEST ENGAGEMENT post from each. Ver
 
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "47K likes, 12K retweets, 3.2K replies").
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"msm":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 12K retweets, 3.2K replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"msm":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 12K retweets, 3.2K replies","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- BUSINESS ---
@@ -741,8 +678,7 @@ QUOTED-MSM REJECTION: REJECT any post whose body is primarily a quoted passage f
 Pick 3 posts from 3 DIFFERENT handles — STRONGEST INSIGHT (highest combined likes+retweets+replies) per handle.
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "12K likes, 3K retweets, 800 replies").
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"business":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"12K likes, 3K retweets, 800 replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"business":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"12K likes, 3K retweets, 800 replies","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- SPORTS ---
@@ -767,8 +703,7 @@ CRITICAL RULES:
 FALLBACK: If weekend and no breaking news, use Friday's posts. ALWAYS produce 4 with both SAS and Cowherd present.
 
 Body: 1 sentence, under 120 chars.
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take.
-Return JSON: {"sports":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"sports":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- PODS ---
@@ -819,8 +754,7 @@ FALLBACK 2: If still <3, broaden to last 48 hours (not 24).
 Pick 3 from DIFFERENT approved shows — the 3 HIGHEST-ENGAGEMENT (combined likes+retweets+replies) CLIP moments.
 Body: 1 sentence describing the specific moment (what was said/happened), under 120 chars. Do NOT describe the episode generally.
 Engagement field MUST contain real numbers (e.g. "47K likes, 8K retweets, 3K replies").
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"pods":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 8K retweets, 3K replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"pods":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 8K retweets, 3K replies","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- PG6 (Celebrity) ---
@@ -851,8 +785,7 @@ ENGLISH-ONLY: All posts must be in English OR have a complete English translatio
 Pick the 3 HIGHEST-ENGAGEMENT (combined likes+retweets+replies) UNEXPECTED/dramatic celebrity posts. 3 DIFFERENT handles.
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "47K likes, 8K retweets, 3K replies").
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"pg6":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 8K retweets, 3K replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"pg6":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 8K retweets, 3K replies","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- RECIPE ---
@@ -869,7 +802,7 @@ FALLBACK: If <3 strong picks, retry with last 3 days.
 Body must name the dish. Skip non-recipe posts.
 Body: 1 sentence, under 120 chars.
 Engagement field MUST contain real numbers (e.g. "5K likes, 1K retweets, 200 replies").
-Return JSON: {"recipe":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"5K likes, 1K retweets, 200 replies","url":"...","honesty":"10/10","notes":"..."},...]}
+Return JSON: {"recipe":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"5K likes, 1K retweets, 200 replies","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- SCIENCE ---
@@ -886,7 +819,7 @@ FALLBACK 3: Last resort: "(scientists OR researchers OR study OR discovery) sinc
 
 PICK 3 from DIFFERENT handles describing 3 DIFFERENT discoveries. Body must name what was actually discovered/found.
 Body: 1 sentence under 120 chars.
-Return JSON: {"science":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"science":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- LOCAL ---
@@ -935,7 +868,7 @@ THE TEST: "Would the Daily Pilot run this story?" If yes — pick it. If no (bec
 
 Body: 1 sentence describing the specific local story, under 140 chars. Name the city, the people, or the place.
 Engagement field MUST contain real numbers (e.g. "1.2K likes, 200 retweets, 50 replies").
-Return JSON: {"local":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"1.2K likes, 200 retweets, 50 replies","url":"...","honesty":"10/10","notes":"..."},...]}
+Return JSON: {"local":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"1.2K likes, 200 retweets, 50 replies","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- CONSPIRACY ---
@@ -971,8 +904,7 @@ FALLBACK 2: Add "(receipts OR documents OR leaked OR exposed OR investigation OR
 Pick 3 from 3 DIFFERENT approved handles — strongest evidence/investigation posts.
 Body: 1 sentence naming the SPECIFIC angle being investigated, under 140 chars.
 Engagement field MUST contain real numbers (e.g. "12K likes, 3K retweets, 800 replies").
-Honesty: score on the specific evidence presented. Score-with-evidence = 8-10. Pure speculation = 4-6. Conspiracy without specifics = 2-3.
-Return JSON: {"conspiracy":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"12K likes, 3K retweets, 800 replies","url":"...","honesty":"X/10","notes":"why this score"},...]}
+Return JSON: {"conspiracy":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"12K likes, 3K retweets, 800 replies","url":"..."},...]}
 PROMPT
 
 # --- COMEDY ---
@@ -983,8 +915,7 @@ Search: "(stand-up OR comedy OR "clip" OR comedian) (Chappelle OR "Eddie Murphy"
 FALLBACK: If <3, broaden: "("standup" OR "stand-up" OR "comedy clip") lang:en since:$YESTERDAY min_faves:5000", mode: "Top", limit: 15.
 Pick the 3 highest-engagement comedy clip posts from DIFFERENT handles.
 Body: 1 sentence describing the comedian/moment, under 120 chars.
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Most comedy clips are 8-9 (performative).
-Return JSON: {"comedy":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Return JSON: {"comedy":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","notes":"..."},...]}
 PROMPT
 
 # --- TIKTOK ---
