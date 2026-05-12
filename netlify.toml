@@ -1,0 +1,11 @@
+# Netlify config. Lets the deploy auto-detect the scheduled function.
+# User mandate (2026-05-12): Mac-independent cron trigger.
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Scheduled function declared here as well as in the function file itself
+# (belt-and-suspenders — Netlify reads either source).
+[functions."expresso-trigger"]
+  schedule = "17 1,5,9,13,17,21 * * *"
