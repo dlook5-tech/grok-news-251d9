@@ -174,6 +174,11 @@ check "qc:final-review-drops"           claude_qc.sh     "final-review.*DROPPED|
 check "qc:refill-from-overflow"         claude_qc.sh     "REFILL.*pulled.*from overflow|_overflow"             exists
 # 2026-05-11: last-resort same-headline dedup (catches dups that survived LLM cluster check)
 check "qc:same-headline-dedup"          claude_qc.sh     "same-headline-dedup|_norm_headline"                  exists
+# 2026-05-12: User mandate — honesty sanity-check + permanent override log
+check "qc:honesty-sanity-check"         claude_qc.sh     "honesty-qc|Honesty-score sanity check"               exists
+check "qc:honesty-override-log"         claude_qc.sh     "honesty_overrides\.csv"                              exists
+check "qc:honesty-log-auto-commit"      .github/workflows/cron.yml  "honesty_overrides\.csv"                   exists
+check "qc:honesty-log-desktop-mirror"   daily_backup.sh  "expresso_honesty_overrides\.csv"                     exists
 # 2026-05-11 (reversed): user dropped the hold rule, "too confusing, too much
 # code. Just find the three most popular stories." Each cron picks fresh top 3
 # in the last 4h. MAX_HOLD_HOURS = 4 (matches the window).

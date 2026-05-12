@@ -1574,6 +1574,10 @@ def clean_world(w):
     if not isinstance(w, dict):
         return None
     headline = w.get('headline', w.get('topic', ''))
+    # 2026-05-12: user saw a "?" headline on World — Grok returned perspectives
+    # but skipped the headline field. Drop these. No empty/missing headlines.
+    if not headline or not headline.strip() or headline.strip() in ('?', '...', 'Untitled'):
+        return None
     if is_garbage(headline):
         return None
     perspectives = []
