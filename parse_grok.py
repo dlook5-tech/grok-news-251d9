@@ -2073,11 +2073,12 @@ for _tab in ('world', 'usa'):
 # really? wtf." OC content that's genuinely viral clears 10k easily; below that
 # is restaurant-promo noise. Local is allowed to show <3 stories rather than pad
 # with low-velocity junk (per user memory: "1-3 stories based on quality, NEVER pad").
-LOCAL_MIN_VIEWS = 10000
+LOCAL_MIN_VIEWS = 0  # 2026-05-12: removed per user. OC content is sparse —
+                     # the 10K bar killed all 7 candidates. Just take top by views.
 def _local_quality_filter(stories_list):
-    """Apply min-views threshold to Local stories. Used for both fresh candidates
-    and the backfill pool so junk doesn't persist across crons."""
-    return [s for s in stories_list if (s.get('views') or 0) >= LOCAL_MIN_VIEWS]
+    """No-op now — kept as identity for callers. Was filtering <10K views but
+    that left Local empty when OC has no viral content."""
+    return stories_list
 
 # News tabs follow user's strict rule (2026-05-11): top by velocity in 4h window,
 # no padding, no snapshot resurrection. Non-news tabs keep their backfill cascade.
