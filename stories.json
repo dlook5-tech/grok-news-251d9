@@ -145,7 +145,7 @@
             "views": 5977,
             "notes": "Appears to be satirical or fabricated quotes attributed to Trump, not verifiable as actual statements.",
             "views_at_save": 5977,
-            "age_at_save_hours": 10.92
+            "age_at_save_hours": 11.3
           },
           {
             "label": "Democrat",
@@ -157,7 +157,7 @@
             "views": 6937,
             "notes": "Factual reporting on diplomatic developments and official statements.",
             "views_at_save": 6937,
-            "age_at_save_hours": 5.36
+            "age_at_save_hours": 5.75
           },
           {
             "label": "Independent",
@@ -169,7 +169,7 @@
             "views": 8206,
             "notes": "Quotes military official on specific incidents, appears based on real briefing but independent verification needed.",
             "views_at_save": 8206,
-            "age_at_save_hours": 17.62
+            "age_at_save_hours": 18.0
           }
         ],
         "footnotes": [],
@@ -177,7 +177,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/12/2026 3:24 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 10.92
+        "age_at_save_hours": 11.3
       },
       {
         "headline": "UK Labour MPs Call for Starmer to Resign",
@@ -193,7 +193,7 @@
             "views": 36420,
             "notes": "Partisan critique of Starmer's leadership and refusal to resign following election losses; opinion-based but grounded in reported events.",
             "views_at_save": 36420,
-            "age_at_save_hours": 18.11
+            "age_at_save_hours": 18.49
           },
           {
             "label": "Independent",
@@ -205,7 +205,7 @@
             "views": 393998,
             "notes": "Straightforward reporting of the number of MPs calling for resignation with a link to tracker; verifiable political development.",
             "views_at_save": 393998,
-            "age_at_save_hours": 8.65
+            "age_at_save_hours": 9.03
           }
         ],
         "footnotes": [],
@@ -793,54 +793,6 @@
         "posted": "5/11/2026 7:43 PM",
         "views_at_save": 0,
         "age_at_save_hours": 5.04
-      },
-      {
-        "headline": "Trump Appears to Nod Off at Maternal Health Event",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@MediasLies",
-            "url": "https://x.com/MediasLies/status/2053904629201588601",
-            "text": "Reuters' @idreesali114 just dropped the biggest scoop of the day: President Trump blinked during today's maternal health event in the Oval Office.....",
-            "engagement": "59 likes, 12 reposts",
-            "honesty": "8/10",
-            "views": 6968,
-            "notes": "Defends Trump by contextualizing media focus on blink, verifiable event details but partisan media critique.",
-            "views_at_save": 6968,
-            "age_at_save_hours": 1.52
-          },
-          {
-            "label": "Democrat",
-            "handle": "@atrupar",
-            "url": "https://x.com/atrupar/status/2053862232178425971",
-            "text": "Trump is about to hit REM sleep on camera in the Oval.",
-            "engagement": "14489 likes, 2226 reposts",
-            "honesty": "9/10",
-            "views": 486034,
-            "notes": "Video clip shows Trump appearing drowsy at event, accurate footage without fabrication.",
-            "views_at_save": 486034,
-            "age_at_save_hours": 4.33
-          },
-          {
-            "label": "Independent",
-            "handle": "@idreesali114",
-            "url": "https://x.com/idreesali114/status/2053870475248341078",
-            "text": "U.S.. President Donald Trump attends a maternal health event in the Oval Office at the White House in Washington, D.C., U.S., May 11, 2026.",
-            "engagement": "1003 likes, 260 reposts",
-            "honesty": "10/10",
-            "views": 302430,
-            "notes": "Neutral photo caption from Reuters event coverage, verifiable journalism.",
-            "views_at_save": 302430,
-            "age_at_save_hours": 3.79
-          }
-        ],
-        "footnotes": [],
-        "notes": "Controversial moment at White House event sparking partisan reactions with high engagement.",
-        "body": "Three-perspective roundup.",
-        "posted": "5/11/2026 7:08 PM",
-        "views_at_save": 0,
-        "age_at_save_hours": 1.52
       }
     ],
     "_overflow": [
@@ -1073,8 +1025,19 @@
         "post_ts": "2026-05-11T16:17:28Z",
         "views": 1118663,
         "views_at_save": 1118663,
-        "age_at_save_hours": 11.31
+        "age_at_save_hours": 11.69
       },
+      {
+        "url": "https://x.com/AdamSchefter/status/2053846787379589286",
+        "handle": "@AdamSchefter",
+        "body": "More about the Los Angeles Chargers agreeing to terms with former Cleveland Browns tight end David Njoku on a one-year deal worth up to $8 million:\n\nhttps://www.espn.com/nfl/story/_/id/48739754/sources-chargers-te-david-njoku-agree-one-year-deal",
+        "views": 538999,
+        "engagement": "Likes=1208, Reposts=83, Quotes=15, Replies=115, Bookmarks=19",
+        "honesty": "High",
+        "notes": "NFL: Chargers sign TE David Njoku to 1-year deal up to $8M"
+      }
+    ],
+    "earlier": [
       {
         "url": "https://x.com/SportsCenter/status/2054033197701235097",
         "handle": "@SportsCenter",
@@ -1408,14 +1371,14 @@
         "age_at_save_hours": 5.38
       },
       {
-        "headline": "Americans prioritize lottery over entertainment with $109B spend",
+        "headline": "Americans Spent $109B on Lottery, More Than Entertainment Combined",
         "handle": "@unusual_whales",
         "url": "https://x.com/unusual_whales/status/2053811609118630374",
-        "body": "Americans spent over $109 billion on lottery tickets last year, more than on movies, books, concerts, and sports tickets combined, per Charlie...",
-        "engagement": "6.3K likes, 743 retweets, 355 replies",
-        "honesty": "9/10",
-        "notes": "Verified statistic from analyst Charlie Bilello, highlighting consumer behavior trends.",
-        "posted": "2026-05-11T20:01:36Z",
+        "body": "Last year, Americans spent over $109 billion on lottery tickets, exceeding combined spending on movies, books, concerts, and sports.",
+        "engagement": "7.6K likes, 884 reposts, 388 replies",
+        "honesty": "8/10",
+        "notes": "Hidden consumer spending insight; stat verifiable per Charlie Bilello.",
+        "posted": "2026-05-12T03:58:48Z",
         "post_ts": "2026-05-11T12:17:00Z",
         "views": 479445,
         "views_at_save": 479445,
@@ -1942,7 +1905,7 @@
         "age_at_save_hours": 7.53
       },
       {
-        "headline": "Dianna Russini Kisses Husband Amid Mike Vrabel Scandal",
+        "headline": "Dianna Russini Kisses Husband After Scandal",
         "handle": "@nypost",
         "url": "https://x.com/nypost/status/2053931773495496941",
         "body": "Dianna Russini shares affectionate kiss with husband on Mother's Day, first sighting since alleged Mike Vrabel affair scandal.",
@@ -2337,14 +2300,14 @@
         "age_at_save_hours": 14.77
       },
       {
-        "headline": "Scientists Discover 38 New Deep-Sea Species Near Japan",
+        "headline": "38 New Deep-Sea Species Discovered Near Japan",
         "handle": "@forallcurious",
         "url": "https://x.com/forallcurious/status/2053881070735802727",
-        "body": "Scientists just found 38 new species of deep-sea organisms in waters near Japan.",
-        "engagement": "6.2K likes, 555 reposts",
-        "honesty": "9/10",
-        "notes": "Reports a verified biological discovery from a research expedition off Japan's coast.",
-        "posted": "2026-05-12T03:35:57Z",
+        "body": "Scientists found 38 new species of deep-sea organisms in waters near Japan.",
+        "engagement": "6.3K likes, 573 reposts",
+        "honesty": "8/10",
+        "notes": "Reports verifiable scientific discovery of new marine species from recent expedition.",
+        "posted": "2026-05-12T03:58:50Z",
         "post_ts": "2026-05-11T16:53:01Z",
         "views": 145466,
         "views_at_save": 145466,
@@ -2511,14 +2474,14 @@
         "age_at_save_hours": 2.83
       },
       {
-        "headline": "Huntington Beach Boardwalk Teen Incident",
+        "headline": "Huntington Beach E-Bike Incident Reported",
         "handle": "@KTLA",
         "url": "https://x.com/KTLA/status/2053998597226561802",
-        "body": "Huntington Beach police report an incident over the weekend on the boardwalk involving a victim navigating a crowd of several hundred teens on...",
-        "engagement": "120 likes, 25 reposts, 9 quotes, 47 replies",
-        "honesty": "9/10",
-        "notes": "Factual local news report based on police account, no sensationalism.",
-        "posted": "2026-05-12T03:35:57Z",
+        "body": "Huntington Beach police report an incident over the weekend where a victim tried to navigate through a crowd of several hundred teens on e-bikes.",
+        "engagement": "127 likes, 26 retweets, 11 quotes, 48 replies",
+        "honesty": "8/10",
+        "notes": "Factual report of local police statement on non-graphic incident; honesty score 9 - verifiable news from credible source.",
+        "posted": "2026-05-12T03:58:50Z",
         "post_ts": "2026-05-12T00:40:01Z",
         "views": 16836,
         "views_at_save": 16836,
@@ -2789,12 +2752,12 @@
         "body": "Shane Gillis calls Chelsea Handler a Zionist Epstein associate who dined with Prince Andrew and Woody Allen in 2010.",
         "engagement": "54K likes, 3K reposts",
         "honesty": "8/10",
-        "notes": "Comedy roast bit referencing public articles; mix of fact and exaggeration for humor.",
-        "posted": "2026-05-11T21:33:14Z",
-        "post_ts": "2026-05-11T04:46:45Z",
-        "views": 3253934,
-        "views_at_save": 3253934,
-        "age_at_save_hours": 22.82
+        "notes": "Description of comedy roast moment with photo.",
+        "posted": "2026-05-12T03:58:51Z",
+        "post_ts": "2026-05-11T16:01:09Z",
+        "views": 467868,
+        "views_at_save": 467868,
+        "age_at_save_hours": 11.96
       },
       {
         "headline": "Tony Hinchcliffe's Savage Roast on Sheryl Underwood",
@@ -2823,20 +2786,6 @@
         "views": 2438445,
         "views_at_save": 2438445,
         "age_at_save_hours": 23.37
-      },
-      {
-        "headline": "Occupy Democrats Shares Handler's Takedown",
-        "handle": "@OccupyDemocrats",
-        "url": "https://x.com/OccupyDemocrats/status/2053868018917372127",
-        "body": "Chelsea Handler incinerates MAGA comedian Tony Hinchcliffe with racist jokes at Kevin Hart roast.",
-        "engagement": "4.7K likes, 685 reposts",
-        "honesty": "8/10",
-        "notes": "Accurate reporting of roast moments with partisan framing.",
-        "posted": "2026-05-11T19:47:33Z",
-        "post_ts": "2026-05-11T16:01:09Z",
-        "views": 205863,
-        "views_at_save": 205863,
-        "age_at_save_hours": 3.88
       },
       {
         "headline": "Shane Gillis Fires Back at Chelsea Handler",
@@ -2908,7 +2857,8 @@
         "views_at_save": 94,
         "age_at_save_hours": 4.05
       }
-    ]
+    ],
+    "_overflow": []
   },
   "freespeech": {
     "stories": [
