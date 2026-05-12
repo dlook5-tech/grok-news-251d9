@@ -724,16 +724,26 @@ if key2:
                          f"notes='{sc['notes']}' body='{sc['body']}'")
         prompt = (
             "Honesty-score sanity check. Each line is a story/perspective with "
-            "a score Grok assigned (0-10). Flag any that look wrong, e.g.:\n"
-            "- Score says 'fabricated/unverifiable' but body has a video clip "
-            "of the person actually saying it (attribution is verified)\n"
-            "- Score is way off the content (factual report scored 3, or "
-            "wild conspiracy scored 9)\n"
-            "- Notes contradict the score\n\n"
+            "a score Grok assigned (0-10). Flag any that look wrong using THIS RUBRIC:\n\n"
+            "  10 = VERIFIED FACT only (court record, scoreboard, official stat,\n"
+            "       election result, raw video of exactly what's claimed)\n"
+            "   9 = factual core with minor editorializing\n"
+            "   8 = analysis/commentary/'expert take' — INCLUDES think tanks\n"
+            "       (CSIS, Brookings, Heritage, AEI, RAND, Atlantic Council, etc.)\n"
+            "       Institutional perspective = NEVER 10.\n"
+            "   7 = opinion / prediction / hot take\n"
+            "   6 = contains a specific misleading claim\n"
+            "   5 = demonstrably false\n"
+            "  ≤4 = serial misrepresentation / conspiracy without specifics\n\n"
+            "ATTRIBUTION: video/audio clip of speaker → attribution VERIFIED;\n"
+            "score content, NOT 'fabricated.'\n\n"
+            "USER CAUGHT THESE WRONG SCORES — flag the pattern:\n"
+            "- @CSIS think tank piece scored 10/10 → should be 8/10 max.\n"
+            "- Trump video clip scored 2/10 'fabricated' → should be 7/10.\n\n"
             + "\n".join(lines) +
             "\n\nReturn JSON array of fixes:\n"
             "  {\"id\": <S_number>, \"new_score\": \"X/10\", \"new_notes\": \"why\"}\n"
-            "Only return entries that need fixing. Empty [] if all reasonable. "
+            "Only entries that need fixing. Empty [] if all reasonable. "
             "NO PROSE outside JSON."
         )
         body_h = json.dumps({"model":"claude-sonnet-4-5","max_tokens":1500,

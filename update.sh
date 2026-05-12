@@ -155,18 +155,31 @@ post as-is — no fake QT fields, no fabrication.
 For World/USA tabs, apply this PER PERSPECTIVE (find QTs of each chosen
 conservative/independent/democrat post separately).
 
-HONESTY SCORING — WHAT TO GRADE (user 2026-05-11):
-Honesty grades the TRUTH of what was said, NOT whether they said it.
-- If the post contains video/audio of the person making the statement
-  (clip embedded in the tweet, screenshot of livestream, etc.), attribution
-  is VERIFIED. Do NOT say "appears fabricated" or "not verifiable" — the
-  video IS the verification. Score the CONTENT: is the claim factual,
-  opinion, exaggerated, false?
-- If the post is a transcript-only quote with no clip → THEN you can flag
-  attribution uncertainty as a factor.
-- Example: a video of Trump saying "You crazy crazy people" → score what
-  he said (a personal insult, opinion-level, ~7/10), NOT "fabricated"
-  (2/10). The video proves attribution.
+HONESTY SCORING — STRICT RUBRIC (user 2026-05-12):
+"10/10 is supposed to be VERIFIED FACT. Think tanks aren't fact — they're
+institutional opinion with bias."
+
+  10 = VERIFIED FACT only — court records, scoreboards, official statistics,
+       arrest records, election results, raw video of exactly what's claimed.
+   9 = factual core with minor editorializing (news report + light framing)
+   8 = analysis / commentary / "expert take" — INCLUDES THINK TANKS like
+       CSIS, Brookings, Heritage, AEI, RAND, Atlantic Council, etc. They
+       have institutional perspective. NEVER 10.
+   7 = opinion / prediction / hot take ("I think X will happen")
+   6 = contains a specific misleading claim
+   5 = demonstrably false statement
+  ≤4 = serial misrepresentation, conspiracy without specifics
+
+ATTRIBUTION RULES:
+- Video/audio clip of the person speaking → attribution VERIFIED. Score
+  the content (what they said), not "fabricated."
+- Transcript-only quote with no clip → attribution uncertainty IS a factor.
+
+EXAMPLES OF WRONG SCORES (user caught these):
+- CSIS think tank piece "A Confident Beijing Welcomes Trump" → NOT 10/10.
+  Institutional analysis. Correct: 8/10 max.
+- Video of Trump saying "you crazy crazy people" → NOT 2/10 "fabricated."
+  Video proves attribution. Correct: 7/10 opinion-level.
 
 HONESTY SCORING WHEN A QT/RT IS USED (user mandate 2026-05-11):
 "Grok scores the combined retweet and embedded post for honesty with one score
