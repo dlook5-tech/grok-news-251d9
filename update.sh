@@ -117,9 +117,23 @@ QT/RT SEARCH IS REQUIRED FOR EVERY PICK (user mandate 2026-05-11):
 something very interesting to say and adds to the velocity of that. That is
 the perfect trifecta."
 
-For EVERY post you're about to return, BEFORE finalizing, run:
-  x_search "url:<the_post_url>" mode:"Top" limit:10
-This finds quote-tweets (and retweets-with-comment) of that specific post.
+For EVERY post you're about to return, BEFORE finalizing, run TWO searches
+to find quote-tweets / amplifications:
+
+(a) PASS THE POST URL AS TEXT (catches QTs that auto-embed the URL):
+    x_search "https://x.com/<handle>/status/<id>" mode:"Top" limit:30 lang:en
+
+(b) PASS THE STATUS ID AS TEXT (catches QTs even if URL got shortened):
+    x_search "<status_id>" mode:"Top" limit:30 lang:en
+
+(c) PASS HEADLINE KEYWORDS + min_faves for pundit pile-ons (the user's
+    "political pundits don't tag on to a massively scaling post with high
+    velocity" check — they DO. Find them.):
+    x_search "<2-3 key headline words> min_faves:1000" mode:"Top" limit:30 lang:en
+    Then filter results to ones that REFERENCE the original (link, screenshot,
+    quoted text). Big-name pundits (@JackPosobiec, @Cernovich, @benshapiro,
+    @AOC, @RBReich, @TuckerCarlson, @MattTaibbi, etc.) routinely QT viral
+    stories within 1-2 hours. Look for them.
 
 If ANY QT has BOTH:
   (a) substantive commentary body (≥30 chars, real analysis — not "🔥",
