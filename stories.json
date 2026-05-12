@@ -1,45 +1,97 @@
 {
-  "lastUpdated": "2026-05-12T04:50:22Z",
+  "lastUpdated": "2026-05-12T04:58:17Z",
   "world": {
     "stories": [
       {
-        "headline": "US-Iran Ceasefire Negotiations Falter as Trump Rejects Tehran's Proposal",
+        "headline": "UAE launches military strikes inside Iran",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@ConservBrief",
+            "url": "https://x.com/ConservBrief/status/2054028017249161633",
+            "text": "MAJOR BREAKING Fox News reports that the United Arab Emirates have begun carrying out military strikes within Iran: \u201cThe UAE forces are directly...",
+            "engagement": "19 likes, 3 retweets, 0 replies",
+            "honesty": "8/10",
+            "views": 1111,
+            "notes": "Analysis based on Fox News report. Reporting what another outlet said = institutional perspective, not verified fact. Should be 8/10 max.",
+            "views_at_save": 1111,
+            "age_at_save_hours": 2.36
+          },
+          {
+            "label": "Democrat",
+            "handle": "@realtoriabrooke",
+            "url": "https://x.com/realtoriabrooke/status/2054042069480386775",
+            "text": "NEW \u2014 The United Arab Emirates is carrying out military strikes inside Iran after Iran launched dozens of missiles and drones at the UAE.. It\u2019s worth...",
+            "engagement": "12 likes, 2 retweets, 1 replies",
+            "honesty": "9/10",
+            "views": 406,
+            "notes": "Factual report of military strikes with minor added context. No institutional analysis present, just reporting with background.",
+            "views_at_save": 406,
+            "age_at_save_hours": 1.43
+          },
+          {
+            "label": "Independent",
+            "handle": "@AmazingStalker8",
+            "url": "https://x.com/AmazingStalker8/status/2054016263358394819",
+            "text": "JUST IN :The UAE just launched its fourth independent military action within a three-month window, marking a peak in their recent provocative...",
+            "engagement": "2 likes, 1 retweets, 0 replies",
+            "honesty": "9/10",
+            "views": 131,
+            "notes": "Based on WSJ report with specific verifiable dates and strikes listed. This is factual reporting with minimal editorializing, not pure analysis.",
+            "views_at_save": 131,
+            "age_at_save_hours": 3.13
+          }
+        ],
+        "footnotes": [
+          "Conservative: Cites Fox News on UAE engagement after Iranian missile attacks.",
+          "Democrat: Notes UAE's shift from OPEC and closer US ties.",
+          "Independent: Details series of UAE strikes per WSJ."
+        ],
+        "notes": "UAE escalates conflict with Iran through multiple strikes following Iranian attacks on UAE territory.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/12/2026 4:58 AM",
+        "views_at_save": 0,
+        "age_at_save_hours": 2.36
+      },
+      {
+        "headline": "Trump calls Iran ceasefire proposal 'garbage' on life support",
         "honesty": "8/10",
         "perspectives": [
           {
             "label": "Conservative",
             "handle": "@RightScopee",
             "url": "https://x.com/RightScopee/status/2054032913105051787",
-            "text": "\ud83d\udea8\"McEnany drops the hammer: Trump has made his decision \u2014 Iran gets ZERO nuclear weapons.\" \n\nKayleigh McEnany fires it home\ud83c\udfa4: Trump tried peaceful...",
-            "engagement": "108 likes, 34 reposts, 35 replies",
+            "text": "\ud83d\udea8\"McEnany drops the hammer: Trump has made his decision \u2014 Iran gets ZERO nuclear weapons.\"  Kayleigh McEnany fires it home\ud83c\udfa4: Trump tried peaceful...",
+            "engagement": "112 likes, 35 retweets, 36 replies",
             "honesty": "7/10",
-            "views": 3634,
-            "notes": "Partisan endorsement of Trump's hardline stance based on verified public statements from Trump and McEnany.",
-            "views_at_save": 3634,
-            "age_at_save_hours": 1.9
+            "views": 3774,
+            "notes": "Opinion piece praising Trump's stance, no false claims but partisan prediction.",
+            "views_at_save": 3774,
+            "age_at_save_hours": 2.03
           },
           {
             "label": "Independent",
             "handle": "@Independent",
             "url": "https://x.com/Independent/status/2054040519567720935",
             "text": "Iran-US war latest: Trump says ceasefire on \u2018massive life support\u2019 after Tehran hit back at president\u2019s outburst...",
-            "engagement": "5 likes, 1 repost, 4 replies",
+            "engagement": "5 likes, 1 retweets, 4 replies",
             "honesty": "9/10",
-            "views": 1424,
-            "notes": "Straightforward news reporting of Trump's comments without added bias.",
-            "views_at_save": 1424,
-            "age_at_save_hours": 1.4
+            "views": 1487,
+            "notes": "Straight news update with link to article on Trump's statement.",
+            "views_at_save": 1487,
+            "age_at_save_hours": 1.53
           }
         ],
         "footnotes": [
-          "Conservative perspective emphasizes Trump's resolve against Iran.",
-          "Independent view reports the diplomatic setback factually."
+          "Conservative: McEnany commentary on Trump's firm no-nuclear policy for Iran.",
+          "Independent: Reports Trump's direct quote on ceasefire status."
         ],
-        "notes": "Tensions rise as ceasefire hangs in balance amid rejected proposals.",
+        "notes": "US President Trump dismisses Iran's latest ceasefire proposal, escalating tensions in ongoing conflict.",
         "body": "Three-perspective roundup.",
-        "posted": "5/12/2026 4:50 AM",
+        "posted": "5/12/2026 4:58 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 1.9
+        "age_at_save_hours": 2.03
       },
       {
         "headline": "Trump to Visit China with Elon Musk and Tim Cook for High-Stakes Summit",
@@ -55,7 +107,7 @@
             "views": 13077,
             "notes": "Enthusiastic MAGA take on the trip as a strong America First move, factual on participants.",
             "views_at_save": 13077,
-            "age_at_save_hours": 3.06
+            "age_at_save_hours": 3.19
           },
           {
             "label": "Independent",
@@ -65,9 +117,9 @@
             "engagement": "6 likes, 4 reposts, 2 replies",
             "honesty": "8/10",
             "views": 1888,
-            "notes": "Think tank analysis providing balanced insight into China's position at the summit. CSIS = institutional perspective, cannot be 10.",
+            "notes": "Think tank analysis providing balanced insight into China's position at the summit. CSIS = institutional perspective, cannot be 10. Already correctly scored at 8/10.",
             "views_at_save": 1888,
-            "age_at_save_hours": 8.24
+            "age_at_save_hours": 8.37
           }
         ],
         "footnotes": [
@@ -78,8 +130,10 @@
         "body": "Three-perspective roundup.",
         "posted": "5/12/2026 4:50 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 3.06
-      },
+        "age_at_save_hours": 3.19
+      }
+    ],
+    "earlier": [
       {
         "headline": "EU Approves New Sanctions Targeting Violent Israeli Settlers in West Bank",
         "honesty": "8/10",
@@ -112,44 +166,6 @@
         "notes": "Sanctions target settlers and groups amid ongoing violence in West Bank.",
         "body": "Three-perspective roundup.",
         "posted": "5/12/2026 4:50 AM"
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "UAE Launches Military Strikes Inside Iran",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@ConservBrief",
-            "url": "https://x.com/ConservBrief/status/2054028017249161633",
-            "text": "MAJOR BREAKING\n\nFox News reports that the United Arab Emirates have begun carrying out military strikes within Iran:\n\n\u201cThe UAE forces are directly...",
-            "engagement": "17 likes, 3 reposts, 0 quotes, 0 replies",
-            "honesty": "8/10",
-            "views": 938,
-            "notes": "Fox News confirmation of UAE engagement, accurate reporting of event.",
-            "views_at_save": 938,
-            "age_at_save_hours": 1.79
-          },
-          {
-            "label": "Independent",
-            "handle": "@realtoriabrooke",
-            "url": "https://x.com/realtoriabrooke/status/2054042069480386775",
-            "text": "NEW \u2014 The United Arab Emirates is carrying out military strikes inside Iran after Iran launched dozens of missiles and drones at the UAE.. It\u2019s worth...",
-            "engagement": "9 likes, 2 reposts, 0 quotes, 1 replies",
-            "honesty": "8/10",
-            "views": 255,
-            "notes": "Factual summary of strikes with context on UAE-US ties, no inaccuracies.",
-            "views_at_save": 255,
-            "age_at_save_hours": 0.86
-          }
-        ],
-        "footnotes": [],
-        "notes": "Escalation in Gulf tensions as UAE responds to Iranian attacks.",
-        "body": "Three-perspective roundup.",
-        "posted": "5/12/2026 4:04 AM",
-        "views_at_save": 0,
-        "age_at_save_hours": 1.79
       },
       {
         "headline": "EU Approves Sanctions on Violent Israeli Settlers and Far-Right Groups",
@@ -380,7 +396,41 @@
         "age_at_save_hours": 7.88
       }
     ],
-    "_overflow": []
+    "_overflow": [
+      {
+        "headline": "Pakistan shelters Iranian aircraft amid US-Iran mediation",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@LindseyGrahamSC",
+            "url": "https://x.com/LindseyGrahamSC/status/2053925069672296785",
+            "text": "If this reporting is accurate, it would require a complete reevaluation of the role Pakistan is playing as mediator between Iran, the United States...",
+            "engagement": "8K likes, 2K retweets, 1.4K replies",
+            "honesty": "8/10",
+            "views": 3190200,
+            "notes": "Original (CBS factual scoop from sources) = 9/10. QT (Graham's opinion calls for reevaluation based on facts) = 7/10. Combined = 8/10 \u2014 verified reporting with conservative framing on trust issues."
+          },
+          {
+            "label": "Independent",
+            "handle": "@JenniferJJacobs",
+            "url": "https://x.com/JenniferJJacobs/status/2053915732740653131",
+            "text": "Scoop via @CBSNews: As Pakistan positioned itself as a diplomatic conduit between Tehran and Washington, it quietly allowed Iranian military aircraft...",
+            "engagement": "3.1K likes, 1.2K retweets, 518 replies",
+            "honesty": "9/10",
+            "views": 2071617,
+            "notes": "Factual reporting based on sources, minor editorializing in framing."
+          }
+        ],
+        "footnotes": [
+          "Conservative: Sen. Graham urges reevaluation of Pakistan's role due to anti-Israel statements.",
+          "Independent: CBS News scoop on aircraft parking at Nur Khan base."
+        ],
+        "notes": "Pakistan accused of double-dealing by sheltering Iranian jets while mediating ceasefire talks between US and Iran.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/12/2026 4:58 AM"
+      }
+    ]
   },
   "usa": {
     "stories": [
@@ -398,7 +448,7 @@
             "views": 14478,
             "notes": "Factual announcement of funding bill passage with partisan framing; no demonstrable falsehoods.",
             "views_at_save": 14478,
-            "age_at_save_hours": 3.79
+            "age_at_save_hours": 3.92
           }
         ],
         "footnotes": [],
@@ -406,7 +456,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/12/2026 4:24 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 3.79
+        "age_at_save_hours": 3.92
       },
       {
         "headline": "Trump Praises Secret Service After WHCA Dinner Shooting",
@@ -422,7 +472,7 @@
             "views": 137509,
             "notes": "Factual reporting of Trump's statement with video; verifiable event.",
             "views_at_save": 137509,
-            "age_at_save_hours": 4.06
+            "age_at_save_hours": 4.19
           },
           {
             "label": "Democrat",
@@ -434,7 +484,7 @@
             "views": 10,
             "notes": "Reports on Fetterman (Dem) statement and poll; assumes poll accuracy - score 8",
             "views_at_save": 10,
-            "age_at_save_hours": 4.43
+            "age_at_save_hours": 4.56
           },
           {
             "label": "Independent",
@@ -446,7 +496,7 @@
             "views": 20513,
             "notes": "Neutral factual summary of event; no lies.",
             "views_at_save": 20513,
-            "age_at_save_hours": 2.12
+            "age_at_save_hours": 2.25
           }
         ],
         "footnotes": [],
@@ -454,7 +504,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/12/2026 4:04 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 4.06
+        "age_at_save_hours": 4.19
       },
       {
         "headline": "SCOTUS Temporarily Extends Access to Abortion Pill",
@@ -470,7 +520,7 @@
             "views": 13418,
             "notes": "Accurate summary of court action; verifiable ruling.",
             "views_at_save": 13418,
-            "age_at_save_hours": 4.34
+            "age_at_save_hours": 4.47
           },
           {
             "label": "Democrat",
@@ -482,7 +532,7 @@
             "views": 9819,
             "notes": "Factual reporting of SCOTUS decision with minor framing. Court actions are verifiable facts, but ongoing nature ('continues to mull') adds slight editorializing.",
             "views_at_save": 9819,
-            "age_at_save_hours": 8.84
+            "age_at_save_hours": 8.97
           },
           {
             "label": "Independent",
@@ -494,7 +544,7 @@
             "views": 13864,
             "notes": "Clear explanation of ruling with background; accurate.",
             "views_at_save": 13864,
-            "age_at_save_hours": 8.31
+            "age_at_save_hours": 8.44
           }
         ],
         "footnotes": [],
@@ -502,7 +552,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/12/2026 4:04 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 4.34
+        "age_at_save_hours": 4.47
       }
     ],
     "earlier": [
@@ -961,44 +1011,124 @@
     ],
     "_overflow": [
       {
-        "headline": "Trump Proposes Suspension of Federal Gas Tax",
+        "headline": "Trump Backs Suspending Federal Gas Tax",
         "honesty": "8/10",
         "perspectives": [
           {
             "label": "Conservative",
-            "handle": "@EricLDaugh",
-            "url": "https://x.com/EricLDaugh/status/2053869192571420981",
-            "text": "\ud83d\udea8 IT'S OFFICIAL: President Trump announces plans to SLASH the federal gas tax\n\n\"Yeah...as soon as Iran is over, you're gonna see oil and gas drop...",
-            "engagement": "1.7K likes, 472 reposts",
-            "honesty": "8/10",
-            "views": 43878,
-            "notes": "Reports Trump's statement accurately but adds enthusiastic framing."
+            "handle": "@NEWSMAX",
+            "url": "https://x.com/NEWSMAX/status/2053977205949243564",
+            "text": "Sen.. Josh Hawley on Monday said he plans to introduce legislation to suspend the federal gas tax to save drivers 18.4 cents per gallon.",
+            "engagement": "292 likes, 38 reposts",
+            "honesty": "9/10",
+            "views": 27415,
+            "notes": "Factual reporting of senator's legislative plan with minor framing."
           },
           {
             "label": "Democrat",
-            "handle": "@TexasTribune",
-            "url": "https://x.com/TexasTribune/status/2053967919063732571",
-            "text": "James Talarico on Monday aligned himself with President Donald Trump over their calls to suspend the federal gas tax \u2014 and took a dig at U.S.. Sen.",
-            "engagement": "6 likes, 2 reposts",
-            "honesty": "9/10",
-            "views": 1698,
-            "notes": "Factual coverage of a Democratic candidate's supportive stance with critical note on Republican."
+            "handle": "@allenanalysis",
+            "url": "https://x.com/allenanalysis/status/2053874972301427145",
+            "text": "\ud83d\udea8NEW: Trump just announced plans to slash the federal gas tax.. \u201cAs soon as Iran is over, you\u2019re gonna see oil and gas drop like a rock.\u201d December:...",
+            "engagement": "5K likes, 1K reposts",
+            "honesty": "7/10",
+            "views": 895272,
+            "notes": "Partisan opinion critiquing policy with accurate price data but interpretive blame on war origins."
           },
           {
             "label": "Independent",
-            "handle": "@AP",
-            "url": "https://x.com/AP/status/2053898448823267664",
-            "text": "President Donald Trump said he supports suspending the federal tax on gasoline to help Americans shoulder surging fuel prices caused by the Iran...",
-            "engagement": "151 likes, 49 reposts",
+            "handle": "@thehill",
+            "url": "https://x.com/thehill/status/2053934669763420496",
+            "text": "Hawley to introduce bill suspending 18.4-cent-a gallon gas tax.",
+            "engagement": "117 likes, 14 reposts",
             "honesty": "10/10",
-            "views": 68067,
-            "notes": "Straightforward reporting of verified presidential statement."
+            "views": 15639,
+            "notes": "Straightforward verifiable news headline on proposed bill."
           }
         ],
         "footnotes": [],
-        "notes": "High-velocity topic on federal policy relief amid economic pressures.",
+        "notes": "High-velocity topic on federal policy response to fuel prices.",
         "body": "Three-perspective roundup.",
-        "posted": "5/12/2026 4:50 AM"
+        "posted": "5/12/2026 4:58 AM"
+      },
+      {
+        "headline": "Trump's Exaggerated Claims on Drug Price Reductions",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@TrumpTruthOnX",
+            "url": "https://x.com/TrumpTruthOnX/status/2053860469967118603",
+            "text": "Trump says he dropped drug prices by 400-500%.... or 70-80% 'Depending on the way you want to phrase the question...",
+            "engagement": "59 likes, 7 reposts",
+            "honesty": "8/10",
+            "views": 9380,
+            "notes": "Reports Trump's statement with video; factual attribution but highlights inconsistency in opinionated way."
+          },
+          {
+            "label": "Democrat",
+            "handle": "@SenSanders",
+            "url": "https://x.com/SenSanders/status/2053963227390759377",
+            "text": "Good news: Trump, who never lies, said he cut drug prices by 400-600%.. Quick.",
+            "engagement": "2.5K likes, 575 reposts",
+            "honesty": "7/10",
+            "views": 109280,
+            "notes": "Satirical opinion mocking claim; no false facts, promotes own bill."
+          },
+          {
+            "label": "Independent",
+            "handle": "@atrupar",
+            "url": "https://x.com/atrupar/status/2053854813834580392",
+            "text": "Trump: \"We're getting drug prices down by 400, 500 percent.. Or depending on the way you want to phrase the question, you could say 600 percent, and...",
+            "engagement": "1K likes, 298 reposts",
+            "honesty": "10/10",
+            "views": 198021,
+            "notes": "Verbatim video clip of Trump's statement, pure fact."
+          }
+        ],
+        "footnotes": [],
+        "notes": "Viral clip sparking mockery across spectrum.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/12/2026 4:58 AM"
+      },
+      {
+        "headline": "Virginia Democrats Seek to Remove Supreme Court Justices Over Redistricting",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@DonaldJTrumpJr",
+            "url": "https://x.com/DonaldJTrumpJr/status/2053990225118990498",
+            "text": "Democracy isn\u2019t dying in darkness - Democrats want to kill it in broad daylight and hope you aren\u2019t paying attention.",
+            "engagement": "2K likes, 628 reposts",
+            "honesty": "6/10",
+            "views": 115997,
+            "notes": "Partisan opinion on event; hyperbolic but refers to real proposal without false claims."
+          },
+          {
+            "label": "Democrat",
+            "handle": "@donusa5667",
+            "url": "https://x.com/donusa5667/status/2053962177866875296",
+            "text": "You evil Virginia Democrats.. The Virginia Supreme court struck down the state redistricting the Democrats wanted because it was racist.",
+            "engagement": "0 likes",
+            "honesty": "5/10",
+            "views": 16,
+            "notes": "Strong opinion but low views; contains demonstrably false or exaggerated claim on 'racist' ruling without specifics."
+          },
+          {
+            "label": "Independent",
+            "handle": "@BreitbartNews",
+            "url": "https://x.com/BreitbartNews/status/2053877492839027067",
+            "text": "Just incredible.. They are done with norms, with the rule of law, with any checks on their power.",
+            "engagement": "54 likes, 14 reposts",
+            "honesty": "7/10",
+            "views": 10901,
+            "notes": "Commentary on news event; opinionated but based on reported facts."
+          }
+        ],
+        "footnotes": [],
+        "notes": "State-level battle with national implications on court packing.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/12/2026 4:58 AM"
       }
     ]
   },
@@ -1019,7 +1149,7 @@
         "parent_handle": "@StateDept",
         "parent_text": "The United States will not legitimize global compacts that enable mass migration into America or Western nations.\n\nUnder President Trump, the State Department will facilitate remigration \u2013 not replacement migration.",
         "views_at_save": 16350,
-        "age_at_save_hours": 4.75
+        "age_at_save_hours": 4.88
       },
       {
         "headline": "No More Censorship",
@@ -1036,7 +1166,7 @@
         "parent_handle": "@pmarca",
         "parent_text": "Four years ago, this post would have gotten you erased from the entire Internet, banned from the entire banking system, fired from your job, and blackballed from future employment in the Fortune 500.",
         "views_at_save": 101466,
-        "age_at_save_hours": 4.76
+        "age_at_save_hours": 4.89
       },
       {
         "headline": "Insane UK Policy on Terrorists",
@@ -1053,7 +1183,7 @@
         "parent_handle": "@Asmongold",
         "parent_text": "Truth is stranger than fiction This clip was about the UK allowing a literal terrorist back in the country who said they wanted to kill white people and jews The caption is accurate Think about how bad it is that, while this seems ridiculous, it's true. Vote Restore Britain!",
         "views_at_save": 17012,
-        "age_at_save_hours": 8.88
+        "age_at_save_hours": 9.02
       },
       {
         "headline": "Agreement on Selective Outrage",
@@ -1067,7 +1197,7 @@
         "post_ts": "2026-05-11T17:42:15Z",
         "views": 14714899,
         "views_at_save": 14714899,
-        "age_at_save_hours": 11.14
+        "age_at_save_hours": 11.27
       },
       {
         "headline": "Critique of Trans Casting in Odyssey",
@@ -1084,7 +1214,7 @@
         "parent_handle": "@unherd",
         "parent_text": "Over the weekend, online reports suggested that Achilles might be played by trans actor Elliot Page in the new film adaptation of The Odyssey. The idea isn't as outrageous as it seems, writes @SpencerKlavan \ud83d\udc47 https://unherd.com/newsroom/elliot-page-as-achilles-is-not-as-far-fetch",
         "views_at_save": 123278,
-        "age_at_save_hours": 10.45
+        "age_at_save_hours": 10.58
       },
       {
         "headline": "Trigger Warnings on Old Movies",
@@ -1101,7 +1231,7 @@
         "parent_handle": "@pmarca",
         "parent_text": "1 Open 2026 30th Anniversary edition of David Foster Wallace\u2019s \u201cInfinite Jest\u201d. 2 First page of new Introduction gratuitously attacks men. 3 Hurl Kindle at wall.",
         "views_at_save": 98907,
-        "age_at_save_hours": 10.66
+        "age_at_save_hours": 10.79
       },
       {
         "headline": "Iliad's Core Plot Points",
@@ -1118,7 +1248,7 @@
         "parent_handle": "@TWarPhilosopher",
         "parent_text": "These two books were disastrous for humanity and study of the Ancients. Miller convinced leftists Achilles and Patroclus were gay lovers and Wilson translated the Iliad to implicitly hint at this. Christopher Nolan\u2019s Odyssey is the final straw to ruin Homer.",
         "views_at_save": 79696,
-        "age_at_save_hours": 10.59
+        "age_at_save_hours": 10.72
       }
     ],
     "earlier": []
@@ -1131,8 +1261,8 @@
         "url": "https://x.com/DarkoStateNews/status/2053882597118259678",
         "body": "Pistons offer Ausar Thompson, Jalen Duren sign-and-trade, Tobias Harris, Ron Holland II, and 2027/2031 firsts for Giannis Antetokounmpo.",
         "engagement": "152 likes, 3 reposts",
-        "honesty": "9/10",
-        "notes": "Original (ESPN Bucks trade report) = 10/10 verified fact. QT (fan trade proposal) = 8/10 speculative but detailed. Combined = 9/10 factual core with added analysis.",
+        "honesty": "8/10",
+        "notes": "Trade proposal speculation mixing real ESPN report (10) with fan proposal (7-8). Combined score 8/10 is appropriate for mix of fact and speculation.",
         "posted": "2026-05-12T04:50:23Z",
         "post_ts": "2026-05-11T16:59:05Z",
         "views": 8427948,
@@ -1141,21 +1271,7 @@
         "original_views": 8067094,
         "qt_views": 360854,
         "views_at_save": 8427948,
-        "age_at_save_hours": 11.86
-      },
-      {
-        "headline": "Bucks Open to Trading Giannis Antetokounmpo",
-        "handle": "@ShamsCharania",
-        "url": "https://x.com/ShamsCharania/status/2053876566615044190",
-        "body": "Milwaukee Bucks are fielding trade offers for two-time MVP Giannis Antetokounmpo ahead of NBA draft.",
-        "engagement": "20K likes, 2.6K reposts",
-        "honesty": "10/10",
-        "notes": "Verified insider report from credible NBA source.",
-        "posted": "2026-05-12T03:35:55Z",
-        "post_ts": "2026-05-11T16:35:07Z",
-        "views": 7907753,
-        "views_at_save": 7907753,
-        "age_at_save_hours": 12.25
+        "age_at_save_hours": 11.99
       },
       {
         "headline": "Deandre Ayton buys 'DominAyton' chain amid Lakers' 0-3 playoff deficit",
@@ -1173,8 +1289,40 @@
         "original_views": 4941838,
         "qt_views": 1503707,
         "views_at_save": 6445545,
-        "age_at_save_hours": 10.25
+        "age_at_save_hours": 10.39
       },
+      {
+        "url": "https://x.com/AdamSchefter/status/2053846787379589286",
+        "handle": "@AdamSchefter",
+        "body": "More about the Los Angeles Chargers agreeing to terms with former Cleveland Browns tight end David Njoku on a one-year deal worth up to $8 million:\n\nhttps://www.espn.com/nfl/story/_/id/48739754/sources-chargers-te-david-njoku-agree-one-year-deal",
+        "views": 541215,
+        "engagement": {
+          "likes": 1215,
+          "reposts": 84,
+          "quotes": 15,
+          "replies": 115,
+          "bookmarks": 19
+        },
+        "honesty": "10/10",
+        "notes": "NFL contract signing from official reporter with link. Verified fact, correctly scored 10/10."
+      },
+      {
+        "url": "https://x.com/AdamSchefter/status/2053920602533298410",
+        "handle": "@AdamSchefter",
+        "body": "More about the Pittsburgh Steelers agreeing to terms with kicker Chris Boswell on a four-year, $28 million extension:\n\nhttps://www.espn.com/nfl/story/_/id/48742244/steelers-boswell-now-tied-aubrey-nfl-top-paid-kicker",
+        "views": 489195,
+        "engagement": {
+          "likes": 915,
+          "reposts": 63,
+          "quotes": 8,
+          "replies": 98,
+          "bookmarks": 15
+        },
+        "honesty": "10/10",
+        "notes": "NFL contract extension from official reporter with link. Verified fact, correctly scored 10/10."
+      }
+    ],
+    "earlier": [
       {
         "url": "https://x.com/BrickCenter_/status/2054033069238341647",
         "handle": "@BrickCenter_",
@@ -1183,9 +1331,7 @@
         "engagement": "Likes=15609, Reposts=1104, Quotes=379, Replies=509, Bookmarks=1373",
         "honesty": "Satirical/Parody",
         "notes": "Funny moment from NBA playoffs involving Dillon Brooks and LeBron James."
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Dillon Brooks Courtside at Lakers-Thunder Game 4",
         "handle": "@BleacherReport",
@@ -1291,20 +1437,6 @@
         "views": 485312,
         "views_at_save": 485312,
         "age_at_save_hours": 11.56
-      },
-      {
-        "headline": "Bucks Open to Giannis Trade Offers",
-        "handle": "@ClutchPoints",
-        "url": "https://x.com/ClutchPoints/status/2053877160541073418",
-        "body": "Milwaukee Bucks are open for business on trades for Giannis Antetokounmpo, keeping the same asking price of young talent and picks.",
-        "engagement": "10 likes, 3 reposts",
-        "honesty": "9/10",
-        "notes": "Accurate reporting based on Shams Charania's sources with minor summary.",
-        "posted": "2026-05-11T16:49:35Z",
-        "post_ts": "2026-05-11T16:37:28Z",
-        "views": 966,
-        "views_at_save": 966,
-        "age_at_save_hours": 0.2
       }
     ]
   },
@@ -1326,7 +1458,7 @@
         "original_views": 1157557,
         "qt_views": 59443,
         "views_at_save": 1217000,
-        "age_at_save_hours": 1.09
+        "age_at_save_hours": 1.22
       },
       {
         "headline": "Censorship's Dramatic Reversal",
@@ -1340,7 +1472,7 @@
         "post_ts": "2026-05-11T23:40:48Z",
         "views": 704411,
         "views_at_save": 704411,
-        "age_at_save_hours": 5.16
+        "age_at_save_hours": 5.29
       },
       {
         "headline": "Data Centers Offer Rapid Payback Amid AI Boom",
@@ -1354,7 +1486,7 @@
         "post_ts": "2026-05-10T20:29:51Z",
         "views": 1895742,
         "views_at_save": 1895742,
-        "age_at_save_hours": 32.34
+        "age_at_save_hours": 32.47
       }
     ],
     "earlier": [
@@ -1414,7 +1546,7 @@
         "post_ts": "2026-05-11T12:06:15Z",
         "views": 1014183,
         "views_at_save": 1014183,
-        "age_at_save_hours": 16.74
+        "age_at_save_hours": 16.87
       },
       {
         "headline": "Zelensky Aide Exposes Corruption",
@@ -1428,7 +1560,7 @@
         "post_ts": "2026-05-11T17:01:37Z",
         "views": 947059,
         "views_at_save": 947059,
-        "age_at_save_hours": 11.81
+        "age_at_save_hours": 11.95
       },
       {
         "headline": "Megyn Kelly Questions Edited Netanyahu 60 Minutes Interview",
@@ -1442,7 +1574,7 @@
         "post_ts": "2026-05-11T23:40:49Z",
         "views": 94347,
         "views_at_save": 94347,
-        "age_at_save_hours": 5.16
+        "age_at_save_hours": 5.29
       }
     ],
     "earlier": [
@@ -1563,6 +1695,20 @@
   "business": {
     "stories": [
       {
+        "headline": "Anthropic Voids Secondary Stock Trades, Exposing Billions in Risk",
+        "handle": "@TFTC21",
+        "url": "https://x.com/TFTC21/status/2053886845084451147",
+        "body": "Anthropic declares unapproved secondary market stock transfers void, invalidating investor ownership and highlighting severe counterparty risks in...",
+        "engagement": "2.9K likes, 321 retweets, 207 replies",
+        "honesty": "9/10",
+        "notes": "Reports verifiable company policy change (Anthropic stock transfer policy). This is a factual corporate action, not expert analysis.",
+        "posted": "2026-05-12T04:58:19Z",
+        "post_ts": "2026-05-11T17:15:57Z",
+        "views": 1534871,
+        "views_at_save": 1534871,
+        "age_at_save_hours": 11.71
+      },
+      {
         "headline": "Trump Gold Phone Deposits Turn into Potential Scam",
         "handle": "@unusual_whales",
         "url": "https://x.com/unusual_whales/status/2053966127730921780",
@@ -1574,7 +1720,7 @@
         "post_ts": "2026-05-11T22:31:00Z",
         "views": 679916,
         "views_at_save": 679916,
-        "age_at_save_hours": 6.32
+        "age_at_save_hours": 6.46
       },
       {
         "headline": "Americans Spent $109B on Lottery, More Than Entertainment Combined",
@@ -1588,8 +1734,10 @@
         "post_ts": "2026-05-11T12:17:00Z",
         "views": 479445,
         "views_at_save": 479445,
-        "age_at_save_hours": 16.56
-      },
+        "age_at_save_hours": 16.69
+      }
+    ],
+    "earlier": [
       {
         "headline": "Ray Dalio Explains Why Bitcoin Isn't a True Safe Haven Like Gold",
         "handle": "@RayDalio",
@@ -1603,9 +1751,7 @@
         "views": 347833,
         "views_at_save": 347833,
         "age_at_save_hours": 8.16
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Vitalik Buterin on ZK-Payments Future",
         "handle": "@Cointelegraph",
@@ -1739,30 +1885,28 @@
     ],
     "_overflow": [
       {
-        "headline": "Gundlach Highlights Private Credit Risks as Fund NAV Plunges to 77",
-        "handle": "@TruthGundlach",
-        "url": "https://x.com/TruthGundlach/status/2053677024607383801",
-        "body": "A large private credit fund marked its NAV down to 77 from 100 YTD, prompting questions on uniform loan losses or concentrated deteriorations.",
-        "engagement": "2K likes, 244 retweets, 0 replies",
-        "honesty": "8/10",
-        "notes": "Factual reporting of NAV markdown with analytical questions on implications.",
-        "posted": "2026-05-12T04:50:25Z",
-        "post_ts": "2026-05-11T03:22:12Z",
-        "views": 278377
-      },
-      {
-        "headline": "Vitalik Buterin Foresees ZK-Payments as Future Crypto Standard in AI Era",
+        "headline": "Vitalik Foresees ZK-Payments as Key to AI Agent Economy",
         "handle": "@Cointelegraph",
         "url": "https://x.com/Cointelegraph/status/2053772252546470164",
-        "body": "Buterin states zero-knowledge proofs for payments could become the norm in an AI-driven world of autonomous agents.",
+        "body": "Vitalik Buterin envisions zero-knowledge payments becoming the standard for crypto transactions in the emerging AI-driven agentic era.",
         "engagement": "1.8K likes, 257 retweets, 251 replies",
-        "honesty": "9/10",
-        "notes": "Direct insight from Ethereum co-founder on emerging tech trends.",
-        "posted": "2026-05-12T04:50:25Z",
+        "honesty": "8/10",
+        "notes": "Insightful prediction from Ethereum founder on future tech integration.",
+        "posted": "2026-05-12T04:58:19Z",
         "post_ts": "2026-05-11T09:40:36Z",
-        "views": 163641,
-        "views_at_save": 162984,
-        "age_at_save_hours": 18.72
+        "views": 163869
+      },
+      {
+        "headline": "Coach-Ability Outweighs Elite Pedigree in Finance Careers",
+        "handle": "@BoringBiz_",
+        "url": "https://x.com/BoringBiz_/status/2053984569536180609",
+        "body": "For junior finance roles in top PE and hedge funds, coach-ability and hard work trump Ivy League backgrounds or bank prestige, as arrogance often...",
+        "engagement": "177 likes, 3 retweets, 5 replies",
+        "honesty": "7/10",
+        "notes": "Opinion-based career advice drawing from industry hiring patterns.",
+        "posted": "2026-05-12T04:58:19Z",
+        "post_ts": "2026-05-11T23:44:17Z",
+        "views": 12087
       }
     ]
   },
@@ -1780,7 +1924,7 @@
         "post_ts": "2026-05-11T19:58:04Z",
         "views": 35462874,
         "views_at_save": 35462874,
-        "age_at_save_hours": 8.87
+        "age_at_save_hours": 9.0
       },
       {
         "headline": "Gad Saad teases 'Suicidal Empathy' book launch",
@@ -1794,7 +1938,7 @@
         "post_ts": "2026-05-11T16:01:45Z",
         "views": 25929131,
         "views_at_save": 25929131,
-        "age_at_save_hours": 12.81
+        "age_at_save_hours": 12.94
       },
       {
         "headline": "Performer Throws Trash Can into Rolling Loud Crowd",
@@ -1808,7 +1952,7 @@
         "post_ts": "2026-05-11T16:36:08Z",
         "views": 5419191,
         "views_at_save": 5419191,
-        "age_at_save_hours": 12.24
+        "age_at_save_hours": 12.37
       }
     ],
     "earlier": [
@@ -1951,40 +2095,40 @@
     ],
     "_overflow": [
       {
-        "headline": "Hypocrisy in Nazi salute accusations against Musk versus Mamdani",
+        "headline": "Hypocrisy in Nazi Salute Accusations",
         "handle": "@theobjectivist",
         "url": "https://x.com/theobjectivist/status/2053637946641657964",
-        "body": "Critics labeled Elon Musk's wave a Nazi salute but defend Robert Mamdani's similar gesture with excuses like arm speed and smiles.",
-        "engagement": "13K likes, 2.7K reposts",
+        "body": "Highlights hypocrisy in accusing Elon Musk of a Nazi salute while defending Mamdani for a similar gesture due to political bias.",
+        "engagement": "13K likes, 2.8K reposts",
         "honesty": "8/10",
-        "notes": "Fact + opinion mix on media double standards.",
-        "posted": "2026-05-12T04:50:25Z",
+        "notes": "Opinion on media double standards, no factual errors.",
+        "posted": "2026-05-12T04:58:20Z",
         "post_ts": "2026-05-11T00:46:55Z",
-        "views": 37943133
+        "views": 38299402
       },
       {
-        "headline": "Elon Musk congratulates Giga Berlin team on 750,000 cars milestone",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2054050939477414041",
-        "body": "Musk praises the Tesla team at Giga Berlin for producing 750,000 vehicles.",
-        "engagement": "14K likes, 1.3K reposts",
+        "headline": "Giga Berlin Hits 750,000 Cars Milestone",
+        "handle": "@gigafactories",
+        "url": "https://x.com/gigafactories/status/2053892462385516853",
+        "body": "Tesla's Giga Berlin factory reaches 750,000 vehicles produced, detailing the complex manufacturing process.",
+        "engagement": "6K likes, 753 reposts",
         "honesty": "10/10",
-        "notes": "Verified fact.",
-        "posted": "2026-05-12T04:50:25Z",
-        "post_ts": "2026-05-12T04:08:01Z",
-        "views": 1939221
+        "notes": "Fact",
+        "posted": "2026-05-12T04:58:20Z",
+        "post_ts": "2026-05-11T17:38:17Z",
+        "views": 2737225
       },
       {
-        "headline": "Anime fan requests Grok to transform Bulma into real life",
-        "handle": "@CinematicLands",
-        "url": "https://x.com/CinematicLands/status/2053962418217173036",
-        "body": "User asks Grok AI to create a realistic image of Dragon Ball character Bulma.",
-        "engagement": "7.6K likes, 159 reposts",
-        "honesty": "7/10",
-        "notes": "Opinion/request, no factual claims.",
-        "posted": "2026-05-12T04:50:25Z",
-        "post_ts": "2026-05-11T22:16:15Z",
-        "views": 1174689
+        "headline": "Starship Launch Rehearsal Success",
+        "handle": "@SpaceX",
+        "url": "https://x.com/SpaceX/status/2053929135936864393",
+        "body": "SpaceX successfully completes launch rehearsal by loading over 5,000 metric tonnes of propellant onto the first fully stacked Starship and Super...",
+        "engagement": "19K likes, 3.3K reposts",
+        "honesty": "10/10",
+        "notes": "Fact",
+        "posted": "2026-05-12T04:58:20Z",
+        "post_ts": "2026-05-11T20:04:00Z",
+        "views": 1214354
       }
     ]
   },
@@ -2002,7 +2146,7 @@
         "post_ts": "2026-05-11T19:47:44Z",
         "views": 2045358,
         "views_at_save": 2045358,
-        "age_at_save_hours": 9.04
+        "age_at_save_hours": 9.18
       },
       {
         "headline": "Democrat CA Mayor pleads guilty to acting as foreign agent for China",
@@ -2016,21 +2160,21 @@
         "post_ts": "2026-05-11T22:26:37Z",
         "views": 1992994,
         "views_at_save": 1992994,
-        "age_at_save_hours": 6.4
+        "age_at_save_hours": 6.53
       },
       {
-        "headline": "Civil Rights Movement Narrative Exposed as Lie by Matt Walsh",
+        "headline": "Civil Rights Movement Narrative Exposed as Lie",
         "handle": "@MattWalshBlog",
         "url": "https://x.com/MattWalshBlog/status/2053863171257925748",
-        "body": "Walsh's new special trailer debunks the standard history of the civil rights movement as a fabricated story.",
-        "engagement": "21K likes, 2.8K retweets, 789 replies",
-        "honesty": "7/10",
-        "notes": "Opinion-driven historical take challenging mainstream views with contrarian analysis.",
-        "posted": "2026-05-12T04:10:40Z",
+        "body": "Standard history of civil rights movement is fabricated, as detailed in new video special with evidence.",
+        "engagement": "21K likes, 2.9K reposts, 210 quotes, 810 replies",
+        "honesty": "8/10",
+        "notes": "Contrarian analysis of historical events; opinion mix with cited evidence, no false claims.",
+        "posted": "2026-05-12T04:58:20Z",
         "post_ts": "2026-05-11T15:41:53Z",
-        "views": 1545205,
-        "views_at_save": 1545205,
-        "age_at_save_hours": 13.14
+        "views": 1600956,
+        "views_at_save": 1600956,
+        "age_at_save_hours": 13.27
       }
     ],
     "earlier": [
@@ -2093,28 +2237,28 @@
     ],
     "_overflow": [
       {
-        "headline": "Biden's CHNV program allowed 500K+ migrants to fly into US with fraud issues",
+        "headline": "Biden's CHNV Program Enabled 500K+ Migrant Flights with Fraud",
         "handle": "@BillMelugin_",
         "url": "https://x.com/BillMelugin_/status/2053894383200780437",
-        "body": "Biden's mass parole flights brought over 500,000 migrants; DHS IG found no tracking of expirations, sponsor vetting failures, and widespread fraud.",
-        "engagement": "10K likes, 3.6K retweets, 198 replies",
+        "body": "Biden created CHNV parole allowing 500K+ migrants to fly into US monthly, but DHS failed to track expirations or vet sponsors amid widespread fraud.",
+        "engagement": "10K likes, 3.6K reposts, 134 quotes, 198 replies",
         "honesty": "9/10",
-        "notes": "Fact with minor framing - program details verified by DHS reports and IG audit.",
-        "posted": "2026-05-12T04:50:25Z",
+        "notes": "Verified DHS IG report on program flaws and numbers; minor editorial framing on circumvention.",
+        "posted": "2026-05-12T04:58:20Z",
         "post_ts": "2026-05-11T17:45:55Z",
-        "views": 297591
+        "views": 298684
       },
       {
-        "headline": "Ohio uncovers billions in Medicaid fraud tied to Somali networks",
-        "handle": "@WallStreetApes",
-        "url": "https://x.com/WallStreetApes/status/2053986436198867113",
-        "body": "Investigators expose shell companies in empty buildings billing $250M+ for fake home health services, plus $3.8B unemployment fraud.",
-        "engagement": "6.3K likes, 3.4K retweets, 257 replies",
+        "headline": "School Staffer Mocks Trump Assassination Attempt",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2053972530252100086",
+        "body": "Stephanie Lange at Chippewa Valley Schools posted content mocking Trump, Elon, Jesus, and disappointment over missed shooter; board pushes for firing.",
+        "engagement": "3.9K likes, 1.8K reposts, 64 quotes, 134 replies",
         "honesty": "8/10",
-        "notes": "Fact + analysis - based on recent investigations and reports, no false claims.",
-        "posted": "2026-05-12T04:50:26Z",
-        "post_ts": "2026-05-11T23:51:42Z",
-        "views": 88748
+        "notes": "Scoop with insider sources and screenshots; interpretive on post intent but factual exposure.",
+        "posted": "2026-05-12T04:58:20Z",
+        "post_ts": "2026-05-11T22:56:26Z",
+        "views": 338996
       }
     ]
   },
@@ -2132,21 +2276,21 @@
         "post_ts": "2026-05-11T20:22:31Z",
         "views": 8554804,
         "views_at_save": 8554804,
-        "age_at_save_hours": 8.47
+        "age_at_save_hours": 8.6
       },
       {
-        "headline": "Dianna Russini Kisses Husband After Scandal",
+        "headline": "Dianna Russini Kisses Husband Amid Mike Vrabel Affair Scandal",
         "handle": "@nypost",
         "url": "https://x.com/nypost/status/2053931773495496941",
-        "body": "Dianna Russini shares affectionate kiss with husband on Mother's Day, first sighting since alleged Mike Vrabel affair scandal.",
-        "engagement": "6.6K likes, 374 reposts, 1.4K quotes, 2K replies",
+        "body": "ESPN reporter Dianna Russini and husband Kevin Goldschmidt share a Mother's Day kiss in first public appearance since her alleged affair with Mike...",
+        "engagement": "6K likes, 381 retweets, 2K replies",
         "honesty": "9/10",
-        "notes": "Fact: reported public appearance and context of ongoing scandal from credible entertainment source.",
-        "posted": "2026-05-12T03:54:04Z",
+        "notes": "Factual reporting of public sighting with reference to ongoing scandal.",
+        "posted": "2026-05-12T04:58:20Z",
         "post_ts": "2026-05-11T20:14:29Z",
-        "views": 6974019,
-        "views_at_save": 6974019,
-        "age_at_save_hours": 8.6
+        "views": 7193193,
+        "views_at_save": 7193193,
+        "age_at_save_hours": 8.73
       },
       {
         "headline": "Blake Lively Shows Strain Post-Lawsuit",
@@ -2160,7 +2304,7 @@
         "post_ts": "2026-05-11T17:28:42Z",
         "views": 5000000,
         "views_at_save": 5000000,
-        "age_at_save_hours": 11.36
+        "age_at_save_hours": 11.49
       }
     ],
     "earlier": [
@@ -2321,7 +2465,7 @@
         "views": 326247,
         "translation": "Post (translated from Japanese): Bonito and bean sprouts ume kochujang noodles. 'Ingredients with similar colors pair well' inspired new mixed noodles: Chinese noodles tossed in plum, kochujang, salt, sesame oil, topped with boiled bean sprouts, sliced bonito tataki, green onions. Vary with ponzu. Amazing taste. https://www.ntv.co.jp/3min/recipe/20260509/ Quoted (translated from Japanese): Nippon TV '3 Minute Cooking' 11:45-55 broadcast. Hasegawa hosts May-June Saturdays! Recipe: Ume kochujang mixed noodles with bonito tataki. Quick and delicious\u2014make it after watching!",
         "views_at_save": 326247,
-        "age_at_save_hours": 19.88
+        "age_at_save_hours": 20.01
       },
       {
         "headline": "Pasta alla Zozzona",
@@ -2335,7 +2479,7 @@
         "post_ts": "2026-05-11T15:03:45Z",
         "views": 161098,
         "views_at_save": 161098,
-        "age_at_save_hours": 13.78
+        "age_at_save_hours": 13.91
       },
       {
         "headline": "Spaghetti alla Carbonara",
@@ -2349,7 +2493,7 @@
         "post_ts": "2026-05-11T09:52:40Z",
         "views": 96403,
         "views_at_save": 96403,
-        "age_at_save_hours": 18.96
+        "age_at_save_hours": 19.09
       }
     ],
     "earlier": [
@@ -2473,18 +2617,18 @@
   "science": {
     "stories": [
       {
-        "headline": "Brazilian Scientists Use Fish Skin to Treat Burns Without Scars",
+        "headline": "Fish Skin Used to Treat Burns Painlessly",
         "handle": "@mog_russEN",
         "url": "https://x.com/mog_russEN/status/2053742046926737711",
-        "body": "Brazilian scientists use fish skin to treat burns, enabling faster healing without pain or scars thanks to its collagen and moisture.",
-        "engagement": "22K likes, 2.6K reposts",
+        "body": "Brazilian scientists are using fish skin to treat burns, helping wounds heal faster without pain or scars thanks to collagen and moisture.",
+        "engagement": "25K likes, 2.8K reposts",
         "honesty": "9/10",
-        "notes": "Established research on tilapia skin grafts for burn treatment, factually accurate.",
-        "posted": "2026-05-12T03:24:08Z",
+        "notes": "Highlights verified research on innovative burn treatment using biomaterial.",
+        "posted": "2026-05-12T04:58:21Z",
         "post_ts": "2026-05-11T07:40:35Z",
-        "views": 3891600,
-        "views_at_save": 3891600,
-        "age_at_save_hours": 21.16
+        "views": 4354929,
+        "views_at_save": 4354929,
+        "age_at_save_hours": 21.3
       },
       {
         "headline": "Google Unveils Gemini Omni: Breakthrough in AI Video Generation",
@@ -2498,21 +2642,21 @@
         "post_ts": "2026-05-11T13:07:49Z",
         "views": 1133121,
         "views_at_save": 1133121,
-        "age_at_save_hours": 15.71
+        "age_at_save_hours": 15.84
       },
       {
         "headline": "38 New Deep-Sea Species Discovered Near Japan",
         "handle": "@forallcurious",
         "url": "https://x.com/forallcurious/status/2053881070735802727",
-        "body": "Scientists found 38 new species of deep-sea organisms in waters near Japan.",
-        "engagement": "6.7K likes, 595 reposts, 92 quotes, 75 replies",
+        "body": "Scientists just found 38 new species of deep-sea organisms in waters near Japan.",
+        "engagement": "6.8K likes, 597 reposts",
         "honesty": "9/10",
-        "notes": "Verified discovery announcement from marine biology research.",
-        "posted": "2026-05-12T04:50:27Z",
+        "notes": "Reports a verified scientific discovery from recent expedition research.",
+        "posted": "2026-05-12T04:58:21Z",
         "post_ts": "2026-05-11T16:53:01Z",
-        "views": 158086,
-        "views_at_save": 158086,
-        "age_at_save_hours": 11.96
+        "views": 159322,
+        "views_at_save": 159322,
+        "age_at_save_hours": 12.09
       }
     ],
     "earlier": [
@@ -2672,7 +2816,7 @@
         "post_ts": "2026-05-12T01:04:32Z",
         "views": 70358,
         "views_at_save": 70358,
-        "age_at_save_hours": 3.77
+        "age_at_save_hours": 3.9
       },
       {
         "headline": "Huntington Beach e-bike incident with teens",
@@ -2686,8 +2830,27 @@
         "post_ts": "2026-05-12T00:40:01Z",
         "views": 19858,
         "views_at_save": 19858,
-        "age_at_save_hours": 4.17
+        "age_at_save_hours": 4.31
       },
+      {
+        "headline": "Suspected money laundering in Irvine real estate",
+        "handle": "@Kreskin_17",
+        "url": "https://x.com/Kreskin_17/status/2054044756104380874",
+        "body": "Chinese nationals allegedly buy $1.5M tract houses in Irvine, leave them empty for two years, then resell for $3-4M in potential money laundering...",
+        "engagement": "13 likes, 2 reposts, 0 replies",
+        "honesty": "7/10",
+        "notes": "Opinion-based speculation on real estate patterns without verified evidence of illegality.",
+        "posted": "2026-05-12T04:58:22Z",
+        "post_ts": "2026-05-12T03:43:26Z",
+        "views": 2678,
+        "parent_url": "https://x.com/RoofKorean7/status/2054033053635506497",
+        "parent_handle": "@RoofKorean7",
+        "parent_text": "They all need to be investigated along with the city council and leadership in the surrounding areas. I'm not kidding. We have a serious problem in the San Gabriel Valley and Irvine.",
+        "views_at_save": 2678,
+        "age_at_save_hours": 1.25
+      }
+    ],
+    "earlier": [
       {
         "headline": "UC Irvine players named to NCAA volleyball all-tournament team",
         "handle": "@Set_PointIE",
@@ -2701,9 +2864,7 @@
         "views": 1335,
         "views_at_save": 1335,
         "age_at_save_hours": 3.7
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "SpaceX Launch Visible from Orange County",
         "handle": "@OC_Scanner",
@@ -2735,40 +2896,64 @@
     ],
     "_overflow": [
       {
-        "headline": "Huntington Beach e-bike enforcement operation issues dozens of citations",
+        "headline": "Huntington Beach police crack down on unlawful e-bikes",
         "handle": "@KTLA",
         "url": "https://x.com/KTLA/status/2053992326666551601",
-        "body": "Huntington Beach police conducted an enforcement operation targeting unlawful e-bike and electric motorcycle activity, resulting in dozens of...",
-        "engagement": "15 likes, 4 retweets, 3 replies",
+        "body": "Huntington Beach PD issued dozens of citations during a Friday enforcement operation targeting illegal e-bike and electric motorcycle use.",
+        "engagement": "16 likes, 4 reposts, 3 replies",
         "honesty": "10/10",
-        "notes": "Verified factual report from police via KTLA news.",
-        "posted": "2026-05-12T04:50:27Z",
+        "notes": "Verified official police enforcement action.",
+        "posted": "2026-05-12T04:58:21Z",
         "post_ts": "2026-05-12T00:15:06Z",
-        "views": 3141
+        "views": 3155
       },
       {
-        "headline": "Irvine safety ranking drops after Democratic council shift",
-        "handle": "@turbs888",
-        "url": "https://x.com/turbs888/status/2053697366725931067",
-        "body": "Irvine, once California's safest city, now ranks 14th following the 2022 elections that gave Democrats a majority on the city council.",
-        "engagement": "136 likes, 62 retweets, 2 quotes, 21 replies",
-        "honesty": "7/10",
-        "notes": "Opinion linking political change to safety decline; ranking verifiable but causation is interpretive.",
-        "posted": "2026-05-12T04:50:27Z",
-        "post_ts": "2026-05-11T04:43:02Z",
-        "views": 2416
+        "headline": "Costa Mesa girls' swim team claims first CIF title",
+        "handle": "@TheDailyPilot",
+        "url": "https://x.com/TheDailyPilot/status/2053178310243574175",
+        "body": "Costa Mesa High girls' swim team won the CIF Southern Section Division 3 championship, setting school records in all relays at the finals.",
+        "engagement": "1 like, 0 reposts, 0 replies",
+        "honesty": "10/10",
+        "notes": "Confirmed high school sports results from local paper.",
+        "posted": "2026-05-12T04:58:21Z",
+        "post_ts": "2026-05-09T18:20:30Z",
+        "views": 198
       },
       {
-        "headline": "Capistrano Beach sand replenishment project begins",
-        "handle": "@ocregister",
-        "url": "https://x.com/ocregister/status/2053986635579084971",
-        "body": "A sand project at Capistrano Beach is using quarry material to replenish the shoreline ahead of the summer tourist season.",
-        "engagement": "1 likes, 0 retweets, 0 quotes, 0 replies",
-        "honesty": "9/10",
-        "notes": "Factual news report on local beach maintenance project with minor framing.",
-        "posted": "2026-05-12T04:50:27Z",
-        "post_ts": "2026-05-11T23:52:29Z",
-        "views": 388
+        "headline": "Local swimmers repeat as CIF Division 1 champions",
+        "handle": "@TheDailyPilot",
+        "url": "https://x.com/TheDailyPilot/status/2053685516445552816",
+        "body": "Fountain Valley junior Alyssa Ton and Newport Harbor senior Connor Ohl repeated as champions in their events at the CIF Division 1 swim finals.",
+        "engagement": "0 likes, 1 repost, 0 replies",
+        "honesty": "10/10",
+        "notes": "Verified achievements in high school swimming competition.",
+        "posted": "2026-05-12T04:58:21Z",
+        "post_ts": "2026-05-11T03:55:57Z",
+        "views": 273
+      },
+      {
+        "headline": "Upcoming community events in Huntington Beach",
+        "handle": "@CityofHBPIO",
+        "url": "https://x.com/CityofHBPIO/status/2053864488844017761",
+        "body": "Huntington Beach schedules include a Planning Commission meeting on May 12, Public Works Open House, Passport Acceptance Fair, and Spring in Bloom...",
+        "engagement": "1 like, 0 reposts, 1 reply",
+        "honesty": "10/10",
+        "notes": "Official city announcement of local events.",
+        "posted": "2026-05-12T04:58:22Z",
+        "post_ts": "2026-05-11T15:47:07Z",
+        "views": 245
+      },
+      {
+        "headline": "Huntington Beach HS football recruit draws college scouts",
+        "handle": "@JimmelChampion",
+        "url": "https://x.com/JimmelChampion/status/2054047230722756969",
+        "body": "Huntington Beach High School class of 2027 prospect Jimmel Champion hosted 25 schools and over 30 scouts at his workout.",
+        "engagement": "5 likes, 2 reposts, 1 reply",
+        "honesty": "10/10",
+        "notes": "First-person account of local high school sports recruiting event.",
+        "posted": "2026-05-12T04:58:22Z",
+        "post_ts": "2026-05-12T03:53:16Z",
+        "views": 132
       }
     ]
   },
@@ -2786,7 +2971,7 @@
         "post_ts": "2026-05-11T16:33:33Z",
         "views": 84851,
         "views_at_save": 84851,
-        "age_at_save_hours": 12.28
+        "age_at_save_hours": 12.41
       },
       {
         "headline": "Israel's Propaganda Tactic to Silence Critics",
@@ -2800,7 +2985,7 @@
         "post_ts": "2026-05-11T18:14:13Z",
         "views": 39564,
         "views_at_save": 39564,
-        "age_at_save_hours": 10.6
+        "age_at_save_hours": 10.74
       },
       {
         "headline": "Hunter Biden Texts Show Potential Trafficking Violations in DOJ Records",
@@ -2812,7 +2997,9 @@
         "notes": "Based on released records but includes interpretive claim about 'justice double standards' and characterization of content as 'Mann Act violations' rather than just reporting what documents contain.",
         "posted": "2026-05-12T04:50:27Z",
         "post_ts": "2026-05-11T19:55:26Z",
-        "views": 18213
+        "views": 18213,
+        "views_at_save": 18213,
+        "age_at_save_hours": 9.05
       }
     ],
     "earlier": [
@@ -2873,7 +3060,20 @@
         "age_at_save_hours": 0.16
       }
     ],
-    "_overflow": []
+    "_overflow": [
+      {
+        "headline": "Comey Knew Steele Dossier Was Fake But Signed FISA Warrants",
+        "handle": "@WallStreetApes",
+        "url": "https://x.com/WallStreetApes/status/2053921323546824945",
+        "body": "FBI internal spreadsheet showed 90% of Steele Dossier uncredible, yet Comey signed FISA warrants for Trump surveillance, orchestrated by Obama and...",
+        "engagement": "4K likes, 1.4K retweets, 33 quotes, 91 replies",
+        "honesty": "8/10",
+        "notes": "Analysis of known FBI documents and Senate testimony, but 'treason' claim is opinionated framing.",
+        "posted": "2026-05-12T04:58:22Z",
+        "post_ts": "2026-05-11T19:32:58Z",
+        "views": 51404
+      }
+    ]
   },
   "comedy": {
     "stories": [
@@ -2889,7 +3089,7 @@
         "post_ts": "2026-05-11T13:05:46Z",
         "views": 372124,
         "views_at_save": 372124,
-        "age_at_save_hours": 15.74
+        "age_at_save_hours": 15.88
       },
       {
         "headline": "Biblically Accurate TV Clip",
@@ -2903,7 +3103,7 @@
         "post_ts": "2026-05-11T14:22:42Z",
         "views": 206364,
         "views_at_save": 206364,
-        "age_at_save_hours": 14.46
+        "age_at_save_hours": 14.59
       },
       {
         "headline": "Crowd Stands for Robbed MVPs",
@@ -2917,7 +3117,7 @@
         "post_ts": "2026-05-11T12:28:33Z",
         "views": 27663,
         "views_at_save": 27663,
-        "age_at_save_hours": 16.37
+        "age_at_save_hours": 16.5
       }
     ],
     "earlier": [
