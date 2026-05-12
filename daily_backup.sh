@@ -43,6 +43,13 @@ rsync -a \
 
 echo "  snapshot written: $SNAP_DIR" | tee -a "$LOG"
 
+# 2c. Mirror honesty_overrides.csv directly to Desktop top level so user has
+# one always-current file (no digging into snapshot folders).
+if [ -f "$REPO/honesty_overrides.csv" ]; then
+    cp "$REPO/honesty_overrides.csv" "$HOME/Desktop/expresso_honesty_overrides.csv"
+    echo "  honesty log: ~/Desktop/expresso_honesty_overrides.csv ($(wc -l < "$HOME/Desktop/expresso_honesty_overrides.csv" | tr -d ' ') lines)" | tee -a "$LOG"
+fi
+
 # 3. Retention: keep last 14 snapshots, drop older.
 cd "$SNAP_ROOT"
 ls -1dt */ 2>/dev/null | tail -n +15 | xargs -I{} rm -rf "{}" 2>/dev/null || true

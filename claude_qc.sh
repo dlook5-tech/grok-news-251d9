@@ -752,6 +752,14 @@ if key2:
             print(f"[honesty-qc] API error {e}", file=sys.stderr)
             fixes = []
         honesty_modified = False
+        # User mandate (2026-05-12): "let me know every time Claude overrides a
+        # Grok score and why. Keep a running log of it."
+        # Append each override to honesty_overrides.csv at repo root. Cron
+        # auto-commits the file, daily_backup syncs it to Desktop.
+        import csv as _csv_h, os as _os_h, datetime as _dt_h
+        _override_log = 'honesty_overrides.csv'
+        _need_header = not _os_h.path.exists(_override_log)
+        _log_rows = []
         for fix in fixes:
             if not isinstance(fix, dict): continue
             sid = fix.get('id')
@@ -778,6 +786,23 @@ if key2:
                 print(f"[honesty-qc] {sc['tab']} @{sc['handle']}: "
                       f"{sc['honesty']} → {new_score} ({new_notes[:80]})", file=sys.stderr)
             warnings.append(f"honesty-qc {sc['tab']} @{sc['handle']}: {sc['honesty']}→{new_score}")
+            _log_rows.append({
+                'timestamp': _dt_h.datetime.now().astimezone().strftime('%Y-%m-%d %I:%M %p'),
+                'tab': sc['tab'],
+                'perspective': sc['label'] or '',
+                'handle': sc['handle'],
+                'grok_score': sc['honesty'],
+                'grok_notes': sc['notes'],
+                'claude_score': new_score,
+                'claude_notes': new_notes,
+                'body_preview': sc['body'][:200],
+            })
+        if _log_rows:
+            with open(_override_log, 'a', newline='', encoding='utf-8') as _lf:
+                _w = _csv_h.DictWriter(_lf, fieldnames=['timestamp','tab','perspective','handle','grok_score','claude_score','grok_notes','claude_notes','body_preview'])
+                if _need_header: _w.writeheader()
+                for _row in _log_rows: _w.writerow(_row)
+            print(f"[honesty-qc] logged {len(_log_rows)} override(s) to {_override_log}", file=sys.stderr)
         if honesty_modified:
             with open('stories.json','w') as f: json.dump(d, f, indent=2)
             print(f"[honesty-qc] stories.json updated with score corrections", file=sys.stderr)
