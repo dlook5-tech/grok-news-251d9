@@ -114,7 +114,7 @@
             "views": 667,
             "notes": "Opinion from Republican congressman advocating dialogue while criticizing China's actions; factual on personal visit and summit but partisan on demands.",
             "views_at_save": 667,
-            "age_at_save_hours": 3.73
+            "age_at_save_hours": 4.01
           },
           {
             "label": "Independent",
@@ -126,7 +126,7 @@
             "views": 1828,
             "notes": "Think tank summary of expert analysis on China's confident stance; verifiable institutional report without bias.",
             "views_at_save": 1828,
-            "age_at_save_hours": 7.3
+            "age_at_save_hours": 7.57
           }
         ],
         "footnotes": [
@@ -137,8 +137,38 @@
         "body": "Three-perspective roundup.",
         "posted": "5/12/2026 3:54 AM",
         "views_at_save": 0,
-        "age_at_save_hours": 3.73
+        "age_at_save_hours": 4.01
       },
+      {
+        "headline": "UK PM Starmer Faces Cabinet Revolt",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Independent",
+            "handle": "@BBCBreaking",
+            "url": "https://x.com/BBCBreaking/status/2053947855178482010",
+            "text": "Analysis: Starmer's cabinet revolt stems from disagreements on fiscal policy amid economic pressures; at least three ministers have signaled intent...",
+            "engagement": "28K likes, 10K retweets, 3K replies",
+            "honesty": "10/10",
+            "views": 750000,
+            "notes": "Neutral factual analysis based on verified reports and statements.",
+            "views_at_save": 750000,
+            "age_at_save_hours": 6.87
+          }
+        ],
+        "footnotes": [
+          "Conservative perspective from @Telegraph emphasizes leadership weakness.",
+          "Liberal view from @guardian focuses on policy reform needs.",
+          "Independent analysis from @BBCBreaking provides balanced event breakdown."
+        ],
+        "notes": "Keir Starmer's government faces significant internal challenges with multiple cabinet members opposing key policies, sparking widespread discussion on UK political stability.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/12/2026 4:10 AM",
+        "views_at_save": 0,
+        "age_at_save_hours": 6.87
+      }
+    ],
+    "earlier": [
       {
         "headline": "?",
         "perspectives": [
@@ -1123,6 +1153,17 @@
         "url": "https://x.com/AdamSchefter/status/2053920602533298410",
         "handle": "@AdamSchefter",
         "body": "More about the Pittsburgh Steelers agreeing to terms with kicker Chris Boswell on a four-year, $28 million extension:\n\nhttps://www.espn.com/nfl/story/_/id/48742244/steelers-boswell-now-tied-aubrey-nfl-top-paid-kicker",
+        "views": 486746,
+        "engagement": "Likes=906, Reposts=62, Quotes=8, Replies=98, Bookmarks=15",
+        "honesty": "10/10",
+        "notes": "Verified NFL insider report on contract extension from credible source."
+      }
+    ],
+    "earlier": [
+      {
+        "url": "https://x.com/AdamSchefter/status/2053920602533298410",
+        "handle": "@AdamSchefter",
+        "body": "More about the Pittsburgh Steelers agreeing to terms with kicker Chris Boswell on a four-year, $28 million extension:\n\nhttps://www.espn.com/nfl/story/_/id/48742244/steelers-boswell-now-tied-aubrey-nfl-top-paid-kicker",
         "views": 485665,
         "engagement": "Likes=903, Reposts=62, Quotes=8, Replies=98, Bookmarks=15",
         "honesty": "High (ESPN Senior NFL Insider)",
@@ -1142,17 +1183,6 @@
         "views_at_save": 1118663,
         "age_at_save_hours": 11.69
       },
-      {
-        "url": "https://x.com/AdamSchefter/status/2053846787379589286",
-        "handle": "@AdamSchefter",
-        "body": "More about the Los Angeles Chargers agreeing to terms with former Cleveland Browns tight end David Njoku on a one-year deal worth up to $8 million:\n\nhttps://www.espn.com/nfl/story/_/id/48739754/sources-chargers-te-david-njoku-agree-one-year-deal",
-        "views": 538999,
-        "engagement": "Likes=1208, Reposts=83, Quotes=15, Replies=115, Bookmarks=19",
-        "honesty": "High",
-        "notes": "NFL: Chargers sign TE David Njoku to 1-year deal up to $8M"
-      }
-    ],
-    "earlier": [
       {
         "url": "https://x.com/SportsCenter/status/2054033197701235097",
         "handle": "@SportsCenter",
@@ -1897,6 +1927,22 @@
         "age_at_save_hours": 5.63
       },
       {
+        "headline": "Civil Rights Movement Narrative Exposed as Lie by Matt Walsh",
+        "handle": "@MattWalshBlog",
+        "url": "https://x.com/MattWalshBlog/status/2053863171257925748",
+        "body": "Walsh's new special trailer debunks the standard history of the civil rights movement as a fabricated story.",
+        "engagement": "21K likes, 2.8K retweets, 789 replies",
+        "honesty": "7/10",
+        "notes": "Opinion-driven historical take challenging mainstream views with contrarian analysis.",
+        "posted": "2026-05-12T04:10:40Z",
+        "post_ts": "2026-05-11T15:41:53Z",
+        "views": 1545205,
+        "views_at_save": 1545205,
+        "age_at_save_hours": 12.48
+      }
+    ],
+    "earlier": [
+      {
         "headline": "Tourist Beats Down Seal Attacker in Hawaii",
         "handle": "@CollinRugg",
         "url": "https://x.com/CollinRugg/status/2053879419060764975",
@@ -2190,6 +2236,36 @@
         "age_at_save_hours": 19.11
       },
       {
+        "headline": "Pasta alla Zozzona",
+        "handle": "@RobustFeed",
+        "url": "https://x.com/RobustFeed/status/2053853573369237797",
+        "body": "Pasta alla Zozzona combines the best of Roman pastas in one indulgent dish.",
+        "engagement": "1.1K likes, 92 retweets, 29 replies",
+        "honesty": "10/10",
+        "notes": "Authentic Roman recipe video with clear steps.",
+        "posted": "2026-05-12T04:10:41Z",
+        "post_ts": "2026-05-11T15:03:45Z",
+        "views": 161098,
+        "views_at_save": 161098,
+        "age_at_save_hours": 13.12
+      },
+      {
+        "headline": "Spaghetti alla Carbonara",
+        "handle": "@Rainmaker1973",
+        "url": "https://x.com/Rainmaker1973/status/2053775286148223287",
+        "body": "Nonna demonstrates the real authentic spaghetti alla carbonara recipe.",
+        "engagement": "1.5K likes, 186 retweets, 39 replies",
+        "honesty": "10/10",
+        "notes": "Traditional Italian recipe from experienced cook, visually guided.",
+        "posted": "2026-05-12T04:10:41Z",
+        "post_ts": "2026-05-11T09:52:40Z",
+        "views": 96403,
+        "views_at_save": 96403,
+        "age_at_save_hours": 18.3
+      }
+    ],
+    "earlier": [
+      {
         "headline": "Steak Stuffed Bread Boat Recipe",
         "handle": "@Soulfoodiiee",
         "url": "https://x.com/Soulfoodiiee/status/2053890404567932964",
@@ -2334,34 +2410,6 @@
         "views": 1380,
         "views_at_save": 1380,
         "age_at_save_hours": 5.35
-      },
-      {
-        "headline": "Coconut Cod Shakshuka Recipe",
-        "handle": "@FoodieChefs_wow",
-        "url": "https://x.com/FoodieChefs_wow/status/2053749929978290585",
-        "body": "Prepare this oven-baked cod and eggs in tomato-coconut sauce with smoked paprika and cumin.",
-        "engagement": "0 likes, 0 reposts, 0 quotes, 0 replies",
-        "honesty": "10/10",
-        "notes": "Complete ingredient list and step-by-step instructions provided in post.",
-        "posted": "2026-05-11T16:49:37Z",
-        "post_ts": "2026-05-11T08:11:54Z",
-        "views": 114,
-        "views_at_save": 114,
-        "age_at_save_hours": 8.63
-      },
-      {
-        "headline": "Skillet Peach Chicken",
-        "handle": "@HBHarvest",
-        "url": "https://x.com/HBHarvest/status/2053796006689673494",
-        "body": "Skillet peach chicken with Marsala pan sauce, melty mozzarella, and crispy prosciutto.",
-        "engagement": "6 likes, 2 retweets, 0 replies",
-        "honesty": "10/10",
-        "notes": "Original recipe from popular cookbook author.",
-        "posted": "2026-05-11T16:44:42Z",
-        "post_ts": "2026-05-11T11:15:00Z",
-        "views": 435,
-        "views_at_save": 435,
-        "age_at_save_hours": 5.5
       }
     ]
   },
@@ -2399,11 +2447,11 @@
         "headline": "38 New Deep-Sea Species Discovered Near Japan",
         "handle": "@forallcurious",
         "url": "https://x.com/forallcurious/status/2053881070735802727",
-        "body": "Scientists found 38 new species of deep-sea organisms in waters near Japan.",
-        "engagement": "6.3K likes, 573 reposts",
-        "honesty": "8/10",
-        "notes": "Reports verifiable scientific discovery of new marine species from recent expedition.",
-        "posted": "2026-05-12T03:58:50Z",
+        "body": "Scientists just found 38 new species of deep-sea organisms in waters near Japan.",
+        "engagement": "6.4K likes, 578 reposts",
+        "honesty": "9/10",
+        "notes": "Verifiable scientific discovery from recent expedition reported accurately.",
+        "posted": "2026-05-12T04:10:41Z",
         "post_ts": "2026-05-11T16:53:01Z",
         "views": 150127,
         "views_at_save": 150127,
@@ -2570,14 +2618,14 @@
         "age_at_save_hours": 3.0
       },
       {
-        "headline": "Huntington Beach E-Bike Incident Reported",
+        "headline": "Huntington Beach e-bike crowd incident",
         "handle": "@KTLA",
         "url": "https://x.com/KTLA/status/2053998597226561802",
-        "body": "Huntington Beach police report an incident over the weekend where a victim tried to navigate through a crowd of several hundred teens on e-bikes.",
-        "engagement": "127 likes, 26 retweets, 11 quotes, 48 replies",
-        "honesty": "8/10",
-        "notes": "Factual report of local police statement on non-graphic incident; honesty score 9 - verifiable news from credible source.",
-        "posted": "2026-05-12T03:58:50Z",
+        "body": "Huntington Beach police report an incident over the weekend involving a victim navigating a crowd of hundreds of teens on e-bikes.",
+        "engagement": "134 likes, 27 reposts, 48 replies",
+        "honesty": "10/10",
+        "notes": "Factual report from local news citing police.",
+        "posted": "2026-05-12T04:10:42Z",
         "post_ts": "2026-05-12T00:40:01Z",
         "views": 16836,
         "views_at_save": 16836,
@@ -2928,8 +2976,7 @@
         "views_at_save": 94,
         "age_at_save_hours": 4.05
       }
-    ],
-    "_overflow": []
+    ]
   },
   "freespeech": {
     "stories": [
