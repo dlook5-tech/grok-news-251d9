@@ -625,16 +625,29 @@ for tab, target in REFILL_TARGETS.items():
     )
     body = json.dumps({
         "model": "grok-4-fast",
-        "messages": [{"role":"user", "content": grok_prompt}],
+        "input": [{"role":"user", "content": grok_prompt}],
         "tools": [{"type":"x_search"}],
+        "max_output_tokens": 4000,
+        "temperature": 0.0,
     }).encode()
     req = urllib.request.Request(
-        "https://api.x.ai/v1/chat/completions",
+        "https://api.x.ai/v1/responses",
         data=body, method="POST",
         headers={"Authorization": f"Bearer {xai_key}", "Content-Type": "application/json"})
     try:
-        r = json.loads(urllib.request.urlopen(req, timeout=90).read())
-        msg = r.get('choices',[{}])[0].get('message',{}).get('content','{}').strip()
+        r = json.loads(urllib.request.urlopen(req, timeout=120).read())
+        # /v1/responses returns output array with content items
+        msg = ''
+        for item in r.get('output', []):
+            if item.get('type') == 'message':
+                for c in item.get('content', []):
+                    if c.get('type') == 'output_text':
+                        msg = c.get('text', '')
+                        break
+                if msg: break
+        if not msg:
+            msg = r.get('output_text', '') or '{}'
+        msg = msg.strip()
         # Strip markdown fences if present
         import re as _rg
         msg = _rg.sub(r'^```(?:json)?\s*|\s*```$', '', msg, flags=_rg.MULTILINE).strip()
