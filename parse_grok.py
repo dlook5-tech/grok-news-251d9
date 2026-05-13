@@ -29,8 +29,8 @@ TAB_AGE_OVERRIDE = {
     'conspiracy': 4, 'local': 4,
     # Reference + personality tabs keep their existing windows
     'recipe': 24, 'science': 24, 'comedy': 24,
-    'elon': 4,         # 2026-05-11: rolling 24h list, but fresh window is 4h.
-                       # Grok looks back 4h for NEW posts; old posts stay until 24h.
+    'elon': 24,        # 2026-05-13: full 24h refresh each cron (was 4h fresh
+                       # window — broke when crons missed intervals).
     'pods': 12,        # User: "no 1d old podcast posts"
     'allin': 24, 'pg6': 24,
     'freespeech': 8760,
@@ -2104,40 +2104,33 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
             print(f"  [local-quality] dropped {_before - len(_candidates)} sub-{LOCAL_MIN_VIEWS}-view candidates", file=sys.stderr)
     _backfill_age = _BACKFILL_AGE_BY_TAB.get(_tab, _TAB_FLOOR_AGE_HOURS)
 
-    # ELON SPECIAL CASE (user 2026-05-11): rolling 24h window with 4h fresh additions.
-    # - Grok scans last 4h for NEW posts
-    # - If new posts found → prepend chronologically (newest first) to existing list
-    # - If NO new posts → tab stays unchanged (only drops anything that aged past 24h)
-    # - Promo posts filtered via _belongs_on_tab/_is_elon_promo (already done above)
+    # ELON SPECIAL CASE (user 2026-05-13): full 24h refresh each cron.
+    # Earlier "fetch last 4h, append to existing" approach broke when crons
+    # missed intervals or 4h windows had only promo posts — list dwindled.
+    # Now: every cron returns ALL non-promo posts from last 24h.
+    # _candidates is Grok's full 24h output, already promo-filtered via
+    # _belongs_on_tab/_is_elon_promo.
     if _tab == 'elon':
-        _existing_elon = _existing.get('elon', {}).get('stories', []) or []
-        # Drop anything from existing that's now >24h old.
-        _kept_existing = []
-        for _s in _existing_elon:
-            _age = url_age_hours(_s.get('url','') or '') or 0
-            if _age <= 24:
-                _kept_existing.append(_s)
-            else:
-                print(f"  [elon-24h] drop aged-out: {_s.get('headline','')[:50]} ({_age:.1f}h)", file=sys.stderr)
-        # Fresh candidates = posts in last 4h that aren't already in existing
-        _existing_urls = {s.get('url') for s in _kept_existing if s.get('url')}
-        _fresh_new = []
+        # Drop anything past 24h URL age. Sort by URL age ascending (newest first).
+        _kept = []
         for _c in _candidates:
-            _url = _c.get('url','') or ''
-            if _url in _existing_urls: continue
-            _age = url_age_hours(_url) or 0
-            if _age > 4: continue  # only "new" posts qualify as additions
-            _fresh_new.append(_c)
-        if _fresh_new:
-            # Sort fresh newest-first by URL snowflake age (ascending age = newest first)
-            _fresh_new.sort(key=lambda s: url_age_hours(s.get('url','') or '') or 0)
-            _picked = _fresh_new + _kept_existing
-            print(f"  [elon] prepended {len(_fresh_new)} fresh post(s); total {len(_picked)} on tab", file=sys.stderr)
+            _age = url_age_hours(_c.get('url','') or '') or 0
+            if _age > 24:
+                print(f"  [elon-24h] drop aged-out: {_c.get('headline','')[:50]} ({_age:.1f}h)", file=sys.stderr)
+                continue
+            _kept.append((_age, _c))
+        _kept.sort(key=lambda x: x[0])  # newest first
+        _picked = [c for _, c in _kept]
+        # If Grok returned nothing (truly no posts in 24h), fall back to
+        # whatever non-aged-out existing we have. Better to show stale than empty.
+        if not _picked:
+            _existing_elon = _existing.get('elon', {}).get('stories', []) or []
+            _picked = [s for s in _existing_elon
+                       if (url_age_hours(s.get('url','') or '') or 0) <= 24]
+            print(f"  [elon] Grok returned 0 in 24h; falling back to existing ({len(_picked)})", file=sys.stderr)
         else:
-            # No new posts → keep existing as-is (already aged-out filtered)
-            _picked = _kept_existing
-            print(f"  [elon] no new posts in last 4h; tab unchanged ({len(_picked)} stories)", file=sys.stderr)
-        # Sanity cap at 30 (in case Elon posts an absurd burst)
+            print(f"  [elon] full 24h refresh: {len(_picked)} posts", file=sys.stderr)
+        # Sanity cap at 30
         _picked = _picked[:30]
         curation.stamp_view_history(_picked)
         _output_v5['elon'] = {'stories': _picked,

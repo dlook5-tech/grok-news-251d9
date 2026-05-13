@@ -597,30 +597,24 @@ one of his companies."
 - Pure text replies WITHOUT visible parent context (DROP)
 - One-word reactions, emoji-only ("true", "agreed", "🔥") (DROP)
 
-WINDOW — LAST 4 HOURS ONLY (user mandate 2026-05-11):
-"post all of his posts and replies for that four-hour span, only removing
-tweets where he's promoting one of his companies. If nothing has been posted
-by Elon in that four-hour window, then everything should remain unchanged on
-the tab."
-
-Python merges these fresh posts into a rolling 24h list (newest prepended,
-anything past 24h ages out). YOUR job here is JUST the fresh-4h fetch.
+WINDOW — LAST 24 HOURS, FULL REFRESH (user clarified 2026-05-13):
+Original spec was "fetch last 4h, append to existing." But crons miss intervals
+and the list dwindles. Now: every cron returns ALL his non-promo posts from
+the last 24 hours, sorted chronologically (newest first). Python replaces the
+tab with this fresh full list. Resilient to cron gaps.
 
 APPROVED HANDLE: @elonmusk only. Each post must be a DIFFERENT URL.
 
 SEARCH:
 1. PRIMARY: mode:"Latest" "from:elonmusk" — return everything he's posted
-   in the last 4 hours (filter on your end by created_at if needed; only
-   include posts ≤4h old). Limit 50, no min_faves floor.
+   in the last 24 hours. Limit 50, no min_faves floor.
 2. INCLUDE REPLIES: Elon's replies count. Search "from:elonmusk
-   filter:replies" or simply include replies in the primary search results.
+   filter:replies" or include replies in the primary search results.
 
 RETURN POLICY:
-- If he posted ≥1 non-promo post/reply in last 4h → return them ALL.
-- If he posted 0 in last 4h → return empty array []. Python will keep the
-  existing tab unchanged.
-- Sort the returned posts chronologically NEWEST FIRST (Python re-sorts but
-  consistency helps).
+- Return ALL his non-promo posts/replies from the last 24h.
+- Sort NEWEST FIRST.
+- If he genuinely posted nothing in 24h → return empty array [].
 
 POST TYPE GUIDANCE (Elon tab — no preference between originals and quote-tweets, judge each on its own merits):
 1. **Original substantive posts** (predictions, announcements, contrarian observations) — kept.
