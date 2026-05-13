@@ -112,6 +112,21 @@ Per-tab counts:
 
 Each pick MUST have: url, handle, body, views, engagement, honesty score, notes (1-line on score).
 
+REPLY PERSPECTIVES — MUST INCLUDE PARENT CONTEXT (user 2026-05-13):
+"Where is the embedded post? This is the worst thing about Twitter: when
+you just see a post and not what it's referring to."
+
+If a perspective post (Conservative/Independent/Democrat for World/USA, OR
+a single-post pick for any tab) is a REPLY to another tweet, you MUST
+populate these fields:
+  - parent_url:    full https://x.com/handle/status/id of the post being replied to
+  - parent_handle: @handle of the parent author
+  - parent_text:   verbatim text of the parent (≤280 chars)
+
+The frontend renders the parent embed ABOVE the reply so the reader sees
+what's being replied to. If you can't find parent context, pick a different
+post — replies without parent context are useless to readers.
+
 VELOCITY DEFINITION (user mandate 2026-05-13):
 **Velocity = (views ÷ age_in_hours) × 4** — projected views over a 4-hour
 window at the post's current rate. RANK EVERYTHING BY VELOCITY, not by raw

@@ -431,7 +431,12 @@ function renderWorldStory(s) {
     var hasXPost = p.url && p.url.indexOf('/status/') !== -1 && (p.url.indexOf('x.com') !== -1 || p.url.indexOf('twitter.com') !== -1);
     var onclickExpr = "var b=document.getElementById('" + pid + "');b.classList.toggle('open');";
     if (hasXPost) {
-      onclickExpr += "if(b.classList.contains('open')){toggleEmbed('" + embedId + "','" + p.url.replace(/'/g,"\\'") + "');}";
+      // Pass parent_url so toggleEmbed renders the post being replied to ABOVE
+      // the reply. User mandate (2026-05-13): "Where is the embedded post?
+      // This is the worst thing about Twitter."
+      var pParentUrl = (p.parent_url && p.parent_url.indexOf('/status/') !== -1) ? p.parent_url : '';
+      onclickExpr += "if(b.classList.contains('open')){toggleEmbed('" + embedId + "','" + p.url.replace(/'/g,"\\'") + "'" +
+                     (pParentUrl ? ",'" + pParentUrl.replace(/'/g,"\\'") + "'" : "") + ");}";
     }
     var embedSlot = hasXPost ? '<div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div>' : '';
     var honestyCard = '';

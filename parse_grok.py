@@ -1615,6 +1615,14 @@ def clean_world(w):
         # 2026-05-11: QT enrichment fields per perspective
         for qt_field in ('original_url', 'original_handle', 'original_views', 'qt_views'):
             if qt_field in p: _persp[qt_field] = p[qt_field]
+        # 2026-05-13: parent context for replies — frontend renders the parent
+        # tweet ABOVE the reply embed so reader sees what's being replied to.
+        # User: "Where is the embedded post? This is the worst thing about Twitter."
+        pp_url = p.get('parent_url')
+        if pp_url and isinstance(pp_url, str) and '/status/' in pp_url:
+            _persp['parent_url'] = pp_url
+            if p.get('parent_handle'): _persp['parent_handle'] = str(p['parent_handle'])
+            if p.get('parent_text'): _persp['parent_text'] = str(p['parent_text'])[:280]
         perspectives.append(_persp)
     # 2026-05-06: WITHIN-STORY URL DEDUP. Reject if two perspectives share a URL —
     # that's Grok hallucinating handle attribution (e.g. @AP's tweet labeled as @samstein
