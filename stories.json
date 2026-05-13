@@ -154,7 +154,7 @@
             "views": 11610,
             "notes": "Pro-Trump account describing welcome ceremony with positive spin; factual event with partisan interpretation.",
             "views_at_save": 11610,
-            "age_at_save_hours": 2.37
+            "age_at_save_hours": 2.88
           }
         ],
         "footnotes": [],
@@ -162,7 +162,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/13/2026 4:33 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 2.37
+        "age_at_save_hours": 2.88
       },
       {
         "headline": "US Central Command Outlines Scale of Iran Blockade Operations",
@@ -178,7 +178,7 @@
             "views": 31918,
             "notes": "Reporting on official CENTCOM data with light framing; verified military facts.",
             "views_at_save": 31918,
-            "age_at_save_hours": 0.69
+            "age_at_save_hours": 1.2
           }
         ],
         "footnotes": [],
@@ -1082,11 +1082,11 @@
   "sports": {
     "stories": [
       {
-        "headline": "Grizzlies Forward Brandon Clarke Dies at 29",
-        "handle": "@ShamsCharania",
-        "url": "https://x.com/ShamsCharania/status/2054260698780250331",
-        "body": "Brandon Clarke of the Memphis Grizzlies has died at 29 years old.. RIP.",
-        "engagement": "139K likes, 12.5K reposts, 9.7K quotes, 9K replies",
+        "url": "https://x.com/TMZ/status/2054335257001025780",
+        "handle": "@TMZ",
+        "body": "\ud83d\udd4a\ufe0f Jason Collins, the NBA's first openly gay player, has died at 47.\n\nDetails: https://www.tmz.com/2026/05/12/jason-collins-dead/",
+        "views": 704166,
+        "engagement": "Likes=4440, Reposts=391, Quotes=111, Replies=475, Bookmarks=423",
         "honesty": "5/10",
         "notes": "Demonstrably false. Brandon Clarke is alive and currently plays for the Memphis Grizzlies. No credible reports of his death exist.",
         "posted": "2026-05-13T13:15:22Z",
@@ -1214,20 +1214,6 @@
         "age_at_save_hours": 17.32
       },
       {
-        "headline": "Cowherd on USC-Notre Dame rivalry revival",
-        "handle": "@TheHerd",
-        "url": "https://x.com/TheHerd/status/2054258870403371350",
-        "body": "Colin Cowherd says USC has all the leverage as Notre Dame comes crawling back to resume their rivalry.",
-        "engagement": "927 likes, 100 reposts, 78 quotes, 408 replies",
-        "honesty": "7/10",
-        "notes": "Opinionated take on college football rivalry negotiations.",
-        "posted": "2026-05-13T05:00:50Z",
-        "post_ts": "2026-05-12T17:54:15Z",
-        "views": 247517,
-        "views_at_save": 247517,
-        "age_at_save_hours": 11.11
-      },
-      {
         "url": "https://x.com/TheHoopCentral/status/2054391696235036788",
         "handle": "TheHoopCentral",
         "body": "VICTOR WEMBANYAMA IS ABSURD. \ud83e\udd2f\n\nDylan Harper couldn\u2019t believe it.",
@@ -1349,6 +1335,45 @@
   },
   "pods": {
     "stories": [
+      {
+        "headline": "Charles Koch on Loss of Meaning",
+        "handle": "@theallinpod",
+        "url": "https://x.com/theallinpod/status/2054597821609759129",
+        "body": "Charles Koch discusses how lacking life meaning drives people to power or pleasure, leading societies to totalitarianism.",
+        "engagement": "88 likes, 19 reposts, 6 replies",
+        "honesty": "7/10",
+        "notes": "Opinion drawing on Viktor Frankl's insights about societal trends.",
+        "posted": "2026-05-13T17:03:56Z",
+        "post_ts": "2026-05-13T16:21:07Z",
+        "views": 8859,
+        "views_at_save": 8859,
+        "age_at_save_hours": 0.71
+      },
+      {
+        "headline": "Rob Schneider on Medical Tyranny",
+        "handle": "@joeroganhq",
+        "url": "https://x.com/joeroganhq/status/2054584957104762951",
+        "body": "Rob Schneider argues that government mandates for experimental gene therapy injections constitute medical tyranny.",
+        "engagement": "411 likes, 56 reposts, 13 replies",
+        "honesty": "7/10",
+        "notes": "Opinion on government overreach in health mandates.",
+        "posted": "2026-05-13T17:03:56Z",
+        "post_ts": "2026-05-13T15:30:00Z",
+        "views": 15466,
+        "views_at_save": 15466,
+        "age_at_save_hours": 1.57
+      },
+      {
+        "url": "https://x.com/cuilinmedia/status/2054250848041996388",
+        "handle": "@cuilinmedia",
+        "body": "\ud83d\udea8 C\u00fail\u00edn Media - Podcast Clip! \ud83d\udea8\n\nThe lads discuss Waterford & Kerry securing their place in the Munster Final next weekend \ud83c\udfc6\n\nWho\u2018s winning this one? \ud83e\udd14\n\nC\u00fail\u00edn Media Championship Coverage 2026 is partnered by @AtakSport \ud83e\udd1d\n\nFull Pod available on YouTube & Spotify \ud83c\udfa7",
+        "views": 445,
+        "engagement": 4,
+        "honesty": "7/10",
+        "notes": "Sports podcast opinion/prediction about Gaelic games matchup. Not conspiracy content."
+      }
+    ],
+    "earlier": [
       {
         "headline": "Spencer Pratt vows Art Deco revival for beautiful LA",
         "handle": "@theallinpod",
@@ -1732,7 +1757,9 @@
         "views": 253690,
         "views_at_save": 253690,
         "age_at_save_hours": 8.61
-      },
+      }
+    ],
+    "earlier": [
       {
         "headline": "Taxpayer-Funded Museum Exhibit Sparks Outrage with $1M Grant",
         "handle": "@EndWokeness",
@@ -1792,14 +1819,14 @@
         "age_at_save_hours": 18.52
       },
       {
-        "headline": "Jay Kay's Wild Breakup Reason with Winona Ryder",
-        "handle": "@creepydotorg",
+        "headline": "Jay Kay's Bizarre Breakup Excuse with Winona Ryder",
+        "handle": "creepydotorg",
         "url": "https://x.com/creepydotorg/status/2054271412425363618",
-        "body": "Jamiroquai's Jay Kay reportedly dumped Winona Ryder because her breasts were too big and she wanted sex too often.",
-        "engagement": "11K likes, 343 reposts, 213 quotes, 924 replies",
+        "body": "Jamiroquai singer Jay Kay reportedly dumped Winona Ryder because her breasts were too big and she wanted sex constantly, saying it was exhausting.",
+        "engagement": "11.8K likes, 350 retweets, 931 replies",
         "honesty": "8/10",
-        "notes": "Reported anecdote from past celebrity relationship, mixes fact with quoted opinion.",
-        "posted": "2026-05-13T16:33:32Z",
+        "notes": "Reported anecdote with direct quote, mixes fact and sensational framing.",
+        "posted": "2026-05-13T17:03:57Z",
         "post_ts": "2026-05-12T18:44:05Z",
         "views": 1887973,
         "views_at_save": 1887973,
@@ -2148,8 +2175,8 @@
         "url": "https://x.com/is_OwenLewis/status/2054375024954581419",
         "body": "Harold White's Casimir Inc.. reveals MicroSPARC, a chip harvesting continuous electrical power from the quantum vacuum via Casimir cavities.",
         "engagement": "8.3K likes, 1.5K reposts",
-        "honesty": "8/10",
-        "notes": "Detailed announcement of prototype technology with verified testing claims.",
+        "honesty": "7/10",
+        "notes": "Announcement of prototype technology claim. Casimir cavity energy harvesting is highly controversial/unverified physics. Should be treated as prediction/claim until independently verified.",
         "posted": "2026-05-13T15:53:24Z",
         "post_ts": "2026-05-13T01:35:49Z",
         "views": 660052,
@@ -2157,14 +2184,14 @@
         "age_at_save_hours": 15.38
       },
       {
-        "headline": "First Telescopic Contact Lens Developed",
+        "headline": "First Telescopic Contact Lens",
         "handle": "@fascinatingonX",
         "url": "https://x.com/fascinatingonX/status/2054358196391936473",
-        "body": "Researchers have created the world's first telescopic contact lens capable of zooming vision up to three times.",
-        "engagement": "7.6K likes, 1.2K reposts",
-        "honesty": "9/10",
-        "notes": "Reports on new technological development in vision enhancement.",
-        "posted": "2026-05-13T16:24:11Z",
+        "body": "Scientists developed the first telescopic contact lens capable of zooming vision up to three times.",
+        "engagement": "7.8K likes, 1.3K reposts, 427 quotes, 329 replies",
+        "honesty": "7/10",
+        "notes": "Technology claim without specific citation or verification. 'Scientists developed' framing without source = prediction/announcement territory.",
+        "posted": "2026-05-13T17:03:58Z",
         "post_ts": "2026-05-13T00:28:56Z",
         "views": 492635,
         "views_at_save": 492635,
