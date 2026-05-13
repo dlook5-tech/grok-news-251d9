@@ -184,6 +184,9 @@ check "qc:honesty-rubric-thinktank"     update.sh        "think tanks|Think tank
 check "qc:honesty-rubric-thinktank-qc"  claude_qc.sh     "think tanks|Think tanks|THINK TANKS"                 exists
 check "qc:honesty-rubric-10-strict"     update.sh        "10 = VERIFIED FACT|10/10 is supposed to be VERIFIED" exists
 check "qc:honesty-rubric-attribution"   update.sh        "video.*proves attribution|attribution VERIFIED"     exists
+# 2026-05-13: Python-enforced QT search + persp replacement (not prompt-only)
+check "qc:python-qt-enrich"             claude_qc.sh     "qt-enrich|PYTHON-SIDE QT SEARCH"                     exists
+check "qc:persp-refill-live-grok"       claude_qc.sh     "persp-refill|REPLACE DROPPED PERSPECTIVES"           exists
 # 2026-05-11 (reversed): user dropped the hold rule, "too confusing, too much
 # code. Just find the three most popular stories." Each cron picks fresh top 3
 # in the last 4h. MAX_HOLD_HOURS = 4 (matches the window).

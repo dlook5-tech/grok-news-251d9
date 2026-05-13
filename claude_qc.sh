@@ -555,11 +555,224 @@ if key2:
         # Per-Check-5-drop refill removed in favor of universal Check 6 below
         # (which catches drops from ALL sources: URL verify, semantic dedup,
         # Claude review, anywhere). DRY.
+
+        # ---- Check 5b: REPLACE DROPPED PERSPECTIVES VIA LIVE GROK ----
+        # User mandate 2026-05-13: "shouldn't you, if you drop a story, go
+        # back to Grok and look for another perspective that does fit rather
+        # than just dropping it?" Yes. For each off-topic perspective drop,
+        # ask Grok for a replacement on the same side, on the same event.
+        xai_key_p = os.environ.get("XAI_API_KEY","")
+        if xai_key_p and persp_drops:
+            for issue in persp_drops:
+                line = issue.get('line')
+                if line not in line_map: continue
+                tab, idx = line_map[line]
+                target_label = (issue.get('perspective','') or '').lower()
+                stories = d.get(tab, {}).get('stories', [])
+                if not (0 <= idx < len(stories)): continue
+                story = stories[idx]
+                # Skip if perspective got re-added already (e.g., via earlier issue)
+                if any((p.get('label','') or '').lower() == target_label for p in story.get('perspectives', []) if isinstance(p, dict)):
+                    continue
+                headline = story.get('headline','')
+                # Exclude already-used URLs for this story
+                used_urls = []
+                for p in story.get('perspectives', []) or []:
+                    if isinstance(p, dict) and p.get('url'): used_urls.append(p['url'])
+                side_keywords = {
+                    'conservative': '(republican OR conservative OR maga OR right OR trump OR gop)',
+                    'democrat':     '(democrat OR liberal OR progressive OR left OR aoc OR berniesanders)',
+                    'independent':  '(analysis OR analyst OR independent OR centrist OR nonpartisan)',
+                }.get(target_label, '')
+                if not side_keywords: continue
+                grok_p_prompt = (
+                    f"Find ONE post that is a genuine {target_label.upper()}-LEANING reaction "
+                    f"to this exact news event:\n"
+                    f"  HEADLINE: {headline}\n\n"
+                    f"x_search query:\n"
+                    f"  \"{headline[:60]} {side_keywords} min_faves:1 lang:en\" "
+                    f"mode:\"Top\" limit:30\n"
+                    f"Sort by views, pick highest. Post body MUST clearly reference THIS "
+                    f"event (not just share keywords). EXCLUDE these URLs: {used_urls}.\n\n"
+                    f"Return STRICT JSON: {{\"url\":\"...\",\"handle\":\"@...\","
+                    f"\"quote\":\"...\",\"views\":N,\"honesty\":\"X/10\",\"notes\":\"...\"}}\n"
+                    f"Empty {{}} if no qualifying post found. NO PROSE outside JSON."
+                )
+                body_p = json.dumps({
+                    "model": "grok-4-fast",
+                    "input": [{"role":"user","content":grok_p_prompt}],
+                    "tools": [{"type":"x_search"}],
+                    "max_output_tokens": 2000,
+                    "temperature": 0.0,
+                }).encode()
+                req_p = urllib.request.Request("https://api.x.ai/v1/responses",
+                    data=body_p, method="POST",
+                    headers={"Authorization": f"Bearer {xai_key_p}", "Content-Type": "application/json"})
+                try:
+                    r_p = json.loads(urllib.request.urlopen(req_p, timeout=90).read())
+                    msg_p = ''
+                    for item in r_p.get('output', []):
+                        if item.get('type') == 'message':
+                            for c in item.get('content', []):
+                                if c.get('type') == 'output_text':
+                                    msg_p = c.get('text',''); break
+                            if msg_p: break
+                    import re as _rp
+                    msg_p = _rp.sub(r'^```(?:json)?\s*|\s*```$', '', (msg_p or '').strip(), flags=_rp.MULTILINE).strip()
+                    m_p = _rp.search(r'\{.*\}', msg_p, _rp.DOTALL)
+                    new_persp = json.loads(m_p.group(0)) if m_p else {}
+                except Exception as e:
+                    print(f"[persp-refill] {tab}[{idx}] {target_label}: API error {e}", file=sys.stderr)
+                    continue
+                if not new_persp.get('url') or '/status/' not in new_persp.get('url',''):
+                    print(f"[persp-refill] {tab}[{idx}] {target_label}: no replacement found", file=sys.stderr)
+                    continue
+                # Build the perspective object and insert
+                label_proper = target_label.capitalize()
+                story.setdefault('perspectives', []).append({
+                    'label': label_proper,
+                    'handle': new_persp.get('handle',''),
+                    'url': new_persp['url'],
+                    'text': (new_persp.get('quote') or new_persp.get('body') or '')[:200],
+                    'views': new_persp.get('views', 0),
+                    'honesty': str(new_persp.get('honesty','7/10')),
+                    'engagement': str(new_persp.get('engagement','')),
+                    'notes': str(new_persp.get('notes','')),
+                })
+                review_modified = True
+                rh = new_persp.get('handle','?')
+                warnings.append(f"persp-refill [{tab}/{target_label}] @{rh} replaced off-topic via live Grok")
+                print(f"[persp-refill] {tab}[{idx}] {target_label}: ADDED @{rh}", file=sys.stderr)
+
         if review_modified:
             with open('stories.json','w') as f: json.dump(d, f, indent=2)
             print(f"[final-review] stories.json updated: dropped {len(drops)} pick(s)", file=sys.stderr)
         elif not issues:
             print(f"[final-review] Claude reviewed {len(summary_lines)} stories — no issues", file=sys.stderr)
+
+# ---- Check 5c: PYTHON-SIDE QT SEARCH for every pick lacking QT enrichment ----
+# User mandate 2026-05-13: "Prompts alone don't fix anything. You've got to
+# enter it into the python." Grok was skipping QT search in its prompt path.
+# Now we ENFORCE it in Python: for each pick without qt_views/original_url
+# (meaning Grok didn't do QT enrichment), call xAI directly to search for QTs.
+# Batched into one Grok call per ~15 picks to keep latency reasonable.
+xai_key_qt = os.environ.get("XAI_API_KEY","")
+if xai_key_qt:
+    targets = []  # list of (tab, idx, persp_idx_or_None, url, headline)
+    for tab in REVIEW_TABS:
+        if tab == 'elon': continue  # rolling list, no QT swap
+        stories = d.get(tab, {}).get('stories', []) or []
+        for si, s in enumerate(stories):
+            persps = s.get('perspectives', []) or []
+            if persps:
+                for pi, p in enumerate(persps):
+                    if not isinstance(p, dict): continue
+                    if p.get('qt_views') or p.get('original_url'): continue  # already enriched
+                    url = p.get('url','')
+                    if not url or '/status/' not in url: continue
+                    targets.append((tab, si, pi, url, s.get('headline','')))
+            else:
+                if s.get('qt_views') or s.get('original_url'): continue
+                url = s.get('url','')
+                if not url or '/status/' not in url: continue
+                targets.append((tab, si, None, url, s.get('headline','')))
+    qt_modified = False
+    BATCH_SIZE = 8  # 8 URLs per Grok call ≈ 5-10s; total batches manageable
+    for batch_start in range(0, len(targets), BATCH_SIZE):
+        batch = targets[batch_start:batch_start+BATCH_SIZE]
+        url_list = "\n".join(f"{i+1}. URL: {t[3]}\n   EVENT: {t[4]}" for i, t in enumerate(batch))
+        qt_prompt = (
+            "For each of these X posts, find the top viral quote-tweet (QT)/"
+            "retweet-with-comment that REFERENCES the original. Look for "
+            "pile-on patterns: contrarian predictions get 'wrong N times' "
+            "snark, politician claims get opposition QTs with receipts, "
+            "celebrity statements get fact-checker QTs, etc.\n\n"
+            "POSTS:\n" + url_list + "\n\n"
+            "For each post, run:\n"
+            "  x_search \"<post_url>\" mode:\"Top\" limit:20 lang:en\n"
+            "  x_search \"<status_id_from_url>\" mode:\"Top\" limit:20 lang:en\n\n"
+            "A QT qualifies if it:\n"
+            "  - References the original (mentions URL, embeds it, screenshots it)\n"
+            "  - Has substantive body (≥10 chars, not bare emoji)\n"
+            "  - Has ≥1000 views (or ≥10K if body <30 chars)\n\n"
+            "Return STRICT JSON array, same order as POSTS:\n"
+            "[\n"
+            "  {\"index\": 1, \"qt_url\": \"https://x.com/...\", "
+            "\"qt_handle\": \"@x\", \"qt_body\": \"verbatim\", "
+            "\"qt_views\": N, \"original_views\": N},\n"
+            "  {\"index\": 2, \"qt_url\": null},   // no qualifying QT found\n"
+            "  ...\n"
+            "]\n"
+            "NO PROSE outside JSON."
+        )
+        body_qt = json.dumps({
+            "model": "grok-4-fast",
+            "input": [{"role":"user","content":qt_prompt}],
+            "tools": [{"type":"x_search"}],
+            "max_output_tokens": 3000,
+            "temperature": 0.0,
+        }).encode()
+        req_qt = urllib.request.Request("https://api.x.ai/v1/responses",
+            data=body_qt, method="POST",
+            headers={"Authorization": f"Bearer {xai_key_qt}", "Content-Type": "application/json"})
+        try:
+            r_qt = json.loads(urllib.request.urlopen(req_qt, timeout=120).read())
+            msg_qt = ''
+            for item in r_qt.get('output', []):
+                if item.get('type') == 'message':
+                    for c in item.get('content', []):
+                        if c.get('type') == 'output_text':
+                            msg_qt = c.get('text',''); break
+                    if msg_qt: break
+            import re as _rqt
+            msg_qt = _rqt.sub(r'^```(?:json)?\s*|\s*```$', '', (msg_qt or '').strip(), flags=_rqt.MULTILINE).strip()
+            m_qt = _rqt.search(r'\[.*\]', msg_qt, _rqt.DOTALL)
+            qts = json.loads(m_qt.group(0)) if m_qt else []
+        except Exception as e:
+            print(f"[qt-enrich] batch error {e}", file=sys.stderr)
+            continue
+        for qt_obj in qts:
+            if not isinstance(qt_obj, dict): continue
+            i = qt_obj.get('index', 0) - 1
+            if not (0 <= i < len(batch)): continue
+            if not qt_obj.get('qt_url') or '/status/' not in qt_obj.get('qt_url',''): continue
+            tab, si, pi, orig_url, _ = batch[i]
+            stories = d.get(tab, {}).get('stories', [])
+            if not (0 <= si < len(stories)): continue
+            target = stories[si]
+            qt_views = int(qt_obj.get('qt_views', 0) or 0)
+            orig_views = int(qt_obj.get('original_views', 0) or 0)
+            new_views = orig_views + qt_views
+            qt_url = qt_obj['qt_url']
+            qt_handle = qt_obj.get('qt_handle','')
+            qt_body = (qt_obj.get('qt_body','') or '')[:200]
+            if pi is None:
+                target['original_url'] = orig_url
+                target['original_handle'] = target.get('handle','')
+                target['original_views'] = orig_views
+                target['url'] = qt_url
+                target['handle'] = qt_handle
+                target['body'] = qt_body
+                target['views'] = new_views
+                target['qt_views'] = qt_views
+            else:
+                persp = target.get('perspectives', [])[pi]
+                persp['original_url'] = orig_url
+                persp['original_handle'] = persp.get('handle','')
+                persp['original_views'] = orig_views
+                persp['url'] = qt_url
+                persp['handle'] = qt_handle
+                persp['text'] = qt_body
+                persp['views'] = new_views
+                persp['qt_views'] = qt_views
+            qt_modified = True
+            print(f"[qt-enrich] {tab}[{si}]"
+                  f"{'/persp'+str(pi) if pi is not None else ''}: "
+                  f"swapped to @{qt_handle} (orig {orig_views} + qt {qt_views} = {new_views})",
+                  file=sys.stderr)
+            warnings.append(f"qt-enrich {tab}: swapped to @{qt_handle} (+{qt_views} views)")
+    if qt_modified:
+        with open('stories.json','w') as f: json.dump(d, f, indent=2)
 
 # ---- Check 6: UNIVERSAL OVERFLOW REFILL (user 2026-05-11) ----
 # "Seems like we've encountered this whack-a-mole before, where we end up with
