@@ -422,6 +422,10 @@ if key2:
                    'msm','conspiracy','pg6','comedy','recipe','science',
                    'local','top']
     # Build line→(tab, index) map so Claude can refer to stories by line number.
+    # 2026-05-13: include perspective BODIES so Claude can check that each
+    # perspective post actually matches the story's headline event (user
+    # caught: World "Trump Deportation" story had @EndWokeness post about
+    # DR-Haiti deportation — different event, just shared keyword).
     summary_lines = []
     line_map = {}    # line_number → (tab, index_in_stories)
     line_num = 0
@@ -432,39 +436,58 @@ if key2:
             line_map[line_num] = (tab, i)
             headline = (s.get('headline','') or '?')[:90]
             handle = s.get('handle','') or ''
-            if not handle:
-                ps = s.get('perspectives', []) or []
-                if ps and isinstance(ps[0], dict):
-                    handle = '+'.join((p.get('handle','') or '') for p in ps[:3] if isinstance(p, dict))
-            url = (s.get('url','') or '')[-50:] if s.get('url') else 'PERSPS'
-            summary_lines.append(f"L{line_num} [{tab}] {headline} | {handle} | …{url}")
+            persps = s.get('perspectives', []) or []
+            if persps:
+                # World/USA: include each perspective's body so Claude can
+                # detect off-topic posts (body doesn't match headline event).
+                summary_lines.append(f"L{line_num} [{tab}] HEADLINE: {headline}")
+                for p in persps[:3]:
+                    if not isinstance(p, dict): continue
+                    plbl = p.get('label','?')
+                    ph = p.get('handle','?')
+                    pb = (p.get('text') or p.get('quote') or p.get('body') or '')[:140]
+                    summary_lines.append(f"     [{plbl}] @{ph}: \"{pb}\"")
+            else:
+                body = (s.get('body','') or '')[:140]
+                url = (s.get('url','') or '')[-40:]
+                summary_lines.append(f"L{line_num} [{tab}] {headline} | @{handle}: \"{body}\" | …{url}")
     if summary_lines:
         review_prompt = (
-            "Final QC review of an X-curated news site. Each line is:\n"
-            "  L<N> [tab] headline | handle | url-tail\n\n"
+            "Final QC review of an X-curated news site. Lines:\n"
+            "  L<N> [tab] HEADLINE: <text>      (for World/USA, then 3 persps follow)\n"
+            "       [Conservative/Indep/Dem] @handle: \"<body>\"\n"
+            "  L<N> [tab] headline | @handle: \"<body>\" | …<url>   (single-post tabs)\n\n"
             + "\n".join(summary_lines) +
-            "\n\nReview every line. For each problem you find, decide whether\n"
-            "Python should DROP the offending pick or just WARN.\n\n"
+            "\n\nReview every line. For each problem found, decide whether\n"
+            "Python should DROP the pick or just WARN.\n\n"
             "Issue types:\n"
-            "  - duplicate: same story/event appears on multiple tabs. Drop ONE\n"
-            "    of the lines (keep the one on the more-natural tab — e.g.,\n"
-            "    drop USA copy if same event is also on World).\n"
-            "  - off-topic: pick doesn't fit its tab (recipe on World, sports\n"
-            "    on Business, etc.). DROP.\n"
-            "  - mechanical: malformed URL, garbled headline, missing handle,\n"
-            "    empty fields. DROP.\n"
-            "  - nonsense: headline doesn't match body, body is gibberish,\n"
-            "    obvious AI hallucination. DROP.\n"
-            "  - borderline: looks suspicious but not clearly broken. WARN only.\n\n"
+            "  - duplicate: same story/event on multiple tabs. Drop ONE.\n"
+            "  - off-topic-tab: pick doesn't fit its tab (recipe on World,\n"
+            "    sports on Business). DROP.\n"
+            "  - off-topic-perspective: PERSPECTIVE POST'S BODY doesn't match\n"
+            "    its story's HEADLINE EVENT. EXAMPLES:\n"
+            "      • Story 'Trump Deportation Policies' headline + perspective\n"
+            "        body about Dominican Republic deporting Haitians → DIFFERENT\n"
+            "        event (shared keyword, not same event). DROP perspective.\n"
+            "      • Story 'Iran Ceasefire' + perspective body about Russia\n"
+            "        sanctions → DIFFERENT event. DROP perspective.\n"
+            "    The perspective tweet must clearly reference the SAME event\n"
+            "    the headline describes. Keyword overlap is NOT enough.\n"
+            "    For this issue: action='drop_perspective', specify which\n"
+            "    perspective label (Conservative/Independent/Democrat).\n"
+            "  - mechanical: malformed URL, garbled headline, missing handle.\n"
+            "    DROP.\n"
+            "  - nonsense: headline doesn't match body, gibberish. DROP.\n"
+            "  - borderline: suspicious but not clearly broken. WARN only.\n\n"
             "Return STRICTLY a JSON array. Each issue object:\n"
-            "  {\"line\": <N>, \"action\": \"drop\" or \"warn\", "
-            "\"type\": \"duplicate|off-topic|mechanical|nonsense|borderline\", "
-            "\"reason\": \"<one short sentence>\"}\n"
-            "If a duplicate spans two lines, return ONE object for the line to\n"
-            "drop (mention both line numbers in `reason`).\n"
+            "  {\"line\": <N>, \"action\": \"drop\"|\"drop_perspective\"|\"warn\",\n"
+            "   \"type\": \"<one of above types>\",\n"
+            "   \"perspective\": \"Conservative|Independent|Democrat\" (only for\n"
+            "      drop_perspective),\n"
+            "   \"reason\": \"<one short sentence>\"}\n"
             "Empty array [] if no issues. NO PROSE outside the JSON."
         )
-        body = json.dumps({"model":"claude-sonnet-4-5","max_tokens":1200,
+        body = json.dumps({"model":"claude-sonnet-4-5","max_tokens":2500,
                            "messages":[{"role":"user","content":review_prompt}]}).encode()
         req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body, method="POST",
             headers={"x-api-key": key2, "anthropic-version":"2023-06-01", "content-type":"application/json"})
@@ -477,12 +500,37 @@ if key2:
         except Exception as e:
             print(f"[final-review] API error {e} — skipping", file=sys.stderr)
             issues = []
-        # ACT on the issues: sort by line DESC so pops don't shift lower indices.
+        # ACT on the issues. Order matters: handle drop_perspective first
+        # (mutates story in place), then drops (pop, sorted DESC by line so
+        # pops don't shift lower indices).
+        persp_drops = [i for i in issues if isinstance(i, dict) and i.get('action') == 'drop_perspective']
         drops = sorted([i for i in issues if isinstance(i, dict) and i.get('action') == 'drop'],
                        key=lambda x: -(x.get('line') or 0))
         warns = [i for i in issues if isinstance(i, dict) and i.get('action') == 'warn']
         review_modified = False
         drops_per_tab = {}  # tab → count of drops, for refill
+        # 1) perspective drops first (don't remove the story, just the bad persp)
+        for issue in persp_drops:
+            line = issue.get('line')
+            if line not in line_map: continue
+            tab, idx = line_map[line]
+            target_label = (issue.get('perspective','') or '').lower()
+            stories = d.get(tab, {}).get('stories', [])
+            if not (0 <= idx < len(stories)): continue
+            story = stories[idx]
+            persps = story.get('perspectives', []) or []
+            before = len(persps)
+            persps = [p for p in persps
+                      if not (isinstance(p, dict) and (p.get('label','') or '').lower() == target_label)]
+            if len(persps) != before:
+                story['perspectives'] = persps
+                rmh = (story.get('headline','') or '?')[:50]
+                rsn = (issue.get('reason','') or '')[:150]
+                print(f"[final-review] DROP-PERSP {tab}[{idx}] {target_label} from '{rmh}' — {rsn}",
+                      file=sys.stderr)
+                warnings.append(f"final-review DROP-PERSP [{tab}/{target_label}] '{rmh}' — {rsn}")
+                review_modified = True
+        # 2) full-story drops
         for issue in drops:
             line = issue.get('line')
             if line not in line_map: continue

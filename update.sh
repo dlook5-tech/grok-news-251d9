@@ -124,6 +124,23 @@ A 30-min-old post at 50K views = velocity 400K (rising fast) → beats a
 4h-old post at 100K views = velocity 100K (plateaued). Fast risers win
 over stale leaders.
 
+QT/RT SEARCH IS MANDATORY — DO NOT SKIP (user mandate 2026-05-13):
+"I don't see any retweets of stories like that Michael Burry story.
+Everybody's saying he's been wrong 38 times, which are kind of viral
+comments, but you just posted his comment."
+
+For every prominent post (especially contrarian takes, predictions,
+hot takes, political claims), there ARE viral QTs. Famous handles
+attract pile-ons within 1-2 hours. If you return a pick without
+checking for QTs, you've FAILED the spec.
+
+Patterns where QTs ARE viral (search hard for these):
+- Michael Burry market calls → "wrong 38 times" snark
+- Politician claims → opposition QTing with receipts
+- Celebrity statement → fact-checkers QTing
+- Bold prediction → dunking responses
+- "Just posted this" → QTs reframing with context
+
 QT/RT SEARCH IS REQUIRED FOR EVERY PICK (user mandate 2026-05-11):
 "If you find the most velocity post and someone has retweeted it who has
 something very interesting to say and adds to the velocity of that. That is
