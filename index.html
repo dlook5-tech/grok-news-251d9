@@ -1012,16 +1012,32 @@ function handleSubmit(e) {
   if (!found) submissions.push({ url: url, notes: note ? [note] : [], votes: 1, timestamp: new Date().toISOString() });
   try { localStorage.setItem('grokSubs', JSON.stringify(submissions)); } catch(e) {}
 
-  // Also POST to Netlify Forms so the cron can pick it up server-side.
-  // Hidden static form in <body> declares the schema; this AJAX call sends
-  // the actual submission. Failures are silent — local copy is still saved.
+  // POST to Netlify Forms so the cron picks it up server-side. CRITICAL:
+  // include EVERY field declared in the static form schema — missing
+  // 'bot-field' was making Netlify silently reject as bot. (User 2026-05-13:
+  // "I only see them on my phone." Netlify submission_count was 0 from this.)
   try {
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ 'form-name': 'post-replace', 'url': url, 'note': note }).toString()
-    }).catch(function() {});
-  } catch (e) {}
+      body: new URLSearchParams({
+        'form-name': 'post-replace',
+        'bot-field': '',
+        'url': url,
+        'note': note,
+      }).toString()
+    }).then(function(r) {
+      if (r.ok) {
+        console.log('[expresso] server-side submission OK');
+      } else {
+        console.error('[expresso] server-side submission failed: HTTP ' + r.status);
+        var c2 = document.getElementById('submitConfirm');
+        if (c2) c2.textContent = '⚠ Saved locally but server submission failed (HTTP ' + r.status + ').';
+      }
+    }).catch(function(err) {
+      console.error('[expresso] server-side submission error:', err);
+    });
+  } catch (e) { console.error('[expresso] submit threw:', e); }
 
   document.getElementById('submitForm').reset();
   var c = document.getElementById('submitConfirm');
