@@ -172,30 +172,47 @@ def story_age_hours(story):
 
 
 def story_velocity(story, history=None):
-    """RANK BY VIEWS, WITH 23H HOLD + 24H FALLBACK — user (2026-05-11):
-    "3 stories always."
+    """RANK BY 4-HOUR-PROJECTED VELOCITY (user 2026-05-13):
+    "Extrapolate what the velocity would be for a new candidate story over
+    four hours or a comparative time frame to the story that did make it
+    previously."
 
-    Layered scoring:
-      - Fresh (age ≤ 4h): score = current views (combined X+Y if QT-enhanced).
-        Highest priority — this is the ideal "most-watched-in-4h" pick.
-      - Held (age > 4h, has views_at_save): score = frozen views_at_save.
-        Holds slot until beaten or 23h URL age.
-      - Older fresh-Grok candidate (4h < age ≤ 24h, no views_at_save):
-        score = views. Eligible as fallback when ≤4h pool can't fill 3 slots.
-      - Past 24h with no views_at_save: -1 (drops).
+    Apples-to-apples: every candidate gets scored on (views / age) × 4 —
+    i.e., projected views in a 4-hour window at current rate. A 1h-old
+    story at 50K views = 200K projected; a 4h-old story at 200K = 200K
+    projected. Tie.
+
+    Held stories use their FROZEN rate from pickup (views_at_save /
+    age_at_save_hours × 4) so they can't gain phantom velocity sitting on
+    the tab.
+
+      - Fresh (age ≤ 4h): score = (current_views / age) × 4
+      - Held (has views_at_save + age_at_save): score = (views_at_save /
+        age_at_save) × 4 — frozen rate at pickup
+      - Older fresh-Grok candidate (4h < age ≤ 24h, never picked):
+        score = (views / age) × 4
+      - Past 24h with no views_at_save: -1, drops
     """
-    age = story_age_hours(story)
+    age = max(story_age_hours(story), 0.1)  # avoid div by zero
     views = story_views(story)
     if age <= 4:
-        return float(views) if views > 0 else 0.0
-    # Held story (was picked in a prior cron): use frozen saved score
+        return (float(views) / age) * 4.0 if views > 0 else 0.0
+    # Held story (picked in prior cron): use frozen rate-at-pickup
     saved = story.get('views_at_save')
+    saved_age = story.get('age_at_save_hours')
+    if saved is not None and saved_age is not None:
+        try:
+            sa = max(float(saved_age), 0.1)
+            return (float(saved) / sa) * 4.0
+        except (ValueError, TypeError):
+            pass
+    # Held but no age_at_save (legacy data): use current age as fallback
     if saved is not None:
-        try: return float(saved)
+        try: return (float(saved) / age) * 4.0
         except (ValueError, TypeError): return -1.0
-    # Older fresh-Grok candidate, never picked yet: eligible up to 24h
+    # Older fresh-Grok candidate, never picked yet — eligible up to 24h
     if age <= 24 and views > 0:
-        return float(views)
+        return (float(views) / age) * 4.0
     return -1.0
 
 
