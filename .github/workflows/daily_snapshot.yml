@@ -10,6 +10,16 @@ on:
   schedule:
     - cron: '0 19 * * *'   # 19:00 UTC = 12:00 PM PT daily
   workflow_dispatch:        # manual trigger from Actions tab
+  push:
+    branches: [main]
+    # Only when actual code changes — skip auto-cron commits to avoid loops
+    paths:
+      - '*.py'
+      - '*.sh'
+      - '*.html'
+      - '*.toml'
+      - '.github/workflows/*.yml'
+      - 'netlify/functions/*'
 
 permissions:
   contents: write           # required to create releases
