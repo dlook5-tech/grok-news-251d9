@@ -112,6 +112,18 @@ Per-tab counts:
 
 Each pick MUST have: url, handle, body, views, engagement, honesty score, notes (1-line on score).
 
+VELOCITY DEFINITION (user mandate 2026-05-13):
+**Velocity = (views ÷ age_in_hours) × 4** — projected views over a 4-hour
+window at the post's current rate. RANK EVERYTHING BY VELOCITY, not by raw
+cumulative views:
+  - Story selection (which events make top 3)
+  - Perspective selection (highest-velocity Conservative/Independent/Democrat)
+  - QT/RT selection (highest-velocity quote-tweet)
+
+A 30-min-old post at 50K views = velocity 400K (rising fast) → beats a
+4h-old post at 100K views = velocity 100K (plateaued). Fast risers win
+over stale leaders.
+
 QT/RT SEARCH IS REQUIRED FOR EVERY PICK (user mandate 2026-05-11):
 "If you find the most velocity post and someone has retweeted it who has
 something very interesting to say and adds to the velocity of that. That is
