@@ -459,7 +459,7 @@
             "views": 13402,
             "notes": "Partisan contrast of DOJ priorities, defensible opinion without false facts",
             "views_at_save": 13402,
-            "age_at_save_hours": 3.38
+            "age_at_save_hours": 3.84
           },
           {
             "label": "Democrat",
@@ -471,7 +471,7 @@
             "views": 2083,
             "notes": "Reports potential DOJ action on lawsuit with critical framing, based on verifiable developments",
             "views_at_save": 2083,
-            "age_at_save_hours": 5.01
+            "age_at_save_hours": 5.47
           },
           {
             "label": "Independent",
@@ -483,7 +483,7 @@
             "views": 20929,
             "notes": "Factual update on policy discussions, though international angle",
             "views_at_save": 20929,
-            "age_at_save_hours": 3.49
+            "age_at_save_hours": 3.95
           }
         ],
         "footnotes": [],
@@ -680,7 +680,7 @@
   "elon": {
     "stories": [
       {
-        "headline": "Elon clarifies AF1 passengers to Beijing",
+        "headline": "Elon calls out Hollywood hypocrisy on historical casting",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2054480994015818084",
         "body": "Elon responds to a post claiming multiple CEOs are on Air Force One by saying only he and Nvidia's Jensen Huang are aboard.",
@@ -804,7 +804,7 @@
         "post_ts": "2026-05-12T19:35:28Z",
         "views": 43939,
         "views_at_save": 43939,
-        "age_at_save_hours": 20.3
+        "age_at_save_hours": 20.76
       },
       {
         "url": "https://x.com/AdamSchefter/status/2054187068046090546",
@@ -968,9 +968,7 @@
         "views": 956379,
         "views_at_save": 956379,
         "age_at_save_hours": 21.78
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Ideological reversal on junk mail",
         "handle": "@PalmerLuckey",
@@ -993,20 +991,6 @@
         "engagement": "35764 likes, 3112 reposts, 84 quotes, 406 replies",
         "honesty": "7/10",
         "notes": "Opinion/hot take on shift in acceptable discourse - commentary on censorship climate without verified incidents."
-      },
-      {
-        "headline": "Copper Prices Set to Surge",
-        "handle": "@chamath",
-        "url": "https://x.com/chamath/status/2054213838862709108",
-        "body": "Chamath Palihapitiya predicts rising copper prices due to no scalable alternatives for its critical uses.",
-        "engagement": "389 likes, 14 retweets, 37 replies",
-        "honesty": "7/10",
-        "notes": "Market prediction opinion, no factual errors in premise.",
-        "posted": "2026-05-12T21:05:43Z",
-        "post_ts": "2026-05-12T14:55:19Z",
-        "views": 151770,
-        "views_at_save": 151770,
-        "age_at_save_hours": 6.17
       },
       {
         "url": "https://x.com/pmarca/status/2053934599533908091",
@@ -1112,6 +1096,34 @@
         "age_at_save_hours": 22.4
       },
       {
+        "headline": "McKinsey forecasts $5T AI data center spend by 2030 amid infrastructure boom",
+        "handle": "@unusual_whales",
+        "url": "https://x.com/unusual_whales/status/2054546450940674358",
+        "body": "McKinsey projects global AI-driven data center investments reaching $5 trillion by 2030, underscoring the massive scale of AI expansion.",
+        "engagement": "644 likes, 71 retweets, 118 replies",
+        "honesty": "9/10",
+        "notes": "Verified projection from McKinsey, factual reporting with minor framing.",
+        "posted": "2026-05-13T16:20:51Z",
+        "post_ts": "2026-05-13T12:57:00Z",
+        "views": 107539,
+        "views_at_save": 107539,
+        "age_at_save_hours": 3.4
+      },
+      {
+        "headline": "52% of investors now blend stocks and crypto in portfolios, Bitget report reveals",
+        "handle": "@Cointelegraph",
+        "url": "https://x.com/Cointelegraph/status/2054567563015729210",
+        "body": "Bitget's 2026 User Asset Allocation Report shows 52% of users holding both stocks and crypto, indicating rising diversification trends.",
+        "engagement": "124 likes, 34 retweets, 43 replies",
+        "honesty": "9/10",
+        "notes": "Factual insight from Bitget's annual report on user behavior.",
+        "posted": "2026-05-13T16:20:51Z",
+        "post_ts": "2026-05-13T14:20:53Z",
+        "views": 11240
+      }
+    ],
+    "earlier": [
+      {
         "headline": "Anthropic seeking massive $30B raise at sky-high valuation after quick burn",
         "handle": "@zerohedge",
         "url": "https://x.com/zerohedge/status/2054310560531951722",
@@ -1171,6 +1183,20 @@
   },
   "top": {
     "stories": [
+      {
+        "headline": "Oscars Best Picture eligibility demands diversity in casting and crew",
+        "handle": "@C_3C_3",
+        "url": "https://x.com/C_3C_3/status/2054542086259573065",
+        "body": "To qualify for Best Picture, films require at least one non-white/non-straight lead, 30% minor roles non-white/non-straight, and two departments...",
+        "engagement": "7.5K likes, 797 reposts, 124 quotes, 767 replies",
+        "honesty": "8/10",
+        "notes": "Fact on Oscars standards mixed with opinion on Nolan.",
+        "posted": "2026-05-13T15:53:22Z",
+        "post_ts": "2026-05-13T12:39:39Z",
+        "views": 2736260,
+        "views_at_save": 2736260,
+        "age_at_save_hours": 3.69
+      },
       {
         "headline": "Grok Now Has Skills",
         "handle": "@elonmusk",
@@ -1330,7 +1356,7 @@
   "msm": {
     "stories": [
       {
-        "headline": "CIA Whistleblower to Testify on COVID Lab Leak Cover-Up",
+        "headline": "CIA Employee Testifies Fauci Influenced COVID Lab Leak Assessment",
         "handle": "@BillMelugin_",
         "url": "https://x.com/BillMelugin_/status/2054260334572326930",
         "body": "Sen.. Rand Paul reveals active CIA employee will testify that intelligence community covered up COVID-19 lab origins for years.",
@@ -1343,6 +1369,36 @@
         "views_at_save": 1655136,
         "age_at_save_hours": 22.3
       },
+      {
+        "headline": "Airport intruder who nearly caused plane disaster has 20 prior arrests including attempted murder",
+        "handle": "@CollinRugg",
+        "url": "https://x.com/CollinRugg/status/2054315871951294898",
+        "body": "Michael Mott, repeat offender released just a month ago, walked in front of taxiing plane due to lenient justice system.",
+        "engagement": "15K likes, 3.2K reposts, 184 quotes, 1.1K replies",
+        "honesty": "9/10",
+        "notes": "Criminal history verified from public records and reports, with opinion on justice system.",
+        "posted": "2026-05-13T15:53:23Z",
+        "post_ts": "2026-05-12T21:40:45Z",
+        "views": 1139553,
+        "views_at_save": 1139553,
+        "age_at_save_hours": 18.67
+      },
+      {
+        "headline": "Undercover Video Exposes White House Staffer's Anti-Trump Confession",
+        "handle": "@JamesOKeefeIII",
+        "url": "https://x.com/JamesOKeefeIII/status/2054254964793622833",
+        "body": "Hidden camera captures White House Domestic Policy Council assistant admitting policies are made on 'feelings' without cost-benefit analysis and...",
+        "engagement": "19K likes, 7.4K reposts, 431 quotes, 1.2K replies",
+        "honesty": "10/10",
+        "notes": "Undercover video provides direct, verifiable recording of statements.",
+        "posted": "2026-05-13T16:20:52Z",
+        "post_ts": "2026-05-12T17:38:44Z",
+        "views": 1343266,
+        "views_at_save": 1250412,
+        "age_at_save_hours": 22.24
+      }
+    ],
+    "earlier": [
       {
         "headline": "White House Insiders Caught Trashing Trump on Undercover Video",
         "handle": "@JamesOKeefeIII",
@@ -1820,6 +1876,36 @@
         "views_at_save": 490845,
         "age_at_save_hours": 15.82
       },
+      {
+        "headline": "First Telescopic Contact Lens Developed for 3x Vision Zoom",
+        "handle": "@fascinatingonX",
+        "url": "https://x.com/fascinatingonX/status/2054358196391936473",
+        "body": "Scientists have created the first telescopic contact lens that can zoom a person's vision up to three times.",
+        "engagement": "7.6K likes, 1.2K reposts",
+        "honesty": "9/10",
+        "notes": "Announces development of new technology based on scientific advancement.",
+        "posted": "2026-05-13T16:20:53Z",
+        "post_ts": "2026-05-13T00:28:56Z",
+        "views": 491927,
+        "views_at_save": 491927,
+        "age_at_save_hours": 15.87
+      },
+      {
+        "headline": "New Protein Discovered That Writes DNA from Scratch",
+        "handle": "@forallcurious",
+        "url": "https://x.com/forallcurious/status/2054376900299292832",
+        "body": "Scientists found a protein that creates DNA without a template or instructions, relying solely on its own shape, challenging a 4-billion-year...",
+        "engagement": "3.4K likes, 359 reposts",
+        "honesty": "8/10",
+        "notes": "Describes recent biological discovery with interpretive framing but based on scientific findings.",
+        "posted": "2026-05-13T16:20:53Z",
+        "post_ts": "2026-05-13T01:43:16Z",
+        "views": 95213,
+        "views_at_save": 95213,
+        "age_at_save_hours": 14.63
+      }
+    ],
+    "earlier": [
       {
         "headline": "New human cell type discovered",
         "handle": "@forallcurious",
