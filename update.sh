@@ -106,7 +106,7 @@ Python sorts and ranks. You return 8-10 candidates per tab. We pick the top by v
 
 Per-tab counts:
 - Most tabs: return 8-10 candidates (Python takes top 3)
-- Elon: return 15-20 candidates (Python takes top 10)
+- Elon: return ALL non-promo posts/replies/retweets/QTs from last 24h. NO TOP-N cap. If he posted 25 non-promo posts, return all 25. Python takes up to 30.
 - World/USA: return 5-8 stories. Each story may have 1, 2, or 3 perspectives — ship whatever you find. Don't drop a high-view story because the third perspective is missing.
 - Sports: return 8-10 candidates (Python takes top 3)
 
@@ -613,10 +613,18 @@ PROMPT
 cat > /tmp/grok_p_elon.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 MISSION (UPDATED 2026-05-13): Return EVERY Elon @elonmusk post + reply + retweet + quote-tweet from the LAST 24 HOURS that isn't self-promotion of his companies. Full 24h refresh every cron — Python replaces the tab with this full list.
-- No top-N cap. Return ALL non-promo activity in the last 24h.
-- Sort newest first.
-- Include: original posts, replies (with parent context), quote-tweets, retweets.
-- If he genuinely posted 0 in 24h → return empty array.
+
+⚠️ NO TOP-N CAP. NO "BEST OF". RETURN ALL.
+Elon posts 20-60 times per day. EXPECT to return 15-50 entries here.
+If you return only 3-5, you are FAILING the spec. He posts WAY more than that.
+
+How to get the full list:
+- mode:"Latest" "from:elonmusk" since:24h ago, limit:100, NO min_faves floor
+- mode:"Latest" "from:elonmusk filter:replies" since:24h ago, limit:100
+- Combine results, dedupe by URL, filter out promo per the EXCLUDE list,
+  sort newest first, return ALL remaining.
+
+If he genuinely posted 0 in 24h → return empty array (rare).
 
 INCLUDE (one block per qualifying post):
 - Political takes, policy commentary, election/government posts

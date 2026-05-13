@@ -1762,6 +1762,8 @@ _ELON_PROMO_KEYWORDS = {
     'grok 3', 'grok 4', 'grok update', 'colossus', 'xai release',
     # X platform
     'x premium', 'x pro', 'x.com feature', 'try x', 'new on x',
+    'x recommendations', 'x recommendation algorithm', 'open sourcing x',
+    'x algorithm', 'x for business', 'community notes update',
     # Other companies
     'neuralink update', 'boring company',
     # Generic marketing language
