@@ -323,9 +323,14 @@ def enrich_commentator(top_story, all_candidates):
     for cand in all_candidates:
         if cand is top_story:
             continue
-        body = (cand.get('body', '') or '')
-        if len(body.strip()) < 30:
-            continue  # need actual commentary, not a bare RT
+        body = (cand.get('body', '') or '').strip()
+        # 2026-05-13: dropped strict 30-char minimum (user: "what if something's
+        # really viral and has less than 30?"). Now: short body OK if it has
+        # meaningful views. Junk one-word RTs from no-name accounts still filter
+        # out via low views.
+        cand_views = story_views(cand)
+        if len(body) < 5: continue  # truly empty / single emoji — skip
+        if len(body) < 30 and cand_views < 10000: continue  # short + low-views = noise
         body_l = body.lower()
         refs_url = bool(target_url and target_url.lower() in body_l)
         refs_headline = bool(target_headline and len(target_headline) > 12 and

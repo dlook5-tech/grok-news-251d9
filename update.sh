@@ -136,7 +136,7 @@ to find quote-tweets / amplifications:
     stories within 1-2 hours. Look for them.
 
 If ANY QT has BOTH:
-  (a) substantive commentary body (≥30 chars, real analysis — not "🔥",
+  (a) substantive commentary body (viral OR ≥10 chars of real text — short punchy QTs like "Called it." or "Brutal." pass IF view count is meaningful. Skip only bare emoji/single-word RTs from no-name accounts.
       not bare RT)
   (b) higher views than the original alone OR adds meaningful color
 THEN swap the displayed URL to the QT and structure the pick as:
@@ -405,7 +405,7 @@ STEP 4. *THEN* for EACH chosen R/I/D post, find a QT/RT amplifier.
           x_search "<status_id>" mode:Top, limit:30
           x_search "<2-3 headline keywords> min_faves:1000" mode:Top, limit:30
               (catches pundit pile-ons — Posobiec/AOC/etc. who QT viral)
-        If a QT/RT exists with substantive commentary (>=30 chars body, NOT
+        If a QT/RT exists with substantive commentary (short OR long body, but VIRAL views — skip bare emoji/no-views RTs, NOT
         just emoji or "🔥"):
           - swap "url" to the QT URL (Twitter embed shows the original
             quoted inside the QT — user sees both)
@@ -502,7 +502,7 @@ EXECUTION:
   c. For each event, run 3 sided searches (conservative/dem/indep keyword
      filters) → find the highest-viewed take from each side.
   d. For each chosen R/I/D post, look for QT/RTs of it with substantive bodies
-     (>=30 chars of real commentary). If found, swap URL to the QT and report
+     (meaningful views — short punchy QTs like "Brutal." count if viral). If found, swap URL to the QT and report
      combined views (original + QT).
   e. Apply Step 4 rejects. If a slot fails after enrichment, find a different
      post for that slot.
