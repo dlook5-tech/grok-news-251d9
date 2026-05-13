@@ -597,10 +597,11 @@ PROMPT
 # --- ELON ---
 cat > /tmp/grok_p_elon.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
-MISSION (UPDATED 2026-05-11): Return EVERY Elon post and reply from the LAST 4 HOURS that isn't self-promotion of his companies. Python merges these fresh posts into the existing 24h rolling list (newest prepended chronologically; anything past 24h ages out).
-- If Elon hasn't posted in the last 4h, return an empty array. The tab will stay unchanged.
-- Do NOT pad with older posts to "fill" — Python handles continuity.
-- No top-N cap. Return ALL non-promo posts/replies he made in the last 4h, even if there are 10.
+MISSION (UPDATED 2026-05-13): Return EVERY Elon @elonmusk post + reply + retweet + quote-tweet from the LAST 24 HOURS that isn't self-promotion of his companies. Full 24h refresh every cron — Python replaces the tab with this full list.
+- No top-N cap. Return ALL non-promo activity in the last 24h.
+- Sort newest first.
+- Include: original posts, replies (with parent context), quote-tweets, retweets.
+- If he genuinely posted 0 in 24h → return empty array.
 
 INCLUDE (one block per qualifying post):
 - Political takes, policy commentary, election/government posts
@@ -661,9 +662,9 @@ Rule of thumb: if you find yourself writing "Replying to..." in the body field, 
 
 If a quote-tweet's parent is in a non-English language (French/Portuguese/Spanish/etc), you MUST set "translation" field with full English translation of the parent tweet. If you can't translate, SKIP and pick another post.
 
-QUALITY BAR: substantive content — prediction, announcement, sharp critique, joke with a point, policy take, contrarian observation. Pick the 3 HIGHEST-ENGAGEMENT substantive posts of the day from @elonmusk.
+QUALITY BAR (UPDATED 2026-05-13): No top-N cap. Return ALL non-promo posts/replies/retweets/QTs from the last 24h. Even bare reactions count IF they have visible parent context that makes them readable. Drop only pure self-promo per the EXCLUDE list.
 
-DIVERSITY: 3 DIFFERENT topics, 3 DIFFERENT URLs. Verify URLs are unique before returning. Mix originals and replies — at least one of each if available.
+DIVERSITY: each URL must be unique. Replies + retweets + originals all welcome.
 
 HONESTY SCORING (apply rigorously, NOT auto-10):
 - 10 = verified fact (e.g. "Tesla earnings beat by X" — checkable)
