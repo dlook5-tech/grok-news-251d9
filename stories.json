@@ -103,23 +103,7 @@
             "views": 13122,
             "notes": "Video of welcome ceremony with positive interpretation, factual core accurate.",
             "views_at_save": 13122,
-            "age_at_save_hours": 3.26
-          },
-          {
-            "label": "Democrat",
-            "handle": "@ZinaWilson3",
-            "url": "https://x.com/ZinaWilson3/status/2054567073276178754",
-            "text": "This is a stupid post. President Trump never greets leaders at the airport when they land, why would anyone expect leaders to greet Trump at the airport? They greet each other someplace like the White",
-            "engagement": "33K likes, 11K reposts, 1.8K replies",
-            "honesty": "9/10",
-            "views": 1687539,
-            "notes": "Accurate on greeters with partisan framing on rocky start, no lies.",
-            "views_at_save": 1539345,
-            "age_at_save_hours": 3.56,
-            "original_url": "https://x.com/CalltoActivism/status/2054560595169489183",
-            "original_handle": "@CalltoActivism",
-            "original_views": 1655080,
-            "qt_views": 32459
+            "age_at_save_hours": 3.99
           },
           {
             "label": "Independent",
@@ -127,11 +111,11 @@
             "url": "https://x.com/MayadeenEnglish/status/2054562940729110712",
             "text": "US President Donald Trump arrived in Beijing, China, with ambitions that have narrowed sharply ahead of talks with Xi Jinping, shifting from what was...",
             "engagement": "12 likes, 5 reposts, 1 replies",
-            "honesty": "8/10",
+            "honesty": "7/10",
             "views": 1329,
-            "notes": "Analysis citing Politico and experts, institutional perspective. Should never be 9/10.",
+            "notes": "Analysis citing Politico with prediction about 'ambitions that have narrowed' - this is opinion/analysis not institutional factual report = 7/10.",
             "views_at_save": 1329,
-            "age_at_save_hours": 3.4
+            "age_at_save_hours": 4.14
           }
         ],
         "footnotes": [],
@@ -139,8 +123,10 @@
         "body": "Three-perspective roundup.",
         "posted": "5/13/2026 5:11 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 3.26
-      },
+        "age_at_save_hours": 3.99
+      }
+    ],
+    "earlier": [
       {
         "headline": "Russia's Massive Drone Attack on Ukraine",
         "honesty": "8/10",
@@ -407,7 +393,7 @@
     ],
     "_overflow": [
       {
-        "headline": "Trump Arrives in Beijing for Summit with Xi Jinping",
+        "headline": "Trump Arrives in China for Summit with Xi Jinping",
         "honesty": "8/10",
         "perspectives": [
           {
@@ -800,7 +786,7 @@
   "elon": {
     "stories": [
       {
-        "headline": "On my way to Beijing in Air Force One",
+        "headline": "Elon affirms DEI quotas for Oscars eligibility",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2054479261462040687",
         "body": "Elon Musk jokes about heading to Beijing aboard Air Force One, poking fun at a potential trip with President Trump.",
@@ -814,14 +800,62 @@
         "age_at_save_hours": 9.55
       },
       {
-        "headline": "True Definition of Fascism",
+        "headline": "Elon slams Hollywood hypocrisy on race-swapped casting",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2054578725589856353",
+        "body": "Elon Musk calls out double standards where portraying Helen of Troy as black is accepted, but reverse casting in Africa would spark riots, labeling...",
+        "engagement": "13K likes, 573 reposts, 18 quotes, 545 replies",
+        "honesty": "7/10",
+        "notes": "Opinion-based critique of cultural double standards without factual errors.",
+        "posted": "2026-05-13T18:10:49Z",
+        "post_ts": "2026-05-13T15:05:15Z",
+        "views": 220182,
+        "parent_url": "https://x.com/MattWalshBlog/status/2054568499603747193",
+        "parent_handle": "@MattWalshBlog",
+        "parent_text": "We're told that we shouldn't object to Helen of Troy being portrayed as a black woman. And yet if a major Hollywood studio made a film set in Africa and cast a white woman as \"the most beautiful woman in Africa,\" those same people would literally riot in the street. If, say, Sydn",
+        "views_at_save": 220182,
+        "age_at_save_hours": 3.09
+      },
+      {
+        "headline": "Elon corrects AF1 passenger list for Beijing trip",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2054480994015818084",
+        "body": "Elon Musk clarifies that only he and Nvidia CEO Jensen Huang are on Air Force One to Beijing, countering claims of multiple trillion-dollar CEOs...",
+        "engagement": "48K likes, 2K reposts, 425 quotes, 2K replies",
+        "honesty": "9/10",
+        "notes": "Factual correction of exaggerated report on travel companions.",
+        "posted": "2026-05-13T18:10:49Z",
+        "post_ts": "2026-05-13T08:36:54Z",
+        "views": 2331978,
+        "parent_url": "https://x.com/zerohedge/status/2054411323849441604",
+        "parent_handle": "@zerohedge",
+        "parent_text": "That's like $20 trillion worth of CEOs on AF1",
+        "views_at_save": 2331978,
+        "age_at_save_hours": 9.57
+      },
+      {
+        "headline": "Elon announces Beijing trip on Air Force One",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2054479261462040687",
+        "body": "Elon Musk shares he's en route to Beijing aboard Air Force One, highlighting geopolitical travel.",
+        "engagement": "492K likes, 29K reposts, 4K quotes, 32K replies",
+        "honesty": "9/10",
+        "notes": "Personal travel statement from Musk himself is verified fact, but 'highlighting geopolitical travel' adds editorial framing = 9/10.",
+        "posted": "2026-05-13T18:10:49Z",
+        "post_ts": "2026-05-13T08:30:00Z",
+        "views": 48610370,
+        "views_at_save": 48610370,
+        "age_at_save_hours": 9.68
+      },
+      {
+        "headline": "Elon endorses true definition of fascism",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2054474488360874018",
-        "body": "Elon agrees with Mike Lee that fascism is a far-left authoritarian ideology, not just Republicans as Democrats claim.",
-        "engagement": "93K likes, 15K reposts, 249 quotes, 3.6K replies",
-        "honesty": "7/10",
-        "notes": "Opinionated agreement on political definition; defensible take without lies.",
-        "posted": "2026-05-13T17:26:32Z",
+        "body": "Elon Musk agrees fascism is far-left authoritarianism centralizing control over society, contrasting Democratic use against Republicans.",
+        "engagement": "97K likes, 16K reposts, 264 quotes, 4K replies",
+        "honesty": "8/10",
+        "notes": "Supports analytical definition of political ideology.",
+        "posted": "2026-05-13T18:10:49Z",
         "post_ts": "2026-05-13T08:11:02Z",
         "views": 10034733,
         "parent_url": "https://x.com/BasedMikeLee/status/2054417783715139882",
@@ -830,6 +864,128 @@
         "views_at_save": 10034733,
         "age_at_save_hours": 9.87
       },
+      {
+        "headline": "Elon praises Gladiator's opening battle scene",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2054405390985773300",
+        "body": "Elon Musk calls the beginning of Gladiator one of the most spectacular in cinema history for its visuals, production, and direction.",
+        "engagement": "4K likes, 155 reposts, 15 quotes, 321 replies",
+        "honesty": "7/10",
+        "notes": "Subjective praise for film elements.",
+        "posted": "2026-05-13T18:10:49Z",
+        "post_ts": "2026-05-13T03:36:28Z",
+        "views": 84030,
+        "translation": "Quoted (translated from Spanish): The entire beginning of \"Gladiator\" is one of the most OVERWHELMING and spectacular that I remember. The visual display, the battle production, the costumes, how \"real\" the battle feels, Scott's masterful direction, cinema history. \ud83d\udc8e. Elon's caption: So great",
+        "parent_url": "https://x.com/JuviCinefilo/status/2054185346854801585",
+        "parent_handle": "@JuviCinefilo",
+        "parent_text": "Todo el comienzo de \"Gladiator\", es uno de los m\u00e1s APABULLANTES y espectaculares que recuerdo. El despliegue visual, la producci\u00f3n de la batalla, los vestuarios, lo \"real\" que se siente en la batalla, la direcci\u00f3n magistral de Scott, historia del cine. \ud83d\udc8e",
+        "views_at_save": 84030,
+        "age_at_save_hours": 14.57
+      },
+      {
+        "headline": "Elon backs truthful AI over biased alternatives",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2054375126578397338",
+        "body": "Elon Musk affirms push for maximally truthful AI that prioritizes accuracy over political correctness, contrasting with filtered systems from other...",
+        "engagement": "3K likes, 213 reposts, 14 quotes, 390 replies",
+        "honesty": "8/10",
+        "notes": "Endorses analysis on AI development philosophy.",
+        "posted": "2026-05-13T18:10:49Z",
+        "post_ts": "2026-05-13T01:36:13Z",
+        "views": 72750,
+        "parent_url": "https://x.com/r0ck3t23/status/2054358433231458719",
+        "parent_handle": "@r0ck3t23",
+        "parent_text": "Elon Musk just said something that should terrify every AI CEO on earth. Musk: \u201cWe want to just have a maximally truthful AI.\u201d Not a safe AI. Not an aligned AI. Not an AI that needs permission to answer your question. A truthful one. That distinction matters more than any chip wa",
+        "views_at_save": 72750,
+        "age_at_save_hours": 16.58
+      },
+      {
+        "headline": "Elon thanks for defending free speech on X",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2054373151220576318",
+        "body": "Elon Musk heart-reacts to praise for acquiring Twitter to restore free speech and combat lies.",
+        "engagement": "2K likes, 146 reposts, 15 quotes, 296 replies",
+        "honesty": "9/10",
+        "notes": "Appreciates commentary on platform's role in truth.",
+        "posted": "2026-05-13T18:10:49Z",
+        "post_ts": "2026-05-13T01:28:22Z",
+        "views": 46322,
+        "parent_url": "https://x.com/Z_XSophie/status/2054221056181711345",
+        "parent_handle": "@Z_XSophie",
+        "parent_text": "Do you realise how important it was for Elon to buy Twitter and turn it into \ud835\udd4f? He didn\u2019t just buy a company. He bought back our right to speak freely. Because of him, we finally see the truth without filters. Because of him, we\u2019re waking up from the lies and manipulation. He\u2019s b",
+        "views_at_save": 46322,
+        "age_at_save_hours": 16.71
+      },
+      {
+        "headline": "Elon lauds Blade Runner's iconic ending",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2054365371868848351",
+        "body": "Elon Musk praises Rutger Hauer's monologue in Blade Runner as turning the villain into a tragic figure.",
+        "engagement": "2K likes, 131 reposts, 12 quotes, 267 replies",
+        "honesty": "7/10",
+        "notes": "Opinion on film's emotional impact.",
+        "posted": "2026-05-13T18:10:49Z",
+        "post_ts": "2026-05-13T00:57:27Z",
+        "views": 63360,
+        "parent_url": "https://x.com/TheCinesthetic/status/2054156461400633382",
+        "parent_handle": "@TheCinesthetic",
+        "parent_text": "The ending of Blade Runner (1982) is one of those scenes where an actor just completely hijacks a movie. Rutger Hauer turns Roy Batty from a sci-fi villain into something weirdly tragic and beautiful. That monologue lingers forever.",
+        "views_at_save": 63360,
+        "age_at_save_hours": 17.22
+      },
+      {
+        "headline": "Elon attributes Nolan's race-swapping to awards chase",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2054353316499595342",
+        "body": "Elon Musk explains Christopher Nolan's race-swapping of white characters stems from pursuit of Academy Awards via quotas.",
+        "engagement": "16K likes, 417 reposts, 24 quotes, 569 replies",
+        "honesty": "7/10",
+        "notes": "Speculative opinion on director's motives.",
+        "posted": "2026-05-13T18:10:49Z",
+        "post_ts": "2026-05-13T00:09:33Z",
+        "views": 196976,
+        "parent_url": "https://x.com/TheAliceSmith/status/2054330612308189414",
+        "parent_handle": "@TheAliceSmith",
+        "parent_text": "Q: Why is Christopher Nolan like many other directors so keen to race swap white characters? A: Quotas and awards.",
+        "views_at_save": 196976,
+        "age_at_save_hours": 18.02
+      },
+      {
+        "headline": "Elon calls Troy an epic film",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2054298208206192678",
+        "body": "Elon Musk recommends rewatching Troy over the new Odyssey adaptation, deeming it epic.",
+        "engagement": "19K likes, 505 reposts, 62 quotes, 796 replies",
+        "honesty": "7/10",
+        "notes": "Personal film preference.",
+        "posted": "2026-05-13T18:10:50Z",
+        "post_ts": "2026-05-12T20:30:34Z",
+        "views": 234429,
+        "parent_url": "https://x.com/Mericamemed/status/2054260315567604114",
+        "parent_handle": "@Mericamemed",
+        "parent_text": "At this point, instead of watching Odyssey, I'm gonna rewatch Troy",
+        "views_at_save": 234429,
+        "age_at_save_hours": 21.67
+      },
+      {
+        "headline": "Elon proposes audits for X recommendation transparency",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2054297785474933179",
+        "body": "Elon Musk suggests third-party verification and audits to prove X's recommendations aren't manipulated, using same data for reproducible results.",
+        "engagement": "11K likes, 1K reposts, 66 quotes, 1K replies",
+        "honesty": "8/10",
+        "notes": "Advocates for verifiable platform transparency.",
+        "posted": "2026-05-13T18:10:50Z",
+        "post_ts": "2026-05-12T20:28:53Z",
+        "views": 794001,
+        "parent_url": "https://x.com/elonmusk/status/2054297431551136198",
+        "parent_handle": "@elonmusk",
+        "parent_text": "To give people confidence that we are not secretly manipulating the \ud835\udd4f recommendations, it is critical that we open source anything that influences what people are shown",
+        "views_at_save": 794001,
+        "age_at_save_hours": 21.7
+      }
+    ],
+    "earlier": [
       {
         "headline": "Open Sourcing X Recommendations",
         "handle": "@elonmusk",
@@ -1082,15 +1238,15 @@
       },
       {
         "headline": "Positivity Compounds to Victory Over Time",
-        "handle": "@chamath",
-        "url": "https://x.com/chamath/status/2054218367041753574",
-        "body": "Chamath Palihapitiya explains that choosing positivity and gratitude, sustained over time, leads to success as time compounds these qualities, unlike...",
+        "handle": "@rsg",
+        "url": "https://x.com/rsg/status/2054307247010852874",
+        "body": "Positivity is a habit more than anything\n\nAnd negativity is one of the hardest bad habits to break in adulthood\n\nYou rarely see a cynic become an optimist. They see their negativity as an objective le",
         "engagement": "9.4K likes, 1K reposts, 80 quotes, 278 replies",
         "honesty": "7/10",
         "notes": "Opinion on personal development and mindset.",
         "posted": "2026-05-13T13:15:23Z",
         "post_ts": "2026-05-12T15:13:18Z",
-        "views": 311719,
+        "views": 344880,
         "views_at_save": 311719,
         "age_at_save_hours": 26.83
       },
@@ -1406,8 +1562,8 @@
         "url": "https://x.com/realMrHyde420/status/2054308234844873051",
         "body": "Recent Grok video, made from a Grok generated image.",
         "engagement": "27K likes, 3.1K reposts",
-        "honesty": "10/10",
-        "notes": "Fact",
+        "honesty": "9/10",
+        "notes": "Demonstration of Grok's capabilities - verifiable but product demo not pure fact = 9/10.",
         "posted": "2026-05-13T05:00:51Z",
         "post_ts": "2026-05-12T20:46:19Z",
         "views": 17502839,
@@ -1537,11 +1693,11 @@
   "msm": {
     "stories": [
       {
-        "headline": "Woman Sentenced for Threatening to Shoot Trump Supporters",
-        "handle": "@catturd2",
-        "url": "https://x.com/catturd2/status/2054592965541044465",
-        "body": "FAFO - there\u2019s a new sheriff in town, and this BS from the Left is going to be severely punished now.",
-        "engagement": "28K likes, 4.6K retweets, 1.3K replies",
+        "headline": "CIA Whistleblower Alleges COVID Lab Leak Coverup",
+        "handle": "@BillMelugin_",
+        "url": "https://x.com/BillMelugin_/status/2054260334572326930",
+        "body": "Active CIA employee to testify before Senate that intelligence community covered up COVID-19 lab leak origins after Fauci's influence.",
+        "engagement": "12K likes, 3.3K retweets, 645 replies",
         "honesty": "9/10",
         "notes": "Verified court sentencing with partisan framing ('called for Trump supporters to be shot' vs actual charge details).",
         "posted": "2026-05-13T16:58:52Z",
@@ -1833,8 +1989,8 @@
         "url": "https://x.com/foodandwine/status/2054592549063479451",
         "body": "Discover how to make the trending rice paper mochi, a refreshing customizable summer treat.",
         "engagement": "0 likes, 2 reposts, 0 quotes, 0 replies",
-        "honesty": "10/10",
-        "notes": "How-to guide for popular recipe.",
+        "honesty": "9/10",
+        "notes": "Recipe how-to guide is instructional content, not verified fact like court records = 9/10.",
         "posted": "2026-05-13T16:58:53Z",
         "post_ts": "2026-05-13T16:00:10Z",
         "views": 1562,
@@ -1847,8 +2003,8 @@
         "url": "https://x.com/theclovecoterie/status/2054284226074386875",
         "body": "Build a ciabatta sandwich with bleu cheese dressing, caramelized onions, roast beef, balsamic blackberry gastrique, and red leaf lettuce.",
         "engagement": "131 likes, 7 retweets, 1 quote, 2 replies",
-        "honesty": "10/10",
-        "notes": "Detailed sandwich recipe components listed.",
+        "honesty": "9/10",
+        "notes": "Recipe components list - instructional not verified fact = 9/10.",
         "posted": "2026-05-13T15:53:23Z",
         "post_ts": "2026-05-12T19:35:00Z",
         "views": 2623,
@@ -2302,6 +2458,24 @@
   "conspiracy": {
     "stories": [
       {
+        "headline": "White House denies O'Keefe Media press credentials",
+        "handle": "@DrewHLive",
+        "url": "https://x.com/DrewHLive/status/2054618486253776922",
+        "body": "Undercover journalists are feared by those with something to hide",
+        "engagement": "2K likes, 631 retweets, 216 replies",
+        "honesty": "9/10",
+        "notes": "Firsthand account with quoted communications from WH team evidencing suppression of press access.",
+        "posted": "2026-05-13T18:10:53Z",
+        "post_ts": "2026-05-13T17:02:01Z",
+        "views": 121395,
+        "views_at_save": 110988,
+        "age_at_save_hours": 1.15,
+        "original_url": "https://x.com/JamesOKeefeIII/status/2054608114066870623",
+        "original_handle": "@JamesOKeefeIII",
+        "original_views": 115699,
+        "qt_views": 5696
+      },
+      {
         "headline": "DOJ $30M settlement exposes PayPal's discriminatory loans against white-owned businesses.",
         "handle": "@varrock",
         "url": "https://x.com/varrock/status/2054424802983592128",
@@ -2404,14 +2578,14 @@
   "comedy": {
     "stories": [
       {
-        "headline": "Curb Your Enthusiasm offensive comedy clip",
+        "headline": "Curb Your Enthusiasm's Boundary-Pushing Comedy",
         "handle": "@Emarged",
         "url": "https://x.com/Emarged/status/2054564148185325878",
-        "body": "Clip highlighting Curb Your Enthusiasm as pinnacle of offensive humor.",
-        "engagement": "31 likes, 7 reposts",
+        "body": "Offensive clip exemplifying the pinnacle of Curb Your Enthusiasm's humor.",
+        "engagement": "41 likes, 8 reposts",
         "honesty": "8/10",
-        "notes": "Sharing verified show clip with personal opinion.",
-        "posted": "2026-05-13T16:17:55Z",
+        "notes": "Commentary on the show's style accompanying the clip.",
+        "posted": "2026-05-13T18:10:54Z",
         "post_ts": "2026-05-13T14:07:19Z",
         "views": 1293,
         "views_at_save": 1293,
@@ -2448,9 +2622,7 @@
         "original_handle": "@TMZ",
         "original_views": 1620220,
         "qt_views": 300945
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Scotty B's Epic Audience Save",
         "handle": "@3BeardsMedia",
@@ -2506,20 +2678,6 @@
         "views": 453761,
         "views_at_save": 453761,
         "age_at_save_hours": 23.74
-      },
-      {
-        "headline": "Chelsea Handler blasts Tony Hinchcliffe",
-        "handle": "@DefiantLs",
-        "url": "https://x.com/DefiantLs/status/2053900444167221430",
-        "body": "Chelsea Handler mocks Tony Hinchcliffe's MAGA ties and draft hypocrisy at Kevin Hart roast.",
-        "engagement": "2K likes, 94 reposts",
-        "honesty": "8/10",
-        "notes": "Performative satire on real comedian; factual context.",
-        "posted": "2026-05-12T05:02:32Z",
-        "post_ts": "2026-05-11T18:10:00Z",
-        "views": 789814,
-        "views_at_save": 789814,
-        "age_at_save_hours": 23.05
       },
       {
         "headline": "Shane Gillis Fires Back at Chelsea Handler",
