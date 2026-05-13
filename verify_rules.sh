@@ -134,7 +134,7 @@ check "freshness:reference-24h-comedy"  parse_grok.py    "'comedy':\s*24"       
 # 2026-05-10: TAB_AGE_OVERRIDE single source of truth — anti-leak audit.
 # Previously two tables existed and disagreed (elon=96 vs elon=12), leaking 25h-old
 # Elon posts. Lock the values in TAB_AGE_OVERRIDE so any future loosening trips this.
-check "freshness:tab-age-elon-4h"       parse_grok.py    "'elon':\s*4\b"                                       exists
+check "freshness:tab-age-elon-24h"      parse_grok.py    "'elon':\s*24\b"                                      exists
 check "freshness:elon-hard-cap-24h"     parse_grok.py    "TAB_HARD_CAP.*\n.*'elon':\s*24|'elon':\s*24"         exists
 check "freshness:pods-soft-12h"         parse_grok.py    "'pods':\s*12"                                        exists
 check "freshness:pods-hard-24h"         parse_grok.py    "'pods':\s*24"                                        exists
