@@ -1,0 +1,67 @@
+name: Daily Snapshot Backup
+
+# Runs every day at 19:00 UTC (12:00 PM PT). Creates a GitHub Release with
+# a tarball of the full repo state + the critical user-facing files
+# (stories.json, honesty_overrides.csv, expresso_changelog.csv).
+# Mac-independent — runs on GitHub's servers. User can download any
+# snapshot from github.com/dlook5-tech/grok-news-251d9/releases at any time.
+
+on:
+  schedule:
+    - cron: '0 19 * * *'   # 19:00 UTC = 12:00 PM PT daily
+  workflow_dispatch:        # manual trigger from Actions tab
+
+permissions:
+  contents: write           # required to create releases
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - name: Build changelog CSV (Python — replicates Mac script)
+        run: |
+          python3 build_changelog.py || true
+          # build_changelog writes to ~/Desktop on Mac; on CI we redirect
+          # to local file we then attach to the release.
+          if [ -f "$HOME/Desktop/expresso_changelog.csv" ]; then
+            cp "$HOME/Desktop/expresso_changelog.csv" ./expresso_changelog.csv
+          fi
+
+      - name: Build snapshot tarball
+        run: |
+          STAMP=$(date -u +%Y-%m-%d)
+          echo "STAMP=$STAMP" >> $GITHUB_ENV
+          # Exclude heavy generated stuff, include critical state files.
+          tar --exclude='.git' --exclude='.netlify' --exclude='node_modules' \
+              --exclude='__pycache__' --exclude='*.pyc' \
+              -czf expresso-snapshot-$STAMP.tar.gz .
+
+      - name: Create / update release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: snapshot-${{ env.STAMP }}
+          name: Daily Snapshot ${{ env.STAMP }}
+          body: |
+            Mac-independent daily backup of eXpressO News repo.
+            Restore: download the .tar.gz, extract, you have the full project.
+          files: |
+            expresso-snapshot-${{ env.STAMP }}.tar.gz
+            stories.json
+            honesty_overrides.csv
+            expresso_changelog.csv
+          fail_on_unmatched_files: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prune old releases (keep last 30)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release list --limit 100 --json tagName,createdAt \
+            --jq '[.[] | select(.tagName | startswith("snapshot-"))] | sort_by(.createdAt) | reverse | .[30:] | .[].tagName' \
+            | while read tag; do
+              [ -n "$tag" ] && gh release delete "$tag" --yes --cleanup-tag || true
+            done
