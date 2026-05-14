@@ -331,17 +331,27 @@ for tab in ('world', 'usa'):
         if len(valid) < 3:
             warnings.append(f"{tab}[{i}] '{s.get('headline','')[:50]}': {len(valid)}/3 perspectives (preferred but not required)")
 
-# ---- Check 3: within-story URL uniqueness ----
+# ---- Check 3: within-story URL uniqueness — drop dup perspective (not abort) ----
+# Was: errors.append → deploy blocker. User 2026-05-13: cron failed for 8h
+# because of this. Now: DROP the duplicate perspective in-place, warn only.
+check3_modified = False
 for tab in ('world', 'usa'):
     for s in d.get(tab, {}).get('stories', []):
         seen = {}
-        for p in s.get('perspectives', []):
+        kept_persps = []
+        for p in s.get('perspectives', []) or []:
             u = p.get('url', '')
-            if not u: continue
-            if u in seen:
-                errors.append(f"{tab} '{s.get('headline','')[:50]}': "
-                              f"{seen[u]} + {p.get('label','?')} share URL {u}")
-            seen[u] = p.get('label', '?')
+            if u and u in seen:
+                warnings.append(f"{tab} '{s.get('headline','')[:50]}': "
+                                f"{seen[u]} + {p.get('label','?')} share URL — dropped {p.get('label','?')}")
+                check3_modified = True
+                continue
+            if u: seen[u] = p.get('label', '?')
+            kept_persps.append(p)
+        if len(kept_persps) != len(s.get('perspectives', []) or []):
+            s['perspectives'] = kept_persps
+if check3_modified:
+    with open('stories.json','w') as f: json.dump(d, f, indent=2)
 
 # ---- Check 4: URL re-verify via oEmbed (the "click everything" pass) ----
 def collect_urls(d):
