@@ -1656,11 +1656,11 @@ def clean_world(w):
         _filtered_perspectives.append(_p)
     perspectives = _filtered_perspectives
 
-    # 2026-05-11 (user reversed again): "If one of the top three news stories
-    # does not have three perspectives, I guess that's okay." → Allow 1-2 persp
-    # stories. Velocity ranking + hold rule will surface 3-persp stories over
-    # time (they usually have higher total views anyway).
-    if len(perspectives) < 1:
+    # 2026-05-13 (user reversed AGAIN): "If they truly are the top stories,
+    # I can't imagine they won't have three perspectives. That would be a
+    # red flag that perhaps this isn't the right story." → Back to strict 3.
+    # Stories with <3 perspectives get dropped; Grok must pick different events.
+    if len(perspectives) < 3:
         return None
 
     # 2026-05-11: STORY-LEVEL velocity floor (sum of all perspective views).
