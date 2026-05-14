@@ -1656,12 +1656,19 @@ def clean_world(w):
         _filtered_perspectives.append(_p)
     perspectives = _filtered_perspectives
 
-    # 2026-05-13 (user reversed AGAIN): "If they truly are the top stories,
-    # I can't imagine they won't have three perspectives. That would be a
-    # red flag that perhaps this isn't the right story." → Back to strict 3.
-    # Stories with <3 perspectives get dropped; Grok must pick different events.
+    # 2026-05-13 (user reversed): strict 3 perspectives required for political
+    # stories. ONE EXCEPTION: apolitical foreign news (typhoon, earthquake,
+    # foreign disaster, non-political international event) — these legitimately
+    # only attract one neutral/independent take. Allowed when:
+    #   - Exactly 1 perspective remains, AND
+    #   - That perspective is labeled "Independent" (the neutral/analyst slot)
+    # Everything else with <3 perspectives drops; Grok must pick different events.
     if len(perspectives) < 3:
-        return None
+        if (len(perspectives) == 1 and
+            (perspectives[0].get('label','') or '').lower() == 'independent'):
+            pass  # apolitical foreign single-perspective story — allow
+        else:
+            return None
 
     # 2026-05-11: STORY-LEVEL velocity floor (sum of all perspective views).
     # Catches stories like Hantavirus (564+1298+75 = 1937 total — junk) that pass

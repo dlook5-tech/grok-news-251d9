@@ -429,13 +429,18 @@ STEP 2. PICK TOP 3 EVENTS BY VIEW COUNT.
         the same event).
 
 STEP 3. *NOW* search for perspectives — one event at a time. ALL 3 SIDES
-        REQUIRED (user 2026-05-13: "If they truly are the top stories, I
-        can't imagine they won't have three perspectives. That would be a
-        red flag that perhaps this isn't the right story.").
-        If an event can't muster a Conservative AND Independent AND Democrat
-        post, that event is NOT actually top-3 material — DROP IT and pick
-        a different event from the 5-8 candidate pool. Keep iterating until
-        you have 3 events that each have all 3 perspectives.
+        REQUIRED for political stories (user 2026-05-13: "If they truly
+        are top stories, I can't imagine they won't have three perspectives").
+
+        ONE EXCEPTION (user 2026-05-13): genuinely APOLITICAL FOREIGN news
+        (typhoon, earthquake, foreign disaster, non-US international event
+        that doesn't intersect US politics). For these, one Independent
+        perspective is acceptable — return just the Independent slot, leave
+        Conservative + Democrat empty.
+
+        Otherwise: if event can't muster Conservative AND Independent AND
+        Democrat posts, DROP it and pick a different event from the 5-8
+        candidate pool.
         For each of the 3 chosen events:
           (a) x_search "(event keywords) (republican OR conservative OR maga
               OR right) min_faves:1 lang:en" mode:Top, limit:30
