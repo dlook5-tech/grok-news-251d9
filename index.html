@@ -797,7 +797,28 @@ function buildPostedTag(s) {
   else if (diffMin < 60) label = diffMin + 'm ago';
   else if (diffMin < 60 * 24) label = Math.round(diffMin / 60) + 'h ago';
   else label = Math.round(diffMin / (60 * 24)) + 'd ago';
-  return '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;font-weight:400;">' + label + '</span>';
+
+  // Views badge — appended to the same grey span as the time-ago. Sanity check
+  // that nothing's stuck through buggy code: if a "top" story is showing 0 views,
+  // we'll see it immediately. Reads s.views (integer) — max across top-level + perspectives.
+  var v = 0;
+  if (s && typeof s.views === 'number') v = Math.max(v, s.views);
+  if (s && Array.isArray(s.perspectives)) {
+    for (var pi = 0; pi < s.perspectives.length; pi++) {
+      var pv = s.perspectives[pi].views;
+      if (typeof pv === 'number') v = Math.max(v, pv);
+    }
+  }
+  var viewsSuffix = '';
+  if (v > 0) {
+    var vs;
+    if (v >= 1e9) vs = (v/1e9).toFixed(1).replace(/\.0$/,'') + 'B';
+    else if (v >= 1e6) vs = (v/1e6).toFixed(1).replace(/\.0$/,'') + 'M';
+    else if (v >= 1e3) vs = Math.round(v/1e3) + 'K';
+    else vs = String(v);
+    viewsSuffix = ' • ' + vs + ' views';
+  }
+  return '<span style="font-size:0.7rem;color:#aaa;margin-left:8px;font-weight:400;">' + label + viewsSuffix + '</span>';
 }
 
 function renderContent() {
