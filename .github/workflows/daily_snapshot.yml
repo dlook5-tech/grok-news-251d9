@@ -45,10 +45,14 @@ jobs:
         run: |
           STAMP=$(date -u +%Y-%m-%d)
           echo "STAMP=$STAMP" >> $GITHUB_ENV
-          # Exclude heavy generated stuff, include critical state files.
-          tar --exclude='.git' --exclude='.netlify' --exclude='node_modules' \
+          # Write tarball to /tmp so it's NOT inside the directory tar is reading
+          # (otherwise tar exits 1 with "file changed as we read it").
+          tar --exclude='./.git' --exclude='./.netlify' --exclude='./node_modules' \
               --exclude='__pycache__' --exclude='*.pyc' \
-              -czf expresso-snapshot-$STAMP.tar.gz .
+              --exclude='./expresso-snapshot-*.tar.gz' \
+              -czf /tmp/expresso-snapshot-$STAMP.tar.gz .
+          mv /tmp/expresso-snapshot-$STAMP.tar.gz ./expresso-snapshot-$STAMP.tar.gz
+          ls -lh ./expresso-snapshot-$STAMP.tar.gz
 
       - name: Create / update release
         uses: softprops/action-gh-release@v2
