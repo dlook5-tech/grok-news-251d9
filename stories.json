@@ -72,14 +72,88 @@
           }
         ],
         "footnotes": [
-          "Israel raising readiness post-Trump summit amid ongoing tensions."
+          "Conservative: Highlights alignment with China against Iran's nuclear ambitions.",
+          "Democrat: Questions US strategy and potential for escalation.",
+          "Independent: Analyzes Iran's loss of leverage in Hormuz and China relations."
         ],
-        "notes": "Post-summit, Israel anticipates US strikes on Iran, heightening regional risks.",
+        "notes": "Trump and Xi expressed similar views on ending the Iran conflict and ensuring the Strait of Hormuz remains open, pressuring Iran.",
         "body": "Three-perspective roundup.",
-        "posted": "5/14/2026 9:15 PM",
+        "posted": "5/15/2026 5:11 AM",
         "views_at_save": 0,
         "age_at_save_hours": 8.34
       },
+      {
+        "headline": "Ukrainian Drones Strike Russian Ryazan Oil Refinery",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Independent",
+            "handle": "@Osinttechnical",
+            "url": "https://x.com/Osinttechnical/status/2055097629177209252",
+            "text": "Russia\u2019s Ryazan oil refinery is heavily ablaze this morning after numerous Ukrainian attack drones hit the facility overnight.",
+            "engagement": "3442 likes, 708 reposts, 56 replies",
+            "honesty": "9/10",
+            "views": 79863,
+            "notes": "Eyewitness OSINT report with image evidence of the strike and fire.",
+            "views_at_save": 79863,
+            "age_at_save_hours": 3.73
+          }
+        ],
+        "footnotes": [
+          "Independent: OSINT confirmation of Ukrainian drone attack on key Russian infrastructure."
+        ],
+        "notes": "Ukraine conducted a major drone assault on a Russian oil refinery near Moscow, causing significant damage and fire.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/15/2026 5:11 AM",
+        "views_at_save": 0,
+        "age_at_save_hours": 3.73
+      },
+      {
+        "headline": "Xi Warns Trump of Potential Conflict Over Taiwan",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@AmericaFirsst",
+            "url": "https://x.com/AmericaFirsst/status/2055035283041567103",
+            "text": "\ud83d\udea8\"China just dropped a not-so-subtle warning on Taiwan right after the Trump-Xi meeting...\"\n\nChinese readout: Taiwan is the \"most important\" issue in...",
+            "engagement": "39 likes, 18 reposts, 6 replies",
+            "honesty": "7/10",
+            "views": 5916,
+            "notes": "Opinionated conservative framing emphasizing US strength, no factual errors in reporting the warning."
+          },
+          {
+            "label": "Democrat",
+            "handle": "@Megatron_ron",
+            "url": "https://x.com/Megatron_ron/status/2054862407915503861",
+            "text": "\ud83c\uddfa\ud83c\uddf8\ud83c\udde8\ud83c\uddf3Trump doesn't dare talk about Taiwan in front of Xi Jinping\n\nJournalist: \"How were the talks, sir?\"\n\nTrump: \"Nice.. China is...",
+            "engagement": "1518 likes, 325 reposts, 79 replies",
+            "honesty": "8/10",
+            "views": 86519,
+            "notes": "Factual video clip of Trump's response with implied criticism of weakness, accurate reporting."
+          },
+          {
+            "label": "Independent",
+            "handle": "@NBCNews",
+            "url": "https://x.com/NBCNews/status/2054909852397277679",
+            "text": "Chinese President Xi Jinping warns of \u201cclashes and even conflicts\u201d with the U.S.. over Taiwan, cautioning President Trump that tensions over the...",
+            "engagement": "66 likes, 33 reposts, 37 replies",
+            "honesty": "9/10",
+            "views": 57658,
+            "notes": "Straightforward news reporting of Xi's warning, verified from official readout."
+          }
+        ],
+        "footnotes": [
+          "Conservative: Emphasizes US resolve against Chinese pressure.",
+          "Democrat: Highlights Trump's apparent avoidance of the topic.",
+          "Independent: Neutral summary of the summit's Taiwan discussion."
+        ],
+        "notes": "During the Trump-Xi summit, Taiwan emerged as a key flashpoint with Xi issuing strong warnings about potential US-China conflict.",
+        "body": "Three-perspective roundup.",
+        "posted": "5/15/2026 5:11 AM"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Netanyahu Instructs Lawsuit Against New York Times Over Rape Allegations Article",
         "honesty": "8/10",
@@ -1056,7 +1130,7 @@
         "post_ts": "2026-05-13T19:34:08Z",
         "views": 185528,
         "views_at_save": 185528,
-        "age_at_save_hours": 13.94,
+        "age_at_save_hours": 17.93,
         "original_url": "https://x.com/chamath/status/2054646394867364143",
         "original_handle": "@chamath",
         "original_views": 184427,
@@ -1087,15 +1161,15 @@
     "stories": [
       {
         "headline": "Patrick Bet-David warns Iran could disrupt global economy via undersea cables",
-        "handle": "@patrickbetdavid",
-        "url": "https://x.com/patrickbetdavid/status/2054959334015049889",
-        "body": "Patrick Bet-David explains that 97% of internet traffic relies on undersea cables, which Iran could target to cripple the global economy.",
+        "handle": "@HARMONYSPACE_EM",
+        "url": "https://x.com/HARMONYSPACE_EM/status/2054990665591685257",
+        "body": "@grok, please explain how starlinks design makes it resilient to interruptions from losing under sea cables.",
         "engagement": "1K likes, 87 reposts, 13 quotes, 187 replies",
         "honesty": "8/10",
         "notes": "Factual data on internet infrastructure mixed with geopolitical opinion.",
         "posted": "2026-05-15T01:11:35Z",
         "post_ts": "2026-05-14T16:17:39Z",
-        "views": 159465,
+        "views": 222610,
         "views_at_save": 159465,
         "age_at_save_hours": 12.75
       },
@@ -1970,24 +2044,6 @@
         "qt_views": 3689
       },
       {
-        "headline": "Quantum Vacuum Power Chip Unveiled",
-        "handle": "@HealthRanger",
-        "url": "https://x.com/HealthRanger/status/2054428057797013947",
-        "body": "This device claims to pull energy straight out of the construct of the cosmos. Of course, it's only measured in milliwatts, for starters. So it won't be powering anything substantial without a lot of ",
-        "engagement": "8.3K likes, 1.5K reposts",
-        "honesty": "6/10",
-        "notes": "Claims 'device pulls energy straight out of cosmos'\u2014Casimir cavity energy harvesting is unverified/fringe physics. Presented as working prototype is specific misleading claim until independently verified = 6/10.",
-        "posted": "2026-05-13T15:53:24Z",
-        "post_ts": "2026-05-13T01:35:49Z",
-        "views": 752907,
-        "views_at_save": 752907,
-        "age_at_save_hours": 34.64,
-        "original_url": "https://x.com/is_OwenLewis/status/2054375024954581419",
-        "original_handle": "@is_OwenLewis",
-        "original_views": 742810,
-        "qt_views": 10097
-      },
-      {
         "headline": "First Telescopic Contact Lens Developed for 3x Vision Zoom",
         "handle": "@LuluTeala",
         "url": "https://x.com/LuluTeala/status/2054447583834292275",
@@ -2068,6 +2124,22 @@
         "views": 4560,
         "views_at_save": 4560,
         "age_at_save_hours": 14.55
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "Opinion: OC Board of Education secure with Lisa Sparks as trustee",
+        "handle": "@ocregister",
+        "url": "https://x.com/ocregister/status/2055127584053023047",
+        "body": "John Seiler argues in an opinion piece that the Orange County Board of Education benefits from Lisa Sparks serving as a trustee.",
+        "engagement": "0 likes, 0 reposts, 0 quotes, 0 replies",
+        "honesty": "8/10",
+        "notes": "Local newspaper opinion on education governance with factual basis.",
+        "posted": "2026-05-15T05:11:04Z",
+        "post_ts": "2026-05-15T03:26:13Z",
+        "views": 411,
+        "views_at_save": 411,
+        "age_at_save_hours": 1.75
       }
     ],
     "earlier": [
@@ -2159,8 +2231,8 @@
         "url": "https://x.com/TomFitton/status/2055038396800639275",
         "body": "Judicial Watch seeks court order for 59,000 NIH royalty payments to Fauci and scientists, investigating gain-of-function conflicts.",
         "engagement": "161 likes, 71 reposts, 7 replies",
-        "honesty": "10/10",
-        "notes": "FOIA action for verifiable government financial disclosures.",
+        "honesty": "9/10",
+        "notes": "Factual reporting of Judicial Watch FOIA action, but 'investigating gain-of-function conflicts' adds interpretive framing to the legal action.",
         "posted": "2026-05-14T22:21:40Z",
         "post_ts": "2026-05-14T21:31:49Z",
         "views": 10201,
@@ -2224,15 +2296,15 @@
       },
       {
         "headline": "Varun Grover's New Standup Video",
-        "handle": "@varungrover",
-        "url": "https://x.com/varungrover/status/2054915640771952898",
-        "body": "Comedian Varun Grover releases new standup video titled 'Desh bacha lo phraands'.",
+        "handle": "@PalshikarSuhas",
+        "url": "https://x.com/PalshikarSuhas/status/2055140630171685241",
+        "body": "Humour may drape agony in laughter but don't hide that the appeals are hurtful and contemptuous of ordinary citizen.",
         "engagement": "1.4K likes, 381 reposts",
         "honesty": "9/10",
         "notes": "Self-promotion of authentic comedy content.",
         "posted": "2026-05-15T01:11:38Z",
         "post_ts": "2026-05-14T13:24:01Z",
-        "views": 55618,
+        "views": 98302,
         "views_at_save": 55618,
         "age_at_save_hours": 15.65
       }
