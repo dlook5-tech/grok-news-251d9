@@ -3,7 +3,7 @@
 // Cache images long-term for speed. Auto-take-over on install.
 // BUILD: 20260428140806   ← deploy.sh stamps this so browsers detect a new SW each deploy
 
-const BUILD = '20260516181140';
+const BUILD = '20260516210354';
 const STATIC_CACHE = 'expresso-static-' + BUILD;
 
 self.addEventListener('install', (event) => {
