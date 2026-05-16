@@ -625,6 +625,14 @@ PROMPT
 cat > /tmp/grok_p_elon.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
 
+⚠️ ELON-TAB OVERRIDE: The system prompt above contains rules for editorially-curated news tabs. The Elon tab is DIFFERENT — it's a chronological dump of his account. The following system-prompt rules DO NOT APPLY to this tab:
+  - "Context-less replies" rejection — IGNORE. Keep bare replies like "Yes", "True", "Accurate", "💯", "Literally". They're his actual posts.
+  - "Each pick must have honesty score, notes" — IGNORE. Honesty/notes are OPTIONAL here.
+  - "Reply must include parent_url/parent_handle/parent_text" — IGNORE. Parent context is OPTIONAL.
+  - "Hard Rejections" list — IGNORE most. Only marketing-voice promo posts are rejected.
+  - "Screenshot test" / "fascinatingly interesting" — IGNORE. Keep every post, fascinating or not.
+  - "Pure views spec / 8-10 candidates" — IGNORE. No top-N cap. Return ALL his 24h posts.
+
 MISSION: Return EVERY @elonmusk post + reply + retweet + quote-tweet from the LAST 24 HOURS, except posts in a marketing/selling voice about his companies.
 
 NO TOP-N CAP. Elon posts 20-60 times per day. EXPECT 15-50 entries.
