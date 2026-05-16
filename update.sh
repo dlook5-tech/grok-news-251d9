@@ -624,94 +624,44 @@ PROMPT
 # --- ELON ---
 cat > /tmp/grok_p_elon.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
-MISSION (UPDATED 2026-05-13): Return EVERY Elon @elonmusk post + reply + retweet + quote-tweet from the LAST 24 HOURS that isn't self-promotion of his companies. Full 24h refresh every cron — Python replaces the tab with this full list.
 
-⚠️ NO TOP-N CAP. NO "BEST OF". RETURN ALL.
-Elon posts 20-60 times per day. EXPECT to return 15-50 entries here.
-If you return only 3-5, you are FAILING the spec. He posts WAY more than that.
+MISSION: Return EVERY @elonmusk post + reply + retweet + quote-tweet from the LAST 24 HOURS, except posts in a marketing/selling voice about his companies.
 
-How to get the full list:
-- mode:"Latest" "from:elonmusk" since:24h ago, limit:100, NO min_faves floor
-- mode:"Latest" "from:elonmusk filter:replies" since:24h ago, limit:100
-- Combine results, dedupe by URL, filter out promo per the EXCLUDE list,
-  sort newest first, return ALL remaining.
-
-If he genuinely posted 0 in 24h → return empty array (rare).
-
-INCLUDE (one block per qualifying post):
-- Political takes, policy commentary, election/government posts
-- Quote-tweets / replies on news stories (with parent visible)
-- Contrarian observations on culture, society, demographics, AI policy
-- Sharp critiques of media, journalists, MSM, government agencies
-- Policy predictions, geopolitical commentary, foreign affairs
-- Satire / humor with a substantive point
-- Replies to other public figures with insight (when reply restates context)
-- Comments on someone else's reporting / leak / investigation
-- Reactions to current events that go beyond emoji or single-word
-
-EXCLUDE — ABSOLUTE NO-PROMO RULE (user mandate 2026-05-10 evening):
-"No promo post like Drake's. Post everything except posts where he's marketing
-one of his companies."
-- Tesla / Cybertruck / Model Y / FSD / Optimus / Roadster announcements (DROP)
-- SpaceX / Falcon 9 / Starship / Starlink launch updates (DROP)
-- xAI / Grok / Colossus product news (DROP)
-- X platform / X Premium / X feature marketing (DROP)
-- Boring Company / Neuralink product news (DROP)
-- ANY post that promotes/markets his companies (DROP) — even if substantive,
-  even if quote-tweeting praise, even if announcing new feature
-- Pure text replies WITHOUT visible parent context (DROP)
-- One-word reactions, emoji-only ("true", "agreed", "🔥") (DROP)
-
-WINDOW — LAST 24 HOURS, FULL REFRESH (user clarified 2026-05-13):
-Original spec was "fetch last 4h, append to existing." But crons miss intervals
-and the list dwindles. Now: every cron returns ALL his non-promo posts from
-the last 24 hours, sorted chronologically (newest first). Python replaces the
-tab with this fresh full list. Resilient to cron gaps.
-
-APPROVED HANDLE: @elonmusk only. Each post must be a DIFFERENT URL.
+NO TOP-N CAP. Elon posts 20-60 times per day. EXPECT 15-50 entries.
+If you return fewer than 10 you are likely missing posts — search more aggressively.
 
 SEARCH:
-1. PRIMARY: mode:"Latest" "from:elonmusk" — return everything he's posted
-   in the last 24 hours. Limit 50, no min_faves floor.
-2. INCLUDE REPLIES: Elon's replies count. Search "from:elonmusk
-   filter:replies" or include replies in the primary search results.
+- mode:"Latest" "from:elonmusk" since:24h ago, limit:100, no min_faves floor
+- mode:"Latest" "from:elonmusk filter:replies" since:24h ago, limit:100
+- Combine, dedupe by URL, drop marketing posts per below, sort newest first.
 
-RETURN POLICY:
-- Return ALL his non-promo posts/replies from the last 24h.
-- Sort NEWEST FIRST.
-- If he genuinely posted nothing in 24h → return empty array [].
+KEEP (everything substantive — including content ABOUT his companies):
+- Political takes, policy commentary, election/government commentary
+- News, earnings, test results about his companies (Tesla earnings, Starship test outcome, xAI research, X platform stats)
+- His own criticism, technical analysis, contrarian commentary about his products
+- Cultural / current-events / demographics / AI-policy commentary
+- Replies and quote-tweets — original or with parent reference, doesn't matter
+- Hot takes, predictions, jokes, satire with a point
+- Bare reactions ("true", "lol", emojis) are FINE — keep them
 
-POST TYPE GUIDANCE (Elon tab — no preference between originals and quote-tweets, judge each on its own merits):
-1. **Original substantive posts** (predictions, announcements, contrarian observations) — kept.
-2. **Quote-tweets** with commentary — kept. Twitter's embed renders the parent post inline.
-3. **REPLIES ARE OK** if you populate parent_url / parent_handle / parent_text (see system prompt). The frontend will render the parent post embed ABOVE the reply so readers see the conversation. Without parent_url, drop the post.
-4. **REJECT: Pure ads / Tesla/X marketing** ("Try X Premium today!") — boring corporate.
+DROP ONLY MARKETING/SELLING-VOICE PROMO:
+- "Preorder Cybertruck today" / "Pre-order now"
+- "Try X Premium" / "Subscribe to ..." / "Get it on the X app"
+- "FSD available in your area" / "Now shipping" / "On sale this weekend"
+- "Starlink subscriptions now open"
+- "Launching today, get it now"
+- Pure product-launch ads in selling tone
 
-CRITICAL — RENDERED CARD TEST: The site renders posts via Twitter's oEmbed. For pure replies, the embedded card shows ONLY the reply text — NOT the parent tweet that Elon is responding to. So even if YOU know what he's replying to (from your search results), the READER will see only Elon's words. Apply the test: if the reply text alone, in isolation, would not make sense to a reader who has no context, REJECT. Examples to REJECT:
-- "Might actually happen" (replying to a Newsom satire video — reader has no clue what)
-- "True" (replying to a claim — reader has no clue what claim)
-- "This is how an economy actually works" replying to a French parent that's not auto-translated — reader sees French
-- Any reply where you wrote a body like "Replying to X about Y" — that body context isn't shown to the reader; only the bare tweet text is shown via oEmbed embed
+Sales-tone test: does the post READ LIKE AN AD or a press release marketing a product? If yes → DROP. If it's news, criticism, test results, earnings, technical commentary, or anything substantive — even about his own companies — KEEP.
 
-Rule of thumb: if you find yourself writing "Replying to..." in the body field, the post FAILS the test. Skip it.
+APPROVED HANDLE: @elonmusk only. Each post must have a unique URL.
 
-If a quote-tweet's parent is in a non-English language (French/Portuguese/Spanish/etc), you MUST set "translation" field with full English translation of the parent tweet. If you can't translate, SKIP and pick another post.
-
-QUALITY BAR (UPDATED 2026-05-13): No top-N cap. Return ALL non-promo posts/replies/retweets/QTs from the last 24h. Even bare reactions count IF they have visible parent context that makes them readable. Drop only pure self-promo per the EXCLUDE list.
-
-DIVERSITY: each URL must be unique. Replies + retweets + originals all welcome.
-
-HONESTY SCORING (apply rigorously, NOT auto-10):
-- 10 = verified fact (e.g. "Tesla earnings beat by X" — checkable)
-- 9 = factual core with minor editorializing
-- 8 = analysis or commentary with no false claims
-- 7 = opinion, prediction, or hot take presented as such
-- 6 = contains a specific misleading claim ("X is a fraud" without proof, "Y laundered money" without conviction)
-- 5 = demonstrably false statement
-Most Elon posts are 7-9 (opinions, predictions, jokes). Reserve 10 for VERIFIABLE facts.
-Body: 1 sentence describing the take and (if reply) what he's responding to, under 120 chars.
-Engagement field MUST contain real numbers (e.g. "147K likes, 22K retweets, 8K replies").
-Return JSON: {"elon":[{"headline":"...","handle":"@elonmusk","body":"...","views":1234567,"engagement":"147K likes, 22K retweets, 8K replies","url":"...","honesty":"X/10","notes":"why this score"},...]}
+OUTPUT (minimal): JSON array of his posts.
+{"elon":[
+  {"handle":"@elonmusk","url":"https://x.com/elonmusk/status/<id>","body":"actual post text","views":1234567},
+  ...
+]}
+That's it. No honesty score required. No headline required. No parent context required. Just the post itself.
 PROMPT
 
 # --- ALLIN ---

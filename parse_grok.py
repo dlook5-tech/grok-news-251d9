@@ -1754,24 +1754,18 @@ _NON_LOCAL_OUTLETS = {
 # except posts where he's marketing one of his companies." Heuristic keyword filter
 # applied to Elon posts as a safety net even if Grok prompt fails.
 _ELON_PROMO_KEYWORDS = {
-    # Tesla
-    'cybertruck', 'cybersuv', 'model y', 'model x', 'model s', 'model 3',
-    'roadster', 'optimus', 'fsd', 'full self-driving', 'tesla bot',
-    'gigafactory', 'megapack', 'powerwall', 'tesla update',
-    # SpaceX
-    'falcon 9', 'falcon heavy', 'starship', 'starlink', 'dragon capsule',
-    'launch attempt', 'liftoff', 'static fire',
-    # xAI / Grok
-    'grok 3', 'grok 4', 'grok update', 'colossus', 'xai release',
-    # X platform
-    'x premium', 'x pro', 'x.com feature', 'try x', 'new on x',
-    'x recommendations', 'x recommendation algorithm', 'open sourcing x',
-    'x algorithm', 'x for business', 'community notes update',
-    # Other companies
-    'neuralink update', 'boring company',
-    # Generic marketing language
-    'preorder', 'available now', 'launching today', 'now shipping',
-    'pre-order', 'on sale', 'subscribe to',
+    # 2026-05-16 user clarification: "Any posts on Elon's companies that are NOT
+    # marketing are acceptable." So we filter SELLING/MARKETING VOICE only —
+    # not bare product names. Tesla earnings post = KEEP. Starship test result
+    # = KEEP. "Preorder Cybertruck today!" = DROP.
+    'preorder', 'pre-order', 'pre order',
+    'available now', 'in stock', 'now shipping', 'ships in',
+    'launching today', 'launches today',
+    'on sale', 'limited time', 'limited edition',
+    'subscribe to',
+    'try x premium', 'try x pro',
+    'order yours', 'buy now', 'get yours',
+    'starting at $',
 }
 
 def _is_elon_promo(story):
