@@ -704,6 +704,34 @@
   "elon": {
     "stories": [
       {
+        "headline": "These come from court transcripts",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2055734812669865997",
+        "body": "These come from court transcripts.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Vague claim 'These come from court transcripts' without specific content - cannot verify what 'these' refers to",
+        "posted": "2026-05-17T05:06:33Z",
+        "post_ts": "2026-05-16T19:39:07Z",
+        "views": 9532533,
+        "views_at_save": 9532533,
+        "age_at_save_hours": 9.46
+      },
+      {
+        "headline": "A glaringly obvious double-standard",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2055733245417750793",
+        "body": "A glaringly obvious double-standard.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Opinion claim 'glaringly obvious double-standard' - subjective commentary",
+        "posted": "2026-05-17T05:06:34Z",
+        "post_ts": "2026-05-16T19:32:54Z",
+        "views": 26823740,
+        "views_at_save": 26823740,
+        "age_at_save_hours": 9.56
+      },
+      {
         "headline": "More people are arrested for speech offenses in the UK than any other country. This is...",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2055732672379441310",
@@ -1052,7 +1080,7 @@
         "engagement": "3860 likes, 184 reposts, 461 replies",
         "honesty": "7/10",
         "notes": "Opinion",
-        "posted": "2026-05-17T01:05:17Z",
+        "posted": "2026-05-17T05:06:34Z",
         "post_ts": "2026-05-16T15:43:49Z",
         "views": 566196,
         "views_at_save": 480478,
@@ -1748,6 +1776,20 @@
   "pg6": {
     "stories": [
       {
+        "headline": "Scarlett Johansson FaceTimes Fail at Cannes",
+        "handle": "@Variety",
+        "url": "https://x.com/Variety/status/2055769093861519643",
+        "body": "Scarlett Johansson misses Cannes premiere and ignores director James Gray's FaceTime during 7-minute standing ovation.",
+        "engagement": "4.3K likes, 130 reposts, 56 replies",
+        "honesty": "9/10",
+        "notes": "Fact",
+        "posted": "2026-05-17T05:06:36Z",
+        "post_ts": "2026-05-16T21:55:20Z",
+        "views": 1784085,
+        "views_at_save": 1784085,
+        "age_at_save_hours": 7.19
+      },
+      {
         "headline": "Kristen Stewart's YouTube Directing Plan",
         "handle": "@RachelLeishman",
         "url": "https://x.com/RachelLeishman/status/2055793084282065134",
@@ -1782,7 +1824,9 @@
         "original_handle": "@PopCrave",
         "original_views": 2328410,
         "qt_views": 13796
-      },
+      }
+    ],
+    "earlier": [
       {
         "headline": "Dak Prescott Spotted With Ex's Bridesmaid",
         "handle": "@DAK_4_MVP",
@@ -1953,6 +1997,20 @@
   "recipe": {
     "stories": [
       {
+        "headline": "Lemon Ricotta Pancakes with Blueberry Sauce",
+        "handle": "@tasteofhome",
+        "url": "https://x.com/tasteofhome/status/2055717466236395837",
+        "body": "Lemon ricotta pancakes with blueberry sauce make a bright summer breakfast.",
+        "engagement": "1 like, 0 reposts, 0 bookmarks",
+        "honesty": "10/10",
+        "notes": "Direct link to full recipe with measurements and instructions.",
+        "posted": "2026-05-17T05:06:36Z",
+        "post_ts": "2026-05-16T18:30:11Z",
+        "views": 119,
+        "views_at_save": 119,
+        "age_at_save_hours": 10.61
+      },
+      {
         "headline": "Focaccia Bread From Scratch",
         "handle": "@tasty",
         "url": "https://x.com/tasty/status/2055519493581897985",
@@ -1979,7 +2037,9 @@
         "views": 480,
         "views_at_save": 480,
         "age_at_save_hours": 23.57
-      },
+      }
+    ],
+    "earlier": [
       {
         "headline": "Slow Cooker Beef Coconut Curry",
         "handle": "@KitchenSanc2ary",
@@ -1993,9 +2053,7 @@
         "views": 3000,
         "views_at_save": 3000,
         "age_at_save_hours": 22.78
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Shrimp Toast",
         "handle": "@tasty",
