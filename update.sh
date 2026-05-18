@@ -628,10 +628,22 @@ Current date: $TODAY. Yesterday: $YESTERDAY.
 ⚠️ ELON-TAB OVERRIDE: The system prompt above contains rules for editorially-curated news tabs. The Elon tab is DIFFERENT — it's a chronological dump of his account. The following system-prompt rules DO NOT APPLY to this tab:
   - "Context-less replies" rejection — IGNORE. Keep bare replies like "Yes", "True", "Accurate", "💯", "Literally". They're his actual posts.
   - "Each pick must have honesty score, notes" — IGNORE. Honesty/notes are OPTIONAL here.
-  - "Reply must include parent_url/parent_handle/parent_text" — IGNORE. Parent context is OPTIONAL.
   - "Hard Rejections" list — IGNORE most. Only marketing-voice promo posts are rejected.
   - "Screenshot test" / "fascinatingly interesting" — IGNORE. Keep every post, fascinating or not.
   - "Pure views spec / 8-10 candidates" — IGNORE. No top-N cap. Return ALL his 24h posts.
+
+⚠️ TWO HARD REQUIREMENTS for the BLOCK to make sense:
+  1. **headline** field is REQUIRED for every post — a 1-line summary of what the post is ABOUT (not a copy of the body). Examples:
+     - Reply "Same" to @SethDillon → headline: "Agrees with Seth Dillon's take on [topic]"
+     - Reply "True" to @WashingtonPost → headline: "Calls WaPo report accurate on [topic]"
+     - Bare image post → headline: "Posts photo of [scene/subject]"
+     - Original take → headline: "Elon predicts [X]" or "Comments on [event]"
+     The frontend uses this headline as the block title — "Same" alone is useless to readers.
+  2. **For REPLIES**: populate parent_url + parent_handle + parent_text so the parent tweet embeds inline above the reply. Without these, the reader sees Elon saying "True" with no idea what he's responding to.
+     - parent_url: full https://x.com/handle/status/id of the post he's replying to
+     - parent_handle: @handle of parent author
+     - parent_text: verbatim text of parent (≤280 chars)
+     If you genuinely can't find parent context for a reply, you may still return the post — but populate at minimum the `headline` so the block isn't blank.
 
 MISSION: Return EVERY @elonmusk post + reply + retweet + quote-tweet from the LAST 24 HOURS, except posts in a marketing/selling voice about his companies.
 
@@ -664,12 +676,42 @@ Sales-tone test: does the post READ LIKE AN AD or a press release marketing a pr
 
 APPROVED HANDLE: @elonmusk only. Each post must have a unique URL.
 
-OUTPUT (minimal): JSON array of his posts.
+OUTPUT — every post needs the contextual fields so the block makes sense:
 {"elon":[
-  {"handle":"@elonmusk","url":"https://x.com/elonmusk/status/<id>","body":"actual post text","views":1234567},
+  {
+    "handle":"@elonmusk",
+    "url":"https://x.com/elonmusk/status/<id>",
+    "headline":"1-line summary of what this post is about (REQUIRED — not a copy of body)",
+    "body":"actual post text verbatim (even if just 'Yes' or '💯')",
+    "views":1234567,
+    "parent_url":"https://x.com/<original_author>/status/<id> (REQUIRED for replies)",
+    "parent_handle":"@original_author (REQUIRED for replies)",
+    "parent_text":"verbatim parent text ≤280 chars (REQUIRED for replies)"
+  },
   ...
 ]}
-That's it. No honesty score required. No headline required. No parent context required. Just the post itself.
+
+A good entry — Elon replied "Same" to Seth Dillon's tweet about media coverage:
+{
+  "handle":"@elonmusk",
+  "url":"https://x.com/elonmusk/status/2055...",
+  "headline":"Agrees with Seth Dillon that mainstream media downplays the story",
+  "body":"Same",
+  "views":51000,
+  "parent_url":"https://x.com/SethDillon/status/2054...",
+  "parent_handle":"@SethDillon",
+  "parent_text":"Notice how the same outlets that obsessed over [X] are now silent on [Y]..."
+}
+
+A bad entry (what you've been returning) — DON'T do this:
+{
+  "handle":"@elonmusk",
+  "url":"https://x.com/elonmusk/status/2055...",
+  "headline":"Same",
+  "body":"Same",
+  "views":51000
+}
+The reader sees "Same" as the block title with no context. Useless.
 PROMPT
 
 # --- ALLIN ---
