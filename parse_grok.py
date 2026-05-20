@@ -3340,6 +3340,22 @@ for tab_key in list(output.keys()):
         print(f"  [headline-dedup] {tab_key}: dropped {dropped_h} (same headline already on tab)", file=sys.stderr)
         container['stories'] = deduped
 
+# 2026-05-19 final sweep: drop World/USA stories whose headline is empty/"?".
+# Slip-through path: carry-over/never-empty fallbacks bypass clean_world validation
+# and can resurface a "?" story from prior cron. User mandate: "no ? marks, just
+# have 2 if no third." Show fewer stories rather than a placeholder.
+for _tab in ('world', 'usa'):
+    _container = output.get(_tab)
+    if not isinstance(_container, dict): continue
+    _kept_stories = []
+    for _s in _container.get('stories', []):
+        _h = (_s.get('headline') or '').strip()
+        if not _h or _h in ('?', '...', 'Untitled', '?.', '? ', '. ?'):
+            print(f"  [final-sweep] {_tab}: drop story with empty/'?' headline (perspectives={len(_s.get('perspectives',[]))})", file=sys.stderr)
+            continue
+        _kept_stories.append(_s)
+    _container['stories'] = _kept_stories
+
 with open('stories.json', 'w') as f:
     json.dump(output, f, indent=2)
 
