@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-19T22:41:04Z",
+  "lastUpdated": "2026-05-20T01:01:35Z",
   "world": {
     "stories": [
       {
@@ -16,7 +16,7 @@
             "views": 21485,
             "notes": "Factual reporting of arrival with light contrast to Trump visit",
             "views_at_save": 21485,
-            "age_at_save_hours": 6.56
+            "age_at_save_hours": 8.9
           },
           {
             "label": "Democrat",
@@ -28,7 +28,7 @@
             "views": 511562,
             "notes": "Direct quote from Putin with positive framing on cooperation",
             "views_at_save": 511562,
-            "age_at_save_hours": 18.49
+            "age_at_save_hours": 20.83
           },
           {
             "label": "Independent",
@@ -40,7 +40,7 @@
             "views": 670900,
             "notes": "Opinion/commentary comparing welcome ceremonies - 'What does Xi know?' is speculation, not pure factual reporting",
             "views_at_save": 670900,
-            "age_at_save_hours": 6.37,
+            "age_at_save_hours": 8.71,
             "original_url": "https://x.com/BRICSinfo/status/2056760634843287956",
             "original_handle": "@BRICSinfo",
             "original_views": 667726,
@@ -55,7 +55,7 @@
         "body": "Three-perspective roundup.",
         "posted": "5/19/2026 5:07 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 6.56
+        "age_at_save_hours": 8.9
       },
       {
         "headline": "Israel intercepts Gaza aid flotilla",
@@ -71,7 +71,7 @@
             "views": 2757,
             "notes": "Defends Israel's legal right with reference to Palmer report; factual core on blockade rights.",
             "views_at_save": 2757,
-            "age_at_save_hours": 10.84
+            "age_at_save_hours": 13.19
           },
           {
             "label": "Democrat",
@@ -83,7 +83,7 @@
             "views": 22415,
             "notes": "Reports accusations and events from flotilla spokesperson; verified incident details.",
             "views_at_save": 22415,
-            "age_at_save_hours": 3.02
+            "age_at_save_hours": 5.36
           },
           {
             "label": "Independent",
@@ -95,7 +95,7 @@
             "views": 306525,
             "notes": "Opinion framing flotilla as pro-terror with US sanctions context; factual on Treasury action.",
             "views_at_save": 306525,
-            "age_at_save_hours": 8.2
+            "age_at_save_hours": 10.54
           }
         ],
         "footnotes": [
@@ -106,40 +106,37 @@
         "body": "Three-perspective roundup.",
         "posted": "5/19/2026 10:41 PM",
         "views_at_save": 0,
-        "age_at_save_hours": 10.84
+        "age_at_save_hours": 13.19
       },
       {
-        "headline": "?",
+        "headline": "China makes neglecting aging parents illegal with court-enforced visits or jail time",
         "perspectives": [
           {
             "label": "Conservative",
-            "handle": "@piersmorgan",
-            "url": "https://x.com/piersmorgan/status/2056842715506290715",
-            "text": "Hi Arsenal haters. \ud83d\ude18",
-            "views": 396896,
-            "honesty": "10/10",
-            "engagement": "",
-            "notes": "Verified fact: social media post by Piers Morgan (Arsenal fan) to 'Arsenal haters' - direct quote, no editorializing"
+            "handle": "@stats_feed",
+            "url": "https://x.com/stats_feed/status/2056844594088911009",
+            "text": "\ud83c\udde8\ud83c\uddf3 China made it illegal to neglect your aging parents - courts can now force you to visit or face jail.",
+            "views": 126421,
+            "honesty": "8/10",
+            "engagement": ""
           },
           {
             "label": "Democrat",
-            "handle": "@Keir_Starmer",
-            "url": "https://x.com/Keir_Starmer/status/2056844815371751689",
-            "text": "22 long years for the Arsenal. But finally, we\u2019re back where we belong. Champions!",
-            "views": 1075872,
-            "honesty": "10/10",
-            "engagement": "",
-            "notes": "Verified fact: official statement from Keir Starmer about Arsenal winning championship - direct quote from public figure"
+            "handle": "@ZelenskyyUa",
+            "url": "https://x.com/ZelenskyyUa/status/2056783537383034883",
+            "text": "This month saw changes in the dynamics on the frontline in Ukraine\u2019s favor. We are holding more positions and inflicting more damage.",
+            "views": 162990,
+            "honesty": "8/10",
+            "engagement": ""
           },
           {
             "label": "Independent",
-            "handle": "@premierleague",
-            "url": "https://x.com/premierleague/status/2056856289238478949",
-            "text": "This is what it means \u2764\ufe0f",
-            "views": 129205,
-            "honesty": "10/10",
-            "engagement": "",
-            "notes": "Verified fact: official Premier League social media post about Arsenal's championship win"
+            "handle": "@ItsTheEnforcer",
+            "url": "https://x.com/ItsTheEnforcer/status/2056835486639951985",
+            "text": "Crazy scenes coming out of Russia at this hour. Ukraine is launching another large-scale attack including Moscow.",
+            "views": 27775,
+            "honesty": "8/10",
+            "engagement": ""
           }
         ],
         "honesty": "8/10",
@@ -153,6 +150,164 @@
   },
   "usa": {
     "stories": [
+      {
+        "headline": "Trump IRS tax audit settlement expanded",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@JesseBWatters",
+            "url": "https://x.com/JesseBWatters/status/2056900734432555459",
+            "text": "\ud83d\udea8 BREAKING: THE TRUMP STOCK SMOKE SCREEN IS FINALLY EXPOSED\u2026 HOLY SMOKES!. \ud83d\ude32 \ud83d\udcc9 THE PORTFOLIO DOESN\u2019T LIE\u2026 HE ACTUALLY LOST MONEY ON THE HEDGES!",
+            "engagement": "126 likes, 37 reposts",
+            "honesty": "7/10",
+            "views": 7050,
+            "notes": "Opinion framing on IRS deal with media contrast, no false claims.",
+            "views_at_save": 7050,
+            "age_at_save_hours": 0.16
+          },
+          {
+            "label": "Democrat",
+            "handle": "@SenAdamSchiff",
+            "url": "https://x.com/SenAdamSchiff/status/2056819490520756226",
+            "text": "The DOJ just said the IRS will no longer pursue any claims it may have against Trump, his family members and his companies over unpaid taxes.. Pure.",
+            "engagement": "3452 likes, 844 reposts",
+            "honesty": "6/10",
+            "views": 101694,
+            "notes": "Strong opinion on corruption with factual core from DOJ settlement but partisan framing.",
+            "views_at_save": 101694,
+            "age_at_save_hours": 5.54
+          },
+          {
+            "label": "Independent",
+            "handle": "@joshgerstein",
+            "url": "https://x.com/joshgerstein/status/2056798932542325149",
+            "text": "FLASH: DOJ expands settlement in Trump-IRS leak suit to cover audits of all tax returns filed by Trump, family members, companies and trusts.. Waiver...",
+            "engagement": "2452 likes, 1363 reposts",
+            "honesty": "9/10",
+            "views": 2652433,
+            "notes": "Factual reporting on DOJ settlement details with no editorializing.",
+            "views_at_save": 2652433,
+            "age_at_save_hours": 6.9
+          }
+        ],
+        "footnotes": [],
+        "notes": "",
+        "body": "Three-perspective roundup.",
+        "posted": "5/20/2026 1:01 AM",
+        "views_at_save": 0,
+        "age_at_save_hours": 0.16
+      },
+      {
+        "headline": "Senate advances Iran War Powers Resolution",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@chriswithans",
+            "url": "https://x.com/chriswithans/status/2056863875296116911",
+            "text": "Everyone's going to say this is a consequence of primarying him.  Maybe so.  But he's just voting like Collins, who wasn't primaried?  And Murkowski and Paul, who both ostensibly have reelection to \"h",
+            "engagement": "3596 likes, 1206 reposts",
+            "honesty": "7/10",
+            "views": 199908,
+            "notes": "Partisan take on Senate vote with accurate vote tally and context.",
+            "views_at_save": 195941,
+            "age_at_save_hours": 3.22,
+            "original_url": "https://x.com/EricLDaugh/status/2056854442922684469",
+            "original_handle": "@EricLDaugh",
+            "original_views": 196476,
+            "qt_views": 3432
+          },
+          {
+            "label": "Democrat",
+            "handle": "@SenSanders",
+            "url": "https://x.com/SenSanders/status/2056870092705579017",
+            "text": "Finally, Senate Republicans are starting to listen to their constituents.\n\nThe American people do not want to spend billions on endless wars. They want to address the enormous crises facing our countr",
+            "engagement": "338 likes, 114 reposts",
+            "honesty": "8/10",
+            "views": 302931,
+            "notes": "Factual wire-style report on Senate vote outcome.",
+            "views_at_save": 212206,
+            "age_at_save_hours": 3.16,
+            "original_url": "https://x.com/CBSNews/status/2056855477938516169",
+            "original_handle": "@CBSNews",
+            "original_views": 213352,
+            "qt_views": 89579
+          },
+          {
+            "label": "Independent",
+            "handle": "@vtchakarova",
+            "url": "https://x.com/vtchakarova/status/2056867793413222694",
+            "text": "May 1 was the first threshold. \nThis is the next one.\n\ud83d\udc47",
+            "engagement": "10016 likes, 1435 reposts",
+            "honesty": "9/10",
+            "views": 675810,
+            "notes": "Clear factual summary of Senate vote with no added spin.",
+            "views_at_save": 661836,
+            "age_at_save_hours": 3.07,
+            "original_url": "https://x.com/KobeissiLetter/status/2056856801341997471",
+            "original_handle": "@KobeissiLetter",
+            "original_views": 664817,
+            "qt_views": 10993
+          }
+        ],
+        "footnotes": [],
+        "notes": "",
+        "body": "Three-perspective roundup.",
+        "posted": "5/20/2026 1:01 AM",
+        "views_at_save": 0,
+        "age_at_save_hours": 3.22
+      },
+      {
+        "headline": "Thomas Massie primary results",
+        "honesty": "8/10",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@xAlphaWarriorx",
+            "url": "https://x.com/xAlphaWarriorx/status/2056896830068449360",
+            "text": "The pro-Iran Jihadi regime crowd told you MAGA was dead.. They were wrong again.",
+            "engagement": "119 likes, 38 reposts",
+            "honesty": "7/10",
+            "views": 1061,
+            "notes": "Celebratory opinion on MAGA win in primary with no factual errors.",
+            "views_at_save": 1061,
+            "age_at_save_hours": 0.42
+          },
+          {
+            "label": "Democrat",
+            "handle": "@igorbobic",
+            "url": "https://x.com/igorbobic/status/2056887996692013168",
+            "text": "Massie, Cassidy, Cornyn, the Indiana Rs \u2014 it\u2019s retribution 2.0 for Trump, only for the GOP this time Huge message for other Rs thinking about...",
+            "engagement": "136 likes, 25 reposts",
+            "honesty": "8/10",
+            "views": 7551,
+            "notes": "Analytical take on primary results and GOP dynamics.",
+            "views_at_save": 7551,
+            "age_at_save_hours": 1.0
+          },
+          {
+            "label": "Independent",
+            "handle": "@PubWanghaf",
+            "url": "https://x.com/PubWanghaf/status/2056868109131325597",
+            "text": "What Thomas Massie sees in his peripheral right before the Decision Desk calls the race for Ed Gallrein.",
+            "engagement": "1946 likes, 96 reposts",
+            "honesty": "8/10",
+            "views": 46046,
+            "notes": "Humorous but factual implication of Massie primary loss.",
+            "views_at_save": 46046,
+            "age_at_save_hours": 2.32
+          }
+        ],
+        "footnotes": [],
+        "notes": "",
+        "body": "Three-perspective roundup.",
+        "posted": "5/20/2026 1:01 AM",
+        "views_at_save": 0,
+        "age_at_save_hours": 0.42
+      }
+    ],
+    "earlier": [
       {
         "headline": "JD Vance: DOJ Probing Ilhan Omar Immigration Fraud",
         "honesty": "8/10",
@@ -228,86 +383,6 @@
         "posted": "5/19/2026 5:07 PM",
         "views_at_save": 0,
         "age_at_save_hours": 6.12
-      },
-      {
-        "headline": "Senate advances war powers resolution to limit Trump on Iran",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@EricLDaugh",
-            "url": "https://x.com/EricLDaugh/status/2056854442922684469",
-            "text": "\ud83d\udea8 JUST IN: The US Senate ADVANCES anti-Trump Iran War Powers Resolution, 50-47, after RINO BILL CASSIDY and other Republicans joined Democrats \u2014 rebuking the Iran war",
-            "views": 75766,
-            "honesty": "8/10",
-            "engagement": ""
-          },
-          {
-            "label": "Democrat",
-            "handle": "@ErikSperling",
-            "url": "https://x.com/ErikSperling/status/2056857703465525642",
-            "text": "\ud83d\udea8 Senate votes to advance Iran War Powers Resolution for first time Historic vote to end illegal war on Iran, as Trump calls gas prices \"peanuts\" and his approval tanks",
-            "views": 13884,
-            "honesty": "8/10",
-            "engagement": ""
-          },
-          {
-            "label": "Independent",
-            "handle": "@jamiedupree",
-            "url": "https://x.com/jamiedupree/status/2056853997336613333",
-            "text": "\ud83d\udea8For the first time, the Senate has voted to hold a debate on a war powers resolution to end the Iran war. 4 GOP 'Yes' votes: Cassidy LA, Collins ME, Murkowski AK, & Paul KY 1 Dem 'No' vote: Fetterman",
-            "views": 6362,
-            "honesty": "8/10",
-            "engagement": ""
-          }
-        ],
-        "honesty": "8/10",
-        "notes": "",
-        "footnotes": [],
-        "body": "3-perspective coverage."
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Republicans push ICE funding bill via Senate reconciliation",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Democrat",
-            "handle": "@davidsirota",
-            "url": "https://x.com/davidsirota/status/2056767190473601364",
-            "text": "everyone please remember what Republicans are doing here \u2014 it\u2019s important context for when Democrats win back Congress but then their leaders inevitably claim they can\u2019t do anything via 50 votes and r",
-            "engagement": "1269 likes, 598 reposts",
-            "honesty": "7/10",
-            "views": 38923,
-            "notes": "Procedural explanation with opinion on intent.",
-            "views_at_save": 28627,
-            "age_at_save_hours": 7.07,
-            "original_url": "https://x.com/ChrisMurphyCT/status/2056710371231011279",
-            "original_handle": "@ChrisMurphyCT",
-            "original_views": 34639,
-            "qt_views": 4284
-          },
-          {
-            "label": "Conservative",
-            "handle": "@PhillipAKennedy",
-            "url": "https://x.com/PhillipAKennedy/status/2056525444585787898",
-            "text": "How I imagine Stephen Miller typing all these anti-Massie posts",
-            "views": 260457,
-            "honesty": "8/10",
-            "engagement": "",
-            "notes": "Strong conservative defense of GOP reconciliation bill for ICE funding; clearly references the event.",
-            "original_url": "https://x.com/StephenM/status/2056515819820003467",
-            "original_handle": "@StephenM",
-            "original_views": 251361,
-            "qt_views": 9096
-          }
-        ],
-        "footnotes": [],
-        "notes": "",
-        "body": "Three-perspective roundup.",
-        "posted": "5/19/2026 5:07 PM",
-        "views_at_save": 0,
-        "age_at_save_hours": 2.49
       },
       {
         "headline": "Supreme Court Voting Rights Act Rulings",
@@ -454,46 +529,6 @@
         "posted": "5/19/2026 4:33 PM"
       },
       {
-        "headline": "Judge bars ICE arrests in NYC immigration courts",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Democrat",
-            "handle": "@nytimes",
-            "url": "https://x.com/nytimes/status/2056555485591982384",
-            "text": "Breaking News: A judge largely barred federal agents from making arrests in immigration courts in New York City.",
-            "engagement": "524 likes, 187 reposts",
-            "honesty": "9/10",
-            "views": 74553,
-            "notes": "Straight reporting of court ruling, minor breaking news framing.",
-            "views_at_save": 74553,
-            "age_at_save_hours": 11.1
-          },
-          {
-            "label": "Conservative",
-            "handle": "@lsferguson",
-            "url": "https://x.com/lsferguson/status/2056563779081555981",
-            "text": "Are we going to be stuck with 100,000,000 illegal aliens?",
-            "views": 5690,
-            "honesty": "8/10",
-            "engagement": "",
-            "notes": "Clear reference to the exact event; conservative-leaning tone by framing the ruling as disrupting Trump's policy.",
-            "views_at_save": 3040,
-            "age_at_save_hours": 11.16,
-            "original_url": "https://x.com/NotHoodlum/status/2056554521686364336",
-            "original_handle": "@NotHoodlum",
-            "original_views": 4311,
-            "qt_views": 1379
-          }
-        ],
-        "footnotes": [],
-        "notes": "",
-        "body": "Three-perspective roundup.",
-        "posted": "5/19/2026 5:02 AM",
-        "views_at_save": 0,
-        "age_at_save_hours": 11.1
-      },
-      {
         "headline": "Trump calls out mail-in ballots as corrupt",
         "honesty": "8/10",
         "perspectives": [
@@ -516,30 +551,6 @@
         "posted": "5/19/2026 5:02 AM",
         "views_at_save": 0,
         "age_at_save_hours": 2.64
-      },
-      {
-        "headline": "Viral confrontation over ICE and Zionist propaganda at San Diego mayor event",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@nicksortor",
-            "url": "https://x.com/nicksortor/status/2056524506261242029",
-            "text": "\ud83d\udea8 WOW!. Some woman just WENT OFF on the gay, Filipino Mayor of San Diego, and he bent over and took it from her The woman went off about \"ICE\" and...",
-            "engagement": "2554 likes, 482 reposts",
-            "honesty": "7/10",
-            "views": 104960,
-            "notes": "Eyewitness video commentary on local political confrontation.",
-            "views_at_save": 104960,
-            "age_at_save_hours": 1.12
-          }
-        ],
-        "footnotes": [],
-        "notes": "",
-        "body": "Three-perspective roundup.",
-        "posted": "5/19/2026 1:04 AM",
-        "views_at_save": 0,
-        "age_at_save_hours": 1.12
       }
     ],
     "_overflow": []
@@ -547,55 +558,91 @@
   "elon": {
     "stories": [
       {
-        "headline": "Laughs at the rarity of high-IQ special operators who enjoy books and bar fights",
+        "headline": "Laughs at Chris Williamson's point on elite special operators",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2056823638758948982",
         "body": "\ud83d\ude02.",
         "engagement": "",
-        "honesty": "7/10",
-        "notes": "Opinion: emoji reaction without factual content to evaluate",
-        "posted": "2026-05-19T22:41:05Z",
+        "honesty": "N/A",
+        "notes": "Single emoji - no factual claim to score",
+        "posted": "2026-05-20T01:01:36Z",
         "post_ts": "2026-05-19T19:45:44Z",
-        "views": 50255,
+        "views": 69575,
         "parent_url": "https://x.com/ChrisWillx/status/2056779365912899814",
         "parent_handle": "@ChrisWillx",
-        "parent_text": "Why you can\u2019t mass produce elite special operators for the military.\n\n\u201cThe percentage of guys with 130+ IQ who enjoy both books and bar fights is incredibly small.\u201d (h/t Link)",
-        "views_at_save": 50255,
-        "age_at_save_hours": 2.92
+        "parent_text": "Why you can\u2019t mass produce elite special operators for the military. \u201cThe percentage of guys with 130+ IQ who enjoy both books and bar fights is incredibly small.\u201d (h/t Link)",
+        "views_at_save": 69575,
+        "age_at_save_hours": 5.26
       },
       {
-        "headline": "Calls LEGO Millennium Falcon a surefire cure for depression",
+        "headline": "Jokes about a surefire cure",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2056823376652718380",
         "body": "Surefire cure \ud83d\ude02.",
         "engagement": "",
-        "honesty": "7/10",
-        "notes": "Opinion: humor/commentary without factual claim",
-        "posted": "2026-05-19T22:41:05Z",
+        "honesty": "N/A",
+        "notes": "Single emoji with phrase - no factual claim to score",
+        "posted": "2026-05-20T01:01:36Z",
         "post_ts": "2026-05-19T19:44:41Z",
-        "views": 91067,
-        "parent_url": "https://x.com/TheBabylonBee/status/2056816272336109838",
-        "parent_handle": "@TheBabylonBee",
-        "parent_text": "Man Cured Of Depression After Doctor Prescribes Millennium Falcon LEGO Set",
-        "views_at_save": 91067,
-        "age_at_save_hours": 2.94
+        "views": 104476,
+        "views_at_save": 104476,
+        "age_at_save_hours": 5.28
       },
       {
-        "headline": "Agrees seriously with Babylon Bee satire on Democrats ruining California",
+        "headline": "Expresses serious reaction",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2056821037506109658",
         "body": "Seriously \ud83d\ude11.",
         "engagement": "",
-        "honesty": "7/10",
-        "notes": "Opinion: emoji reaction expressing sentiment",
-        "posted": "2026-05-19T22:41:05Z",
+        "honesty": "N/A",
+        "notes": "Single emoji with word - no factual claim to score",
+        "posted": "2026-05-20T01:01:36Z",
         "post_ts": "2026-05-19T19:35:23Z",
-        "views": 88772,
-        "parent_url": "https://x.com/TheBabylonBee/status/2056555476486066247",
-        "parent_handle": "@TheBabylonBee",
-        "parent_text": "God Baffled That Democrats Managed To Ruin California",
-        "views_at_save": 88772,
-        "age_at_save_hours": 3.1
+        "views": 100136,
+        "views_at_save": 100136,
+        "age_at_save_hours": 5.44
+      },
+      {
+        "headline": "Laughs at a post",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2056818896125243434",
+        "body": "\ud83d\ude02.",
+        "engagement": "",
+        "honesty": "N/A",
+        "notes": "Single emoji - no factual claim to score",
+        "posted": "2026-05-20T01:01:36Z",
+        "post_ts": "2026-05-19T19:26:53Z",
+        "views": 73115,
+        "views_at_save": 73115,
+        "age_at_save_hours": 5.58
+      },
+      {
+        "headline": "Exclaims in surprise",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2056818846192005307",
+        "body": "!!",
+        "engagement": "",
+        "honesty": "N/A",
+        "notes": "Exclamation marks only - no factual claim to score",
+        "posted": "2026-05-20T01:01:36Z",
+        "post_ts": "2026-05-19T19:26:41Z",
+        "views": 8320,
+        "views_at_save": 8320,
+        "age_at_save_hours": 5.58
+      },
+      {
+        "headline": "Reacts with fire emoji",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2056818738075467880",
+        "body": "\ud83d\udd25.",
+        "engagement": "",
+        "honesty": "N/A",
+        "notes": "Single emoji - no factual claim to score",
+        "posted": "2026-05-20T01:01:36Z",
+        "post_ts": "2026-05-19T19:26:15Z",
+        "views": 97173,
+        "views_at_save": 97173,
+        "age_at_save_hours": 5.59
       },
       {
         "headline": "Promotes trying Composer 2.5 on Cursor",
@@ -603,55 +650,67 @@
         "url": "https://x.com/elonmusk/status/2056818469195407458",
         "body": "Try Composer 2.5 on Cursor!",
         "engagement": "",
-        "honesty": "9/10",
-        "notes": "Factual recommendation to try specific software product",
-        "posted": "2026-05-19T22:41:06Z",
+        "honesty": "N/A",
+        "notes": "Product recommendation - no factual claim to score",
+        "posted": "2026-05-20T01:01:36Z",
         "post_ts": "2026-05-19T19:25:11Z",
-        "views": 10739206,
-        "views_at_save": 10739206,
-        "age_at_save_hours": 3.27
+        "views": 15189501,
+        "parent_url": "https://x.com/mntruell/status/2056780569380626686",
+        "parent_handle": "@mntruell",
+        "parent_text": "Composer 2.5 is now the most-chosen model in Cursor. We're giving everyone 10x usage for the rest of the day. Enjoy!",
+        "views_at_save": 15189501,
+        "age_at_save_hours": 5.61
       },
       {
-        "headline": "Calls expectations for vetted immigration and free speech fair",
+        "headline": "Agrees that listed expectations are fair",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2056818351939502432",
         "body": "Fair expectations.",
         "engagement": "",
-        "honesty": "7/10",
-        "notes": "Opinion: commentary without specific factual claim",
-        "posted": "2026-05-19T22:41:06Z",
+        "honesty": "N/A",
+        "notes": "Two-word phrase - insufficient context for honesty scoring",
+        "posted": "2026-05-20T01:01:36Z",
         "post_ts": "2026-05-19T19:24:43Z",
-        "views": 4115109,
-        "views_at_save": 4115109,
-        "age_at_save_hours": 3.27
+        "views": 6957533,
+        "parent_url": "https://x.com/nickshirleyy/status/2056769439165468892",
+        "parent_handle": "@nickshirleyy",
+        "parent_text": "Does it make you \u201cfar right\u201d to want: vetted immigration, no digital ID, lower taxes, no two-tier policing, free speech, pedophiles out of office, lower cost of living. MSM and politicians will call these ladies far right. Does this sound far right to you or just right?",
+        "views_at_save": 6957533,
+        "age_at_save_hours": 5.61
       },
       {
-        "headline": "Encourages joining the underground tunneling movement",
+        "headline": "Comments on The Boring Company and tunneling",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2056774600252399621",
         "body": "Join tunneling \u2013 the underground movement.",
         "engagement": "",
-        "honesty": "7/10",
-        "notes": "Opinion: recruitment pitch with wordplay, not factual claim",
-        "posted": "2026-05-19T22:41:06Z",
+        "honesty": "N/A",
+        "notes": "Recruitment/slogan - no factual claim to score",
+        "posted": "2026-05-20T01:01:36Z",
         "post_ts": "2026-05-19T16:30:52Z",
-        "views": 4685932,
-        "views_at_save": 4685932,
-        "age_at_save_hours": 6.17
+        "views": 5638193,
+        "parent_url": "https://x.com/XFreeze/status/2056773311808303315",
+        "parent_handle": "@XFreeze",
+        "parent_text": "Elon Musk on why tunnels became reality: \u201cEveryone thought it was a joke. We made it a company\u201d The idea behind The Boring Company is actually simple physics and geometry...",
+        "views_at_save": 5638193,
+        "age_at_save_hours": 8.51
       },
       {
-        "headline": "Agrees that leftists lost the ability to be funny",
+        "headline": "Agrees with Aimee Terese on leftists and comedy",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2056774304193212606",
         "body": "Bingo.",
         "engagement": "",
-        "honesty": "7/10",
-        "notes": "Opinion: single-word agreement without factual content",
-        "posted": "2026-05-19T22:41:06Z",
+        "honesty": "N/A",
+        "notes": "Single word - no factual claim to score",
+        "posted": "2026-05-20T01:01:37Z",
         "post_ts": "2026-05-19T16:29:41Z",
-        "views": 11846246,
-        "views_at_save": 11846246,
-        "age_at_save_hours": 6.19
+        "views": 16160695,
+        "parent_url": "https://x.com/aimeeterese/status/2056502013953970556",
+        "parent_handle": "@aimeeterese",
+        "parent_text": "The strongest red flag was when leftists lost the ability to be funny. Comedy relies on subverting expectations to expose truth. Leftism subverts the truth to peddle lies. That\u2019s why they can\u2019t be funny, they can\u2019t reveal the truth, their entire politics depends on concealing it.",
+        "views_at_save": 16160695,
+        "age_at_save_hours": 8.53
       }
     ],
     "earlier": [
@@ -806,6 +865,24 @@
   "sports": {
     "stories": [
       {
+        "headline": "Jason Kidd fired by Mavericks",
+        "handle": "@EmmanuelAcho",
+        "url": "https://x.com/EmmanuelAcho/status/2056875603811561945",
+        "body": "To my knowledge Jason Kidd wanted to make a Brad Stevens type of transition and move from head coach to front office.\n\nWhen the Mavs went in a different direction with Masai, Kidd\u2019s days were numbered",
+        "engagement": "35K likes, 4.5K reposts",
+        "honesty": "8/10",
+        "notes": "Insider reporting on personnel decisions, not verified court record or official stat - analysis of front office intentions",
+        "posted": "2026-05-20T01:01:37Z",
+        "post_ts": "2026-05-19T23:04:02Z",
+        "views": 4684651,
+        "views_at_save": 4243195,
+        "age_at_save_hours": 1.96,
+        "original_url": "https://x.com/ShamsCharania/status/2056873543296581743",
+        "original_handle": "@ShamsCharania",
+        "original_views": 4297806,
+        "qt_views": 386845
+      },
+      {
         "headline": "Wemby stuns with insane Game 1 shot vs Thunder",
         "handle": "@Fergycookedd",
         "url": "https://x.com/Fergycookedd/status/2056758842461983185",
@@ -817,7 +894,7 @@
         "post_ts": "2026-05-19T04:05:17Z",
         "views": 5100804,
         "views_at_save": 5100804,
-        "age_at_save_hours": 7.21,
+        "age_at_save_hours": 9.56,
         "original_url": "https://x.com/BleacherReport/status/2056586969908396045",
         "original_handle": "@BleacherReport",
         "original_views": 5097766,
@@ -829,18 +906,29 @@
         "url": "https://x.com/MedcalfByESPN/status/2056783220427853922",
         "body": "Just an fyi: Maple Grove is not \"conveniently located within a few miles of the airport and stadium,\" no matter what that Airbnb host tells you.",
         "engagement": "3.7K likes, 373 reposts",
-        "honesty": "9/10",
-        "notes": "Official announcement from credible insider source, but single-source attribution not court record",
+        "honesty": "7/10",
+        "notes": "Opinion/sarcastic commentary about location convenience, not factual announcement",
         "posted": "2026-05-19T17:07:24Z",
         "post_ts": "2026-05-19T16:10:33Z",
         "views": 840655,
         "views_at_save": 840655,
-        "age_at_save_hours": 5.6,
+        "age_at_save_hours": 7.94,
         "original_url": "https://x.com/AdamSchefter/status/2056769489224499566",
         "original_handle": "@AdamSchefter",
         "original_views": 594418,
         "qt_views": 246237
       },
+      {
+        "url": "https://x.com/MLB/status/2056890053884883299",
+        "handle": "@MLB",
+        "body": "JAMES WOOD INSIDE-THE-PARK GRAND SLAM!",
+        "views": 825382,
+        "engagement": "Likes=3087, Reposts=453, Quotes=170, Replies=121, Bookmarks=157",
+        "honesty": "10/10",
+        "notes": "Official MLB highlight - verified sports event"
+      }
+    ],
+    "earlier": [
       {
         "url": "https://x.com/TheDunkCentral/status/2056853628669857894",
         "handle": "@TheDunkCentral",
@@ -858,9 +946,7 @@
         "engagement": "1284 likes, 210 reposts, 6 quotes, 25 replies, 76 bookmarks",
         "honesty": "10/10",
         "notes": "Verified fact: official NFL announcement of Super Bowl host locations"
-      }
-    ],
-    "earlier": [
+      },
       {
         "url": "https://x.com/Fullcourtpass/status/2056804267600531819",
         "handle": "@Fullcourtpass",
@@ -869,15 +955,6 @@
         "engagement": "Likes=309, Reposts=13, Quotes=52, Replies=43, Bookmarks=23",
         "honesty": "high",
         "notes": "NBA offseason roster news"
-      },
-      {
-        "url": "https://x.com/NFLonFOX/status/2056812132180611568",
-        "handle": "@NFLonFOX",
-        "body": "The next four Super Bowl locations are officially locked in \ud83c\udfc6\ud83e\udd29",
-        "views": 11654,
-        "engagement": "Likes=242, Reposts=47, Quotes=1, Replies=13, Bookmarks=18",
-        "honesty": "high",
-        "notes": "NFL future Super Bowl venues"
       },
       {
         "url": "https://x.com/AlbertBreer/status/2056777490928959809",
@@ -965,15 +1042,6 @@
         "original_handle": "@stephenasmith",
         "original_views": 218627,
         "qt_views": 9397
-      },
-      {
-        "url": "https://x.com/BleacherReport/status/2056525138477170909",
-        "handle": "@BleacherReport",
-        "body": "Best player on every NFL team that could still be CUT during the offseason \ud83d\udc40\ud83d\ude2f -- Patriots: WR DeMario Douglas -- Colts: QB Anthony Richardson Sr. -- Chiefs: CB Kristian Fulton -- Rams: TE Colby Parkinson -- Steelers: QB Mason Rudolph See the full list of players here \ud83d\udd17:",
-        "views": 80513,
-        "engagement": "Likes=155, Reposts=8, Quotes=2, Replies=44, Bookmarks=9",
-        "honesty": "7/10",
-        "notes": "Missing actual score - notes say 'High - factual list' but this is speculation/analysis about potential cuts, not verified roster moves."
       }
     ]
   },
@@ -991,7 +1059,7 @@
         "post_ts": "2026-05-19T18:08:42Z",
         "views": 294718,
         "views_at_save": 294718,
-        "age_at_save_hours": 4.54
+        "age_at_save_hours": 6.88
       },
       {
         "headline": "Power Constraints Should Crash AI Prices",
@@ -1005,7 +1073,7 @@
         "post_ts": "2026-05-19T14:51:53Z",
         "views": 299007,
         "views_at_save": 299007,
-        "age_at_save_hours": 7.18,
+        "age_at_save_hours": 9.52,
         "original_url": "https://x.com/chamath/status/2056749689991839987",
         "original_handle": "@chamath",
         "original_views": 294103,
@@ -1023,7 +1091,7 @@
         "post_ts": "2026-05-18T15:57:10Z",
         "views": 607084,
         "views_at_save": 607084,
-        "age_at_save_hours": 21.44,
+        "age_at_save_hours": 23.78,
         "original_url": "https://x.com/chamath/status/2056403731747672324",
         "original_handle": "@chamath",
         "original_views": 605239,
@@ -1100,20 +1168,6 @@
         "age_at_save_hours": 9.6
       },
       {
-        "headline": "Hyperstimuli Overload Warning",
-        "handle": "@pmarca",
-        "url": "https://x.com/pmarca/status/2056177764449784207",
-        "body": "Marc Andreessen agrees modern conveniences like social media and fast food act as hyperstimuli risking dopamine overload.",
-        "engagement": "374 likes, 6 reposts, 29 replies",
-        "honesty": "7/10",
-        "notes": "Opinion on cultural critique.",
-        "posted": "2026-05-18T14:52:15Z",
-        "post_ts": "2026-05-18T00:59:15Z",
-        "views": 205667,
-        "views_at_save": 205667,
-        "age_at_save_hours": 15.61
-      },
-      {
         "headline": "AI Data Center Hype Questioned",
         "handle": "@pmarca",
         "url": "https://x.com/pmarca/status/2056183706973319257",
@@ -1146,24 +1200,6 @@
   "pods": {
     "stories": [
       {
-        "headline": "El Ni\u00f1o Food Crisis Warning",
-        "handle": "@AndreasSteno",
-        "url": "https://x.com/AndreasSteno/status/2056801387183329401",
-        "body": "When all-in tech bros talk Famine and El Nino, you just know it's not gonna be a big deal.",
-        "engagement": "127 likes, 25 reposts, 16 replies",
-        "honesty": "8/10",
-        "notes": "Opinion/analysis with specific data framing",
-        "posted": "2026-05-19T19:20:11Z",
-        "post_ts": "2026-05-19T17:58:11Z",
-        "views": 44377,
-        "views_at_save": 44377,
-        "age_at_save_hours": 4.4,
-        "original_url": "https://x.com/theallinpod/status/2056796574018048133",
-        "original_handle": "@theallinpod",
-        "original_views": 34190,
-        "qt_views": 10187
-      },
-      {
         "headline": "The Rock clarifies Biden support",
         "handle": "@joeroganhq",
         "url": "https://x.com/joeroganhq/status/2056785705913946514",
@@ -1175,16 +1211,34 @@
         "post_ts": "2026-05-19T17:15:00Z",
         "views": 65993,
         "views_at_save": 65993,
-        "age_at_save_hours": 5.44
+        "age_at_save_hours": 7.78
       },
       {
-        "url": "https://x.com/RyanGirdusky/status/2056392220924682602",
-        "handle": "@RyanGirdusky",
-        "body": "CA Gubernatorial candidate @ChadBianco joined me on today\u2019s podcast to discuss his plan for California. The election is on June 2nd and the top 2 candidates make it to the runoff in November. Listen to the full episode here: https://omny.fm/shows/a-numbers-game-with-ryan-girdusky/its-a-numbers-game-data-centers-china-ai-what-they-re-not-telling-you",
-        "views": 10105,
-        "engagement": "98 likes, 25 reposts, 15 replies, 2 quotes",
-        "honesty": "9/10",
-        "notes": "Verified fact: podcast interview announcement with CA gubernatorial candidate, election date is verifiable"
+        "headline": "El Ni\u00f1o Food Crisis Warning",
+        "handle": "@AndreasSteno",
+        "url": "https://x.com/AndreasSteno/status/2056801387183329401",
+        "body": "When all-in tech bros talk Famine and El Nino, you just know it's not gonna be a big deal.",
+        "engagement": "127 likes, 25 reposts, 16 replies",
+        "honesty": "8/10",
+        "notes": "Opinion/analysis with specific data framing",
+        "posted": "2026-05-19T19:20:11Z",
+        "post_ts": "2026-05-19T17:58:11Z",
+        "views": 44377,
+        "views_at_save": 44377,
+        "age_at_save_hours": 6.74,
+        "original_url": "https://x.com/theallinpod/status/2056796574018048133",
+        "original_handle": "@theallinpod",
+        "original_views": 34190,
+        "qt_views": 10187
+      },
+      {
+        "url": "https://x.com/gottatrythispod/status/2056858340219629804",
+        "handle": "@gottatrythispod",
+        "body": "How one podcast clip changed lives @vivalafood_ @MattPiperJenks @LargeBarstool",
+        "views": 81034,
+        "engagement": "114 likes, 5 reposts, 26 bookmarks, 5 replies",
+        "honesty": "Genuine clip from food podcast discussing restaurant recommendations with real impact story",
+        "notes": "Viral food podcast moment highlighting life-changing restaurant advice; different event from excluded headlines"
       }
     ],
     "earlier": [
@@ -1252,20 +1306,6 @@
         "views": 10009,
         "views_at_save": 10009,
         "age_at_save_hours": 1.88
-      },
-      {
-        "headline": "Warren Buffett on Why Five Homes Mean Nothing",
-        "handle": "@joeroganhq",
-        "url": "https://x.com/joeroganhq/status/2056520206726402344",
-        "body": "Warren Buffett says owning five homes adds problems not happiness, he's content with one.",
-        "engagement": "377 likes, 22 reposts, 27 replies",
-        "honesty": "8/10",
-        "notes": "Direct quote from Buffett verified from clip, but content is personal opinion/value judgment not independently verifiable fact.",
-        "posted": "2026-05-19T01:04:10Z",
-        "post_ts": "2026-05-18T23:40:00Z",
-        "views": 29936,
-        "views_at_save": 29936,
-        "age_at_save_hours": 5.38
       }
     ]
   },
@@ -1283,7 +1323,7 @@
         "post_ts": "2026-05-19T14:40:34Z",
         "views": 408805,
         "views_at_save": 408805,
-        "age_at_save_hours": 7.57,
+        "age_at_save_hours": 9.91,
         "original_url": "https://x.com/WatcherGuru/status/2056746840779792825",
         "original_handle": "@WatcherGuru",
         "original_views": 384549,
@@ -1301,7 +1341,7 @@
         "post_ts": "2026-05-19T12:37:00Z",
         "views": 481876,
         "views_at_save": 481876,
-        "age_at_save_hours": 9.42,
+        "age_at_save_hours": 11.76,
         "original_url": "https://x.com/unusual_whales/status/2056715745241751570",
         "original_handle": "@unusual_whales",
         "original_views": 466610,
@@ -1319,7 +1359,7 @@
         "post_ts": "2026-05-19T16:26:18Z",
         "views": 121736,
         "views_at_save": 121736,
-        "age_at_save_hours": 6.25
+        "age_at_save_hours": 8.59
       }
     ],
     "earlier": [
@@ -1340,28 +1380,40 @@
     ],
     "_overflow": [
       {
-        "headline": "SEC Greenlights Tokenized Stock Trading",
-        "handle": "@WatcherGuru",
-        "url": "https://x.com/WatcherGuru/status/2056481341387014551",
-        "body": "SEC prepares to allow blockchain-based tokenized stock trading, opening a new era for 24/7 markets and fractional ownership.",
-        "engagement": "13740 likes, 1942 reposts, 615 replies",
+        "headline": "Retail Sales Rose 24% But Flat After Inflation",
+        "handle": "@LizAnnSonders",
+        "url": "https://x.com/LizAnnSonders/status/2056809704349630883",
+        "body": "Monthly retail sales up 24.3% since 2021 but essentially flat when adjusted for inflation, showing no real economic growth.",
+        "engagement": "169 likes, 43 reposts, 16 replies",
         "honesty": "9/10",
-        "notes": "Verified regulatory development with market implications.",
-        "posted": "2026-05-19T22:41:08Z",
-        "post_ts": "2026-05-18T21:05:34Z",
-        "views": 1501878
+        "notes": "Fact",
+        "posted": "2026-05-20T01:01:37Z",
+        "post_ts": "2026-05-19T18:50:21Z",
+        "views": 18725
       },
       {
-        "headline": "Gen X Delays Retirement Amid Economic Pressure",
+        "headline": "Values Trump Skills When Building Teams",
+        "handle": "@RayDalio",
+        "url": "https://x.com/RayDalio/status/2056706443093401888",
+        "body": "In long-term relationships and organizations, values and abilities matter far more than skills which can be learned quickly.",
+        "engagement": "286 likes, 31 reposts, 33 replies",
+        "honesty": "8/10",
+        "notes": "Opinion",
+        "posted": "2026-05-20T01:01:37Z",
+        "post_ts": "2026-05-19T12:00:02Z",
+        "views": 38654
+      },
+      {
+        "headline": "First-Time Homebuyers Now Average Age 40",
         "handle": "@unusual_whales",
-        "url": "https://x.com/unusual_whales/status/2056700645625733263",
-        "body": "50% of Gen X workers are pushing back retirement due to stagnant wages, rising costs and insufficient savings, per PwC data.",
-        "engagement": "1263 likes, 132 reposts, 158 replies",
+        "url": "https://x.com/unusual_whales/status/2056695612515418362",
+        "body": "Median age of first-time homebuyers has jumped from 28 in 1991 to 40 today amid higher costs and stagnant wages.",
+        "engagement": "4.1K likes, 447 reposts, 157 replies",
         "honesty": "9/10",
-        "notes": "Survey data with clear economic framing.",
-        "posted": "2026-05-19T22:41:08Z",
-        "post_ts": "2026-05-19T11:37:00Z",
-        "views": 123955
+        "notes": "Fact",
+        "posted": "2026-05-20T01:01:37Z",
+        "post_ts": "2026-05-19T11:17:00Z",
+        "views": 254905
       }
     ]
   },
@@ -1379,7 +1431,7 @@
         "post_ts": "2026-05-19T15:01:46Z",
         "views": 6610226,
         "views_at_save": 6610226,
-        "age_at_save_hours": 7.46,
+        "age_at_save_hours": 9.8,
         "original_url": "https://x.com/elonmusk/status/2056752178895741363",
         "original_handle": "@elonmusk",
         "original_views": 6607005,
@@ -1397,12 +1449,28 @@
         "post_ts": "2026-05-19T11:18:17Z",
         "views": 4380434,
         "views_at_save": 4380434,
-        "age_at_save_hours": 11.01,
+        "age_at_save_hours": 13.35,
         "original_url": "https://x.com/ManUtd/status/2056695935556542642",
         "original_handle": "@ManUtd",
         "original_views": 3992449,
         "qt_views": 387985
       },
+      {
+        "headline": "Saka fires up Arsenal fans",
+        "handle": "@FabrizioRomano",
+        "url": "https://x.com/FabrizioRomano/status/2056888711288095044",
+        "body": "Bukayo Saka celebrates with a fiery quote after Arsenal win: 'Light that up!. They\u2019re not laughing anymore.'.",
+        "engagement": "14388 likes, 1399 reposts",
+        "honesty": "9/10",
+        "notes": "Fact",
+        "posted": "2026-05-20T01:01:38Z",
+        "post_ts": "2026-05-20T00:04:18Z",
+        "views": 298454,
+        "views_at_save": 298454,
+        "age_at_save_hours": 0.96
+      }
+    ],
+    "earlier": [
       {
         "headline": "Arsenal legend spotted",
         "handle": "@Arsenal",
@@ -1416,9 +1484,7 @@
         "views": 98222,
         "views_at_save": 98222,
         "age_at_save_hours": 0.25
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "US 30Y yield hits 5.18%",
         "handle": "@DanielLMcAdams",
@@ -1482,46 +1548,68 @@
     ],
     "_overflow": [
       {
-        "headline": "Democrat candidate's extreme post",
-        "handle": "@BillMelugin_",
-        "url": "https://x.com/BillMelugin_/status/2056852998962204960",
-        "body": "Democrat running for Congress in TX-35 posts about turning ICE center into prison for Zionists and castration site.",
-        "engagement": "1.5K likes, 1K reposts",
-        "honesty": "9/10",
-        "notes": "Fact with minor editorializing",
-        "posted": "2026-05-19T22:41:09Z",
-        "post_ts": "2026-05-19T21:42:24Z",
-        "views": 44667
-      },
-      {
-        "headline": "Arsenal fan's full heart",
-        "handle": "@WelBeast",
-        "url": "https://x.com/WelBeast/status/2056859198835638431",
-        "body": "Arsenal supporter shares emotional photo saying their heart is full after recent win.",
-        "engagement": "1K likes, 125 reposts",
+        "headline": "NYC housekeepers big pay raise",
+        "handle": "@Polymarket",
+        "url": "https://x.com/Polymarket/status/2056888898546970816",
+        "body": "NYC hotel housekeepers will earn over $100,000 a year under new union contract.",
+        "engagement": "790 likes, 72 reposts",
         "honesty": "10/10",
         "notes": "Fact",
-        "posted": "2026-05-19T22:41:09Z",
-        "post_ts": "2026-05-19T22:07:02Z",
-        "views": 11908
+        "posted": "2026-05-20T01:01:38Z",
+        "post_ts": "2026-05-20T00:05:03Z",
+        "views": 95649
+      },
+      {
+        "headline": "Braids return in June",
+        "handle": "@LashaeAsh",
+        "url": "https://x.com/LashaeAsh/status/2056889786762133570",
+        "body": "The braids will probably return mid June with a playful wink emoji.",
+        "engagement": "1759 likes, 173 reposts",
+        "honesty": "7/10",
+        "notes": "Opinion",
+        "posted": "2026-05-20T01:01:38Z",
+        "post_ts": "2026-05-20T00:08:34Z",
+        "views": 27253
       }
     ]
   },
   "msm": {
     "stories": [
       {
-        "headline": "DOJ Probes WA Women's Prison for Housing Male Inmates",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2056794521409601759",
-        "body": "DOJ notifies Washington Gov.. Ferguson of investigation into Corrections Center for Women housing male prisoners, endangering female inmates.",
-        "engagement": "1.3K likes, 458 reposts, 129 replies",
+        "headline": "Cambridge disables gunshot detectors for migrants",
+        "handle": "@alx",
+        "url": "https://x.com/alx/status/2056833556152799743",
+        "body": "Incredible admission",
+        "engagement": "7.6K likes, 1.5K reposts, 1.4K replies",
         "honesty": "9/10",
-        "notes": "Official DOJ notification is verifiable; 'endangering' adds minor editorial framing",
-        "posted": "2026-05-19T19:20:13Z",
-        "post_ts": "2026-05-19T17:50:01Z",
-        "views": 76760,
-        "views_at_save": 76760,
-        "age_at_save_hours": 4.85
+        "notes": "Fact",
+        "posted": "2026-05-20T01:01:38Z",
+        "post_ts": "2026-05-19T19:58:10Z",
+        "views": 855840,
+        "views_at_save": 770188,
+        "age_at_save_hours": 5.06,
+        "original_url": "https://x.com/EndWokeness/status/2056826769945047484",
+        "original_handle": "@EndWokeness",
+        "original_views": 774794,
+        "qt_views": 81046
+      },
+      {
+        "headline": "Democrat candidate's extreme anti-Zionist rant",
+        "handle": "@KassyAkiva",
+        "url": "https://x.com/KassyAkiva/status/2056877130022006997",
+        "body": "And she\u2019s basically doubling down here but slightly softening her rhetoric",
+        "engagement": "5.3K likes, 3.1K reposts, 608 replies",
+        "honesty": "9/10",
+        "notes": "Fact",
+        "posted": "2026-05-20T01:01:38Z",
+        "post_ts": "2026-05-19T21:42:24Z",
+        "views": 241778,
+        "views_at_save": 231547,
+        "age_at_save_hours": 3.32,
+        "original_url": "https://x.com/BillMelugin_/status/2056852998962204960",
+        "original_handle": "@BillMelugin_",
+        "original_views": 234694,
+        "qt_views": 7084
       },
       {
         "headline": "Homeless NGOs pay execs $1M+ while problem worsens",
@@ -1535,11 +1623,27 @@
         "post_ts": "2026-05-19T11:00:01Z",
         "views": 309210,
         "views_at_save": 309210,
-        "age_at_save_hours": 10.51,
+        "age_at_save_hours": 12.86,
         "original_url": "https://x.com/WallStreetApes/status/2056691341497893224",
         "original_handle": "@WallStreetApes",
         "original_views": 307249,
         "qt_views": 1961
+      }
+    ],
+    "earlier": [
+      {
+        "headline": "DOJ Probes WA Women's Prison for Housing Male Inmates",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2056794521409601759",
+        "body": "DOJ notifies Washington Gov.. Ferguson of investigation into Corrections Center for Women housing male prisoners, endangering female inmates.",
+        "engagement": "1.3K likes, 458 reposts, 129 replies",
+        "honesty": "9/10",
+        "notes": "Official DOJ notification is verifiable; 'endangering' adds minor editorial framing",
+        "posted": "2026-05-19T19:20:13Z",
+        "post_ts": "2026-05-19T17:50:01Z",
+        "views": 76760,
+        "views_at_save": 76760,
+        "age_at_save_hours": 4.85
       },
       {
         "headline": "Maine girls testify on bathroom incidents",
@@ -1558,9 +1662,7 @@
         "original_handle": "@libsoftiktok",
         "original_views": 147292,
         "qt_views": 1172
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Michigan Dem rep calls USA garbage",
         "handle": "@True_News_On_X",
@@ -1580,7 +1682,20 @@
         "qt_views": 2497
       }
     ],
-    "_overflow": []
+    "_overflow": [
+      {
+        "headline": "O'Keefe probe leads to election fraud guilty plea",
+        "handle": "@JamesOKeefeIII",
+        "url": "https://x.com/JamesOKeefeIII/status/2056820504279842937",
+        "body": "Brenda Brown, caught on hidden camera in Skid Row election fraud, pleads guilty and faces 5 years in prison.",
+        "engagement": "3K likes, 664 reposts, 202 replies",
+        "honesty": "10/10",
+        "notes": "Fact",
+        "posted": "2026-05-20T01:01:38Z",
+        "post_ts": "2026-05-19T19:33:16Z",
+        "views": 95958
+      }
+    ]
   },
   "pg6": {
     "stories": [
@@ -1603,23 +1718,25 @@
         "qt_views": 1518
       },
       {
-        "headline": "Hayden Panettiere shocking reveal",
-        "handle": "@luisjgomez",
-        "url": "https://x.com/luisjgomez/status/2056759092371152946",
-        "body": "Penis is creepy.  Balls are funny.",
-        "engagement": "2.5K likes, 139 reposts, 642 replies",
-        "honesty": "7/10",
-        "notes": "Opinion: subjective humor assessment",
-        "posted": "2026-05-19T17:07:26Z",
-        "post_ts": "2026-05-19T13:45:09Z",
-        "views": 1808496,
-        "views_at_save": 1808496,
-        "age_at_save_hours": 7.2,
-        "original_url": "https://x.com/TMZ/status/2056732895134294295",
-        "original_handle": "@TMZ",
-        "original_views": 1664900,
-        "qt_views": 143596
+        "url": "https://x.com/nypost/status/2056742227724976200",
+        "handle": "@nypost",
+        "body": "New 'Star Wars' film panned by critics, leaving the legendary franchise fighting for its future",
+        "views": 318575,
+        "engagement": "Likes=824, Reposts=52, Quotes=102, Replies=376, Bookmarks=64",
+        "honesty": "high",
+        "notes": "Pop culture film review gossip from reputable outlet"
       },
+      {
+        "url": "https://x.com/Dexerto/status/2056716762914132448",
+        "handle": "@Dexerto",
+        "body": "Johnny Somali says he's being treated like a \u201ccelebrity\u201d in prison, in a letter where he asked to see the social media coverage about him and some Game of Thrones books \u201cI am treated very well by all the inmates, many shake my hand and always say hello or yell \u2018soooooomali!!\u2019\u201d",
+        "views": 86244,
+        "engagement": "Likes=942, Reposts=19, Quotes=10, Replies=102, Bookmarks=84",
+        "honesty": "medium",
+        "notes": "Celebrity/influencer prison gossip with direct quotes"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Harry Styles Fans Blocked by Stage",
         "handle": "@Variety",
@@ -1633,9 +1750,7 @@
         "views": 193493,
         "views_at_save": 193493,
         "age_at_save_hours": 3.63
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Zahara Drops Pitt Name",
         "handle": "@GeauxGabrielle",
@@ -1758,10 +1873,39 @@
         "original_views": 194644,
         "qt_views": 3568
       }
-    ]
+    ],
+    "_overflow": []
   },
   "recipe": {
     "stories": [
+      {
+        "headline": "Cheesy Garlic Chilli Stuffed Mushrooms",
+        "handle": "@KitchenSanc2ary",
+        "url": "https://x.com/KitchenSanc2ary/status/2056741414336344069",
+        "body": "Spicy cheesy garlic stuffed mushrooms for an easy meatless lunch.",
+        "engagement": "40 likes, 8 reposts, 3 replies",
+        "honesty": "10/10",
+        "notes": "Full recipe post with photo and direct link.",
+        "posted": "2026-05-20T01:01:39Z",
+        "post_ts": "2026-05-19T14:19:00Z",
+        "views": 1850,
+        "views_at_save": 1850,
+        "age_at_save_hours": 10.71
+      },
+      {
+        "headline": "Ultimate Fried Egg Pizza",
+        "handle": "@tasty",
+        "url": "https://x.com/tasty/status/2056312120669553083",
+        "body": "Ultimate Fried Egg Pizza combines crispy crust with runny eggs for a savory breakfast twist.",
+        "engagement": "19 likes, 1 repost, 7 replies",
+        "honesty": "N/A",
+        "notes": "Recipe content - not factual claim subject to honesty scoring",
+        "posted": "2026-05-19T05:14:37Z",
+        "post_ts": "2026-05-18T09:53:08Z",
+        "views": 5920,
+        "views_at_save": 5920,
+        "age_at_save_hours": 39.14
+      },
       {
         "headline": "Honey Jalape\u00f1o Chicken Sliders",
         "handle": "@tasty",
@@ -1775,7 +1919,9 @@
         "views": 7847,
         "views_at_save": 7847,
         "age_at_save_hours": 41.9
-      },
+      }
+    ],
+    "earlier": [
       {
         "headline": "Char Siu Pork",
         "handle": "@KitchenSanc2ary",
@@ -1790,22 +1936,6 @@
         "views_at_save": 2690,
         "age_at_save_hours": 36.1
       },
-      {
-        "headline": "Ultimate Fried Egg Pizza",
-        "handle": "@tasty",
-        "url": "https://x.com/tasty/status/2056312120669553083",
-        "body": "Ultimate Fried Egg Pizza combines crispy crust with runny eggs for a savory breakfast twist.",
-        "engagement": "19 likes, 1 repost, 7 replies",
-        "honesty": "N/A",
-        "notes": "Recipe content - not factual claim subject to honesty scoring",
-        "posted": "2026-05-19T05:14:37Z",
-        "post_ts": "2026-05-18T09:53:08Z",
-        "views": 5920,
-        "views_at_save": 5920,
-        "age_at_save_hours": 30.68
-      }
-    ],
-    "earlier": [
       {
         "url": "https://x.com/KitchenSanc2ary/status/2056381542872600625",
         "handle": "@KitchenSanc2ary",
@@ -1831,8 +1961,8 @@
         "posted": "2026-05-19T22:41:10Z",
         "post_ts": "2026-05-19T14:00:03Z",
         "views": 3238642,
-        "views_at_save": 3131738,
-        "age_at_save_hours": 8.69,
+        "views_at_save": 3238642,
+        "age_at_save_hours": 10.92,
         "original_url": "https://x.com/SGRodriques/status/2056736646176129311",
         "original_handle": "@SGRodriques",
         "original_views": 3157221,
@@ -1850,16 +1980,16 @@
         "post_ts": "2026-05-19T10:26:31Z",
         "views": 85329,
         "views_at_save": 85329,
-        "age_at_save_hours": 12.24
+        "age_at_save_hours": 14.59
       },
       {
         "url": "https://x.com/ScienceMagazine/status/2056824234727362923",
         "handle": "@ScienceMagazine",
         "body": "Despite billions of dollars spent on potential drug treatments for cocaine addiction, none have proved effective\u2014and cocaine use is increasing in the United States and around the world.\n\nBut one class of possible remedy has remained untested: psychedelics, which have shown promise for treating post-traumatic stress disorder, depression, anxiety, alcohol use disorder, smoking, and more.\n\nNow, the results of a pioneering randomized trial\u2014more than a decade in the making\u2014reveal a single dose of psilocybin, the psychedelic component of magic mushrooms, brought significant relief for people addicted to cocaine.\n\nThe study of 40 people showed that 180 days after treatment, 30% of the psilocybin group was completely abstaining from cocaine, versus none of the placebo group\u2014and those who continued using the drug did so less frequently.\n\nLearn more: https://t.co/ce7tlJQj3e @NewsfromScience",
-        "views": 8233,
-        "engagement": "Likes=42, Reposts=9, Quotes=3, Replies=4, Bookmarks=10",
-        "honesty": "9/10",
-        "notes": "Factual reporting from Science Magazine on randomized trial results for psilocybin treatment"
+        "views": "10738",
+        "engagement": "Likes=60, Reposts=13, Quotes=3, Replies=5, Bookmarks=11",
+        "honesty": "High - accurately summarizes peer-reviewed trial results with context on prior failures and limitations",
+        "notes": "Clear research finding on psilocybin trial for cocaine addiction; distinct from excluded AI/herpes topics"
       }
     ],
     "earlier": [
@@ -1910,24 +2040,6 @@
         "qt_views": 31559
       },
       {
-        "headline": "Grey hair as cancer defense",
-        "handle": "@Desiree134VT",
-        "url": "https://x.com/Desiree134VT/status/2056149357456413055",
-        "body": "NO UOURE LYING I HAVE GREY HAIRS",
-        "engagement": "3267 likes, 459 reposts",
-        "honesty": "7/10",
-        "notes": "Emotional reaction ('NO UOURE LYING I HAVE GREY HAIRS') - opinion/personal response, not study summary",
-        "posted": "2026-05-18T05:01:33Z",
-        "post_ts": "2026-05-17T13:14:05Z",
-        "views": 4197189,
-        "views_at_save": 4197189,
-        "age_at_save_hours": 41.46,
-        "original_url": "https://x.com/Nutri_Science_/status/2056000304609710302",
-        "original_handle": "@Nutri_Science_",
-        "original_views": 4194870,
-        "qt_views": 2319
-      },
-      {
         "headline": "Human Cells Rejuvenated by 30 Years",
         "handle": "@forallcurious",
         "url": "https://x.com/forallcurious/status/2056456630368375166",
@@ -1972,25 +2084,25 @@
         "original_handle": "@NicHulscher",
         "original_views": 1161068,
         "qt_views": 1478
-      },
-      {
-        "headline": "Honeybee venom kills breast cancer cells",
-        "handle": "@ScienceFocusonX",
-        "url": "https://x.com/ScienceFocusonX/status/2056151006350807480",
-        "body": "Scientists found honeybee venom kills 100% of aggressive breast cancer cells in under 60 minutes while sparing healthy ones.",
-        "engagement": "19.9K likes, 7.6K reposts",
-        "honesty": "9/10",
-        "notes": "Peer-reviewed study details verified cancer cell results with synthetic replication.",
-        "posted": "2026-05-18T22:16:03Z",
-        "post_ts": "2026-05-17T23:12:56Z",
-        "views": 806381,
-        "views_at_save": 806381,
-        "age_at_save_hours": 23.05
       }
     ]
   },
   "local": {
     "stories": [
+      {
+        "headline": "Angels Visit Costa Mesa Elementary for Adopt-A-School Program",
+        "handle": "@Angels",
+        "url": "https://x.com/Angels/status/2056843641931649356",
+        "body": "Mitch Farris visits Adams Elementary School in Costa Mesa as part of Angels Adopt-A-School program.",
+        "engagement": "91 likes, 8 reposts, 3 replies",
+        "honesty": "10/10",
+        "notes": "Community event coverage with local Costa Mesa school.",
+        "posted": "2026-05-20T01:01:39Z",
+        "post_ts": "2026-05-19T21:05:13Z",
+        "views": 7882,
+        "views_at_save": 7882,
+        "age_at_save_hours": 3.94
+      },
       {
         "headline": "Southern California Home Sales Reach 3-Year High",
         "handle": "@ocregister",
@@ -2003,62 +2115,58 @@
         "post_ts": "2026-05-19T16:13:36Z",
         "views": 268,
         "views_at_save": 268,
-        "age_at_save_hours": 6.46
+        "age_at_save_hours": 8.8
       },
       {
-        "headline": "OC homelessness spending update",
-        "handle": "@ocregister",
-        "url": "https://x.com/ocregister/status/2056549191829049456",
-        "body": "Orange County spent over half a billion dollars on homelessness with limited results.",
-        "engagement": "1 likes, 2 retweets, 5 replies",
-        "honesty": "9/10",
-        "notes": "Factual summary of county spending report with context.",
-        "posted": "2026-05-19T05:02:53Z",
-        "post_ts": "2026-05-19T01:35:10Z",
-        "views": 494,
-        "views_at_save": 494,
-        "age_at_save_hours": 21.1
-      },
-      {
-        "headline": "Laguna Beach Marine Protected Area Hearing",
-        "handle": "@ocregister",
-        "url": "https://x.com/ocregister/status/2056538135287246901",
-        "body": "State commission to hear public input on proposal to extend marine protected area in Laguna Beach.",
-        "engagement": "0 likes, 0 retweets, 0 replies",
+        "headline": "Laguna Beach to Ban Large Beach Canopies This Summer",
+        "handle": "@KTLA",
+        "url": "https://x.com/KTLA/status/2056770636245016835",
+        "body": "Laguna Beach implements umbrellas-only rule at beaches this summer, no large tents or canopies without permission.",
+        "engagement": "85 likes, 20 reposts, 25 replies",
         "honesty": "10/10",
-        "notes": "Factual local government/environmental story from OC Register.",
-        "posted": "2026-05-19T16:33:50Z",
-        "post_ts": "2026-05-19T00:51:14Z",
-        "views": 491,
-        "views_at_save": 491,
-        "age_at_save_hours": 21.83
+        "notes": "Verified local beach regulation from official city announcement.",
+        "posted": "2026-05-20T01:01:39Z",
+        "post_ts": "2026-05-19T16:15:07Z",
+        "views": 10241
       }
     ],
     "earlier": [],
     "_overflow": [
       {
-        "headline": "Laguna Beach bans large canopies on beaches this summer",
-        "handle": "@KTLA",
-        "url": "https://x.com/KTLA/status/2056770636245016835",
-        "body": "Laguna Beach requires permits for tents and large shade structures on its beaches to control crowds and access.",
-        "engagement": "72 likes, 18 reposts, 24 replies",
+        "headline": "Public Input Sought on Laguna Beach Marine Protected Area",
+        "handle": "@ocregister",
+        "url": "https://x.com/ocregister/status/2056538135287246901",
+        "body": "State commission to hear public comments on proposal to extend marine protected area in Laguna Beach.",
+        "engagement": "0 likes, 0 reposts, 0 replies",
         "honesty": "10/10",
-        "notes": "Direct report on verified local beach zoning rule from city announcement.",
-        "posted": "2026-05-19T22:41:11Z",
-        "post_ts": "2026-05-19T16:15:07Z",
-        "views": 9303
+        "notes": "Factual report on local environmental commission meeting.",
+        "posted": "2026-05-20T01:01:39Z",
+        "post_ts": "2026-05-19T00:51:14Z",
+        "views": 500
       },
       {
-        "headline": "Huntington Beach Cougars host FanFest community event",
-        "handle": "@nusgotdajuice",
-        "url": "https://x.com/nusgotdajuice/status/2056576044506009788",
-        "body": "Huntington Beach Cougar FanFest brought fans together for team support and local celebration this weekend.",
-        "engagement": "279 likes, 15 reposts, 1 reply",
+        "headline": "OC Teen Pushes California Lawmakers to Ban School Smartphones",
+        "handle": "@ocregister",
+        "url": "https://x.com/ocregister/status/2056378219738046551",
+        "body": "Sacramento Snapshot: OC teen asks California lawmakers to ban smartphones in schools.",
+        "engagement": "2 likes, 0 reposts, 1 reply",
         "honesty": "10/10",
-        "notes": "Factual account of specific local high school sports community event.",
-        "posted": "2026-05-19T22:41:11Z",
-        "post_ts": "2026-05-19T03:21:53Z",
-        "views": 3301
+        "notes": "Straight local education policy story from OC student.",
+        "posted": "2026-05-20T01:01:39Z",
+        "post_ts": "2026-05-18T14:15:47Z",
+        "views": 435
+      },
+      {
+        "headline": "Orange County Homeless Population Down 14% in Two Years",
+        "handle": "@ocregister",
+        "url": "https://x.com/ocregister/status/2056513067467350374",
+        "body": "2026 Point In Time Count shows Orange County\u2019s homeless population down 14% in two years.",
+        "engagement": "0 likes, 0 reposts, 1 reply",
+        "honesty": "10/10",
+        "notes": "Official local statistics on OC homelessness trends.",
+        "posted": "2026-05-20T01:01:39Z",
+        "post_ts": "2026-05-18T23:11:38Z",
+        "views": 457
       }
     ]
   },
@@ -2070,107 +2178,93 @@
         "url": "https://x.com/JamesOKeefeIII/status/2056771194418774363",
         "body": "O'Keefe hidden camera footage of Skid Row election fraudster Brenda Brown results in federal indictment with 5 years prison, $10k fine.",
         "engagement": "2444 likes, 488 reposts, 55 replies",
-        "honesty": "9/10",
-        "notes": "Verified indictment from O'Keefe's documented undercover evidence.",
+        "honesty": "8/10",
+        "notes": "Verified indictment is factual core, but causal link 'results in' implies O'Keefe footage directly caused indictment - analytical framing",
         "posted": "2026-05-19T19:20:15Z",
         "post_ts": "2026-05-19T16:17:20Z",
         "views": 69819,
         "views_at_save": 69819,
-        "age_at_save_hours": 6.4
+        "age_at_save_hours": 8.74
       },
       {
-        "headline": "Armenian National Steals $500M in Massive Tax Credit Fraud",
-        "handle": "@AZ2ADave",
-        "url": "https://x.com/AZ2ADave/status/2056545257563869623",
-        "body": "The very last sentence in this post has been my battle cry\u2026another thief discovered. Another thief that\u2019s stolen from us, the common taxpayer. And what does the common taxpayer have to continue doing?",
-        "engagement": "11893 likes, 5094 reposts, 335 replies",
-        "honesty": "8/10",
-        "notes": "Specific names, dollar amounts, and prosecutorial details from court filings provide strong evidence.",
-        "posted": "2026-05-19T05:02:53Z",
-        "post_ts": "2026-05-18T20:46:59Z",
-        "views": 211783,
-        "views_at_save": 211783,
-        "age_at_save_hours": 21.36,
-        "original_url": "https://x.com/WallStreetApes/status/2056476666344706382",
-        "original_handle": "@WallStreetApes",
-        "original_views": 210023,
-        "qt_views": 1760
+        "headline": "Trump Grants Visa to Polish Opposition Official Targeted by Tusk Show Trial",
+        "handle": "@JackPosobiec",
+        "url": "https://x.com/JackPosobiec/status/2056749525914562755",
+        "body": "Trump issues visa to conservative Polish official after Globalist Tusk's show trial attempt, exposing EU government weaponization with official photo...",
+        "engagement": "5.4K likes, 1.5K reposts, 554 replies",
+        "honesty": "7/10",
+        "notes": "Opinion framing 'Globalist Tusk's show trial' and 'exposing weaponization' - editorializing beyond visa issuance fact",
+        "posted": "2026-05-20T01:01:39Z",
+        "post_ts": "2026-05-19T14:51:14Z",
+        "views": 99500
       },
       {
-        "headline": "TikTokers openly calling for assassinations of conservatives",
-        "handle": "@HabitualLinest",
-        "url": "https://x.com/HabitualLinest/status/2056708761595646068",
-        "body": "Luigi Mangione would not have murdered Brian Thompson, if Brian was ghey, black or a woman \n\nHe wasn't assassinated because he worked for a health insurance company....",
-        "engagement": "1.1K likes, 142 reposts, 32 replies",
+        "headline": "NY School District Illegally Prioritizes Race in Hiring with Documented Proof",
+        "handle": "@libsoftiktok",
+        "url": "https://x.com/libsoftiktok/status/2056791114082816241",
+        "body": "Penfield CSD job posting and superintendent letter reveal race-based hiring favoring underrepresented groups, enabling civil rights claims against...",
+        "engagement": "1.8K likes, 623 reposts, 53 replies",
         "honesty": "8/10",
-        "notes": "Links to original videos and screenshots as direct evidence of threats, no exaggeration of claims.",
-        "posted": "2026-05-19T17:07:28Z",
-        "post_ts": "2026-05-19T10:48:33Z",
-        "views": 84295,
-        "views_at_save": 84295,
-        "age_at_save_hours": 10.53,
-        "original_url": "https://x.com/JackPosobiec/status/2056688451865514468",
-        "original_handle": "@JackPosobiec",
-        "original_views": 44526,
-        "qt_views": 39769
+        "notes": "Job posting and letter are verifiable, but 'enabling civil rights claims' is legal analysis/prediction, not verified fact",
+        "posted": "2026-05-20T01:01:39Z",
+        "post_ts": "2026-05-19T17:36:29Z",
+        "views": 84031
       }
     ],
     "earlier": [],
-    "_overflow": [
-      {
-        "headline": "Maine girls testify males in bathrooms masturbating, too terrified to speak",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2056741371600408961",
-        "body": "Shocking testimony from young girls in Maine: males pretending to be girls masturbating in girls bathrooms, referendum to ban boys from private...",
-        "engagement": "21K likes, 6.4K reposts, 318 replies",
-        "honesty": "9/10",
-        "notes": "Eyewitness video testimony with specific referendum details and direct claims, no unsubstantiated speculation.",
-        "posted": "2026-05-19T22:41:11Z",
-        "post_ts": "2026-05-19T14:18:50Z",
-        "views": 241094
-      },
-      {
-        "headline": "O'Keefe expose leads to guilty plea in 20-year LA voter fraud scheme",
-        "handle": "@JamesOKeefeIII",
-        "url": "https://x.com/JamesOKeefeIII/status/2056412749274517507",
-        "body": "O'Keefe gets accountability: election fraudster Brenda Brown faces up to 5 years after expose, pleads guilty to paying homeless to register in...",
-        "engagement": "8K likes, 1.7K reposts, 96 replies",
-        "honesty": "9/10",
-        "notes": "Court outcome tied directly to O'Keefe investigation with video evidence and DOJ reference, verifiable facts.",
-        "posted": "2026-05-19T22:41:11Z",
-        "post_ts": "2026-05-18T16:33:00Z",
-        "views": 159335
-      },
-      {
-        "headline": "Google caught in election interference with targeted suppression",
-        "handle": "@EndWokeness",
-        "url": "https://x.com/EndWokeness/status/2056437825424257040",
-        "body": "This is election interference by Google: video evidence of search manipulation suppressing conservative content ahead of votes.",
-        "engagement": "10.7K likes, 2.6K reposts, 207 replies",
-        "honesty": "8/10",
-        "notes": "Video clip demonstrates specific interference claim with visual proof, light framing but core evidence holds.",
-        "posted": "2026-05-19T22:41:11Z",
-        "post_ts": "2026-05-18T18:12:39Z",
-        "views": 132265
-      }
-    ]
+    "_overflow": []
   },
   "comedy": {
     "stories": [
       {
         "headline": "Wayans brothers roast reaction",
-        "handle": "@KillaKreww",
-        "url": "https://x.com/KillaKreww/status/2056833311129965027",
-        "body": "Marlon and Shawn Wayans react to Kevin Hart roast and Tony Hinchcliffe George Floyd joke.",
+        "handle": "@Quadripolar_B",
+        "url": "https://x.com/Quadripolar_B/status/2056872542644711733",
+        "body": "Always been my motto, nothing is off limits if you can make it funny",
         "engagement": "2569 likes, 153 reposts",
         "honesty": "8/10",
         "notes": "Factual clip of comedians discussing comedy boundaries.",
         "posted": "2026-05-19T22:41:12Z",
         "post_ts": "2026-05-19T20:24:10Z",
-        "views": 349983,
+        "views": 680420,
         "views_at_save": 349983,
-        "age_at_save_hours": 2.28
+        "age_at_save_hours": 4.62,
+        "original_url": "https://x.com/KillaKreww/status/2056833311129965027",
+        "original_handle": "@KillaKreww",
+        "original_views": 679569,
+        "qt_views": 851
       },
+      {
+        "headline": "Simpsons couch gag sparks stand-up writer joke",
+        "handle": "@VeeEmYou",
+        "url": "https://x.com/VeeEmYou/status/2056779495319736716",
+        "body": "Out of context Simpsons clip prompts quip about failed millennial nepo baby standup comic.",
+        "engagement": "7724 likes, 182 reposts",
+        "honesty": "9/10",
+        "notes": "Fact-based commentary on a real video clip with light opinion.",
+        "posted": "2026-05-20T01:01:40Z",
+        "post_ts": "2026-05-19T16:50:19Z",
+        "views": 376965,
+        "views_at_save": 376965,
+        "age_at_save_hours": 8.19
+      },
+      {
+        "url": "https://x.com/miiilato/status/2056723355873513700",
+        "handle": "@miiilato",
+        "body": "people joke about social anxiety but they never had to pretend like they weren't crossing the street just so the car wouldn't have to wait",
+        "views": 1036943,
+        "engagement": {
+          "likes": 24192,
+          "reposts": 931,
+          "quotes": 80,
+          "replies": 91,
+          "bookmarks": 1343
+        },
+        "honesty": "humorous observational skit",
+        "notes": "viral social anxiety humor clip, different event from excluded topics"
+      }
+    ],
+    "earlier": [
       {
         "headline": "Joe Rogan Podcast Clip on Ownership",
         "handle": "@joeroganhq",
@@ -2185,23 +2279,6 @@
         "views_at_save": 27295,
         "age_at_save_hours": 22.85
       },
-      {
-        "url": "https://x.com/hi_rhea/status/2056595766123413828",
-        "handle": "@hi_rhea",
-        "body": "No one can roast better than indian mom \ud83d\ude02",
-        "views": 264227,
-        "engagement": {
-          "likes": 4927,
-          "reposts": 342,
-          "quotes": 10,
-          "replies": 28,
-          "bookmarks": 1218
-        },
-        "honesty": "7/10",
-        "notes": "Opinion: subjective commentary ('No one can roast better') on video clip"
-      }
-    ],
-    "earlier": [
       {
         "headline": "Shrek premiere nostalgia",
         "handle": "@CrazyGamerInc",
@@ -2235,20 +2312,6 @@
         "age_at_save_hours": 23.75
       },
       {
-        "headline": "Comedians turned directors",
-        "handle": "@LazyFrickStream",
-        "url": "https://x.com/LazyFrickStream/status/2056154827252486216",
-        "body": "Jordan Peele and Zach Cregger started as comedians before directing horror hits like Get Out and Barbarian.",
-        "engagement": "9855 likes, 866 reposts",
-        "honesty": "9/10",
-        "notes": "Accurate historical fact about comedians' careers with light commentary.",
-        "posted": "2026-05-18T15:31:33Z",
-        "post_ts": "2026-05-17T23:28:06Z",
-        "views": 178832,
-        "views_at_save": 178832,
-        "age_at_save_hours": 41.1
-      },
-      {
         "headline": "Monday morning comedy video clip",
         "handle": "@bagshaw2112",
         "url": "https://x.com/bagshaw2112/status/2056262875115573551",
@@ -2275,20 +2338,6 @@
         "views": 118249,
         "views_at_save": 118249,
         "age_at_save_hours": 22.41
-      },
-      {
-        "headline": "Mike Epps disturbed by Adrien Broner",
-        "handle": "@kick_clips",
-        "url": "https://x.com/kick_clips/status/2056174620336664898",
-        "body": "Comedian Mike Epps looks genuinely disturbed after Adrien Broner asks him to make a joke on the spot.",
-        "engagement": "1011 likes, 32 reposts",
-        "honesty": "10/10",
-        "notes": "Video clip is primary source of exactly what's claimed - verified content",
-        "posted": "2026-05-18T13:12:25Z",
-        "post_ts": "2026-05-18T00:46:46Z",
-        "views": 77166,
-        "views_at_save": 77166,
-        "age_at_save_hours": 18.31
       },
       {
         "url": "https://x.com/IndianaGPA/status/2056180796663173332",
