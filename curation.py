@@ -369,20 +369,16 @@ def curate(tab, current_stories, fresh_candidates, top_n=DEFAULT_TOP_N, enrich=T
     """
     Run the entire selection pipeline for a single tab.
 
-    Inputs:
-      tab               — tab name (string, for logging only)
-      current_stories   — what's currently displayed on the tab (from previous cron)
-      fresh_candidates  — new candidates returned by Grok this cron
-      top_n             — how many stories to keep on the tab
-      enrich            — if True, run the commentator enrichment
-      history           — optional dict {url -> {views_at_save, age_at_save_hours}}
-                          for real 4-hour-delta velocity computation
-
     Output:
-      list of N stories, ranked by 4h-growth, optionally enriched.
+      list of N stories, ranked by 4h-growth (or raw views on Top tab), optionally enriched.
     """
     chosen = apply_velocity_hold(current_stories or [], fresh_candidates or [],
                                   top_n=top_n, history=history, max_age_h=max_age_h)
+    # 2026-05-20: Top tab = absolute most-viewed today, no editorial filter.
+    # Velocity sort hides large-but-older stories behind small-but-fresh ones.
+    # On Top specifically, re-sort the post-hold pool by raw view count.
+    if tab == 'top' and chosen:
+        chosen = sorted(chosen, key=story_views, reverse=True)[:top_n]
     if enrich and chosen:
         chosen = [enrich_commentator(s, fresh_candidates or []) for s in chosen]
     return chosen

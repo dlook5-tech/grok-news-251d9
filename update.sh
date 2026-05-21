@@ -745,12 +745,24 @@ PROMPT
 # --- TOP VIRAL ---
 cat > /tmp/grok_p_top.txt <<PROMPT
 Current date: $TODAY. Yesterday: $YESTERDAY.
-Find the 3 most viral posts on ALL of X right now.
-Primary search: "lang:en since:$TODAY", mode: "Top", limit: 10. Let X's ranking algorithm find the most viral content.
-Fallback: "lang:en since:$YESTERDAY min_faves:5000", mode: "Top", limit: 10.
-Pick the 3 highest-engagement posts. 3 DIFFERENT handles.
+MISSION: Find the 3 absolute most-viewed posts on ALL of X in the last 24h. By RAW VIEW COUNT, not engagement score.
+
+CRITICAL: x_search's "Top" mode sorts by Twitter's black-box engagement score (likes+RTs+replies), NOT raw views. A 30M-view video clip with modest likes can be invisible behind a 100K-view text post with high engagement. To compensate, fire MULTIPLE searches with different angles, pool the candidates, then YOU re-sort by raw view count.
+
+RUN ALL FOUR SEARCHES AND POOL CANDIDATES:
+(a) "lang:en since:$TODAY", mode:"Top", limit:25 — accumulated viral
+(b) "lang:en since:4_hours_ago min_faves:500", mode:"Latest", limit:25 — fresh viral that just broke
+(c) "lang:en since:$TODAY filter:videos min_faves:200", mode:"Top", limit:25 — videos often 10M+ views with modest likes
+(d) "lang:en since:$TODAY min_retweets:5000", mode:"Top", limit:25 — silent-viral content with high reach
+
+Combine all candidates, dedupe by URL. Sort by RAW VIEW COUNT descending. Return the 3 highest by raw views. They can be any subject (news, meme, sports clip, viral moment, anything). NO editorial filter — pure views.
+
+REQUIREMENTS:
+- 3 DIFFERENT handles, 3 DIFFERENT events (no two posts about the same thing)
+- Each must include a real integer "views" field from x_search's view_count
+
 Body: 1 sentence, under 120 chars.
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
+Honesty: 10=verified fact, 8=analysis/commentary, 7=opinion/take.
 Return JSON: {"top":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
@@ -764,15 +776,12 @@ STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handl
 
 CRITICAL DIVERSITY RULE: 3 DIFFERENT handles. NO repeats. If you've used @MattWalshBlog for one story, use a different handle for the others. The user has flagged that we keep returning the same handle (Matt Walsh) for every story — STOP DOING THAT.
 
-Search EACH handle separately, mode: "Latest" for freshness:
-"from:BillMelugin_ since:$YESTERDAY min_faves:500", mode: "Latest"
-"from:MattWalshBlog since:$YESTERDAY min_faves:500", mode: "Latest"
-"from:TimcastNews since:$YESTERDAY min_faves:500", mode: "Latest"
-"from:TheRabbitHole84 since:$YESTERDAY min_faves:500", mode: "Latest"
-"from:JamesOKeefeIII since:$YESTERDAY min_faves:200", mode: "Latest"
-"from:LibsOfTikTok since:$YESTERDAY min_faves:500", mode: "Latest"
-"from:collinrugg OR from:EndWokeness OR from:WallStreetApes OR from:RealSaavedra OR from:SCOTUSblog OR from:InsightGL since:$YESTERDAY min_faves:500", mode: "Latest"
-FALLBACK: If a handle has no Latest results, try mode: "Top" with same min_faves. Then retry with min_faves:100.
+SEARCH BROADLY — don't restrict to the seed list. The biggest MSM-ignored stories often go viral on accounts NOT on our seed list (fan accounts, citizen journalists, breaking witnesses). Find them all:
+(a) Topic search: "(suppressed OR ignored OR covered up OR exposed OR undercover OR receipts OR \"caught on camera\" OR \"the part nobody is talking about\") lang:en since:$YESTERDAY min_faves:500", mode:"Top", limit:30
+(b) Seed assist (use seeds as candidate-source hints, NOT as a filter): "(from:BillMelugin_ OR from:MattWalshBlog OR from:TimcastNews OR from:JamesOKeefeIII OR from:LibsOfTikTok OR from:collinrugg OR from:EndWokeness) since:$YESTERDAY min_faves:200", mode:"Latest", limit:30
+(c) Open: "lang:en since:$YESTERDAY min_faves:5000 (story OR breaking OR exclusive OR investigation)", mode:"Top", limit:30
+
+Pool candidates, sort by raw view count, take the top 3. Any handle is welcome — the strongest stories often come from accounts you've never heard of.
 
 QUALITY BAR: pick posts with a SPECIFIC STORY that MSM isn't covering — not hot takes ABOUT the media. Actual events, data, undercover footage, specific officials doing specific things.
 
@@ -793,10 +802,13 @@ STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handl
 @DowdEdward, @RayDalio, @Stocktwits, @StockMKTNewz, @WatcherGuru, @unusual_whales, @TruthGundlach, @LizAnnSonders, @elerianm
 
 Must be stocks, markets, finance, crypto, deals, or macro. NOT geopolitics/military.
-Search mode: "Latest" with insight keywords:
-"(from:unusual_whales OR from:WatcherGuru OR from:StockMKTNewz OR from:RayDalio OR from:LizAnnSonders OR from:elerianm OR from:Stocktwits OR from:DowdEdward OR from:TruthGundlach) (insight OR analysis OR \"hot take\" OR contrarian OR \"why this matters\" OR underrated OR \"what nobody is saying\") since:$YESTERDAY min_faves:100", mode: "Latest", limit: 20.
-ALSO search mode: "Top": "(from:unusual_whales OR from:WatcherGuru OR from:StockMKTNewz OR from:RayDalio OR from:LizAnnSonders OR from:elerianm OR from:DowdEdward OR from:TruthGundlach) since:$YESTERDAY min_faves:500", limit: 15.
-FALLBACK: If <3, retry with min_faves:50.
+
+SEARCH BROADLY — don't restrict to the seed list. The strongest finance posts often come from accounts not on the seed list. Find them all:
+(a) Topic search: "(stocks OR markets OR earnings OR macro OR \"hot take\" OR contrarian OR \"why this matters\" OR \"what nobody is saying\") (insight OR analysis OR data OR chart) lang:en since:$YESTERDAY min_faves:200", mode:"Top", limit:30
+(b) Seed assist (as hints, NOT a filter): "(from:unusual_whales OR from:WatcherGuru OR from:StockMKTNewz OR from:RayDalio OR from:LizAnnSonders OR from:elerianm OR from:DowdEdward OR from:TruthGundlach OR from:Stocktwits) since:$YESTERDAY min_faves:100", mode:"Latest", limit:30
+(c) Open: "(finance OR macro OR markets OR economy) lang:en since:$YESTERDAY min_faves:5000", mode:"Top", limit:30
+
+Pool candidates, sort by RAW VIEW COUNT, take the 3 strongest. Any handle is welcome. The biggest finance moments today don't always live on the seed list.
 
 QUALITY BAR: pick posts with data + opinion, contrarian call, or macro framing. REJECT bare earnings numbers, price-only posts, or "line go up" cheerleading.
 
@@ -860,23 +872,13 @@ old as the primary target. Only fall back to 24h if 12h truly empty. NEVER
 return clips ≥24h old — parse_grok will drop them anyway and the tab goes
 empty.
 
-PRIMARY SEARCH (mode:Latest first — fresh clips that haven't accumulated likes yet):
-"(from:joerogan OR from:joeroganhq OR from:JREClips OR from:TuckerCarlson OR from:lexfridman OR from:fridmanclips OR from:theallinpod OR from:CallHerDaddy OR from:adamcarolla OR from:PBDPodcast OR from:patrickbetdavid OR from:ShawnRyanShow OR from:MegynKellyShow OR from:LouderWithCrowder OR from:RussellBrand) lang:en", mode: "Latest", limit: 50
+SEARCH BROADLY — the seed list is a HINT, NOT a filter. The most viral podcast clips often live on FAN-CLIP ACCOUNTS (@JREClips_HQ, viral-clip pages), reaction accounts, and random users who reposted the clip — NOT the official show handles. Cast a wide net:
+(a) Topic + clip search: "(\"Joe Rogan\" OR \"Tucker Carlson\" OR \"Lex Fridman\" OR \"Theo Von\" OR \"podcast clip\" OR \"on the pod\") (clip OR moment OR \"said this\" OR exchange) lang:en since:$YESTERDAY min_faves:500", mode:"Top", limit:30
+(b) Seed assist (as hints): "(from:joerogan OR from:joeroganhq OR from:JREClips OR from:TuckerCarlson OR from:lexfridman OR from:theallinpod OR from:PBDPodcast OR from:ShawnRyanShow OR from:MegynKellyShow OR from:RussellBrand) lang:en since:$YESTERDAY", mode:"Latest", limit:30
+(c) Fresh-broad: "(podcast OR \"on the show\" OR \"on the pod\") lang:en since:12_hours_ago min_faves:1000", mode:"Top", limit:30
+(d) Big-viral-pod-clips: "(\"Joe Rogan\" OR \"Tucker\" OR \"Lex\" OR \"Theo Von\") since:$YESTERDAY min_faves:5000", mode:"Top", limit:30
 
-SECONDARY (mode:Top for accumulated engagement on 12-24h-old clips):
-"(from:joerogan OR from:joeroganhq OR from:JREClips OR from:TuckerCarlson OR from:lexfridman OR from:fridmanclips OR from:theallinpod OR from:CallHerDaddy OR from:adamcarolla OR from:PBDPodcast OR from:patrickbetdavid OR from:ShawnRyanShow OR from:MegynKellyShow OR from:LouderWithCrowder OR from:RussellBrand) lang:en since:$YESTERDAY min_faves:100", mode: "Top", limit: 30
-
-LOWERED min_faves to 100 (was 300-500): high thresholds biased toward older
-accumulated-engagement posts and missed fresh clips. Lower bar lets recent
-viral content through. The dedup + Python-side curation handles quality.
-
-SUPPLEMENT — per-show fresh search:
-"from:JREClips OR from:joerogan OR from:joeroganhq", mode: "Latest", limit: 15
-"from:theallinpod", mode: "Latest", limit: 15
-"from:TuckerCarlson", mode: "Latest", limit: 15
-"from:PBDPodcast OR from:patrickbetdavid", mode: "Latest", limit: 15
-"from:fridmanclips OR from:lexfridman", mode: "Latest", limit: 15
-"from:ShawnRyanShow OR from:MegynKellyShow OR from:RussellBrand OR from:adamcarolla OR from:LouderWithCrowder OR from:CallHerDaddy", mode: "Latest", limit: 25
+Pool candidates, sort by RAW VIEW COUNT, take 3. ANY handle is welcome — a fan account at 5M views BEATS the official handle at 50K views.
 
 CRITICAL: prefer ANY fresh clip (≤12h) over older ones (12-24h). A 5h-old
 clip with 50 likes BEATS a 23h-old clip with 5000 likes.
@@ -1035,10 +1037,12 @@ REJECT:
 - Content older than 6 hours (must be tied to current news cycle)
 - MSM amplification ("per CNN") — these are people DOING reporting MSM isn't doing
 
-Search:
-"(from:JackPosobiec OR from:JamesOKeefeIII OR from:TomFitton OR from:WallStreetApes OR from:TheRabbitHole84 OR from:CollinRugg OR from:libsoftiktok OR from:EndWokeness OR from:DropSiteNews OR from:Snowden OR from:ggreenwald OR from:ProPublica OR from:KimZetter OR from:disclosetv OR from:BillMelugin_) since:$YESTERDAY min_faves:1000", mode: "Top", limit: 30
-FALLBACK 1: If <3 strong picks, drop to min_faves:500.
-FALLBACK 2: Add "(receipts OR documents OR leaked OR exposed OR investigation OR FOIA OR \"court filing\")" to narrow toward actual evidence-based posts.
+SEARCH BROADLY — seed list is a HINT, NOT a filter. The strongest evidence-based posts often come from accounts not on the seed list (citizen investigators, leaked-doc accounts, FOIA-specialist handles, anonymous truth-tellers):
+(a) Topic search: "(receipts OR \"leaked documents\" OR exposed OR undercover OR FOIA OR \"court filing\" OR \"document dump\" OR \"the part nobody is talking about\") lang:en since:$YESTERDAY min_faves:1000", mode:"Top", limit:30
+(b) Seed assist (as hints): "(from:JackPosobiec OR from:JamesOKeefeIII OR from:TomFitton OR from:WallStreetApes OR from:TheRabbitHole84 OR from:CollinRugg OR from:libsoftiktok OR from:DropSiteNews OR from:ggreenwald OR from:ProPublica OR from:BillMelugin_) since:$YESTERDAY min_faves:500", mode:"Top", limit:30
+(c) Investigation-style: "(investigation OR \"watch this\" OR \"this is wild\" OR \"thread:\") lang:en since:$YESTERDAY min_faves:5000", mode:"Top", limit:30
+
+Pool candidates, sort by RAW VIEW COUNT, take 3 strongest evidence-based picks. ANY handle is welcome.
 
 Pick 3 from 3 DIFFERENT approved handles — strongest evidence/investigation posts.
 Body: 1 sentence naming the SPECIFIC angle being investigated, under 140 chars.
