@@ -1037,22 +1037,10 @@ REJECT:
 - Content older than 6 hours (must be tied to current news cycle)
 - MSM amplification ("per CNN") — these are people DOING reporting MSM isn't doing
 
-CRITICAL — START BROAD, NOT FROM SEEDS. Two crons in a row picked 100% seed-handle posts with sub-100K views. The strongest evidence-based content today is often on accounts not on our seed list — citizen investigators, leak accounts, breaking-news witnesses, anonymous document-droppers. DO NOT default to the seed list.
-
-REQUIRED SEARCH ORDER:
-1. Run searches (a)(b)(c) FIRST — broad, seed-free:
-   (a) "(receipts OR \"leaked documents\" OR exposed OR undercover OR FOIA OR \"court filing\" OR \"document dump\" OR \"obtained by\" OR \"footage shows\") lang:en since:$YESTERDAY min_faves:2000", mode:"Top", limit:40
-   (b) "(investigation OR \"watch this\" OR \"this is wild\" OR \"thread:\" OR \"the part nobody is talking about\" OR \"suppressed\") lang:en since:$YESTERDAY min_faves:5000", mode:"Top", limit:40
-   (c) "(\"caught on camera\" OR \"surveillance footage\" OR \"audio leaked\" OR \"emails reveal\") lang:en since:$YESTERDAY min_faves:1000", mode:"Top", limit:40
-
-2. Pool all (a)(b)(c) candidates, sort by RAW VIEW COUNT.
-
-3. ONLY IF the broad search pool returns <5 viable candidates above 100K views, fall back to seed-list search:
-   "(from:JackPosobiec OR from:JamesOKeefeIII OR from:TomFitton OR from:WallStreetApes OR from:TheRabbitHole84 OR from:CollinRugg OR from:libsoftiktok OR from:DropSiteNews OR from:ggreenwald OR from:ProPublica OR from:BillMelugin_) since:$YESTERDAY min_faves:500", mode:"Top", limit:30
-
-4. SELF-CHECK before returning: if your 3 picks are all from the seed list AND any has <500K views, RE-RUN searches (a)(b)(c) more aggressively. You're defaulting to comfortable handles; that's failing the spec.
-
-Take the 3 highest by RAW VIEW COUNT. ANY handle is welcome — strongly preferred to come from outside the seed list.
+Search:
+"(from:JackPosobiec OR from:JamesOKeefeIII OR from:TomFitton OR from:WallStreetApes OR from:TheRabbitHole84 OR from:CollinRugg OR from:libsoftiktok OR from:EndWokeness OR from:DropSiteNews OR from:Snowden OR from:ggreenwald OR from:ProPublica OR from:KimZetter OR from:disclosetv OR from:BillMelugin_) since:$YESTERDAY min_faves:1000", mode: "Top", limit: 30
+FALLBACK 1: If <3 strong picks, drop to min_faves:500.
+FALLBACK 2: Add "(receipts OR documents OR leaked OR exposed OR investigation OR FOIA OR \"court filing\")" to narrow toward actual evidence-based posts.
 
 Pick 3 from 3 DIFFERENT approved handles — strongest evidence/investigation posts.
 Body: 1 sentence naming the SPECIFIC angle being investigated, under 140 chars.
