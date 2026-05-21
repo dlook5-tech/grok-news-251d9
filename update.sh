@@ -636,9 +636,11 @@ Current date: $TODAY. Yesterday: $YESTERDAY.
   1. **headline** field is REQUIRED for every post — a 1-line summary of what the post is ABOUT (not a copy of the body). Examples:
      - Reply "Same" to @SethDillon → headline: "Agrees with Seth Dillon's take on [topic]"
      - Reply "True" to @WashingtonPost → headline: "Calls WaPo report accurate on [topic]"
-     - Bare image post → headline: "Posts photo of [scene/subject]"
+     - Bare image post → headline must describe WHAT THE IMAGE SHOWS: "Posts photo of SpaceX engine test fire" / "Shares satellite image of Iran nuclear site". NEVER just "Posts photo" or "Shares an image".
+     - Link-only post (just a t.co URL) → headline must describe WHAT THE LINK IS ABOUT, not "Shares a link". Open the link via x_search context to find what it points to, then summarize the destination.
+     - Video repost → headline must describe what the video shows.
      - Original take → headline: "Elon predicts [X]" or "Comments on [event]"
-     The frontend uses this headline as the block title — "Same" alone is useless to readers.
+     The frontend uses this headline as the block title — "Same" or "Shares a link" alone is useless to readers.
   2. **For REPLIES**: populate parent_url + parent_handle + parent_text so the parent tweet embeds inline above the reply. Without these, the reader sees Elon saying "True" with no idea what he's responding to.
      - parent_url: full https://x.com/handle/status/id of the post he's replying to
      - parent_handle: @handle of parent author
