@@ -684,7 +684,7 @@
         "engagement": "",
         "honesty": "8/10",
         "notes": "",
-        "posted": "2026-05-22T04:56:29Z",
+        "posted": "2026-05-22T05:21:14Z",
         "post_ts": "2026-05-21T14:36:03Z",
         "views": 205394,
         "views_at_save": 205394,
@@ -778,6 +778,17 @@
         "honesty": "High - factual playoff context",
         "notes": "NBA playoffs milestone, different event"
       },
+      {
+        "url": "https://x.com/MLB/status/2057474052516687995",
+        "handle": "@MLB",
+        "body": "Cristopher S\u00e1nchez jumps three spots to No. 1 in the latest Pitcher Power Rankings! (MLB x @SageUSAmerica)",
+        "views": 1336437,
+        "engagement": "Likes=4123, Reposts=369, Quotes=99, Replies=145, Bookmarks=120",
+        "honesty": "official MLB ranking update",
+        "notes": "MLB pitcher rankings story"
+      }
+    ],
+    "earlier": [
       {
         "url": "https://x.com/MLB/status/2057685183801807311",
         "handle": "@MLB",
@@ -1369,6 +1380,54 @@
   "msm": {
     "stories": [
       {
+        "headline": "1976 Coca-Cola Ad Goes Viral",
+        "handle": "@EndWokeness",
+        "url": "https://x.com/EndWokeness/status/2057591012701220907",
+        "body": "Viral 1976 Coca-Cola commercial highlights stark cultural shift from past to present.",
+        "engagement": "32K likes, 5.5K reposts, 858 replies",
+        "honesty": "8/10",
+        "notes": "Fact with opinion framing",
+        "posted": "2026-05-22T05:21:15Z",
+        "post_ts": "2026-05-21T22:35:00Z",
+        "views": 1121686,
+        "views_at_save": 1121686,
+        "age_at_save_hours": 6.77
+      },
+      {
+        "headline": "Trump Supporter Attacked at Home",
+        "handle": "@CollinRugg",
+        "url": "https://x.com/CollinRugg/status/2057608036940972199",
+        "body": "Wife of elderly Trump flag displayer says husband not expected to survive brutal beating.",
+        "engagement": "14.1K likes, 4.2K reposts, 1K replies",
+        "honesty": "9/10",
+        "notes": "Fact",
+        "posted": "2026-05-22T05:21:16Z",
+        "post_ts": "2026-05-21T23:42:39Z",
+        "views": 628305,
+        "views_at_save": 628305,
+        "age_at_save_hours": 5.64
+      },
+      {
+        "headline": "DOJ Charges $90M Minnesota Fraud Suspect Who Fled on Rooftop",
+        "handle": "@washghost1",
+        "url": "https://x.com/washghost1/status/2057532584796553610",
+        "body": "He\u2019s a hundred percent hiding within his community",
+        "engagement": "24K likes, 6K reposts, 748 replies",
+        "honesty": "9/10",
+        "notes": "Fact with minor editorializing on the bust scale.",
+        "posted": "2026-05-22T04:56:31Z",
+        "post_ts": "2026-05-21T17:38:19Z",
+        "views": 1000757,
+        "views_at_save": 1000757,
+        "age_at_save_hours": 10.64,
+        "original_url": "https://x.com/EndWokeness/status/2057516351107842389",
+        "original_handle": "@EndWokeness",
+        "original_views": 960086,
+        "qt_views": 40671
+      }
+    ],
+    "earlier": [
+      {
         "headline": "DOJ Busts $90M Medicaid Fraudster on the Run",
         "handle": "@JPo1369",
         "url": "https://x.com/JPo1369/status/2057517797354188832",
@@ -1759,24 +1818,6 @@
         "original_handle": "@PopCrave",
         "original_views": 118747,
         "qt_views": 1107
-      },
-      {
-        "headline": "SUGA races before BTS show",
-        "handle": "@camlovesyoongi",
-        "url": "https://x.com/camlovesyoongi/status/2057165892341924097",
-        "body": "what you know about yunki min huh",
-        "engagement": "6675 likes, 788 reposts, 66 replies",
-        "honesty": "10/10",
-        "notes": "Fact",
-        "posted": "2026-05-20T19:35:08Z",
-        "post_ts": "2026-05-20T15:15:10Z",
-        "views": 154204,
-        "views_at_save": 121128,
-        "age_at_save_hours": 5.96,
-        "original_url": "https://x.com/TMZ/status/2057117938365124755",
-        "original_handle": "@TMZ",
-        "original_views": 150461,
-        "qt_views": 3743
       }
     ]
   },
