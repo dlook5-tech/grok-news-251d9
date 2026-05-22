@@ -2191,8 +2191,12 @@ def _local_quality_filter(stories_list):
 # no padding, no snapshot resurrection. Non-news tabs keep their backfill cascade.
 _NEWS_TABS_NO_PAD = {'business', 'top', 'msm', 'conspiracy', 'local'}
 
-for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
-             'pg6', 'recipe', 'science', 'local', 'conspiracy', 'comedy'):
+# 2026-05-22: per user mandate "bring everything over to Ristretto code",
+# the existing eXpressO main loop now only processes elon (keep eXpressO's
+# logic for prolific posting) and top (multi-query + raw-views already
+# Ristretto-equivalent). All other tabs are handled by the Ristretto block
+# further down.
+for _tab in ('elon', 'top'):
     _raw = data.get(_tab, [])
     _items = _raw if isinstance(_raw, list) else [_raw]
     _candidates = []
@@ -2287,6 +2291,65 @@ for _tab in ('elon', 'sports', 'allin', 'pods', 'business', 'top', 'msm',
     curation.stamp_view_history(_picked)
     _output_v5[_tab] = {'stories': _picked,
                         'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {}))}
+
+# ============================================================================
+# RISTRETTO BLOCK for all non-Elon, non-Top, non-World/USA tabs.
+# Per user mandate 2026-05-22: "bring everything over to Ristretto code."
+# Uses the same _rist_curate function defined above for World/USA.
+# Sports has the only special-case: SAS + Cowherd guaranteed at the bottom.
+# ============================================================================
+_RISTRETTO_TABS = ('business', 'msm', 'sports', 'pods', 'allin',
+                   'pg6', 'recipe', 'science', 'local', 'conspiracy', 'comedy')
+
+for _tab in _RISTRETTO_TABS:
+    # Ristretto main-loop body, verbatim:
+    items = data.get(_tab, [])
+    if not isinstance(items, list):
+        items = [items] if items else []
+    cleaned = []
+    for item in items:
+        if isinstance(item, dict):
+            if item.get('handle') and item.get('url'):
+                cleaned.append(item)
+    # Ristretto's curate (velocity sort, hold-aware, top_n=3 by default)
+    chosen = _rist_apply_hold(_rist_previous.get(_tab, []), cleaned, sort_key=_rist_story_velocity)
+    chosen = chosen[:3]  # Ristretto default top_n
+
+    # SPORTS SPECIAL: guarantee Stephen A + Cowherd slots at the bottom.
+    # Per user mandate 2026-05-22: "keep at least one Stephen A and Colin
+    # Cowherd post at the bottom of the sports stories, no matter what they are."
+    if _tab == 'sports':
+        # Detect what we already have
+        def _is_sas(s):
+            h = (s.get('handle','') or '').lower().lstrip('@')
+            return h in ('stephenasmith', 'firsttake')
+        def _is_cow(s):
+            h = (s.get('handle','') or '').lower().lstrip('@')
+            return h in ('colincowherd', 'theherd')
+        has_sas = any(_is_sas(s) for s in chosen)
+        has_cow = any(_is_cow(s) for s in chosen)
+
+        # Look for SAS/Cowherd in the full cleaned candidate pool (not yet picked)
+        # AND in held stories from previous cron.
+        _sport_pool = list(cleaned) + list(_rist_previous.get('sports', []))
+        if not has_sas:
+            sas_post = next((s for s in _sport_pool if _is_sas(s)), None)
+            if sas_post:
+                chosen.append(sas_post)
+                print(f"[sports] appended Stephen A post from pool", file=sys.stderr)
+        if not has_cow:
+            cow_post = next((s for s in _sport_pool if _is_cow(s)), None)
+            if cow_post:
+                chosen.append(cow_post)
+                print(f"[sports] appended Cowherd post from pool", file=sys.stderr)
+
+    # Frontend compat: body→text rename on each perspective (if any)
+    chosen = [_wu_body_to_text(s) for s in chosen]
+    print(f"[{_tab}] Ristretto-style: {len(chosen)} picks", file=sys.stderr)
+    _output_v5[_tab] = {
+        'stories': chosen,
+        'earlier': _build_earlier(_tab, chosen, _existing.get(_tab, {})),
+    }
 
 # ---- Static tabs (user-curated, never auto-populated) ----
 for _static in ('freespeech',):

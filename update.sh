@@ -557,32 +557,15 @@ A bad entry (what you've been returning) — DON'T do this:
 The reader sees "Same" as the block title with no context. Useless.
 PROMPT
 
-# --- ALLIN ---
+# --- ALLIN (Ristretto-style — minimal prompt, no seed restriction) ---
 cat > /tmp/grok_p_allin.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-MISSION: Find the 3 MOST THOUGHT-PROVOKING posts from billionaire operators — ORIGINAL INSIGHT, contrarian takes, deep framing. NOT generic "interesting" or "agree" reactions.
+Top 5 highest-view X posts (past 24h) from billionaire operators / All-In podcast hosts (Chamath, David Sacks, Marc Andreessen, Palmer Luckey, David Friedberg, etc.). Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
 
-STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
-@chamath, @DavidSacks, @pmarca, @PalmerLuckey, @friedberg
-
-Search EACH person separately, prefer mode: "Latest" for freshness + insight keywords:
-"from:chamath (insight OR analysis OR \"hot take\" OR contrarian OR perspective OR \"why this matters\" OR underrated) since:$YESTERDAY min_faves:100", mode: "Latest"
-"from:DavidSacks (insight OR analysis OR \"hot take\" OR contrarian OR perspective OR \"why this matters\" OR underrated) since:$YESTERDAY min_faves:100", mode: "Latest"
-"from:pmarca (insight OR analysis OR contrarian OR perspective OR underrated) since:$YESTERDAY min_faves:100", mode: "Latest"
-"from:PalmerLuckey (insight OR analysis OR contrarian OR perspective) since:$YESTERDAY min_faves:100", mode: "Latest"
-"from:friedberg (insight OR analysis OR contrarian OR perspective) since:$YESTERDAY min_faves:100", mode: "Latest"
-FALLBACK 1: If any person has no insight-keyword results, broaden to: "from:handle since:$YESTERDAY min_faves:100", mode: "Top".
-FALLBACK 2: If still no results, retry with min_faves:20.
-
-QUALITY BAR — pick ONLY posts with novel angle, sharp contrarian view, or deep insight. REJECT generic "interesting" / "agree" / "exactly" posts.
-
-CONTEXT RULE: ORIGINAL posts or quote-tweets only. NO context-less replies (starting with "@someone" or "that isn't true").
-
-Pick 3 posts from 3 DIFFERENT handles — strongest ORIGINAL INSIGHT (highest combined likes+retweets+replies among substantive posts) from each.
-Body: 1 sentence, under 120 chars.
-Engagement field MUST contain real numbers (e.g. "5.2K likes, 800 retweets, 200 replies").
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"allin":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"5.2K likes, 800 retweets, 200 replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
 # --- TOP VIRAL ---
@@ -609,299 +592,129 @@ Honesty: 10=verified fact, 8=analysis/commentary, 7=opinion/take.
 Return JSON: {"top":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
 PROMPT
 
+# ============================================================================
+# RISTRETTO-STYLE PROMPTS for non-perspectives, non-Elon tabs.
+# Per user mandate 2026-05-22: "bring everything over to Ristretto code."
+# Every tab below uses Ristretto's exact single-line prompt + JSON schema.
+# Sports is the one exception: keep SAS + Cowherd guaranteed at the bottom.
+# ============================================================================
+
 # --- MSM ---
 cat > /tmp/grok_p_msm.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-MISSION: Stories blowing up on X that MSM is IGNORING or UNDERREPORTING — the juicier, more suppressed the better. Prefer NOVEL ANGLES, exposé-style reporting, undercover footage, data that contradicts official narratives.
+Top 5 highest-view X posts (past 24h) from mainstream-media accounts (NYT, WaPo, CNN, BBC, Reuters, AP, etc.). Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
 
-STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is the most viral recipe, regardless of who posted):
-@BillMelugin_, @MattWalshBlog, @TimcastNews, @TheRabbitHole84, @SCOTUSblog, @InsightGL, @JamesOKeefeIII, @LibsOfTikTok, @RealSaavedra, @collinrugg, @EndWokeness, @WallStreetApes
-
-CRITICAL DIVERSITY RULE: 3 DIFFERENT handles. NO repeats. If you've used @MattWalshBlog for one story, use a different handle for the others. The user has flagged that we keep returning the same handle (Matt Walsh) for every story — STOP DOING THAT.
-
-SEARCH BROADLY — don't restrict to the seed list. The biggest MSM-ignored stories often go viral on accounts NOT on our seed list (fan accounts, citizen journalists, breaking witnesses). Find them all:
-(a) Topic search: "(suppressed OR ignored OR covered up OR exposed OR undercover OR receipts OR \"caught on camera\" OR \"the part nobody is talking about\") lang:en since:$YESTERDAY min_faves:500", mode:"Top", limit:30
-(b) Seed assist (use seeds as candidate-source hints, NOT as a filter): "(from:BillMelugin_ OR from:MattWalshBlog OR from:TimcastNews OR from:JamesOKeefeIII OR from:LibsOfTikTok OR from:collinrugg OR from:EndWokeness) since:$YESTERDAY min_faves:200", mode:"Latest", limit:30
-(c) Open: "lang:en since:$YESTERDAY min_faves:5000 (story OR breaking OR exclusive OR investigation)", mode:"Top", limit:30
-
-Pool candidates, sort by raw view count, take the top 3. Any handle is welcome — the strongest stories often come from accounts you've never heard of.
-
-QUALITY BAR: pick posts with a SPECIFIC STORY that MSM isn't covering — not hot takes ABOUT the media. Actual events, data, undercover footage, specific officials doing specific things.
-
-PICK 3 posts from 3 DIFFERENT handles — HIGHEST ENGAGEMENT post from each. Verify the 3 handles are not identical before returning.
-
-Body: 1 sentence, under 120 chars.
-Engagement field MUST contain real numbers (e.g. "47K likes, 12K retweets, 3.2K replies").
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"msm":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 12K retweets, 3.2K replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
 # --- BUSINESS ---
 cat > /tmp/grok_p_business.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-MISSION: 3 MOST THOUGHT-PROVOKING business/markets posts. Original analysis, contrarian calls, macro insight, hidden story behind the numbers — NOT generic "stocks up today" headlines.
+Top 5 highest-view X posts (past 24h) about business / markets / finance / economy. Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
 
-STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
-@DowdEdward, @RayDalio, @Stocktwits, @StockMKTNewz, @WatcherGuru, @unusual_whales, @TruthGundlach, @LizAnnSonders, @elerianm
-
-Must be stocks, markets, finance, crypto, deals, or macro. NOT geopolitics/military.
-
-SEARCH BROADLY — don't restrict to the seed list. The strongest finance posts often come from accounts not on the seed list. Find them all:
-(a) Topic search: "(stocks OR markets OR earnings OR macro OR \"hot take\" OR contrarian OR \"why this matters\" OR \"what nobody is saying\") (insight OR analysis OR data OR chart) lang:en since:$YESTERDAY min_faves:200", mode:"Top", limit:30
-(b) Seed assist (as hints, NOT a filter): "(from:unusual_whales OR from:WatcherGuru OR from:StockMKTNewz OR from:RayDalio OR from:LizAnnSonders OR from:elerianm OR from:DowdEdward OR from:TruthGundlach OR from:Stocktwits) since:$YESTERDAY min_faves:100", mode:"Latest", limit:30
-(c) Open: "(finance OR macro OR markets OR economy) lang:en since:$YESTERDAY min_faves:5000", mode:"Top", limit:30
-
-Pool candidates, sort by RAW VIEW COUNT, take the 3 strongest. Any handle is welcome. The biggest finance moments today don't always live on the seed list.
-
-QUALITY BAR: pick posts with data + opinion, contrarian call, or macro framing. REJECT bare earnings numbers, price-only posts, or "line go up" cheerleading.
-
-POLITICAL CONTENT REJECTION (HARD RULE): Business is markets/finance/macro ONLY. REJECT any post that is:
-- A political proposal, voting rights debate, immigration policy, social policy
-- A politician praising/criticizing another politician
-- A media outlet quoting a politician on policy (TIME on Washington, etc.)
-- An MSM-quote about "what most Americans think" of policy
-- Any content where the primary subject is partisan politics rather than markets/business
-If the topic is political, it belongs in the USA tab (which has 3-perspective format with Conservative/Democrat/Independent), NOT business. Single-perspective political content is explicitly forbidden — the user wants balance on every political story.
-
-QUOTED-MSM REJECTION: REJECT any post whose body is primarily a quoted passage from TIME, NY Times, WaPo, Washington Post, NPR, Reuters, AP, etc. (look for "per TIME" / "per NYT" / "per WaPo" patterns or text that opens with a quote). These are amplifications, not analysis.
-
-Pick 3 posts from 3 DIFFERENT handles — STRONGEST INSIGHT (highest combined likes+retweets+replies) per handle.
-Body: 1 sentence, under 120 chars.
-Engagement field MUST contain real numbers (e.g. "12K likes, 3K retweets, 800 replies").
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"business":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"12K likes, 3K retweets, 800 replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
-# --- SPORTS ---
+# --- SPORTS (Ristretto-style top picks + SAS/Cowherd guaranteed at bottom) ---
 cat > /tmp/grok_p_sports.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
+Find sports posts in two groups. Today is $TODAY.
 
-STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is the most viral recipe, regardless of who posted):
-@ShamsCharania, @wojespn, @ClutchPoints, @BleacherReport, @CourtsideBuzzX, @TheAthletic, @ESPNStatsInfo, @AdamSchefter, @stephenasmith, @TheHerd, @colincowherd
+GROUP A — Top 3 highest-view X posts (past 24h) about sports (major leagues, big games, athlete news). ANY handle.
+GROUP B — TWO guaranteed bottom slots:
+  - the most recent post from @stephenasmith (Stephen A Smith)
+  - the most recent post from @colincowherd (Colin Cowherd, or @TheHerd)
+  Include them even if their views are tiny. They always get a slot.
 
-EXACT structure — return EXACTLY 4 posts in this order:
-Post 1: Breaking sports news #1 (biggest story today). Search: "from:ShamsCharania OR from:wojespn OR from:BleacherReport OR from:ESPNStatsInfo OR from:TheAthletic OR from:AdamSchefter OR from:ClutchPoints since:$YESTERDAY min_faves:500", mode: "Top", limit: 15
-Post 2: Breaking sports news #2 (second biggest, DIFFERENT sport from Post 1). Same search, different story.
-Post 3: REQUIRED — Stephen A Smith's most viral take. Search ONLY: "from:stephenasmith since:$YESTERDAY", mode: "Top", limit: 10. Pick HIS HIGHEST-ENGAGEMENT post. If none today, try "since:3 days ago". MUST come from @stephenasmith. NEVER skip this slot — Stephen A is a fixture on this tab.
-Post 4: REQUIRED — Colin Cowherd's most viral take. Search ONLY: "from:colincowherd OR from:TheHerd since:$YESTERDAY", mode: "Top", limit: 10. Pick the HIGHEST-ENGAGEMENT post. If none today, try "since:3 days ago". MUST come from @colincowherd or @TheHerd. NEVER skip this slot.
+Return ALL 5 posts (3 from Group A, then 2 from Group B in that order — SAS first, Cowherd last) as a single JSON array.
+STRICT RECENCY for Group A: use x_search operator since:$YESTERDAY. Reject Group A posts before $YESTERDAY. Group B (SAS + Cowherd) may be up to 3 days old if needed to find one.
 
-CRITICAL RULES:
-- Always 4 posts. NOT 5. NOT 3. EXACTLY 4.
-- Post 3 must always be Stephen A. Post 4 must always be Cowherd. Both are required every run.
-- Post 1 and Post 2 must be DIFFERENT sports if possible (one NFL, one NBA — or one football, one basketball, one MLB, etc).
-- All 4 must be from DIFFERENT handles.
-
-FALLBACK: If weekend and no breaking news, use Friday's posts. ALWAYS produce 4 with both SAS and Cowherd present.
-
-Body: 1 sentence, under 120 chars.
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take.
-Return JSON: {"sports":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs. Views = actual view count integer.
 PROMPT
 
 # --- PODS ---
 cat > /tmp/grok_p_pods.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-CRITICAL MISSION: Find the 3 MOST VIRAL podcast clip moments on X right now. The user specifically complains that we've been returning mediocre clips — they want MASSIVELY VIRAL moments (100K+ views, 5K+ likes minimum for major podcasts, or peak engagement for the day).
+Top 5 highest-view X posts (past 24h) about or from major podcasters (Rogan, Lex Fridman, Theo Von, Tucker Carlson, PBD, etc.). Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
 
-STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is the most viral clip, regardless of which show):
-@joerogan, @joeroganhq, @JREClips, @TuckerCarlson, @theallinpod, @lexfridman, @fridmanclips, @CallHerDaddy, @adamcarolla, @PBDPodcast, @patrickbetdavid, @ShawnRyanShow, @MegynKellyShow, @LouderWithCrowder, @RussellBrand
-
-A clip is a 30-sec to 3-min specific moment that went viral. NOT a full-episode announcement.
-
-FRESHNESS REQUIREMENT (user mandate 2026-05-10 evening):
-"Are you telling me there's no other podcast posts today?" — when prior crons
-returned 25h+ clips, the user pushed back hard. Search MUST find clips ≤12h
-old as the primary target. Only fall back to 24h if 12h truly empty. NEVER
-return clips ≥24h old — parse_grok will drop them anyway and the tab goes
-empty.
-
-SEARCH BROADLY — the seed list is a HINT, NOT a filter. The most viral podcast clips often live on FAN-CLIP ACCOUNTS (@JREClips_HQ, viral-clip pages), reaction accounts, and random users who reposted the clip — NOT the official show handles. Cast a wide net:
-(a) Topic + clip search: "(\"Joe Rogan\" OR \"Tucker Carlson\" OR \"Lex Fridman\" OR \"Theo Von\" OR \"podcast clip\" OR \"on the pod\") (clip OR moment OR \"said this\" OR exchange) lang:en since:$YESTERDAY min_faves:500", mode:"Top", limit:30
-(b) Seed assist (as hints): "(from:joerogan OR from:joeroganhq OR from:JREClips OR from:TuckerCarlson OR from:lexfridman OR from:theallinpod OR from:PBDPodcast OR from:ShawnRyanShow OR from:MegynKellyShow OR from:RussellBrand) lang:en since:$YESTERDAY", mode:"Latest", limit:30
-(c) Fresh-broad: "(podcast OR \"on the show\" OR \"on the pod\") lang:en since:12_hours_ago min_faves:1000", mode:"Top", limit:30
-(d) Big-viral-pod-clips: "(\"Joe Rogan\" OR \"Tucker\" OR \"Lex\" OR \"Theo Von\") since:$YESTERDAY min_faves:5000", mode:"Top", limit:30
-
-Pool candidates, sort by RAW VIEW COUNT, take 3. ANY handle is welcome — a fan account at 5M views BEATS the official handle at 50K views.
-
-CRITICAL: prefer ANY fresh clip (≤12h) over older ones (12-24h). A 5h-old
-clip with 50 likes BEATS a 23h-old clip with 5000 likes.
-
-FILTERING: REJECT "new episode", "full interview", "full episode", "out now", "tune in", "dropping soon". KEEP specific-moment headlines — someone saying something shocking, a host reaction, a heated exchange, a reveal.
-
-DIVERSITY REQUIREMENT: Each of the 3 selections MUST be from a DIFFERENT podcast/show. No two clips from the same show/handle.
-
-FALLBACK 1: If <3 after above, lower thresholds by half.
-FALLBACK 2: If still <3, broaden to last 48 hours (not 24).
-
-Pick 3 from DIFFERENT approved shows — the 3 HIGHEST-ENGAGEMENT (combined likes+retweets+replies) CLIP moments.
-Body: 1 sentence describing the specific moment (what was said/happened), under 120 chars. Do NOT describe the episode generally.
-Engagement field MUST contain real numbers (e.g. "47K likes, 8K retweets, 3K replies").
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"pods":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 8K retweets, 3K replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
 # --- PG6 (Celebrity) ---
 cat > /tmp/grok_p_pg6.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-MISSION: JUICIEST celebrity gossip — SURPRISING reveals, dramatic takes, "wait, what?" moments. NOT red-carpet appearances or generic promo.
+Top 5 highest-view X posts (past 24h) about celebrity / entertainment / pop-culture news. Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
 
-STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
-@PopCrave, @enews, @JustJared, @etnow, @TMZ, @DeuxMoi, @PageSix, @Variety
-
-Search mode: "Latest" for fresh + juicy:
-"(from:PopCrave OR from:TMZ OR from:DeuxMoi OR from:enews OR from:JustJared OR from:PageSix OR from:Variety OR from:etnow) since:$YESTERDAY min_faves:500", mode: "Latest", limit: 20.
-ALSO search mode: "Top" for highest-engagement: "(from:PopCrave OR from:TMZ OR from:DeuxMoi OR from:etnow) since:$YESTERDAY min_faves:1000", limit: 15.
-FALLBACK: If <3 strong picks, retry with min_faves:200.
-
-QUALITY BAR: unexpected reveals, dramatic feuds, surprise engagements/breakups, cryptic posts that went viral, specific quotes from celebs. REJECT magazine-cover announcements and PR-rep releases.
-
-CRIME-BLOTTER REJECTION (HARD RULE): SKIP all sensationalized violent crime posts. This includes:
-- Graphic murder details, dismemberment, body disposal
-- Crime against minors with explicit details
-- "TERRIFYING:", "🚨 DISTURBING:", "ASSUSTADOR:" framing of violent crime
-- Mugshot + victim photo combo posts
-- Any post whose primary content is a violent crime accusation against a person
-The user is explicit: NO crime-blotter content on Pg.6. Pick redemption stories, dramatic feuds, surprise reveals, cultural moments, fashion drama instead.
-
-ENGLISH-ONLY: All posts must be in English OR have a complete English translation in the "translation" field. NO untranslated foreign-language content. If a post body is in Portuguese/Spanish/French/etc and you can't translate, SKIP it.
-
-Pick the 3 HIGHEST-ENGAGEMENT (combined likes+retweets+replies) UNEXPECTED/dramatic celebrity posts. 3 DIFFERENT handles.
-Body: 1 sentence, under 120 chars.
-Engagement field MUST contain real numbers (e.g. "47K likes, 8K retweets, 3K replies").
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Notes: say "Fact" or "Opinion" and call out any specific lies.
-Return JSON: {"pg6":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"47K likes, 8K retweets, 3K replies","url":"...","honesty":"X/10","notes":"..."},...]}
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
 # --- RECIPE ---
 cat > /tmp/grok_p_recipe.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-Actual FOOD RECIPES you can cook. NOT product lists, NOT gadget ads.
+Top 5 highest-view X posts (past 24h) about recipes / cooking / food. Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
 
-STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
-@tasteofhome, @FoodNetwork, @thekitchn, @HBHarvest, @halfbakedharvest, @foodandwine, @tasty, @KitchenSanc2ary, @budgetbytes, @BonAppetit, @RecipeTinEats
-
-Search 1: "from:FoodNetwork OR from:tasty OR from:halfbakedharvest OR from:HBHarvest OR from:budgetbytes OR from:foodandwine since:$YESTERDAY", mode: "Top", limit: 15.
-Search 2: "from:tasteofhome OR from:KitchenSanc2ary OR from:thekitchn OR from:BonAppetit OR from:RecipeTinEats since:$YESTERDAY", mode: "Top", limit: 15.
-FALLBACK: If <3 strong picks, retry with last 3 days.
-Body must name the dish. Skip non-recipe posts.
-Body: 1 sentence, under 120 chars.
-Engagement field MUST contain real numbers (e.g. "5K likes, 1K retweets, 200 replies").
-Return JSON: {"recipe":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"5K likes, 1K retweets, 200 replies","url":"...","honesty":"10/10","notes":"..."},...]}
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
 # --- SCIENCE ---
 cat > /tmp/grok_p_science.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-MISSION: 3 ACTUAL science DISCOVERIES or research findings. NOT award votes, NOT rankings, NOT industry promo.
+Top 5 highest-view X posts (past 24h) about science / tech / research breakthroughs. Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
 
-PRIMARY SEARCH (broader roster):
-"(from:NASAWebb OR from:EricTopol OR from:ScienceAlert OR from:ProfFeynman OR from:NatureNews OR from:SciAm OR from:DrEricDing OR from:NASA OR from:NASAJPL OR from:NewScientist OR from:LiveScience OR from:phys_org OR from:ScienceMagazine OR from:NIH OR from:NASAEarth OR from:CDCgov OR from:WHO OR from:NatGeo OR from:NeilTyson OR from:BillNye OR from:michio_kaku OR from:elonmusk OR from:SpaceX OR from:NASAArtemis) since:$YESTERDAY min_faves:50", mode: "Top", limit: 25.
-
-FALLBACK 1: Drop min_faves to 20 if <3.
-FALLBACK 2: Open it up — search "(discovery OR research OR breakthrough OR \"new study\" OR scientists OR \"first ever\") (space OR cancer OR climate OR AI OR genetics OR physics OR astronomy OR neuroscience OR fusion OR longevity) since:$YESTERDAY min_faves:1000 lang:en", mode: "Top", limit: 25.
-FALLBACK 3: Last resort: "(scientists OR researchers OR study OR discovery) since:$YESTERDAY min_faves:5000 lang:en", limit: 25 — pick anything genuinely science.
-
-PICK 3 from DIFFERENT handles describing 3 DIFFERENT discoveries. Body must name what was actually discovered/found.
-Body: 1 sentence under 120 chars.
-Return JSON: {"science":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
 # --- LOCAL ---
 cat > /tmp/grok_p_local.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
+Top 5 highest-view X posts (past 24h) about Southern California / Orange County / Newport Beach local news. Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
+GEOGRAPHY: stories must be Newport Beach, Costa Mesa, Huntington Beach, Irvine, Laguna Beach, Corona del Mar, Balboa, Fountain Valley, or Tustin. NEVER generic LA County / Hollywood / federal political stories that just happen to be in California.
 
-THE QUALITY MODEL — DAILY PILOT (https://www.dailypilot.com/)
-The user's exact guidance: "Go look at the Daily Pilot, it's the Newport Beach community paper. Look at the stories — that's the model for what to look for."
-
-Use web_search FIRST: "site:dailypilot.com" or visit dailypilot.com to see what types of stories are running THIS WEEK. Then find X posts that cover the SAME categories of stories. The Daily Pilot covers:
-- Newport Beach / Costa Mesa / Huntington Beach / Irvine / Laguna Beach city government (council meetings, mayor, planning commission, school board votes)
-- Local crime blotter (NBPD, OCSD reports — non-graphic, just specific incidents)
-- High school sports (Corona del Mar, Newport Harbor, Sage Hill, Estancia, etc.)
-- Local business openings/closings (restaurants, retail, small business stories)
-- Beach conditions, surf reports, water quality, ocean life
-- Real estate / housing development / zoning
-- Restaurant reviews and food scene
-- Community events (Newport Beach Film Festival, Boat Parade, Concerts on the Green)
-- Local non-profits and charities
-- Specific people (mayors, council members, school principals, business owners, athletes)
-- Traffic / road closures specific to OC
-
-GEOGRAPHY RULE (STRICT): Stories MUST be Newport Beach, Costa Mesa, Huntington Beach, Irvine, Laguna Beach, Corona del Mar, Balboa, Fountain Valley, Tustin. NEVER:
-- Generic LA County (Compton, Watts, downtown LA, Hollywood) unless directly affects OC
-- Political marches, labor rallies, protests anywhere
-- LA-wide breaking-news tickers
-- Federal political stories that just happen to be in California
-
-STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
-@DailyPilot, @OC_Scanner, @OCRegister, @NBPDsocial, @CityofNewportBeach, @hbpd, @CityofHB, @cityofIrvine, @CMPD_NewsInfo, @oclnews, @CdMHigh, @newportharborhs
-
-PRIORITY ORDER:
-1. @DailyPilot direct posts — these ARE the model
-2. @OC_Scanner / @NBPDsocial / @hbpd for incidents
-3. @OCRegister for OC-wide stories
-4. @CityofNewportBeach / @cityofHB / @cityofIrvine for civic news
-
-Search:
-"from:DailyPilot since:$YESTERDAY", mode: "Top", limit: 20
-"from:OC_Scanner OR from:OCRegister OR from:NBPDsocial OR from:CityofNewportBeach OR from:hbpd OR from:CityofHB since:$YESTERDAY", mode: "Top", limit: 20
-"(\"Newport Beach\" OR \"Costa Mesa\" OR \"Huntington Beach\" OR \"Corona del Mar\" OR Irvine OR Laguna) since:$YESTERDAY min_faves:50", mode: "Top", limit: 20
-
-FALLBACK: If <3 fresh OC stories, broaden to last 3 days from same handles. Better to have a 2-day-old Newport Beach city council vote than a fresh LA story.
-
-THE TEST: "Would the Daily Pilot run this story?" If yes — pick it. If no (because it's LA, federal, partisan rant, MSM-bait) — skip it.
-
-Body: 1 sentence describing the specific local story, under 140 chars. Name the city, the people, or the place.
-Engagement field MUST contain real numbers (e.g. "1.2K likes, 200 retweets, 50 replies").
-Return JSON: {"local":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"1.2K likes, 200 retweets, 50 replies","url":"...","honesty":"10/10","notes":"..."},...]}
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
 # --- CONSPIRACY ---
 cat > /tmp/grok_p_conspiracy.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-MISSION: 3 posts going DEEP behind the biggest stories of the day — investigative threads, suppressed angles, undercover footage, court documents, document dumps, FOIA results, contradictions in official narratives, things mainstream media is NOT asking. The vibe is "in search of the truth behind the biggest stories."
+Top 5 highest-view X posts (past 24h) about conspiracies / under-reported stories / fringe theories. Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
 
-STARTING SEARCH SEEDS (use ONLY to find candidates — DO NOT prefer these handles. Final pick is purely by view count, regardless of who posted):
-@JackPosobiec, @JamesOKeefeIII, @TomFitton, @WallStreetApes, @TheRabbitHole84, @CollinRugg, @libsoftiktok, @EndWokeness, @DropSiteNews, @Snowden, @ggreenwald, @ProPublica, @KimZetter, @disclosetv, @megynkelly, @SecularTalk, @MariaBartiromo, @JulianAssange, @BillMelugin_
-
-QUALITY BAR — what counts as a "conspiracy / truth-behind" post:
-- Investigative threads with specific evidence (documents, video, leaked memos)
-- Undercover footage (Project Veritas style)
-- Documented contradictions between official narrative and evidence
-- FOIA results, court filings, financial disclosures revealing things
-- Suppressed angles on viral stories ("the part nobody is talking about")
-- Specific people, places, dates, dollar amounts — NOT vague "they don't want you to know"
-- Tied to a CURRENT BIG STORY — not random rabbit holes
-
-REJECT:
-- Pure rant / "wake up sheeple" with no evidence
-- Vague "they're hiding something" without specifics
-- UFO / Bigfoot / aliens unless tied to actual document release
-- Anti-vax / flat earth — those are old conspiracies, not "truth behind today's stories"
-- Content older than 6 hours (must be tied to current news cycle)
-- MSM amplification ("per CNN") — these are people DOING reporting MSM isn't doing
-
-Search:
-"(from:JackPosobiec OR from:JamesOKeefeIII OR from:TomFitton OR from:WallStreetApes OR from:TheRabbitHole84 OR from:CollinRugg OR from:libsoftiktok OR from:EndWokeness OR from:DropSiteNews OR from:Snowden OR from:ggreenwald OR from:ProPublica OR from:KimZetter OR from:disclosetv OR from:BillMelugin_) since:$YESTERDAY min_faves:1000", mode: "Top", limit: 30
-FALLBACK 1: If <3 strong picks, drop to min_faves:500.
-FALLBACK 2: Add "(receipts OR documents OR leaked OR exposed OR investigation OR FOIA OR \"court filing\")" to narrow toward actual evidence-based posts.
-
-Pick 3 from 3 DIFFERENT approved handles — strongest evidence/investigation posts.
-Body: 1 sentence naming the SPECIFIC angle being investigated, under 140 chars.
-Engagement field MUST contain real numbers (e.g. "12K likes, 3K retweets, 800 replies").
-Honesty: score on the specific evidence presented. Score-with-evidence = 8-10. Pure speculation = 4-6. Conspiracy without specifics = 2-3.
-Return JSON: {"conspiracy":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"12K likes, 3K retweets, 800 replies","url":"...","honesty":"X/10","notes":"why this score"},...]}
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
 # --- COMEDY ---
 cat > /tmp/grok_p_comedy.txt <<PROMPT
-Current date: $TODAY. Yesterday: $YESTERDAY.
-The 3 MOST VIRAL comedy clips on X right now — stand-up moments, bits, old legends resurfacing, or new comedians going viral.
-Search: "(stand-up OR comedy OR "clip" OR comedian) (Chappelle OR "Eddie Murphy" OR Rogan OR Gaffigan OR Burr OR Schulz OR Kreischer OR Hinchcliffe OR Mulaney OR Seinfeld OR Chris Rock) lang:en since:$YESTERDAY min_faves:2000", mode: "Top", limit: 15.
-FALLBACK: If <3, broaden: "("standup" OR "stand-up" OR "comedy clip") lang:en since:$YESTERDAY min_faves:5000", mode: "Top", limit: 15.
-Pick the 3 highest-engagement comedy clip posts from DIFFERENT handles.
-Body: 1 sentence describing the comedian/moment, under 120 chars.
-Honesty: 10=verified fact, 9=fact with minor editorializing, 8=fact+opinion mix, 7=opinion/prediction/take. Most comedy clips are 8-9 (performative).
-Return JSON: {"comedy":[{"headline":"...","handle":"@...","body":"...","views":1234567,"engagement":"...","url":"...","honesty":"X/10","notes":"..."},...]}
+Top 5 highest-view X posts (past 24h) that are funny — jokes, memes, comedy clips going viral. Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
+
+Each item:
+{"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
+URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
 # --- TIKTOK ---
