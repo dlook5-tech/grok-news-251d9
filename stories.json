@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-22T15:59:27Z",
+  "lastUpdated": "2026-05-22T17:09:21Z",
   "world": {
     "stories": [
       {
@@ -90,42 +90,6 @@
         ]
       },
       {
-        "headline": "?",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@EricLDaugh",
-            "url": "https://x.com/EricLDaugh/status/2057517521817796912",
-            "text": "\ud83d\udea8 JUST IN: The Senate is GOING ON RECESS instead of staying to vote on and pass the ICE-CBP reconciliation package that only needs 50+1 votes WTF?! They're now going to MISS Trump's June 1 deadline. R",
-            "views": 177325,
-            "honesty": "8/10",
-            "engagement": ""
-          },
-          {
-            "label": "Democrat",
-            "handle": "@nicksortor",
-            "url": "https://x.com/nicksortor/status/2057514851564466440",
-            "text": "\ud83d\udea8 NOW: Dr. Oz confirms Minnesota is STILL NOT COOPERATING with federal anti-fraud efforts, despite over $350 MILLION in federal funding being withheld Clearly we need to be withholding EVERY PENNY the",
-            "views": 159945,
-            "honesty": "8/10",
-            "engagement": ""
-          },
-          {
-            "label": "Independent",
-            "handle": "@Hunter_Eagleman",
-            "url": "https://x.com/Hunter_Eagleman/status/2057524578620944661",
-            "text": "\ud83d\udea8UNBELIEVABLE! Today @LeaderJohnThune just decided to shut down the Senate and send everyone home until early June with ZERO warning. No recess appointments. No Save America Act. No ICE or border fund",
-            "views": 176187,
-            "honesty": "8/10",
-            "engagement": ""
-          }
-        ],
-        "honesty": "8/10",
-        "notes": "",
-        "footnotes": [],
-        "body": "3-perspective coverage."
-      },
-      {
         "headline": "Trump admin deportation drive with record immigration judge hiring",
         "honesty": "8/10",
         "perspectives": [
@@ -160,15 +124,109 @@
         "body": "Try it out!",
         "engagement": "",
         "honesty": "7/10",
-        "notes": "Two-word opinion/directive without factual content",
-        "posted": "2026-05-22T15:59:27Z",
+        "notes": "Vague directive without factual content - cannot be 8/10",
+        "posted": "2026-05-22T17:09:21Z",
         "post_ts": "2026-05-22T15:15:13Z",
-        "views": 2198567,
+        "views": 6187219,
         "parent_url": "https://x.com/KellehEyad/status/2057759086108627222",
         "parent_handle": "@KellehEyad",
-        "parent_text": "Spent the whole night in Composer 2.Spent the whole night in Composer 2.5, just waking up now and honestly, hard to go back. The pace this thing moves at is something else. Same outputs as Codex and Opus, but way faster. Someone explain @cursor_ai ?",
-        "views_at_save": 2198567,
-        "age_at_save_hours": 0.74
+        "parent_text": "Spent the whole night in Composer 2.5, just waking up now and honestly, hard to go back. The pace this thing moves at is something else. Same outputs as Codex and Opus, but way faster. Someone explain @cursor_ai ?",
+        "views_at_save": 6187219,
+        "age_at_save_hours": 1.9
+      },
+      {
+        "headline": "Laughs at a joke or meme",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057839818877309139",
+        "body": "\ud83e\udd23\ud83e\udd23.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Emoji reaction without factual content",
+        "posted": "2026-05-22T17:09:21Z",
+        "post_ts": "2026-05-22T15:03:40Z",
+        "views": 78532,
+        "parent_url": "https://x.com/elonmusk/status/2057824999591842227",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 78532,
+        "age_at_save_hours": 2.1
+      },
+      {
+        "headline": "Shares video of SpaceX or Tesla test",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057839480350834878",
+        "body": "https://t.co/yjHT8jvxKJ.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Link only without factual content",
+        "posted": "2026-05-22T17:09:21Z",
+        "post_ts": "2026-05-22T15:02:19Z",
+        "views": 1841643,
+        "views_at_save": 1841643,
+        "age_at_save_hours": 2.12
+      },
+      {
+        "headline": "Replies with playful emoji reaction",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057819911204770162",
+        "body": "Make you \ud83d\udca6.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Emoji reaction without factual content",
+        "posted": "2026-05-22T17:09:22Z",
+        "post_ts": "2026-05-22T13:44:33Z",
+        "views": 300508,
+        "parent_url": "https://x.com/elonmusk/status/2057597724929749123",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 300508,
+        "age_at_save_hours": 3.41
+      },
+      {
+        "headline": "Gives target emoji as reaction",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057816608383402371",
+        "body": "\ud83c\udfaf.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Emoji only without factual content",
+        "posted": "2026-05-22T17:09:22Z",
+        "post_ts": "2026-05-22T13:31:26Z",
+        "views": 16170,
+        "parent_url": "https://x.com/elonmusk/status/2057807177012613561",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 16170,
+        "age_at_save_hours": 3.63
+      },
+      {
+        "headline": "Laughs with crying emoji",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057812587396350455",
+        "body": "\ud83d\ude02.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Emoji reaction without factual content",
+        "posted": "2026-05-22T17:09:22Z",
+        "post_ts": "2026-05-22T13:15:27Z",
+        "views": 15986,
+        "parent_url": "https://x.com/elonmusk/status/2057363633546662194",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 15986,
+        "age_at_save_hours": 3.9
+      },
+      {
+        "headline": "Expresses surprise with 'Wow'",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057811593778327671",
+        "body": "Wow.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Single-word reaction without factual content",
+        "posted": "2026-05-22T17:09:22Z",
+        "post_ts": "2026-05-22T13:11:30Z",
+        "views": 164363,
+        "parent_url": "https://x.com/elonmusk/status/2057803424603775427",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 164363,
+        "age_at_save_hours": 3.96
       },
       {
         "headline": "Jokes about warp drive to another galaxy",
@@ -177,47 +235,81 @@
         "body": "Warp drive to another galaxy, probably.",
         "engagement": "",
         "honesty": "7/10",
-        "notes": "Speculative opinion/prediction about future capability",
-        "posted": "2026-05-22T15:59:27Z",
+        "notes": "Speculative joke ('probably') without factual content",
+        "posted": "2026-05-22T17:09:22Z",
         "post_ts": "2026-05-22T13:08:57Z",
-        "views": 27928,
-        "views_at_save": 27928,
-        "age_at_save_hours": 2.84
-      }
-    ],
-    "earlier": [
+        "views": 33065,
+        "parent_url": "https://x.com/elonmusk/status/2057804511696073015",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 33065,
+        "age_at_save_hours": 4.01
+      },
       {
-        "headline": "Jokes 'I used 5G to control their brain waves \ud83d\ude02'",
+        "headline": "Laughs with crying emoji",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057810037884477447",
+        "body": "\ud83d\ude02.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Emoji reaction without factual content",
+        "posted": "2026-05-22T17:09:22Z",
+        "post_ts": "2026-05-22T13:05:19Z",
+        "views": 12973,
+        "parent_url": "https://x.com/elonmusk/status/2057769272097603675",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 12973,
+        "age_at_save_hours": 4.07
+      },
+      {
+        "headline": "Agrees with a take and adds fire emoji",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057809958045925735",
+        "body": "True \ud83d\udd25.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Emoji reaction without factual content",
+        "posted": "2026-05-22T17:09:22Z",
+        "post_ts": "2026-05-22T13:05:00Z",
+        "views": 15790,
+        "parent_url": "https://x.com/elonmusk/status/2057769272097603675",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 15790,
+        "age_at_save_hours": 4.07
+      },
+      {
+        "headline": "Jokes about using 5G to control brain waves",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057809626632999343",
         "body": "I used 5G to control their brain waves \ud83d\ude02.",
         "engagement": "",
         "honesty": "7/10",
-        "notes": "Sarcastic joke - humorous opinion",
-        "posted": "2026-05-22T15:43:31Z",
+        "notes": "Sarcastic joke with emoji - no factual content",
+        "posted": "2026-05-22T17:09:22Z",
         "post_ts": "2026-05-22T13:03:41Z",
-        "views": 337850,
+        "views": 421646,
         "parent_url": "https://x.com/elonmusk/status/2057804511696073015",
         "parent_handle": "@elonmusk",
-        "views_at_save": 337850,
-        "age_at_save_hours": 2.66
+        "views_at_save": 421646,
+        "age_at_save_hours": 4.09
       },
       {
-        "headline": "Agrees with a post",
+        "headline": "Agrees with a previous statement",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057808978122313913",
         "body": "I agree.",
         "engagement": "",
-        "honesty": "5/10",
-        "notes": "Agreement only - no factual content",
-        "posted": "2026-05-22T15:43:31Z",
+        "honesty": "7/10",
+        "notes": "Opinion agreement without factual content",
+        "posted": "2026-05-22T17:09:22Z",
         "post_ts": "2026-05-22T13:01:07Z",
-        "views": 91954,
+        "views": 135796,
         "parent_url": "https://x.com/elonmusk/status/2057803087121629633",
         "parent_handle": "@elonmusk",
-        "views_at_save": 91954,
-        "age_at_save_hours": 2.71
-      },
+        "views_at_save": 135796,
+        "age_at_save_hours": 4.14
+      }
+    ],
+    "earlier": [
       {
         "headline": "Praises Western civilization as amazing",
         "handle": "@elonmusk",
@@ -354,8 +446,8 @@
         "posted": "2026-05-22T15:59:28Z",
         "post_ts": "2026-05-22T10:05:54Z",
         "views": 12171430,
-        "views_at_save": 12154083,
-        "age_at_save_hours": 5.89,
+        "views_at_save": 12171430,
+        "age_at_save_hours": 5.58,
         "original_url": "https://x.com/elonmusk/status/2057764883773407535",
         "original_handle": "@elonmusk",
         "original_views": 12171355,
@@ -367,18 +459,32 @@
         "url": "https://x.com/Element_M1ller/status/2057772742301151391",
         "body": "Get this wank World Cup out of the way, sack Adolf Hitler immediately and give this bloke whatever money he wants.",
         "engagement": "187K likes, 31K reposts",
-        "honesty": "9/10",
-        "notes": "Official club announcement but awaits independent verification of major news - not raw official record yet",
+        "honesty": "7/10",
+        "notes": "Opinion/demand ('sack Adolf Hitler...give this bloke money') - not official announcement",
         "posted": "2026-05-22T15:43:31Z",
         "post_ts": "2026-05-22T10:14:46Z",
         "views": 8048136,
-        "views_at_save": 7195987,
-        "age_at_save_hours": 5.74,
+        "views_at_save": 8048136,
+        "age_at_save_hours": 6.54,
         "original_url": "https://x.com/ManCity/status/2057767116644700432",
         "original_handle": "@ManCity",
         "original_views": 7363053,
         "qt_views": 685083
       },
+      {
+        "headline": "DHS on immigration loophole",
+        "handle": "@DHSgov",
+        "url": "https://x.com/DHSgov/status/2057817233200418837",
+        "body": "DHS announces end to loophole letting migrants stay in US while awaiting green cards.",
+        "engagement": "19K likes, 3.7K reposts",
+        "honesty": "9/10",
+        "notes": "Verified policy announcement with clear explanation.",
+        "posted": "2026-05-22T17:09:22Z",
+        "post_ts": "2026-05-22T13:33:55Z",
+        "views": 2651563
+      }
+    ],
+    "earlier": [
       {
         "headline": "Western civilization praised",
         "handle": "@DimaZeniuk",
@@ -396,26 +502,6 @@
         "original_handle": "@elonmusk",
         "original_views": 3056870,
         "qt_views": 2858
-      }
-    ],
-    "earlier": [
-      {
-        "headline": "Destiny 2 ends live-service updates after 12 years",
-        "handle": "@PaulTassi",
-        "url": "https://x.com/PaulTassi/status/2057507553102180655",
-        "body": "Destiny 2 is ending. All expansions cancelled. No more content updates after this last one. It's over.",
-        "engagement": "42K likes, 8K reposts",
-        "honesty": "8/10",
-        "notes": "Game announcement requiring verification - 'all expansions cancelled' needs confirmation as institutional statement not pure verified fact",
-        "posted": "2026-05-21T19:20:51Z",
-        "post_ts": "2026-05-21T17:00:43Z",
-        "views": 11709472,
-        "views_at_save": 11709472,
-        "age_at_save_hours": 22.67,
-        "original_url": "https://x.com/DestinyTheGame/status/2057506887600361720",
-        "original_handle": "@DestinyTheGame",
-        "original_views": 8762902,
-        "qt_views": 2946570
       },
       {
         "headline": "Jorge Jesus exits Al Nassr",
@@ -464,28 +550,16 @@
     ],
     "_overflow": [
       {
-        "headline": "Abhijeet Dipke receives death threats",
-        "handle": "@abhijeet_dipke",
-        "url": "https://x.com/abhijeet_dipke/status/2057725482594894108",
-        "body": "Abhijeet Dipke shares photo evidence of receiving death threats over his campaign.",
-        "engagement": "30K likes, 7K reposts",
-        "honesty": "10/10",
-        "notes": "Verified screenshot of threats received.",
-        "posted": "2026-05-22T15:59:28Z",
-        "post_ts": "2026-05-22T07:29:20Z",
-        "views": 2059897
-      },
-      {
-        "headline": "DHS announces immigration policy change",
-        "handle": "@DHSgov",
-        "url": "https://x.com/DHSgov/status/2057817233200418837",
-        "body": "DHS ends loophole allowing migrants to stay in US while awaiting green cards.",
-        "engagement": "14K likes, 2.8K reposts",
-        "honesty": "9/10",
-        "notes": "Official policy announcement with clear explanation.",
-        "posted": "2026-05-22T15:59:28Z",
-        "post_ts": "2026-05-22T13:33:55Z",
-        "views": 1325512
+        "headline": "White House on Columbus",
+        "handle": "@WhiteHouse",
+        "url": "https://x.com/WhiteHouse/status/2057564175417672018",
+        "body": "White House declares Christopher Columbus a hero in this house.",
+        "engagement": "40K likes, 5K reposts",
+        "honesty": "8/10",
+        "notes": "Official statement with historical opinion.",
+        "posted": "2026-05-22T17:09:23Z",
+        "post_ts": "2026-05-21T20:48:21Z",
+        "views": 1303619
       }
     ]
   },
@@ -694,30 +768,6 @@
     ],
     "earlier": [
       {
-        "headline": "Biden Admin Coverup Exposed",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2057548745726959849",
-        "body": "Former Deputy AG Lisa Monaco referred to DOJ for allegedly covering up Microsoft cyber breach probes, then joined Microsoft.",
-        "engagement": "24.9K likes, 10.8K reposts, 624 replies",
-        "honesty": "9/10",
-        "notes": "Fact with minor editorializing",
-        "posted": "2026-05-22T06:28:07Z",
-        "post_ts": "2026-05-21T19:47:03Z",
-        "views": 487321
-      },
-      {
-        "headline": "CISA Election Security Breach",
-        "handle": "@PatriotMarkCook",
-        "url": "https://x.com/PatriotMarkCook/status/2057282668698476622",
-        "body": "CISA left sensitive election infrastructure credentials exposed on public GitHub for six months including passwords and keys.",
-        "engagement": "985 likes, 608 reposts, 69 replies",
-        "honesty": "9/10",
-        "notes": "Fact with minor editorializing",
-        "posted": "2026-05-22T06:28:07Z",
-        "post_ts": "2026-05-21T02:09:45Z",
-        "views": 84706
-      },
-      {
         "headline": "Washington State School Coverup",
         "handle": "@libsoftiktok",
         "url": "https://x.com/libsoftiktok/status/2057592864679330220",
@@ -815,8 +865,8 @@
         "url": "https://x.com/PalmerLuckey/status/2057617889453342909",
         "body": "Anduril's EagleEye delivers 84-degree FOV, stereo thermal fusion and 4K display\u2014double the industry standard.",
         "engagement": "3.3K likes, 137 reposts, 132 replies",
-        "honesty": "10/10",
-        "notes": "Verifiable product specifications - technical facts",
+        "honesty": "9/10",
+        "notes": "Product specifications claim - requires independent verification, not manufacturer specification document",
         "posted": "2026-05-22T06:28:06Z",
         "post_ts": "2026-05-22T00:21:48Z",
         "views": 224497,
@@ -919,23 +969,9 @@
         "original_handle": "@pmarca",
         "original_views": 101257,
         "qt_views": 1888
-      },
-      {
-        "url": "https://x.com/Jason/status/2057140460808749158",
-        "handle": "@Jason",
-        "body": "Especially since I've discovered this new technology called \u201cdesalination\u201d that folks in the Middle East and on Islands have pioneered that provides [ checks notes ] all of their water! \ud83d\ude02\ud83d\ude02\ud83d\ude02",
-        "views": 49000,
-        "engagement": {
-          "likes": 103,
-          "reposts": 6,
-          "quotes": 0,
-          "replies": 12,
-          "bookmarks": 8
-        },
-        "honesty": "7/10",
-        "notes": "Sarcastic opinion/hot take on desalination technology relevance."
       }
-    ]
+    ],
+    "_overflow": []
   },
   "pg6": {
     "stories": [
@@ -993,7 +1029,8 @@
         "original_url": "https://x.com/PopCrave/status/2057553609089335683",
         "original_handle": "@PopCrave",
         "original_views": 735507,
-        "qt_views": 2917
+        "qt_views": 2917,
+        "perspectives": []
       }
     ],
     "earlier": [
@@ -1101,26 +1138,10 @@
         "original_views": 118747,
         "qt_views": 1107
       }
-    ],
-    "_overflow": []
+    ]
   },
   "recipe": {
     "stories": [
-      {
-        "headline": "Beef & Broccoli Recipe",
-        "handle": "@FoodNetwork",
-        "url": "https://x.com/FoodNetwork/status/2057522071123402810",
-        "body": "The only Beef & Broccoli recipe you need with all secrets from Jet Tila.",
-        "engagement": "98 likes, 14 reposts, 2 replies, 74 bookmarks",
-        "honesty": "7/10",
-        "notes": "Recipe instruction - how-to content, not verifiable fact",
-        "posted": "2026-05-21T22:44:06Z",
-        "post_ts": "2026-05-21T18:01:03Z",
-        "views": 7871,
-        "views_at_save": 7871,
-        "age_at_save_hours": 12.45,
-        "perspectives": []
-      },
       {
         "headline": "Beef Plov with Chickpeas",
         "handle": "@foodandwine",
@@ -1134,6 +1155,21 @@
         "views": 2420,
         "views_at_save": 2420,
         "age_at_save_hours": 6.45,
+        "perspectives": []
+      },
+      {
+        "headline": "Beef & Broccoli Recipe",
+        "handle": "@FoodNetwork",
+        "url": "https://x.com/FoodNetwork/status/2057522071123402810",
+        "body": "The only Beef & Broccoli recipe you need with all secrets from Jet Tila.",
+        "engagement": "98 likes, 14 reposts, 2 replies, 74 bookmarks",
+        "honesty": "7/10",
+        "notes": "Recipe instruction - how-to content, not verifiable fact",
+        "posted": "2026-05-21T22:44:06Z",
+        "post_ts": "2026-05-21T18:01:03Z",
+        "views": 7871,
+        "views_at_save": 7871,
+        "age_at_save_hours": 12.45,
         "perspectives": []
       },
       {
@@ -1179,20 +1215,6 @@
         "views": 5987,
         "views_at_save": 5987,
         "age_at_save_hours": 9.38
-      },
-      {
-        "headline": "Sweet Potato Puffs",
-        "handle": "@tasty",
-        "url": "https://x.com/tasty/status/2057132594349674777",
-        "body": "Crispy sweet potato puffs perfect as a snack or side.",
-        "engagement": "13 likes, 1 repost, 10 replies",
-        "honesty": "10/10",
-        "notes": "Verified recipe with video and direct link to full instructions.",
-        "posted": "2026-05-20T19:35:09Z",
-        "post_ts": "2026-05-20T16:13:24Z",
-        "views": 4822,
-        "views_at_save": 4822,
-        "age_at_save_hours": 12.83
       }
     ],
     "_overflow": []
@@ -1205,8 +1227,8 @@
         "url": "https://x.com/bluvoodoo1/status/2057666172313584055",
         "body": "Once-DAILY eye drops that last for 10-hours.  \n\nAlways a TREATEMENT that you buy FOREVER, and never a CURE.",
         "engagement": "3957 likes, 349 reposts",
-        "honesty": "8/10",
-        "notes": "Reports scientific development but adds editorial opinion ('always treatment...never cure') - factual core with commentary",
+        "honesty": "7/10",
+        "notes": "Reports medical development but frames with conspiracy opinion ('always treatment never cure') - editorializing dominates",
         "posted": "2026-05-22T04:56:32Z",
         "post_ts": "2026-05-21T22:54:45Z",
         "views": 277979,
@@ -1243,8 +1265,8 @@
         "url": "https://x.com/latkedelrey/status/2057483955046125581",
         "body": "can i ask a question. is the classification new? is that why everyone\u2019s acting shocked? because my grandpa died of stomach cancer in the 60s and my mom spent the rest of her life including my childhoo",
         "engagement": "8372 likes, 2428 reposts",
-        "honesty": "9/10",
-        "notes": "Factual report of IARC research classification with supporting details.",
+        "honesty": "7/10",
+        "notes": "Personal anecdote about family history and personal belief - not report of IARC classification",
         "posted": "2026-05-22T06:16:24Z",
         "post_ts": "2026-05-21T10:09:56Z",
         "views": 3523560,
@@ -1367,15 +1389,6 @@
         "engagement": "126 likes, 19 reposts, 37 bookmarks",
         "honesty": "High - directly summarizes peer-reviewed study with source citation",
         "notes": "Clear research finding on primate handedness evolution; detailed body, not announcement or video-only"
-      },
-      {
-        "url": "https://x.com/oceana/status/2057144430889476139",
-        "handle": "@oceana",
-        "body": "#BREAKING: In the past year, scientists have found 1,121 new species.\n\nThe discovery of these animals, which were seen as deep as miles beneath the surface, represents a monumental step for ocean discovery.\n\nRead more: https://abcnews.com/International/marine-scientists-discover-1100-new-species-new-record/story?id=133078227",
-        "views": 1373,
-        "engagement": "Likes=50, Reposts=22, Quotes=0, Replies=0, Bookmarks=4",
-        "honesty": "High - directly reports verified discovery count and context from marine research",
-        "notes": "Different event: record number of new marine species discovered in past year"
       }
     ],
     "_overflow": []
@@ -1470,9 +1483,7 @@
         "original_views": 139585,
         "qt_views": 76615,
         "perspectives": []
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Melissa Chen defends Kill Tony diversity",
         "handle": "@Squirrelknut",
@@ -1492,6 +1503,7 @@
         "qt_views": 1702
       }
     ],
+    "earlier": [],
     "_overflow": []
   },
   "freespeech": {
