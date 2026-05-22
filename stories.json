@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-22T13:01:19Z",
+  "lastUpdated": "2026-05-22T15:43:30Z",
   "world": {
     "stories": [
       {
@@ -11,8 +11,9 @@
             "url": "https://x.com/SkyNews/status/2057541593939222750",
             "text": "Ebola outbreak spreading as crowd sets fire to treatment centre in DRC.",
             "views": 56053,
-            "honesty": "8/10",
-            "engagement": ""
+            "honesty": "9/10",
+            "engagement": "",
+            "notes": "Factual news report of verifiable event, not official record"
           },
           {
             "label": "Democrat",
@@ -20,12 +21,13 @@
             "url": "https://x.com/RVAwonk/status/2057526652679111025",
             "text": "This is bad. \u201cSeveral patients may have escaped from this [Ebola] treatment facility\u201d after locals tried to break in and retrieve the body of a deceased Ebola patient.",
             "views": 380905,
-            "honesty": "8/10",
+            "honesty": "9/10",
             "engagement": "",
             "original_url": "https://x.com/LarryMadowo/status/2057490155301155195",
             "original_handle": "@LarryMadowo",
             "original_views": 320469,
-            "qt_views": 60436
+            "qt_views": 60436,
+            "notes": "Factual news report with direct quote, verifiable event"
           },
           {
             "label": "Independent",
@@ -33,12 +35,13 @@
             "url": "https://x.com/AnnieJacobsen/status/2057684970479779983",
             "text": "Biological war game scenarios at the Pentagon presume vigilantism like this will happen in a deadly outbreak of this scale\u2014including in the US.\n\nIn Congo, with massive refugee movement due to ongoing ",
             "views": 204439,
-            "honesty": "8/10",
+            "honesty": "7/10",
             "engagement": "",
             "original_url": "https://x.com/BBCWorld/status/2057556231561040366",
             "original_handle": "@BBCWorld",
             "original_views": 187284,
-            "qt_views": 17155
+            "qt_views": 17155,
+            "notes": "Pentagon war game analyst commentary - expert opinion/prediction not verified fact"
           }
         ],
         "honesty": "8/10",
@@ -147,76 +150,6 @@
         "age_at_save_hours": 3.57
       },
       {
-        "headline": "Supreme Court allows suit over Cuba-seized assets",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Independent",
-            "handle": "@nytimes",
-            "url": "https://x.com/nytimes/status/2057478107523658060",
-            "text": "Breaking News: The Supreme Court ruled that a U.S.-owned port business could sue over assets Cuba seized in 1960, possibly opening the door to...",
-            "engagement": "496 likes, 186 reposts",
-            "honesty": "10/10",
-            "views": 111663,
-            "notes": "Verbatim court ruling summary with no editorializing.",
-            "views_at_save": 111663,
-            "age_at_save_hours": 7.63
-          }
-        ],
-        "footnotes": [],
-        "notes": "",
-        "body": "Three-perspective roundup.",
-        "posted": "5/21/2026 9:04 PM",
-        "views_at_save": 0,
-        "age_at_save_hours": 7.63
-      },
-      {
-        "headline": "Trump pushes SCOTUS to end birthright citizenship for illegals",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Democrat",
-            "handle": "@EricLDaugh",
-            "url": "https://x.com/EricLDaugh/status/2057497570167996471",
-            "text": "\ud83d\udea8 JUST NOW: President Trump demands the US Supreme Court do the RIGHT THING and ABOLISH birthright citizenship for illegal aliens and...",
-            "engagement": "2197 likes, 761 reposts",
-            "honesty": "7/10",
-            "views": 63617,
-            "notes": "Direct quote with interpretive framing; factual elements accurate.",
-            "views_at_save": 63617,
-            "age_at_save_hours": 4.68
-          },
-          {
-            "label": "Independent",
-            "handle": "@RandPaul",
-            "url": "https://x.com/RandPaul/status/2057530193498062869",
-            "text": "President Trump is right.. Birthright citizenship is being exploited.",
-            "engagement": "929 likes, 146 reposts",
-            "honesty": "9/10",
-            "views": 42116,
-            "notes": "Clear opinion backed by legislative action; no false claims.",
-            "views_at_save": 42116,
-            "age_at_save_hours": 2.52
-          },
-          {
-            "label": "Conservative",
-            "handle": "@SenRandPaul",
-            "url": "https://x.com/SenRandPaul/status/2057514256631746619",
-            "text": "President Trump is 100% correct. This is why I've introduced a Constitutional Amendment to end Birthright Citizenship.",
-            "views": 120763,
-            "honesty": "9/10",
-            "engagement": "",
-            "notes": "Direct conservative endorsement clearly tying Trump's SCOTUS push to ending birthright citizenship for illegals."
-          }
-        ],
-        "footnotes": [],
-        "notes": "High-velocity topic with clear 3-perspective spread on birthright citizenship push.",
-        "body": "Three-perspective roundup.",
-        "posted": "5/21/2026 7:20 PM",
-        "views_at_save": 0,
-        "age_at_save_hours": 3.42
-      },
-      {
         "headline": "15 indicted in $90M Minnesota healthcare fraud scheme",
         "honesty": "8/10",
         "perspectives": [
@@ -263,47 +196,203 @@
         "posted": "5/21/2026 7:20 PM",
         "views_at_save": 0,
         "age_at_save_hours": 2.57
-      },
-      {
-        "headline": "Trump terminates Biden-era fridge and AC regulations to cut costs",
-        "honesty": "8/10",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "@RapidResponse47",
-            "url": "https://x.com/RapidResponse47/status/2057492965069553955",
-            "text": ".@epaleezeldin on @POTUS' announcement terminating costly Biden-era regulations on refrigerators and air conditioners: \"Once again, the Trump...",
-            "engagement": "630 likes, 121 reposts",
-            "honesty": "7/10",
-            "views": 24383,
-            "notes": "Official announcement factual, but 'costly' and positive framing ('Once again, the Trump...') adds editorial opinion",
-            "views_at_save": 24383,
-            "age_at_save_hours": 0.98
-          },
-          {
-            "label": "Independent",
-            "handle": "@nicksortor",
-            "url": "https://x.com/nicksortor/status/2057491170838597673",
-            "text": "\ud83d\udea8 JUST IN: President Trump just announced he\u2019ll be NIXING ridiculous Biden-era Green New Scam regulations on refrigeration, which should ease grocery...",
-            "engagement": "712 likes, 137 reposts",
-            "honesty": "8/10",
-            "views": 15817,
-            "notes": "Citizen journalist reporting the announcement with critical framing of prior policy",
-            "views_at_save": 15817,
-            "age_at_save_hours": 1.1
-          }
-        ],
-        "footnotes": [],
-        "notes": "Regulation rollback story dominates recent high-velocity posts but lacks balanced perspectives",
-        "body": "Three-perspective roundup.",
-        "posted": "5/21/2026 4:25 PM",
-        "views_at_save": 0,
-        "age_at_save_hours": 0.98
       }
     ]
   },
   "elon": {
     "stories": [
+      {
+        "headline": "Recommends trying Cursor AI Composer 2.5 after seeing user's all-night session",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057842724649209878",
+        "body": "Try it out!",
+        "engagement": "",
+        "honesty": "5/10",
+        "notes": "Context-free command - no factual content",
+        "posted": "2026-05-22T15:43:30Z",
+        "post_ts": "2026-05-22T15:15:13Z",
+        "views": 1123375,
+        "views_at_save": 1123375,
+        "age_at_save_hours": 0.47
+      },
+      {
+        "headline": "Laughs at meme of Elon fixing the election from space",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057839818877309139",
+        "body": "\ud83e\udd23\ud83e\udd23.",
+        "engagement": "",
+        "honesty": "5/10",
+        "notes": "Emoji only - no factual content",
+        "posted": "2026-05-22T15:43:30Z",
+        "post_ts": "2026-05-22T15:03:40Z",
+        "views": 33910,
+        "parent_url": "https://x.com/peterrhague/status/2057824999591842227",
+        "parent_handle": "@peterrhague",
+        "parent_text": "Elon fixing the election from space",
+        "views_at_save": 33910,
+        "age_at_save_hours": 0.66
+      },
+      {
+        "headline": "Shares video clip",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057839480350834878",
+        "body": "https://t.co/yjHT8jvxKJ.",
+        "engagement": "",
+        "honesty": "5/10",
+        "notes": "Link only - no factual content",
+        "posted": "2026-05-22T15:43:30Z",
+        "post_ts": "2026-05-22T15:02:19Z",
+        "views": 811789,
+        "views_at_save": 811789,
+        "age_at_save_hours": 0.69
+      },
+      {
+        "headline": "Jokes that GLP drugs make you \ud83d\udca6 in response to cancer study discussion",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057819911204770162",
+        "body": "Make you \ud83d\udca6.",
+        "engagement": "",
+        "honesty": "5/10",
+        "notes": "Suggestive emoji - no factual content",
+        "posted": "2026-05-22T15:43:30Z",
+        "post_ts": "2026-05-22T13:44:33Z",
+        "views": 223040,
+        "parent_url": "https://x.com/tunguz/status/2057597724929749123",
+        "parent_handle": "@tunguz",
+        "parent_text": "Is there anything that GLPs *can't* do???",
+        "views_at_save": 223040,
+        "age_at_save_hours": 1.98
+      },
+      {
+        "headline": "Hits the bullseye emoji in reply",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057816608383402371",
+        "body": "\ud83c\udfaf.",
+        "engagement": "",
+        "honesty": "5/10",
+        "notes": "Emoji only - no factual content",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T13:31:26Z",
+        "views": 12363,
+        "parent_url": "https://x.com/elonmusk/status/2057807177012613561",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 12363,
+        "age_at_save_hours": 2.2
+      },
+      {
+        "headline": "Laughs with crying emoji",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057812587396350455",
+        "body": "\ud83d\ude02.",
+        "engagement": "",
+        "honesty": "5/10",
+        "notes": "Emoji only - no factual content",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T13:15:27Z",
+        "views": 12001,
+        "parent_url": "https://x.com/elonmusk/status/2057363633546662194",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 12001,
+        "age_at_save_hours": 2.47
+      },
+      {
+        "headline": "Reacts with 'Wow' to a post",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057811593778327671",
+        "body": "Wow.",
+        "engagement": "",
+        "honesty": "5/10",
+        "notes": "Single word reaction - no factual content",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T13:11:30Z",
+        "views": 109011,
+        "parent_url": "https://x.com/elonmusk/status/2057803424603775427",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 109011,
+        "age_at_save_hours": 2.53
+      },
+      {
+        "headline": "Jokes about warp drive to another galaxy",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057810949310915002",
+        "body": "Warp drive to another galaxy, probably.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Speculative joke - opinion/hot take",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T13:08:57Z",
+        "views": 26294,
+        "parent_url": "https://x.com/elonmusk/status/2057804511696073015",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 26294,
+        "age_at_save_hours": 2.58
+      },
+      {
+        "headline": "Laughs with crying emoji",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057810037884477447",
+        "body": "\ud83d\ude02.",
+        "engagement": "",
+        "honesty": "5/10",
+        "notes": "Emoji only - no factual content",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T13:05:19Z",
+        "views": 10133,
+        "parent_url": "https://x.com/elonmusk/status/2057769272097603675",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 10133,
+        "age_at_save_hours": 2.64
+      },
+      {
+        "headline": "Agrees with 'True' and fire emoji",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057809958045925735",
+        "body": "True \ud83d\udd25.",
+        "engagement": "",
+        "honesty": "5/10",
+        "notes": "Affirmation with emoji - no factual content",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T13:05:00Z",
+        "views": 12626,
+        "parent_url": "https://x.com/elonmusk/status/2057769272097603675",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 12626,
+        "age_at_save_hours": 2.64
+      },
+      {
+        "headline": "Jokes 'I used 5G to control their brain waves \ud83d\ude02'",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057809626632999343",
+        "body": "I used 5G to control their brain waves \ud83d\ude02.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Sarcastic joke - humorous opinion",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T13:03:41Z",
+        "views": 337850,
+        "parent_url": "https://x.com/elonmusk/status/2057804511696073015",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 337850,
+        "age_at_save_hours": 2.66
+      },
+      {
+        "headline": "Agrees with a post",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057808978122313913",
+        "body": "I agree.",
+        "engagement": "",
+        "honesty": "5/10",
+        "notes": "Agreement only - no factual content",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T13:01:07Z",
+        "views": 91954,
+        "parent_url": "https://x.com/elonmusk/status/2057803087121629633",
+        "parent_handle": "@elonmusk",
+        "views_at_save": 91954,
+        "age_at_save_hours": 2.71
+      }
+    ],
+    "earlier": [
       {
         "headline": "Praises Western civilization as amazing",
         "handle": "@elonmusk",
@@ -351,9 +440,7 @@
         "views": 344607,
         "views_at_save": 344607,
         "age_at_save_hours": 3.96
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Comments on murder case involving Nowak and Digwa",
         "handle": "@elonmusk",
@@ -454,51 +541,6 @@
         "views": 70738,
         "views_at_save": 70738,
         "age_at_save_hours": 6.63
-      },
-      {
-        "headline": "Updates on Starship V3 launch attempt delay due to hydraulic pin",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057609682865254695",
-        "body": "The hydraulic pin holding the tower arm in place did not retract.. If that can be fixed tonight, there will be another launch attempt tomorrow at...",
-        "engagement": "",
-        "honesty": "9/10",
-        "notes": "Factual technical explanation of launch issue from Musk",
-        "posted": "2026-05-22T06:28:05Z",
-        "post_ts": "2026-05-21T23:49:11Z",
-        "views": 13169396,
-        "parent_url": "https://x.com/elonmusk/status/2057594680284430428",
-        "parent_handle": "@elonmusk",
-        "parent_text": "Starship V3 first flight countdown starting",
-        "views_at_save": 13169396,
-        "age_at_save_hours": 6.65
-      },
-      {
-        "headline": "Announces Starship V3 first flight countdown starting",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057594680284430428",
-        "body": "Starship V3 first flight countdown starting.",
-        "engagement": "",
-        "honesty": "9/10",
-        "notes": "Verifiable event announcement",
-        "posted": "2026-05-22T06:28:05Z",
-        "post_ts": "2026-05-21T22:49:34Z",
-        "views": 31787418,
-        "views_at_save": 31787418,
-        "age_at_save_hours": 7.64
-      },
-      {
-        "headline": "Explains V3 Starship pipeline and redesign delay impact",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057588646857850916",
-        "body": "There is a large pipeline of V3 ships and boosters in the factory.. The delay from last launch was due to the almost total redesign of the primary...",
-        "engagement": "",
-        "honesty": "9/10",
-        "notes": "Factual statement about production pipeline from company head",
-        "posted": "2026-05-22T06:28:05Z",
-        "post_ts": "2026-05-21T22:25:36Z",
-        "views": 134735,
-        "views_at_save": 134735,
-        "age_at_save_hours": 8.04
       }
     ]
   },
@@ -516,12 +558,46 @@
         "post_ts": "2026-05-21T17:00:43Z",
         "views": 11709472,
         "views_at_save": 11709472,
-        "age_at_save_hours": 19.97,
+        "age_at_save_hours": 22.67,
         "original_url": "https://x.com/DestinyTheGame/status/2057506887600361720",
         "original_handle": "@DestinyTheGame",
         "original_views": 8762902,
         "qt_views": 2946570
       },
+      {
+        "headline": "Pep Guardiola steps down",
+        "handle": "@ManCity",
+        "url": "https://x.com/ManCity/status/2057767116644700432",
+        "body": "Manchester City announces Pep Guardiola steps down after incredible decade as manager.",
+        "engagement": "187K likes, 31K reposts",
+        "honesty": "9/10",
+        "notes": "Official club announcement but awaits independent verification of major news - not raw official record yet",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T10:14:46Z",
+        "views": 7195987,
+        "views_at_save": 7195987,
+        "age_at_save_hours": 5.48
+      },
+      {
+        "headline": "Western civilization praised",
+        "handle": "@DimaZeniuk",
+        "url": "https://x.com/DimaZeniuk/status/2057817128363761969",
+        "body": "Western civilization will prosper like never before",
+        "engagement": "31K likes, 5K reposts",
+        "honesty": "8/10",
+        "notes": "Opinion framing on historical facts from quoted analysis.",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T12:53:57Z",
+        "views": 3059728,
+        "views_at_save": 3041323,
+        "age_at_save_hours": 2.83,
+        "original_url": "https://x.com/elonmusk/status/2057807177012613561",
+        "original_handle": "@elonmusk",
+        "original_views": 3056870,
+        "qt_views": 2858
+      }
+    ],
+    "earlier": [
       {
         "headline": "Jorge Jesus exits Al Nassr",
         "handle": "@tobyasky",
@@ -553,9 +629,7 @@
         "views": 1484311,
         "views_at_save": 1484311,
         "age_at_save_hours": 5.53
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Mayweather child support order",
         "handle": "@DJGreenVillain",
@@ -571,16 +645,16 @@
     ],
     "_overflow": [
       {
-        "headline": "Fever dream moment",
-        "handle": "@jungsnrk",
-        "url": "https://x.com/jungsnrk/status/2057649170211856743",
-        "body": "Fever dream captured in this striking photo of a surreal scene.",
-        "engagement": "72K likes, 5K reposts",
+        "headline": "Honkai Star Rail collab",
+        "handle": "@honkaistarrail",
+        "url": "https://x.com/honkaistarrail/status/2057797373753958600",
+        "body": "Honkai: Star Rail launches Fate/stay night collab with free Gilgamesh character.",
+        "engagement": "41K likes, 8K reposts",
         "honesty": "10/10",
-        "notes": "Simple visual post with no claims beyond the image.",
-        "posted": "2026-05-22T13:01:21Z",
-        "post_ts": "2026-05-22T02:26:06Z",
-        "views": 716873
+        "notes": "Official game announcement with verified details.",
+        "posted": "2026-05-22T15:43:31Z",
+        "post_ts": "2026-05-22T12:15:00Z",
+        "views": 1259808
       }
     ]
   },
@@ -592,8 +666,8 @@
         "url": "https://x.com/s_nakotomo/status/2057532353963340077",
         "body": "T\u00fcrkiye is not an ordinary state founded merely 100 or 200 years ago; it is the heir to an ancient civilization whose roots stretch deep into history.\nHistory itself stands as witness to this.\n\nOnce, ",
         "engagement": "11K likes, 2.5K reposts, 399 replies",
-        "honesty": "9/10",
-        "notes": "Verified macro data with context.",
+        "honesty": "7/10",
+        "notes": "Historical/political opinion about Turkey - interpretive commentary not verified data",
         "posted": "2026-05-22T06:11:11Z",
         "post_ts": "2026-05-21T16:35:23Z",
         "views": 5524782,
@@ -621,37 +695,9 @@
         "original_handle": "@HedgieMarkets",
         "original_views": 5105874,
         "qt_views": 977684
-      },
-      {
-        "url": "https://x.com/WSJ/status/2057742123542175837",
-        "handle": "@WSJ",
-        "body": "Exclusive: The Trump administration is awarding $2 billion in grants to nine quantum-computing companies in deals that include U.S. government equity stakes, the Commerce Department said https://www.wsj.com/tech/quantum-computing-grants-ibm-rigetti-globalfoundries-7382e6be?mod=e2tw",
-        "views": 19852,
-        "engagement": 75,
-        "honesty": "high",
-        "notes": "Solid WSJ exclusive on new quantum grants with equity stakes; distinct from excluded AI subsidy or Turkey lira topics."
       }
     ],
-    "earlier": [
-      {
-        "headline": "AI Subsidy Era Ends as Token Costs Explode",
-        "handle": "@tunguz",
-        "url": "https://x.com/tunguz/status/2057551006297141665",
-        "body": "Try to build as much code as possible over the next few months. The prices you are seeing now for AI will probably not last too long.",
-        "engagement": "11.4K likes, 2.2K reposts, 600 replies",
-        "honesty": "8/10",
-        "notes": "Fact with sharp macro analysis on rising AI costs and valuation risks.",
-        "posted": "2026-05-22T05:58:09Z",
-        "post_ts": "2026-05-21T18:39:09Z",
-        "views": 4265596,
-        "views_at_save": 4265596,
-        "age_at_save_hours": 10.34,
-        "original_url": "https://x.com/HedgieMarkets/status/2057531661785628841",
-        "original_handle": "@HedgieMarkets",
-        "original_views": 3472183,
-        "qt_views": 793413
-      }
-    ]
+    "earlier": []
   },
   "msm": {
     "stories": [
@@ -790,38 +836,6 @@
         "original_handle": "@BillMelugin_",
         "original_views": 83563,
         "qt_views": 18892
-      },
-      {
-        "headline": "Starmer Double Standard on Henry Nowak",
-        "handle": "@EndWokeness",
-        "url": "https://x.com/EndWokeness/status/2057485447840841989",
-        "body": "I wonder what the difference could be",
-        "engagement": "453 likes, 68 reposts, 64 replies",
-        "honesty": "7/10",
-        "notes": "'I wonder what the difference could be' - sarcastic commentary/opinion, not fact",
-        "posted": "2026-05-21T16:25:25Z",
-        "post_ts": "2026-05-21T15:31:58Z",
-        "views": 88253,
-        "views_at_save": 88253,
-        "age_at_save_hours": 1.48,
-        "original_url": "https://x.com/EndWokeness/status/2057484554709893457",
-        "original_handle": "@EndWokeness",
-        "original_views": 62302,
-        "qt_views": 25951
-      },
-      {
-        "headline": "Illegal Alien Truckers Killing Americans",
-        "handle": "@BillMelugin_",
-        "url": "https://x.com/BillMelugin_/status/2057480231775092813",
-        "body": "Four Indian illegal alien truck drivers with CA CDLs arrested for deadly crashes killing multiple people.",
-        "engagement": "1586 likes, 591 reposts, 119 replies",
-        "honesty": "9/10",
-        "notes": "Fact",
-        "posted": "2026-05-21T16:25:25Z",
-        "post_ts": "2026-05-21T15:14:48Z",
-        "views": 40878,
-        "views_at_save": 40878,
-        "age_at_save_hours": 1.82
       }
     ]
   },
@@ -845,35 +859,9 @@
         "original_views": 3986819,
         "qt_views": 144288,
         "perspectives": []
-      },
-      {
-        "url": "https://x.com/MIK3MCDANIEL/status/2057658475145023605",
-        "handle": "@MIK3MCDANIEL",
-        "body": "I can\u2019t respect this Finals runs",
-        "views": 1971112,
-        "engagement": "Likes=5035, Reposts=344, Quotes=39, Replies=141, Bookmarks=73",
-        "honesty": "high",
-        "notes": "Accurate series update; different event from excluded topics",
-        "perspectives": [],
-        "original_url": "https://x.com/TheDunkCentral/status/2057652347438870782",
-        "original_handle": "@TheDunkCentral",
-        "original_views": 1029422,
-        "qt_views": 941690
-      },
-      {
-        "url": "https://x.com/emichelsss/status/2057733792110891297",
-        "handle": "@emichelsss",
-        "body": "I don\u2019t care what \u201cform\u201d he\u2019s in. If it\u2019s 1-1 or even down at by one at 89 min, would you rather have Cole Palmer come on before potential overtime and penalties or fucking Eze and Madueke",
-        "views": 4688622,
-        "engagement": "Likes=13918, Reposts=1233, Quotes=560, Replies=1762, Bookmarks=191",
-        "honesty": "high",
-        "notes": "Soccer roster news; different event from excluded topics",
-        "perspectives": [],
-        "original_url": "https://x.com/FabrizioRomano/status/2057705867550625855",
-        "original_handle": "@FabrizioRomano",
-        "original_views": 4168692,
-        "qt_views": 519930
-      },
+      }
+    ],
+    "earlier": [
       {
         "url": "https://x.com/TheDunkCentral/status/2057652347438870782",
         "handle": "@TheDunkCentral",
@@ -888,9 +876,7 @@
         },
         "honesty": "high",
         "notes": "Knicks playoff series lead in Eastern Conference Finals; different event from excluded NFL topic"
-      }
-    ],
-    "earlier": [
+      },
       {
         "url": "https://x.com/BleacherReport/status/2057270573961810355",
         "handle": "@BleacherReport",
@@ -1021,8 +1007,8 @@
         "url": "https://x.com/PalmerLuckey/status/2057617889453342909",
         "body": "Anduril's EagleEye delivers 84-degree FOV, stereo thermal fusion and 4K display\u2014double the industry standard.",
         "engagement": "3.3K likes, 137 reposts, 132 replies",
-        "honesty": "8/10",
-        "notes": "Fact with minor framing",
+        "honesty": "9/10",
+        "notes": "Product specifications - verifiable technical facts",
         "posted": "2026-05-22T06:28:06Z",
         "post_ts": "2026-05-22T00:21:48Z",
         "views": 224497,
@@ -1109,15 +1095,6 @@
         "age_at_save_hours": 22.59
       },
       {
-        "url": "https://x.com/joeroganhq/status/2057085363920015793",
-        "handle": "@joeroganhq",
-        "body": "Joe Rogan on AOC: \"This idea that it\u2019s easy to become a billionaire and that these billionaires somehow are the problem because they\u2019re not paying their fair share is weird.\"",
-        "views": 20079,
-        "engagement": "526 likes, 52 reposts, 38 replies",
-        "honesty": "Direct quote from podcaster; aligns with known Rogan views on wealth creation",
-        "notes": "Podcaster take on billionaire taxation/economy; different event from excluded headlines"
-      },
-      {
         "headline": "Douglas Adams tech adoption",
         "handle": "@austincampbell",
         "url": "https://x.com/austincampbell/status/2057224607178834028",
@@ -1174,16 +1151,6 @@
         "perspectives": []
       },
       {
-        "url": "https://x.com/RedMedia_us/status/2057694510096716252",
-        "handle": "@RedMedia_us",
-        "body": "Nicki Minaj forgets to put on her iPhone filters at a recent MAGA event.",
-        "views": 4783,
-        "engagement": "363 likes, 35 reposts, 3 quotes, 41 replies, 15 bookmarks",
-        "honesty": "7/10",
-        "notes": "Opinion/snark about celebrity appearance ('forgets filters')",
-        "perspectives": []
-      },
-      {
         "headline": "Zayn Hit With Water",
         "handle": "@skinnymysterio",
         "url": "https://x.com/skinnymysterio/status/2057598500058087486",
@@ -1199,7 +1166,8 @@
         "original_url": "https://x.com/PopCrave/status/2057580999299547382",
         "original_handle": "@PopCrave",
         "original_views": 268879,
-        "qt_views": 3476
+        "qt_views": 3476,
+        "perspectives": []
       }
     ],
     "earlier": [
@@ -1294,24 +1262,6 @@
         "qt_views": 47721
       },
       {
-        "headline": "Madonna drops cryptic dance floor wisdom",
-        "handle": "@kaiamal13",
-        "url": "https://x.com/kaiamal13/status/2057093378743927111",
-        "body": "the charli shade omg",
-        "engagement": "8768 likes, 467 reposts, 260 replies",
-        "honesty": "7/10",
-        "notes": "Reaction/interpretation of implied shade - opinion",
-        "posted": "2026-05-20T16:35:29Z",
-        "post_ts": "2026-05-20T13:18:33Z",
-        "views": 425186,
-        "views_at_save": 425186,
-        "age_at_save_hours": 11.4,
-        "original_url": "https://x.com/PopCrave/status/2057088591050748297",
-        "original_handle": "@PopCrave",
-        "original_views": 402991,
-        "qt_views": 22195
-      },
-      {
         "headline": "Love Island Breakup Shocker",
         "handle": "@TMZ",
         "url": "https://x.com/TMZ/status/2057208530688410108",
@@ -1343,8 +1293,7 @@
         "original_views": 118747,
         "qt_views": 1107
       }
-    ],
-    "_overflow": []
+    ]
   },
   "recipe": {
     "stories": [
@@ -1442,6 +1391,25 @@
   "science": {
     "stories": [
       {
+        "headline": "VIZZ Eye Drops Restore Vision",
+        "handle": "@bluvoodoo1",
+        "url": "https://x.com/bluvoodoo1/status/2057666172313584055",
+        "body": "Once-DAILY eye drops that last for 10-hours.  \n\nAlways a TREATEMENT that you buy FOREVER, and never a CURE.",
+        "engagement": "3957 likes, 349 reposts",
+        "honesty": "8/10",
+        "notes": "Reports scientific development but adds editorial opinion ('always treatment...never cure') - factual core with commentary",
+        "posted": "2026-05-22T04:56:32Z",
+        "post_ts": "2026-05-21T22:54:45Z",
+        "views": 277979,
+        "views_at_save": 277979,
+        "age_at_save_hours": 2.91,
+        "original_url": "https://x.com/forallcurious/status/2057595985476407533",
+        "original_handle": "@forallcurious",
+        "original_views": 276778,
+        "qt_views": 1201,
+        "perspectives": []
+      },
+      {
         "headline": "AI Breakthrough on Erd\u0151s Problem",
         "handle": "@memecrashes",
         "url": "https://x.com/memecrashes/status/2057478155246440929",
@@ -1477,25 +1445,6 @@
         "original_handle": "@sciencegirl",
         "original_views": 2733909,
         "qt_views": 789651,
-        "perspectives": []
-      },
-      {
-        "headline": "VIZZ Eye Drops Restore Vision",
-        "handle": "@bluvoodoo1",
-        "url": "https://x.com/bluvoodoo1/status/2057666172313584055",
-        "body": "Once-DAILY eye drops that last for 10-hours.  \n\nAlways a TREATEMENT that you buy FOREVER, and never a CURE.",
-        "engagement": "3957 likes, 349 reposts",
-        "honesty": "8/10",
-        "notes": "Reports scientific development but adds editorial opinion ('always treatment...never cure') - factual core with commentary",
-        "posted": "2026-05-22T04:56:32Z",
-        "post_ts": "2026-05-21T22:54:45Z",
-        "views": 277979,
-        "views_at_save": 277979,
-        "age_at_save_hours": 2.91,
-        "original_url": "https://x.com/forallcurious/status/2057595985476407533",
-        "original_handle": "@forallcurious",
-        "original_views": 276778,
-        "qt_views": 1201,
         "perspectives": []
       }
     ],
@@ -1618,26 +1567,9 @@
         "engagement": "Likes=50, Reposts=22, Quotes=0, Replies=0, Bookmarks=4",
         "honesty": "High - directly reports verified discovery count and context from marine research",
         "notes": "Different event: record number of new marine species discovered in past year"
-      },
-      {
-        "headline": "AI whole-body 3D model maps cell perturbations",
-        "handle": "@erturklab",
-        "url": "https://x.com/erturklab/status/2057118052815155216",
-        "body": "thank you very much Eric for highlighting our work. We are very excited about the potential of MouseMapper.",
-        "engagement": "62 likes, 13 reposts",
-        "honesty": "9/10",
-        "notes": "Accurate summary of peer-reviewed Nature paper on verifiable AI research tool.",
-        "posted": "2026-05-20T16:35:30Z",
-        "post_ts": "2026-05-20T15:01:24Z",
-        "views": 14095,
-        "views_at_save": 14095,
-        "age_at_save_hours": 7.52,
-        "original_url": "https://x.com/EricTopol/status/2057114472553251062",
-        "original_handle": "@EricTopol",
-        "original_views": 12852,
-        "qt_views": 1243
       }
-    ]
+    ],
+    "_overflow": []
   },
   "local": {
     "stories": [
@@ -1670,61 +1602,13 @@
         "views_at_save": 13639,
         "age_at_save_hours": 7.04,
         "perspectives": []
-      },
-      {
-        "url": "https://x.com/Hunter_Eagleman/status/2057570074785874222",
-        "handle": "@Hunter_Eagleman",
-        "body": "LA Mayor Karen Bass just said she\u2019s considering allowing illegal aliens to vote in local elections and claims \u201cthey pay taxes.\u201d For God\u2019s sake Los Angeles, VOTE SPENCER PRATT!",
-        "views": 10146,
-        "engagement": {
-          "likes": 1915,
-          "reposts": 412,
-          "quotes": 10,
-          "replies": 87,
-          "bookmarks": 9
-        },
-        "honesty": "opinionated commentary on public statement",
-        "notes": "SoCal local politics story; different event from excluded topics"
       }
     ],
     "earlier": []
   },
   "conspiracy": {
-    "stories": [
-      {
-        "headline": "Trump Admin Foreign Policy Driven by Diaspora Priorities",
-        "handle": "@anyaparampil",
-        "url": "https://x.com/anyaparampil/status/2057544032105152901",
-        "body": "We have Zionist Jews brokering our \u201cpeace\u201d with Iran and reactionary Cubans drawing up our policies toward Latin America.\n\nAmerica First, where tribalism prevails.",
-        "engagement": "3.2K likes, 689 reposts, 216 replies",
-        "honesty": "7/10",
-        "notes": "Analytical take on policy patterns backed by Rubio family background and video quote.",
-        "posted": "2026-05-22T01:01:44Z",
-        "post_ts": "2026-05-21T17:01:11Z",
-        "views": 131183,
-        "views_at_save": 131183,
-        "age_at_save_hours": 11.0,
-        "original_url": "https://x.com/ggreenwald/status/2057507006219444261",
-        "original_handle": "@ggreenwald",
-        "original_views": 129303,
-        "qt_views": 1880,
-        "perspectives": []
-      },
-      {
-        "headline": "School Cover-Up Exposed",
-        "handle": "@libsoftiktok",
-        "url": "https://x.com/libsoftiktok/status/2057589755479523560",
-        "body": "Washington State school superintendent and director arrested for obstructing sexual assault investigation and giving false statements to authorities.",
-        "engagement": "2.8K likes, 1.2K reposts, 139 replies",
-        "honesty": "9/10",
-        "notes": "Factual report of arrests/charges - verifiable but needs confirmation as court record vs news report",
-        "posted": "2026-05-22T04:56:33Z",
-        "post_ts": "2026-05-21T22:30:00Z",
-        "views": 61988,
-        "views_at_save": 61988,
-        "age_at_save_hours": 7.97,
-        "perspectives": []
-      },
+    "stories": [],
+    "earlier": [
       {
         "headline": "O'Keefe Videos on Homeless Voting Payments Ignored by Fox",
         "handle": "@JamesOKeefeIII",
@@ -1740,21 +1624,10 @@
         "age_at_save_hours": 16.2,
         "perspectives": []
       }
-    ],
-    "earlier": []
+    ]
   },
   "comedy": {
     "stories": [
-      {
-        "url": "https://x.com/Tokyouna/status/2057466198745551238",
-        "handle": "@Tokyouna",
-        "body": "The slow motion makes it hilarious. \ud83e\udd23\ud83e\udd23\ud83e\udd23",
-        "views": 2518240,
-        "engagement": "Likes:36798 Reposts:3608 Quotes:129 Replies:190 Bookmarks:5637",
-        "honesty": "7/10",
-        "notes": "Subjective humor opinion ('makes it hilarious')",
-        "perspectives": []
-      },
       {
         "headline": "Tom Segura on story 'way in'",
         "handle": "@PerellClips",
