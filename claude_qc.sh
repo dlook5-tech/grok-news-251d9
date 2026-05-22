@@ -1150,66 +1150,9 @@ if sweep_modified:
     with open('stories.json','w') as f: json.dump(d, f, indent=2)
     print("[final-sweep] stories.json updated", file=sys.stderr)
 
-# ---- Check 9: World/USA — pull from Ristretto (with 100K view floor) ----
-# User mandate (2026-05-22): eXpressO's keyword-filtered World prompt was
-# missing big stories (e.g. 3.66M Gonorrhoea-Europe, 1M India-cockroach,
-# 569K Ebola-US-screening) that Ristretto's simpler "top events" prompt
-# caught. Decision: swap World/USA picks with Ristretto's, filtered to
-# events whose top-perspective view ≥ 100,000. Graceful fallback to
-# eXpressO's own picks if Ristretto is unreachable.
-import urllib.request
-RISTRETTO_URL = 'https://ristretto-news.netlify.app/stories.json'
-VIEW_FLOOR = 100_000
-
-def _top_view(story):
-    v = 0
-    try: v = max(v, int(story.get('views', 0) or 0))
-    except: pass
-    for p in story.get('perspectives', []) or []:
-        try: v = max(v, int(p.get('views', 0) or 0))
-        except: pass
-    return v
-
-def _adapt_perspective(p):
-    # Ristretto uses 'body'; eXpressO frontend reads 'text'. Normalize.
-    out = dict(p)
-    if 'body' in out and 'text' not in out:
-        out['text'] = out['body']
-    return out
-
-def _adapt_story(s):
-    out = dict(s)
-    out['perspectives'] = [_adapt_perspective(p) for p in (s.get('perspectives') or [])]
-    return out
-
-try:
-    req = urllib.request.Request(RISTRETTO_URL, headers={'User-Agent': 'expresso-qc/1.0'})
-    with urllib.request.urlopen(req, timeout=15) as r:
-        rist = json.load(r)
-    swap_modified = False
-    for _tab in ('world', 'usa'):
-        # Ristretto schema: {"stories": {"world": {"stories": [...]}}}
-        rist_stories = (rist.get('stories', {}).get(_tab, {}) or {}).get('stories', []) or []
-        # Apply 100K floor
-        kept = [_adapt_story(s) for s in rist_stories if _top_view(s) >= VIEW_FLOOR]
-        if not kept:
-            print(f"[ristretto-pull] {_tab}: 0 stories cleared 100K floor — keeping eXpressO picks", file=sys.stderr)
-            continue
-        # Replace eXpressO's picks
-        if _tab not in d or not isinstance(d.get(_tab), dict):
-            d[_tab] = {}
-        prev_count = len(d.get(_tab, {}).get('stories', []) or [])
-        d[_tab]['stories'] = kept
-        print(f"[ristretto-pull] {_tab}: swapped {prev_count} eXpressO picks → {len(kept)} Ristretto picks (≥100K view floor)", file=sys.stderr)
-        for s in kept:
-            print(f"    {_top_view(s):>10,}  {(s.get('headline') or '?')[:60]}", file=sys.stderr)
-        swap_modified = True
-    if swap_modified:
-        with open('stories.json','w') as f: json.dump(d, f, indent=2)
-        print("[ristretto-pull] stories.json updated with Ristretto World/USA", file=sys.stderr)
-except Exception as e:
-    print(f"[ristretto-pull] could not fetch Ristretto ({e}); keeping eXpressO World/USA", file=sys.stderr)
-    warnings.append(f"ristretto-pull-failed: {e}")
+# NOTE (2026-05-22): the old "ristretto-pull" Check 9 was removed because
+# parse_grok.py now natively runs the Ristretto-style World/USA pipeline
+# (100K view floor, no cap, no hold). No more cross-site fetch needed.
 
 # ---- Report ----
 if warnings:

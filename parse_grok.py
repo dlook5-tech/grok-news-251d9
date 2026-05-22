@@ -2037,46 +2037,60 @@ def _topup_to_floor(picked, existing_stories, top_n=_TAB_FLOOR, max_age_h=_TAB_F
 # enforces 3-perspective + no-wire-copy. curation.curate sorts by views in 4h
 # window and takes top 3. enrich_commentator handles the QT/RT trifecta swap.
 # That's it.
+# 2026-05-22: World/USA rewritten in Ristretto's simple style per user mandate:
+# "Copy the Python code that's used in Ristretto for those two tabs and paste it
+# into eXpressO with the 100K floor. Delete whatever Python code you had for
+# eXpressO for the World and USA tab."
+# Logic:
+#   1. Accept Grok's perspectives-array output as-is
+#   2. Normalize body→text (Ristretto schema → eXpressO frontend schema)
+#   3. Filter: max perspective view ≥ 100,000
+#   4. Sort by max perspective view, descending
+#   5. NO cap, NO velocity hold, NO carry-over, NO clean_world validation,
+#      NO overflow. Could be 1 story, could be 8. Pure views floor.
+WU_VIEW_FLOOR = 100_000
+
+def _wu_max_view(s):
+    v = 0
+    try: v = max(v, int(s.get('views', 0) or 0))
+    except: pass
+    for _p in s.get('perspectives', []) or []:
+        try: v = max(v, int(_p.get('views', 0) or 0))
+        except: pass
+    return v
+
+def _wu_normalize(s):
+    """Normalize Ristretto-style perspective array (body field) → eXpressO frontend (text field)."""
+    out = dict(s)
+    persps = []
+    for p in s.get('perspectives', []) or []:
+        if not isinstance(p, dict): continue
+        pp = dict(p)
+        if 'body' in pp and 'text' not in pp:
+            pp['text'] = pp['body']
+        if not pp.get('url') or '/status/' not in pp['url']:
+            continue
+        persps.append(pp)
+    out['perspectives'] = persps
+    return out
+
 for _tab in ('world', 'usa'):
     _raw = data.get(_tab, [])
     _items = _raw if isinstance(_raw, list) else [_raw]
-    _candidates = []
+    _qualified = []
     for _w in _items:
-        _cleaned = clean_world(_w) if _w else None
-        if _cleaned and _belongs_on_tab(_tab, _cleaned):
-            _candidates.append(_cleaned)
-    _wu_age_cap = _BACKFILL_AGE_BY_TAB.get(_tab, 4)
-    _held = _existing.get(_tab, {}).get('stories', []) or []
-    # PASS 1: top 3 in 4h window (preferred).
-    _picked = curation.curate(_tab, _held, _candidates,
-                              top_n=_TAB_N[_tab], enrich=False, history=_history,
-                              max_age_h=_wu_age_cap)
-    # PASS 2: if <3, widen window to 24h. User mandate "3 stories always".
-    if len(_picked) < 3:
-        _picked = curation.curate(_tab, _held, _candidates,
-                                  top_n=_TAB_N[_tab], enrich=False, history=_history,
-                                  max_age_h=24)
-    curation.stamp_view_history(_picked)
-    # Overflow: Grok candidates we DIDN'T pick. claude_qc can pull from here when
-    # semantic-dedup creates a gap (user 2026-05-10: "go back to crock and find the
-    # next most popular velocity story"). Capped at 5 to keep stories.json compact.
-    _picked_urls = set()
-    for _s in _picked:
-        if _s.get('url'): _picked_urls.add(_s['url'])
-        for _p in _s.get('perspectives', []) or []:
-            if isinstance(_p, dict) and _p.get('url'): _picked_urls.add(_p['url'])
-    _overflow = []
-    for _c in _candidates:
-        _c_urls = set()
-        if _c.get('url'): _c_urls.add(_c['url'])
-        for _p in _c.get('perspectives', []) or []:
-            if isinstance(_p, dict) and _p.get('url'): _c_urls.add(_p['url'])
-        if _c_urls and not (_c_urls & _picked_urls):
-            _overflow.append(_c)
+        if not isinstance(_w, dict): continue
+        if not (_w.get('headline') or '').strip(): continue
+        _norm = _wu_normalize(_w)
+        if not _norm.get('perspectives'): continue
+        if _wu_max_view(_norm) < WU_VIEW_FLOOR: continue
+        _qualified.append(_norm)
+    # Sort by max view descending, no top-N cap
+    _qualified.sort(key=_wu_max_view, reverse=True)
+    print(f"[{_tab}] Ristretto-style: {len(_qualified)} events cleared {WU_VIEW_FLOOR:,} view floor", file=sys.stderr)
     _output_v5[_tab] = {
-        'stories': _picked,
-        'earlier': _build_earlier(_tab, _picked, _existing.get(_tab, {})),
-        '_overflow': _overflow[:5],
+        'stories': _qualified,
+        'earlier': _build_earlier(_tab, _qualified, _existing.get(_tab, {})),
     }
 
 # ---- Flat tabs (one post per slot) ----
