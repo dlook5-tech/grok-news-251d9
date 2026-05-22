@@ -413,15 +413,20 @@ cat > /tmp/grok_p_world.txt <<'PROMPT'
 USER'S EXACT SPEC (2026-05-12) — FOLLOW THIS ORDER LITERALLY. DO NOT REORDER.
 
 STEP 1. STORIES ONLY (no perspectives yet, no politics yet).
-        x_search broadly for international news in the last 4 hours:
+        x_search broadly for international news in the LAST 24 HOURS
+        (was 4h — too narrow, kept producing 6K-view picks on slow news days):
           "(international OR world OR foreign OR war OR conflict OR
-            geopolitics OR Iran OR China OR Russia OR Ukraine OR
-            Israel OR Europe OR Asia) lang:en since:4_hours_ago"
+            geopolitics OR Iran OR China OR Russia OR Ukraine OR Israel OR
+            Gaza OR Europe OR Asia OR Africa OR \"Latin America\" OR
+            \"South America\" OR India OR Pakistan OR Korea OR Japan)
+            lang:en since:24_hours_ago min_faves:1000"
           mode:"Top", limit:50.
         Cluster the results BY EVENT (not handle). Identify the top 5-8
         events by total view count of their lead posts. **Do NOT look at
         political perspectives in this step.** This is purely "what are
-        the biggest news events on X right now?"
+        the biggest news events on X right now?" Prefer fresher events
+        (<4h) when their view count is competitive, but a 12h-old story
+        with 5M views BEATS a 2h-old story with 50K views.
 
 STEP 2. PICK TOP 3 EVENTS BY VIEW COUNT.
         Of the 5-8 events from Step 1, take the 3 with the highest lead-post
@@ -509,9 +514,18 @@ PROMPT
 cat > /tmp/grok_p_usa.txt <<'PROMPT'
 USER'S EXACT SPEC (2026-05-11) — FOLLOW LITERALLY, ADD NOTHING:
 
-STEP 1. Find the top 5-8 US national news stories (domestic politics, SCOTUS, Congress, federal policy). Identify which have the
-        HIGHEST VELOCITY (most views in the last 4 hours). Curate the top 3
-        and **make sure they're not about the same subject matter** (no two
+STEP 1. Find the top 5-8 US national news stories (domestic politics, SCOTUS,
+        Congress, federal policy) over the LAST 24 HOURS (was 4h — too narrow,
+        produced sub-10K-view picks on slow days). x_search:
+          "(Congress OR Senate OR House OR SCOTUS OR Trump OR Biden OR
+            \"federal court\" OR DOJ OR DHS OR \"White House\" OR FBI OR
+            \"executive order\" OR election OR Republican OR Democrat OR
+            \"US politics\") lang:en since:24_hours_ago min_faves:1000"
+          mode:"Top", limit:50.
+        Cluster results BY EVENT. Identify the top 5-8 by total view count.
+        Prefer fresher events (<4h) when view-competitive, but a 12h-old
+        2M-view story BEATS a 2h-old 50K story. Curate the top 3 and
+        **make sure they're not about the same subject matter** (no two
         framings of the same event — e.g. don't return 3 Iran-ceasefire posts).
 
 STEP 2. For EACH of the 3 topics, find the HIGHEST-VELOCITY coverage from
