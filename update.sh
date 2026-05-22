@@ -408,64 +408,58 @@ except Exception: print('0')
 # WRITE ALL 12 PROMPTS
 # ============================================================
 
-# --- WORLD (Ristretto-style, 100K view floor, no cap) ---
-cat > /tmp/grok_p_world.txt <<'PROMPT'
-Find the top WORLD news EVENTS on X in the past 24 hours, ranked by raw view count.
+# --- WORLD / USA — Ristretto's exact prompt text, verbatim from ristretto-news/update.sh
+# Per user mandate 2026-05-22: "Use the EXACT code that was used in producing
+# successful results in Ristretto and just cut and paste it. Put it exactly
+# in eXpressO with the only add that 100k floor."
+# Two changes from Ristretto's verbatim prompt: (1) added 100K view floor
+# instruction, (2) removed the "Top 3" cap (Ristretto: "Top 3 highest-view".
+# Here: "Top highest-view" — no number cap).
 
-NO KEYWORD FILTER. Don't restrict to specific countries or topics — let view count decide what counts as "top world news." Health, politics, war, disaster, culture, foreign elections, anything international or non-US that's actually viral.
+cat > /tmp/grok_p_world.txt <<PROMPT
+Top highest-view WORLD news EVENTS on X in the past 24h (international, outside the US). Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything posted before $YESTERDAY.
 
-For each event, find a Conservative, Independent, and Democrat perspective tweet (2 minimum, 3 ideal). If only 1 perspective exists, drop the event entirely.
+Each item is one EVENT with three sided reactions:
+{
+  "headline":"neutral one-line summary of the event",
+  "url":"https://x.com/user/status/<id>",
+  "handle":"username",
+  "perspectives":[
+    {"label":"Conservative","handle":"...","url":"https://x.com/.../status/<id>","body":"actual post text","engagement":"500K views","views":500000},
+    {"label":"Independent","handle":"...","url":"https://x.com/.../status/<id>","body":"...","engagement":"...","views":...},
+    {"label":"Democrat","handle":"...","url":"https://x.com/.../status/<id>","body":"...","engagement":"...","views":...}
+  ]
+}
+For each event: highest-view Conservative, Independent, and Democrat reactions on X — ALL from the last 24 hours. All four URLs MUST be real X status URLs from posts on or after $YESTERDAY. If you can't find 3 perspectives, still return the event with however many you DO find.
 
-CRITICAL:
-- Each event MUST be a DIFFERENT subject. If multiple high-view tweets cover the same news (e.g. 5 different Ebola posts), MERGE them into ONE event with all perspectives consolidated.
-- Each event's TOP perspective must have at least 100,000 views — drop any event below that.
-- Return as many qualifying events as you find (no cap). 1 is fine. 6 is fine. Empty array is fine if literally nothing clears the bar.
+MERGE DUPLICATES: If multiple high-view tweets cover the SAME news event (e.g. five Ebola-emergency tweets from different angles), MERGE them into ONE event block with all the perspectives consolidated. Don't return two separate events about the same story even if the perspective handles differ. Each event you return must be a genuinely DIFFERENT subject matter.
 
-Return ONLY a JSON array with this exact schema (no markdown, no fences):
-{"world":[
-  {
-    "headline":"neutral one-line summary of the event",
-    "url":"https://x.com/user/status/<id>",
-    "handle":"username",
-    "perspectives":[
-      {"label":"Conservative","handle":"...","url":"https://x.com/.../status/<id>","body":"actual post text","views":1234567},
-      {"label":"Independent","handle":"...","url":"https://x.com/.../status/<id>","body":"...","views":...},
-      {"label":"Democrat","handle":"...","url":"https://x.com/.../status/<id>","body":"...","views":...}
-    ]
-  },
-  ...
-]}
-URLs must be real x.com/handle/status/numeric_id from x_search. Never fabricate. Verbatim post text only.
+VIEW FLOOR (only addition vs Ristretto's verbatim prompt): Each event's TOP perspective must have at least 100,000 views. Drop any event below that. No fixed cap on count — return as many qualifying events as you find.
 PROMPT
 
-# --- USA (Ristretto-style, 100K view floor, no cap) ---
-cat > /tmp/grok_p_usa.txt <<'PROMPT'
-Find the top US NATIONAL news EVENTS on X in the past 24 hours, ranked by raw view count. Domestic politics, SCOTUS, Congress, federal policy, federal courts, White House, federal agencies.
+cat > /tmp/grok_p_usa.txt <<PROMPT
+Top highest-view US NATIONAL news EVENTS on X in the past 24h (politics, federal events). Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything posted before $YESTERDAY.
 
-NO KEYWORD FILTER, NO SEED-HANDLE RESTRICTION. Let view count decide which stories are top. Any handle is welcome.
+Each item is one EVENT with three sided reactions:
+{
+  "headline":"neutral one-line summary of the event",
+  "url":"https://x.com/user/status/<id>",
+  "handle":"username",
+  "perspectives":[
+    {"label":"Conservative","handle":"...","url":"https://x.com/.../status/<id>","body":"actual post text","engagement":"500K views","views":500000},
+    {"label":"Independent","handle":"...","url":"https://x.com/.../status/<id>","body":"...","engagement":"...","views":...},
+    {"label":"Democrat","handle":"...","url":"https://x.com/.../status/<id>","body":"...","engagement":"...","views":...}
+  ]
+}
+For each event: highest-view Conservative, Independent, and Democrat reactions on X — ALL from the last 24 hours. All four URLs MUST be real X status URLs from posts on or after $YESTERDAY. If you can't find 3 perspectives, still return the event with however many you DO find.
 
-For each event, find a Conservative, Independent, and Democrat perspective tweet (2 minimum, 3 ideal). If only 1 perspective exists, drop the event entirely.
+MERGE DUPLICATES: If multiple high-view tweets cover the SAME news event, MERGE them into ONE event block with all the perspectives consolidated. Don't return two separate events about the same story even if the perspective handles differ. Each event you return must be a genuinely DIFFERENT subject matter.
 
-CRITICAL:
-- Each event MUST be a DIFFERENT subject. If multiple high-view tweets cover the same news, MERGE them into ONE event with all perspectives consolidated.
-- Each event's TOP perspective must have at least 100,000 views — drop any event below that.
-- Return as many qualifying events as you find (no cap). 1 is fine. 6 is fine. Empty array is fine if literally nothing clears the bar.
-
-Return ONLY a JSON array with this exact schema (no markdown, no fences):
-{"usa":[
-  {
-    "headline":"neutral one-line summary of the event",
-    "url":"https://x.com/user/status/<id>",
-    "handle":"username",
-    "perspectives":[
-      {"label":"Conservative","handle":"...","url":"https://x.com/.../status/<id>","body":"actual post text","views":1234567},
-      {"label":"Independent","handle":"...","url":"https://x.com/.../status/<id>","body":"...","views":...},
-      {"label":"Democrat","handle":"...","url":"https://x.com/.../status/<id>","body":"...","views":...}
-    ]
-  },
-  ...
-]}
-URLs must be real x.com/handle/status/numeric_id from x_search. Never fabricate. Verbatim post text only.
+VIEW FLOOR (only addition vs Ristretto's verbatim prompt): Each event's TOP perspective must have at least 100,000 views. Drop any event below that. No fixed cap on count — return as many qualifying events as you find.
 PROMPT
 
 # --- ELON ---

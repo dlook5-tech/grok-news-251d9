@@ -2037,30 +2037,105 @@ def _topup_to_floor(picked, existing_stories, top_n=_TAB_FLOOR, max_age_h=_TAB_F
 # enforces 3-perspective + no-wire-copy. curation.curate sorts by views in 4h
 # window and takes top 3. enrich_commentator handles the QT/RT trifecta swap.
 # That's it.
-# 2026-05-22: World/USA rewritten in Ristretto's simple style per user mandate:
-# "Copy the Python code that's used in Ristretto for those two tabs and paste it
-# into eXpressO with the 100K floor. Delete whatever Python code you had for
-# eXpressO for the World and USA tab."
-# Logic:
-#   1. Accept Grok's perspectives-array output as-is
-#   2. Normalize body→text (Ristretto schema → eXpressO frontend schema)
-#   3. Filter: max perspective view ≥ 100,000
-#   4. Sort by max perspective view, descending
-#   5. NO cap, NO velocity hold, NO carry-over, NO clean_world validation,
-#      NO overflow. Could be 1 story, could be 8. Pure views floor.
-WU_VIEW_FLOOR = 100_000
+# ============================================================================
+# WORLD / USA — Ristretto's exact code, verbatim from /Users/lookhome/ristretto-news/
+# Per user mandate 2026-05-22: "Use the EXACT code that was used in producing
+# successful results in Ristretto and just cut and paste it. Put it exactly
+# in eXpressO with the only add that 100k floor. That's it."
+#
+# DELTAS from Ristretto (only what was unavoidable):
+#   (1) 100K view floor on candidates  (the user-requested addition)
+#   (2) no top_n cap  (user: "however many stories have over 100,000 views")
+#   (3) body→text rename on each perspective  (required because eXpressO's
+#       frontend reads `text`; Ristretto's frontend reads `body`. Pure
+#       field-rename, not a logic change.)
+# Everything else below is Ristretto's parse_grok.py + curation.py verbatim.
+# ============================================================================
 
-def _wu_max_view(s):
-    v = 0
-    try: v = max(v, int(s.get('views', 0) or 0))
-    except: pass
-    for _p in s.get('perspectives', []) or []:
-        try: v = max(v, int(_p.get('views', 0) or 0))
-        except: pass
+# === Verbatim from /Users/lookhome/ristretto-news/curation.py ===
+_RIST_MAX_HOLD_HOURS = 23
+
+def _rist_parse_metric(s, metric='views'):
+    if not s: return 0
+    m = re.search(r'([\d.,]+)\s*([kmb])?\s*' + re.escape(metric), str(s).lower())
+    if not m: return 0
+    n = float(m.group(1).replace(',', ''))
+    suffix = (m.group(2) or '').lower()
+    if suffix == 'k': n *= 1000
+    elif suffix == 'm': n *= 1_000_000
+    elif suffix == 'b': n *= 1_000_000_000
+    return int(n)
+
+def _rist_int_or_zero(x):
+    try: return int(x)
+    except: return 0
+
+def _rist_story_views(s):
+    """Max view count from top-level OR any perspective (verbatim from Ristretto)."""
+    v = max(_rist_int_or_zero(s.get('views', 0)), _rist_parse_metric(s.get('engagement', '')))
+    for p in s.get('perspectives', []) or []:
+        v = max(v, _rist_int_or_zero(p.get('views', 0)), _rist_parse_metric(p.get('engagement', '')))
     return v
 
-def _wu_normalize(s):
-    """Normalize Ristretto-style perspective array (body field) → eXpressO frontend (text field)."""
+def _rist_age_of_url(url):
+    m = re.search(r'/status/(\d+)', url or '')
+    if not m: return float('inf')
+    try:
+        ts = (int(m.group(1)) >> 22) + 1288834974657
+        return (datetime.datetime.now() - datetime.datetime.fromtimestamp(ts / 1000)).total_seconds() / 3600
+    except: return float('inf')
+
+def _rist_story_age_hours(s):
+    """Age of FRESHEST url (verbatim from Ristretto)."""
+    ages = [_rist_age_of_url(s.get('url',''))]
+    for p in s.get('perspectives', []) or []:
+        ages.append(_rist_age_of_url(p.get('url','')))
+    finite = [a for a in ages if a != float('inf')]
+    return min(finite) if finite else 0.0
+
+def _rist_story_velocity(s):
+    age = max(_rist_story_age_hours(s), 0.1)
+    views = _rist_story_views(s)
+    saved = s.get('views_at_save')
+    saved_age = s.get('age_at_save_hours')
+    if saved is not None and saved_age is not None:
+        return (float(saved) / max(float(saved_age), 0.1)) * 4.0
+    if age <= 24 and views > 0:
+        return (float(views) / age) * 4.0
+    return -1.0
+
+def _rist_apply_hold(current, candidates, sort_key=None):
+    """Verbatim from Ristretto apply_hold, with top_n cap removed (user delta #2)."""
+    if sort_key is None:
+        sort_key = _rist_story_velocity
+    seen = {}
+    for s in (candidates or []):
+        if _rist_story_age_hours(s) > 24: continue
+        key = s.get('url') or s.get('headline', str(id(s)))
+        seen[key] = s
+    for s in (current or []):
+        if _rist_story_age_hours(s) > _RIST_MAX_HOLD_HOURS: continue
+        key = s.get('url') or s.get('headline', str(id(s)))
+        if key not in seen or sort_key(s) > sort_key(seen[key]):
+            seen[key] = s
+    pool = list(seen.values())
+    return sorted(pool, key=sort_key, reverse=True)  # delta #2: no [:top_n]
+
+def _rist_curate(tab, current, fresh):
+    # World/USA use velocity sort (same as Ristretto's curate for non-'top' tabs)
+    return _rist_apply_hold(current, fresh, sort_key=_rist_story_velocity)
+
+# === Verbatim from /Users/lookhome/ristretto-news/parse_grok.py main loop ===
+# (load_previous_stories pattern, then the per-tab loop body)
+_WU_VIEW_FLOOR = 100_000  # delta #1: the only addition
+
+_rist_previous = {}
+for _t, _tdata in (_existing or {}).items():
+    if isinstance(_tdata, dict):
+        _rist_previous[_t] = _tdata.get('stories', []) or []
+
+def _wu_body_to_text(s):
+    """Delta #3: rename `body` field to `text` for eXpressO frontend compatibility."""
     out = dict(s)
     persps = []
     for p in s.get('perspectives', []) or []:
@@ -2068,29 +2143,30 @@ def _wu_normalize(s):
         pp = dict(p)
         if 'body' in pp and 'text' not in pp:
             pp['text'] = pp['body']
-        if not pp.get('url') or '/status/' not in pp['url']:
-            continue
         persps.append(pp)
     out['perspectives'] = persps
     return out
 
 for _tab in ('world', 'usa'):
-    _raw = data.get(_tab, [])
-    _items = _raw if isinstance(_raw, list) else [_raw]
-    _qualified = []
-    for _w in _items:
-        if not isinstance(_w, dict): continue
-        if not (_w.get('headline') or '').strip(): continue
-        _norm = _wu_normalize(_w)
-        if not _norm.get('perspectives'): continue
-        if _wu_max_view(_norm) < WU_VIEW_FLOOR: continue
-        _qualified.append(_norm)
-    # Sort by max view descending, no top-N cap
-    _qualified.sort(key=_wu_max_view, reverse=True)
-    print(f"[{_tab}] Ristretto-style: {len(_qualified)} events cleared {WU_VIEW_FLOOR:,} view floor", file=sys.stderr)
+    # Ristretto main-loop body, verbatim:
+    items = data.get(_tab, [])
+    if not isinstance(items, list):
+        items = [items] if items else []
+    cleaned = []
+    for item in items:
+        if isinstance(item, dict):
+            if item.get('handle') and item.get('url'):
+                cleaned.append(item)
+    # Delta #1: 100K view floor (the only user-requested addition)
+    cleaned = [c for c in cleaned if _rist_story_views(c) >= _WU_VIEW_FLOOR]
+    # Ristretto's curate call (without top_n cap)
+    chosen = _rist_curate(_tab, _rist_previous.get(_tab, []), cleaned)
+    # Delta #3: body→text rename for frontend
+    chosen = [_wu_body_to_text(s) for s in chosen]
+    print(f"[{_tab}] Ristretto-exact: {len(chosen)} events cleared {_WU_VIEW_FLOOR:,} view floor", file=sys.stderr)
     _output_v5[_tab] = {
-        'stories': _qualified,
-        'earlier': _build_earlier(_tab, _qualified, _existing.get(_tab, {})),
+        'stories': chosen,
+        'earlier': _build_earlier(_tab, chosen, _existing.get(_tab, {})),
     }
 
 # ---- Flat tabs (one post per slot) ----
