@@ -1,47 +1,116 @@
 {
-  "lastUpdated": "2026-05-22T17:09:21Z",
+  "lastUpdated": "2026-05-22T19:05:08Z",
   "world": {
     "stories": [
       {
-        "headline": "Angry crowd sets fire to Ebola hospital tents in DR Congo amid outbreak",
+        "headline": "UN General Assembly endorses ICJ advisory opinion on states' climate obligations",
         "perspectives": [
           {
             "label": "Conservative",
-            "handle": "@SkyNews",
-            "url": "https://x.com/SkyNews/status/2057541593939222750",
-            "text": "Ebola outbreak spreading as crowd sets fire to treatment centre in DRC.",
-            "views": 56053,
+            "handle": "@UN_Vienna",
+            "url": "https://x.com/UN_Vienna/status/2057808706104946884",
+            "text": "The UN General Assembly adopted a landmark resolution this week committing states to take all possible steps to avoid causing significant damage to the climate & environment. It follows the advisory o",
+            "views": 146,
             "honesty": "9/10",
             "engagement": "",
-            "notes": "Factual news report of verifiable event, not official record"
+            "notes": "Factual report of UN resolution with minor framing ('landmark')"
           },
           {
             "label": "Democrat",
-            "handle": "@RVAwonk",
-            "url": "https://x.com/RVAwonk/status/2057526652679111025",
-            "text": "This is bad. \u201cSeveral patients may have escaped from this [Ebola] treatment facility\u201d after locals tried to break in and retrieve the body of a deceased Ebola patient.",
-            "views": 380905,
+            "handle": "@UN",
+            "url": "https://x.com/UN/status/2057450084376134064",
+            "text": "UN General Assembly backs historic @CIJ_ICJ's advisory opinion on countries' obligation to protect the environment from greenhouse gas emissions. The resolution reaffirms that tackling the climate cri",
+            "views": 50571,
             "honesty": "9/10",
             "engagement": "",
-            "original_url": "https://x.com/LarryMadowo/status/2057490155301155195",
-            "original_handle": "@LarryMadowo",
-            "original_views": 320469,
-            "qt_views": 60436,
-            "notes": "Factual news report with direct quote, verifiable event"
+            "notes": "Factual report of UN resolution with minor framing ('historic')"
           },
           {
             "label": "Independent",
-            "handle": "@AnnieJacobsen",
-            "url": "https://x.com/AnnieJacobsen/status/2057684970479779983",
-            "text": "Biological war game scenarios at the Pentagon presume vigilantism like this will happen in a deadly outbreak of this scale\u2014including in the US.\n\nIn Congo, with massive refugee movement due to ongoing ",
-            "views": 204439,
-            "honesty": "7/10",
+            "handle": "@UNHumanRights",
+            "url": "https://x.com/UNHumanRights/status/2057769745777037406",
+            "text": "The UN General Assembly endorsement of the International Court of Justice\u2019s climate ruling is key - the climate crisis is also a human rights crisis and States have legal obligations to protect people",
+            "views": 12831,
+            "honesty": "8/10",
             "engagement": "",
-            "original_url": "https://x.com/BBCWorld/status/2057556231561040366",
-            "original_handle": "@BBCWorld",
-            "original_views": 187284,
-            "qt_views": 17155,
-            "notes": "Pentagon war game analyst commentary - expert opinion/prediction not verified fact"
+            "notes": "UN Human Rights institutional perspective on legal obligations - organizational analysis not pure fact"
+          }
+        ],
+        "honesty": "8/10",
+        "notes": "",
+        "footnotes": [],
+        "body": "3-perspective coverage."
+      },
+      {
+        "headline": "WHO raises risk of Bundibugyo Ebola outbreak in DRC to 'very high'",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@WarNewsGlobal",
+            "url": "https://x.com/WarNewsGlobal/status/2057892546572128690",
+            "text": "\ud83d\udd34In Bunia, DR Congo, health experts say misinformation and mistrust are hampering efforts to contain an Ebola outbreak, with 160 suspected deaths among 670 suspected cases.",
+            "views": 58,
+            "honesty": "9/10",
+            "engagement": "",
+            "notes": "Factual report of Ebola outbreak with verifiable numbers"
+          },
+          {
+            "label": "Democrat",
+            "handle": "@AJEnglish",
+            "url": "https://x.com/AJEnglish/status/2057891815425196345",
+            "text": "An Ebola outbreak is spreading rapidly across eastern regions of the Democratic Republic of the Congo, with health authorities struggling to contain new cases amid ongoing insecurity and community unr",
+            "views": 7034,
+            "honesty": "9/10",
+            "engagement": "",
+            "notes": "Factual report of Ebola outbreak status"
+          },
+          {
+            "label": "Independent",
+            "handle": "@Reuters",
+            "url": "https://x.com/Reuters/status/2057881677578522766",
+            "text": "The World Health Organization has raised the risk of the Bundibugyo strain of Ebola turning into a national outbreak in the Democratic Republic of Congo to \u2018very high\u2019",
+            "views": 16128,
+            "honesty": "9/10",
+            "engagement": "",
+            "notes": "WHO risk assessment - official organizational statement"
+          }
+        ],
+        "honesty": "8/10",
+        "notes": "",
+        "footnotes": [],
+        "body": "3-perspective coverage."
+      },
+      {
+        "headline": "India advances Nordic ties amid global tensions at Oslo summit",
+        "perspectives": [
+          {
+            "label": "Conservative",
+            "handle": "@SuvenduWB",
+            "url": "https://x.com/SuvenduWB/status/2057804556285984995",
+            "text": "Honoured and privileged to have met our respected Prime Minister; Shri @narendramodi Ji, in New Delhi today. This marks my first Official Meeting with Hon'ble PM since assuming the responsibility of s",
+            "views": 156124,
+            "honesty": "9/10",
+            "engagement": "",
+            "notes": "Official's direct account of meeting - attribution verified"
+          },
+          {
+            "label": "Democrat",
+            "handle": "@DrSJaishankar",
+            "url": "https://x.com/DrSJaishankar/status/2057710846844051628",
+            "text": "Delighted to call on President @Christodulides of the Republic of Cyprus in New Delhi today. Value his positive sentiments and guidance for strengthening our bilateral ties and India - EU cooperation.",
+            "views": 26472,
+            "honesty": "9/10",
+            "engagement": "",
+            "notes": "Official's direct account of meeting - attribution verified"
+          },
+          {
+            "label": "Independent",
+            "handle": "@suhasinih",
+            "url": "https://x.com/suhasinih/status/2057894253658022141",
+            "text": "This week #Worldview from Oslo and the Nordic India summit: Are global powers pushing India and this North European region closer together with their unilateral aggression and rule breaking actions?",
+            "views": 440,
+            "honesty": "8/10",
+            "engagement": ""
           }
         ],
         "honesty": "8/10",
@@ -118,164 +187,69 @@
   "elon": {
     "stories": [
       {
-        "headline": "Recommends trying Cursor AI Composer 2.5 after seeing user praise",
+        "headline": "Recommends trying Cursor AI Composer 2.5 after seeing user's all-night session",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057842724649209878",
         "body": "Try it out!",
         "engagement": "",
         "honesty": "7/10",
-        "notes": "Vague directive without factual content - cannot be 8/10",
-        "posted": "2026-05-22T17:09:21Z",
+        "notes": "Elon's vague encouragement without factual content - opinion/reaction",
+        "posted": "2026-05-22T19:05:09Z",
         "post_ts": "2026-05-22T15:15:13Z",
-        "views": 6187219,
+        "views": 10084907,
         "parent_url": "https://x.com/KellehEyad/status/2057759086108627222",
         "parent_handle": "@KellehEyad",
-        "parent_text": "Spent the whole night in Composer 2.5, just waking up now and honestly, hard to go back. The pace this thing moves at is something else. Same outputs as Codex and Opus, but way faster. Someone explain @cursor_ai ?",
-        "views_at_save": 6187219,
-        "age_at_save_hours": 1.9
+        "parent_text": "Spent the whole night in Composer 2.Spent the whole night in Composer 2.5, just waking up now and honestly, hard to go back. The pace this thing moves at is something else. Same outputs as Codex and Opus, but way faster. Someone explain @cursor_ai ?",
+        "views_at_save": 10084907,
+        "age_at_save_hours": 3.83
       },
       {
-        "headline": "Laughs at a joke or meme",
+        "headline": "Laughs at meme of Elon fixing the election from space with lasers",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057839818877309139",
         "body": "\ud83e\udd23\ud83e\udd23.",
         "engagement": "",
         "honesty": "7/10",
-        "notes": "Emoji reaction without factual content",
-        "posted": "2026-05-22T17:09:21Z",
+        "notes": "Elon's emoji reaction - no factual content",
+        "posted": "2026-05-22T19:05:09Z",
         "post_ts": "2026-05-22T15:03:40Z",
-        "views": 78532,
-        "parent_url": "https://x.com/elonmusk/status/2057824999591842227",
-        "parent_handle": "@elonmusk",
-        "views_at_save": 78532,
-        "age_at_save_hours": 2.1
+        "views": 123633,
+        "parent_url": "https://x.com/peterrhague/status/2057824999591842227",
+        "parent_handle": "@peterrhague",
+        "parent_text": "Elon fixing the election from space",
+        "views_at_save": 123633,
+        "age_at_save_hours": 4.03
       },
       {
-        "headline": "Shares video of SpaceX or Tesla test",
+        "headline": "Shares video of Starship test or related footage",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057839480350834878",
         "body": "https://t.co/yjHT8jvxKJ.",
         "engagement": "",
         "honesty": "7/10",
-        "notes": "Link only without factual content",
-        "posted": "2026-05-22T17:09:21Z",
+        "notes": "Elon's link without context - no verifiable claim",
+        "posted": "2026-05-22T19:05:09Z",
         "post_ts": "2026-05-22T15:02:19Z",
-        "views": 1841643,
-        "views_at_save": 1841643,
-        "age_at_save_hours": 2.12
+        "views": 2676706,
+        "views_at_save": 2676706,
+        "age_at_save_hours": 4.05
       },
       {
-        "headline": "Replies with playful emoji reaction",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057819911204770162",
-        "body": "Make you \ud83d\udca6.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Emoji reaction without factual content",
-        "posted": "2026-05-22T17:09:22Z",
-        "post_ts": "2026-05-22T13:44:33Z",
-        "views": 300508,
-        "parent_url": "https://x.com/elonmusk/status/2057597724929749123",
-        "parent_handle": "@elonmusk",
-        "views_at_save": 300508,
-        "age_at_save_hours": 3.41
-      },
-      {
-        "headline": "Gives target emoji as reaction",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057816608383402371",
-        "body": "\ud83c\udfaf.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Emoji only without factual content",
-        "posted": "2026-05-22T17:09:22Z",
-        "post_ts": "2026-05-22T13:31:26Z",
-        "views": 16170,
-        "parent_url": "https://x.com/elonmusk/status/2057807177012613561",
-        "parent_handle": "@elonmusk",
-        "views_at_save": 16170,
-        "age_at_save_hours": 3.63
-      },
-      {
-        "headline": "Laughs with crying emoji",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057812587396350455",
-        "body": "\ud83d\ude02.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Emoji reaction without factual content",
-        "posted": "2026-05-22T17:09:22Z",
-        "post_ts": "2026-05-22T13:15:27Z",
-        "views": 15986,
-        "parent_url": "https://x.com/elonmusk/status/2057363633546662194",
-        "parent_handle": "@elonmusk",
-        "views_at_save": 15986,
-        "age_at_save_hours": 3.9
-      },
-      {
-        "headline": "Expresses surprise with 'Wow'",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057811593778327671",
-        "body": "Wow.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Single-word reaction without factual content",
-        "posted": "2026-05-22T17:09:22Z",
-        "post_ts": "2026-05-22T13:11:30Z",
-        "views": 164363,
-        "parent_url": "https://x.com/elonmusk/status/2057803424603775427",
-        "parent_handle": "@elonmusk",
-        "views_at_save": 164363,
-        "age_at_save_hours": 3.96
-      },
-      {
-        "headline": "Jokes about warp drive to another galaxy",
+        "headline": "Replies speculating warp drive to another galaxy",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057810949310915002",
         "body": "Warp drive to another galaxy, probably.",
         "engagement": "",
         "honesty": "7/10",
-        "notes": "Speculative joke ('probably') without factual content",
-        "posted": "2026-05-22T17:09:22Z",
+        "notes": "Elon's speculative humor about future tech - opinion/joke",
+        "posted": "2026-05-22T19:05:10Z",
         "post_ts": "2026-05-22T13:08:57Z",
-        "views": 33065,
-        "parent_url": "https://x.com/elonmusk/status/2057804511696073015",
-        "parent_handle": "@elonmusk",
-        "views_at_save": 33065,
-        "age_at_save_hours": 4.01
-      },
-      {
-        "headline": "Laughs with crying emoji",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057810037884477447",
-        "body": "\ud83d\ude02.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Emoji reaction without factual content",
-        "posted": "2026-05-22T17:09:22Z",
-        "post_ts": "2026-05-22T13:05:19Z",
-        "views": 12973,
-        "parent_url": "https://x.com/elonmusk/status/2057769272097603675",
-        "parent_handle": "@elonmusk",
-        "views_at_save": 12973,
-        "age_at_save_hours": 4.07
-      },
-      {
-        "headline": "Agrees with a take and adds fire emoji",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057809958045925735",
-        "body": "True \ud83d\udd25.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Emoji reaction without factual content",
-        "posted": "2026-05-22T17:09:22Z",
-        "post_ts": "2026-05-22T13:05:00Z",
-        "views": 15790,
-        "parent_url": "https://x.com/elonmusk/status/2057769272097603675",
-        "parent_handle": "@elonmusk",
-        "views_at_save": 15790,
-        "age_at_save_hours": 4.07
-      },
+        "views": 39176,
+        "views_at_save": 39176,
+        "age_at_save_hours": 5.94
+      }
+    ],
+    "earlier": [
       {
         "headline": "Jokes about using 5G to control brain waves",
         "handle": "@elonmusk",
@@ -307,9 +281,7 @@
         "parent_handle": "@elonmusk",
         "views_at_save": 135796,
         "age_at_save_hours": 4.14
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Praises Western civilization as amazing",
         "handle": "@elonmusk",
@@ -447,11 +419,29 @@
         "post_ts": "2026-05-22T10:05:54Z",
         "views": 12171430,
         "views_at_save": 12171430,
-        "age_at_save_hours": 5.58,
+        "age_at_save_hours": 7.51,
         "original_url": "https://x.com/elonmusk/status/2057764883773407535",
         "original_handle": "@elonmusk",
         "original_views": 12171355,
         "qt_views": 75
+      },
+      {
+        "headline": "GTA VI Wishlist Drops",
+        "handle": "@GTA6Alerts",
+        "url": "https://x.com/GTA6Alerts/status/2057856674925519086",
+        "body": "XBOX is doing what Rockstar Games is supposed to do right now.\n\nThey are probably just trying to ride the GTA 6 hype wave, but I wonder if Rockstar actually asked them to post this? \ud83e\udd14",
+        "engagement": "128K likes, 10K reposts",
+        "honesty": "7/10",
+        "notes": "Commentary/speculation about Xbox-Rockstar relationship ('I wonder if') - not official announcement",
+        "posted": "2026-05-22T19:05:10Z",
+        "post_ts": "2026-05-22T16:05:06Z",
+        "views": 8591242,
+        "views_at_save": 8225250,
+        "age_at_save_hours": 3.0,
+        "original_url": "https://x.com/XBOX/status/2057855279287476620",
+        "original_handle": "@XBOX",
+        "original_views": 8315003,
+        "qt_views": 276239
       },
       {
         "headline": "Pep Guardiola steps down",
@@ -465,12 +455,14 @@
         "post_ts": "2026-05-22T10:14:46Z",
         "views": 8048136,
         "views_at_save": 8048136,
-        "age_at_save_hours": 6.54,
+        "age_at_save_hours": 8.47,
         "original_url": "https://x.com/ManCity/status/2057767116644700432",
         "original_handle": "@ManCity",
         "original_views": 7363053,
         "qt_views": 685083
-      },
+      }
+    ],
+    "earlier": [
       {
         "headline": "DHS on immigration loophole",
         "handle": "@DHSgov",
@@ -482,9 +474,7 @@
         "posted": "2026-05-22T17:09:22Z",
         "post_ts": "2026-05-22T13:33:55Z",
         "views": 2651563
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Western civilization praised",
         "handle": "@DimaZeniuk",
@@ -550,21 +540,34 @@
     ],
     "_overflow": [
       {
-        "headline": "White House on Columbus",
-        "handle": "@WhiteHouse",
-        "url": "https://x.com/WhiteHouse/status/2057564175417672018",
-        "body": "White House declares Christopher Columbus a hero in this house.",
-        "engagement": "40K likes, 5K reposts",
-        "honesty": "8/10",
-        "notes": "Official statement with historical opinion.",
-        "posted": "2026-05-22T17:09:23Z",
-        "post_ts": "2026-05-21T20:48:21Z",
-        "views": 1303619
+        "headline": "Trump Admin Closes Immigration Loophole",
+        "handle": "@DHSgov",
+        "url": "https://x.com/DHSgov/status/2057817233200418837",
+        "body": "DHS announces end to loophole allowing migrants to stay in US while awaiting green cards.",
+        "engagement": "26K likes, 5K reposts",
+        "honesty": "10/10",
+        "notes": "Official government policy statement with direct quote.",
+        "posted": "2026-05-22T19:05:10Z",
+        "post_ts": "2026-05-22T13:33:55Z",
+        "views": 5338443
+      },
+      {
+        "headline": "Obsession Film Breaks Box Office Records",
+        "handle": "@DiscussingFilm",
+        "url": "https://x.com/DiscussingFilm/status/2057787156500828605",
+        "body": "Low-budget film Obsession on track for $100M+ earnings, rare feat for under $1M budget.",
+        "engagement": "104K likes, 6K reposts",
+        "honesty": "9/10",
+        "notes": "Factual reporting on projected earnings with industry context.",
+        "posted": "2026-05-22T19:05:10Z",
+        "post_ts": "2026-05-22T11:34:24Z",
+        "views": 5130206
       }
     ]
   },
   "business": {
-    "stories": [
+    "stories": [],
+    "earlier": [
       {
         "headline": "Turkey burns $14B defending lira amid macro pressure",
         "handle": "@s_nakotomo",
@@ -601,8 +604,7 @@
         "original_views": 5105874,
         "qt_views": 977684
       }
-    ],
-    "earlier": []
+    ]
   },
   "msm": {
     "stories": [
@@ -723,26 +725,9 @@
         "engagement": "993 likes, 205 reposts, 43 replies",
         "honesty": "High - directly quotes Punchbowl reporting on congressional action",
         "notes": "Underreported political maneuver on foreign policy; avoids excluded topics like judicial rulings or specific fraud cases"
-      },
-      {
-        "headline": "Medicaid Fraudster Flees FBI",
-        "handle": "@lukerosiak",
-        "url": "https://x.com/lukerosiak/status/2057552071667097814",
-        "body": "We've got \"home health care\" owners jumping off roofs to flee the FBI.",
-        "engagement": "1.9K likes, 899 reposts, 127 replies",
-        "honesty": "10/10",
-        "notes": "Verified fact from DOJ indictment and video.",
-        "posted": "2026-05-21T21:04:32Z",
-        "post_ts": "2026-05-21T19:20:51Z",
-        "views": 102455,
-        "views_at_save": 81255,
-        "age_at_save_hours": 1.73,
-        "original_url": "https://x.com/BillMelugin_/status/2057542155657457831",
-        "original_handle": "@BillMelugin_",
-        "original_views": 83563,
-        "qt_views": 18892
       }
-    ]
+    ],
+    "_overflow": []
   },
   "sports": {
     "stories": [
@@ -764,45 +749,25 @@
         "original_views": 3986819,
         "qt_views": 144288,
         "perspectives": []
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Washington State School Coverup",
         "handle": "@libsoftiktok",
         "url": "https://x.com/libsoftiktok/status/2057592864679330220",
         "body": "Superintendent and director charged with obstructing sexual assault investigation and giving false statements at Longview Schools.",
         "engagement": "2.9K likes, 1.2K reposts, 144 replies",
-        "honesty": "9/10",
-        "notes": "Fact with minor editorializing",
+        "honesty": "8/10",
+        "notes": "Factual report of charges but 'Fact with minor editorializing' doesn't match 9/10 - should be 8/10 for news report",
         "posted": "2026-05-22T06:28:07Z",
         "post_ts": "2026-05-21T22:42:21Z",
         "views": 63960
       }
     ],
+    "earlier": [],
     "_overflow": []
   },
   "pods": {
     "stories": [
-      {
-        "headline": "Joe Rogan on Bill Gates ticks",
-        "handle": "@Architectolder",
-        "url": "https://x.com/Architectolder/status/2057545925795488026",
-        "body": "A crime against humanity",
-        "engagement": "13K likes, 5.9K reposts, 531 replies",
-        "honesty": "7/10",
-        "notes": "Extreme opinion ('crime against humanity') without specific factual basis in text provided",
-        "posted": "2026-05-22T01:01:40Z",
-        "post_ts": "2026-05-21T13:59:36Z",
-        "views": 1890679,
-        "views_at_save": 1890679,
-        "age_at_save_hours": 10.87,
-        "original_url": "https://x.com/NicHulscher/status/2057461310292381770",
-        "original_handle": "@NicHulscher",
-        "original_views": 1887416,
-        "qt_views": 3263,
-        "perspectives": []
-      },
       {
         "headline": "Joe Rogan speechless at Wheel of Fortune genius",
         "handle": "@CentristMadness",
@@ -844,6 +809,25 @@
     ],
     "earlier": [
       {
+        "headline": "Joe Rogan on Bill Gates ticks",
+        "handle": "@Architectolder",
+        "url": "https://x.com/Architectolder/status/2057545925795488026",
+        "body": "A crime against humanity",
+        "engagement": "13K likes, 5.9K reposts, 531 replies",
+        "honesty": "7/10",
+        "notes": "Extreme opinion ('crime against humanity') without specific factual basis in text provided",
+        "posted": "2026-05-22T01:01:40Z",
+        "post_ts": "2026-05-21T13:59:36Z",
+        "views": 1890679,
+        "views_at_save": 1890679,
+        "age_at_save_hours": 10.87,
+        "original_url": "https://x.com/NicHulscher/status/2057461310292381770",
+        "original_handle": "@NicHulscher",
+        "original_views": 1887416,
+        "qt_views": 3263,
+        "perspectives": []
+      },
+      {
         "headline": "Floyd Mayweather baby news",
         "handle": "@DJGreenVillain",
         "url": "https://x.com/DJGreenVillain/status/2057640930891514009",
@@ -865,8 +849,8 @@
         "url": "https://x.com/PalmerLuckey/status/2057617889453342909",
         "body": "Anduril's EagleEye delivers 84-degree FOV, stereo thermal fusion and 4K display\u2014double the industry standard.",
         "engagement": "3.3K likes, 137 reposts, 132 replies",
-        "honesty": "9/10",
-        "notes": "Product specifications claim - requires independent verification, not manufacturer specification document",
+        "honesty": "8/10",
+        "notes": "Product specs from manufacturer - analysis/marketing claim requiring independent verification",
         "posted": "2026-05-22T06:28:06Z",
         "post_ts": "2026-05-22T00:21:48Z",
         "views": 224497,
@@ -1119,24 +1103,6 @@
         "views": 133285,
         "views_at_save": 133285,
         "age_at_save_hours": 1.53
-      },
-      {
-        "headline": "Quinta Brunson lands Betty Boop role",
-        "handle": "@VanTheBrand",
-        "url": "https://x.com/VanTheBrand/status/2057175562888904754",
-        "body": "Outrageous Hollywood revisionism strikes again. Betty Boop should only be played by a sexy dog!",
-        "engagement": "3824 likes, 171 reposts, 123 replies",
-        "honesty": "10/10",
-        "notes": "Fact",
-        "posted": "2026-05-20T21:12:36Z",
-        "post_ts": "2026-05-20T17:26:06Z",
-        "views": 119854,
-        "views_at_save": 119854,
-        "age_at_save_hours": 3.71,
-        "original_url": "https://x.com/PopCrave/status/2057150890058907771",
-        "original_handle": "@PopCrave",
-        "original_views": 118747,
-        "qt_views": 1107
       }
     ]
   },
@@ -1380,15 +1346,6 @@
         "original_handle": "@forallcurious",
         "original_views": 95788,
         "qt_views": 5789
-      },
-      {
-        "url": "https://x.com/sciencegirl/status/2057149088357913056",
-        "handle": "@sciencegirl",
-        "body": "About 90% of people are right handed, a pattern that is unusually strong compared with other primates and has puzzled scientists for years.\n\nA new study published in PLOS Biology examining dozens of primate species suggests the answer may come from two major steps in human evolution: walking on two legs and the growth of a larger brain.\n\nResearchers analysed data from more than 2,000 individuals across 41 primate species and found that once upright walking and brain size are taken into account, humans no longer appear as an outlier.\n\nThe idea is that bipedalism freed the hands for skilled tasks, encouraging early hand preference, while later brain expansion intensified this bias into the strong right hand dominance seen in species such as Homo erectus and Neanderthals.\n\nThe study also notes that why left handedness still exists is not fully understood.\n\nSource P\u00fcschel T A Hurwitz R M and Venditti C 2026 PLOS Biology",
-        "views": 30567,
-        "engagement": "126 likes, 19 reposts, 37 bookmarks",
-        "honesty": "High - directly summarizes peer-reviewed study with source citation",
-        "notes": "Clear research finding on primate handedness evolution; detailed body, not announcement or video-only"
       }
     ],
     "_overflow": []
