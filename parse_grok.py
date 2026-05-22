@@ -2156,18 +2156,24 @@ for _tab in ('world', 'usa'):
     for item in items:
         if isinstance(item, dict):
             if item.get('handle') and item.get('url'):
+                # 2026-05-22 fix: synthesize a single-perspective fallback when Grok
+                # returns lead-post views but empty perspectives. The frontend needs
+                # at least 1 perspective to render. Build it from top-level fields.
+                if not item.get('perspectives'):
+                    item = dict(item)
+                    item['perspectives'] = [{
+                        'label': 'Independent',
+                        'handle': item.get('handle',''),
+                        'url': item.get('url',''),
+                        'body': item.get('body','') or item.get('headline',''),
+                        'views': int(item.get('views',0) or 0),
+                    }]
                 cleaned.append(item)
-    # Delta #1: 100K view floor (the only user-requested addition).
-    # Applied to BOTH fresh candidates AND held stories — otherwise a held
-    # story whose view count dropped below 100K (e.g. 285K UK→7K after re-pull)
-    # leaks through the hold without filtering.
+    # 100K view floor (the only user-requested addition).
     cleaned = [c for c in cleaned if _rist_story_views(c) >= _WU_VIEW_FLOOR]
     held_filtered = [h for h in _rist_previous.get(_tab, []) if _rist_story_views(h) >= _WU_VIEW_FLOOR]
-    # Ristretto's curate call (without top_n cap)
     chosen = _rist_curate(_tab, held_filtered, cleaned)
-    # Belt-and-suspenders: re-filter final picks (in case curate emitted anything sub-floor)
     chosen = [s for s in chosen if _rist_story_views(s) >= _WU_VIEW_FLOOR]
-    # Delta #3: body→text rename for frontend
     chosen = [_wu_body_to_text(s) for s in chosen]
     print(f"[{_tab}] Ristretto-exact: {len(chosen)} events cleared {_WU_VIEW_FLOOR:,} view floor", file=sys.stderr)
     _output_v5[_tab] = {
@@ -2318,8 +2324,8 @@ for _tab in _RISTRETTO_TABS:
     # SPORTS SPECIAL: guarantee Stephen A + Cowherd slots at the bottom.
     # Per user mandate 2026-05-22: "keep at least one Stephen A and Colin
     # Cowherd post at the bottom of the sports stories, no matter what they are."
+    # We use a dedicated sas_cowherd Grok call (separate prompt) to find them.
     if _tab == 'sports':
-        # Detect what we already have
         def _is_sas(s):
             h = (s.get('handle','') or '').lower().lstrip('@')
             return h in ('stephenasmith', 'firsttake')
@@ -2328,20 +2334,21 @@ for _tab in _RISTRETTO_TABS:
             return h in ('colincowherd', 'theherd')
         has_sas = any(_is_sas(s) for s in chosen)
         has_cow = any(_is_cow(s) for s in chosen)
-
-        # Look for SAS/Cowherd in the full cleaned candidate pool (not yet picked)
-        # AND in held stories from previous cron.
-        _sport_pool = list(cleaned) + list(_rist_previous.get('sports', []))
+        # Pool: dedicated sas_cowherd response + sports candidates + previous sports
+        _sas_cow_items = data.get('sas_cowherd', [])
+        if not isinstance(_sas_cow_items, list):
+            _sas_cow_items = [_sas_cow_items] if _sas_cow_items else []
+        _sport_pool = list(_sas_cow_items) + list(cleaned) + list(_rist_previous.get('sports', []))
         if not has_sas:
-            sas_post = next((s for s in _sport_pool if _is_sas(s)), None)
+            sas_post = next((s for s in _sport_pool if isinstance(s, dict) and _is_sas(s) and s.get('url')), None)
             if sas_post:
                 chosen.append(sas_post)
-                print(f"[sports] appended Stephen A post from pool", file=sys.stderr)
+                print(f"[sports] appended Stephen A post", file=sys.stderr)
         if not has_cow:
-            cow_post = next((s for s in _sport_pool if _is_cow(s)), None)
+            cow_post = next((s for s in _sport_pool if isinstance(s, dict) and _is_cow(s) and s.get('url')), None)
             if cow_post:
                 chosen.append(cow_post)
-                print(f"[sports] appended Cowherd post from pool", file=sys.stderr)
+                print(f"[sports] appended Cowherd post", file=sys.stderr)
 
     # Frontend compat: body→text rename on each perspective (if any)
     chosen = [_wu_body_to_text(s) for s in chosen]

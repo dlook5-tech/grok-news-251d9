@@ -417,49 +417,63 @@ except Exception: print('0')
 # Here: "Top highest-view" — no number cap).
 
 cat > /tmp/grok_p_world.txt <<PROMPT
-Top highest-view WORLD news EVENTS on X in the past 24h (international, outside the US). Today is $TODAY.
-Return ONLY a JSON array, no markdown, no prose.
-STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything posted before $YESTERDAY.
+Find the top 8 highest-view WORLD news events on X in the past 24 hours (international, outside the US). Today is $TODAY. Use x_search since:$YESTERDAY.
 
-Each item is one EVENT with three sided reactions:
-{
-  "headline":"neutral one-line summary of the event",
-  "url":"https://x.com/user/status/<id>",
-  "handle":"username",
-  "perspectives":[
-    {"label":"Conservative","handle":"...","url":"https://x.com/.../status/<id>","body":"actual post text","engagement":"500K views","views":500000},
-    {"label":"Independent","handle":"...","url":"https://x.com/.../status/<id>","body":"...","engagement":"...","views":...},
-    {"label":"Democrat","handle":"...","url":"https://x.com/.../status/<id>","body":"...","engagement":"...","views":...}
-  ]
-}
-For each event: highest-view Conservative, Independent, and Democrat reactions on X — ALL from the last 24 hours. All four URLs MUST be real X status URLs from posts on or after $YESTERDAY. If you can't find 3 perspectives, still return the event with however many you DO find.
+For EACH event:
+1. Find the highest-view tweet about that event — that's the "lead post". Record its URL, handle, and integer views.
+2. TRY to find Conservative, Independent, and Democrat reaction tweets about the event. Include whichever you can find. If you can't find any, leave perspectives as an empty array — DO NOT skip the event.
 
-MERGE DUPLICATES: If multiple high-view tweets cover the SAME news event (e.g. five Ebola-emergency tweets from different angles), MERGE them into ONE event block with all the perspectives consolidated. Don't return two separate events about the same story even if the perspective handles differ. Each event you return must be a genuinely DIFFERENT subject matter.
+Return JSON array (no markdown, no prose):
+[
+  {
+    "headline":"neutral one-line summary",
+    "url":"<lead post URL>",
+    "handle":"<lead post handle>",
+    "views":<integer view count of lead post>,
+    "perspectives":[
+      {"label":"Conservative","handle":"...","url":"https://x.com/.../status/<id>","body":"...","views":N},
+      {"label":"Independent","handle":"...","url":"...","body":"...","views":N},
+      {"label":"Democrat","handle":"...","url":"...","body":"...","views":N}
+    ]
+  },
+  ...
+]
 
-VIEW FLOOR (only addition vs Ristretto's verbatim prompt): Each event's TOP perspective must have at least 100,000 views. Drop any event below that. No fixed cap on count — return as many qualifying events as you find.
+CRITICAL:
+- "views" field on each event MUST be the actual integer view count of the lead post. NEVER 0 or null.
+- "perspectives" may be 0, 1, 2, or 3 items long. Empty is OK if no reactions exist.
+- MERGE DUPLICATES: if multiple tweets cover the same event, return ONE event with consolidated perspectives.
+- All URLs must be real x.com/handle/status/numeric_id from x_search. Never fabricate.
 PROMPT
 
 cat > /tmp/grok_p_usa.txt <<PROMPT
-Top highest-view US NATIONAL news EVENTS on X in the past 24h (politics, federal events). Today is $TODAY.
-Return ONLY a JSON array, no markdown, no prose.
-STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything posted before $YESTERDAY.
+Find the top 8 highest-view US national news events on X in the past 24 hours (domestic politics, SCOTUS, Congress, federal policy). Today is $TODAY. Use x_search since:$YESTERDAY.
 
-Each item is one EVENT with three sided reactions:
-{
-  "headline":"neutral one-line summary of the event",
-  "url":"https://x.com/user/status/<id>",
-  "handle":"username",
-  "perspectives":[
-    {"label":"Conservative","handle":"...","url":"https://x.com/.../status/<id>","body":"actual post text","engagement":"500K views","views":500000},
-    {"label":"Independent","handle":"...","url":"https://x.com/.../status/<id>","body":"...","engagement":"...","views":...},
-    {"label":"Democrat","handle":"...","url":"https://x.com/.../status/<id>","body":"...","engagement":"...","views":...}
-  ]
-}
-For each event: highest-view Conservative, Independent, and Democrat reactions on X — ALL from the last 24 hours. All four URLs MUST be real X status URLs from posts on or after $YESTERDAY. If you can't find 3 perspectives, still return the event with however many you DO find.
+For EACH event:
+1. Find the highest-view tweet about that event — that's the "lead post". Record its URL, handle, and integer views.
+2. TRY to find Conservative, Independent, and Democrat reaction tweets about the event. Include whichever you can find. If you can't find any, leave perspectives as an empty array — DO NOT skip the event.
 
-MERGE DUPLICATES: If multiple high-view tweets cover the SAME news event, MERGE them into ONE event block with all the perspectives consolidated. Don't return two separate events about the same story even if the perspective handles differ. Each event you return must be a genuinely DIFFERENT subject matter.
+Return JSON array (no markdown, no prose):
+[
+  {
+    "headline":"neutral one-line summary",
+    "url":"<lead post URL>",
+    "handle":"<lead post handle>",
+    "views":<integer view count of lead post>,
+    "perspectives":[
+      {"label":"Conservative","handle":"...","url":"https://x.com/.../status/<id>","body":"...","views":N},
+      {"label":"Independent","handle":"...","url":"...","body":"...","views":N},
+      {"label":"Democrat","handle":"...","url":"...","body":"...","views":N}
+    ]
+  },
+  ...
+]
 
-VIEW FLOOR (only addition vs Ristretto's verbatim prompt): Each event's TOP perspective must have at least 100,000 views. Drop any event below that. No fixed cap on count — return as many qualifying events as you find.
+CRITICAL:
+- "views" field on each event MUST be the actual integer view count of the lead post. NEVER 0 or null.
+- "perspectives" may be 0, 1, 2, or 3 items long. Empty is OK if no reactions exist.
+- MERGE DUPLICATES: if multiple tweets cover the same event, return ONE event with consolidated perspectives.
+- All URLs must be real x.com/handle/status/numeric_id from x_search. Never fabricate.
 PROMPT
 
 # --- ELON ---
@@ -621,22 +635,31 @@ Each item:
 URLs MUST be real X status URLs from posts on or after $YESTERDAY. Views = actual view count integer.
 PROMPT
 
-# --- SPORTS (Ristretto-style top picks + SAS/Cowherd guaranteed at bottom) ---
+# --- SPORTS (Ristretto-style top picks; SAS+Cowherd handled by separate sas_cowherd prompt) ---
 cat > /tmp/grok_p_sports.txt <<PROMPT
-Find sports posts in two groups. Today is $TODAY.
-
-GROUP A — Top 3 highest-view X posts (past 24h) about sports (major leagues, big games, athlete news). ANY handle.
-GROUP B — TWO guaranteed bottom slots:
-  - the most recent post from @stephenasmith (Stephen A Smith)
-  - the most recent post from @colincowherd (Colin Cowherd, or @TheHerd)
-  Include them even if their views are tiny. They always get a slot.
-
-Return ALL 5 posts (3 from Group A, then 2 from Group B in that order — SAS first, Cowherd last) as a single JSON array.
-STRICT RECENCY for Group A: use x_search operator since:$YESTERDAY. Reject Group A posts before $YESTERDAY. Group B (SAS + Cowherd) may be up to 3 days old if needed to find one.
+Top 5 highest-view X posts (past 24h) about sports (major leagues, big games, athlete news). Today is $TODAY.
+Return ONLY a JSON array, no markdown, no prose.
+STRICT RECENCY: use x_search operator since:$YESTERDAY. Reject anything before $YESTERDAY.
 
 Each item:
 {"handle":"username","url":"https://x.com/user/status/<id>","headline":"neutral one-line summary","body":"actual post text","engagement":"500K views","views":500000}
 URLs MUST be real X status URLs. Views = actual view count integer.
+PROMPT
+
+# --- SAS_COWHERD (dedicated fallback to guarantee Stephen A + Cowherd slots in Sports) ---
+cat > /tmp/grok_p_sas_cowherd.txt <<PROMPT
+Find TWO posts:
+1. The most recent post from @stephenasmith (Stephen A Smith) — try x_search "from:stephenasmith" mode:Latest limit:10. Pick the newest non-promo one. If @stephenasmith has none in 3 days, try @firsttake.
+2. The most recent post from @colincowherd (Colin Cowherd) — try x_search "from:colincowherd" mode:Latest limit:10. Pick the newest non-promo one. If @colincowherd has none in 3 days, try @TheHerd.
+
+Today is $TODAY. Both can be up to 3 days old. Include their integer view counts.
+
+Return ONLY a JSON array of 2 items (SAS first, Cowherd second), no markdown:
+[
+  {"handle":"stephenasmith","url":"https://x.com/.../status/<id>","headline":"neutral one-line summary","body":"actual post text","views":N},
+  {"handle":"colincowherd","url":"https://x.com/.../status/<id>","headline":"neutral one-line summary","body":"actual post text","views":N}
+]
+URLs MUST be real X status URLs from those exact handles. Never fabricate.
 PROMPT
 
 # --- PODS ---
@@ -893,7 +916,7 @@ INJECT_EOF
 # ============================================================
 echo "Launching 16 parallel API calls..."
 
-CATEGORIES="world usa elon allin top msm business sports pods pg6 recipe science local conspiracy comedy"
+CATEGORIES="world usa elon allin top msm business sports sas_cowherd pods pg6 recipe science local conspiracy comedy"
 
 for cat in $CATEGORIES; do
     # All tabs run on grok-4-fast. The world/USA prompts have been simplified so the
@@ -918,7 +941,7 @@ echo "Merging and validating..."
 python3 <<'MERGE_EOF' > /tmp/grok_raw.json
 import json, sys, re
 
-CATEGORIES = 'world usa elon allin top msm business sports pods pg6 recipe science local conspiracy comedy'.split()
+CATEGORIES = 'world usa elon allin top msm business sports sas_cowherd pods pg6 recipe science local conspiracy comedy'.split()
 
 def extract_json_text(raw_file):
     try:

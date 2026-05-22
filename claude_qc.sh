@@ -1128,19 +1128,19 @@ if dedup_modified:
     with open('stories.json','w') as f: json.dump(d, f, indent=2)
     print(f"[same-headline-dedup] stories.json updated", file=sys.stderr)
 
-# ---- Check 8: Final-sweep World/USA — drop "?" headlines that slipped through QC refills ----
-# parse_grok.py has this sweep too, but Check 5/6/6b later in this file can re-add
-# stories with empty/"?" headlines via overflow refill or live-Grok replacement.
-# User mandate (2026-05-19): "no ? marks, just have 2 if no third."
+# ---- Check 8: Final-sweep ALL TABS — drop "?" / empty headlines ----
+# User mandate (2026-05-19/22): "no ? marks." Applies to every tab.
 sweep_modified = False
-for _tab in ('world', 'usa'):
+_SWEEP_TABS = ('world','usa','top','business','msm','sports','pods','allin',
+               'pg6','recipe','science','local','conspiracy','comedy','elon')
+for _tab in _SWEEP_TABS:
     _container = d.get(_tab)
     if not isinstance(_container, dict): continue
     _kept = []
     for _s in _container.get('stories', []):
         _h = (_s.get('headline') or '').strip()
         if not _h or _h in ('?', '...', 'Untitled', '?.', '? ', '. ?'):
-            print(f"[final-sweep] {_tab}: drop story with empty/'?' headline (perspectives={len(_s.get('perspectives',[]))})", file=sys.stderr)
+            print(f"[final-sweep] {_tab}: drop story with empty/'?' headline", file=sys.stderr)
             warnings.append(f"final-sweep DROP {_tab} '?' headline")
             sweep_modified = True
             continue
