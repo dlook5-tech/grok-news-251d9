@@ -2157,10 +2157,16 @@ for _tab in ('world', 'usa'):
         if isinstance(item, dict):
             if item.get('handle') and item.get('url'):
                 cleaned.append(item)
-    # Delta #1: 100K view floor (the only user-requested addition)
+    # Delta #1: 100K view floor (the only user-requested addition).
+    # Applied to BOTH fresh candidates AND held stories — otherwise a held
+    # story whose view count dropped below 100K (e.g. 285K UK→7K after re-pull)
+    # leaks through the hold without filtering.
     cleaned = [c for c in cleaned if _rist_story_views(c) >= _WU_VIEW_FLOOR]
+    held_filtered = [h for h in _rist_previous.get(_tab, []) if _rist_story_views(h) >= _WU_VIEW_FLOOR]
     # Ristretto's curate call (without top_n cap)
-    chosen = _rist_curate(_tab, _rist_previous.get(_tab, []), cleaned)
+    chosen = _rist_curate(_tab, held_filtered, cleaned)
+    # Belt-and-suspenders: re-filter final picks (in case curate emitted anything sub-floor)
+    chosen = [s for s in chosen if _rist_story_views(s) >= _WU_VIEW_FLOOR]
     # Delta #3: body→text rename for frontend
     chosen = [_wu_body_to_text(s) for s in chosen]
     print(f"[{_tab}] Ristretto-exact: {len(chosen)} events cleared {_WU_VIEW_FLOOR:,} view floor", file=sys.stderr)
