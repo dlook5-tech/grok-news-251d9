@@ -1,7 +1,8 @@
 {
-  "lastUpdated": "2026-05-22T21:01:19Z",
+  "lastUpdated": "2026-05-22T22:18:10Z",
   "world": {
-    "stories": [
+    "stories": [],
+    "earlier": [
       {
         "headline": "India advances Nordic ties amid global tensions at Oslo summit",
         "perspectives": [
@@ -19,9 +20,7 @@
         "notes": "",
         "footnotes": [],
         "body": "3-perspective coverage."
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "WHO raises risk of Bundibugyo Ebola outbreak in DRC to 'very high'",
         "perspectives": [
@@ -65,59 +64,141 @@
   },
   "usa": {
     "stories": [],
-    "earlier": [
-      {
-        "headline": "House committee advances Sunshine Protection Act to make Daylight Saving Time permanent",
-        "url": "https://x.com/EricLDaugh/status/2057604822732542239",
-        "handle": "EricLDaugh",
-        "perspectives": [
-          {
-            "label": "Conservative",
-            "handle": "EricLDaugh",
-            "url": "https://x.com/EricLDaugh/status/2057604822732542239",
-            "body": "\ud83d\udea8 JUST IN: President Trump announces legislation has ADVANCED to make PERMANENT Daylight Saving Time through the Sunshine Protection Act \u2014 and demands Congress make it LAW \ud83d\udd25",
-            "engagement": "391K views",
-            "views": 391105,
-            "text": "\ud83d\udea8 JUST IN: President Trump announces legislation has ADVANCED to make PERMANENT Daylight Saving Time through the Sunshine Protection Act \u2014 and demands Congress make it LAW \ud83d\udd25"
-          },
-          {
-            "label": "Independent",
-            "handle": "MarioNawfal",
-            "url": "https://x.com/MarioNawfal/status/2057597697213763954",
-            "body": "\ud83d\udea8 BREAKING: \ud83c\uddfa\ud83c\uddf8 The House Energy and Commerce Committee just voted 48-1 to advance The Sunshine Protection Act, which would make Daylight Saving Time permanent.",
-            "engagement": "104K views",
-            "views": 104709,
-            "text": "\ud83d\udea8 BREAKING: \ud83c\uddfa\ud83c\uddf8 The House Energy and Commerce Committee just voted 48-1 to advance The Sunshine Protection Act, which would make Daylight Saving Time permanent."
-          },
-          {
-            "label": "Democrat",
-            "handle": "SaveStandard",
-            "url": "https://x.com/SaveStandard/status/2057609839048544572",
-            "body": "Mr. President, Daylight Saving Time forces Americans to wake an hour earlier than Standard Time and does not create more daylight. Permanent Daylight Saving Time would make winter mornings dangerously dark... For the sake of public health, safety, and better sleep, please restore permanent Standard Time!",
-            "engagement": "497K views",
-            "views": 497068,
-            "text": "Mr. President, Daylight Saving Time forces Americans to wake an hour earlier than Standard Time and does not create more daylight. Permanent Daylight Saving Time would make winter mornings dangerously dark... For the sake of public health, safety, and better sleep, please restore permanent Standard Time!"
-          }
-        ]
-      }
-    ]
+    "earlier": []
   },
   "elon": {
     "stories": [
       {
-        "headline": "Updates on Starship T-zero countdown time in Texas",
+        "headline": "Replies about ironing out issues with Grok Build",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057939049701097489",
+        "body": "Yeah, we just need to iron out a lot of remaining issues.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Elon vague statement about future issues - opinion/update without verifiable specifics",
+        "posted": "2026-05-22T22:18:10Z",
+        "post_ts": "2026-05-22T21:37:58Z",
+        "views": 8166,
+        "parent_url": "https://x.com/Chesschick01/status/2057933697802809507",
+        "parent_handle": "@Chesschick01",
+        "parent_text": "Will premium plus get to play with grok build?",
+        "views_at_save": 8166,
+        "age_at_save_hours": 0.67
+      },
+      {
+        "headline": "Reacts with wtf?? to conversation",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057937686904586551",
+        "body": "wtf??",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Two-word reaction expressing opinion - no factual content",
+        "posted": "2026-05-22T22:18:10Z",
+        "post_ts": "2026-05-22T21:32:33Z",
+        "views": 7753,
+        "views_at_save": 7753,
+        "age_at_save_hours": 0.76
+      },
+      {
+        "headline": "Quotes xAI team post on Grok Build beta and welcomes critical feedback",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057933447541219630",
+        "body": "Critical feedback is much appreciated.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "General statement of openness - opinion/stance, not verifiable fact",
+        "posted": "2026-05-22T22:18:10Z",
+        "post_ts": "2026-05-22T21:15:43Z",
+        "views": 3153522,
+        "views_at_save": 3153522,
+        "age_at_save_hours": 1.04
+      },
+      {
+        "headline": "Replies True to conversation",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057932227065913359",
+        "body": "True.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "One-word agreement - opinion reaction, no factual content",
+        "posted": "2026-05-22T22:18:10Z",
+        "post_ts": "2026-05-22T21:10:52Z",
+        "views": 18646,
+        "views_at_save": 18646,
+        "age_at_save_hours": 1.12
+      },
+      {
+        "headline": "Replies Yup to conversation",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057931231719731232",
+        "body": "Yup.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "One-word agreement - opinion reaction, no factual content",
+        "posted": "2026-05-22T22:18:11Z",
+        "post_ts": "2026-05-22T21:06:54Z",
+        "views": 136280,
+        "views_at_save": 136280,
+        "age_at_save_hours": 1.19
+      },
+      {
+        "headline": "Replies Absolutely to conversation",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057930731737743690",
+        "body": "Absolutely.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "One-word agreement - opinion reaction, no factual content",
+        "posted": "2026-05-22T22:18:11Z",
+        "post_ts": "2026-05-22T21:04:55Z",
+        "views": 5337,
+        "views_at_save": 5337,
+        "age_at_save_hours": 1.22
+      },
+      {
+        "headline": "Posts video of Starship T-zero countdown at 5:30 Texas time",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057927486998978691",
         "body": "T-zero is currently 5:30 Texas time.",
         "engagement": "",
-        "honesty": "10/10",
-        "notes": "Factual statement of launch time",
-        "posted": "2026-05-22T21:01:19Z",
+        "honesty": "9/10",
+        "notes": "Specific time statement - verifiable if context known, minor editorializing with 'currently'",
+        "posted": "2026-05-22T22:18:11Z",
         "post_ts": "2026-05-22T20:52:02Z",
-        "views": 206044,
-        "views_at_save": 206044,
-        "age_at_save_hours": 0.16
+        "views": 1978298,
+        "views_at_save": 1978298,
+        "age_at_save_hours": 1.44
       },
+      {
+        "headline": "Comments on finding it funny to call Homolander fake & gay",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057922040561094750",
+        "body": "I just it\u2019s really funny to call Homolander fake & gay.. Cracks me up everytime \ud83e\udd23\ud83e\udd23.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Personal opinion about humor - subjective reaction, not factual claim",
+        "posted": "2026-05-22T22:18:11Z",
+        "post_ts": "2026-05-22T20:30:23Z",
+        "views": 153718,
+        "views_at_save": 153718,
+        "age_at_save_hours": 1.8
+      },
+      {
+        "headline": "Replies Exactly! to conversation",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057921353756348636",
+        "body": "Exactly!",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "One-word agreement - opinion reaction, no factual content",
+        "posted": "2026-05-22T22:18:11Z",
+        "post_ts": "2026-05-22T20:27:39Z",
+        "views": 8062,
+        "views_at_save": 8062,
+        "age_at_save_hours": 1.84
+      }
+    ],
+    "earlier": [
       {
         "headline": "Jokes about giving blue check for driving traffic to X",
         "handle": "@elonmusk",
@@ -145,9 +226,7 @@
         "views": 12825659,
         "views_at_save": 12825659,
         "age_at_save_hours": 5.77
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Replies speculating warp drive to another galaxy",
         "handle": "@elonmusk",
@@ -272,39 +351,57 @@
         "parent_text": "Bug fixes shipping to Grok Build (release notes will be available in the TUI) 0.1.214\n\n- Rolling out X search and a much faster web-search (we plan to complete this by EOD)\n- Windows rendering bugs fix on powershell\n- Fix arrow-up keybinding in modals\n- Fix non-vim mode keybindin",
         "views_at_save": 7783373,
         "age_at_save_hours": 5.61
-      },
-      {
-        "headline": "Replies to a question about something not happening",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057625067081621643",
-        "body": "It seems not \u2026.",
-        "engagement": "",
-        "honesty": "8/10",
-        "notes": "",
-        "posted": "2026-05-22T06:28:04Z",
-        "post_ts": "2026-05-22T00:50:19Z",
-        "views": 93777,
-        "views_at_save": 93777,
-        "age_at_save_hours": 5.63
-      },
-      {
-        "headline": "Shares Grok conversation link",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057612753276125521",
-        "body": "https://x.com/i/grok/share/d1ee3a5774314560b925514e37de3655.",
-        "engagement": "",
-        "honesty": "8/10",
-        "notes": "",
-        "posted": "2026-05-22T06:28:04Z",
-        "post_ts": "2026-05-22T00:01:23Z",
-        "views": 38490,
-        "views_at_save": 38490,
-        "age_at_save_hours": 6.45
       }
     ]
   },
   "top": {
     "stories": [
+      {
+        "headline": "Man City Season Recap Video",
+        "handle": "@ManCity",
+        "url": "https://x.com/ManCity/status/2057817233200418837",
+        "body": "What a time we have had together in this season highlight video.",
+        "engagement": "166577 likes, 32677 reposts",
+        "honesty": "9/10",
+        "notes": "Official club video but 'what a time' is editorial framing, not pure fact",
+        "posted": "2026-05-22T22:18:11Z",
+        "post_ts": "2026-05-22T13:33:55Z",
+        "views": 12558020,
+        "views_at_save": 12558020,
+        "age_at_save_hours": 8.74
+      },
+      {
+        "headline": "GTA VI Wishlist Drops",
+        "handle": "@GTA6Alerts",
+        "url": "https://x.com/GTA6Alerts/status/2057856674925519086",
+        "body": "XBOX is doing what Rockstar Games is supposed to do right now.\n\nThey are probably just trying to ride the GTA 6 hype wave, but I wonder if Rockstar actually asked them to post this? \ud83e\udd14",
+        "engagement": "128K likes, 10K reposts",
+        "honesty": "7/10",
+        "notes": "Commentary/speculation about Xbox-Rockstar relationship ('I wonder if') - not official announcement",
+        "posted": "2026-05-22T19:05:10Z",
+        "post_ts": "2026-05-22T16:05:06Z",
+        "views": 8591242,
+        "views_at_save": 8591242,
+        "age_at_save_hours": 6.13,
+        "original_url": "https://x.com/XBOX/status/2057855279287476620",
+        "original_handle": "@XBOX",
+        "original_views": 8315003,
+        "qt_views": 276239
+      },
+      {
+        "headline": "Trump Admin Closes Immigration Loophole",
+        "handle": "@DHSgov",
+        "url": "https://x.com/DHSgov/status/2057811799161090499",
+        "body": "An alien in the U.S.. temporarily must return home to apply for a Green Card under new policy.",
+        "engagement": "34220 likes, 6328 reposts",
+        "honesty": "10/10",
+        "notes": "Official policy statement quoting verified government action.",
+        "posted": "2026-05-22T22:18:11Z",
+        "post_ts": "2026-05-22T13:12:19Z",
+        "views": 9877781
+      }
+    ],
+    "earlier": [
       {
         "headline": "Elon Musk on Starmer's double standard",
         "handle": "@MIPAGUY",
@@ -324,24 +421,6 @@
         "qt_views": 75
       },
       {
-        "headline": "GTA VI Wishlist Drops",
-        "handle": "@GTA6Alerts",
-        "url": "https://x.com/GTA6Alerts/status/2057856674925519086",
-        "body": "XBOX is doing what Rockstar Games is supposed to do right now.\n\nThey are probably just trying to ride the GTA 6 hype wave, but I wonder if Rockstar actually asked them to post this? \ud83e\udd14",
-        "engagement": "128K likes, 10K reposts",
-        "honesty": "7/10",
-        "notes": "Commentary/speculation about Xbox-Rockstar relationship ('I wonder if') - not official announcement",
-        "posted": "2026-05-22T19:05:10Z",
-        "post_ts": "2026-05-22T16:05:06Z",
-        "views": 8591242,
-        "views_at_save": 8591242,
-        "age_at_save_hours": 4.85,
-        "original_url": "https://x.com/XBOX/status/2057855279287476620",
-        "original_handle": "@XBOX",
-        "original_views": 8315003,
-        "qt_views": 276239
-      },
-      {
         "headline": "Low-budget film on track for $100M",
         "handle": "@DiscussingFilm",
         "url": "https://x.com/DiscussingFilm/status/2057787156500828605",
@@ -352,9 +431,7 @@
         "posted": "2026-05-22T21:01:21Z",
         "post_ts": "2026-05-22T11:34:24Z",
         "views": 6728984
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Pep Guardiola steps down",
         "handle": "@Element_M1ller",
@@ -448,20 +525,7 @@
         "views": 1872247
       }
     ],
-    "_overflow": [
-      {
-        "headline": "Tulsi Gabbard resigns as DNI",
-        "handle": "@TulsiGabbard",
-        "url": "https://x.com/TulsiGabbard/status/2057876821421527476",
-        "body": "I must submit my resignation effective June 30, 2026 to support my husband through his cancer battle.",
-        "engagement": "141574 likes, 19256 reposts",
-        "honesty": "10/10",
-        "notes": "Direct personal statement with verified context from her role.",
-        "posted": "2026-05-22T21:01:21Z",
-        "post_ts": "2026-05-22T17:30:42Z",
-        "views": 3742660
-      }
-    ]
+    "_overflow": []
   },
   "business": {
     "stories": [],
@@ -564,17 +628,7 @@
         "perspectives": []
       }
     ],
-    "earlier": [
-      {
-        "url": "https://x.com/EricLDaugh/status/2057585021712506923",
-        "handle": "EricLDaugh",
-        "body": "\ud83d\udea8 JUST IN: House Republicans have just CANCELED an anti-Trump Iran War Powers Resolution vote \u2014 Punchbowl\n\nGood! STOP the endless shenanigans that only stand to help the ayatollah!",
-        "views": 20230,
-        "engagement": "993 likes, 205 reposts, 43 replies",
-        "honesty": "High - directly quotes Punchbowl reporting on congressional action",
-        "notes": "Underreported political maneuver on foreign policy; avoids excluded topics like judicial rulings or specific fraud cases"
-      }
-    ],
+    "earlier": [],
     "_overflow": []
   },
   "sports": {
@@ -602,7 +656,8 @@
     "earlier": []
   },
   "pods": {
-    "stories": [
+    "stories": [],
+    "earlier": [
       {
         "headline": "Ben Shapiro on human nature and Mormons",
         "handle": "@JesseLucasSaga",
@@ -621,9 +676,7 @@
         "original_views": 220587,
         "qt_views": 58463,
         "perspectives": []
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Joe Rogan speechless at Wheel of Fortune genius",
         "handle": "@CentristMadness",
@@ -680,18 +733,22 @@
     "stories": [
       {
         "headline": "Night Vision Tech Leaps Forward",
-        "handle": "@PalmerLuckey",
-        "url": "https://x.com/PalmerLuckey/status/2057617889453342909",
-        "body": "Anduril's EagleEye delivers 84-degree FOV, stereo thermal fusion and 4K display\u2014double the industry standard.",
+        "handle": "@WeaponOutfitter",
+        "url": "https://x.com/WeaponOutfitter/status/2057626078085333250",
+        "body": "Neat!",
         "engagement": "3.3K likes, 137 reposts, 132 replies",
         "honesty": "8/10",
         "notes": "Product specs from manufacturer - analysis/marketing claim requiring independent verification",
         "posted": "2026-05-22T06:28:06Z",
         "post_ts": "2026-05-22T00:21:48Z",
-        "views": 224497,
+        "views": 335076,
         "views_at_save": 224497,
         "age_at_save_hours": 6.11,
-        "perspectives": []
+        "perspectives": [],
+        "original_url": "https://x.com/PalmerLuckey/status/2057617889453342909",
+        "original_handle": "@PalmerLuckey",
+        "original_views": 333734,
+        "qt_views": 1342
       },
       {
         "headline": "Anduril vs Wasteful Think Tanks",
@@ -872,24 +929,6 @@
         "qt_views": 2902029
       },
       {
-        "headline": "Love Island USA Couple Splits",
-        "handle": "@HATETHEREALME",
-        "url": "https://x.com/HATETHEREALME/status/2057221382690505063",
-        "body": "Love isn\u2019t real man what the fuck \ud83d\udc94 if they can\u2019t last nobody can",
-        "engagement": "13K likes, 309 reposts, 774 replies",
-        "honesty": "7/10",
-        "notes": "Opinion/reaction to celebrity breakup - subjective commentary.",
-        "posted": "2026-05-21T03:23:33Z",
-        "post_ts": "2026-05-20T21:16:16Z",
-        "views": 2660142,
-        "views_at_save": 2660142,
-        "age_at_save_hours": 26.92,
-        "original_url": "https://x.com/PopCrave/status/2057208811199365221",
-        "original_handle": "@PopCrave",
-        "original_views": 2011977,
-        "qt_views": 648165
-      },
-      {
         "headline": "Rami Malek Emotional Cannes Moment",
         "handle": "@cj_prin",
         "url": "https://x.com/cj_prin/status/2057238297429098543",
@@ -924,20 +963,6 @@
         "original_handle": "@TMZ",
         "original_views": 337328,
         "qt_views": 47721
-      },
-      {
-        "headline": "Love Island Breakup Shocker",
-        "handle": "@TMZ",
-        "url": "https://x.com/TMZ/status/2057208530688410108",
-        "body": "Love Island USA\u2019s Huda Mustafa and Louis Russell have broken up.",
-        "engagement": "908 likes, 56 reposts, 193 replies",
-        "honesty": "9/10",
-        "notes": "Fact",
-        "posted": "2026-05-20T22:46:41Z",
-        "post_ts": "2026-05-20T21:15:09Z",
-        "views": 133285,
-        "views_at_save": 133285,
-        "age_at_save_hours": 1.53
       }
     ],
     "_overflow": []
@@ -989,22 +1014,7 @@
         "age_at_save_hours": 18.58
       }
     ],
-    "earlier": [
-      {
-        "headline": "Spaghetti with Quick Pesto Tomato Sauce",
-        "handle": "@FoodNetwork",
-        "url": "https://x.com/FoodNetwork/status/2057220109182083348",
-        "body": "This vibrant pesto and grilled tomato sauce is literally a thousand times better than jarred.",
-        "engagement": "118 likes, 14 reposts, 2 replies",
-        "honesty": "10/10",
-        "notes": "Actual recipe post with video demo and link.",
-        "posted": "2026-05-21T01:01:35Z",
-        "post_ts": "2026-05-20T22:01:09Z",
-        "views": 11294,
-        "views_at_save": 11294,
-        "age_at_save_hours": 23.06
-      }
-    ],
+    "earlier": [],
     "_overflow": []
   },
   "science": {
@@ -1034,8 +1044,8 @@
         "url": "https://x.com/memecrashes/status/2057478155246440929",
         "body": "outdated not even 3hs later by a human, not everything is lost \n\nhttps://arxiv.org/abs/2605.20579",
         "engagement": "22635 likes, 3220 reposts",
-        "honesty": "8/10",
-        "notes": "Claims AI solved math problem but 'outdated...by a human' - needs verification of both claims; analytical commentary on significance",
+        "honesty": "7/10",
+        "notes": "Commentary on unverified claims about math problem - speculative analysis without independent verification",
         "posted": "2026-05-21T17:04:02Z",
         "post_ts": "2026-05-20T19:06:41Z",
         "views": 9537351,
@@ -1117,24 +1127,6 @@
         "original_handle": "@forallcurious",
         "original_views": 225046,
         "qt_views": 44742
-      },
-      {
-        "headline": "Cat lifespan treatment",
-        "handle": "@metroadlib",
-        "url": "https://x.com/metroadlib/status/2057220622934024518",
-        "body": "\"fucking.....wow.\"\n\n--dogs",
-        "engagement": "2179 likes, 279 reposts",
-        "honesty": "7/10",
-        "notes": "Joke/comedy reaction ('fucking.....wow. --dogs') - not factual content.",
-        "posted": "2026-05-21T01:01:36Z",
-        "post_ts": "2026-05-20T19:56:43Z",
-        "views": 101577,
-        "views_at_save": 101577,
-        "age_at_save_hours": 15.03,
-        "original_url": "https://x.com/forallcurious/status/2057188793015210181",
-        "original_handle": "@forallcurious",
-        "original_views": 95788,
-        "qt_views": 5789
       }
     ],
     "_overflow": []
