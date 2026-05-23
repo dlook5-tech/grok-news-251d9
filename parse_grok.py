@@ -941,7 +941,7 @@ Return ONLY the JSON object, no prose."""
 
     try:
         payload = {
-            "model": "grok-4-fast",
+            "model": "grok-4.3",
             "input": prompt,
             "max_output_tokens": 2000
         }
@@ -1078,7 +1078,7 @@ Return JSON ONLY (only include items that need correction):
 
     try:
         payload = {
-            "model": "grok-4-fast",
+            "model": "grok-4.3",
             "input": prompt,
             "max_output_tokens": 2500,
             "temperature": 0.0,
@@ -1162,7 +1162,7 @@ Return JSON ONLY (no prose):
 
     try:
         payload = {
-            "model": "grok-4-fast",
+            "model": "grok-4.3",
             "input": prompt,
             "tools": [{"type": "x_search"}, {"type": "web_search"}],
             "max_output_tokens": 1500,
@@ -2412,7 +2412,7 @@ for _tab in _RISTRETTO_TABS:
                       f'{{"handle":"{handle}","url":"https://x.com/{handle}/status/<id>",'
                       f'"headline":"one-line summary","body":"actual post text","views":<integer>}}')
             payload = {
-                "model": "grok-4-fast",
+                "model": "grok-4.3",
                 "input": [{"role": "user", "content": prompt}],
                 "tools": [{"type": "x_search"}],
                 "max_output_tokens": 1500,

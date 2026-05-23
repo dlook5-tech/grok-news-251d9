@@ -334,14 +334,14 @@ Always include the source language. Never leave foreign-language text untranslat
 SYSEOF
 
 # Payload builder — model can be overridden per call via 3rd arg.
-# Default = grok-4-fast (cheap, fast). World/USA use grok-4 (full reasoning) because
-# their prompts are heavier (3-perspective + topic-lock) and grok-4-fast was hallucinating
+# Default = grok-4.3 (cheap, fast). World/USA use grok-4 (full reasoning) because
+# their prompts are heavier (3-perspective + topic-lock) and grok-4.3 was hallucinating
 # fake snowflake URLs under load.
 cat > /tmp/grok_build_payload.py << 'PYEOF'
 import json, sys
 prompt_file = sys.argv[1]
 output_payload = sys.argv[2] if len(sys.argv) > 2 else '/tmp/grok_payload.json'
-model = sys.argv[3] if len(sys.argv) > 3 else 'grok-4-fast'
+model = sys.argv[3] if len(sys.argv) > 3 else 'grok-4.3'
 with open('/tmp/grok_system.txt') as f:
     system = f.read().strip()
 with open(prompt_file) as f:
@@ -366,7 +366,7 @@ PYEOF
 grok_call() {
     local prompt_file="$1"
     local output_file="$2"
-    local model="${3:-grok-4-fast}"  # default fast; override for heavy tabs
+    local model="${3:-grok-4.3}"  # default fast; override for heavy tabs
     local payload_file="/tmp/grok_payload_$(basename "$prompt_file" .txt).json"
 
     python3 /tmp/grok_build_payload.py "$prompt_file" "$payload_file" "$model"
@@ -828,7 +828,7 @@ TLPROMPT
 # Build payload that uses web_search (not x_search) — different tool for news-site lookup
 cat > /tmp/grok_topic_lock_payload.json <<JSONEOF
 {
-  "model": "grok-4-fast",
+  "model": "grok-4.3",
   "input": $(python3 -c "import json, sys; print(json.dumps(open('/tmp/grok_p_topic_lock.txt').read()))"),
   "tools": [{"type": "web_search"}],
   "max_output_tokens": 3000,
@@ -919,10 +919,10 @@ echo "Launching 16 parallel API calls..."
 CATEGORIES="world usa elon allin top msm business sports sas_cowherd pods pg6 recipe science local conspiracy comedy"
 
 for cat in $CATEGORIES; do
-    # All tabs run on grok-4-fast. The world/USA prompts have been simplified so the
+    # All tabs run on grok-4.3. The world/USA prompts have been simplified so the
     # fast model handles them reliably (was hallucinating sequential snowflake IDs on
     # the prior 4000-token multi-step prompts).
-    model="grok-4-fast"
+    model="grok-4.3"
     echo "  Starting: $cat (model: $model)"
     grok_call "/tmp/grok_p_${cat}.txt" "/tmp/grok_raw_${cat}.json" "$model" &
 done
@@ -1244,7 +1244,7 @@ if translatable:
                 "Items:\n" + json.dumps(items_for_translation, ensure_ascii=False)
             )
             tx_payload = {
-                "model": "grok-4-fast",
+                "model": "grok-4.3",
                 "input": [
                     {"role": "system", "content": "You are a precise translator. Output ONLY valid JSON."},
                     {"role": "user", "content": tx_prompt}

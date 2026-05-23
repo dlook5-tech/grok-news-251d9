@@ -609,7 +609,7 @@ if key2:
                     f"Empty {{}} if no qualifying post found. NO PROSE outside JSON."
                 )
                 body_p = json.dumps({
-                    "model": "grok-4-fast",
+                    "model": "grok-4.3",
                     "input": [{"role":"user","content":grok_p_prompt}],
                     "tools": [{"type":"x_search"}],
                     "max_output_tokens": 2000,
@@ -716,7 +716,7 @@ if xai_key_qt:
             "NO PROSE outside JSON."
         )
         body_qt = json.dumps({
-            "model": "grok-4-fast",
+            "model": "grok-4.3",
             "input": [{"role":"user","content":qt_prompt}],
             "tools": [{"type":"x_search"}],
             "max_output_tokens": 3000,
@@ -895,7 +895,7 @@ for tab, target in REFILL_TARGETS.items():
         f"NO PROSE outside the JSON."
     )
     body = json.dumps({
-        "model": "grok-4-fast",
+        "model": "grok-4.3",
         "input": [{"role":"user", "content": grok_prompt}],
         "tools": [{"type":"x_search"}],
         "max_output_tokens": 4000,

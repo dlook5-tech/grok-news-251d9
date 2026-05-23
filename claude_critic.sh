@@ -407,7 +407,7 @@ PYEOF
 
     # Only call Grok if we actually have something to find
     if [ -s /tmp/grok_replacement_prompt.txt ] && ! grep -q "^# No replacements needed" /tmp/grok_replacement_prompt.txt; then
-        python3 /tmp/grok_build_payload.py /tmp/grok_replacement_prompt.txt /tmp/grok_replacement_payload.json grok-4-fast
+        python3 /tmp/grok_build_payload.py /tmp/grok_replacement_prompt.txt /tmp/grok_replacement_payload.json grok-4.3
         # Bump max_tokens — 18 replacement objects need ~12K out tokens, default 8K truncates
         python3 -c "
 import json
