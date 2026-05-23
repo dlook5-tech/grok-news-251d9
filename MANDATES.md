@@ -88,6 +88,17 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-021 — Honesty scoring is a SEPARATE LABELING PASS. Never inside selection or perspective fetch.
+**Date:** 2026-05-23 evening
+**User said:** "The honesty score should not affect any picking of stories or picking of the perspective sub-stories. What the fuck are you doing?"
+**Root cause:** When I restored honesty (M-020), I put the rubric inside the Grok selection prompts (update.sh) AND inside the Stage 2 perspective-fetch prompt (find_perspectives). Grok then used the rubric to filter — picking high-honesty items and dropping the rest. Cron at 22:10 UTC shipped only 2 World / 1 USA / 0 Business. WRONG architecture: selection and scoring must be independent passes.
+**Enforcement:**
+- Selection prompts (update.sh news-tabs + top tab) have honesty REMOVED. Note added: "Honesty scoring happens downstream — do NOT score honesty here, do NOT filter by honesty."
+- `find_perspectives` prompt has honesty REMOVED with the same note. Validation no longer accepts honesty/notes fields from Grok's perspective response.
+- New `score_honesty(url, body, headline)` function in parse_grok.py: one xAI call per item, returns `{honesty, notes}` only. Never drops, never filters — returns `{honesty: None}` if scoring fails.
+- New scoring pass after all selection + perspective work: iterates every shipped story AND every shipped perspective across news tabs, scores in parallel (ThreadPoolExecutor max_workers=10), and writes honesty + notes onto each item.
+- M-020's "every story has honesty" goal achieved via the new pass — but selection counts are no longer suppressed because Grok never sees the rubric during selection.
+
 ## M-020 — Honesty scores 1-10 on every news story + perspective. Restored 2026-05-23.
 **Date:** 2026-05-23 evening
 **User said:** "Make sure you include honesty scores. We've had that for well over a month, and all of a sudden it's disappeared. I think that disappeared when you did Restretto."

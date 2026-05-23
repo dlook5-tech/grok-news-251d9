@@ -91,10 +91,14 @@ check  "M-019b:tiered-view-floors"     parse_grok.py  "_PERSPECTIVE_MIN_VIEWS"  
 check  "M-019c:no-curated-handles"     parse_grok.py  "curated handle"                  absent
 check  "M-019d:self-quote-guard"       parse_grok.py  "url == story_url"                exists
 
-# M-020 — Honesty scoring rubric in prompts (regression from Ristretto migration)
-check  "M-020a:honesty-in-newstabs"    update.sh      "HONESTY SCORING"                  exists
-check  "M-020b:honesty-in-toptab"      update.sh      "HONESTY SCORING.*verified fact"   exists
-check  "M-020c:honesty-rubric-rules"   update.sh      "Brookings|Heritage|CSIS"          exists
+# M-020 SUPERSEDED by M-021: honesty rubric moved OUT of selection prompts into a separate scoring pass.
+# Old M-020a/b/c checks removed — selection prompts must NOT contain the rubric now.
+
+# M-021 — Honesty is a separate labeling pass; never inside selection or perspective fetch
+check  "M-021a:no-honesty-in-update"   update.sh      "HONESTY SCORING"                  absent
+check  "M-021b:score-honesty-fn"       parse_grok.py  "def score_honesty"                exists
+check  "M-021c:scoring-pass-wired"     parse_grok.py  "honesty-score.*scoring.*items"    exists
+check  "M-021d:persp-prompt-no-honesty" parse_grok.py "DO NOT score honesty here"        exists
 
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists

@@ -221,13 +221,14 @@ def find_perspectives(story_url, story_headline):
         f"  - All URLs must be real X status URLs you actually found via x_search. NEVER fabricate.\n"
         f"  - Each perspective's URL must be DIFFERENT from {story_url} (no self-quotes).\n"
         f"  - Posted in the last 24 hours.\n"
-        f"  - If you can only find 0 or 1 perspective, return what you found. Don't force matches.\n\n"
+        f"  - If you can only find 0 or 1 perspective, return what you found. Don't force matches.\n"
+        f"  - DO NOT score honesty here — that runs as a separate labeling pass.\n\n"
         f"Return ONLY a JSON object:\n"
         f'{{"perspectives":[\n'
         f'  {{"label":"Conservative","handle":"@user","url":"https://x.com/.../status/<id>",'
-        f'"body":"verbatim post text","views":<integer>,"honesty":<1-10>,"notes":"one-line plain-English honesty justification"}},\n'
-        f'  {{"label":"Democrat","handle":"@user","url":"...","body":"...","views":...,"honesty":...,"notes":"..."}},\n'
-        f'  {{"label":"Independent","handle":"@user","url":"...","body":"...","views":...,"honesty":...,"notes":"..."}}\n'
+        f'"body":"verbatim post text","views":<integer>}},\n'
+        f'  {{"label":"Democrat","handle":"@user","url":"...","body":"...","views":...}},\n'
+        f'  {{"label":"Independent","handle":"@user","url":"...","body":"...","views":...}}\n'
         f"]}}\n"
         f"Empty array {{\"perspectives\":[]}} is valid if nothing qualifies."
     )
@@ -262,12 +263,57 @@ def find_perspectives(story_url, story_headline):
             'body': (p.get('body') or '')[:600],
             'views': views,
             'engagement': f"{views:,} views",
-            'honesty': p.get('honesty'),
-            'notes': (p.get('notes') or '')[:300],
+            # honesty + notes set by score_honesty() pass (M-021)
         })
         if len(valid) >= 3:
             break
     return valid
+
+
+# ============================================================
+# M-021: HONESTY SCORING IS A SEPARATE LABELING PASS.
+# Honesty must NEVER affect story selection or perspective fetch.
+# Runs AFTER Stage 1 (selection) and Stage 2 (perspectives) complete.
+# Each shipped story + each shipped perspective gets one scoring call,
+# parallelized. xAI just labels — never filters, never reorders.
+# ============================================================
+def score_honesty(url, body, headline=''):
+    """Returns {honesty: int 1-10, notes: str} for the given post.
+    NEVER drops or filters — always returns a dict, defaults to 7/null if scoring fails."""
+    if not url or '/status/' not in url:
+        return {'honesty': None, 'notes': ''}
+    text = ((headline or '') + ' — ' + (body or '')).strip()[:500]
+    prompt = (
+        f"Score this X post for honesty 1-10 using this rubric:\n"
+        f"  10 = VERIFIED FACT only (court records, scoreboards, official stats, raw video of exactly what's claimed)\n"
+        f"   9 = factual core with minor editorializing (news report + light framing)\n"
+        f"   8 = analysis / commentary / institutional perspective (think tanks CSIS/Brookings/Heritage/RAND/AEI NEVER score 10 — max 8)\n"
+        f"   7 = opinion / prediction / hot take ('I think X will happen')\n"
+        f"   6 = contains a specific misleading claim\n"
+        f"   5 = demonstrably false statement\n"
+        f"  ≤4 = serial misrepresentation, conspiracy without specifics\n\n"
+        f"Attribution: video/audio of person speaking = attribution VERIFIED (score the content, not 'fabricated'). "
+        f"Transcript-only quotes have attribution uncertainty.\n\n"
+        f"Post URL: {url}\n"
+        f"Post text: {text!r}\n\n"
+        f"Return ONLY a JSON object: "
+        f'{{"honesty": <1-10 integer>, "notes": "<one-line plain-English why, max 120 chars>"}}'
+    )
+    try:
+        result = _xai_call(prompt, timeout=30, max_tokens=400)
+    except Exception as e:
+        print(f"[honesty-score] xAI failed for {url}: {e}", file=sys.stderr)
+        return {'honesty': None, 'notes': ''}
+    if not result:
+        return {'honesty': None, 'notes': ''}
+    try:
+        h = int(result.get('honesty') or 0)
+    except (TypeError, ValueError):
+        h = 0
+    if not (1 <= h <= 10):
+        h = None
+    notes = (result.get('notes') or '')[:120]
+    return {'honesty': h, 'notes': notes}
 
 
 def fetch_top_qt(url):
@@ -923,6 +969,41 @@ def _qc_llm_semantic_dedup(output_dict):
         c['stories'] = [s for i, s in enumerate(sts) if i not in idxes]
 
 _qc_llm_semantic_dedup(output)
+
+# ============================================================
+# M-021: HONESTY SCORING PASS — runs LAST, never affects selection.
+# Score every shipped story + every shipped perspective in news tabs.
+# Parallelized via thread pool. Entertainment tabs (NO_HONESTY) skipped
+# on the frontend anyway so no point scoring them.
+# ============================================================
+_HONESTY_NEWS_TABS = ['world','usa','top','msm','business','sports','pods','pg6',
+                      'science','local','conspiracy','allin']
+import concurrent.futures as _cf_honesty
+
+_score_jobs = []  # list of (target_dict,) for each thing to score
+for _h_tab in _HONESTY_NEWS_TABS:
+    _h_container = output.get(_h_tab, {})
+    if not isinstance(_h_container, dict): continue
+    for _h_story in _h_container.get('stories', []) or []:
+        if not _h_story.get('url'): continue
+        _score_jobs.append(_h_story)
+        for _h_p in _h_story.get('perspectives', []) or []:
+            if isinstance(_h_p, dict) and _h_p.get('url'):
+                _score_jobs.append(_h_p)
+
+def _score_one(item):
+    s = score_honesty(item.get('url',''), item.get('body',''), item.get('headline',''))
+    item['honesty'] = s.get('honesty')
+    item['notes'] = s.get('notes', '')
+    return item
+
+if _score_jobs:
+    print(f"[honesty-score] scoring {len(_score_jobs)} items in parallel...", file=sys.stderr)
+    with _cf_honesty.ThreadPoolExecutor(max_workers=10) as _ex:
+        list(_ex.map(_score_one, _score_jobs))
+    _scored = sum(1 for j in _score_jobs if j.get('honesty'))
+    print(f"[honesty-score] {_scored}/{len(_score_jobs)} items got valid 1-10 scores", file=sys.stderr)
+
 
 # ---- Preserve user-managed tabs (freespeech, submit) ----
 for manual_tab in ('freespeech', 'submit'):
