@@ -613,18 +613,23 @@ _QC_STOP = {
     'the','from','with','that','this','about','have','will','their','they','them',
     'these','those','than','then','your','what','when','where','some','been','were',
     'has','was','will','would','could','should','into','over','more','very','just',
+    'such','here','there','only','also','same','both','each','itself','must',
     # common news verbs
     'says','said','tells','told','holds','signs','calls','plans','wants','seeks',
     'takes','gives','makes','goes','comes','sees','shows','asks','adds','warns',
     'announces','reveals','reports','reacts','shares','posts','breaks','meets',
-    'discusses','responds','launches','sends',
+    'discusses','responds','launches','sends','pushes','urges','condemns','denies',
+    'admits','agrees','offers','accuses','claims','suggests','vows','threatens',
     # generic intensifiers / adjectives often used in headlines
     'massive','major','huge','large','small','big','little','recent','latest','new',
     'old','first','last','top','best','worst','full','great','only','many','most',
+    'real','fake','true','false','good','bad','right','wrong','high','low',
     # bland nouns common across all news
     'news','story','update','report','statement','today','yesterday','week','day',
     'time','year','part','thing','case','plan','idea','show','clip','video','photo',
-    'post','tweet','reply',
+    'post','tweet','reply','people','person','public','media','press','event',
+    # 2026-05-23: false-positive triggers seen on live data
+    # ('real' + 'trump' was making any "real X" headline dupe with any Trump story)
 }
 
 _MONEY_RE = re.compile(r'\$\d+(?:\.\d+)?[mkbt]?', re.IGNORECASE)

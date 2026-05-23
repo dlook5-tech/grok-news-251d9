@@ -70,13 +70,30 @@ def story_velocity(s: Dict) -> float:
         return (float(views) / age) * 4.0
     return -1.0
 
-def apply_hold(current: List[Dict], candidates: List[Dict], top_n=DEFAULT_TOP_N, sort_key=None) -> List[Dict]:
-    """Generic hold-and-rank. sort_key defaults to velocity; pass story_views for raw-views ranking."""
+# Per-tab age cap for apply_hold. Default 24h is the strict news cap; niche tabs
+# with slower content cadences need wider windows or they ship empty every cron.
+# Mirrors parse_grok.py's PER_TAB_AGE_CAP — change in both places if you tune.
+PER_TAB_MAX_AGE = {
+    'pods': 48.0,
+    'allin': 48.0,
+    'conspiracy': 48.0,
+    'recipe': 72.0,
+    'science': 72.0,
+    'local': 72.0,
+}
+DEFAULT_MAX_AGE = 24.0
+
+def apply_hold(current: List[Dict], candidates: List[Dict], top_n=DEFAULT_TOP_N,
+               sort_key=None, max_age_hours=None) -> List[Dict]:
+    """Generic hold-and-rank. sort_key defaults to velocity; pass story_views for raw-views ranking.
+    max_age_hours: per-tab age cap (default 24h). Pass a larger value for niche tabs."""
     if sort_key is None:
         sort_key = story_velocity
+    if max_age_hours is None:
+        max_age_hours = DEFAULT_MAX_AGE
     seen = {}
     for s in (candidates or []):
-        if story_age_hours(s) > 24: continue
+        if story_age_hours(s) > max_age_hours: continue
         key = s.get('url') or s.get('headline', str(id(s)))
         seen[key] = s
     for s in (current or []):
@@ -94,9 +111,10 @@ def apply_velocity_hold(current, candidates, top_n=DEFAULT_TOP_N):
 def curate(tab: str, current: List, fresh: List, top_n=DEFAULT_TOP_N) -> List:
     # Top tab = absolute most-viewed, period (memes welcome). Raw views, not velocity.
     # Every other tab keeps velocity sort so fresh-but-rising content can beat stale leaders.
+    max_age = PER_TAB_MAX_AGE.get(tab, DEFAULT_MAX_AGE)
     if tab == 'top':
-        return apply_hold(current, fresh, top_n, sort_key=story_views)
-    return apply_hold(current, fresh, top_n, sort_key=story_velocity)
+        return apply_hold(current, fresh, top_n, sort_key=story_views, max_age_hours=max_age)
+    return apply_hold(current, fresh, top_n, sort_key=story_velocity, max_age_hours=max_age)
 
 def stamp_view_history(stories: List) -> List:
     for s in stories or []:
