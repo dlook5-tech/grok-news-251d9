@@ -342,14 +342,17 @@ import json, sys
 prompt_file = sys.argv[1]
 output_payload = sys.argv[2] if len(sys.argv) > 2 else '/tmp/grok_payload.json'
 model = sys.argv[3] if len(sys.argv) > 3 else 'grok-4.3'
-with open('/tmp/grok_system.txt') as f:
-    system = f.read().strip()
 with open(prompt_file) as f:
     prompt = f.read().strip()
+# 2026-05-22: Removed heavy system prompt that was injecting old eXpressO
+# editorial filters (drop bare announcements, require honesty score, drop
+# context-less replies, etc.) on every Grok call. Those filters overrode
+# the Ristretto-style simple user prompts, causing 6 tabs to consistently
+# return empty (world/usa/business/pods/local/conspiracy). Ristretto sends
+# user prompt only and returns stories. eXpressO now does the same.
 payload = {
     "model": model,
     "input": [
-        {"role": "system", "content": system},
         {"role": "user", "content": prompt}
     ],
     "tools": [{"type": "x_search"}],
