@@ -80,6 +80,17 @@ if [ "$HTML_SIZE" -lt 55000 ]; then
 fi
 
 # ============================================================================
+# MANDATE GATE — final hard-fail audit before pushing to Netlify. This is
+# belt-and-suspenders on top of update.sh's pre-flight: if anyone calls
+# deploy.sh standalone (or if state changed between pre-flight and now), the
+# deploy still refuses to ship if any mandate has regressed.
+# ============================================================================
+if ! bash "$MAIN/verify_mandates.sh" >&2; then
+  echo "[deploy] ABORT: mandate regression. Fix MANDATES.md enforcement points and retry." >&2
+  exit 1
+fi
+
+# ============================================================================
 # DIRECT-LINK BLOCKS GUARD (user mandate, locked 2026-05-23):
 # renderAutoEmbedBlock must emit an <a class="story story-link"> wrapper —
 # NEVER classList.toggle('open') / toggleEmbed / "Open on X" buttons that

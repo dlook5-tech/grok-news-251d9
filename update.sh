@@ -19,6 +19,23 @@ cd "$(dirname "$0")"
 
 echo "=== eXpressO Update $(date) ==="
 
+# ============================================================================
+# MANDATE PRE-FLIGHT — runs verify_mandates.sh in HARD-FAIL mode.
+# If any user-corrected mandate has regressed in code, the cron aborts BEFORE
+# burning xAI tokens on a Grok run that would deploy a broken site.
+# This script has NO soft-mode bypass. To skip it, the user has to delete the
+# mandate from MANDATES.md AND its check from verify_mandates.sh manually.
+# ============================================================================
+echo ""
+echo "--- Mandate pre-flight ---"
+if ! bash verify_mandates.sh; then
+  echo ""
+  echo "ABORTING CRON: mandate regression detected. See failures above." >&2
+  echo "Fix the code so the failing mandate's enforcement check passes, then retry." >&2
+  exit 1
+fi
+echo ""
+
 TABS=(world usa business top msm sports sas_cowherd elon pods pg6 recipe science local conspiracy comedy allin)
 
 needs_perspectives() {

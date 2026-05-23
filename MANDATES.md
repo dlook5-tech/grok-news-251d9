@@ -86,3 +86,12 @@ cannot quietly die in a future session.
 **Enforcement:**
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
+
+## M-013 — Mandate checks are HARD-FAIL. No soft-mode bypass. Mandate regression blocks the cron + deploy.
+**Date:** 2026-05-23 ("How about just hard-code it so you stop forgetting things that we've talked about?")
+**Enforcement:**
+- `verify_mandates.sh` is a hard-fail audit script (no `RULE_AUDIT_SOFT` equivalent — it cannot be silenced).
+- `update.sh` calls `bash verify_mandates.sh` as pre-flight; failure aborts BEFORE the Grok run starts.
+- `deploy.sh` calls it again as the final gate before pushing to Netlify; failure aborts the deploy.
+- If any check fails, the cron literally cannot reach Netlify until the enforcement point is restored.
+- The old `verify_rules.sh` stays for the legacy graveyard checks but remains in SOFT mode — only `verify_mandates.sh` blocks.
