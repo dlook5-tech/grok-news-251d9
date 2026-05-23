@@ -2247,10 +2247,30 @@ for _tab in ('elon', 'top'):
     _raw = data.get(_tab, [])
     _items = _raw if isinstance(_raw, list) else [_raw]
     _candidates = []
-    for _p in _items:
-        _cleaned = clean_story(_p, tab=_tab) if _p else None
-        if _cleaned and _belongs_on_tab(_tab, _cleaned):
-            _candidates.append(_cleaned)
+    if _tab == 'elon':
+        # 2026-05-22 user mandate (repeated multiple times):
+        # "Elon Tab should not have or be limited to just three posts. It should
+        # be all of his posts that aren't commercials for his companies."
+        # clean_story was dropping bare replies ('True.', 'Yes', '💯') because
+        # is_garbage rejects len<3 strings. BYPASS clean_story entirely for Elon.
+        # Only filters: has handle, has valid /status/ URL, not company promo.
+        for _p in _items:
+            if not isinstance(_p, dict): continue
+            _u = (_p.get('url') or '').strip()
+            if '/status/' not in _u: continue
+            if not _p.get('handle'): continue
+            # Normalize fields the frontend reads
+            _post = dict(_p)
+            if 'headline' not in _post or not (_post.get('headline') or '').strip():
+                _post['headline'] = (_post.get('body') or '')[:120] or 'Untitled'
+            # Promo filter (the only filter user wants)
+            if _is_elon_promo(_post): continue
+            _candidates.append(_post)
+    else:
+        for _p in _items:
+            _cleaned = clean_story(_p, tab=_tab) if _p else None
+            if _cleaned and _belongs_on_tab(_tab, _cleaned):
+                _candidates.append(_cleaned)
     if _tab == 'local':
         _before = len(_candidates)
         _candidates = _local_quality_filter(_candidates)
@@ -2284,8 +2304,8 @@ for _tab in ('elon', 'top'):
             print(f"  [elon] Grok returned 0 in 24h; falling back to existing ({len(_picked)})", file=sys.stderr)
         else:
             print(f"  [elon] full 24h refresh: {len(_picked)} posts", file=sys.stderr)
-        # Sanity cap at 30
-        _picked = _picked[:30]
+        # 2026-05-22 user mandate: "should be ALL of his posts that aren't commercials".
+        # NO cap. He typically posts 20-60/day; we ship all 24h non-promo posts.
         curation.stamp_view_history(_picked)
         _output_v5['elon'] = {'stories': _picked,
                               'earlier': _build_earlier('elon', _picked, _existing.get('elon', {}))}
