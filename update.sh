@@ -22,7 +22,13 @@ echo "=== eXpressO Update $(date) ==="
 TABS=(world usa business top msm sports sas_cowherd elon pods pg6 recipe science local conspiracy comedy allin)
 
 needs_perspectives() {
-    [[ "$1" == "world" || "$1" == "usa" ]]
+    # 2026-05-22: TEMPORARY — perspectives requirement removed from World/USA
+    # per user "take away the three perspectives requirement and return all eight
+    # for both world and USA, and look at the view counts so we can dial in the
+    # algorithm. Maybe we get those, choose those, then sequentially do the three
+    # requirements." STAGE 1: get top 8 events by raw views, no perspectives.
+    # STAGE 2 (later): add perspectives to chosen events.
+    false
 }
 
 prompt_for() {
