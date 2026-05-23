@@ -2181,6 +2181,47 @@ for _tab in ('world', 'usa'):
         'earlier': _build_earlier(_tab, chosen, _existing.get(_tab, {})),
     }
 
+# WORLD ← USA cross-promotion (user mandate 2026-05-22):
+# "If the world tab doesn't have enough stories, look to USA stories. Anything
+# Trump-related with Iran etc. — anything over 100K in views in 24h that's in
+# the general roundup of USA stories should be moved into world if world is lacking."
+# Scan USA picks for international keywords; promote ones ≥100K into World until
+# World has 3 stories (or USA runs out of qualifying stories).
+_INTL_KW = {
+    'iran','china','russia','ukraine','israel','gaza','palestin','nato','un ','unsc','foreign',
+    'embassy','summit','diplomat','sanction','war','military','ally','allies','treaty','geopolit',
+    'abroad','overseas','putin','xi jinping','netanyahu','zelensky','tehran','beijing','moscow',
+    'kremlin','europe','asia','africa','latin america','south america','middle east','nuclear',
+    'icbm','missile','tariff','trade war','foreign policy','strait of hormuz','red sea',
+}
+
+def _has_international_signal(story):
+    text = (story.get('headline','') or '').lower() + ' ' + (story.get('body','') or '').lower()
+    for p in story.get('perspectives', []) or []:
+        if isinstance(p, dict):
+            text += ' ' + (p.get('text','') or '').lower() + ' ' + (p.get('body','') or '').lower()
+    return any(kw in text for kw in _INTL_KW)
+
+_world_stories = _output_v5.get('world', {}).get('stories', []) or []
+_usa_stories = _output_v5.get('usa', {}).get('stories', []) or []
+_world_urls = {s.get('url','') for s in _world_stories if s.get('url')}
+_promoted = []
+for s in _usa_stories:
+    if len(_world_stories) + len(_promoted) >= 3:
+        break
+    if s.get('url','') in _world_urls:
+        continue
+    if _rist_story_views(s) < _WU_VIEW_FLOOR:
+        continue
+    if not _has_international_signal(s):
+        continue
+    _promoted.append(s)
+    print(f"[world<-usa] promoted: {(s.get('headline','') or '?')[:60]}  ({_rist_story_views(s):,} views)", file=sys.stderr)
+
+if _promoted:
+    _output_v5['world']['stories'] = _world_stories + _promoted
+    print(f"[world<-usa] World now has {len(_output_v5['world']['stories'])} stories ({len(_promoted)} promoted from USA)", file=sys.stderr)
+
 # ---- Flat tabs (one post per slot) ----
 # Min-views floor for Local. User mandate (2026-05-10): "Drake's at 3382 views,
 # really? wtf." OC content that's genuinely viral clears 10k easily; below that
@@ -2323,8 +2364,13 @@ for _tab in _RISTRETTO_TABS:
 
     # SPORTS SPECIAL: guarantee Stephen A + Cowherd slots at the bottom.
     # Per user mandate 2026-05-22: "keep at least one Stephen A and Colin
-    # Cowherd post at the bottom of the sports stories, no matter what they are."
-    # We use a dedicated sas_cowherd Grok call (separate prompt) to find them.
+    # Cowherd post at the bottom of the sports stories, no matter what they are.
+    # With the most views."
+    #
+    # Strategy (3 fallback layers — first that finds a post wins):
+    #   1. Check if SAS/Cowherd are already in `cleaned` or `_rist_previous['sports']`
+    #   2. Check the separate `sas_cowherd` Grok response in `data`
+    #   3. If still missing, fire a direct xAI call from Python for that handle
     if _tab == 'sports':
         def _is_sas(s):
             h = (s.get('handle','') or '').lower().lstrip('@')
@@ -2332,23 +2378,81 @@ for _tab in _RISTRETTO_TABS:
         def _is_cow(s):
             h = (s.get('handle','') or '').lower().lstrip('@')
             return h in ('colincowherd', 'theherd')
+
+        def _fetch_latest_post(handle):
+            """Direct xAI call for the latest post from a specific handle. Last-resort fallback."""
+            import urllib.request as _urlreq
+            import os as _os
+            api_key = _os.environ.get('XAI_API_KEY', '')
+            if not api_key:
+                return None
+            prompt = (f"Find the single most recent post from @{handle} on X. "
+                      f"If they have none in the last 3 days, find ANY recent post by them. "
+                      f"Return ONLY a JSON object (no markdown):\n"
+                      f'{{"handle":"{handle}","url":"https://x.com/{handle}/status/<id>",'
+                      f'"headline":"one-line summary","body":"actual post text","views":<integer>}}')
+            payload = {
+                "model": "grok-4-fast",
+                "input": [{"role": "user", "content": prompt}],
+                "tools": [{"type": "x_search"}],
+                "max_output_tokens": 1500,
+            }
+            try:
+                req = _urlreq.Request(
+                    'https://api.x.ai/v1/responses',
+                    data=json.dumps(payload).encode(),
+                    headers={'Content-Type': 'application/json',
+                             'Authorization': f'Bearer {api_key}'},
+                )
+                with _urlreq.urlopen(req, timeout=60) as r:
+                    resp = json.load(r)
+                text = ''
+                for o in resp.get('output', []):
+                    for c in o.get('content', []) or []:
+                        if isinstance(c, dict) and c.get('text'):
+                            text += c['text']
+                text = re.sub(r'^```[a-zA-Z]*\s*', '', text.strip())
+                text = re.sub(r'\s*```\s*$', '', text)
+                m = re.search(r'\{[^{}]*"url"[^{}]*\}', text, re.DOTALL)
+                if not m: return None
+                post = json.loads(m.group(0))
+                if not post.get('url') or '/status/' not in post['url']: return None
+                return post
+            except Exception as e:
+                print(f"[sports] _fetch_latest_post({handle}) failed: {e}", file=sys.stderr)
+                return None
+
         has_sas = any(_is_sas(s) for s in chosen)
         has_cow = any(_is_cow(s) for s in chosen)
-        # Pool: dedicated sas_cowherd response + sports candidates + previous sports
+
+        # Layer 1+2: scan candidate pool + sas_cowherd response + previous
         _sas_cow_items = data.get('sas_cowherd', [])
         if not isinstance(_sas_cow_items, list):
             _sas_cow_items = [_sas_cow_items] if _sas_cow_items else []
         _sport_pool = list(_sas_cow_items) + list(cleaned) + list(_rist_previous.get('sports', []))
+
         if not has_sas:
             sas_post = next((s for s in _sport_pool if isinstance(s, dict) and _is_sas(s) and s.get('url')), None)
+            if not sas_post:
+                # Layer 3: direct xAI fetch
+                print(f"[sports] no SAS in pool — firing direct xAI call", file=sys.stderr)
+                sas_post = _fetch_latest_post('stephenasmith')
             if sas_post:
                 chosen.append(sas_post)
-                print(f"[sports] appended Stephen A post", file=sys.stderr)
+                print(f"[sports] appended Stephen A: @{sas_post.get('handle')}", file=sys.stderr)
+            else:
+                print(f"[sports] WARN — could not find SAS post anywhere", file=sys.stderr)
+
         if not has_cow:
             cow_post = next((s for s in _sport_pool if isinstance(s, dict) and _is_cow(s) and s.get('url')), None)
+            if not cow_post:
+                print(f"[sports] no Cowherd in pool — firing direct xAI call", file=sys.stderr)
+                cow_post = _fetch_latest_post('colincowherd')
             if cow_post:
                 chosen.append(cow_post)
-                print(f"[sports] appended Cowherd post", file=sys.stderr)
+                print(f"[sports] appended Cowherd: @{cow_post.get('handle')}", file=sys.stderr)
+            else:
+                print(f"[sports] WARN — could not find Cowherd post anywhere", file=sys.stderr)
 
     # Frontend compat: body→text rename on each perspective (if any)
     chosen = [_wu_body_to_text(s) for s in chosen]
