@@ -62,7 +62,7 @@ def _is_elon_promo(s):
 
 
 # ---- DELTA #1: World/USA 100K view floor ----
-WU_VIEW_FLOOR = 100_000
+WU_VIEW_FLOOR = 50_000  # 2026-05-22: lowered 100K→50K per user (option 3 — loosen floors, keep features)
 
 
 # ---- DELTA #4: International keywords for World←USA promotion ----
@@ -387,13 +387,13 @@ for tab in tabs:
         # post-boost state (original_views, qt_views, combined_views).
         tab_candidates_after_boost = _candidate_dump(cleaned)
 
-        # Filter: 100K floor AND ≥2 perspectives (user mandate — single-perspective
-        # events should not ship; that's not a real "top story" if only one side covered it)
+        # Filter: 50K floor AND ≥1 perspective
+        # (2026-05-22 option 3: loosen — 50K instead of 100K, ≥1 instead of ≥2)
         def _wu_qualified(s):
             if curation.story_views(s) < WU_VIEW_FLOOR: return False
             persps = s.get('perspectives', []) or []
             n = sum(1 for p in persps if isinstance(p, dict) and p.get('url') and '/status/' in p.get('url', ''))
-            return n >= 2
+            return n >= 1
 
         cleaned_qual = [c for c in cleaned if _wu_qualified(c)]
         held = previous.get(tab, [])

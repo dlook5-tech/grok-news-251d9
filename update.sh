@@ -28,8 +28,8 @@ needs_perspectives() {
 prompt_for() {
     local tab=$1
     case "$tab" in
-        world)    echo "Top 8 highest-view WORLD news EVENTS on X in the past 24h. "World" = international events, US foreign policy, US-international relations (Trump-Iran, US-China trade, NATO, etc.), global events involving any country. Include US-international topics — DON'T exclude just because Trump is mentioned. Return all 8 candidates — even ones under 100K views — so we can see the full pool. Python applies the 100K filter, not you." ;;
-        usa)      echo "Top 8 highest-view US NATIONAL news EVENTS on X in the past 24h (politics, federal events). Return all 8 candidates — even ones under 100K views — so we can see the full pool. Python applies the 100K filter, not you." ;;
+        world)    echo "Top 8 highest-view WORLD news EVENTS on X in the past 24h. "World" = international events, US foreign policy, US-international relations (Trump-Iran, US-China trade, NATO, etc.), global events involving any country. Include US-international topics — DON'T exclude just because Trump is mentioned. Return all 8 candidates — even ones under 50K views — so we can see the full pool. Python applies the 50K filter, not you." ;;
+        usa)      echo "Top 8 highest-view US NATIONAL news EVENTS on X in the past 24h (politics, federal events). Return all 8 candidates — even ones under 50K views — so we can see the full pool. Python applies the 50K filter, not you." ;;
         business) echo "Top 5 highest-view X posts (past 24h) about business / markets / finance / economy." ;;
         top)      echo "Top 5 highest-view X posts (past 24h) — the absolute most-viewed across the platform." ;;
         msm)      echo "Top 5 highest-view X posts (past 24h) from mainstream-media accounts (NYT, WaPo, CNN, BBC, Reuters, AP, etc.)." ;;
@@ -72,7 +72,7 @@ For each event: highest-view Conservative, Independent, and Democrat reactions o
 
 MERGE DUPLICATES: If multiple high-view tweets cover the SAME news event, MERGE them into ONE event block with all perspectives consolidated.
 
-VIEW FLOOR (DELTA): Each event's TOP perspective must have at least 100,000 COMBINED views (see QT/RT BOOST below). Drop any event below that. No fixed cap on count.
+VIEW FLOOR (DELTA): Each event's TOP perspective must have at least 50,000 COMBINED views (see QT/RT BOOST below). Drop any event below that. No fixed cap on count.
 
 QT/RT BOOST: For each perspective, also look for the biggest retweet or quote-tweet of that post. If found, set the perspective's \"views\" field to (original_views + qt_views) — the COMBINED total. Also include original_url + original_handle + original_views + qt_views fields so the data is auditable. This lets a 70K-view post that has a 50K-view retweet clear the 100K floor (combined = 120K). If no notable QT/RT exists, just leave views as the original count."
     elif [ "$tab" == "elon" ]; then
