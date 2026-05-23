@@ -387,13 +387,20 @@ for tab in tabs:
         # post-boost state (original_views, qt_views, combined_views).
         tab_candidates_after_boost = _candidate_dump(cleaned)
 
-        cleaned_100k = [c for c in cleaned if curation.story_views(c) >= WU_VIEW_FLOOR]
+        # Filter: 100K floor AND ≥2 perspectives (user mandate — single-perspective
+        # events should not ship; that's not a real "top story" if only one side covered it)
+        def _wu_qualified(s):
+            if curation.story_views(s) < WU_VIEW_FLOOR: return False
+            persps = s.get('perspectives', []) or []
+            n = sum(1 for p in persps if isinstance(p, dict) and p.get('url') and '/status/' in p.get('url', ''))
+            return n >= 2
+
+        cleaned_qual = [c for c in cleaned if _wu_qualified(c)]
         held = previous.get(tab, [])
-        held_100k = [h for h in held if curation.story_views(h) >= WU_VIEW_FLOOR]
-        # Ristretto's apply_hold but with no top_n cap (use very large top_n)
-        chosen = curation.apply_hold(held_100k, cleaned_100k, top_n=999,
+        held_qual = [h for h in held if _wu_qualified(h)]
+        chosen = curation.apply_hold(held_qual, cleaned_qual, top_n=999,
                                      sort_key=curation.story_velocity)
-        chosen = [s for s in chosen if curation.story_views(s) >= WU_VIEW_FLOOR]
+        chosen = [s for s in chosen if _wu_qualified(s)]
         output[tab] = {'stories': [_body_to_text(s) for s in chosen],
                        '_candidates': tab_candidates_after_boost}
         print(f"[{tab}] {len(chosen)} events cleared {WU_VIEW_FLOOR:,} view floor (after QT boost)", file=sys.stderr)
