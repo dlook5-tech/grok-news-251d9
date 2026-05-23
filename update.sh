@@ -68,7 +68,9 @@ Each item is one EVENT with three sided reactions:
     {\"label\":\"Democrat\",\"handle\":\"...\",\"url\":\"https://x.com/.../status/<id>\",\"body\":\"...\",\"engagement\":\"...\",\"views\":...}
   ]
 }
-For each event: highest-view Conservative, Independent, and Democrat reactions on X — ALL from the last 24 hours. All four URLs MUST be real X status URLs from posts on or after ${since}. If you can't find 3 perspectives, still return the event with however many you DO find.
+For each event: TRY to find highest-view Conservative, Independent, and Democrat reactions on X — ALL from the last 24 hours. All URLs MUST be real X status URLs from posts on or after ${since}.
+
+CRITICAL: Return the event REGARDLESS of how many perspectives you find — even ZERO perspectives is fine. If you can only find the original story tweet with no political reactions, RETURN IT with an empty perspectives array []. NEVER drop an event because perspectives are missing. We want all 8 candidates, no matter how thin the perspectives are. Python decides what ships.
 
 MERGE DUPLICATES: If multiple high-view tweets cover the SAME news event, MERGE them into ONE event block with all perspectives consolidated.
 
