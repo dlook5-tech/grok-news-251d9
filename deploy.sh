@@ -90,38 +90,8 @@ if ! bash "$MAIN/verify_mandates.sh" >&2; then
   exit 1
 fi
 
-# ============================================================================
-# DIRECT-LINK BLOCKS GUARD (user mandate, locked 2026-05-23):
-# renderAutoEmbedBlock must emit an <a class="story story-link"> wrapper —
-# NEVER classList.toggle('open') / toggleEmbed / "Open on X" buttons that
-# require expanding to reveal. If this regresses, the deploy aborts so the
-# bug never reaches the live site.
-# ============================================================================
-if ! grep -q 'class="story story-link"' "$MAIN/index.html"; then
-  echo "[deploy] ABORT: renderAutoEmbedBlock no longer emits <a class=\"story story-link\"> wrapper." >&2
-  echo "[deploy] User mandate: blocks MUST be direct links, no expand/toggle. See index.html USER MANDATE comment." >&2
-  exit 1
-fi
-# Check that the ACTIVE renderAutoEmbedBlock isn't using toggle/embed.
-# The legacy function is allowed to exist (renamed _legacy_... and never called),
-# so we only flag toggleEmbed/classList.toggle inside the LIVE function body.
-if python3 -c "
-import re, sys
-with open('$MAIN/index.html') as f: src = f.read()
-# Extract the function body of renderAutoEmbedBlock (NOT the legacy one)
-m = re.search(r'function renderAutoEmbedBlock\(s\) \{(.*?)^\}', src, re.DOTALL | re.MULTILINE)
-if not m:
-    print('renderAutoEmbedBlock function not found', file=sys.stderr); sys.exit(2)
-body = m.group(1)
-if 'classList.toggle' in body or 'toggleEmbed' in body:
-    print('renderAutoEmbedBlock contains expand/toggle code -- mandate regression', file=sys.stderr); sys.exit(3)
-sys.exit(0)
-" ; then
-  : # OK
-else
-  echo "[deploy] ABORT: renderAutoEmbedBlock is back to expand-on-click. User mandate violated." >&2
-  exit 1
-fi
+# Direct-link guard removed 2026-05-23 evening: user reverted to inline-embed
+# expansion + honesty score. The block is again expand-on-click.
 
 # Build the file manifest: path -> sha1
 echo "[deploy] Computing file hashes..."

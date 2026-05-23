@@ -242,7 +242,7 @@ var NEWS_DATA = { lastUpdated: "", _stale: false };
 
 // ---- Cache-busting version check (with loop guard) ----
 // Only reloads ONCE per server-version. Uses sessionStorage to prevent flashing if the cache remains stale.
-var THIS_VERSION = "20260523133233";
+var THIS_VERSION = "20260523133557";
 // Visible freshness badge top-right of the page. Tap = full hard refresh (bypass all cache).
 function hardRefresh() {
   try {
@@ -616,36 +616,63 @@ function parseYouTube(url) {
 // to a block, STOP -- you are about to violate this mandate AGAIN.
 // 2026-05-23: regressed twice in a single day; locked here permanently.
 // ========================================================================
+// ========================================================================
+// USER MANDATE (locked 2026-05-23 evening, SUPERSEDES the earlier
+// direct-link version):
+// Click block -> expand inline -> X embed loads in place + honesty score
+// shows at bottom. No "Open on X" button (user previously hated that).
+// If the embed silently fails after 6 seconds, toggleEmbed shows an
+// "Open on X ->" fallback link automatically — that's the only place
+// any "open on X" wording is allowed.
+// ========================================================================
 function renderAutoEmbedBlock(s) {
+  var sid = 'b' + Math.random().toString(36).substr(2,9);
+  var embedId = 'emb' + Math.random().toString(36).substr(2,9);
   var fullBody = (s.headline || s.body || '').trim() || 'View post';
   var body = makeTeaser(fullBody);
   var url = s.url || '';
-  var postedTag = buildPostedTag(s);
+  var ytInfo = parseYouTube(url);
+  var hasXPost = url && url.indexOf('/status/') !== -1 && (url.indexOf('x.com') !== -1 || url.indexOf('twitter.com') !== -1);
 
-  // No URL -> render a dead block (no link wrapper). Should be rare.
-  if (!url) {
-    return '<div class="story"><div class="story-header" style="cursor:default;">' +
-             '<span>' + body + postedTag + '</span></div></div>';
+  var onclickExpr = "var b=document.getElementById('" + sid + "');b.classList.toggle('open');";
+  if (hasXPost) {
+    var parentUrl = (s.parent_url && s.parent_url.indexOf('/status/') !== -1) ? s.parent_url : '';
+    onclickExpr += "if(b.classList.contains('open')){toggleEmbed('" + embedId + "','" + url.replace(/'/g,"\\'") + "'" +
+                   (parentUrl ? ",'" + parentUrl.replace(/'/g,"\\'") + "'" : "") + ");}";
   }
 
-  // ====================================================================
-  // USER MANDATE (repeated 1000s of times, locked 2026-05-23):
-  // The WHOLE block is a single anchor — tap anywhere on it, open the
-  // source in a new tab. NO "X ↗" / "YT ↗" / hostLabel badges. NO
-  // openIcon. NO arrow indicators. NO link-style ornaments. JUST the
-  // headline + posted time. If you find yourself adding ANY visual
-  // indicator to the block header, STOP — the user yelled about this
-  // again on 2026-05-23.
-  // ====================================================================
-  return '<a href="' + url + '" target="_blank" rel="noopener" class="story story-link" ' +
-            'style="display:block;text-decoration:none;color:inherit;">' +
-           '<div class="story-header">' +
-             '<span>' + body + postedTag + '</span>' +
-           '</div>' +
-         '</a>';
+  // Body content loaded on click via toggleEmbed.
+  var inner = '';
+  if (hasXPost) {
+    inner += '<div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div>';
+  } else if (ytInfo) {
+    var ytSrc = 'https://www.youtube.com/embed/' + ytInfo.videoId + '?rel=0&modestbranding=1&playsinline=1' +
+                (ytInfo.start > 0 ? '&start=' + ytInfo.start : '') +
+                (ytInfo.end > 0 ? '&end=' + ytInfo.end : '');
+    inner += '<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin-top:10px;border-radius:6px;">' +
+               '<iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" ' +
+                 'src="' + ytSrc + '" loading="lazy" playsinline webkit-playsinline ' +
+                 'allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
+             '</div>';
+  }
+  if (s.translation) {
+    inner += '<div style="margin-top:10px;padding:10px 12px;background:#fbf7ec;border-left:3px solid #b8860b;border-radius:4px;font-size:0.83rem;line-height:1.5;color:#3d3029;"><strong style="color:#8b6e1e;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;">Translation:</strong> ' + s.translation + '</div>';
+  }
+  // Honesty footnote card at bottom (suppressed on entertainment tabs).
+  if (s.honesty && !NO_HONESTY_TABS[activeTab]) {
+    var hid = 'h' + Math.random().toString(36).substr(2,9);
+    var note = ((s.notes || s.evidence || '').trim()) || 'See post for full context.';
+    inner += '<div class="footnote-card" id="' + hid + '" style="margin-top:12px;"><div class="story-header" onclick="event.stopPropagation();event.preventDefault();document.getElementById(\'' + hid + '\').classList.toggle(\'open\');return false;"><span class="arrow">▶</span><span>Honesty ' + s.honesty + '</span></div><div class="story-body"><div class="footnotes"><div class="footnote-item">' + note + '</div></div></div></div>';
+  }
+
+  var postedTag = buildPostedTag(s);
+  return '<div class="story" id="' + sid + '">' +
+           '<div class="story-header" onclick="' + onclickExpr + '"><span class="arrow">▶</span><span>' + body + postedTag + '</span></div>' +
+           '<div class="story-body">' + inner + '</div>' +
+         '</div>';
 }
 
-// ----- legacy (unused) expand-style renderer, kept ONLY for reference. DO NOT call it. -----
+// ----- legacy (unused) direct-link renderer kept for reference only. -----
 function _legacy_renderAutoEmbedBlock_DO_NOT_USE(s) {
   var sid = 'b' + Math.random().toString(36).substr(2,9);
   var embedId = 'emb' + Math.random().toString(36).substr(2,9);
@@ -1018,15 +1045,11 @@ function renderContent() {
       h += '<p style="color:#f0e6d6;font-size:0.9rem;margin-top:16px;">Stories will appear here after the next update cycle.</p>';
     } else {
       d.stories.forEach(function(s) {
-        // User mandate (2026-05-23): "I click on any block in the world tab,
-        // it still doesn't show me anything from X." Old path called
-        // acc(headline, renderWorldStory(s)) which returned an empty body when
-        // a story had no perspectives (always true in Stage 1) — click expanded
-        // an empty box, no way to reach X.
-        // Fix: render via the direct-link block whenever there are no
-        // perspectives. When perspectives DO ship (Stage 2 later), the
-        // perspective blocks themselves are also direct links inside
-        // renderWorldStory.
+        // User mandate (2026-05-23 evening, supersedes direct-link version):
+        // World/USA blocks use inline-embed expansion + honesty score.
+        // If story has perspectives, render the 3-block view (renderWorldStory).
+        // If not, render via renderAutoEmbedBlock (which is now the
+        // inline-embed-with-honesty version).
         if (s.perspectives && s.perspectives.length) {
           var pt = buildPostedTag(s);
           h += acc(s.headline + pt, renderWorldStory(s));

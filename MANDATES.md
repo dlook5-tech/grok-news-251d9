@@ -14,6 +14,7 @@ cannot quietly die in a future session.
 ---
 
 ## M-001 — Story blocks are DIRECT LINKS to source. No expand. No toggle. No embed-on-click.
+**Status:** SUPERSEDED 2026-05-23 evening by M-017. Active design is now inline-expand-with-embed + honesty score (same as the pre-M-001 design). M-001's "direct link" instruction is no longer active.
 **Date:** 2026-05-23
 **User said:** "I don't want anything where you have to click it to say 'open on X'. We've talked about this. Why do I keep repeating myself?"
 **Enforcement:**
@@ -86,6 +87,17 @@ cannot quietly die in a future session.
 **Enforcement:**
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
+
+## M-017 — Click block -> expand inline -> X embed loads + honesty score at bottom (REVERSAL of M-001).
+**Date:** 2026-05-23 evening
+**User said:** "Going backwards, do it like we had it before, where you click on the block and it opens the X post within the block with an honesty score."
+**Supersedes:** M-001 (direct-link blocks) and M-015 (perspective-guard branch). M-016's no-icons rule is still active — no badges, no "X ↗" — just the embed loading inline.
+**Enforcement:**
+- `index.html::renderAutoEmbedBlock` is the inline-expand version: `<div class="story"><div class="story-header" onclick="toggle+toggleEmbed">▶ headline</div><div class="story-body">[X embed slot][honesty footnote card]</div></div>`.
+- World/USA tab render: when no perspectives, calls `renderAutoEmbedBlock(s)` (which now expands inline). When perspectives exist, calls `acc(headline, renderWorldStory(s))` for the 3-way split.
+- `deploy.sh` direct-link guard REMOVED.
+- `verify_mandates.sh` M-001a/b/c checks REMOVED, replaced by M-017a/b/c which require `classList.toggle`, `toggleEmbed`, and the honesty footnote card to be present.
+- If the embed fails to load within 6 seconds, `toggleEmbed`'s built-in fallback shows an "Open on X →" link as graceful degradation (no other place in the code displays that text).
 
 ## M-016 — NO host-label icons in block headers. NO "X ↗" / "YT ↗" badges. JUST the headline.
 **Date:** 2026-05-23

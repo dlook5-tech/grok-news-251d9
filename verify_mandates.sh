@@ -69,10 +69,14 @@ PY
 echo "=== MANDATES.md hard-fail audit ==="
 echo ""
 
-# M-001 — story blocks are direct links, no expand/toggle in active renderer
-check                  "M-001a:blocks-anchor-class"       index.html       'class="story story-link"'       exists
-check_not_in_function  "M-001b:no-toggle-in-active-fn"    index.html       renderAutoEmbedBlock              classList.toggle
-check_not_in_function  "M-001c:no-embed-in-active-fn"     index.html       renderAutoEmbedBlock              toggleEmbed
+# M-001 — SUPERSEDED 2026-05-23 evening by M-017 (user reverted to inline embed).
+# Old direct-link checks removed. The active renderAutoEmbedBlock now DOES use
+# classList.toggle and toggleEmbed — that's the correct behavior under M-017.
+
+# M-017 — Inline embed expansion + honesty score at bottom (latest preference)
+check  "M-017a:active-uses-toggle"     index.html  "classList.toggle\('open'\)"       exists
+check  "M-017b:active-uses-embed"      index.html  "toggleEmbed\("                    exists
+check  "M-017c:honesty-card-renders"   index.html  "footnote-card.*Honesty"           exists
 
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists
@@ -120,8 +124,7 @@ check_not_in_function  "M-016c:no-arrow-entity"   index.html  renderAutoEmbedBlo
 check  "M-012a:mandates-file"            MANDATES.md      "^## M-001"                                                exists
 check  "M-012b:claude-md-points-here"    CLAUDE.md        "MANDATES\.md"                                             exists
 
-# Deploy guard mandate (added in deploy.sh as belt-and-suspenders for M-001)
-check  "deploy:guard-direct-link"        deploy.sh        'class="story story-link"'                                 exists
+# Deploy direct-link guard REMOVED 2026-05-23 evening (M-001 superseded by M-017).
 
 # M-013 — this audit itself must be wired into BOTH update.sh and deploy.sh
 check  "M-013a:wired-in-update"          update.sh        "bash verify_mandates\.sh"                                 exists
