@@ -34,7 +34,7 @@ prompt_for() {
         top)      echo "Top 5 highest-view X posts (past 24h) — the absolute most-viewed across the platform." ;;
         msm)      echo "Top 5 highest-view X posts (past 24h) from mainstream-media accounts (NYT, WaPo, CNN, BBC, Reuters, AP, etc.)." ;;
         sports)   echo "Top 5 highest-view X posts (past 24h) about sports — major leagues, big games, athlete news." ;;
-        elon)     echo "EVERY @elonmusk post + reply + retweet + quote-tweet from the last 24h. NO TOP-N CAP — return ALL of them (typically 20-60 posts/day). Drop ONLY posts in a marketing/selling voice about his companies (Tesla / SpaceX / xAI / X-platform / Neuralink commercials). KEEP everything else — news, criticism, contrarian takes, bare replies, emoji reactions, anything." ;;
+        elon)     echo "Return EVERY @elonmusk post + reply + retweet + quote-tweet from the LAST 24 HOURS. NO TOP-N CAP — typically 20-60/day. If you return fewer than 10 you are missing posts." ;;
         pods)     echo "Top 5 highest-view X posts (past 24h) about or from major podcasters (Rogan, Lex, Theo Von, etc.)." ;;
         pg6)      echo "Top 5 highest-view X posts (past 24h) about celebrity / entertainment / pop-culture news." ;;
         recipe)   echo "Top 5 highest-view X posts (past 24h) about recipes / cooking / food." ;;
@@ -75,6 +75,34 @@ MERGE DUPLICATES: If multiple high-view tweets cover the SAME news event, MERGE 
 VIEW FLOOR (DELTA): Each event's TOP perspective must have at least 100,000 COMBINED views (see QT/RT BOOST below). Drop any event below that. No fixed cap on count.
 
 QT/RT BOOST: For each perspective, also look for the biggest retweet or quote-tweet of that post. If found, set the perspective's \"views\" field to (original_views + qt_views) — the COMBINED total. Also include original_url + original_handle + original_views + qt_views fields so the data is auditable. This lets a 70K-view post that has a 50K-view retweet clear the 100K floor (combined = 120K). If no notable QT/RT exists, just leave views as the original count."
+    elif [ "$tab" == "elon" ]; then
+        schema="DROP ONLY marketing/selling-voice posts about his companies (Tesla / SpaceX / xAI / X-platform / Neuralink commercials). KEEP everything else — news, criticism, contrarian takes, bare replies ('Yes', 'True', '💯'), emoji reactions, anything.
+
+⚠️ TWO HARD REQUIREMENTS for the BLOCK to make sense:
+  1. headline field is REQUIRED for every post — a 1-line news-style description of what the post is ABOUT (not a copy of the body). DO NOT start with 'Elon' or 'Elon Musk' — the reader knows it's his tab. Just describe the substance.
+     - Reply 'True' to a Hegseth post on military → headline: 'Agrees with Hegseth on military rebuild'
+     - Reply 'Same' to Seth Dillon → headline: 'Agrees with Seth Dillon on media coverage'
+     - Bare image of Cybertruck at Starbase → headline: 'Photo of Cybertruck at Starbase launch site'
+     - Video of Starship test → headline: 'Starship engine test fires successfully'
+     - Original take → 'Predicts AI will outpace human intelligence by 2030'
+     NEVER: 'Shares video link' / 'Replies True' / 'Comments on X' / 'Posts photo' / starts with 'Elon ...'
+  2. For REPLIES: populate parent_url + parent_handle + parent_text so the parent tweet embeds inline above the reply.
+     If you can't find parent context for a reply, still return the post but DO populate the headline so the block isn't blank.
+
+OUTPUT — every post needs the contextual fields:
+{\"elon\":[
+  {
+    \"handle\":\"@elonmusk\",
+    \"url\":\"https://x.com/elonmusk/status/<id>\",
+    \"headline\":\"1-line news-style summary, no 'Elon' name prefix\",
+    \"body\":\"actual post text verbatim\",
+    \"views\":1234567,
+    \"parent_url\":\"https://x.com/<handle>/status/<id> (REQUIRED for replies)\",
+    \"parent_handle\":\"@<handle>\",
+    \"parent_text\":\"verbatim parent text ≤280 chars\"
+  },
+  ...
+]}"
     elif [ "$tab" == "sas_cowherd" ]; then
         return_what="object"
         schema="Return ONLY a JSON object with key \"sas_cowherd\" holding a 2-item array:

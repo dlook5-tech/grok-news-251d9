@@ -193,9 +193,13 @@ _GENERIC_HEADLINE_PATTERNS = [
     r'^shares?\s+(a\s+)?(video|link|image|photo|tweet)\b',
     r'^posts?\s+(a\s+)?(video|image|photo|link)\b',
     r'^short\s+(reply|affirmative\s+reply|comment)\b',
-    r'^replies\s+(positively|affirmatively|with)\b',
+    r'^replies\s+(positively|affirmatively|with|[\'"])',
+    r'^replies\s+about\s+a?\s+\w+\s+(post|reply)?\s*$',
+    r'^comments?\s+on\s+a\s+(very\s+good\s+|good\s+|great\s+|nice\s+)?day',
+    r'^comments?\s+(no\s+\w+|about\s+\w+)\s+on',
     r'^shares?\s+(an?\s+)?(image|gif)\b',
     r'^posts?\s+rocket\s+emoji',
+    r'^elon(\s+musk)?\s+(shares?|posts?|comments?|replies)',
     r'^[?\s\.]*$',
     r'^untitled$',
 ]
@@ -221,6 +225,7 @@ def fetch_headline_for_post(url, body):
         f"The post text is: {body[:200]!r}\n"
         f"Return ONLY a JSON object: {{\"headline\":\"the descriptive headline\"}}. "
         f"NEVER write 'Shares video link', 'Posts photo', 'Short reply', or anything generic. "
+        f"NEVER start the headline with the author's name (e.g. 'Elon Musk Shares Video of ...' — just write 'Photo of Cybertruck at Starbase'). "
         f"If you genuinely can't determine what the content is, return {{}}."
     )
     result = _xai_call(prompt, timeout=30, max_tokens=400)
