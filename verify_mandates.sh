@@ -100,6 +100,12 @@ check  "M-008:local-is-socal"            update.sh        "Southern California|O
 check  "M-009a:xtab-url-dedup"           parse_grok.py    "CROSS-TAB DEDUP|xtab-dedup"                               exists
 check  "M-009b:qc-event-dedup"           parse_grok.py    "FINAL QC|qc-dupe"                                         exists
 
+# M-014 — cross-tab needs 3 tokens; LLM semantic backstop
+check  "M-014a:min-shared-kwarg"         parse_grok.py    "min_shared"                                               exists
+check  "M-014b:cross-tab-threshold"      parse_grok.py    "min_shared = 2 if _prev_tab == _qc_tab else 3"            exists
+check  "M-014c:llm-dedup-fn"             parse_grok.py    "_qc_llm_semantic_dedup"                                   exists
+check  "M-014d:llm-dedup-called"         parse_grok.py    "_qc_llm_semantic_dedup\(output\)"                         exists
+
 # M-012 — MANDATES.md exists and is referenced from CLAUDE.md
 check  "M-012a:mandates-file"            MANDATES.md      "^## M-001"                                                exists
 check  "M-012b:claude-md-points-here"    CLAUDE.md        "MANDATES\.md"                                             exists

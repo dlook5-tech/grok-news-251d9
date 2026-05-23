@@ -87,6 +87,15 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-014 — Cross-tab dedup needs 3+ shared tokens; LLM semantic backstop catches the rest.
+**Date:** 2026-05-23
+**User said:** "#2 seems more inclusive, but if we could also add to the backend of that an AI intelligence QC check where it reads all the stories to make sure none are the same."
+**Root cause:** Rule-based QC with 2-token threshold killed USA #2 "Trump admin finalizing AI deal with Anthropic for US spy agencies" because it shared `{trump, deal}` with World #3 (Iran deal). Two completely different deals, but Trump+deal is background noise in political news.
+**Enforcement:**
+- `parse_grok.py::_qc_is_dupe` now takes `min_shared` kwarg. Caller passes `2` if `prev_tab == this_tab` (within-tab), `3` otherwise (cross-tab). Stops generic-word false positives crossing tabs while staying strict on within-tab clusters.
+- `parse_grok.py::_qc_llm_semantic_dedup(output)` — single xAI call after the rule pass, sends all shipped news-tab headlines, asks it to flag pairs that are the SAME event despite different wording. Drops lower-priority tab's story. Graceful fallback if xAI errors (logs, never blocks the cron).
+- Log lines tag each rule-based drop as `within-tab` or `cross-tab` so the audit shows scope; LLM drops are tagged `[qc-llm]`.
+
 ## M-013 — Mandate checks are HARD-FAIL. No soft-mode bypass. Mandate regression blocks the cron + deploy.
 **Date:** 2026-05-23 ("How about just hard-code it so you stop forgetting things that we've talked about?")
 **Enforcement:**

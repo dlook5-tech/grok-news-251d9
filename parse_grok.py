@@ -642,12 +642,17 @@ def _qc_extract(s):
     money = {m.lower() for m in _MONEY_RE.findall(h_low)}
     return tokens, money
 
-def _qc_is_dupe(t1, m1, t2, m2):
-    """≥2 shared distinctive tokens, OR any shared money figure."""
+def _qc_is_dupe(t1, m1, t2, m2, min_shared=2):
+    """≥min_shared distinctive tokens shared, OR any shared money figure.
+    min_shared=2 for within-tab (default), =3 for cross-tab (M-014).
+    Cross-tab needs the stricter threshold because {trump, deal} or {iran, trump}
+    shared between unrelated political stories is just background noise — almost
+    every US political headline contains both. False positive on 2026-05-23:
+    Anthropic-AI USA story dropped vs Iran-deal World story on shared {trump, deal}."""
     if m1 and m2 and (m1 & m2):
         return ('money', m1 & m2)
     shared = t1 & t2
-    if len(shared) >= 2:
+    if len(shared) >= min_shared:
         return ('tokens', shared)
     return None
 
@@ -663,18 +668,123 @@ for _qc_tab in _DEDUP_ORDER:
             _qc_kept.append(_qc_s); continue
         _qc_match = None
         for _prev_tab, _prev_t, _prev_m, _prev_h in _qc_seen:
-            d = _qc_is_dupe(_qc_t, _qc_m, _prev_t, _prev_m)
+            # M-014: cross-tab needs 3+ shared tokens; within-tab keeps 2+.
+            min_shared = 2 if _prev_tab == _qc_tab else 3
+            d = _qc_is_dupe(_qc_t, _qc_m, _prev_t, _prev_m, min_shared=min_shared)
             if d:
                 _qc_match = (_prev_tab, d, _prev_h); break
         if _qc_match:
             _prev_tab, (_kind, _overlap), _prev_h = _qc_match
+            scope = 'within-tab' if _prev_tab == _qc_tab else 'cross-tab'
             print(f"[qc-dupe] drop {_qc_tab}: '{(_qc_s.get('headline','') or '?')[:55]}' "
-                  f"(shared {_kind} {sorted(_overlap)} w/ {_prev_tab}: '{_prev_h[:55]}')",
+                  f"({scope} shared {_kind} {sorted(_overlap)} w/ {_prev_tab}: '{_prev_h[:55]}')",
                   file=sys.stderr)
             continue
         _qc_kept.append(_qc_s)
         _qc_seen.append((_qc_tab, _qc_t, _qc_m, _qc_s.get('headline','') or ''))
     _qc_container['stories'] = _qc_kept
+
+
+# ============================================================
+# M-014: LLM SEMANTIC DEDUP — backstop pass after rule-based QC.
+# User mandate 2026-05-23: "if we could also add to the backend of that an AI
+# intelligence QC check where it reads all the stories to make sure none are
+# the same."
+#
+# After the rule-based QC, fire ONE xAI call that reads ALL shipped news-tab
+# headlines and returns pairs that are semantically the same event despite not
+# triggering token overlap (e.g. completely different wording on the same news).
+# Drop the LOWER-priority tab's story (using _DEDUP_ORDER as tiebreaker).
+# Graceful degradation: if xAI errors or response is malformed, log and
+# continue — never block the cron.
+# ============================================================
+def _qc_llm_semantic_dedup(output_dict):
+    items = []  # (tab, idx_in_tab, handle, headline)
+    for tab in _DEDUP_ORDER:
+        c = output_dict.get(tab, {})
+        if not isinstance(c, dict): continue
+        sts = c.get('stories', []) or []
+        for idx, s in enumerate(sts):
+            h = (s.get('headline','') or s.get('body','') or '').strip()
+            if not h: continue
+            items.append((tab, idx, s.get('handle','?'), h[:120]))
+    if len(items) < 2:
+        print(f"[qc-llm] only {len(items)} stories; skipping LLM dedup", file=sys.stderr)
+        return
+    if len(items) > 50:
+        items = items[:50]
+    listing = '\n'.join(f"[{i}] {tab}/{handle}: {h}"
+                       for i, (tab, _, handle, h) in enumerate(items))
+    prompt = (
+        "You are reviewing news-site headlines for duplicate EVENTS. Two headlines "
+        "are duplicates if they describe THE SAME news event from different angles, "
+        "reporters, or wording — not just sharing a person/place/topic.\n\n"
+        "EXAMPLES of duplicates (same event):\n"
+        "  '$90M Minnesota Medicaid fraud bust' and 'DOJ charges $90M MN fraud suspect'\n"
+        "  'Hamas releases hostage video' and 'Israeli hostage video released by Hamas'\n\n"
+        "EXAMPLES of NOT duplicates (different events, same names):\n"
+        "  'Trump signs Iran deal' and 'Trump signs trade bill' (different deals)\n"
+        "  'Anthropic AI contract' and 'Iran nuclear deal' (just shared 'deal')\n"
+        "  'Stephen A Smith on Lakers' and 'Stephen A Smith on Heat' (different shows)\n\n"
+        "Headlines:\n\n"
+        + listing +
+        "\n\nReturn ONLY a JSON object: {\"dupes\":[[i,j,\"one-sentence reason\"], ...]} "
+        "where i and j are indices and j is the SAME event as i. If no duplicates, "
+        "return {\"dupes\":[]}. Be conservative — only flag if you are confident."
+    )
+    try:
+        result = _xai_call(prompt, timeout=45, max_tokens=2000)
+    except Exception as e:
+        print(f"[qc-llm] xAI call failed: {e} — skipping", file=sys.stderr)
+        return
+    if not result or 'dupes' not in result:
+        print(f"[qc-llm] no usable response — skipping", file=sys.stderr)
+        return
+    dupes = result.get('dupes') or []
+    if not isinstance(dupes, list):
+        print(f"[qc-llm] malformed dupes field — skipping", file=sys.stderr)
+        return
+
+    to_drop = {}  # (tab, idx_in_tab) -> (kept_label, drop_head, reason)
+    for entry in dupes:
+        try:
+            i, j = int(entry[0]), int(entry[1])
+            reason = (entry[2] if len(entry) > 2 else 'LLM flagged as same event')[:120]
+        except (TypeError, ValueError, IndexError):
+            continue
+        if not (0 <= i < len(items) and 0 <= j < len(items)) or i == j:
+            continue
+        a_tab, a_idx, a_handle, a_head = items[i]
+        b_tab, b_idx, b_handle, b_head = items[j]
+        a_rank = _DEDUP_ORDER.index(a_tab) if a_tab in _DEDUP_ORDER else 999
+        b_rank = _DEDUP_ORDER.index(b_tab) if b_tab in _DEDUP_ORDER else 999
+        if a_rank < b_rank:
+            drop_key = (b_tab, b_idx); kept_label = f"{a_tab}/{a_handle}"; drop_head = b_head
+        elif b_rank < a_rank:
+            drop_key = (a_tab, a_idx); kept_label = f"{b_tab}/{b_handle}"; drop_head = a_head
+        else:
+            drop_key = (b_tab, b_idx); kept_label = f"{a_tab}/{a_handle}"; drop_head = b_head
+        if drop_key in to_drop: continue
+        to_drop[drop_key] = (kept_label, drop_head, reason)
+
+    if not to_drop:
+        print(f"[qc-llm] reviewed {len(items)} stories; 0 semantic dupes flagged", file=sys.stderr)
+        return
+
+    drops_by_tab = {}
+    for (tab, idx), info in to_drop.items():
+        drops_by_tab.setdefault(tab, []).append((idx, info))
+    for tab, drop_list in drops_by_tab.items():
+        idxes = {i for i, _ in drop_list}
+        c = output_dict.get(tab, {})
+        sts = c.get('stories', []) or []
+        for i, info in drop_list:
+            kept, head, reason = info
+            print(f"[qc-llm] drop {tab}: '{head[:55]}' "
+                  f"(LLM: same as {kept} — {reason})", file=sys.stderr)
+        c['stories'] = [s for i, s in enumerate(sts) if i not in idxes]
+
+_qc_llm_semantic_dedup(output)
 
 # ---- Preserve user-managed tabs (freespeech, submit) ----
 for manual_tab in ('freespeech', 'submit'):
