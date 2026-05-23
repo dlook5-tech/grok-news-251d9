@@ -145,7 +145,7 @@ Each item:
 {\"handle\":\"username\",\"url\":\"https://x.com/user/status/<id>\",\"headline\":\"neutral one-line summary\",\"body\":\"actual post text\",\"engagement\":\"500K views\",\"views\":500000,\"honesty\":8,\"notes\":\"one-line plain-English honesty justification\"}
 URLs MUST be real X status URLs from posts on or after ${since}. Views = actual view count integer.
 
-HONESTY SCORING (REQUIRED on every item, 1-10 integer, restored 2026-05-23 — user mandate):
+HONESTY SCORING — score EVERY item you return, don't drop items because you can't decide a score (just pick the closest). Use 1-10 integer:
   10 = VERIFIED FACT only (court records, scoreboards, official stats, raw video of exactly what's claimed)
    9 = factual core with minor editorializing (news report + light framing)
    8 = analysis / commentary / institutional perspective (think tanks CSIS/Brookings/Heritage/RAND/AEI are NEVER 10 — max 8)
@@ -154,7 +154,9 @@ HONESTY SCORING (REQUIRED on every item, 1-10 integer, restored 2026-05-23 — u
    5 = demonstrably false statement
   ≤4 = serial misrepresentation, conspiracy without specifics
 Attribution: video/audio clip of person speaking = attribution VERIFIED (score what they said, not 'fabricated'). Transcript-only quotes have attribution uncertainty.
-'notes' field: one short plain-English line explaining the score (e.g. 'Reuters factual report with light framing' or 'Hot take, no specific facts'). REQUIRED."
+'notes' field: one short plain-English line explaining the score (e.g. 'Reuters factual report with light framing' or 'Hot take, no specific facts').
+
+⚠️ DON'T LET HONESTY FILTERING SHRINK YOUR RESULTS. Return the FULL number of items the tab asked for (e.g. top 8 highest-view world events). Score each one — even a 4/10 conspiracy post is valid output. The user wants ALL the top items WITH scores, not a curated subset of only the high-honesty ones."
     fi
     local user_prompt="$(prompt_for "$tab") Today is ${today}.
 Return ONLY a JSON ${return_what}, no markdown, no prose.
@@ -167,7 +169,7 @@ print(json.dumps({
     "model": "grok-4.3",
     "input": [{"role": "user", "content": sys.argv[1]}],
     "tools": [{"type": "x_search"}],
-    "max_output_tokens": 6000
+    "max_output_tokens": 8000
 }))
 ' "$user_prompt")
 
@@ -190,7 +192,7 @@ Each item:
 {\"handle\":\"username\",\"url\":\"https://x.com/user/status/<id>\",\"headline\":\"neutral one-line summary\",\"body\":\"actual post text\",\"engagement\":\"500K views\",\"views\":500000,\"honesty\":8,\"notes\":\"one-line plain-English honesty justification\"}
 URLs MUST be real X status URLs from posts on or after ${since}. Views = actual view count integer.
 
-HONESTY SCORING (REQUIRED, 1-10 integer): 10=verified fact only; 9=factual report with light framing; 8=analysis/commentary/think tanks (CSIS/Brookings/Heritage/RAND etc are max 8, never 10); 7=opinion/take; 6=specific misleading claim; 5=demonstrably false; ≤4=serial misrepresentation. Video/audio clip = attribution verified. notes = one short line."
+HONESTY SCORING (1-10 integer on every item): 10=verified fact only; 9=factual report with light framing; 8=analysis/commentary/think tanks (CSIS/Brookings/Heritage/RAND etc are max 8, never 10); 7=opinion/take; 6=specific misleading claim; 5=demonstrably false; ≤4=serial misrepresentation. Video/audio clip = attribution verified. notes = one short line. SCORE EVERY ITEM — don't drop low-honesty items, just give them a low score."
 
     local prompts=(
         "Top 10 highest-view X posts globally in the past 24 hours. Sort by raw view count. Today is ${today}. Return ONLY a JSON array, no markdown. ${schema}"
@@ -208,7 +210,7 @@ print(json.dumps({
     "model": "grok-4.3",
     "input": [{"role": "user", "content": sys.argv[1]}],
     "tools": [{"type": "x_search"}],
-    "max_output_tokens": 4000
+    "max_output_tokens": 6000
 }))
 ' "$p")
 
