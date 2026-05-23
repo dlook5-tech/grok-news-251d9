@@ -88,6 +88,17 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-020 — Honesty scores 1-10 on every news story + perspective. Restored 2026-05-23.
+**Date:** 2026-05-23 evening
+**User said:** "Make sure you include honesty scores. We've had that for well over a month, and all of a sudden it's disappeared. I think that disappeared when you did Restretto."
+**Root cause:** The Ristretto pipeline swap (commit 6ed5a87) stripped the honesty rubric from update.sh's Grok prompts. Grok stopped returning a `honesty` field. Frontend renders honesty only when `s.honesty` exists, so the score footnote silently went blank. The pre-Ristretto rubric was in update.sh from commit 47cd960 era — restored from `git show 41fbf89:update.sh`.
+**Enforcement:**
+- `update.sh` news-tab schema now requires `"honesty": <1-10 integer>` + `"notes": "<one-line plain-English justification>"` on every item.
+- Rubric in the prompt: 10=verified fact only; 9=factual report with light framing; 8=analysis/commentary/think tanks (CSIS, Brookings, Heritage, RAND, AEI etc. NEVER 10, max 8); 7=opinion/take; 6=specific misleading claim; 5=demonstrably false; ≤4=serial misrep. Video/audio of person speaking = attribution verified.
+- Both the news-tab schema (`if/elif/else` branch) and the `call_grok_top_multi` schema carry the rubric.
+- Stage 2 `find_perspectives` already requests honesty per perspective.
+- Frontend `renderAutoEmbedBlock` renders the Honesty footnote card at the bottom of the expanded body when `s.honesty` is set and the tab isn't entertainment-only (`NO_HONESTY_TABS`).
+
 ## M-019 — Perspective search drills into REPLIES/QTs of the source tweet, not the whole platform. Tiered view minimums.
 **Date:** 2026-05-23 evening
 **User said:** "Are you sure we're searching that correctly? Not just stories, but someone who's taken a story and we retweeted it with a negative comment? ... I want it to always be clean and objective by number of views. Maybe lower the perspective below 5K if you don't have any Democrat contrasting view, as long as it's not some Yahoo."

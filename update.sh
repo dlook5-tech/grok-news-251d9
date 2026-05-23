@@ -142,8 +142,19 @@ URLs MUST be real X status URLs. IF the post is a reply or quote-tweet, POPULATE
         schema="STRICT RECENCY: use x_search operator since:${since}. Reject anything before ${since}.
 
 Each item:
-{\"handle\":\"username\",\"url\":\"https://x.com/user/status/<id>\",\"headline\":\"neutral one-line summary\",\"body\":\"actual post text\",\"engagement\":\"500K views\",\"views\":500000}
-URLs MUST be real X status URLs from posts on or after ${since}. Views = actual view count integer."
+{\"handle\":\"username\",\"url\":\"https://x.com/user/status/<id>\",\"headline\":\"neutral one-line summary\",\"body\":\"actual post text\",\"engagement\":\"500K views\",\"views\":500000,\"honesty\":8,\"notes\":\"one-line plain-English honesty justification\"}
+URLs MUST be real X status URLs from posts on or after ${since}. Views = actual view count integer.
+
+HONESTY SCORING (REQUIRED on every item, 1-10 integer, restored 2026-05-23 — user mandate):
+  10 = VERIFIED FACT only (court records, scoreboards, official stats, raw video of exactly what's claimed)
+   9 = factual core with minor editorializing (news report + light framing)
+   8 = analysis / commentary / institutional perspective (think tanks CSIS/Brookings/Heritage/RAND/AEI are NEVER 10 — max 8)
+   7 = opinion / prediction / hot take ('I think X will happen')
+   6 = contains a specific misleading claim
+   5 = demonstrably false statement
+  ≤4 = serial misrepresentation, conspiracy without specifics
+Attribution: video/audio clip of person speaking = attribution VERIFIED (score what they said, not 'fabricated'). Transcript-only quotes have attribution uncertainty.
+'notes' field: one short plain-English line explaining the score (e.g. 'Reuters factual report with light framing' or 'Hot take, no specific facts'). REQUIRED."
     fi
     local user_prompt="$(prompt_for "$tab") Today is ${today}.
 Return ONLY a JSON ${return_what}, no markdown, no prose.
@@ -176,8 +187,10 @@ call_grok_top_multi() {
 
     local schema="STRICT RECENCY: use x_search since:${since}.
 Each item:
-{\"handle\":\"username\",\"url\":\"https://x.com/user/status/<id>\",\"headline\":\"neutral one-line summary\",\"body\":\"actual post text\",\"engagement\":\"500K views\",\"views\":500000}
-URLs MUST be real X status URLs from posts on or after ${since}. Views = actual view count integer."
+{\"handle\":\"username\",\"url\":\"https://x.com/user/status/<id>\",\"headline\":\"neutral one-line summary\",\"body\":\"actual post text\",\"engagement\":\"500K views\",\"views\":500000,\"honesty\":8,\"notes\":\"one-line plain-English honesty justification\"}
+URLs MUST be real X status URLs from posts on or after ${since}. Views = actual view count integer.
+
+HONESTY SCORING (REQUIRED, 1-10 integer): 10=verified fact only; 9=factual report with light framing; 8=analysis/commentary/think tanks (CSIS/Brookings/Heritage/RAND etc are max 8, never 10); 7=opinion/take; 6=specific misleading claim; 5=demonstrably false; ≤4=serial misrepresentation. Video/audio clip = attribution verified. notes = one short line."
 
     local prompts=(
         "Top 10 highest-view X posts globally in the past 24 hours. Sort by raw view count. Today is ${today}. Return ONLY a JSON array, no markdown. ${schema}"
