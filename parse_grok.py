@@ -383,6 +383,48 @@ if promoted:
     output['world']['stories'] = world_stories + promoted
 
 
+# ---- CROSS-TAB DEDUP (World vs USA) ----
+# User mandate 2026-05-22: "dont we have a QC check to stop duplicate stories"
+# A story (by URL) shipping in BOTH World AND USA is a bug. Decide per story:
+#   - International signal → keep in World, drop from USA
+#   - No international signal → keep in USA, drop from World
+_w = output.get('world', {}).get('stories', []) or []
+_u = output.get('usa', {}).get('stories', []) or []
+
+def _all_urls(s):
+    urls = set()
+    if s.get('url'): urls.add(s['url'])
+    for p in s.get('perspectives', []) or []:
+        if isinstance(p, dict) and p.get('url'):
+            urls.add(p['url'])
+    return urls
+
+_w_url_to_story = {}
+for s in _w:
+    for u in _all_urls(s):
+        _w_url_to_story[u] = s
+
+_drop_from_world = set()
+_drop_from_usa = set()
+for s in _u:
+    for u in _all_urls(s):
+        if u in _w_url_to_story:
+            world_s = _w_url_to_story[u]
+            # Decide: keep international in World, US-only in USA
+            if _has_intl_signal(s):
+                _drop_from_usa.add(s.get('url',''))
+                print(f"[xtab-dedup] keep in WORLD, drop from USA: '{(s.get('headline','') or '?')[:60]}'", file=sys.stderr)
+            else:
+                _drop_from_world.add(world_s.get('url',''))
+                print(f"[xtab-dedup] keep in USA, drop from WORLD: '{(world_s.get('headline','') or '?')[:60]}'", file=sys.stderr)
+            break
+
+if _drop_from_world:
+    output['world']['stories'] = [s for s in _w if s.get('url','') not in _drop_from_world]
+if _drop_from_usa:
+    output['usa']['stories'] = [s for s in _u if s.get('url','') not in _drop_from_usa]
+
+
 # ---- HARD 24h AGE CAP — user mandate 2026-05-22: "nothing should be a day
 # ago, 24 hours only." Drop any story (and any perspective) whose URL is
 # older than 24h. Belt-and-suspenders: applies to every tab after all
