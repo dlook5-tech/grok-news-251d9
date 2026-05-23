@@ -259,4 +259,7 @@ PY
 echo "Running parse_grok.py..."
 python3 parse_grok.py < /tmp/grok_raw.json
 
+echo "Deploying to Netlify..."
+bash deploy.sh
+
 echo "=== Update Complete $(date) ==="
