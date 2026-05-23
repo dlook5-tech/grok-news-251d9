@@ -88,6 +88,17 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-019 — Perspective search drills into REPLIES/QTs of the source tweet, not the whole platform. Tiered view minimums.
+**Date:** 2026-05-23 evening
+**User said:** "Are you sure we're searching that correctly? Not just stories, but someone who's taken a story and we retweeted it with a negative comment? ... I want it to always be clean and objective by number of views. Maybe lower the perspective below 5K if you don't have any Democrat contrasting view, as long as it's not some Yahoo."
+**Root cause:** Initial Stage 2 prompt asked Grok to find "reaction tweets ABOUT this story" anywhere on the platform. That surfaces the loudest right-leaning accounts who post their own takes — but misses the contrarian replies and quote-tweets sitting directly underneath the source tweet, which is where the political diversity actually lives. Cron #7 result: 8 of 9 perspectives were Conservative, 0 Democrat takes on USA stories.
+**Enforcement:**
+- `parse_grok.py::find_perspectives` prompt now restricts search to "REPLIES and QUOTE-TWEETS of the source URL" — explicitly NOT the whole platform.
+- Per-label view minimums (`_PERSPECTIVE_MIN_VIEWS`): Conservative 5K, Democrat 1K, Independent 1K. Lower Democrat floor compensates for typical lower-engagement contrarian replies on right-favoring stories.
+- Quality floor: account must have ≥1K followers + real bio + substantive comment (no "lol"/emoji/spam).
+- Self-quote guard: perspective URL can't equal `story_url`.
+- NO curated handle list — search is open and view-driven (user mandate: "I don't want a rat's nest of looking for specific people").
+
 ## M-018 — Stage 2 perspectives: Conservative + Democrat for every World/USA story. Independent optional. NEVER block a story.
 **Date:** 2026-05-23 evening
 **User said:** "To find the three perspectives once the stories are chosen, if they have over 50,000 views, I have to believe you're going to be able to find the top-viewing stories from each political perspective: Conservative, Independent, and Democrat. Definitely no failure mode here. A bigger story should not be scrapped if you can't find all three perspectives. I would even go down to: if you can only find one perspective, that's okay."

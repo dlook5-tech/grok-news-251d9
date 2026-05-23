@@ -85,6 +85,12 @@ check  "M-018c:thread-pool-parallel"   parse_grok.py  "ThreadPoolExecutor"      
 check  "M-018d:exception-caught"       parse_grok.py  "stage2-warn"                     exists
 check  "M-018e:clears-stale-persp"     parse_grok.py  "_s.pop\('perspectives'"          exists
 
+# M-019 — Replies/QT-of-source search + tiered view floors
+check  "M-019a:replies-and-QTs-search" parse_grok.py  "REPLIES and QUOTE-TWEETS of"     exists
+check  "M-019b:tiered-view-floors"     parse_grok.py  "_PERSPECTIVE_MIN_VIEWS"          exists
+check  "M-019c:no-curated-handles"     parse_grok.py  "curated handle"                  absent
+check  "M-019d:self-quote-guard"       parse_grok.py  "url == story_url"                exists
+
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists
 check  "M-002b:report-in-workflow"       .github/workflows/cron.yml  "cron_report\.md"                               exists

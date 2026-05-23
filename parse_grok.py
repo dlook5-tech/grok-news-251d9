@@ -171,33 +171,59 @@ def fetch_parent(url):
     }
 
 
+_PERSPECTIVE_MIN_VIEWS = {
+    'Conservative': 5_000,
+    'Democrat': 1_000,      # Often muted on right-favoring stories — go lower so a substantive Dem reply isn't dropped
+    'Independent': 1_000,
+}
+_PERSPECTIVE_MIN_FOLLOWERS = 1_000  # Quality floor: no "Yahoo accounts" per user
+
 def find_perspectives(story_url, story_headline):
-    """STAGE 2: For a chosen World/USA story, find reaction tweets on X:
-      - Conservative (right-leaning commentator's take)
-      - Democrat    (left-leaning commentator's take)
-      - Independent (ONLY if a genuinely non-partisan or unique take exists)
-    User mandate (M-018): never block the story over missing perspectives —
-    0, 1, 2, or 3 are all fine. Always returns a list (possibly empty).
+    """STAGE 2: For a chosen World/USA story, search the REPLIES and
+    QUOTE-TWEETS of the original story tweet itself, find:
+      - Conservative (right-leaning reply/QT)
+      - Democrat    (left-leaning reply/QT — view floor lowered to 1K)
+      - Independent (ONLY if a genuinely non-partisan take exists)
+
+    User mandate (refined 2026-05-23 eve): "I want it to always be clean
+    and objective by number of views. Maybe lower the perspective below
+    5K if you don't have any Democrat contrasting view, as long as it's
+    not some Yahoo." Don't look at the whole platform for "reactions";
+    drill into the replies/QTs of the SOURCE tweet — that's where the
+    political diversity actually lives. For any 50K+ view story there
+    are usually dozens of substantive contrarian QTs.
     """
     if not story_url or '/status/' not in story_url:
         return []
     prompt = (
-        f"For the news event at {story_url} (headline: {story_headline!r}), "
-        f"find the highest-view reaction posts on X with these political angles. "
-        f"Use x_search to find tweets ABOUT this specific story from the last 24h.\n\n"
-        f"Required slots:\n"
-        f"  - Conservative — right-leaning / MAGA / Republican-aligned commentator\n"
-        f"  - Democrat — left-leaning / progressive / Democrat-aligned commentator\n"
-        f"\nOptional slot:\n"
-        f"  - Independent — ONLY if there is a genuinely non-partisan or unusual "
-        f"take that doesn't slot into Conservative or Democrat. Otherwise OMIT. "
-        f"Do NOT manufacture an Independent take from a weak source.\n\n"
-        f"Constraints:\n"
-        f"  - Each reaction must be ABOUT this story, posted in the last 24 hours.\n"
-        f"  - Minimum 5,000 views per reaction.\n"
-        f"  - All URLs must be real X status URLs you found via x_search. NEVER fabricate.\n"
-        f"  - If you can only find 1 perspective (or 0), return what you found and stop. "
-        f"Do NOT force matches. Missing perspectives are acceptable.\n\n"
+        f"For the X post at {story_url} (headline: {story_headline!r}), find the "
+        f"highest-view REPLIES and QUOTE-TWEETS of THIS post that take a clear "
+        f"political angle.\n\n"
+        f"WHERE TO LOOK (this is the only place to look):\n"
+        f"  - Direct replies to the URL above\n"
+        f"  - Quote-tweets that share the URL above with the user's own commentary\n"
+        f"  - NOT generic political posts unrelated to this specific story\n"
+        f"  - NOT the original post itself or anything from the same author\n\n"
+        f"SLOTS (return what you find — missing slots are fine):\n"
+        f"  - Conservative: right-leaning / MAGA / Republican-aligned reply or QT.\n"
+        f"  - Democrat: left-leaning / progressive / Democrat-aligned reply or QT.\n"
+        f"  - Independent: ONLY include if there's a genuinely non-partisan or unusual "
+        f"take that doesn't slot into Conservative or Democrat. Otherwise OMIT this slot — "
+        f"do not manufacture one.\n\n"
+        f"VIEW MINIMUMS (tiered for fairness — left-leaning replies on right-favoring "
+        f"stories often get lower engagement but can still be substantive):\n"
+        f"  - Conservative reaction: minimum 5,000 views.\n"
+        f"  - Democrat reaction: minimum 1,000 views.\n"
+        f"  - Independent reaction: minimum 1,000 views.\n\n"
+        f"QUALITY (anti-spam / anti-Yahoo): each reply/QT account must have at least "
+        f"1,000 followers, a real bio, and the reply itself must be SUBSTANTIVE — no "
+        f"one-word reactions ('lol', 'true', emoji), no spam, no copy-paste talking "
+        f"points. Real commentary only.\n\n"
+        f"RULES:\n"
+        f"  - All URLs must be real X status URLs you actually found via x_search. NEVER fabricate.\n"
+        f"  - Each perspective's URL must be DIFFERENT from {story_url} (no self-quotes).\n"
+        f"  - Posted in the last 24 hours.\n"
+        f"  - If you can only find 0 or 1 perspective, return what you found. Don't force matches.\n\n"
         f"Return ONLY a JSON object:\n"
         f'{{"perspectives":[\n'
         f'  {{"label":"Conservative","handle":"@user","url":"https://x.com/.../status/<id>",'
@@ -219,15 +245,16 @@ def find_perspectives(story_url, story_headline):
         if not isinstance(p, dict): continue
         url = (p.get('url') or '').strip()
         if '/status/' not in url: continue
-        if url in seen_urls: continue  # dedup
+        if url == story_url: continue  # never let the source tweet ship as its own perspective
+        if url in seen_urls: continue
         label = (p.get('label') or '').strip()
         if label not in ('Conservative', 'Democrat', 'Independent'): continue
-        # Coerce views to int, drop if too small
         try:
             views = int(p.get('views') or 0)
         except (TypeError, ValueError):
             views = 0
-        if views < 5_000:
+        # Tiered floor — per-label minimums (M-019)
+        if views < _PERSPECTIVE_MIN_VIEWS.get(label, 5_000):
             continue
         seen_urls.add(url)
         valid.append({
