@@ -189,6 +189,48 @@ def fetch_top_qt(url):
     }
 
 
+_GENERIC_HEADLINE_PATTERNS = [
+    r'^shares?\s+(a\s+)?(video|link|image|photo|tweet)\b',
+    r'^posts?\s+(a\s+)?(video|image|photo|link)\b',
+    r'^short\s+(reply|affirmative\s+reply|comment)\b',
+    r'^replies\s+(positively|affirmatively|with)\b',
+    r'^shares?\s+(an?\s+)?(image|gif)\b',
+    r'^posts?\s+rocket\s+emoji',
+    r'^[?\s\.]*$',
+    r'^untitled$',
+]
+_GENERIC_HEADLINE_RE = re.compile('|'.join(_GENERIC_HEADLINE_PATTERNS), re.IGNORECASE)
+
+
+def _is_generic_headline(h):
+    if not h or not h.strip(): return True
+    return bool(_GENERIC_HEADLINE_RE.match(h.strip()))
+
+
+def fetch_headline_for_post(url, body):
+    """For a post URL whose headline is generic ('Shares video link', etc.), fire
+    an xAI call to describe what's actually in the post (the video subject, the
+    linked content, etc.). Returns a 1-line headline or None."""
+    if not url or '/status/' not in url:
+        return None
+    prompt = (
+        f"For the X post at {url}: write ONE newspaper-style headline (under 100 chars) "
+        f"that describes WHAT IS IN THE POST — if it's a video, describe what the video shows; "
+        f"if it's a link, describe what the linked content is about; if it's an image, describe the image; "
+        f"if it's a reply or QT, describe what's being responded to and the response take. "
+        f"The post text is: {body[:200]!r}\n"
+        f"Return ONLY a JSON object: {{\"headline\":\"the descriptive headline\"}}. "
+        f"NEVER write 'Shares video link', 'Posts photo', 'Short reply', or anything generic. "
+        f"If you genuinely can't determine what the content is, return {{}}."
+    )
+    result = _xai_call(prompt, timeout=30, max_tokens=400)
+    if not result or not result.get('headline'):
+        return None
+    h = (result['headline'] or '').strip()
+    if _is_generic_headline(h): return None
+    return h[:120]
+
+
 # ---- body→text rename for eXpressO frontend compat ----
 def _body_to_text(s):
     out = dict(s)
@@ -278,6 +320,17 @@ for tab in tabs:
     # --- DELTA #3: ELON ---
     if tab == 'elon':
         elon_kept = [c for c in cleaned if not _is_elon_promo(c)]
+        # PYTHON ENFORCEMENT: rewrite generic headlines ("Shares video link",
+        # "Short affirmative reply", etc.) by fetching what's actually in the
+        # post. User has flagged this bug 3+ times — prompt-only fix wasn't
+        # holding; now enforced in Python.
+        for s in elon_kept:
+            h = (s.get('headline') or '').strip()
+            if _is_generic_headline(h):
+                better = fetch_headline_for_post(s.get('url',''), s.get('body',''))
+                if better:
+                    print(f"[elon-headline] rewrote '{h[:40]}' → '{better[:60]}'", file=sys.stderr)
+                    s['headline'] = better
         output[tab] = {'stories': [_body_to_text(s) for s in elon_kept],
                        '_candidates': tab_candidates}
         print(f"[elon] {len(elon_kept)} posts (no top_n cap, promo filtered)", file=sys.stderr)
