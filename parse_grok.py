@@ -238,6 +238,39 @@ if promoted:
     output['world']['stories'] = world_stories + promoted
 
 
+# ---- HARD 24h AGE CAP — user mandate 2026-05-22: "nothing should be a day
+# ago, 24 hours only." Drop any story (and any perspective) whose URL is
+# older than 24h. Belt-and-suspenders: applies to every tab after all
+# curation/promotion has run. ----
+HARD_AGE_CAP_H = 24.0
+for _tab, _container in list(output.items()):
+    if not isinstance(_container, dict): continue
+    _stories = _container.get('stories', [])
+    if not isinstance(_stories, list): continue
+    _kept = []
+    for _s in _stories:
+        # For perspective stories, use freshest perspective URL; else top-level url
+        urls = [_s.get('url', '')]
+        for _p in _s.get('perspectives', []) or []:
+            if isinstance(_p, dict) and _p.get('url'):
+                urls.append(_p['url'])
+        ages = []
+        for u in urls:
+            m = re.search(r'/status/(\d+)', u or '')
+            if not m: continue
+            try:
+                ts = (int(m.group(1)) >> 22) + 1288834974657
+                ages.append((datetime.datetime.now() - datetime.datetime.fromtimestamp(ts/1000)).total_seconds() / 3600)
+            except: pass
+        if not ages:
+            _kept.append(_s)  # no URL age we can read — keep
+            continue
+        if min(ages) > HARD_AGE_CAP_H:
+            print(f"[24h-cap] drop {_tab}: '{(_s.get('headline','') or '?')[:50]}' (oldest URL {min(ages):.1f}h)", file=sys.stderr)
+            continue
+        _kept.append(_s)
+    _container['stories'] = _kept
+
 # ---- Preserve user-managed tabs (freespeech, submit) ----
 for manual_tab in ('freespeech', 'submit'):
     if manual_tab in existing_full and isinstance(existing_full[manual_tab], dict):
