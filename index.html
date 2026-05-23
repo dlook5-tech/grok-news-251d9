@@ -627,6 +627,11 @@ function renderAutoEmbedBlock(s) {
   // Body content (loaded on click via toggleEmbed):
   var inner = '';
   if (hasXPost) {
+    // 2026-05-23 user mandate: "the arrow points down, but nothing happens" — make
+    // sure tapping a block ALWAYS leaves the user with a way to view the post even
+    // if the X embed silently fails to render. This direct link is visible
+    // immediately on expand, before the embed loads (or never if widgets break).
+    inner += '<div style="margin-top:8px;"><a href="' + url + '" target="_blank" rel="noopener" style="display:inline-block;padding:8px 14px;background:#1a8cd8;color:#fff;text-decoration:none;border-radius:6px;font-size:0.88rem;font-weight:600;">Open on X &rarr;</a></div>';
     inner += '<div id="' + embedId + '" class="tweet-embed-container" style="display:none;margin-top:10px;"></div>';
   } else if (ytInfo) {
     // YouTube: inline iframe embed. playsinline=1 keeps it from hijacking to native player on iOS.
