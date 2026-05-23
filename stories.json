@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-22T22:18:10Z",
+  "lastUpdated": "2026-05-23T00:32:10Z",
   "world": {
     "stories": [],
     "earlier": [
@@ -69,6 +69,50 @@
   "elon": {
     "stories": [
       {
+        "headline": "Congratulates SpaceX team on first Starship V3 launch and landing",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057974830469677092",
+        "body": "Congratulations @SpaceX team on an epic first Starship V3 launch & landing!. You scored a goal for humanity.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Elon's opinion/commentary on SpaceX event - 'epic' and 'scored a goal for humanity' are subjective",
+        "posted": "2026-05-23T00:32:10Z",
+        "post_ts": "2026-05-23T00:00:09Z",
+        "views": 509878,
+        "views_at_save": 509878,
+        "age_at_save_hours": 0.53
+      },
+      {
+        "headline": "Announces Starship launch attempt in 5 minutes",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057950715272675398",
+        "body": "Starship launch attempt in 5 minutes.",
+        "engagement": "",
+        "honesty": "9/10",
+        "notes": "Factual announcement of imminent launch with minor temporal claim ('5 minutes')",
+        "posted": "2026-05-23T00:32:11Z",
+        "post_ts": "2026-05-22T22:24:20Z",
+        "views": 304146,
+        "views_at_save": 304146,
+        "age_at_save_hours": 2.13
+      },
+      {
+        "headline": "Requests critical feedback on Grok Build for web dev",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057933447541219630",
+        "body": "Critical feedback is much appreciated.",
+        "engagement": "",
+        "honesty": "7/10",
+        "notes": "Opinion/request statement - not factual claim",
+        "posted": "2026-05-23T00:32:11Z",
+        "post_ts": "2026-05-22T21:15:43Z",
+        "views": 8629590,
+        "views_at_save": 8629590,
+        "age_at_save_hours": 3.27
+      }
+    ],
+    "earlier": [
+      {
         "headline": "Replies about ironing out issues with Grok Build",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057939049701097489",
@@ -98,20 +142,6 @@
         "views": 7753,
         "views_at_save": 7753,
         "age_at_save_hours": 0.76
-      },
-      {
-        "headline": "Quotes xAI team post on Grok Build beta and welcomes critical feedback",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057933447541219630",
-        "body": "Critical feedback is much appreciated.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "General statement of openness - opinion/stance, not verifiable fact",
-        "posted": "2026-05-22T22:18:10Z",
-        "post_ts": "2026-05-22T21:15:43Z",
-        "views": 3153522,
-        "views_at_save": 3153522,
-        "age_at_save_hours": 1.04
       },
       {
         "headline": "Replies True to conversation",
@@ -170,20 +200,6 @@
         "age_at_save_hours": 1.44
       },
       {
-        "headline": "Comments on finding it funny to call Homolander fake & gay",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057922040561094750",
-        "body": "I just it\u2019s really funny to call Homolander fake & gay.. Cracks me up everytime \ud83e\udd23\ud83e\udd23.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Personal opinion about humor - subjective reaction, not factual claim",
-        "posted": "2026-05-22T22:18:11Z",
-        "post_ts": "2026-05-22T20:30:23Z",
-        "views": 153718,
-        "views_at_save": 153718,
-        "age_at_save_hours": 1.8
-      },
-      {
         "headline": "Replies Exactly! to conversation",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057921353756348636",
@@ -196,9 +212,7 @@
         "views": 8062,
         "views_at_save": 8062,
         "age_at_save_hours": 1.84
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Jokes about giving blue check for driving traffic to X",
         "handle": "@elonmusk",
@@ -240,122 +254,43 @@
         "views": 39176,
         "views_at_save": 39176,
         "age_at_save_hours": 5.94
-      },
-      {
-        "headline": "Jokes about using 5G to control brain waves",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057809626632999343",
-        "body": "I used 5G to control their brain waves \ud83d\ude02.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Sarcastic joke with emoji - no factual content",
-        "posted": "2026-05-22T17:09:22Z",
-        "post_ts": "2026-05-22T13:03:41Z",
-        "views": 421646,
-        "parent_url": "https://x.com/elonmusk/status/2057804511696073015",
-        "parent_handle": "@elonmusk",
-        "views_at_save": 421646,
-        "age_at_save_hours": 4.09
-      },
-      {
-        "headline": "Agrees with a previous statement",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057808978122313913",
-        "body": "I agree.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Opinion agreement without factual content",
-        "posted": "2026-05-22T17:09:22Z",
-        "post_ts": "2026-05-22T13:01:07Z",
-        "views": 135796,
-        "parent_url": "https://x.com/elonmusk/status/2057803087121629633",
-        "parent_handle": "@elonmusk",
-        "views_at_save": 135796,
-        "age_at_save_hours": 4.14
-      },
-      {
-        "headline": "Praises Western civilization as amazing",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057807177012613561",
-        "body": "Western civilization is amazing.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Opinion - subjective value judgment, not verifiable fact",
-        "posted": "2026-05-22T13:01:20Z",
-        "post_ts": "2026-05-22T12:53:57Z",
-        "views": 157813,
-        "parent_url": "https://x.com/KonstantinKisin/status/2057803521953616036",
-        "parent_handle": "@KonstantinKisin",
-        "parent_text": "What if the west isn't the villain they told you it was? We\u2019ve spent years accepting accusations about racism, intolerance, and slavery without challenging the bigger historical reality: The societies most condemned today are also the ones that led the world in ending slavery, ex",
-        "views_at_save": 157813,
-        "age_at_save_hours": 0.12
-      },
-      {
-        "headline": "Compares Starmer's reactions to George Floyd vs Henry Nowak",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057764883773407535",
-        "body": "In both cases, police were uncaring, but only in one case does Starmer bend the knee.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Opinion/political commentary - 'bend the knee' is editorializing without specific verified facts",
-        "posted": "2026-05-22T13:01:20Z",
-        "post_ts": "2026-05-22T10:05:54Z",
-        "views": 7913360,
-        "parent_url": "https://x.com/ksorbs/status/2057642346049593666",
-        "parent_handle": "@ksorbs",
-        "parent_text": "FYI, this is kier Starmer, the prime minister of the UK, kneeling for fentanyl addict George Floyd, who died of an overdose. He hasn\u2019t said a word about Henry Nowak, the British kid who was stabbed to death by an Indian man in his country. Henry drowned in his own blood, and Kier",
-        "views_at_save": 7913360,
-        "age_at_save_hours": 2.92
-      },
-      {
-        "headline": "Comments on Kripke's Homelander ending as groveling apology",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057749265615609905",
-        "body": "Kripke probably got flack from his wife\u2019s bf for Homelander being used in based memes and had to write that ending as a groveling apology.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Speculation/opinion - unverified claim about motivations ('probably got flack', 'groveling apology')",
-        "posted": "2026-05-22T13:01:20Z",
-        "post_ts": "2026-05-22T09:03:50Z",
-        "views": 344607,
-        "views_at_save": 344607,
-        "age_at_save_hours": 3.96
-      },
-      {
-        "headline": "Comments on murder case involving Nowak and Digwa",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057625863038894318",
-        "body": "\u201cNowak attempted to flee the scene, climbing over a fence while Digwa was still stabbing him\u201d\n\nThis is a clear case of murder.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Opinion conclusion ('clear case of murder') based on quoted facts",
-        "posted": "2026-05-22T06:28:04Z",
-        "post_ts": "2026-05-22T00:53:29Z",
-        "views": 172914,
-        "views_at_save": 172914,
-        "age_at_save_hours": 5.58
-      },
-      {
-        "headline": "Shares daily Grok Build bug fixes update",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057625354592792807",
-        "body": "Daily Grok Build bug fixes.",
-        "engagement": "",
-        "honesty": "9/10",
-        "notes": "Verifiable company operational update",
-        "posted": "2026-05-22T06:28:04Z",
-        "post_ts": "2026-05-22T00:51:28Z",
-        "views": 7783373,
-        "parent_url": "https://x.com/skcd42/status/2057620377313095842",
-        "parent_handle": "@skcd42",
-        "parent_text": "Bug fixes shipping to Grok Build (release notes will be available in the TUI) 0.1.214\n\n- Rolling out X search and a much faster web-search (we plan to complete this by EOD)\n- Windows rendering bugs fix on powershell\n- Fix arrow-up keybinding in modals\n- Fix non-vim mode keybindin",
-        "views_at_save": 7783373,
-        "age_at_save_hours": 5.61
       }
     ]
   },
   "top": {
     "stories": [
+      {
+        "headline": "Elon Musk on history",
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057730335413063917",
+        "body": "Elon Musk agrees reading how humans from the past thought shapes worldview more than anything else.",
+        "engagement": "56K likes, 5.5K reposts",
+        "honesty": "7/10",
+        "notes": "Pure opinion agreement on a quoted post.",
+        "posted": "2026-05-23T00:32:11Z",
+        "post_ts": "2026-05-22T07:48:37Z",
+        "views": 25018349,
+        "views_at_save": 25018349,
+        "age_at_save_hours": 16.73
+      },
+      {
+        "headline": "GTA VI release date",
+        "handle": "@TheGameVerse",
+        "url": "https://x.com/TheGameVerse/status/2057859074927284707",
+        "body": "Baby wake up, XBOX just dropped a GTA 6 post.",
+        "engagement": "198K likes, 16K reposts",
+        "honesty": "9/10",
+        "notes": "Verified Xbox post existence but characterization 'baby wake up' and 'just dropped' are editorial framing",
+        "posted": "2026-05-23T00:32:11Z",
+        "post_ts": "2026-05-22T16:05:06Z",
+        "views": 22008359,
+        "views_at_save": 21928087,
+        "age_at_save_hours": 8.45,
+        "original_url": "https://x.com/XBOX/status/2057855279287476620",
+        "original_handle": "@XBOX",
+        "original_views": 21960438,
+        "qt_views": 47921
+      },
       {
         "headline": "Man City Season Recap Video",
         "handle": "@ManCity",
@@ -368,8 +303,10 @@
         "post_ts": "2026-05-22T13:33:55Z",
         "views": 12558020,
         "views_at_save": 12558020,
-        "age_at_save_hours": 8.74
-      },
+        "age_at_save_hours": 10.97
+      }
+    ],
+    "earlier": [
       {
         "headline": "GTA VI Wishlist Drops",
         "handle": "@GTA6Alerts",
@@ -399,9 +336,7 @@
         "posted": "2026-05-22T22:18:11Z",
         "post_ts": "2026-05-22T13:12:19Z",
         "views": 9877781
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Elon Musk on Starmer's double standard",
         "handle": "@MIPAGUY",
@@ -525,7 +460,20 @@
         "views": 1872247
       }
     ],
-    "_overflow": []
+    "_overflow": [
+      {
+        "headline": "Viral meme reaction",
+        "handle": "@chaos2x",
+        "url": "https://x.com/chaos2x/status/2057636474401788279",
+        "body": "User shares meme captioned 'white people when they make eye contact with a minority' with first-time reaction.",
+        "engagement": "141K likes, 8.9K reposts",
+        "honesty": "8/10",
+        "notes": "Humorous meme with no factual claims.",
+        "posted": "2026-05-23T00:32:11Z",
+        "post_ts": "2026-05-22T01:35:39Z",
+        "views": 3831030
+      }
+    ]
   },
   "business": {
     "stories": [],
@@ -634,6 +582,22 @@
   "sports": {
     "stories": [
       {
+        "handle": "stephenasmith",
+        "url": "https://x.com/stephenasmith/status/2057960374268305422",
+        "headline": "Stephen A. Smith shares new YouTube video link",
+        "body": "We can\u2019t ignore this Ladies and Gentleman\u2026YouTube OUT NOW: https://www.youtube.com/watch?si=rxbIpyrWH6G-RTKY&v=Kpoxn3zBN8M&feature=youtu.be",
+        "views": 27599,
+        "perspectives": []
+      },
+      {
+        "handle": "colincowherd",
+        "url": "https://x.com/colincowherd/status/2057980253213950028",
+        "headline": "F-16 fighter jet shoots down UFO over Michigan is a pretty bad ass headline",
+        "body": "\u201cF-16 fighter jet shoots down UFO over Michigan\u201d \u2026is a pretty bad ass headline.",
+        "views": 10171,
+        "perspectives": []
+      },
+      {
         "headline": "Rams extend Matthew Stafford",
         "handle": "@RedditCFB",
         "url": "https://x.com/RedditCFB/status/2057616747470234029",
@@ -653,7 +617,8 @@
         "perspectives": []
       }
     ],
-    "earlier": []
+    "earlier": [],
+    "_overflow": []
   },
   "pods": {
     "stories": [],
@@ -813,38 +778,6 @@
         "original_handle": "@PalmerLuckey",
         "original_views": 198239,
         "qt_views": 2063
-      },
-      {
-        "headline": "AI Math Superiority",
-        "handle": "@pmarca",
-        "url": "https://x.com/pmarca/status/2057227177368990174",
-        "body": "Sensible take: human brains aren't optimized for advanced math so AI surpassing us there follows Moravec's paradox pattern.",
-        "engagement": "863 likes, 32 reposts, 58 replies",
-        "honesty": "7/10",
-        "notes": "Opinion endorsing deep analysis, no false claims.",
-        "posted": "2026-05-21T21:04:31Z",
-        "post_ts": "2026-05-20T22:29:15Z",
-        "views": 235933,
-        "views_at_save": 235933,
-        "age_at_save_hours": 22.59
-      },
-      {
-        "headline": "Douglas Adams tech adoption",
-        "handle": "@austincampbell",
-        "url": "https://x.com/austincampbell/status/2057224607178834028",
-        "body": "Corollary: one of the most important things you can do in life is continue to try new things after 35.\n\nListen to new music. Use new technology. Learn new things.\n\nIf you let your brain begin to ossif",
-        "engagement": "993 likes, 79 reposts, 57 replies",
-        "honesty": "8/10",
-        "notes": "Insightful cultural observation via classic quote.",
-        "posted": "2026-05-21T01:01:34Z",
-        "post_ts": "2026-05-20T20:19:26Z",
-        "views": 103145,
-        "views_at_save": 103145,
-        "age_at_save_hours": 7.31,
-        "original_url": "https://x.com/pmarca/status/2057194510560694697",
-        "original_handle": "@pmarca",
-        "original_views": 101257,
-        "qt_views": 1888
       }
     ],
     "_overflow": []
@@ -909,62 +842,7 @@
         "perspectives": []
       }
     ],
-    "earlier": [
-      {
-        "headline": "Latto Welcomes First Baby",
-        "handle": "@cameranaj",
-        "url": "https://x.com/cameranaj/status/2057242511991881860",
-        "body": "bird + boy mom.. she\u2019s boutta be insufferable.",
-        "engagement": "45K likes, 2K reposts, 568 replies",
-        "honesty": "10/10",
-        "notes": "Fact",
-        "posted": "2026-05-21T17:04:02Z",
-        "post_ts": "2026-05-20T22:46:58Z",
-        "views": 9319495,
-        "views_at_save": 9319495,
-        "age_at_save_hours": 29.44,
-        "original_url": "https://x.com/PopCrave/status/2057231635901194381",
-        "original_handle": "@PopCrave",
-        "original_views": 6417466,
-        "qt_views": 2902029
-      },
-      {
-        "headline": "Rami Malek Emotional Cannes Moment",
-        "handle": "@cj_prin",
-        "url": "https://x.com/cj_prin/status/2057238297429098543",
-        "body": "It's funnier if you read \"gay\" as pejorative",
-        "engagement": "2.5K likes, 202 reposts, 85 replies",
-        "honesty": "7/10",
-        "notes": "Joke/commentary on interpretation - not factual claim.",
-        "posted": "2026-05-21T03:23:34Z",
-        "post_ts": "2026-05-20T22:38:38Z",
-        "views": 1719477,
-        "views_at_save": 1719477,
-        "age_at_save_hours": 23.51,
-        "original_url": "https://x.com/Variety/status/2057229541006061894",
-        "original_handle": "@Variety",
-        "original_views": 958535,
-        "qt_views": 760942
-      },
-      {
-        "headline": "Ashley St. Clair's Shocking Elon Claim",
-        "handle": "@donwinslow",
-        "url": "https://x.com/donwinslow/status/2057249315102626226",
-        "body": "This should be carefully examined and verified if true.",
-        "engagement": "3.7K likes, 897 reposts, 603 replies",
-        "honesty": "7/10",
-        "notes": "Opinion calling for verification - cautious commentary, not fact",
-        "posted": "2026-05-21T02:21:18Z",
-        "post_ts": "2026-05-20T23:31:10Z",
-        "views": 385049,
-        "views_at_save": 385049,
-        "age_at_save_hours": 16.47,
-        "original_url": "https://x.com/TMZ/status/2057242762026668218",
-        "original_handle": "@TMZ",
-        "original_views": 337328,
-        "qt_views": 47721
-      }
-    ],
+    "earlier": [],
     "_overflow": []
   },
   "recipe": {
@@ -1109,30 +987,13 @@
         "views": 10262,
         "views_at_save": 10262,
         "age_at_save_hours": 8.52
-      },
-      {
-        "headline": "Japan Develops Cat Lifespan Doubler",
-        "handle": "@eat5G",
-        "url": "https://x.com/eat5G/status/2057236053598044296",
-        "body": "Thank you Fofonia Labs\u2122",
-        "engagement": "4K likes, 559 reposts",
-        "honesty": "8/10",
-        "notes": "Reports specific research finding on cat longevity treatment.",
-        "posted": "2026-05-21T19:20:53Z",
-        "post_ts": "2026-05-20T19:56:43Z",
-        "views": 269788,
-        "views_at_save": 269788,
-        "age_at_save_hours": 23.66,
-        "original_url": "https://x.com/forallcurious/status/2057188793015210181",
-        "original_handle": "@forallcurious",
-        "original_views": 225046,
-        "qt_views": 44742
       }
     ],
     "_overflow": []
   },
   "local": {
-    "stories": [
+    "stories": [],
+    "earlier": [
       {
         "headline": "Newport Beach rolls out new open-air trolleys",
         "handle": "@KTLA",
@@ -1147,9 +1008,7 @@
         "views_at_save": 13639,
         "age_at_save_hours": 7.04,
         "perspectives": []
-      }
-    ],
-    "earlier": [
+      },
       {
         "headline": "Irvine Families Flee Over School Dress Code",
         "handle": "@MarktheRed21",
