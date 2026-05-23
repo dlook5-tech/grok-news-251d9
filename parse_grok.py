@@ -130,9 +130,19 @@ def _xai_call(prompt, timeout=45, max_tokens=800):
                     text += c['text']
         text = re.sub(r'^```[a-zA-Z]*\s*', '', text.strip())
         text = re.sub(r'\s*```\s*$', '', text)
-        m = re.search(r'\{[^{}]*\}', text, re.DOTALL)
-        if not m: return None
-        return json.loads(m.group(0))
+        # Find the first '{' and use json.JSONDecoder's raw_decode to consume
+        # exactly one well-formed JSON object — handles nested braces/arrays
+        # (e.g. {"perspectives":[{...},{...}]}). Old regex `\{[^{}]*\}` only
+        # matched FLAT objects and was extracting the FIRST inner object on
+        # nested responses, dropping the wrapper.
+        start = text.find('{')
+        if start < 0: return None
+        try:
+            obj, _ = json.JSONDecoder().raw_decode(text[start:])
+            return obj
+        except json.JSONDecodeError as e:
+            print(f"[xai-call] JSON decode failed: {e} — text head: {text[start:start+200]!r}", file=sys.stderr)
+            return None
     except Exception as e:
         print(f"[xai-call] failed: {e}", file=sys.stderr)
         return None
