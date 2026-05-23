@@ -87,6 +87,14 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-016 — NO host-label icons in block headers. NO "X ↗" / "YT ↗" badges. JUST the headline.
+**Date:** 2026-05-23
+**User said:** "I said get those fucking X with the arrow links to go to the X website. We've talked about that probably a thousand fucking times. I just want to be able to click the block and go to the site, so stop it."
+**Root cause:** I added an `openIcon` / `hostLabel` rendering ("X ↗", "YT ↗", "TikTok ↗", "IG ↗") to the block header thinking it would help users see where the link goes. The user has said repeatedly: no ornaments. The block itself is the link. Tap = open. Don't put a visual click target inside the block.
+**Enforcement:**
+- `index.html::renderAutoEmbedBlock` returns only `<a class="story story-link"><div class="story-header"><span>{body+postedTag}</span></div></a>` — no openIcon, no hostLabel, no arrows.
+- `verify_mandates.sh` checks the active function body for absence of `hostLabel`, `openIcon`, and `&#8599;` (the ↗ entity). Regression aborts cron + deploy.
+
 ## M-015 — World/USA tabs use the direct-link block when there are no perspectives.
 **Date:** 2026-05-23
 **User said:** "I noticed when I click on any block in the world tab, it still doesn't show me anything from X."

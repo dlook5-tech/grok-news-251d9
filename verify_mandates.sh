@@ -110,6 +110,12 @@ check  "M-014d:llm-dedup-called"         parse_grok.py    "_qc_llm_semantic_dedu
 check  "M-015a:world-uses-direct-link"   index.html       "renderAutoEmbedBlock\(s\)"                                exists
 check  "M-015b:world-perspective-guard"  index.html       "perspectives && s\.perspectives\.length"                  exists
 
+# M-016 — No host-label icons / arrows / badges in the block header. Just the headline.
+# Patterns look for actual code use (var X) not comment mentions.
+check_not_in_function  "M-016a:no-hostLabel-var"  index.html  renderAutoEmbedBlock  "var hostLabel"
+check_not_in_function  "M-016b:no-openIcon-var"   index.html  renderAutoEmbedBlock  "var openIcon"
+check_not_in_function  "M-016c:no-arrow-entity"   index.html  renderAutoEmbedBlock  "&#8599;"
+
 # M-012 — MANDATES.md exists and is referenced from CLAUDE.md
 check  "M-012a:mandates-file"            MANDATES.md      "^## M-001"                                                exists
 check  "M-012b:claude-md-points-here"    CLAUDE.md        "MANDATES\.md"                                             exists
