@@ -133,6 +133,22 @@ existing_full = load_existing_full()
 tabs = ['world', 'usa', 'business', 'top', 'msm', 'sports', 'elon', 'pods',
         'pg6', 'recipe', 'science', 'local', 'conspiracy', 'comedy', 'allin']
 
+
+def _candidate_dump(cleaned, n=8):
+    """Top N candidates by view count — diagnostic field per tab. Lets the user
+    see what Grok returned before any filtering (100K floor, curate, etc.)."""
+    sorted_c = sorted(cleaned, key=curation.story_views, reverse=True)[:n]
+    out = []
+    for c in sorted_c:
+        out.append({
+            'handle': (c.get('handle') or '').lstrip('@'),
+            'url': c.get('url'),
+            'headline': (c.get('headline') or c.get('body','') or '')[:100],
+            'views': curation.story_views(c),
+        })
+    return out
+
+
 for tab in tabs:
     items = data.get(tab, [])
     if not isinstance(items, list):
@@ -144,10 +160,14 @@ for tab in tabs:
             if item.get('handle') and item.get('url'):
                 cleaned.append(item)
 
+    # Always save the candidate dump for diagnostic visibility.
+    tab_candidates = _candidate_dump(cleaned)
+
     # --- DELTA #3: ELON ---
     if tab == 'elon':
         elon_kept = [c for c in cleaned if not _is_elon_promo(c)]
-        output[tab] = {'stories': [_body_to_text(s) for s in elon_kept]}
+        output[tab] = {'stories': [_body_to_text(s) for s in elon_kept],
+                       '_candidates': tab_candidates}
         print(f"[elon] {len(elon_kept)} posts (no top_n cap, promo filtered)", file=sys.stderr)
         continue
 
@@ -160,7 +180,8 @@ for tab in tabs:
         chosen = curation.apply_hold(held_100k, cleaned_100k, top_n=999,
                                      sort_key=curation.story_velocity)
         chosen = [s for s in chosen if curation.story_views(s) >= WU_VIEW_FLOOR]
-        output[tab] = {'stories': [_body_to_text(s) for s in chosen]}
+        output[tab] = {'stories': [_body_to_text(s) for s in chosen],
+                       '_candidates': tab_candidates}
         print(f"[{tab}] {len(chosen)} events cleared {WU_VIEW_FLOOR:,} view floor", file=sys.stderr)
         continue
 
@@ -186,12 +207,14 @@ for tab in tabs:
             if cow_post:
                 chosen.append(cow_post)
                 print("[sports] appended Cowherd at bottom", file=sys.stderr)
-        output[tab] = {'stories': [_body_to_text(s) for s in chosen]}
+        output[tab] = {'stories': [_body_to_text(s) for s in chosen],
+                       '_candidates': tab_candidates}
         continue
 
     # --- All other tabs: Ristretto verbatim ---
     chosen = curation.curate(tab, previous.get(tab, []), cleaned, top_n=3)
-    output[tab] = {'stories': [_body_to_text(s) for s in chosen]}
+    output[tab] = {'stories': [_body_to_text(s) for s in chosen],
+                   '_candidates': tab_candidates}
 
 
 # ---- DELTA #4: World←USA cross-promotion ----
