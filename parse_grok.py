@@ -592,6 +592,85 @@ for _tab, _container in list(output.items()):
         _kept.append(_s)
     _container['stories'] = _kept
 
+# ---- FINAL QC: cross-tab event dedup ----
+# User mandate 2026-05-23: "cant u just do a QC at the end looking for dups"
+# The URL-only cross-tab dedup catches the SAME tweet appearing in two tabs.
+# This catches SAME EVENT, DIFFERENT TWEETS — e.g., Minnesota Medicaid fraud
+# shipping simultaneously in USA (@bigNews) and MSM (@washghost1) and Top
+# (@DOJ) via three different reporters.
+#
+# Heuristic: two stories are dupes if they share BOTH:
+#   (a) ≥2 distinctive 4+char non-stop tokens, OR
+#   (b) any shared $-figure (e.g. "$90m") — money tokens are highly distinctive
+# Expanded stoplist drops common news verbs (signs/holds/calls/announces/etc) and
+# generic adjectives (massive/major/huge/big) so they don't count toward the 2.
+#
+# Priority (earlier wins): world > usa > top > msm > business > sports > pg6 ...
+_DEDUP_ORDER = ['world','usa','top','msm','business','sports','pg6','science',
+                'pods','allin','conspiracy','local','recipe','comedy','elon']
+_QC_STOP = {
+    # articles / pronouns / conjunctions
+    'the','from','with','that','this','about','have','will','their','they','them',
+    'these','those','than','then','your','what','when','where','some','been','were',
+    'has','was','will','would','could','should','into','over','more','very','just',
+    # common news verbs
+    'says','said','tells','told','holds','signs','calls','plans','wants','seeks',
+    'takes','gives','makes','goes','comes','sees','shows','asks','adds','warns',
+    'announces','reveals','reports','reacts','shares','posts','breaks','meets',
+    'discusses','responds','launches','sends',
+    # generic intensifiers / adjectives often used in headlines
+    'massive','major','huge','large','small','big','little','recent','latest','new',
+    'old','first','last','top','best','worst','full','great','only','many','most',
+    # bland nouns common across all news
+    'news','story','update','report','statement','today','yesterday','week','day',
+    'time','year','part','thing','case','plan','idea','show','clip','video','photo',
+    'post','tweet','reply',
+}
+
+_MONEY_RE = re.compile(r'\$\d+(?:\.\d+)?[mkbt]?', re.IGNORECASE)
+
+def _qc_extract(s):
+    """Return (distinctive_tokens, money_tokens) for dupe comparison."""
+    h = (s.get('headline','') or s.get('body','') or '')
+    h_low = h.lower()
+    tokens = {w for w in re.findall(r'[a-z]{4,}', h_low) if w not in _QC_STOP}
+    money = {m.lower() for m in _MONEY_RE.findall(h_low)}
+    return tokens, money
+
+def _qc_is_dupe(t1, m1, t2, m2):
+    """≥2 shared distinctive tokens, OR any shared money figure."""
+    if m1 and m2 and (m1 & m2):
+        return ('money', m1 & m2)
+    shared = t1 & t2
+    if len(shared) >= 2:
+        return ('tokens', shared)
+    return None
+
+_qc_seen = []  # list of (tab, tokens, money, headline)
+for _qc_tab in _DEDUP_ORDER:
+    _qc_container = output.get(_qc_tab, {})
+    if not isinstance(_qc_container, dict): continue
+    _qc_stories = _qc_container.get('stories', []) or []
+    _qc_kept = []
+    for _qc_s in _qc_stories:
+        _qc_t, _qc_m = _qc_extract(_qc_s)
+        if len(_qc_t) < 2 and not _qc_m:
+            _qc_kept.append(_qc_s); continue
+        _qc_match = None
+        for _prev_tab, _prev_t, _prev_m, _prev_h in _qc_seen:
+            d = _qc_is_dupe(_qc_t, _qc_m, _prev_t, _prev_m)
+            if d:
+                _qc_match = (_prev_tab, d, _prev_h); break
+        if _qc_match:
+            _prev_tab, (_kind, _overlap), _prev_h = _qc_match
+            print(f"[qc-dupe] drop {_qc_tab}: '{(_qc_s.get('headline','') or '?')[:55]}' "
+                  f"(shared {_kind} {sorted(_overlap)} w/ {_prev_tab}: '{_prev_h[:55]}')",
+                  file=sys.stderr)
+            continue
+        _qc_kept.append(_qc_s)
+        _qc_seen.append((_qc_tab, _qc_t, _qc_m, _qc_s.get('headline','') or ''))
+    _qc_container['stories'] = _qc_kept
+
 # ---- Preserve user-managed tabs (freespeech, submit) ----
 for manual_tab in ('freespeech', 'submit'):
     if manual_tab in existing_full and isinstance(existing_full[manual_tab], dict):
