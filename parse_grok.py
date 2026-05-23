@@ -161,6 +161,80 @@ def fetch_parent(url):
     }
 
 
+def find_perspectives(story_url, story_headline):
+    """STAGE 2: For a chosen World/USA story, find reaction tweets on X:
+      - Conservative (right-leaning commentator's take)
+      - Democrat    (left-leaning commentator's take)
+      - Independent (ONLY if a genuinely non-partisan or unique take exists)
+    User mandate (M-018): never block the story over missing perspectives —
+    0, 1, 2, or 3 are all fine. Always returns a list (possibly empty).
+    """
+    if not story_url or '/status/' not in story_url:
+        return []
+    prompt = (
+        f"For the news event at {story_url} (headline: {story_headline!r}), "
+        f"find the highest-view reaction posts on X with these political angles. "
+        f"Use x_search to find tweets ABOUT this specific story from the last 24h.\n\n"
+        f"Required slots:\n"
+        f"  - Conservative — right-leaning / MAGA / Republican-aligned commentator\n"
+        f"  - Democrat — left-leaning / progressive / Democrat-aligned commentator\n"
+        f"\nOptional slot:\n"
+        f"  - Independent — ONLY if there is a genuinely non-partisan or unusual "
+        f"take that doesn't slot into Conservative or Democrat. Otherwise OMIT. "
+        f"Do NOT manufacture an Independent take from a weak source.\n\n"
+        f"Constraints:\n"
+        f"  - Each reaction must be ABOUT this story, posted in the last 24 hours.\n"
+        f"  - Minimum 5,000 views per reaction.\n"
+        f"  - All URLs must be real X status URLs you found via x_search. NEVER fabricate.\n"
+        f"  - If you can only find 1 perspective (or 0), return what you found and stop. "
+        f"Do NOT force matches. Missing perspectives are acceptable.\n\n"
+        f"Return ONLY a JSON object:\n"
+        f'{{"perspectives":[\n'
+        f'  {{"label":"Conservative","handle":"@user","url":"https://x.com/.../status/<id>",'
+        f'"body":"verbatim post text","views":<integer>,"honesty":<1-10>,"notes":"one-line plain-English honesty justification"}},\n'
+        f'  {{"label":"Democrat","handle":"@user","url":"...","body":"...","views":...,"honesty":...,"notes":"..."}},\n'
+        f'  {{"label":"Independent","handle":"@user","url":"...","body":"...","views":...,"honesty":...,"notes":"..."}}\n'
+        f"]}}\n"
+        f"Empty array {{\"perspectives\":[]}} is valid if nothing qualifies."
+    )
+    result = _xai_call(prompt, timeout=90, max_tokens=3000)
+    if not result or 'perspectives' not in result:
+        return []
+    persps = result.get('perspectives') or []
+    if not isinstance(persps, list):
+        return []
+    valid = []
+    seen_urls = set()
+    for p in persps:
+        if not isinstance(p, dict): continue
+        url = (p.get('url') or '').strip()
+        if '/status/' not in url: continue
+        if url in seen_urls: continue  # dedup
+        label = (p.get('label') or '').strip()
+        if label not in ('Conservative', 'Democrat', 'Independent'): continue
+        # Coerce views to int, drop if too small
+        try:
+            views = int(p.get('views') or 0)
+        except (TypeError, ValueError):
+            views = 0
+        if views < 5_000:
+            continue
+        seen_urls.add(url)
+        valid.append({
+            'label': label,
+            'handle': p.get('handle', '') or '',
+            'url': url,
+            'body': (p.get('body') or '')[:600],
+            'views': views,
+            'engagement': f"{views:,} views",
+            'honesty': p.get('honesty'),
+            'notes': (p.get('notes') or '')[:300],
+        })
+        if len(valid) >= 3:
+            break
+    return valid
+
+
 def fetch_top_qt(url):
     """Find the highest-view QT/RT of a given post URL.
     Returns {qt_url, qt_handle, qt_views} or None if no notable QT exists."""
@@ -402,6 +476,35 @@ for tab in tabs:
         chosen = curation.apply_hold(held_qual, cleaned_qual, top_n=999,
                                      sort_key=curation.story_velocity)
         chosen = [s for s in chosen if _wu_qualified(s)]
+
+        # ===== STAGE 2: find Conservative / Democrat (+ optional Independent)
+        # perspectives for each chosen story. M-018 mandate: re-fetch every
+        # cron, no caching. Missing perspectives never block the story.
+        # Parallelize with thread pool — typically 3-6 stories × ~10s each
+        # collapses to ~10-15s wall time.
+        import concurrent.futures as _cf
+        def _enrich_one(_s):
+            try:
+                persps = find_perspectives(_s.get('url',''), _s.get('headline',''))
+            except Exception as _e:
+                print(f"[stage2-warn] {tab}: perspective fetch failed for "
+                      f"@{_s.get('handle','?')}: {_e}", file=sys.stderr)
+                persps = []
+            if persps:
+                _s['perspectives'] = persps
+                labels = [p.get('label') for p in persps]
+                print(f"[stage2] {tab} @{_s.get('handle','?')}: found {len(persps)} "
+                      f"perspectives ({', '.join(labels)})", file=sys.stderr)
+            else:
+                # Strip any stale perspectives field so we don't show old data
+                _s.pop('perspectives', None)
+                print(f"[stage2] {tab} @{_s.get('handle','?')}: 0 perspectives "
+                      f"(ships as inline-embed block)", file=sys.stderr)
+            return _s
+        if chosen:
+            with _cf.ThreadPoolExecutor(max_workers=6) as _ex:
+                chosen = list(_ex.map(_enrich_one, chosen))
+
         output[tab] = {'stories': [_body_to_text(s) for s in chosen],
                        '_candidates': tab_candidates_after_boost}
         print(f"[{tab}] {len(chosen)} events cleared {WU_VIEW_FLOOR:,} view floor (after QT boost)", file=sys.stderr)

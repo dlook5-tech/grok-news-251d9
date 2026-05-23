@@ -78,6 +78,13 @@ check  "M-017a:active-uses-toggle"     index.html  "classList.toggle\('open'\)" 
 check  "M-017b:active-uses-embed"      index.html  "toggleEmbed\("                    exists
 check  "M-017c:honesty-card-renders"   index.html  "footnote-card.*Honesty"           exists
 
+# M-018 — Stage 2 perspective enrichment for World/USA stories
+check  "M-018a:find-perspectives-fn"   parse_grok.py  "def find_perspectives"           exists
+check  "M-018b:stage2-wired-in-WU"     parse_grok.py  "STAGE 2: find Conservative"      exists
+check  "M-018c:thread-pool-parallel"   parse_grok.py  "ThreadPoolExecutor"              exists
+check  "M-018d:exception-caught"       parse_grok.py  "stage2-warn"                     exists
+check  "M-018e:clears-stale-persp"     parse_grok.py  "_s.pop\('perspectives'"          exists
+
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists
 check  "M-002b:report-in-workflow"       .github/workflows/cron.yml  "cron_report\.md"                               exists

@@ -88,6 +88,17 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-018 — Stage 2 perspectives: Conservative + Democrat for every World/USA story. Independent optional. NEVER block a story.
+**Date:** 2026-05-23 evening
+**User said:** "To find the three perspectives once the stories are chosen, if they have over 50,000 views, I have to believe you're going to be able to find the top-viewing stories from each political perspective: Conservative, Independent, and Democrat. Definitely no failure mode here. A bigger story should not be scrapped if you can't find all three perspectives. I would even go down to: if you can only find one perspective, that's okay."
+**Refinement (same turn):** Independent is nebulous — drop the always-find-Independent requirement. Conservative + Democrat are the primary two slots; Independent ships only when a genuinely unique non-partisan take exists. Re-fetch every cron, no caching.
+**Enforcement:**
+- `parse_grok.py::find_perspectives(url, headline)` — one xAI call per chosen World/USA story. Asks for Conservative + Democrat (required slots) and Independent (only if genuinely non-partisan). Returns up to 3 valid perspectives; missing slots are fine.
+- Each perspective validated: must have `/status/` URL, label in {Conservative, Democrat, Independent}, ≥5K views. Bodies clipped to 600 chars.
+- Wired into the World/USA branch AFTER `chosen` is finalized. Parallelized via `concurrent.futures.ThreadPoolExecutor(max_workers=6)`. Stories without perspectives ship as inline-embed-with-honesty blocks (per M-017).
+- ANY exception during perspective fetch is caught, logged, and the story ships with 0 perspectives.
+- Re-fetched every cron — `_s.pop('perspectives', None)` clears stale data when nothing's found this cycle.
+
 ## M-017 — Click block -> expand inline -> X embed loads + honesty score at bottom (REVERSAL of M-001).
 **Date:** 2026-05-23 evening
 **User said:** "Going backwards, do it like we had it before, where you click on the block and it opens the X post within the block with an honesty score."
