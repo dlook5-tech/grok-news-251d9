@@ -38,6 +38,11 @@
   h1 { font-family: "Playfair Display", Georgia, serif; font-size: 1.7rem; font-weight: 800; margin-bottom: 6px; line-height: 1.2; color: #fff8ee; text-shadow: 0 1px 3px rgba(80,40,0,0.3); }
   .subtitle { color: #f0e6d6; font-size: 0.88rem; margin-bottom: 24px; line-height: 1.5; }
   .story { border: 1px solid #d4b896; border-radius: 6px; margin-bottom: 10px; background: #faf6f0; overflow: hidden; box-shadow: 0 2px 8px rgba(80,50,20,0.15); }
+  /* User mandate (locked 2026-05-23): top-level story blocks are DIRECT LINKS.
+     .story-link is an <a> wrapper; restore the visual feedback an anchor loses. */
+  .story-link { transition: transform 0.08s, box-shadow 0.08s; }
+  .story-link:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(80,50,20,0.22); }
+  .story-link:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(80,50,20,0.15); }
   .story-header { padding: 14px 18px; cursor: pointer; display: flex; align-items: flex-start; gap: 10px; font-weight: 600; font-size: 0.9rem; line-height: 1.4; user-select: none; }
   .story-header:hover { background: #f5efe5; }
   .arrow { flex-shrink: 0; transition: transform 0.2s; font-size: 0.65rem; margin-top: 5px; color: #b5a998; }
@@ -600,7 +605,57 @@ function parseYouTube(url) {
   return { videoId: videoId, start: start, end: end };
 }
 
+// ========================================================================
+// USER MANDATE — repeated 1000s of times, do NOT regress:
+// Story blocks are DIRECT LINKS to X (or YouTube/TikTok/Instagram for those URLs).
+// Tap block -> opens the source in a new tab. NO expand. NO toggle. NO inline
+// embed. NO "click to view" intermediate step. NO arrow that requires expanding
+// to reveal a button. The block IS the button.
+//
+// If you find yourself adding classList.toggle('open') or toggleEmbed(...)
+// to a block, STOP -- you are about to violate this mandate AGAIN.
+// 2026-05-23: regressed twice in a single day; locked here permanently.
+// ========================================================================
 function renderAutoEmbedBlock(s) {
+  var fullBody = (s.headline || s.body || '').trim() || 'View post';
+  var body = makeTeaser(fullBody);
+  var url = s.url || '';
+  var postedTag = buildPostedTag(s);
+
+  // Pick a small host-label indicator so the user sees where the link goes.
+  var hostLabel = '';
+  if (url.indexOf('/status/') !== -1 && (url.indexOf('x.com') !== -1 || url.indexOf('twitter.com') !== -1)) {
+    hostLabel = 'X';
+  } else if (url.indexOf('youtube.com') !== -1 || url.indexOf('youtu.be') !== -1) {
+    hostLabel = 'YT';
+  } else if (url.indexOf('tiktok.com') !== -1) {
+    hostLabel = 'TikTok';
+  } else if (url.indexOf('instagram.com') !== -1) {
+    hostLabel = 'IG';
+  }
+  var openIcon = hostLabel
+    ? '<span style="flex-shrink:0;font-size:0.65rem;color:#1a8cd8;font-weight:700;margin-top:5px;letter-spacing:0.3px;">' + hostLabel + ' &#8599;</span>'
+    : '';
+
+  // No URL -> render a dead block (no link wrapper). Should be rare.
+  if (!url) {
+    return '<div class="story"><div class="story-header" style="cursor:default;">' +
+             '<span>' + body + postedTag + '</span></div></div>';
+  }
+
+  // Whole block is a single anchor -- tap anywhere -> opens source in new tab.
+  // CSS rule .story-link below restores the .story styling on the <a>.
+  return '<a href="' + url + '" target="_blank" rel="noopener" class="story story-link" ' +
+            'style="display:block;text-decoration:none;color:inherit;">' +
+           '<div class="story-header">' +
+             openIcon +
+             '<span>' + body + postedTag + '</span>' +
+           '</div>' +
+         '</a>';
+}
+
+// ----- legacy (unused) expand-style renderer, kept ONLY for reference. DO NOT call it. -----
+function _legacy_renderAutoEmbedBlock_DO_NOT_USE(s) {
   var sid = 'b' + Math.random().toString(36).substr(2,9);
   var embedId = 'emb' + Math.random().toString(36).substr(2,9);
   // 2026-05-02 user: teaser should be a HOOK, not a summary. Headlines are pithy and pull you in;
