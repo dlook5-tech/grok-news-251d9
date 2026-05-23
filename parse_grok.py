@@ -230,16 +230,33 @@ tabs = ['world', 'usa', 'business', 'top', 'msm', 'sports', 'elon', 'pods',
 
 
 def _candidate_dump(cleaned, n=8):
-    """Top N candidates by view count — diagnostic field per tab. Lets the user
-    see what Grok returned before any filtering (100K floor, curate, etc.)."""
+    """Top N candidates with QT-boost audit: original_views + qt_views = combined.
+    Lets the user verify the algorithm: see the raw Grok view count, the biggest
+    QT/RT views found, and what the combined total is that competes for the 100K
+    floor. For tabs without perspectives, original = combined and qt_views = 0."""
     sorted_c = sorted(cleaned, key=curation.story_views, reverse=True)[:n]
     out = []
     for c in sorted_c:
+        persps = c.get('perspectives', []) or []
+        if persps:
+            # Find the highest-view perspective (which is what's compared to the 100K floor)
+            top_p = max((p for p in persps if isinstance(p, dict)),
+                        key=lambda p: int(p.get('views', 0) or 0), default={})
+            original = int(top_p.get('original_views') or top_p.get('views', 0) or 0)
+            qt_views = int(top_p.get('qt_views', 0) or 0)
+            combined = int(top_p.get('views', 0) or 0)
+        else:
+            original = curation.story_views(c)
+            qt_views = 0
+            combined = original
         out.append({
             'handle': (c.get('handle') or '').lstrip('@'),
             'url': c.get('url'),
             'headline': (c.get('headline') or c.get('body','') or '')[:100],
-            'views': curation.story_views(c),
+            'original_views': original,
+            'qt_views': qt_views,
+            'combined_views': combined,
+            'views': combined,
         })
     return out
 
@@ -297,6 +314,10 @@ for tab in tabs:
                     p['views'] = cur_views + qt['qt_views']  # COMBINED
                     print(f"[qt-boost {tab}] @{p.get('handle')} {cur_views:,} + QT {qt['qt_views']:,} = {p['views']:,}", file=sys.stderr)
 
+        # Re-dump candidates AFTER QT boost so the audit numbers reflect the
+        # post-boost state (original_views, qt_views, combined_views).
+        tab_candidates_after_boost = _candidate_dump(cleaned)
+
         cleaned_100k = [c for c in cleaned if curation.story_views(c) >= WU_VIEW_FLOOR]
         held = previous.get(tab, [])
         held_100k = [h for h in held if curation.story_views(h) >= WU_VIEW_FLOOR]
@@ -305,7 +326,7 @@ for tab in tabs:
                                      sort_key=curation.story_velocity)
         chosen = [s for s in chosen if curation.story_views(s) >= WU_VIEW_FLOOR]
         output[tab] = {'stories': [_body_to_text(s) for s in chosen],
-                       '_candidates': tab_candidates}
+                       '_candidates': tab_candidates_after_boost}
         print(f"[{tab}] {len(chosen)} events cleared {WU_VIEW_FLOOR:,} view floor (after QT boost)", file=sys.stderr)
         continue
 
