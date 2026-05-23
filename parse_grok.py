@@ -522,15 +522,20 @@ for _tab, _container in list(output.items()):
                 print(f"[{_tab}-headline] rewrote '{_h[:40]}' → '{_better[:60]}'", file=sys.stderr)
                 _s['headline'] = _better
 
-# ---- HARD 24h AGE CAP — user mandate 2026-05-22: "nothing should be a day
-# ago, 24 hours only." Drop any story (and any perspective) whose URL is
-# older than 24h. Belt-and-suspenders: applies to every tab after all
-# curation/promotion has run. ----
+# ---- HARD AGE CAPS per tab ----
+# Default: 24h (user mandate "nothing should be a day ago, 24 hours only").
+# Per-tab overrides for slower-cadence content where podcasters/etc don't
+# post viral clips every day:
+#   - pods: 48h (user 2026-05-22: "pods 2" = 2 days)
 HARD_AGE_CAP_H = 24.0
+PER_TAB_AGE_CAP = {
+    'pods': 48.0,
+}
 for _tab, _container in list(output.items()):
     if not isinstance(_container, dict): continue
     _stories = _container.get('stories', [])
     if not isinstance(_stories, list): continue
+    _cap = PER_TAB_AGE_CAP.get(_tab, HARD_AGE_CAP_H)
     _kept = []
     for _s in _stories:
         # For perspective stories, use freshest perspective URL; else top-level url
@@ -549,8 +554,8 @@ for _tab, _container in list(output.items()):
         if not ages:
             _kept.append(_s)  # no URL age we can read — keep
             continue
-        if min(ages) > HARD_AGE_CAP_H:
-            print(f"[24h-cap] drop {_tab}: '{(_s.get('headline','') or '?')[:50]}' (oldest URL {min(ages):.1f}h)", file=sys.stderr)
+        if min(ages) > _cap:
+            print(f"[age-cap] drop {_tab}: '{(_s.get('headline','') or '?')[:50]}' (oldest URL {min(ages):.1f}h > {_cap:.0f}h cap)", file=sys.stderr)
             continue
         _kept.append(_s)
     _container['stories'] = _kept
