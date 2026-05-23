@@ -72,7 +72,9 @@ For each event: highest-view Conservative, Independent, and Democrat reactions o
 
 MERGE DUPLICATES: If multiple high-view tweets cover the SAME news event, MERGE them into ONE event block with all perspectives consolidated.
 
-VIEW FLOOR (DELTA): Each event's TOP perspective must have at least 100,000 views. Drop any event below that. No fixed cap on count."
+VIEW FLOOR (DELTA): Each event's TOP perspective must have at least 100,000 COMBINED views (see QT/RT BOOST below). Drop any event below that. No fixed cap on count.
+
+QT/RT BOOST: For each perspective, also look for the biggest retweet or quote-tweet of that post. If found, set the perspective's \"views\" field to (original_views + qt_views) — the COMBINED total. Also include original_url + original_handle + original_views + qt_views fields so the data is auditable. This lets a 70K-view post that has a 50K-view retweet clear the 100K floor (combined = 120K). If no notable QT/RT exists, just leave views as the original count."
     elif [ "$tab" == "sas_cowherd" ]; then
         return_what="object"
         schema="Return ONLY a JSON object with key \"sas_cowherd\" holding a 2-item array:
