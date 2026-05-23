@@ -387,13 +387,17 @@ for tab in tabs:
         # post-boost state (original_views, qt_views, combined_views).
         tab_candidates_after_boost = _candidate_dump(cleaned)
 
-        # Filter: 50K floor AND ≥1 perspective
-        # (2026-05-22 option 3: loosen — 50K instead of 100K, ≥1 instead of ≥2)
+        # Filter: 50K floor + must have AT LEAST ONE valid URL somewhere
+        # (top-level OR perspective). A single-source story without perspectives
+        # still counts — its top-level URL is the source.
         def _wu_qualified(s):
             if curation.story_views(s) < WU_VIEW_FLOOR: return False
-            persps = s.get('perspectives', []) or []
-            n = sum(1 for p in persps if isinstance(p, dict) and p.get('url') and '/status/' in p.get('url', ''))
-            return n >= 1
+            urls = [s.get('url','')]
+            for p in s.get('perspectives', []) or []:
+                if isinstance(p, dict) and p.get('url'):
+                    urls.append(p['url'])
+            valid = [u for u in urls if u and '/status/' in u]
+            return len(valid) >= 1
 
         cleaned_qual = [c for c in cleaned if _wu_qualified(c)]
         held = previous.get(tab, [])
