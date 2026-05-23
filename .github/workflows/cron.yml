@@ -61,7 +61,7 @@ jobs:
         run: |
           git config user.name "expresso-cron"
           git config user.email "cron@expresso-news.local"
-          git add -A version.txt sw.js stories.json index.html seen_history.json honesty_overrides.csv 2>/dev/null || true
+          git add -A version.txt sw.js stories.json index.html seen_history.json honesty_overrides.csv cron_report.md 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m "Cron: refresh stories $(date -u +%Y-%m-%dT%H:%MZ)"
             # Try push, on rejection rebase + retry
