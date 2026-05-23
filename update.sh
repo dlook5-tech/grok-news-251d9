@@ -77,10 +77,12 @@ VIEW FLOOR (DELTA): Each event's TOP perspective must have at least 100,000 view
         return_what="object"
         schema="Return ONLY a JSON object with key \"sas_cowherd\" holding a 2-item array:
 {\"sas_cowherd\":[
-  {\"handle\":\"stephenasmith\",\"url\":\"https://x.com/stephenasmith/status/<id>\",\"headline\":\"one-line summary\",\"body\":\"post text\",\"views\":N},
-  {\"handle\":\"colincowherd\",\"url\":\"https://x.com/colincowherd/status/<id>\",\"headline\":\"one-line summary\",\"body\":\"post text\",\"views\":N}
+  {\"handle\":\"stephenasmith\",\"url\":\"https://x.com/stephenasmith/status/<id>\",\"headline\":\"one-line summary\",\"body\":\"post text\",\"views\":N,
+   \"parent_url\":\"https://x.com/<original_handle>/status/<id>\",\"parent_handle\":\"@original_handle\",\"parent_text\":\"verbatim text of post being replied to or quote-tweeted (≤280 chars)\"},
+  {\"handle\":\"colincowherd\",\"url\":\"https://x.com/colincowherd/status/<id>\",\"headline\":\"one-line summary\",\"body\":\"post text\",\"views\":N,
+   \"parent_url\":\"https://x.com/<original_handle>/status/<id>\",\"parent_handle\":\"@original_handle\",\"parent_text\":\"verbatim text\"}
 ]}
-URLs MUST be real X status URLs."
+URLs MUST be real X status URLs. IF the post is a reply or quote-tweet, POPULATE the parent_url + parent_handle + parent_text fields — these let the frontend embed the original post above the reply so readers see what's being responded to. If the post is original (not a reply/QT), OMIT those three fields."
     else
         schema="STRICT RECENCY: use x_search operator since:${since}. Reject anything before ${since}.
 
