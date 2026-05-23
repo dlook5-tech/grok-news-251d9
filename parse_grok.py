@@ -200,6 +200,16 @@ _GENERIC_HEADLINE_PATTERNS = [
     r'^shares?\s+(an?\s+)?(image|gif)\b',
     r'^posts?\s+rocket\s+emoji',
     r'^elon(\s+musk)?\s+(shares?|posts?|comments?|replies)',
+    # "X with a post" / "X at a post" / "X on a post" — generic, no context
+    # Catches: Agrees with a post, Laughs at a post, Expresses surprise at a post,
+    # Comments on a post with emoji, Marks agreement with target emoji
+    r'\b(with|at|on|to)\s+a\s+post\b',
+    r'\b(with|at|on|to)\s+a\s+post\s+(with|on|about)\s+\w+$',
+    r'^marks\s+agreement\b',
+    r'^expresses\s+\w+\s+(at|on|to)\s+a\s+post',
+    r'^laughs?\s+(at|on)\s+a\s+post',
+    r'^agrees?\s+(strongly|emphatically|exactly|with)?\s*(with\s+a\s+post|on\s+a\s+post|at\s+a\s+post)?\s*$',
+    r'^notes?\s+(remaining\s+)?(issues|points|things)\s+in\s+a\s+(discussion|conversation|thread|post)',
     r'^[?\s\.]*$',
     r'^untitled$',
 ]
@@ -208,7 +218,8 @@ _GENERIC_HEADLINE_RE = re.compile('|'.join(_GENERIC_HEADLINE_PATTERNS), re.IGNOR
 
 def _is_generic_headline(h):
     if not h or not h.strip(): return True
-    return bool(_GENERIC_HEADLINE_RE.match(h.strip()))
+    # search (not match) so patterns can detect generic phrases anywhere in headline
+    return bool(_GENERIC_HEADLINE_RE.search(h.strip()))
 
 
 def fetch_headline_for_post(url, body):
