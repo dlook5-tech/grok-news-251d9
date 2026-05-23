@@ -527,9 +527,17 @@ for _tab, _container in list(output.items()):
 # Per-tab overrides for slower-cadence content where podcasters/etc don't
 # post viral clips every day:
 #   - pods: 48h (user 2026-05-22: "pods 2" = 2 days)
-HARD_AGE_CAP_H = 24.0
+HARD_AGE_CAP_H = 24.0  # default for news tabs (daily content)
 PER_TAB_AGE_CAP = {
-    'pods': 48.0,
+    # News tabs (daily content cadence) — strict 24h
+    # world, usa, top, business, msm, sports, pg6, comedy, elon = 24h default
+    # Slower-cadence tabs — loosened so they're not always empty:
+    'pods': 48.0,        # podcasters drop clips every 1-3 days
+    'allin': 48.0,       # billionaire-podcaster posts often 1-2 day cadence
+    'conspiracy': 48.0,  # investigative content takes time to surface
+    'recipe': 72.0,      # recipe content has long shelf life, posts less daily
+    'science': 72.0,     # research/breakthrough posts spaced out
+    'local': 72.0,       # SoCal/OC content sparse on X
 }
 for _tab, _container in list(output.items()):
     if not isinstance(_container, dict): continue
