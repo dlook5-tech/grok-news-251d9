@@ -87,6 +87,14 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-015 — World/USA tabs use the direct-link block when there are no perspectives.
+**Date:** 2026-05-23
+**User said:** "I noticed when I click on any block in the world tab, it still doesn't show me anything from X."
+**Root cause:** World/USA tabs render via `acc(headline, renderWorldStory(s))`. `renderWorldStory` returns `""` when `s.perspectives` is missing (always true in Stage 1). `acc()` then produces a block with an empty `.story-body`. Clicking expanded the body but there was nothing in it — no embed, no link, no way to reach X. The direct-link fix in M-001 ONLY touched `renderAutoEmbedBlock`, not `renderWorldStory`/`acc`. World tab still broke.
+**Enforcement:**
+- `index.html` World/USA render path: `if (s.perspectives && s.perspectives.length) { acc(...) } else { renderAutoEmbedBlock(s) }`. Both the live `.stories` loop and the `earlier` loop use this pattern.
+- When Stage 2 ships perspectives back, the `renderWorldStory` perspective blocks themselves also need to be direct links (deferred — flag this mandate then).
+
 ## M-014 — Cross-tab dedup needs 3+ shared tokens; LLM semantic backstop catches the rest.
 **Date:** 2026-05-23
 **User said:** "#2 seems more inclusive, but if we could also add to the backend of that an AI intelligence QC check where it reads all the stories to make sure none are the same."

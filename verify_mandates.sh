@@ -106,6 +106,10 @@ check  "M-014b:cross-tab-threshold"      parse_grok.py    "min_shared = 2 if _pr
 check  "M-014c:llm-dedup-fn"             parse_grok.py    "_qc_llm_semantic_dedup"                                   exists
 check  "M-014d:llm-dedup-called"         parse_grok.py    "_qc_llm_semantic_dedup\(output\)"                         exists
 
+# M-015 — World/USA tabs use direct-link block when no perspectives (clicks open X)
+check  "M-015a:world-uses-direct-link"   index.html       "renderAutoEmbedBlock\(s\)"                                exists
+check  "M-015b:world-perspective-guard"  index.html       "perspectives && s\.perspectives\.length"                  exists
+
 # M-012 — MANDATES.md exists and is referenced from CLAUDE.md
 check  "M-012a:mandates-file"            MANDATES.md      "^## M-001"                                                exists
 check  "M-012b:claude-md-points-here"    CLAUDE.md        "MANDATES\.md"                                             exists
