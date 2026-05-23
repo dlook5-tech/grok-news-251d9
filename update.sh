@@ -28,8 +28,8 @@ needs_perspectives() {
 prompt_for() {
     local tab=$1
     case "$tab" in
-        world)    echo "Top highest-view WORLD news EVENTS on X in the past 24h (international, outside the US)." ;;
-        usa)      echo "Top highest-view US NATIONAL news EVENTS on X in the past 24h (politics, federal events)." ;;
+        world)    echo "Top 8 highest-view WORLD news EVENTS on X in the past 24h (international, outside the US). Return all 8 candidates — even ones under 100K views — so we can see the full pool. Python applies the 100K filter, not you." ;;
+        usa)      echo "Top 8 highest-view US NATIONAL news EVENTS on X in the past 24h (politics, federal events). Return all 8 candidates — even ones under 100K views — so we can see the full pool. Python applies the 100K filter, not you." ;;
         business) echo "Top 5 highest-view X posts (past 24h) about business / markets / finance / economy." ;;
         top)      echo "Top 5 highest-view X posts (past 24h) — the absolute most-viewed across the platform." ;;
         msm)      echo "Top 5 highest-view X posts (past 24h) from mainstream-media accounts (NYT, WaPo, CNN, BBC, Reuters, AP, etc.)." ;;
