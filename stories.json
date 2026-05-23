@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-23T00:42:27Z",
+  "lastUpdated": "2026-05-23T00:59:10Z",
   "world": {
     "stories": [],
     "earlier": [
@@ -69,35 +69,37 @@
   "elon": {
     "stories": [
       {
-        "headline": "Congratulates SpaceX team on first Starship V3 launch and landing",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057974830469677092",
-        "body": "Congratulations @SpaceX team on an epic first Starship V3 launch & landing!. You scored a goal for humanity.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Congratulatory opinion ('epic', 'scored a goal for humanity') - subjective framing",
-        "posted": "2026-05-23T00:42:27Z",
-        "post_ts": "2026-05-23T00:00:09Z",
-        "views": 727394,
-        "views_at_save": 727394,
-        "age_at_save_hours": 0.71
+        "headline": "Congratulates SpaceX team on first Starship V3 launch and landing",
+        "body": "Congratulations @SpaceX team on an epic first Starship V3 launch & landing!\n\nYou scored a goal for humanity.",
+        "views": 1095478,
+        "_tweet_text": "Congratulations @SpaceX team on an epic first Starship V3 launch & landing! You scored a goal for humanity.",
+        "views_at_save": 1095478,
+        "age_at_save_hours": 0.98
       },
       {
-        "headline": "Requests critical feedback on Grok Build for web dev",
         "handle": "@elonmusk",
         "url": "https://x.com/elonmusk/status/2057933447541219630",
-        "body": "Critical feedback is much appreciated.",
-        "engagement": "",
-        "honesty": "7/10",
-        "notes": "Generic statement without verifiable factual content",
-        "posted": "2026-05-23T00:42:27Z",
-        "post_ts": "2026-05-22T21:15:43Z",
-        "views": 8893964,
+        "headline": "Requests critical feedback on Grok Build for web dev",
+        "body": "Critical feedback is much appreciated",
+        "views": 9336261,
         "original_url": "https://x.com/boyuan__zheng/status/2057925222284804375",
         "original_handle": "@boyuan__zheng",
-        "original_views": 8945318,
-        "views_at_save": 8893964,
-        "age_at_save_hours": 3.45
+        "original_views": 9386785,
+        "_tweet_text": "Critical feedback is much appreciated https://t.co/d6U6c0JUD7",
+        "views_at_save": 9336261,
+        "age_at_save_hours": 3.72
+      },
+      {
+        "handle": "@elonmusk",
+        "url": "https://x.com/elonmusk/status/2057922040561094750",
+        "headline": "Finds it funny to call Homolander fake & gay",
+        "body": "I just it\u2019s really funny to call Homolander fake & gay. Cracks me up everytime \ud83e\udd23\ud83e\udd23",
+        "views": 281603,
+        "_tweet_text": "I just it\u2019s really funny to call Homolander fake & gay. Cracks me up everytime \ud83e\udd23\ud83e\udd23",
+        "views_at_save": 281603,
+        "age_at_save_hours": 4.48
       }
     ],
     "earlier": [
@@ -249,20 +251,6 @@
   "top": {
     "stories": [
       {
-        "headline": "Elon Musk on history",
-        "handle": "@elonmusk",
-        "url": "https://x.com/elonmusk/status/2057730335413063917",
-        "body": "Elon Musk agrees reading how humans from the past thought shapes worldview more than anything else.",
-        "engagement": "56K likes, 5.5K reposts",
-        "honesty": "7/10",
-        "notes": "Pure opinion agreement on a quoted post.",
-        "posted": "2026-05-23T00:32:11Z",
-        "post_ts": "2026-05-22T07:48:37Z",
-        "views": 25018349,
-        "views_at_save": 25018349,
-        "age_at_save_hours": 16.9
-      },
-      {
         "headline": "GTA VI release date",
         "handle": "@TheGameVerse",
         "url": "https://x.com/TheGameVerse/status/2057859074927284707",
@@ -274,7 +262,7 @@
         "post_ts": "2026-05-22T16:05:06Z",
         "views": 22008359,
         "views_at_save": 22008359,
-        "age_at_save_hours": 8.37,
+        "age_at_save_hours": 8.65,
         "original_url": "https://x.com/XBOX/status/2057855279287476620",
         "original_handle": "@XBOX",
         "original_views": 21960438,
@@ -286,13 +274,25 @@
         "url": "https://x.com/ManCity/status/2057817233200418837",
         "body": "What a time we have had together in this season highlight video.",
         "engagement": "166577 likes, 32677 reposts",
-        "honesty": "9/10",
-        "notes": "Official club video but 'what a time' is editorial framing, not pure fact",
+        "honesty": "10/10",
+        "notes": "Official Man City account posting their own highlight video - verified factual content, 'what a time' is their own editorial",
         "posted": "2026-05-22T22:18:11Z",
         "post_ts": "2026-05-22T13:33:55Z",
         "views": 12558020,
         "views_at_save": 12558020,
-        "age_at_save_hours": 11.14
+        "age_at_save_hours": 11.42
+      },
+      {
+        "headline": "Fortnite emote launch",
+        "handle": "@HYPEX",
+        "url": "https://x.com/HYPEX/status/2057975161098256528",
+        "body": "RAKAI & PLAQUEBOYMAX x FORTNITE emote now available in the item shop.",
+        "engagement": "1496 likes, 78 reposts",
+        "honesty": "9/10",
+        "notes": "Verifiable Fortnite item shop update but 'now available' may have timing ambiguity",
+        "posted": "2026-05-23T00:59:10Z",
+        "post_ts": "2026-05-23T00:01:28Z",
+        "views": 104750
       }
     ],
     "earlier": [
@@ -417,56 +417,32 @@
         "views": 1484311,
         "views_at_save": 1484311,
         "age_at_save_hours": 5.53
-      },
-      {
-        "headline": "Mayweather child support order",
-        "handle": "@DJGreenVillain",
-        "url": "https://x.com/DJGreenVillain/status/2057640930891514009",
-        "body": "Floyd Mayweather reportedly had a baby with a dancer and owes $1M back child support.",
-        "engagement": "55K likes, 5.7K reposts",
-        "honesty": "8/10",
-        "notes": "Reports TMZ-sourced claim with opinion overlay.",
-        "posted": "2026-05-22T06:28:07Z",
-        "post_ts": "2026-05-22T01:53:21Z",
-        "views": 1872247
       }
     ],
     "_overflow": [
       {
-        "headline": "Playboi Carti drops new music video",
-        "handle": "@Kurrco",
-        "url": "https://x.com/Kurrco/status/2057976428553986183",
-        "body": "PLAYBOI CARTI FATT SMAXK SMAXK OR D*E REMIX MUSIC VIDEO OUT NOW.",
-        "engagement": "814 likes, 87 reposts",
+        "headline": "Wembanyama basketball play",
+        "handle": "@Wemby_Muse",
+        "url": "https://x.com/Wemby_Muse/status/2057984828796985848",
+        "body": "Wemby puts Hartenstein in a blender with a highlight move.",
+        "engagement": "270 likes, 54 reposts",
         "honesty": "10/10",
-        "notes": "Verified music video release with no claims.",
-        "posted": "2026-05-23T00:42:27Z",
-        "post_ts": "2026-05-23T00:06:30Z",
-        "views": 21274
+        "notes": "Verified video clip of NBA play with no claims.",
+        "posted": "2026-05-23T00:59:10Z",
+        "post_ts": "2026-05-23T00:39:53Z",
+        "views": 57856
       },
       {
-        "headline": "New dude activity video goes viral",
-        "handle": "@DudespostingWs",
-        "url": "https://x.com/DudespostingWs/status/2057977307776864487",
-        "body": "New fun dude activity just dropped in this hilarious video clip.",
-        "engagement": "178 likes, 6 reposts",
+        "headline": "Barcelona player moment",
+        "handle": "@FCBarcelona",
+        "url": "https://x.com/FCBarcelona/status/2057974793253863485",
+        "body": "A very special day for Rashy with a personal photo post.",
+        "engagement": "3723 likes, 188 reposts",
         "honesty": "10/10",
-        "notes": "Pure video content, no factual claims.",
-        "posted": "2026-05-23T00:42:27Z",
-        "post_ts": "2026-05-23T00:10:00Z",
-        "views": 20951
-      },
-      {
-        "headline": "Backyard flooding signals major sinkhole risk",
-        "handle": "@WallStreetApes",
-        "url": "https://x.com/WallStreetApes/status/2057974986820751636",
-        "body": "Walking out to rushing backyard water means water main break and sinkhole forming.",
-        "engagement": "183 likes, 51 reposts",
-        "honesty": "10/10",
-        "notes": "Factual explanation of plumbing issue with video evidence.",
-        "posted": "2026-05-23T00:42:28Z",
-        "post_ts": "2026-05-23T00:00:46Z",
-        "views": 15649
+        "notes": "Verified official club photo post with no claims.",
+        "posted": "2026-05-23T00:59:10Z",
+        "post_ts": "2026-05-23T00:00:00Z",
+        "views": 30187
       }
     ]
   },
@@ -530,25 +506,6 @@
         "original_handle": "@EndWokeness",
         "original_views": 1169808,
         "qt_views": 205027,
-        "perspectives": []
-      },
-      {
-        "headline": "Trump Supporter Attacked at Home",
-        "handle": "@RealDeanCain",
-        "url": "https://x.com/RealDeanCain/status/2057615776371372223",
-        "body": "Sick. \ud83d\ude4f\ud83c\udffd",
-        "engagement": "14.1K likes, 4.2K reposts, 1K replies",
-        "honesty": "7/10",
-        "notes": "Single-word opinion reaction ('Sick') with prayer emoji - no factual content",
-        "posted": "2026-05-22T05:21:16Z",
-        "post_ts": "2026-05-21T23:42:39Z",
-        "views": 675519,
-        "views_at_save": 675519,
-        "age_at_save_hours": 6.25,
-        "original_url": "https://x.com/CollinRugg/status/2057608036940972199",
-        "original_handle": "@CollinRugg",
-        "original_views": 651971,
-        "qt_views": 23548,
         "perspectives": []
       },
       {
@@ -691,25 +648,6 @@
   },
   "allin": {
     "stories": [
-      {
-        "headline": "Night Vision Tech Leaps Forward",
-        "handle": "@WeaponOutfitter",
-        "url": "https://x.com/WeaponOutfitter/status/2057626078085333250",
-        "body": "Neat!",
-        "engagement": "3.3K likes, 137 reposts, 132 replies",
-        "honesty": "7/10",
-        "notes": "Single-word reaction ('Neat!') - no factual content to verify",
-        "posted": "2026-05-22T06:28:06Z",
-        "post_ts": "2026-05-22T00:21:48Z",
-        "views": 335076,
-        "views_at_save": 224497,
-        "age_at_save_hours": 6.11,
-        "perspectives": [],
-        "original_url": "https://x.com/PalmerLuckey/status/2057617889453342909",
-        "original_handle": "@PalmerLuckey",
-        "original_views": 333734,
-        "qt_views": 1342
-      },
       {
         "headline": "Anduril vs Wasteful Think Tanks",
         "handle": "@PalmerLuckey",
@@ -1076,24 +1014,6 @@
         "original_views": 139585,
         "qt_views": 76615,
         "perspectives": []
-      },
-      {
-        "headline": "Melissa Chen defends Kill Tony diversity",
-        "handle": "@Squirrelknut",
-        "url": "https://x.com/Squirrelknut/status/2057263899800416729",
-        "body": "Imagine being less cool than Sheryl Underwood and Lizzo.",
-        "engagement": "8K likes, 357 reposts",
-        "honesty": "7/10",
-        "notes": "'Imagine being less cool' - subjective opinion/joke, not verifiable fact",
-        "posted": "2026-05-21T16:25:27Z",
-        "post_ts": "2026-05-20T21:15:55Z",
-        "views": 789705,
-        "views_at_save": 789705,
-        "age_at_save_hours": 21.82,
-        "original_url": "https://x.com/MsMelChen/status/2057208723282514057",
-        "original_handle": "@MsMelChen",
-        "original_views": 788003,
-        "qt_views": 1702
       }
     ],
     "earlier": [],
