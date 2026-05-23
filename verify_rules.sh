@@ -263,6 +263,30 @@ for f in index.html parse_grok.py update.sh deploy.sh curation.py; do
 done
 
 echo ""
+# ============================================================
+# MANDATES.md enforcement checks — one per active mandate.
+# If any of these fail, a user-corrected rule has regressed in code.
+# Mandate text + dates live in MANDATES.md (append-only).
+# ============================================================
+echo ""
+echo "--- MANDATES.md enforcement ---"
+check "M-001:blocks-are-anchors"          index.html       'class="story story-link"'                                 exists
+check "M-001:no-toggle-in-renderblock"    index.html       'function renderAutoEmbedBlock'                            exists
+check "M-002:cron-report-written"         parse_grok.py    "cron_report.md"                                           exists
+check "M-002:cron-report-in-workflow"     .github/workflows/cron.yml  "cron_report.md"                                exists
+check "M-003:per-tab-age-cap-applied"     curation.py      "PER_TAB_MAX_AGE|max_age_hours"                            exists
+check "M-003:no-hardcoded-24h-in-applyhold" curation.py    "story_age_hours\(s\) > 24\b"                              absent
+check "M-004:generic-headline-regex"      parse_grok.py    "_GENERIC_HEADLINE_PATTERNS"                               exists
+check "M-004:generic-headline-rewrite"    parse_grok.py    "fetch_headline_for_post"                                  exists
+check "M-005:elon-prompt-no-name-prefix"  update.sh        "NOT start with 'Elon'|DO NOT start with 'Elon'"           exists
+check "M-007:50K-floor-WU"                parse_grok.py    "WU_VIEW_FLOOR\s*=\s*50_?000"                              exists
+check "M-008:local-is-socal"              update.sh        "Southern California|Orange County|Newport"                exists
+check "M-009:cross-tab-dedup"             parse_grok.py    "CROSS-TAB DEDUP|xtab-dedup"                               exists
+check "M-009:qc-event-dedup"              parse_grok.py    "FINAL QC|qc-dupe"                                         exists
+check "M-012:mandates-file-exists"        MANDATES.md      "M-001"                                                    exists
+check "M-012:claude-md-points-to-mandates" CLAUDE.md       "MANDATES\.md"                                             exists
+
+echo ""
 echo "=== Summary ==="
 printf "  ${GREEN}PASS${NC}: %d   ${RED}FAIL${NC}: %d\n" "$PASS" "$FAIL"
 

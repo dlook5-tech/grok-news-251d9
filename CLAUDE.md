@@ -1,5 +1,13 @@
 # eXpressO News Project Instructions
 
+## RULE #-3 — READ `MANDATES.md` FIRST, EVERY TURN, NO EXCEPTIONS.
+
+`MANDATES.md` is the append-only list of user corrections I keep regressing on.
+It is SHORT and FOCUSED. Read it before doing anything else on this project.
+For each active mandate, confirm the code-enforcement point still exists in
+the codebase. If a turn introduces a new correction, append it there same turn.
+Never reorder, edit, or delete. Only append. The rest of this file is history.
+
 ## RULE #-2 — PURE VIEWS, ZERO FILTERS (May 2026-05-04)
 
 **This is the active curation spec. It REPLACES every "lessons", "tab-specific lesson", "anti-pattern", "filter rule", "scoring layer", "exemption", "honesty cap", and "perspective requirement" written below. Everything else in this file is now historical context, not active rules. The active rules live in `curation.py` — that's it.**
