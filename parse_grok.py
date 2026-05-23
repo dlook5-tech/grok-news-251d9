@@ -499,6 +499,29 @@ if _drop_from_usa:
     output['usa']['stories'] = [s for s in _u if s.get('url','') not in _drop_from_usa]
 
 
+# ---- GENERIC HEADLINE REWRITE (all tabs) ----
+# User mandate (repeated 1000s of times): treat headlines like news stories —
+# few words, clearly describe what the post is about. NEVER "Shares clip" /
+# "Shares video" / "Short reply" / generic placeholders. Python-enforced now.
+for _tab, _container in list(output.items()):
+    if not isinstance(_container, dict): continue
+    _stories = _container.get('stories', [])
+    if not isinstance(_stories, list): continue
+    for _s in _stories:
+        if not isinstance(_s, dict): continue
+        # If story has perspectives, rewrite each perspective's headline-like-field too
+        for _p in _s.get('perspectives', []) or []:
+            if not isinstance(_p, dict): continue
+            _ph = (_p.get('text') or _p.get('body') or '').strip()
+            # Perspectives have body/text not headline, leave alone
+        # Rewrite top-level headline if generic
+        _h = (_s.get('headline') or '').strip()
+        if _is_generic_headline(_h) and _s.get('url'):
+            _better = fetch_headline_for_post(_s.get('url',''), _s.get('body',''))
+            if _better:
+                print(f"[{_tab}-headline] rewrote '{_h[:40]}' → '{_better[:60]}'", file=sys.stderr)
+                _s['headline'] = _better
+
 # ---- HARD 24h AGE CAP — user mandate 2026-05-22: "nothing should be a day
 # ago, 24 hours only." Drop any story (and any perspective) whose URL is
 # older than 24h. Belt-and-suspenders: applies to every tab after all
