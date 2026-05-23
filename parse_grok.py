@@ -94,6 +94,101 @@ def _is_cow(s):
     return h in ('colincowherd', 'theherd')
 
 
+# ============================================================
+# PYTHON ENFORCEMENT for prompt-only features (user mandate 2026-05-22:
+# "yes python" — make the parent-embed and QT/RT-boost enforced, not relying
+# on Grok to volunteer them). Each helper makes a targeted xAI call only when
+# the data is missing.
+# ============================================================
+import os as _os
+import urllib.request as _urlreq
+
+def _xai_call(prompt, timeout=45, max_tokens=800):
+    """One-shot xAI call. Returns parsed JSON object from Grok's text, or None."""
+    api_key = _os.environ.get('XAI_API_KEY', '')
+    if not api_key:
+        return None
+    payload = {
+        "model": "grok-4.3",
+        "input": [{"role": "user", "content": prompt}],
+        "tools": [{"type": "x_search"}],
+        "max_output_tokens": max_tokens,
+    }
+    try:
+        req = _urlreq.Request(
+            'https://api.x.ai/v1/responses',
+            data=json.dumps(payload).encode(),
+            headers={'Content-Type': 'application/json',
+                     'Authorization': f'Bearer {api_key}'},
+        )
+        with _urlreq.urlopen(req, timeout=timeout) as r:
+            resp = json.load(r)
+        text = ''
+        for o in resp.get('output', []):
+            for c in o.get('content', []) or []:
+                if isinstance(c, dict) and c.get('text'):
+                    text += c['text']
+        text = re.sub(r'^```[a-zA-Z]*\s*', '', text.strip())
+        text = re.sub(r'\s*```\s*$', '', text)
+        m = re.search(r'\{[^{}]*\}', text, re.DOTALL)
+        if not m: return None
+        return json.loads(m.group(0))
+    except Exception as e:
+        print(f"[xai-call] failed: {e}", file=sys.stderr)
+        return None
+
+
+def fetch_parent(url):
+    """For a post URL, find the tweet it's replying to or quote-tweeting.
+    Returns {parent_url, parent_handle, parent_text} or None if original/not-found."""
+    if not url or '/status/' not in url:
+        return None
+    prompt = (
+        f"For the X post at {url}, find the tweet it is replying to OR quote-tweeting. "
+        f"Return ONLY a JSON object: "
+        f'{{"parent_url":"https://x.com/<handle>/status/<id>","parent_handle":"@<handle>","parent_text":"verbatim text of the parent tweet (≤280 chars)"}}. '
+        f"If the post is original (not a reply, not a QT), return an empty object {{}}."
+    )
+    result = _xai_call(prompt, timeout=30, max_tokens=400)
+    if not result or not result.get('parent_url'):
+        return None
+    if '/status/' not in (result.get('parent_url') or ''):
+        return None
+    return {
+        'parent_url': result['parent_url'],
+        'parent_handle': result.get('parent_handle', ''),
+        'parent_text': (result.get('parent_text') or '')[:280],
+    }
+
+
+def fetch_top_qt(url):
+    """Find the highest-view QT/RT of a given post URL.
+    Returns {qt_url, qt_handle, qt_views} or None if no notable QT exists."""
+    if not url or '/status/' not in url:
+        return None
+    prompt = (
+        f"Find the highest-view quote-tweet or retweet (with commentary) of the X post {url}. "
+        f"Use x_search to find QTs/RTs that reference this URL. "
+        f"Return ONLY a JSON object: "
+        f'{{"qt_url":"https://x.com/<handle>/status/<id>","qt_handle":"@<handle>","qt_views":<integer>}}. '
+        f"If no notable QT exists with at least 5,000 views, return an empty object {{}}."
+    )
+    result = _xai_call(prompt, timeout=45, max_tokens=400)
+    if not result or not result.get('qt_url'):
+        return None
+    try:
+        qt_views = int(result.get('qt_views') or 0)
+    except (TypeError, ValueError):
+        return None
+    if qt_views < 5000:
+        return None
+    return {
+        'qt_url': result['qt_url'],
+        'qt_handle': result.get('qt_handle', ''),
+        'qt_views': qt_views,
+    }
+
+
 # ---- body→text rename for eXpressO frontend compat ----
 def _body_to_text(s):
     out = dict(s)
@@ -171,8 +266,37 @@ for tab in tabs:
         print(f"[elon] {len(elon_kept)} posts (no top_n cap, promo filtered)", file=sys.stderr)
         continue
 
-    # --- DELTA #1: WORLD/USA ---
+    # --- DELTA #1: WORLD/USA — 100K floor + QT/RT view boost ---
     if tab in ('world', 'usa'):
+        # QT/RT BOOST (Python enforcement): for any item where the top
+        # perspective view is below 100K, fire a targeted xAI call to find
+        # the highest-view QT/RT of that perspective. If found, add qt_views
+        # to the perspective.views and store original_views + qt_views fields
+        # so the math is auditable. This can push a borderline story over the
+        # 100K floor that would otherwise be dropped.
+        for c in cleaned:
+            if not isinstance(c, dict): continue
+            if curation.story_views(c) >= WU_VIEW_FLOOR:
+                continue  # already over floor — no boost needed
+            for p in c.get('perspectives', []) or []:
+                if not isinstance(p, dict): continue
+                try: cur_views = int(p.get('views', 0) or 0)
+                except: cur_views = 0
+                # Skip if perspective already has qt boost recorded
+                if p.get('qt_views'): continue
+                # Skip if no useful URL
+                if not p.get('url') or '/status/' not in p['url']: continue
+                qt = fetch_top_qt(p['url'])
+                if qt:
+                    p['original_views'] = cur_views
+                    p['original_url'] = p['url']
+                    p['original_handle'] = p.get('handle', '')
+                    p['qt_views'] = qt['qt_views']
+                    p['qt_url'] = qt['qt_url']
+                    p['qt_handle'] = qt['qt_handle']
+                    p['views'] = cur_views + qt['qt_views']  # COMBINED
+                    print(f"[qt-boost {tab}] @{p.get('handle')} {cur_views:,} + QT {qt['qt_views']:,} = {p['views']:,}", file=sys.stderr)
+
         cleaned_100k = [c for c in cleaned if curation.story_views(c) >= WU_VIEW_FLOOR]
         held = previous.get(tab, [])
         held_100k = [h for h in held if curation.story_views(h) >= WU_VIEW_FLOOR]
@@ -182,7 +306,7 @@ for tab in tabs:
         chosen = [s for s in chosen if curation.story_views(s) >= WU_VIEW_FLOOR]
         output[tab] = {'stories': [_body_to_text(s) for s in chosen],
                        '_candidates': tab_candidates}
-        print(f"[{tab}] {len(chosen)} events cleared {WU_VIEW_FLOOR:,} view floor", file=sys.stderr)
+        print(f"[{tab}] {len(chosen)} events cleared {WU_VIEW_FLOOR:,} view floor (after QT boost)", file=sys.stderr)
         continue
 
     # --- DELTA #2: SPORTS — Ristretto picks + SAS/Cowherd guarantee at end ---
@@ -207,6 +331,27 @@ for tab in tabs:
             if cow_post:
                 chosen.append(cow_post)
                 print("[sports] appended Cowherd at bottom", file=sys.stderr)
+
+        # PARENT CONTEXT (Python enforcement): for SAS/Cowherd posts that look
+        # like replies/QTs but don't have parent_url populated, fire xAI lookup
+        # to fetch the parent tweet so the frontend can embed it.
+        for s in chosen:
+            if not isinstance(s, dict): continue
+            if not _is_sas(s) and not _is_cow(s): continue  # only enforce on SAS/Cowherd
+            if s.get('parent_url'): continue  # already populated
+            body = (s.get('body') or '').strip()
+            # Heuristic for "looks like a reply/QT": starts with @, or short comment-like
+            looks_like_reply = body.startswith('@') or (body and len(body) < 60 and body[0] in '"“"')
+            if not looks_like_reply:
+                # Even if heuristic says no, fetch anyway since SAS/Cowherd often QT
+                pass
+            parent = fetch_parent(s.get('url', ''))
+            if parent:
+                s['parent_url'] = parent['parent_url']
+                s['parent_handle'] = parent['parent_handle']
+                s['parent_text'] = parent['parent_text']
+                print(f"[parent-fetch] @{s.get('handle')}: found parent @{parent['parent_handle']}", file=sys.stderr)
+
         output[tab] = {'stories': [_body_to_text(s) for s in chosen],
                        '_candidates': tab_candidates}
         continue
