@@ -172,8 +172,8 @@ def fetch_parent(url):
 
 
 _PERSPECTIVE_MIN_VIEWS = {
-    'Conservative': 5_000,
-    'Democrat': 1_000,      # Often muted on right-favoring stories — go lower so a substantive Dem reply isn't dropped
+    'Conservative': 1_000,  # Lowered 5K→1K 2026-05-23 eve: too many real replies sit in 2-4K range and were getting dropped
+    'Democrat': 1_000,
     'Independent': 1_000,
 }
 _PERSPECTIVE_MIN_FOLLOWERS = 1_000  # Quality floor: no "Yahoo accounts" per user
@@ -211,11 +211,8 @@ def find_perspectives(story_url, story_headline):
         f"  - Independent: ONLY include if there's a genuinely non-partisan or unusual "
         f"take that doesn't slot into Conservative or Democrat. Otherwise OMIT this slot — "
         f"do not manufacture one.\n\n"
-        f"VIEW MINIMUMS (tiered for fairness — left-leaning replies on right-favoring "
-        f"stories often get lower engagement but can still be substantive):\n"
-        f"  - Conservative reaction: minimum 5,000 views.\n"
-        f"  - Democrat reaction: minimum 1,000 views.\n"
-        f"  - Independent reaction: minimum 1,000 views.\n\n"
+        f"VIEW MINIMUM: each perspective must have at least 1,000 views. "
+        f"That's it — no per-label tier. Pick the highest-view qualifying tweet for each side.\n\n"
         f"QUALITY (anti-spam / anti-Yahoo): each reply/QT account must have at least "
         f"1,000 followers, a real bio, and the reply itself must be SUBSTANTIVE — no "
         f"one-word reactions ('lol', 'true', emoji), no spam, no copy-paste talking "
@@ -234,7 +231,7 @@ def find_perspectives(story_url, story_headline):
         f"]}}\n"
         f"Empty array {{\"perspectives\":[]}} is valid if nothing qualifies."
     )
-    result = _xai_call(prompt, timeout=90, max_tokens=3000)
+    result = _xai_call(prompt, timeout=120, max_tokens=5000)
     if not result or 'perspectives' not in result:
         return []
     persps = result.get('perspectives') or []
