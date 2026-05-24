@@ -156,6 +156,12 @@ check  "M-038e:env-exported"           update.sh      "export NETLIFY_AUTH_TOKEN
 # cap loop's 500K bypass can actually fire on late-bloomer viral stories.
 check  "M-026-fix:apply-hold-no-prefilter"  parse_grok.py  "max_age_hours=999"  exists
 
+# M-040 — Hallucination guard via X oEmbed handle verification
+check  "M-040a:verify-fn"              parse_grok.py  "def verify_url_handle"          exists
+check  "M-040b:oembed-call"            parse_grok.py  "publish\.twitter\.com/oembed"   exists
+check  "M-040c:verify-sweep-wired"     parse_grok.py  "oembed-verify.*checking"        exists
+check  "M-040d:drop-mismatched"        parse_grok.py  "oembed-drop"                    exists
+
 # M-030 — Elon parent fetch (Python-enforced)
 check  "M-030a:elon-parent-fn"         parse_grok.py  "_enrich_parent"                  exists
 check  "M-030b:elon-parent-log"        parse_grok.py  "elon-parent"                     exists

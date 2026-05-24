@@ -438,6 +438,34 @@ def _is_generic_headline(h):
     return bool(_GENERIC_HEADLINE_RE.search(h.strip()))
 
 
+def verify_url_handle(url):
+    """M-040: hallucination guard. Call X's oEmbed API to confirm the URL
+    actually resolves AND that the handle in the URL matches the actual tweet
+    author. Catches Grok pairing a real handle with someone else's status ID.
+    Returns True if URL is valid + handle matches; False if either fails OR
+    if oEmbed API errors (fail-safe: drop unverifiable URLs).
+    """
+    if not url or '/status/' not in url:
+        return False
+    m = re.search(r'(?:x|twitter)\.com/([^/]+)/status/', url)
+    if not m:
+        return False
+    url_handle = m.group(1).lower()
+    api = 'https://publish.twitter.com/oembed?dnt=true&url=' + url
+    try:
+        req = _urlreq.Request(api, headers={'User-Agent': 'eXpressO/1.0'})
+        with _urlreq.urlopen(req, timeout=10) as r:
+            data = json.load(r)
+    except Exception:
+        # oEmbed unreachable or 404 — URL doesn't resolve. Drop it.
+        return False
+    author_url = (data.get('author_url') or '').rstrip('/')
+    if not author_url:
+        return False
+    actual_handle = author_url.rsplit('/', 1)[-1].lower()
+    return url_handle == actual_handle
+
+
 def pull_netlify_submissions():
     """M-038: Pull Post/Replace form submissions from Netlify Forms API.
     Returns submissions from the last 24h as story-shaped dicts. Older
@@ -1303,6 +1331,57 @@ for _e_tab, _e_container in list(output.items()):
         _e_displaced.append(_e_p)
         if len(_e_displaced) >= 10: break
     _e_container['earlier'] = _e_displaced
+
+
+# M-040: HALLUCINATION GUARD — verify every shipped URL via X's oEmbed API.
+# Drops stories where the handle in the URL doesn't match the actual tweet
+# author (Grok pairs real text with wrong status ID sometimes — user caught
+# Jan 6 story embedding @edward_bernayz's Azealia Banks tweet).
+# Parallelized; ~10 API calls per cron is cheap, ~1-2s wall time.
+import concurrent.futures as _cf_oembed
+def _verify_one(item):
+    item['_url_verified'] = verify_url_handle(item.get('url',''))
+    return item
+
+_verify_jobs = []
+_verify_news_tabs = ['world','usa','top','msm','business','sports','elon','pods','pg6',
+                     'recipe','science','local','conspiracy','comedy','allin']
+for _v_tab in _verify_news_tabs:
+    _v_container = output.get(_v_tab, {})
+    if not isinstance(_v_container, dict): continue
+    for _v_story in _v_container.get('stories', []) or []:
+        if _v_story.get('url'): _verify_jobs.append(_v_story)
+        for _v_p in _v_story.get('perspectives', []) or []:
+            if isinstance(_v_p, dict) and _v_p.get('url'):
+                _verify_jobs.append(_v_p)
+
+if _verify_jobs:
+    print(f'[oembed-verify] checking {len(_verify_jobs)} URLs against X oEmbed API...', file=sys.stderr)
+    with _cf_oembed.ThreadPoolExecutor(max_workers=10) as _ex:
+        list(_ex.map(_verify_one, _verify_jobs))
+
+# Drop stories that failed verification (and their perspectives along with them).
+# Also drop individual perspectives that failed even if the story is valid.
+for _v_tab in _verify_news_tabs:
+    _v_container = output.get(_v_tab, {})
+    if not isinstance(_v_container, dict): continue
+    _sts = _v_container.get('stories', []) or []
+    _kept = []
+    for _v_story in _sts:
+        if not _v_story.pop('_url_verified', False):
+            print(f"[oembed-drop] {_v_tab}: '{(_v_story.get('headline','') or '?')[:55]}' — URL handle mismatch or unresolvable", file=sys.stderr)
+            continue
+        # Drop bad perspectives
+        _filtered_persps = []
+        for _v_p in _v_story.get('perspectives', []) or []:
+            if isinstance(_v_p, dict) and _v_p.pop('_url_verified', False):
+                _filtered_persps.append(_v_p)
+            elif isinstance(_v_p, dict):
+                print(f"[oembed-drop] {_v_tab} persp: @{_v_p.get('handle','?')} — URL handle mismatch", file=sys.stderr)
+        if 'perspectives' in _v_story:
+            _v_story['perspectives'] = _filtered_persps
+        _kept.append(_v_story)
+    _v_container['stories'] = _kept
 
 
 # ---- Preserve user-managed tabs (freespeech only — submit now cron-managed) ----

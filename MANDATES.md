@@ -88,6 +88,17 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-040 — Hallucination guard: verify every shipped URL via X's oEmbed API.
+**Date:** 2026-05-23 night
+**User said:** [screenshot] Conspiracy tab story "Jan 6 defendants now admitting to seditious conspiracy after previously blaming antifa or feds" — but the X embed loaded a totally unrelated @edward_bernayz tweet about Azealia Banks and Elon Musk.
+**Root cause:** Grok hallucinated the URL. Status ID 2058169975551021412 actually belongs to @edward_bernayz but Grok paired it with @hannahgais's handle + the Jan 6 body text. The handle/status-ID combo was inconsistent. Pre-Ristretto we had oEmbed verification that caught this; it was lost in the migration.
+**Enforcement:**
+- New `parse_grok.py::verify_url_handle(url)` — calls `publish.twitter.com/oembed?url=...`, extracts `author_url`, compares to handle in the original URL. Returns True only if both resolve AND handle matches.
+- Final sweep runs on ALL shipped stories AND perspectives across news tabs, parallelized via ThreadPoolExecutor.
+- Drops any story where URL handle ≠ actual author. Drops individual perspectives that fail (without killing the parent story).
+- Fail-safe: if oEmbed API errors or times out, the URL is considered unverifiable and DROPPED (better to ship less than ship wrong content).
+- ~10 API calls per cron, ~1-2s wall time.
+
 ## M-038 — Post/Replace submissions: 24h public window, then private-forever in submitter's browser.
 **Date:** 2026-05-23 night
 **User said:** "Why don't you just put it on the post that everyone sees at least for 24 hours, and then, whoever created it, it stays in their post replace forever until they delete it?"
