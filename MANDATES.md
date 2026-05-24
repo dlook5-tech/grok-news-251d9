@@ -88,6 +88,14 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-036 — ONE perspective per label, top-viewed only. No fallback to lower-viewed alternatives.
+**Date:** 2026-05-23 night
+**User said:** "honesty 5 is ok if its the highest viewed [democrat] perspective. if its not, 5 is way too low"
+**Interpretation:** Only the single highest-viewed reaction per label ships. If that pick fails the honesty 5 floor, the side ships empty — we do NOT fall back to the #2 or #3 viewed alternative (those would need a much higher honesty bar to count, and the simpler rule is just "top or nothing").
+**Enforcement:**
+- `find_perspectives` final step: group validated perspectives by label, keep only the highest-viewed per label, return in fixed order (Conservative, Democrat, Independent).
+- Honesty floor (M-034: <5 drops) still applies — but to the top pick only, no substitutions.
+
 ## M-035 — Perspectives: highest-viewed wins per side. NO character minimum. NO "analysis quality" curation.
 **Date:** 2026-05-23 night
 **User said:** "why 80 char i never said that. shouldbe the highest viewed post for (dem) perspective for that story"

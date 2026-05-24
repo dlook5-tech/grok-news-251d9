@@ -137,6 +137,9 @@ check  "M-029b:no-vulgar-slurs"        parse_grok.py  "Vulgar slurs"            
 check  "M-035a:no-80-char-min"         parse_grok.py  "len\(body_text\) < 80"           absent
 check  "M-035b:highest-viewed-prompt"  parse_grok.py  "HIGHEST-VIEWED political reaction"  exists
 
+# M-036 — One perspective per label (top-viewed only)
+check  "M-036:one-per-label"           parse_grok.py  "by_label\[lab\] = v"             exists
+
 # M-030 — Elon parent fetch (Python-enforced)
 check  "M-030a:elon-parent-fn"         parse_grok.py  "_enrich_parent"                  exists
 check  "M-030b:elon-parent-log"        parse_grok.py  "elon-parent"                     exists

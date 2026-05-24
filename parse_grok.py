@@ -285,9 +285,18 @@ def find_perspectives(story_url, story_headline):
             'engagement': f"{views:,} views",
             # honesty + notes set by score_honesty() pass (M-021)
         })
-        if len(valid) >= 3:
-            break
-    return valid
+
+    # M-036: ONE perspective per label, the HIGHEST-VIEWED Grok returned for
+    # that side. User mandate 2026-05-23 night: "honesty 5 is ok if its the
+    # highest viewed [democrat] perspective. if its not, 5 is way too low."
+    # So we never fall back to a lower-viewed alternative — top-per-label only.
+    # Honesty floor (M-034) then applies to that one pick.
+    by_label = {}
+    for v in valid:
+        lab = v['label']
+        if lab not in by_label or v['views'] > by_label[lab]['views']:
+            by_label[lab] = v
+    return [by_label[lab] for lab in ('Conservative', 'Democrat', 'Independent') if lab in by_label]
 
 
 # ============================================================
