@@ -88,6 +88,11 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-027 — cron_report.md timestamp shows Pacific Time (user reads in PT).
+**Date:** 2026-05-23 evening
+**User said:** "time stamp pacific time going forward"
+**Enforcement:** `parse_grok.py` report header uses `zoneinfo.ZoneInfo("America/Los_Angeles")` to convert `lastUpdated` to PT. Format: `=== CRON @ 2026-05-23 5:49 PM PT  (2026-05-24T00:49:57Z) ===`. UTC kept in parens for traceability.
+
 ## M-026 — Big-views age exception: World/USA stories ≥500K views bypass the 24h cap.
 **Date:** 2026-05-23 evening
 **User said:** "yes 500k exception if late growth"
