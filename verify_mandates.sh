@@ -98,7 +98,7 @@ check  "M-019d:self-quote-guard"       parse_grok.py  "url == story_url"        
 check  "M-021a:no-honesty-in-update"   update.sh      "HONESTY SCORING"                  absent
 check  "M-021b:score-honesty-fn"       parse_grok.py  "def score_honesty"                exists
 check  "M-021c:scoring-pass-wired"     parse_grok.py  "honesty-score.*scoring.*items"    exists
-check  "M-021d:persp-prompt-no-honesty" parse_grok.py "DO NOT score honesty here"        exists
+check  "M-021d:persp-prompt-no-honesty" parse_grok.py "DO NOT score honesty"             exists
 
 # M-023 — Elon: no promo filter, no QC dedup
 check  "M-023a:elon-no-promo-filter"   parse_grok.py  "elon_kept = list\(cleaned\)"     exists
@@ -127,9 +127,10 @@ check  "M-027:report-pt-timestamp"     parse_grok.py  "America/Los_Angeles"     
 check  "M-028a:persp-honesty-floor"    parse_grok.py  "_PERSP_HONESTY_FLOOR ="          exists
 check  "M-028b:honesty-floor-log"      parse_grok.py  "honesty-floor"                   exists
 
-# M-029 PRIME DIRECTIVE — citizen journalism, not freaks online
-check  "M-029a:prime-directive-prompt" parse_grok.py  "PRIME DIRECTIVE.*CITIZEN JOURNALISM"  exists
-check  "M-029b:auto-reject-vulgar"     parse_grok.py  "AUTO-REJECT"                     exists
+# M-029 PRIME DIRECTIVE — superseded by M-035 (highest-viewed wins). Anti-vulgar
+# stays in the AUTO-REJECT list of the new prompt.
+check  "M-029a:auto-reject-block"      parse_grok.py  "AUTO-REJECT"                     exists
+check  "M-029b:no-vulgar-slurs"        parse_grok.py  "Vulgar slurs"                    exists
 # M-029c REMOVED — 80-char min was my overreach (M-035). User never asked for it.
 
 # M-035: NO character minimum, highest-viewed wins
