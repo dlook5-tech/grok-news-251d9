@@ -88,6 +88,15 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-022 — After any cron, ALWAYS paste cron_report.md verbatim. Never summarize from memory.
+**Date:** 2026-05-23 evening
+**User said:** "Where's the last cron report on the eight stories, how they were curated, and why they were passed? Can you hard code that into the Python so you stop forgetting it each time?"
+**Root cause:** The file has been auto-generated since M-002 (2026-05-23 morning). The structural piece is done. What I kept doing wrong was summarizing the run from memory in chat instead of pasting the cron_report.md contents directly. The user shouldn't have to ask where it is.
+**Enforcement:**
+- Behavioral rule for me: after ANY cron completes (locally OR via GitHub Actions), the first thing in my response is `cat cron_report.md` output, pasted in chat verbatim. THEN any commentary.
+- Recurring wakeup prompt (ScheduleWakeup) updated to require reading and pasting `cron_report.md` literally as the first step.
+- M-002 already enforces that the file gets written + committed. M-022 adds the "always show it" rule on top.
+
 ## M-021 — Honesty scoring is a SEPARATE LABELING PASS. Never inside selection or perspective fetch.
 **Date:** 2026-05-23 evening
 **User said:** "The honesty score should not affect any picking of stories or picking of the perspective sub-stories. What the fuck are you doing?"
