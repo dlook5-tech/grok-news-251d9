@@ -112,6 +112,14 @@ check  "M-024b:msm-top-n-5"            parse_grok.py  "'msm': 5"                
 check  "M-025a:non-english-fn"         parse_grok.py  "def _is_non_english"             exists
 check  "M-025b:lang-filter-applied"    parse_grok.py  "lang-filter"                     exists
 
+# M-026 — Big-views age exception (World/USA only)
+check  "M-026a:bypass-tabs-defined"    parse_grok.py  "_BIG_VIEW_BYPASS_TABS"           exists
+check  "M-026b:bypass-floor-500K"      parse_grok.py  "_BIG_VIEW_BYPASS_FLOOR = 500_000" exists
+check  "M-026c:bypass-log-line"        parse_grok.py  "age-cap-bypass"                  exists
+
+# M-022 strengthened: cron report wrapper exists
+check  "M-022-helper:wrapper-script"   run_cron_with_report.sh  "cat cron_report.md"     exists
+
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists
 check  "M-002b:report-in-workflow"       .github/workflows/cron.yml  "cron_report\.md"                               exists

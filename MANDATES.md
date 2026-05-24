@@ -88,6 +88,20 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-026 — Big-views age exception: World/USA stories ≥500K views bypass the 24h cap.
+**Date:** 2026-05-23 evening
+**User said:** "yes 500k exception if late growth"
+**Context:** White House @WhiteHouse Barilla pasta plant story (1.4M views) showed up in cron #13's candidate list at 49.6h old and got killed by the 24h USA age cap. The story was clearly viral but late-blooming — most likely it crossed 1M views only after the 24h freshness window. User wants those late-blooming viral hits to still ship.
+**Enforcement:**
+- `parse_grok.py` age-cap loop now has a per-story exception: if `_tab in {'world','usa'}` and `views >= 500_000`, the 24h cap is bypassed and the story ships even when older.
+- Log line `[age-cap-bypass]` shows when this fires, with view count and actual age.
+- Floor stays at 500K (not 100K) — keeps the small-fish stories on the strict 24h timeline.
+- Other tabs unaffected.
+
+## M-022 STRENGTHENED — Always cat cron_report.md after cron, no exceptions. Wrapper added.
+- New helper `run_cron_with_report.sh` runs `update.sh` then `cat cron_report.md`. Use it any time we want to be SURE the report prints.
+- Wakeup prompt updated to require pasting the file contents verbatim as the FIRST element of the response, no preamble.
+
 ## M-025 — Don't post anything not in English. Drop non-English stories AND perspectives.
 **Date:** 2026-05-23 evening
 **User said:** "dont post anything not translated"

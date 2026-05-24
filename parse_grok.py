@@ -768,6 +768,14 @@ PER_TAB_AGE_CAP = {
     'science': 72.0,     # research/breakthrough posts spaced out
     'local': 72.0,       # SoCal/OC content sparse on X
 }
+# M-026: BIG-VIEWS AGE EXCEPTION for World + USA.
+# User mandate 2026-05-23 evening: late-blooming viral stories (e.g. Barilla
+# pasta plant at 1.4M views, 49h old) shouldn't be killed by 24h cap. If a
+# story crossed the threshold (500K views) it's clearly viral regardless of
+# when it was posted — ship it.
+_BIG_VIEW_BYPASS_TABS = {'world', 'usa'}
+_BIG_VIEW_BYPASS_FLOOR = 500_000
+
 for _tab, _container in list(output.items()):
     if not isinstance(_container, dict): continue
     _stories = _container.get('stories', [])
@@ -792,6 +800,14 @@ for _tab, _container in list(output.items()):
             _kept.append(_s)  # no URL age we can read — keep
             continue
         if min(ages) > _cap:
+            # M-026: big-views bypass for World/USA only
+            _v = int(_s.get('views', 0) or 0)
+            if _tab in _BIG_VIEW_BYPASS_TABS and _v >= _BIG_VIEW_BYPASS_FLOOR:
+                print(f"[age-cap-bypass] keep {_tab}: '{(_s.get('headline','') or '?')[:50]}' "
+                      f"({_v:,} views >= {_BIG_VIEW_BYPASS_FLOOR:,} bypass, age {min(ages):.1f}h)",
+                      file=sys.stderr)
+                _kept.append(_s)
+                continue
             print(f"[age-cap] drop {_tab}: '{(_s.get('headline','') or '?')[:50]}' (oldest URL {min(ages):.1f}h > {_cap:.0f}h cap)", file=sys.stderr)
             continue
         _kept.append(_s)
