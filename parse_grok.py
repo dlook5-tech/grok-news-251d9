@@ -489,12 +489,15 @@ for tab in tabs:
     tab_candidates = _candidate_dump(cleaned)
 
     # --- DELTA #3: ELON ---
+    # User mandate 2026-05-23 evening: "for Elon Tab, don't cut off anything
+    # where he talks about one of his companies. If he has over a million
+    # views on the story, post it. Make the Python code that simple."
+    # → No promo filter. Ship every Elon post Grok returned.
+    # → QC dedup skips Elon (see _DEDUP_ORDER) so his multi-take threads
+    #   on the same topic all show.
     if tab == 'elon':
-        elon_kept = [c for c in cleaned if not _is_elon_promo(c)]
-        # PYTHON ENFORCEMENT: rewrite generic headlines ("Shares video link",
-        # "Short affirmative reply", etc.) by fetching what's actually in the
-        # post. User has flagged this bug 3+ times — prompt-only fix wasn't
-        # holding; now enforced in Python.
+        elon_kept = list(cleaned)
+        # Still rewrite generic headlines ('Shares video link', etc.)
         for s in elon_kept:
             h = (s.get('headline') or '').strip()
             if _is_generic_headline(h):
@@ -504,7 +507,7 @@ for tab in tabs:
                     s['headline'] = better
         output[tab] = {'stories': [_body_to_text(s) for s in elon_kept],
                        '_candidates': tab_candidates}
-        print(f"[elon] {len(elon_kept)} posts (no top_n cap, promo filtered)", file=sys.stderr)
+        print(f"[elon] {len(elon_kept)} posts (no promo filter, no top_n cap)", file=sys.stderr)
         continue
 
     # --- DELTA #1: WORLD/USA — 100K floor + QT/RT view boost ---
@@ -790,8 +793,10 @@ for _tab, _container in list(output.items()):
 # generic adjectives (massive/major/huge/big) so they don't count toward the 2.
 #
 # Priority (earlier wins): world > usa > top > msm > business > sports > pg6 ...
+# Elon REMOVED from dedup order (M-023) — his multi-take threads on the same
+# topic should all ship; dedup-by-shared-tokens kills variations of the same take.
 _DEDUP_ORDER = ['world','usa','top','msm','business','sports','pg6','science',
-                'pods','allin','conspiracy','local','recipe','comedy','elon']
+                'pods','allin','conspiracy','local','recipe','comedy']
 _QC_STOP = {
     # articles / pronouns / conjunctions
     'the','from','with','that','this','about','have','will','their','they','them',

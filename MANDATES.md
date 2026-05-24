@@ -88,6 +88,15 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-023 — Elon tab: NO promo filter, NO cross-tab QC dedup. Ship every post Grok returns within 24h.
+**Date:** 2026-05-23 evening
+**User said:** "for Elon Tab, don't cut off anything where he talks about one of his companies. If he has over a million views on the story, post it. Make the Python code that simple."
+**Enforcement:**
+- `parse_grok.py` Elon branch: removed `_is_elon_promo` filter. `elon_kept = list(cleaned)` ships every post Grok returned.
+- `_DEDUP_ORDER` no longer includes `'elon'` — QC dedup never touches Elon stories (his multi-take threads on the same topic all ship; e.g. multiple Starship reactions, multiple Grok-build follow-ups).
+- 24h age cap still applies (per general news-tab freshness rule).
+- Generic-headline rewrite still runs (Elon often posts "Shares video" stubs that need real headlines).
+
 ## M-022 — After any cron, ALWAYS paste cron_report.md verbatim. Never summarize from memory.
 **Date:** 2026-05-23 evening
 **User said:** "Where's the last cron report on the eight stories, how they were curated, and why they were passed? Can you hard code that into the Python so you stop forgetting it each time?"
