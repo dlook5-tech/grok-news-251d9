@@ -1045,6 +1045,32 @@ if _score_jobs:
     _scored = sum(1 for j in _score_jobs if j.get('honesty'))
     print(f"[honesty-score] {_scored}/{len(_score_jobs)} items got valid 1-10 scores", file=sys.stderr)
 
+# M-028: Drop PERSPECTIVES with honesty < 5 (serial misrep / conspiracy).
+# Stories themselves are picked by views and never dropped on honesty.
+# User mandate 2026-05-23 evening: "honesty 3 is that even news?" — a Tara
+# Dublin reply got scored 3 (personal attack on Modi/Rubio with no facts);
+# user correctly flagged it as not-news. Threshold of 5 keeps anything
+# "demonstrably false" and up, drops conspiracy/serial-misrep only.
+_PERSP_HONESTY_FLOOR = 5
+for _h_tab in _HONESTY_NEWS_TABS:
+    _h_container = output.get(_h_tab, {})
+    if not isinstance(_h_container, dict): continue
+    for _h_story in _h_container.get('stories', []) or []:
+        _persps = _h_story.get('perspectives', []) or []
+        if not _persps: continue
+        _persps_kept = []
+        for _p in _persps:
+            if not isinstance(_p, dict):
+                continue
+            _ph = _p.get('honesty')
+            if _ph is not None and isinstance(_ph, (int, float)) and _ph < _PERSP_HONESTY_FLOOR:
+                print(f"[honesty-floor] drop perspective in {_h_tab}: @{_p.get('handle','?')} "
+                      f"({_p.get('label','?')}, honesty={_ph}) — '{(_p.get('body','') or '')[:60]}'",
+                      file=sys.stderr)
+                continue
+            _persps_kept.append(_p)
+        _h_story['perspectives'] = _persps_kept
+
 
 # ---- M-025: Drop non-English stories AND non-English perspectives ----
 # User mandate 2026-05-23 evening: "dont post anything not translated"

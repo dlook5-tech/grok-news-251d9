@@ -88,6 +88,16 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-028 — Perspectives with honesty < 5 get dropped (post-scoring, not pre-selection).
+**Date:** 2026-05-23 evening
+**User said:** "honesty 3 is that even news?" — flagged @taradublinrocks Democrat reply scored honesty=3 ("But he's protecting a pedophile rapist..." — personal attack on Modi/Rubio with no facts) as not-news.
+**Reconciles with M-021 (honesty separate from selection):** M-021 says honesty must NOT bias Grok's initial selection. M-028 fires AFTER honesty scoring is done — it's an editorial floor on already-scored items, not a selection bias.
+**Enforcement:**
+- `parse_grok.py` after honesty-scoring pass: iterate all shipped stories' perspectives, drop those with `honesty < 5` (per the rubric: 5+ keeps "demonstrably false and up"; <5 = serial misrep/conspiracy).
+- Stories themselves are NEVER dropped on honesty — selection stays pure-views.
+- Threshold lives in `_PERSP_HONESTY_FLOOR` constant for easy tuning.
+- Log line `[honesty-floor]` shows each drop with handle, label, score, body excerpt.
+
 ## M-027 — cron_report.md timestamp shows Pacific Time (user reads in PT).
 **Date:** 2026-05-23 evening
 **User said:** "time stamp pacific time going forward"

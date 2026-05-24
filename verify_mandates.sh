@@ -123,6 +123,10 @@ check  "M-022-helper:wrapper-script"   run_cron_with_report.sh  "cat cron_report
 # M-027 — Report header in Pacific Time
 check  "M-027:report-pt-timestamp"     parse_grok.py  "America/Los_Angeles"             exists
 
+# M-028 — Perspective honesty floor (drops conspiracy / serial misrep)
+check  "M-028a:persp-honesty-floor"    parse_grok.py  "_PERSP_HONESTY_FLOOR = 5"        exists
+check  "M-028b:honesty-floor-log"      parse_grok.py  "honesty-floor"                   exists
+
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists
 check  "M-002b:report-in-workflow"       .github/workflows/cron.yml  "cron_report\.md"                               exists
