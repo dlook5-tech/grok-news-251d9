@@ -256,6 +256,9 @@ PY
 
 export -f call_grok call_grok_top_multi prompt_for needs_perspectives
 export XAI_API_KEY
+# M-038 enforcement: parse_grok.py's pull_netlify_submissions() needs these.
+# Without exporting, the subprocess inherits nothing from `source .env`.
+export NETLIFY_AUTH_TOKEN NETLIFY_SITE_ID
 
 echo "Calling Grok for ${#TABS[@]} tabs in parallel..."
 for tab in "${TABS[@]}"; do

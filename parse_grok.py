@@ -713,8 +713,14 @@ for tab in tabs:
         cleaned_qual = [c for c in cleaned if _wu_qualified(c)]
         held = previous.get(tab, [])
         held_qual = [h for h in held if _wu_qualified(h)]
+        # M-026 fix: pass max_age_hours=999 so apply_hold does NOT pre-filter on
+        # 24h. The per-tab age cap loop downstream applies 24h + the 500K-view
+        # bypass for late-bloomer viral stories. Without this, apply_hold's
+        # default 24h killed candidates before M-026 could evaluate them
+        # (e.g. WhiteHouse SAVE Act 695K views @ 33.7h was getting dropped).
         chosen = curation.apply_hold(held_qual, cleaned_qual, top_n=999,
-                                     sort_key=curation.story_velocity)
+                                     sort_key=curation.story_velocity,
+                                     max_age_hours=999)
         chosen = [s for s in chosen if _wu_qualified(s)]
 
         # ===== STAGE 2: find Conservative / Democrat (+ optional Independent)

@@ -150,6 +150,11 @@ check  "M-038a:pull-netlify-fn"        parse_grok.py  "def pull_netlify_submissi
 check  "M-038b:24h-cutoff"             parse_grok.py  "if age_h > 24: continue.*24h public window" exists
 check  "M-038c:submit-not-preserved"   parse_grok.py  "for manual_tab in \('freespeech',\):"  exists
 check  "M-038d:submit-written"         parse_grok.py  "output\['submit'\] = \{'stories'"  exists
+check  "M-038e:env-exported"           update.sh      "export NETLIFY_AUTH_TOKEN NETLIFY_SITE_ID"  exists
+
+# M-026 fix: World/USA apply_hold must pass max_age_hours=999 so the per-tab
+# cap loop's 500K bypass can actually fire on late-bloomer viral stories.
+check  "M-026-fix:apply-hold-no-prefilter"  parse_grok.py  "max_age_hours=999"  exists
 
 # M-030 — Elon parent fetch (Python-enforced)
 check  "M-030a:elon-parent-fn"         parse_grok.py  "_enrich_parent"                  exists
