@@ -641,8 +641,10 @@ for tab in tabs:
                        '_candidates': tab_candidates}
         continue
 
-    # --- All other tabs: Ristretto verbatim ---
-    chosen = curation.curate(tab, previous.get(tab, []), cleaned, top_n=3)
+    # --- All other tabs: Ristretto verbatim with per-tab cap ---
+    # MSM bumped to 5 (M-024 — user: "so many choices, low views makes sense").
+    _tab_top_n = {'msm': 5}.get(tab, 3)
+    chosen = curation.curate(tab, previous.get(tab, []), cleaned, top_n=_tab_top_n)
     output[tab] = {'stories': [_body_to_text(s) for s in chosen],
                    '_candidates': tab_candidates}
 
@@ -793,9 +795,11 @@ for _tab, _container in list(output.items()):
 # generic adjectives (massive/major/huge/big) so they don't count toward the 2.
 #
 # Priority (earlier wins): world > usa > top > msm > business > sports > pg6 ...
-# Elon REMOVED from dedup order (M-023) — his multi-take threads on the same
-# topic should all ship; dedup-by-shared-tokens kills variations of the same take.
-_DEDUP_ORDER = ['world','usa','top','msm','business','sports','pg6','science',
+# Tabs EXCLUDED from dedup (because their content NATURALLY overlaps):
+#   - elon (M-023): his own multi-take threads should all ship
+#   - msm  (M-024): mainstream media's whole purpose is covering the same news
+#                   that's in World/USA — dedup was emptying the tab
+_DEDUP_ORDER = ['world','usa','top','business','sports','pg6','science',
                 'pods','allin','conspiracy','local','recipe','comedy']
 _QC_STOP = {
     # articles / pronouns / conjunctions

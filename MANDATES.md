@@ -88,6 +88,16 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-024 — MSM tab: NEVER blank. No QC dedup. top_n bumped to 5. Low views are fine.
+**Date:** 2026-05-23 evening
+**User said:** "msm should not be blank, so many choices, low views makes sense, the opposite"
+**Root cause:** Mainstream media accounts (NYT, WaPo, CNN, BBC, AP, Reuters, etc.) cover the same big stories that are in World/USA — that's literally what "mainstream media" means. The QC cross-tab dedup was emptying the MSM tab because every MSM story shared tokens with the World/USA shipped story it was reporting on. Cron #15 saw 5 MSM items from Grok, dedup killed 3 directly + the rest got dropped, MSM shipped 0.
+**Enforcement:**
+- `_DEDUP_ORDER` no longer includes `'msm'` — QC dedup never touches MSM stories.
+- `top_n=5` for MSM (default is 3) — show more mainstream coverage angles per cron.
+- No view floor (MSM never had one). Wire-service and beat-reporter posts often sit at 30-80K views; that's fine.
+- 24h age cap still applies (MSM should be fresh news, not yesterday's coverage).
+
 ## M-023 — Elon tab: NO promo filter, NO cross-tab QC dedup. Ship every post Grok returns within 24h.
 **Date:** 2026-05-23 evening
 **User said:** "for Elon Tab, don't cut off anything where he talks about one of his companies. If he has over a million views on the story, post it. Make the Python code that simple."

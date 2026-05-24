@@ -104,6 +104,10 @@ check  "M-021d:persp-prompt-no-honesty" parse_grok.py "DO NOT score honesty here
 check  "M-023a:elon-no-promo-filter"   parse_grok.py  "elon_kept = list\(cleaned\)"     exists
 check  "M-023b:elon-not-in-dedup"      parse_grok.py  "'recipe','comedy'\]"             exists
 
+# M-024 — MSM tab: no dedup, top_n=5
+check  "M-024a:msm-not-in-dedup"       parse_grok.py  "'world','usa','top','business'" exists
+check  "M-024b:msm-top-n-5"            parse_grok.py  "'msm': 5"                       exists
+
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists
 check  "M-002b:report-in-workflow"       .github/workflows/cron.yml  "cron_report\.md"                               exists
