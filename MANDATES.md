@@ -88,10 +88,15 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
-## M-031 — cron_report.md per-tab summary is a PLAIN LIST, not a table.
+## M-032 — Test mode: test_parse.sh re-runs parse_grok against cached Grok output (saves tokens).
 **Date:** 2026-05-23 evening
-**User said:** "no post report as a table"
-**Enforcement:** `parse_grok.py` writes per-tab summary as `  tab: N stories, top Xv, ages Y-Zh — headline` lines, NOT a markdown table.
+**User said:** "Also, instead of running a full cron, can we do like a test cron? Or you just show me the results, so we don't use so many tokens?"
+**Enforcement:** `test_parse.sh` reads cached `/tmp/grok_raw.json` instead of firing the 17 selection xAI calls. Stage 2 perspectives + honesty scoring + parent fetch + headline rewrite still run live (they need fresh data). Cost per test ≈ $0.05 vs $0.50 for a full cron. Use this when iterating on prompt/filter changes; only run `run_cron_with_report.sh` when you actually want to deploy.
+
+## M-031 CORRECTED — cron_report.md per-tab summary IS a table. (Earlier "no table" version was a misread of the user.)
+**Date:** 2026-05-23 evening (originally wrong, corrected same day)
+**Original misread:** I interpreted "no post report as a table" as "do not post the report as a table" and removed the table format. User clarified: "ive never said dont make a table, your halucinating ... write the table into your Python coding so you don't forget. Leave it in the exact form in this table; that's what I like."
+**Correct enforcement:** `parse_grok.py` writes the per-tab summary as the EXACT markdown table the user approved: `| TAB | N | Top Views | Age range | Top Headline |` — DO NOT regress this.
 
 ## M-030 — Python-enforced PARENT FETCH for Elon replies (post what he's reacting to).
 **Date:** 2026-05-23 evening

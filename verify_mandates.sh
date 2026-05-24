@@ -136,8 +136,12 @@ check  "M-029c:body-min-80-chars"      parse_grok.py  "len\(body_text\) < 80"   
 check  "M-030a:elon-parent-fn"         parse_grok.py  "_enrich_parent"                  exists
 check  "M-030b:elon-parent-log"        parse_grok.py  "elon-parent"                     exists
 
-# M-031 — Report per-tab summary is NOT a table
-check  "M-031:no-table-format"         parse_grok.py  "M-031: NOT a table"              exists
+# M-031 CORRECTED — Report per-tab summary IS the table format user approved
+check  "M-031:table-format-present"    parse_grok.py  "Top Views \| Age range"          exists
+check  "M-031:table-mandate-comment"   parse_grok.py  "M-031 CORRECTED"                 exists
+
+# M-032 — Test mode helper exists
+check  "M-032:test-mode-script"        test_parse.sh  "TEST MODE"                       exists
 
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists

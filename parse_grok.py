@@ -1259,14 +1259,16 @@ for tab in ('world','usa'):
         _report_lines.append(f"  {i}. {_fmt_views(v):>6s} {mark} @{handle} — {h}{reason}")
     _report_lines.append("")
 
-# Per-tab summary (M-031: NOT a table — user explicitly said no table format).
-# Plain list: one line per tab with N + top headline.
-_report_lines.append("Per-tab summary:")
+# M-031 CORRECTED 2026-05-23: user wants the table. Restored the exact format.
+# DO NOT REMOVE — user explicit: "Leave it in the exact form in this table;
+# that's what I like; that's what we've been talking about. Leave it."
+_report_lines.append("| TAB        | N | Top Views | Age range  | Top Headline                                       |")
+_report_lines.append("|------------|---|-----------|------------|----------------------------------------------------|")
 for tab in ('world','usa','top','business','msm','sports','elon','pods','pg6',
             'recipe','science','local','conspiracy','comedy','allin'):
     sts = (final.get(tab,{}) or {}).get('stories',[]) or []
     if not sts:
-        _report_lines.append(f"  {tab}: 0 stories")
+        _report_lines.append(f"| {tab:<10s} | 0 |    —      | —          | (empty)                                            |")
         continue
     top_view = 0
     top_head = ''
@@ -1278,11 +1280,11 @@ for tab in ('world','usa','top','business','msm','sports','elon','pods','pg6',
                 v = int(re.findall(r'(\d[\d.]*)\s*([kmb]?)\s*views', (s.get('engagement','') or '').lower())[0][0].replace(',','').replace('.','')) if 'views' in (s.get('engagement','') or '').lower() else 0
             except: pass
         if v > top_view:
-            top_view = v; top_head = (s.get('headline','') or s.get('body','') or '?')[:60]
+            top_view = v; top_head = (s.get('headline','') or s.get('body','') or '?')[:50]
         a = _url_age_h(s.get('url',''))
         if a is not None: ages.append(a)
     age_range = f'{min(ages):.1f}-{max(ages):.1f}h' if ages else '—'
-    _report_lines.append(f"  {tab}: {len(sts)} stories, top {_fmt_views(top_view)}v, ages {age_range} — {top_head}")
+    _report_lines.append(f"| {tab:<10s} | {len(sts)} | {_fmt_views(top_view):>9s} | {age_range:<10s} | {top_head:<50s} |")
 
 with open('cron_report.md', 'w') as f:
     f.write('\n'.join(_report_lines) + '\n')
