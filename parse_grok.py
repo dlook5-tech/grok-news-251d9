@@ -307,9 +307,16 @@ def score_honesty(url, body, headline=''):
         f"   7 = opinion / prediction / hot take ('I think X will happen')\n"
         f"   6 = contains a specific misleading claim\n"
         f"   5 = demonstrably false statement\n"
-        f"  ≤4 = serial misrepresentation, conspiracy without specifics\n\n"
-        f"Attribution: video/audio of person speaking = attribution VERIFIED (score the content, not 'fabricated'). "
+        f"  ≤4 = serial misrepresentation, conspiracy without specifics, pure personal attacks with no factual content\n\n"
+        f"ATTRIBUTION: video/audio of person speaking = attribution VERIFIED (score the content, not 'fabricated').\n"
         f"Transcript-only quotes have attribution uncertainty.\n\n"
+        f"COMMON MISSCORES TO AVOID:\n"
+        f"  - Vulgar personal attacks with no checkable claim ('X is a hooker / pedophile / nazi') = 3, NOT 5+\n"
+        f"  - Pure praise/congratulation with no factual content ('Way to go!' / 'You're a hero!') = 6 max, NOT 8+\n"
+        f"  - Calling someone a slur or generic insult without supporting evidence = 2-3\n"
+        f"  - One-line reactions like 'lol' or 'true' or pure emoji = 4 max\n"
+        f"  - Sarcastic dunks WITHOUT facts ('Sure, Jan') = 4-5\n"
+        f"  - Sarcastic dunks WITH a checkable claim attached = 6-7\n\n"
         f"Post URL: {url}\n"
         f"Post text: {text!r}\n\n"
         f"Return ONLY a JSON object: "
@@ -1051,7 +1058,7 @@ if _score_jobs:
 # Dublin reply got scored 3 (personal attack on Modi/Rubio with no facts);
 # user correctly flagged it as not-news. Threshold of 5 keeps anything
 # "demonstrably false" and up, drops conspiracy/serial-misrep only.
-_PERSP_HONESTY_FLOOR = 5
+_PERSP_HONESTY_FLOOR = 7  # Raised 5→7 on 2026-05-23: 5 was letting vulgar attacks ('First Lady was a hooker...') through. 7 keeps opinion/hot take (7) and analysis (8+), drops misleading-claim (6) and below.
 for _h_tab in _HONESTY_NEWS_TABS:
     _h_container = output.get(_h_tab, {})
     if not isinstance(_h_container, dict): continue
