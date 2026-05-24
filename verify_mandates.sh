@@ -130,7 +130,11 @@ check  "M-028b:honesty-floor-log"      parse_grok.py  "honesty-floor"           
 # M-029 PRIME DIRECTIVE — citizen journalism, not freaks online
 check  "M-029a:prime-directive-prompt" parse_grok.py  "PRIME DIRECTIVE.*CITIZEN JOURNALISM"  exists
 check  "M-029b:auto-reject-vulgar"     parse_grok.py  "AUTO-REJECT"                     exists
-check  "M-029c:body-min-80-chars"      parse_grok.py  "len\(body_text\) < 80"           exists
+# M-029c REMOVED — 80-char min was my overreach (M-035). User never asked for it.
+
+# M-035: NO character minimum, highest-viewed wins
+check  "M-035a:no-80-char-min"         parse_grok.py  "len\(body_text\) < 80"           absent
+check  "M-035b:highest-viewed-prompt"  parse_grok.py  "HIGHEST-VIEWED political reaction"  exists
 
 # M-030 — Elon parent fetch (Python-enforced)
 check  "M-030a:elon-parent-fn"         parse_grok.py  "_enrich_parent"                  exists

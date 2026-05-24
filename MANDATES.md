@@ -88,6 +88,16 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-035 — Perspectives: highest-viewed wins per side. NO character minimum. NO "analysis quality" curation.
+**Date:** 2026-05-23 night
+**User said:** "why 80 char i never said that. shouldbe the highest viewed post for (dem) perspective for that story"
+**Root cause:** I added a hidden 80-character body minimum AND framed the Stage 2 prompt around "substantive citizen-journalism analysis." Both were my overreach — user never asked for either. Combined with the prime-directive prompt, Grok was returning 0 perspectives on stories where the actual top reactions were short or non-analytical (e.g. Khalil deportation: lots of Democrat replies, all blunt, all under 80 chars and not "analytical" — Grok rejected them all per my prompt and shipped nothing).
+**Enforcement:**
+- `find_perspectives` Python validation: removed `len(body_text) < 80` check.
+- Prompt rewritten to ask for "HIGHEST-VIEWED reaction per side" — Grok ranks by views, picks the winner.
+- Auto-reject narrowed to actual abuse: vulgar slurs/personal-attacks-without-substance, pure-emoji posts, spam. No more "must be analytical" requirement.
+- View floor stays (1K). Account quality floor stays (1K followers + real bio). Those are anti-Yahoo, not editorial.
+
 ## M-033 — Earlier tab restored: stories displaced this cron go into `earlier`. (Regression from Ristretto migration.)
 **Date:** 2026-05-23 night
 **User said:** "Why doesn't the earlier tab work anymore? You might have to go back to the expresso before you put Restratto in. You probably wiped it out during that refresh."

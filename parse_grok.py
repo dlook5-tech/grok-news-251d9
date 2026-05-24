@@ -212,55 +212,42 @@ def find_perspectives(story_url, story_headline):
     if not story_url or '/status/' not in story_url:
         return []
     prompt = (
-        f"PRIME DIRECTIVE: This is eXpressO News, a CITIZEN JOURNALISM site. Every "
-        f"perspective you return must promote citizen journalism — substantive, "
-        f"thoughtful takes from real voices that ADD to understanding of the story. "
-        f"Not freaks online, not dunks, not cheerleading, not personal attacks.\n\n"
-        f"For the X post at {story_url} (headline: {story_headline!r}), find substantive "
-        f"citizen-journalism reactions to this specific event.\n\n"
-        f"WHAT QUALIFIES AS A CITIZEN-JOURNALISM PERSPECTIVE:\n"
-        f"  - Original analysis, context, or background that helps the reader understand the story\n"
-        f"  - Factual additions: corrections, missing data, primary-source citations\n"
-        f"  - First-person expertise or on-the-ground experience relevant to the topic\n"
-        f"  - Substantive political take that EXPLAINS a position with reasoning (not just venting)\n"
-        f"  - Investigative thread or receipt-posting that advances the story\n\n"
-        f"AUTO-REJECT (do NOT return these — they violate the prime directive):\n"
-        f"  - Personal attacks / slurs ('X is a hooker / pedophile / nazi / fascist')\n"
-        f"  - One-line cheerleading ('Way to go!' / 'You're a hero!' / 'Slay queen')\n"
-        f"  - One-line dismissals ('Fuck them' / 'cope' / 'this' / 'lol')\n"
-        f"  - Pure emoji / reaction posts\n"
-        f"  - Generic dunks without facts or reasoning ('Sure, Jan' / 'OK boomer')\n"
-        f"  - Meme images without substantive commentary\n"
-        f"  - Vulgar/profanity-only reactions\n\n"
+        f"For the X post at {story_url} (headline: {story_headline!r}), find the "
+        f"HIGHEST-VIEWED political reaction on X for each of these slots:\n"
+        f"  - Conservative: right-leaning / MAGA / Republican-aligned reaction\n"
+        f"  - Democrat: left-leaning / progressive / Democrat-aligned reaction\n"
+        f"  - Independent: ONLY if a non-partisan or unusual take exists. Otherwise OMIT.\n\n"
+        f"Pick by view count. The highest-viewed qualifying reaction per side wins — "
+        f"don't curate by 'analysis quality,' the user wants raw winners.\n\n"
         f"WHERE TO LOOK:\n"
         f"  (a) Direct replies to {story_url}\n"
-        f"  (b) Quote-tweets that share the URL with the user's own commentary\n"
-        f"  (c) Original posts within 24h on this same event from substantive accounts\n"
-        f"  NOT: generic political posts unrelated to this story, NOT the original post itself.\n\n"
-        f"SLOTS (return what you find — missing slots are fine):\n"
-        f"  - Conservative: right-leaning citizen take with substance\n"
-        f"  - Democrat: left-leaning citizen take with substance\n"
-        f"  - Independent: ONLY if a non-partisan substantive take exists. Otherwise OMIT.\n\n"
+        f"  (b) Quote-tweets sharing the URL with the user's own commentary\n"
+        f"  (c) Original posts within 24h on the SAME news event from other commentators\n"
+        f"  NOT: generic political posts unrelated to this story. NOT the source post or anything from the same author.\n\n"
+        f"AUTO-REJECT (don't return these — promotes freaks online, not citizen journalism):\n"
+        f"  - Vulgar slurs / personal attacks with no substance ('X is a hooker / pedophile / nazi')\n"
+        f"  - Pure emoji reactions ('🎯' alone) or one-character posts\n"
+        f"  - Spam / copy-paste talking points repeated across many accounts\n\n"
         f"QUALITY FLOORS (all required):\n"
         f"  - Minimum 1,000 views per perspective.\n"
-        f"  - Account ≥1K followers, real bio, real posting history.\n"
-        f"  - Body text ≥80 characters of substantive commentary.\n"
-        f"  - Must make a FACTUAL or ANALYTICAL claim, not just emote.\n\n"
-        f"If you can't find a substantive citizen-journalism take for a side, OMIT that side. "
-        f"Empty results are far better than freaks-online filler. NEVER manufacture a take.\n\n"
+        f"  - Account ≥1K followers and a real bio (not bot/spam account).\n\n"
+        f"That's it — no character-length minimum, no 'must be analytical.' A blunt "
+        f"3-word reaction from a real account with 50K views beats a thoughtful "
+        f"essay from someone with 200 followers.\n\n"
         f"RULES:\n"
-        f"  - All URLs must be real X status URLs you actually found via x_search. NEVER fabricate.\n"
+        f"  - All URLs must be real X status URLs you found via x_search. NEVER fabricate.\n"
         f"  - Each perspective's URL must be DIFFERENT from {story_url}.\n"
         f"  - Posted in the last 24 hours.\n"
-        f"  - DO NOT score honesty here — separate downstream pass handles that.\n\n"
+        f"  - DO NOT score honesty — separate downstream pass handles that.\n"
+        f"  - If you genuinely cannot find a qualifying reaction for a side, OMIT that slot. "
+        f"Don't manufacture takes. Empty slot > fake content.\n\n"
         f"Return ONLY a JSON object:\n"
         f'{{"perspectives":[\n'
         f'  {{"label":"Conservative","handle":"@user","url":"https://x.com/.../status/<id>",'
         f'"body":"verbatim post text","views":<integer>}},\n'
         f'  {{"label":"Democrat","handle":"@user","url":"...","body":"...","views":...}},\n'
         f'  {{"label":"Independent","handle":"@user","url":"...","body":"...","views":...}}\n'
-        f"]}}\n"
-        f"Empty array {{\"perspectives\":[]}} is valid AND expected when nothing substantive qualifies."
+        f"]}}"
     )
     result = _xai_call(prompt, timeout=120, max_tokens=5000)
     if not result or 'perspectives' not in result:
@@ -285,10 +272,9 @@ def find_perspectives(story_url, story_headline):
         # Tiered floor — per-label minimums (M-019)
         if views < _PERSPECTIVE_MIN_VIEWS.get(label, 5_000):
             continue
-        # M-029 PRIME DIRECTIVE: citizen journalism = substantive. Drop if body <80 chars.
-        body_text = (p.get('body') or '').strip()
-        if len(body_text) < 80:
-            continue
+        # M-035: NO character-length minimum. User never asked for it. Highest-viewed
+        # qualifying reaction wins per side. Anti-vulgar handled in prime-directive
+        # prompt's auto-reject list, not by length.
         seen_urls.add(url)
         valid.append({
             'label': label,
