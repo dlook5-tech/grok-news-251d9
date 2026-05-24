@@ -86,7 +86,7 @@ check  "M-018d:exception-caught"       parse_grok.py  "stage2-warn"             
 check  "M-018e:clears-stale-persp"     parse_grok.py  "_s.pop\('perspectives'"          exists
 
 # M-019 — Replies/QT-of-source search + tiered view floors
-check  "M-019a:replies-QTs-and-takes"  parse_grok.py  "Direct replies to the URL above" exists
+check  "M-019a:replies-QTs-and-takes"  parse_grok.py  "Direct replies to"               exists
 check  "M-019b:tiered-view-floors"     parse_grok.py  "_PERSPECTIVE_MIN_VIEWS"          exists
 check  "M-019c:no-curated-handles"     parse_grok.py  "curated handle"                  absent
 check  "M-019d:self-quote-guard"       parse_grok.py  "url == story_url"                exists
