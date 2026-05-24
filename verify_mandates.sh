@@ -162,6 +162,10 @@ check  "M-040b:oembed-call"            parse_grok.py  "publish\.twitter\.com/oem
 check  "M-040c:verify-sweep-wired"     parse_grok.py  "oembed-verify.*checking"        exists
 check  "M-040d:drop-mismatched"        parse_grok.py  "oembed-drop"                    exists
 
+# M-041 — Nested comments: perspectives get parent context fetched + embedded
+check  "M-041a:persp-parent-fn"        parse_grok.py  "_enrich_persp_parent"           exists
+check  "M-041b:persp-parent-log"       parse_grok.py  "persp-parent"                   exists
+
 # M-030 — Elon parent fetch (Python-enforced)
 check  "M-030a:elon-parent-fn"         parse_grok.py  "_enrich_parent"                  exists
 check  "M-030b:elon-parent-log"        parse_grok.py  "elon-parent"                     exists

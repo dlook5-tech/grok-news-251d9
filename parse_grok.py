@@ -803,6 +803,36 @@ for tab in tabs:
             with _cf.ThreadPoolExecutor(max_workers=6) as _ex:
                 chosen = list(_ex.map(_enrich_one, chosen))
 
+        # M-041: NESTED COMMENTS — for each perspective that's a reply, fetch
+        # the parent post so the frontend can embed it ABOVE the reply.
+        # User mandate 2026-05-24: "nesting comments so we know what context
+        # comments like these are speaking to. Otherwise, it's useless."
+        # Example: @AdamKinzinger reply "If Foxnews admits it's bad, it's bad"
+        # is meaningless without the FoxNews/TreyYingst post embedded above it.
+        # Frontend's renderWorldStory already passes parent_url through —
+        # this just populates it via fetch_parent.
+        def _enrich_persp_parent(_p):
+            if not isinstance(_p, dict) or _p.get('parent_url'):
+                return _p
+            try:
+                _parent = fetch_parent(_p.get('url',''))
+            except Exception:
+                return _p
+            if _parent:
+                _p['parent_url'] = _parent['parent_url']
+                _p['parent_handle'] = _parent['parent_handle']
+                _p['parent_text'] = _parent['parent_text']
+                print(f"[persp-parent] {tab} {_p.get('label','?')} @{_p.get('handle','?')} "
+                      f"→ parent @{_parent['parent_handle']}", file=sys.stderr)
+            return _p
+        _all_persps = []
+        for _cs in chosen:
+            for _p in (_cs.get('perspectives', []) or []):
+                _all_persps.append(_p)
+        if _all_persps:
+            with _cf.ThreadPoolExecutor(max_workers=10) as _ex:
+                list(_ex.map(_enrich_persp_parent, _all_persps))
+
         output[tab] = {'stories': [_body_to_text(s) for s in chosen],
                        '_candidates': tab_candidates_after_boost}
         print(f"[{tab}] {len(chosen)} events cleared {WU_VIEW_FLOOR:,} view floor (after QT boost)", file=sys.stderr)

@@ -88,6 +88,17 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-041 — Nested comments: every shipped PERSPECTIVE gets parent context fetched + embedded above its reply.
+**Date:** 2026-05-24
+**User said:** "I thought we were working on nesting comments so we know what context comments like these are speaking to. Otherwise, it's useless. No sense even posting stuff like this." (re: @AdamKinzinger perspective "If Foxnews admits it's bad, it's bad" — meaningless without the FoxNews/TreyYingst post he's replying to)
+**Context:** M-030 wired parent fetch for top-level Elon stories. Earlier code wired it for SAS/Cowherd top-level. But Stage 2 perspectives (Conservative/Democrat/Independent reactions) never had parent fetch. So a reply perspective ships without the post it's responding to, and the reader sees a punchline with no setup.
+**Enforcement:**
+- In the World/USA branch, AFTER Stage 2's `find_perspectives` populates each chosen story, iterate every shipped perspective and call `fetch_parent(p.url)`.
+- If a parent is found: attach `parent_url`, `parent_handle`, `parent_text` to the perspective dict.
+- Frontend (`renderWorldStory` in index.html) already passes `parent_url` through to `toggleEmbed`, which renders the parent embed ABOVE the perspective embed.
+- Parallelized via `ThreadPoolExecutor(max_workers=10)` — adds ~3-5s wall time per cron (15-20 extra parent-fetch calls).
+- Log line `[persp-parent]` shows each successful enrichment.
+
 ## M-040 — Hallucination guard: verify every shipped URL via X's oEmbed API.
 **Date:** 2026-05-23 night
 **User said:** [screenshot] Conspiracy tab story "Jan 6 defendants now admitting to seditious conspiracy after previously blaming antifa or feds" — but the X embed loaded a totally unrelated @edward_bernayz tweet about Azealia Banks and Elon Musk.
