@@ -132,6 +132,13 @@ check  "M-029a:prime-directive-prompt" parse_grok.py  "PRIME DIRECTIVE.*CITIZEN 
 check  "M-029b:auto-reject-vulgar"     parse_grok.py  "AUTO-REJECT"                     exists
 check  "M-029c:body-min-80-chars"      parse_grok.py  "len\(body_text\) < 80"           exists
 
+# M-030 — Elon parent fetch (Python-enforced)
+check  "M-030a:elon-parent-fn"         parse_grok.py  "_enrich_parent"                  exists
+check  "M-030b:elon-parent-log"        parse_grok.py  "elon-parent"                     exists
+
+# M-031 — Report per-tab summary is NOT a table
+check  "M-031:no-table-format"         parse_grok.py  "M-031: NOT a table"              exists
+
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists
 check  "M-002b:report-in-workflow"       .github/workflows/cron.yml  "cron_report\.md"                               exists

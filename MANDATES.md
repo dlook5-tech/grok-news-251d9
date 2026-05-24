@@ -88,6 +88,21 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-031 — cron_report.md per-tab summary is a PLAIN LIST, not a table.
+**Date:** 2026-05-23 evening
+**User said:** "no post report as a table"
+**Enforcement:** `parse_grok.py` writes per-tab summary as `  tab: N stories, top Xv, ages Y-Zh — headline` lines, NOT a markdown table.
+
+## M-030 — Python-enforced PARENT FETCH for Elon replies (post what he's reacting to).
+**Date:** 2026-05-23 evening
+**User said:** "this is useless, post what hes reacting to embedded" (re: Elon "🎯 emoji" reply to @KonstantinKisin shown without the parent post)
+**Root cause:** Elon's posts that are replies have meaning ONLY when you can see what he's replying to. The Elon prompt asks Grok to fill `parent_url/parent_handle/parent_text` but Grok ignores it ~80% of the time. Same Python-enforcement pattern we already use for SAS/Cowherd needs to apply to Elon.
+**Enforcement:**
+- After Elon's generic-headline rewrite, fire `fetch_parent(url)` for any Elon post where `parent_url` is missing AND body looks like a reply (starts with `@` or is <60 chars).
+- Parallelized via ThreadPoolExecutor(max_workers=6).
+- Frontend `toggleEmbed` already renders parent embed ABOVE reply embed when `parent_url` is populated — no frontend change needed.
+- Log line `[elon-parent]` shows successful parent fetches.
+
 ## M-029 — PRIME DIRECTIVE: this site promotes CITIZEN JOURNALISM, not freaks online.
 **Date:** 2026-05-23 evening
 **User said:** "remember the prime directive - to promote citizen journalism, this promotes freeks online"

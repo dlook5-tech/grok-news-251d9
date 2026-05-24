@@ -546,6 +546,33 @@ for tab in tabs:
                 if better:
                     print(f"[elon-headline] rewrote '{h[:40]}' → '{better[:60]}'", file=sys.stderr)
                     s['headline'] = better
+        # M-030: PARENT FETCH for Elon replies. The Elon prompt asks Grok to fill
+        # parent_url/parent_handle/parent_text but Grok routinely ignores it.
+        # User mandate 2026-05-23: "this is useless, post what hes reacting to
+        # embedded" — without the parent, an Elon reply like "🎯" to @KonstantinKisin
+        # is meaningless. Python enforcement.
+        import concurrent.futures as _cf_p
+        def _enrich_parent(_s):
+            if _s.get('parent_url'):
+                return _s
+            body = (_s.get('body') or '').strip()
+            looks_like_reply = body.startswith('@') or (body and len(body) < 60)
+            if not looks_like_reply:
+                return _s
+            try:
+                parent = fetch_parent(_s.get('url',''))
+            except Exception as _e:
+                print(f"[elon-parent-warn] @{_s.get('handle','?')}: {_e}", file=sys.stderr)
+                return _s
+            if parent:
+                _s['parent_url'] = parent['parent_url']
+                _s['parent_handle'] = parent['parent_handle']
+                _s['parent_text'] = parent['parent_text']
+                print(f"[elon-parent] @{_s.get('handle','?')} → parent @{parent['parent_handle']}", file=sys.stderr)
+            return _s
+        if elon_kept:
+            with _cf_p.ThreadPoolExecutor(max_workers=6) as _ex:
+                elon_kept = list(_ex.map(_enrich_parent, elon_kept))
         output[tab] = {'stories': [_body_to_text(s) for s in elon_kept],
                        '_candidates': tab_candidates}
         print(f"[elon] {len(elon_kept)} posts (no promo filter, no top_n cap)", file=sys.stderr)
@@ -1232,14 +1259,14 @@ for tab in ('world','usa'):
         _report_lines.append(f"  {i}. {_fmt_views(v):>6s} {mark} @{handle} — {h}{reason}")
     _report_lines.append("")
 
-# Per-tab summary table
-_report_lines.append("| TAB        | N | Top Views | Age range  | Top Headline                                       |")
-_report_lines.append("|------------|---|-----------|------------|----------------------------------------------------|")
+# Per-tab summary (M-031: NOT a table — user explicitly said no table format).
+# Plain list: one line per tab with N + top headline.
+_report_lines.append("Per-tab summary:")
 for tab in ('world','usa','top','business','msm','sports','elon','pods','pg6',
             'recipe','science','local','conspiracy','comedy','allin'):
     sts = (final.get(tab,{}) or {}).get('stories',[]) or []
     if not sts:
-        _report_lines.append(f"| {tab:<10s} | 0 |    —      | —          | (empty)                                            |")
+        _report_lines.append(f"  {tab}: 0 stories")
         continue
     top_view = 0
     top_head = ''
@@ -1251,11 +1278,11 @@ for tab in ('world','usa','top','business','msm','sports','elon','pods','pg6',
                 v = int(re.findall(r'(\d[\d.]*)\s*([kmb]?)\s*views', (s.get('engagement','') or '').lower())[0][0].replace(',','').replace('.','')) if 'views' in (s.get('engagement','') or '').lower() else 0
             except: pass
         if v > top_view:
-            top_view = v; top_head = (s.get('headline','') or s.get('body','') or '?')[:50]
+            top_view = v; top_head = (s.get('headline','') or s.get('body','') or '?')[:60]
         a = _url_age_h(s.get('url',''))
         if a is not None: ages.append(a)
     age_range = f'{min(ages):.1f}-{max(ages):.1f}h' if ages else '—'
-    _report_lines.append(f"| {tab:<10s} | {len(sts)} | {_fmt_views(top_view):>9s} | {age_range:<10s} | {top_head:<50s} |")
+    _report_lines.append(f"  {tab}: {len(sts)} stories, top {_fmt_views(top_view)}v, ages {age_range} — {top_head}")
 
 with open('cron_report.md', 'w') as f:
     f.write('\n'.join(_report_lines) + '\n')
