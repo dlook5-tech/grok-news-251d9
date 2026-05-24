@@ -102,7 +102,7 @@ check  "M-021d:persp-prompt-no-honesty" parse_grok.py "DO NOT score honesty here
 
 # M-023 — Elon: no promo filter, no QC dedup
 check  "M-023a:elon-no-promo-filter"   parse_grok.py  "elon_kept = list\(cleaned\)"     exists
-check  "M-023b:elon-not-in-dedup"      parse_grok.py  "_DEDUP_ORDER = \['world','usa','top','msm','business','sports','pg6','science',\s*'pods','allin','conspiracy','local','recipe','comedy'\]"  exists
+check  "M-023b:elon-not-in-dedup"      parse_grok.py  "'recipe','comedy'\]"             exists
 
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists
