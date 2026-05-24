@@ -403,6 +403,13 @@ _GENERIC_HEADLINE_PATTERNS = [
     r'^notes?\s+(remaining\s+)?(issues|points|things)\s+in\s+a\s+(discussion|conversation|thread|post)',
     r'^[?\s\.]*$',
     r'^untitled$',
+    # 2026-05-23 night: SAS reply 'Affirming a statement with Instagram reel link'
+    # — user: 'this is a newspaper with attention getting headlines, does that
+    # seem like it?'
+    r'^affirm(ing|s)\b',
+    r'^confirms?\s+a\s+statement\b',
+    r'^(affirms?|denies?|confirms?|endorses?|disagrees?)\s+(a|with\s+a|the)?\s*(statement|post|claim|tweet|video|reel|clip|link|article)',
+    r'\b(with|via)\s+(an?\s+)?(instagram|tiktok|youtube)\s+(reel|video|link|clip|post)\b',
 ]
 _GENERIC_HEADLINE_RE = re.compile('|'.join(_GENERIC_HEADLINE_PATTERNS), re.IGNORECASE)
 
@@ -413,22 +420,44 @@ def _is_generic_headline(h):
     return bool(_GENERIC_HEADLINE_RE.search(h.strip()))
 
 
-def fetch_headline_for_post(url, body):
+def fetch_headline_for_post(url, body, parent_text=None, parent_handle=None):
     """For a post URL whose headline is generic ('Shares video link', etc.), fire
-    an xAI call to describe what's actually in the post (the video subject, the
-    linked content, etc.). Returns a 1-line headline or None."""
+    an xAI call to write an ATTENTION-GRABBING NEWSPAPER HEADLINE.
+    If parent_text/parent_handle are provided (the post is a reply or QT), the
+    headline uses the PARENT'S content as the news hook — that's what readers care
+    about. Returns a 1-line headline or None.
+    """
     if not url or '/status/' not in url:
         return None
+    parent_block = ''
+    if parent_text:
+        ph = parent_handle or '?'
+        parent_block = (
+            f"\nThis post is a REPLY or QUOTE-TWEET. The author is reacting to a "
+            f"post by @{ph} which said: {parent_text[:280]!r}\n"
+            f"The news hook is what THE PARENT POST is about — describe THAT, not "
+            f"the reaction. The author's role is secondary. Example: parent says "
+            f"'NYPD chief resigns over corruption'; this author replies '👀'. The "
+            f"headline should be 'NYPD chief resigns amid corruption probe' (the "
+            f"news), not 'Author reacts with eyes emoji' (the reaction).\n"
+        )
     prompt = (
-        f"For the X post at {url}: write ONE newspaper-style headline (under 100 chars) "
-        f"that describes WHAT IS IN THE POST — if it's a video, describe what the video shows; "
-        f"if it's a link, describe what the linked content is about; if it's an image, describe the image; "
-        f"if it's a reply or QT, describe what's being responded to and the response take. "
-        f"The post text is: {body[:200]!r}\n"
-        f"Return ONLY a JSON object: {{\"headline\":\"the descriptive headline\"}}. "
-        f"NEVER write 'Shares video link', 'Posts photo', 'Short reply', or anything generic. "
-        f"NEVER start the headline with the author's name (e.g. 'Elon Musk Shares Video of ...' — just write 'Photo of Cybertruck at Starbase'). "
-        f"If you genuinely can't determine what the content is, return {{}}."
+        f"Write ONE attention-grabbing NEWSPAPER HEADLINE (under 100 chars) for the X post at {url}.\n\n"
+        f"Style: like a newspaper front page — specific, factual, hook the reader. "
+        f"Use proper nouns, concrete actions, real verbs. Active voice. No vague "
+        f"verbs like 'affirms', 'reacts', 'comments', 'discusses'.\n\n"
+        f"The post text is: {body[:300]!r}\n"
+        f"{parent_block}"
+        f"\nBAD examples (NEVER write these):\n"
+        f"  - 'Shares video link', 'Posts photo', 'Affirming a statement', 'Reacts with emoji'\n"
+        f"  - 'Author comments on news', 'Replies to discussion', 'Author with a post'\n"
+        f"  - Starting with the author's name ('Elon Musk Shares...' — readers know whose tab they're in)\n\n"
+        f"GOOD examples:\n"
+        f"  - 'Cybertruck photographed at Starbase launch pad'\n"
+        f"  - 'NYPD chief resigns amid federal corruption probe'\n"
+        f"  - 'Stephen A endorses News Nation report on WH cure-funds trust'\n\n"
+        f"Return ONLY a JSON object: {{\"headline\":\"the headline\"}}. "
+        f"If you genuinely can't determine what the news is, return {{}}."
     )
     result = _xai_call(prompt, timeout=30, max_tokens=400)
     if not result or not result.get('headline'):
@@ -533,19 +562,9 @@ for tab in tabs:
     #   on the same topic all show.
     if tab == 'elon':
         elon_kept = list(cleaned)
-        # Still rewrite generic headlines ('Shares video link', etc.)
-        for s in elon_kept:
-            h = (s.get('headline') or '').strip()
-            if _is_generic_headline(h):
-                better = fetch_headline_for_post(s.get('url',''), s.get('body',''))
-                if better:
-                    print(f"[elon-headline] rewrote '{h[:40]}' → '{better[:60]}'", file=sys.stderr)
-                    s['headline'] = better
-        # M-030: PARENT FETCH for Elon replies. The Elon prompt asks Grok to fill
-        # parent_url/parent_handle/parent_text but Grok routinely ignores it.
-        # User mandate 2026-05-23: "this is useless, post what hes reacting to
-        # embedded" — without the parent, an Elon reply like "🎯" to @KonstantinKisin
-        # is meaningless. Python enforcement.
+        # ORDER MATTERS (M-037): fetch parent FIRST so the headline rewriter
+        # can use parent context. Otherwise emoji-only replies get headlines
+        # like "Reacts with target emoji" instead of describing the actual news.
         import concurrent.futures as _cf_p
         def _enrich_parent(_s):
             if _s.get('parent_url'):
@@ -568,6 +587,16 @@ for tab in tabs:
         if elon_kept:
             with _cf_p.ThreadPoolExecutor(max_workers=6) as _ex:
                 elon_kept = list(_ex.map(_enrich_parent, elon_kept))
+        # Now rewrite generic headlines using parent context if available.
+        for s in elon_kept:
+            h = (s.get('headline') or '').strip()
+            if _is_generic_headline(h):
+                better = fetch_headline_for_post(
+                    s.get('url',''), s.get('body',''),
+                    parent_text=s.get('parent_text'), parent_handle=s.get('parent_handle'))
+                if better:
+                    print(f"[elon-headline] rewrote '{h[:40]}' → '{better[:60]}'", file=sys.stderr)
+                    s['headline'] = better
         output[tab] = {'stories': [_body_to_text(s) for s in elon_kept],
                        '_candidates': tab_candidates}
         print(f"[elon] {len(elon_kept)} posts (no promo filter, no top_n cap)", file=sys.stderr)
@@ -790,10 +819,14 @@ for _tab, _container in list(output.items()):
             if not isinstance(_p, dict): continue
             _ph = (_p.get('text') or _p.get('body') or '').strip()
             # Perspectives have body/text not headline, leave alone
-        # Rewrite top-level headline if generic
+        # Rewrite top-level headline if generic — pass parent context if available
+        # so reply/QT posts (Stephen A "Affirming a statement", etc.) get newspaper
+        # headlines about the parent's news, not the reaction.
         _h = (_s.get('headline') or '').strip()
         if _is_generic_headline(_h) and _s.get('url'):
-            _better = fetch_headline_for_post(_s.get('url',''), _s.get('body',''))
+            _better = fetch_headline_for_post(
+                _s.get('url',''), _s.get('body',''),
+                parent_text=_s.get('parent_text'), parent_handle=_s.get('parent_handle'))
             if _better:
                 print(f"[{_tab}-headline] rewrote '{_h[:40]}' → '{_better[:60]}'", file=sys.stderr)
                 _s['headline'] = _better

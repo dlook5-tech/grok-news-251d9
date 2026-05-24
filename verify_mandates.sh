@@ -140,6 +140,11 @@ check  "M-035b:highest-viewed-prompt"  parse_grok.py  "HIGHEST-VIEWED political 
 # M-036 — One perspective per label (top-viewed only)
 check  "M-036:one-per-label"           parse_grok.py  "by_label\[lab\] = v"             exists
 
+# M-037 — Newspaper-style headlines with parent context
+check  "M-037a:affirming-pattern"      parse_grok.py  "\^affirm"                        exists
+check  "M-037b:parent-aware-rewrite"   parse_grok.py  "parent_text=None.*parent_handle=None|parent_text=_s.get\('parent_text'\)"  exists
+check  "M-037c:newspaper-style-prompt" parse_grok.py  "attention-grabbing NEWSPAPER HEADLINE" exists
+
 # M-030 — Elon parent fetch (Python-enforced)
 check  "M-030a:elon-parent-fn"         parse_grok.py  "_enrich_parent"                  exists
 check  "M-030b:elon-parent-log"        parse_grok.py  "elon-parent"                     exists

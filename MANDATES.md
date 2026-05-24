@@ -88,6 +88,17 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-037 — Headlines are NEWSPAPER-STYLE. Generic-reaction phrasings auto-trigger a parent-aware rewrite.
+**Date:** 2026-05-23 night
+**User said:** "'affirming statement, this is a newspaper with attention getting headlines...does that seem like it?'"
+**Context:** Stephen A Smith Sports post shipped as "Affirming a statement with Instagram reel link" — completely useless, not a headline. Same problem with emoji-only Elon replies that show up as "Reacts with target emoji".
+**Enforcement:**
+- `_GENERIC_HEADLINE_PATTERNS` extended: now catches `affirm(ing|s)`, `confirms a statement`, `(affirms|denies|confirms|endorses|disagrees) (a|with a|the) (statement|post|claim|video|reel|link...)`, and `with/via (an) (instagram|tiktok|youtube) (reel|video|link|clip|post)`.
+- `fetch_headline_for_post` now takes optional `parent_text` and `parent_handle`. When the post is a reply/QT and we have the parent, the rewrite uses the PARENT'S content as the news hook — describes what's actually being reacted to, not the reaction itself.
+- Elon branch reordered: parent fetch runs BEFORE headline rewrite (so the rewrite has parent context).
+- Generic-rewrite loop for all other tabs also passes `parent_text`/`parent_handle` through.
+- Prompt rewritten: explicit "newspaper headline" framing with good/bad examples ("Cybertruck photographed at Starbase launch pad" vs "Shares video link").
+
 ## M-036 — ONE perspective per label, top-viewed only. No fallback to lower-viewed alternatives.
 **Date:** 2026-05-23 night
 **User said:** "honesty 5 is ok if its the highest viewed [democrat] perspective. if its not, 5 is way too low"
