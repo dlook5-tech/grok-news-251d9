@@ -143,6 +143,13 @@ check  "M-031:table-mandate-comment"   parse_grok.py  "M-031 CORRECTED"         
 # M-032 — Test mode helper exists
 check  "M-032:test-mode-script"        test_parse.sh  "TEST MODE"                       exists
 
+# M-033 — Earlier tab populated from previous-cron displaced stories
+check  "M-033a:earlier-loop-present"   parse_grok.py  "M-033: Restore EARLIER tab"      exists
+check  "M-033b:earlier-key-written"    parse_grok.py  "_e_container\['earlier'\]"       exists
+
+# M-034 — Perspective honesty floor at 5
+check  "M-034:floor-relaxed-to-5"      parse_grok.py  "_PERSP_HONESTY_FLOOR = 5"        exists
+
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists
 check  "M-002b:report-in-workflow"       .github/workflows/cron.yml  "cron_report\.md"                               exists

@@ -88,6 +88,23 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-033 — Earlier tab restored: stories displaced this cron go into `earlier`. (Regression from Ristretto migration.)
+**Date:** 2026-05-23 night
+**User said:** "Why doesn't the earlier tab work anymore? You might have to go back to the expresso before you put Restratto in. You probably wiped it out during that refresh."
+**Root cause:** Pre-Ristretto parse_grok.py had `_build_earlier()` that populated `output[tab]['earlier']`. The Ristretto rewrite dropped it. `earlier` was never set, so the Earlier tab on the frontend showed "No earlier stories yet today" every time.
+**Enforcement:**
+- New loop in `parse_grok.py` after per-tab curation: for each tab, take stories that were in the PREVIOUS cron's `stories` array but got displaced this cron, cap at 10, exclude items >24h old, write to `output[_e_tab]['earlier']`.
+- Frontend Earlier tab already reads from `NEWS_DATA[tab].earlier` — no JS change needed.
+
+## M-034 — Perspective honesty floor relaxed back to 5 from 7.
+**Date:** 2026-05-23 night
+**User said:** "How is there not a Democrat perspective on this story? I can't believe there's not." (re: Mahmoud Khalil deportation, 1.7M views — no Democrat take shipped)
+**Root cause:** I tightened `_PERSP_HONESTY_FLOOR` from 5 → 7 in M-028 to catch vulgar attacks. That ALSO killed legit partisan reactions that scored 5-6 (specific misleading claim / demonstrably false but still a real political angle). Combined with the 80-char body min and the prime-directive prompt's auto-reject list, 7 was overkill.
+**Enforcement:**
+- `_PERSP_HONESTY_FLOOR` back to 5. Drops conspiracy / serial misrep (≤4) only.
+- The vulgar-attack rejection still happens upstream via the prime-directive prompt (M-029) — that's what catches the "First Lady was a hooker" content, NOT the honesty floor.
+- The 80-char body min still applies, killing one-liners and emoji-only reactions.
+
 ## M-032 — Test mode: test_parse.sh re-runs parse_grok against cached Grok output (saves tokens).
 **Date:** 2026-05-23 evening
 **User said:** "Also, instead of running a full cron, can we do like a test cron? Or you just show me the results, so we don't use so many tokens?"

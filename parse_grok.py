@@ -1103,7 +1103,7 @@ if _score_jobs:
 # Dublin reply got scored 3 (personal attack on Modi/Rubio with no facts);
 # user correctly flagged it as not-news. Threshold of 5 keeps anything
 # "demonstrably false" and up, drops conspiracy/serial-misrep only.
-_PERSP_HONESTY_FLOOR = 7  # Raised 5→7 on 2026-05-23: 5 was letting vulgar attacks ('First Lady was a hooker...') through. 7 keeps opinion/hot take (7) and analysis (8+), drops misleading-claim (6) and below.
+_PERSP_HONESTY_FLOOR = 5  # 7→5 on 2026-05-23 night: 7 was killing legit Democrat takes on USA stories (no Dem perspective on Khalil deportation). 5 drops conspiracy/serial-misrep (≤4) but keeps partisan reactions even if they make "specific misleading claims" or "demonstrably false statements" — those still represent a real political angle. The 80-char body min + vulgar-attack auto-reject in the Stage 2 prompt are the actual quality controls.
 for _h_tab in _HONESTY_NEWS_TABS:
     _h_container = output.get(_h_tab, {})
     if not isinstance(_h_container, dict): continue
@@ -1147,6 +1147,40 @@ for _l_tab, _l_container in list(output.items()):
             _l_s['perspectives'] = _l_persps_kept
         _l_kept.append(_l_s)
     _l_container['stories'] = _l_kept
+
+
+# M-033: Restore EARLIER tab population (regression from Ristretto migration).
+# User mandate 2026-05-23 night: "Why doesn't the earlier tab work anymore?
+# You might have to go back to the expresso before you put Restratto in.
+# You probably wiped it out during that refresh."
+# For each tab: stories that were in the PREVIOUS stories.json's `stories`
+# array but got displaced this cron go into `earlier`. Cap at 10. Drops items
+# older than 24h to keep "earlier today" actually about today.
+import re as _re_earlier
+def _url_age_h_earlier(url):
+    m = _re_earlier.search(r'/status/(\d+)', url or '')
+    if not m: return None
+    try:
+        ts = (int(m.group(1)) >> 22) + 1288834974657
+        return (datetime.datetime.now() - datetime.datetime.fromtimestamp(ts/1000)).total_seconds()/3600
+    except: return None
+
+for _e_tab, _e_container in list(output.items()):
+    if not isinstance(_e_container, dict): continue
+    if _e_tab in ('freespeech', 'submit'): continue  # user-managed
+    _e_current_urls = {s.get('url') for s in (_e_container.get('stories', []) or []) if s.get('url')}
+    _e_prev = previous.get(_e_tab, []) or []
+    _e_displaced = []
+    for _e_p in _e_prev:
+        if not isinstance(_e_p, dict): continue
+        _e_url = _e_p.get('url', '')
+        if not _e_url or _e_url in _e_current_urls: continue
+        # Same-day freshness: skip if older than 24h
+        _e_age = _url_age_h_earlier(_e_url)
+        if _e_age is not None and _e_age > 24: continue
+        _e_displaced.append(_e_p)
+        if len(_e_displaced) >= 10: break
+    _e_container['earlier'] = _e_displaced
 
 
 # ---- Preserve user-managed tabs (freespeech, submit) ----
