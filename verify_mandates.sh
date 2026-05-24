@@ -145,6 +145,12 @@ check  "M-037a:affirming-pattern"      parse_grok.py  "\^affirm"                
 check  "M-037b:parent-aware-rewrite"   parse_grok.py  "parent_text=None.*parent_handle=None|parent_text=_s.get\('parent_text'\)"  exists
 check  "M-037c:newspaper-style-prompt" parse_grok.py  "attention-grabbing NEWSPAPER HEADLINE" exists
 
+# M-038 — Reader Post/Replace 24h public window via Netlify Forms pull
+check  "M-038a:pull-netlify-fn"        parse_grok.py  "def pull_netlify_submissions"   exists
+check  "M-038b:24h-cutoff"             parse_grok.py  "if age_h > 24: continue.*24h public window" exists
+check  "M-038c:submit-not-preserved"   parse_grok.py  "for manual_tab in \('freespeech',\):"  exists
+check  "M-038d:submit-written"         parse_grok.py  "output\['submit'\] = \{'stories'"  exists
+
 # M-030 — Elon parent fetch (Python-enforced)
 check  "M-030a:elon-parent-fn"         parse_grok.py  "_enrich_parent"                  exists
 check  "M-030b:elon-parent-log"        parse_grok.py  "elon-parent"                     exists

@@ -88,6 +88,19 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-038 — Post/Replace submissions: 24h public window, then private-forever in submitter's browser.
+**Date:** 2026-05-23 night
+**User said:** "Why don't you just put it on the post that everyone sees at least for 24 hours, and then, whoever created it, it stays in their post replace forever until they delete it?"
+**Architecture (clean two-tier):**
+- **Public:** for 24 hours after submission, the post shows on EVERY user's Post/Replace tab under "Reader Submissions" (server-side via cron-pull from Netlify Forms API).
+- **Private:** after 24 hours, the post drops off the public list but stays in the SUBMITTER's localStorage forever (existing "Your Submissions (this browser)" section), until they manually delete it.
+**Root cause this fixes:** Cron-pull from Netlify Forms got dropped in the Ristretto migration. Submissions were captured server-side but never made it to stories.json. Users (including the submitter on a different device) never saw them.
+**Enforcement:**
+- `parse_grok.py::pull_netlify_submissions()` — calls Netlify Forms API with `NETLIFY_SITE_ID` + `NETLIFY_AUTH_TOKEN`, filters to form name `post-replace`, drops anything older than 24h, returns list of story-shaped dicts.
+- Main loop writes `output['submit'] = {'stories': [...], 'earlier': []}` AFTER the freespeech preservation step (so cron-pull doesn't get clobbered).
+- `'submit'` REMOVED from the `manual_tab` preserve list — the cron now owns this tab.
+- Frontend's "Your Submissions (this browser)" localStorage section is independent and unchanged.
+
 ## M-037 — Headlines are NEWSPAPER-STYLE. Generic-reaction phrasings auto-trigger a parent-aware rewrite.
 **Date:** 2026-05-23 night
 **User said:** "'affirming statement, this is a newspaper with attention getting headlines...does that seem like it?'"

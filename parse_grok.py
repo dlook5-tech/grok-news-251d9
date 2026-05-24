@@ -420,6 +420,70 @@ def _is_generic_headline(h):
     return bool(_GENERIC_HEADLINE_RE.search(h.strip()))
 
 
+def pull_netlify_submissions():
+    """M-038: Pull Post/Replace form submissions from Netlify Forms API.
+    Returns submissions from the last 24h as story-shaped dicts. Older
+    submissions are dropped from the public view (they stay in the
+    submitter's localStorage forever — that's the M-038 24h-public,
+    private-forever architecture).
+    """
+    site_id = _os.environ.get('NETLIFY_SITE_ID', '')
+    auth = _os.environ.get('NETLIFY_AUTH_TOKEN', '')
+    if not site_id or not auth:
+        print('[netlify-pull] missing NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN — skipping', file=sys.stderr)
+        return []
+    api_url = f'https://api.netlify.com/api/v1/sites/{site_id}/submissions?per_page=100'
+    try:
+        req = _urlreq.Request(api_url, headers={'Authorization': f'Bearer {auth}'})
+        with _urlreq.urlopen(req, timeout=30) as r:
+            data = json.load(r)
+    except Exception as e:
+        print(f'[netlify-pull] failed: {e} — submit tab will be empty this cron', file=sys.stderr)
+        return []
+    if not isinstance(data, list):
+        return []
+    now = datetime.datetime.now(datetime.timezone.utc)
+    out = []
+    seen_urls = set()
+    for s in data:
+        if not isinstance(s, dict): continue
+        if s.get('form_name') != 'post-replace': continue
+        d = s.get('data', {}) or {}
+        url = (d.get('url') or '').strip()
+        if not url or '/status/' not in url: continue
+        if url in seen_urls: continue  # dedup multiple submissions of same URL
+        note = (d.get('note') or '').strip()
+        created = s.get('created_at', '')
+        created_dt = None
+        for fmt in ('%Y-%m-%dT%H:%M:%S.%fZ', '%Y-%m-%dT%H:%M:%SZ'):
+            try:
+                created_dt = datetime.datetime.strptime(created, fmt).replace(tzinfo=datetime.timezone.utc)
+                break
+            except ValueError:
+                continue
+        if not created_dt: continue
+        age_h = (now - created_dt).total_seconds() / 3600
+        if age_h > 24: continue  # 24h public window
+        # Extract handle from URL for display
+        m = re.search(r'(?:x|twitter)\.com/([^/]+)/status/', url)
+        handle = ('@' + m.group(1)) if m else ''
+        seen_urls.add(url)
+        out.append({
+            'url': url,
+            'handle': handle,
+            'headline': (note[:100] if note else 'Reader submission'),
+            'body': note or 'Submitted via Post/Replace form.',
+            'views': 0,  # submissions don't have engagement metric
+            'engagement': '',
+            'submitted_at': created,
+            'age_hours': round(age_h, 1),
+        })
+    # Most recent first
+    out.sort(key=lambda x: x.get('submitted_at', ''), reverse=True)
+    print(f'[netlify-pull] {len(out)} submissions in last 24h (public window)', file=sys.stderr)
+    return out
+
+
 def fetch_headline_for_post(url, body, parent_text=None, parent_handle=None):
     """For a post URL whose headline is generic ('Shares video link', etc.), fire
     an xAI call to write an ATTENTION-GRABBING NEWSPAPER HEADLINE.
@@ -1211,10 +1275,19 @@ for _e_tab, _e_container in list(output.items()):
     _e_container['earlier'] = _e_displaced
 
 
-# ---- Preserve user-managed tabs (freespeech, submit) ----
-for manual_tab in ('freespeech', 'submit'):
+# ---- Preserve user-managed tabs (freespeech only — submit now cron-managed) ----
+# 'submit' was previously preserved from existing_full, but M-038 moves it to
+# cron-pull from Netlify Forms (24h public window). Removed from this loop so
+# the cron-pulled submissions don't get clobbered by the previous deploy's data.
+for manual_tab in ('freespeech',):
     if manual_tab in existing_full and isinstance(existing_full[manual_tab], dict):
         output[manual_tab] = existing_full[manual_tab]
+
+# M-038: Reader Post/Replace submissions — 24h public window. After 24h the
+# submission falls off the public list but stays in the submitter's localStorage
+# forever (frontend already handles that side independently).
+_subs = pull_netlify_submissions()
+output['submit'] = {'stories': _subs, 'earlier': []}
 
 
 # ---- Write stories.json in eXpressO's top-level-tab-key shape ----
