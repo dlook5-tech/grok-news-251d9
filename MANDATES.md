@@ -88,6 +88,17 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-029 — PRIME DIRECTIVE: this site promotes CITIZEN JOURNALISM, not freaks online.
+**Date:** 2026-05-23 evening
+**User said:** "remember the prime directive - to promote citizen journalism, this promotes freeks online"
+**Context:** The previous perspective pipeline asked for "highest-view Conservative/Democrat reactions" and Grok returned whatever was loudest — which on X is usually vulgar attacks (@taradublinrocks pedophile-rapist line, @smc429 "First Lady was a hooker" line) and substance-free cheerleading ("Way to go!" / "Congratulations!"). That's the OPPOSITE of citizen journalism. The mission is to surface substantive, thoughtful citizen voices that ADD to the story, not viral garbage.
+**Enforcement:**
+- `find_perspectives` prompt rewritten with PRIME DIRECTIVE framing as the FIRST line. Explicit AUTO-REJECT list (personal attacks, cheerleading, one-liners, emoji-only, generic dunks, meme-only, profanity-only). Explicit qualification criteria (original analysis, context, factual additions, first-person expertise, substantive reasoning, investigative threads).
+- Quality floors raised: body must be ≥80 characters of substantive commentary. Account ≥1K followers + real bio + real posting history.
+- Honesty floor of 7 (M-028) stays — combined effect: vulgar/cheerleading/short reactions get cut by both the upstream prompt AND the downstream honesty filter.
+- Python-side validation in find_perspectives now drops any perspective with `len(body) < 80`.
+- This mandate sits ABOVE all other Stage 2 mandates — if anything conflicts, citizen journalism wins.
+
 ## M-028 — Perspectives with honesty < 5 get dropped (post-scoring, not pre-selection).
 **Date:** 2026-05-23 evening
 **User said:** "honesty 3 is that even news?" — flagged @taradublinrocks Democrat reply scored honesty=3 ("But he's protecting a pedophile rapist..." — personal attack on Modi/Rubio with no facts) as not-news.

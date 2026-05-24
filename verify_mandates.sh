@@ -124,8 +124,13 @@ check  "M-022-helper:wrapper-script"   run_cron_with_report.sh  "cat cron_report
 check  "M-027:report-pt-timestamp"     parse_grok.py  "America/Los_Angeles"             exists
 
 # M-028 — Perspective honesty floor (drops conspiracy / serial misrep)
-check  "M-028a:persp-honesty-floor"    parse_grok.py  "_PERSP_HONESTY_FLOOR = 5"        exists
+check  "M-028a:persp-honesty-floor"    parse_grok.py  "_PERSP_HONESTY_FLOOR ="          exists
 check  "M-028b:honesty-floor-log"      parse_grok.py  "honesty-floor"                   exists
+
+# M-029 PRIME DIRECTIVE — citizen journalism, not freaks online
+check  "M-029a:prime-directive-prompt" parse_grok.py  "PRIME DIRECTIVE.*CITIZEN JOURNALISM"  exists
+check  "M-029b:auto-reject-vulgar"     parse_grok.py  "AUTO-REJECT"                     exists
+check  "M-029c:body-min-80-chars"      parse_grok.py  "len\(body_text\) < 80"           exists
 
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists

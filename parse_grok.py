@@ -212,33 +212,47 @@ def find_perspectives(story_url, story_headline):
     if not story_url or '/status/' not in story_url:
         return []
     prompt = (
-        f"For the X post at {story_url} (headline: {story_headline!r}), find the "
-        f"highest-view politically-charged reactions to this specific news event.\n\n"
-        f"WHERE TO LOOK (both are valid — pick the highest-view qualifying tweet per side):\n"
-        f"  (a) Direct replies to the URL above\n"
-        f"  (b) Quote-tweets that share the URL above with the user's own commentary\n"
-        f"  (c) Original posts on X within the last 24h that are about THIS SAME news event\n"
-        f"      (e.g. another commentator covering the same story with their own take)\n"
-        f"  - NOT generic political posts unrelated to this specific event\n"
-        f"  - NOT the original post itself or anything from the same author\n\n"
+        f"PRIME DIRECTIVE: This is eXpressO News, a CITIZEN JOURNALISM site. Every "
+        f"perspective you return must promote citizen journalism — substantive, "
+        f"thoughtful takes from real voices that ADD to understanding of the story. "
+        f"Not freaks online, not dunks, not cheerleading, not personal attacks.\n\n"
+        f"For the X post at {story_url} (headline: {story_headline!r}), find substantive "
+        f"citizen-journalism reactions to this specific event.\n\n"
+        f"WHAT QUALIFIES AS A CITIZEN-JOURNALISM PERSPECTIVE:\n"
+        f"  - Original analysis, context, or background that helps the reader understand the story\n"
+        f"  - Factual additions: corrections, missing data, primary-source citations\n"
+        f"  - First-person expertise or on-the-ground experience relevant to the topic\n"
+        f"  - Substantive political take that EXPLAINS a position with reasoning (not just venting)\n"
+        f"  - Investigative thread or receipt-posting that advances the story\n\n"
+        f"AUTO-REJECT (do NOT return these — they violate the prime directive):\n"
+        f"  - Personal attacks / slurs ('X is a hooker / pedophile / nazi / fascist')\n"
+        f"  - One-line cheerleading ('Way to go!' / 'You're a hero!' / 'Slay queen')\n"
+        f"  - One-line dismissals ('Fuck them' / 'cope' / 'this' / 'lol')\n"
+        f"  - Pure emoji / reaction posts\n"
+        f"  - Generic dunks without facts or reasoning ('Sure, Jan' / 'OK boomer')\n"
+        f"  - Meme images without substantive commentary\n"
+        f"  - Vulgar/profanity-only reactions\n\n"
+        f"WHERE TO LOOK:\n"
+        f"  (a) Direct replies to {story_url}\n"
+        f"  (b) Quote-tweets that share the URL with the user's own commentary\n"
+        f"  (c) Original posts within 24h on this same event from substantive accounts\n"
+        f"  NOT: generic political posts unrelated to this story, NOT the original post itself.\n\n"
         f"SLOTS (return what you find — missing slots are fine):\n"
-        f"  - Conservative: right-leaning / MAGA / Republican-aligned reply or QT.\n"
-        f"  - Democrat: left-leaning / progressive / Democrat-aligned reply or QT.\n"
-        f"  - Independent: ONLY include if there's a genuinely non-partisan or unusual "
-        f"take that doesn't slot into Conservative or Democrat. Otherwise OMIT this slot — "
-        f"do not manufacture one.\n\n"
-        f"VIEW MINIMUM: each perspective must have at least 1,000 views. "
-        f"That's it — no per-label tier. Pick the highest-view qualifying tweet for each side.\n\n"
-        f"QUALITY (anti-spam / anti-Yahoo): each reply/QT account must have at least "
-        f"1,000 followers, a real bio, and the reply itself must be SUBSTANTIVE — no "
-        f"one-word reactions ('lol', 'true', emoji), no spam, no copy-paste talking "
-        f"points. Real commentary only.\n\n"
+        f"  - Conservative: right-leaning citizen take with substance\n"
+        f"  - Democrat: left-leaning citizen take with substance\n"
+        f"  - Independent: ONLY if a non-partisan substantive take exists. Otherwise OMIT.\n\n"
+        f"QUALITY FLOORS (all required):\n"
+        f"  - Minimum 1,000 views per perspective.\n"
+        f"  - Account ≥1K followers, real bio, real posting history.\n"
+        f"  - Body text ≥80 characters of substantive commentary.\n"
+        f"  - Must make a FACTUAL or ANALYTICAL claim, not just emote.\n\n"
+        f"If you can't find a substantive citizen-journalism take for a side, OMIT that side. "
+        f"Empty results are far better than freaks-online filler. NEVER manufacture a take.\n\n"
         f"RULES:\n"
         f"  - All URLs must be real X status URLs you actually found via x_search. NEVER fabricate.\n"
-        f"  - Each perspective's URL must be DIFFERENT from {story_url} (no self-quotes).\n"
+        f"  - Each perspective's URL must be DIFFERENT from {story_url}.\n"
         f"  - Posted in the last 24 hours.\n"
-        f"  - If you can only find 0 or 1 perspective, return what you found. Don't force matches.\n"
-        f"  - DO NOT score honesty here — that runs as a separate labeling pass.\n\n"
+        f"  - DO NOT score honesty here — separate downstream pass handles that.\n\n"
         f"Return ONLY a JSON object:\n"
         f'{{"perspectives":[\n'
         f'  {{"label":"Conservative","handle":"@user","url":"https://x.com/.../status/<id>",'
@@ -246,7 +260,7 @@ def find_perspectives(story_url, story_headline):
         f'  {{"label":"Democrat","handle":"@user","url":"...","body":"...","views":...}},\n'
         f'  {{"label":"Independent","handle":"@user","url":"...","body":"...","views":...}}\n'
         f"]}}\n"
-        f"Empty array {{\"perspectives\":[]}} is valid if nothing qualifies."
+        f"Empty array {{\"perspectives\":[]}} is valid AND expected when nothing substantive qualifies."
     )
     result = _xai_call(prompt, timeout=120, max_tokens=5000)
     if not result or 'perspectives' not in result:
@@ -270,6 +284,10 @@ def find_perspectives(story_url, story_headline):
             views = 0
         # Tiered floor — per-label minimums (M-019)
         if views < _PERSPECTIVE_MIN_VIEWS.get(label, 5_000):
+            continue
+        # M-029 PRIME DIRECTIVE: citizen journalism = substantive. Drop if body <80 chars.
+        body_text = (p.get('body') or '').strip()
+        if len(body_text) < 80:
             continue
         seen_urls.add(url)
         valid.append({
