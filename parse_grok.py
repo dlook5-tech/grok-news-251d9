@@ -410,6 +410,19 @@ _GENERIC_HEADLINE_PATTERNS = [
     r'^confirms?\s+a\s+statement\b',
     r'^(affirms?|denies?|confirms?|endorses?|disagrees?)\s+(a|with\s+a|the)?\s*(statement|post|claim|tweet|video|reel|clip|link|article)',
     r'\b(with|via)\s+(an?\s+)?(instagram|tiktok|youtube)\s+(reel|video|link|clip|post)\b',
+    # 2026-05-23 late: user caught more generics that slipped through cron #26.
+    # Pattern: verb + (a|the) + generic-noun-of-reaction. Catches:
+    #   'Agrees on a point in conversation'
+    #   'Confirms a point with Yes'
+    #   'Notes importance of a statement'
+    #   'Emphasizes agreement in thread'
+    #   'Reacts with target emoji to post'
+    r'^(agrees?|confirms?|denies?|emphasizes?|notes?|reacts?|expresses?|stresses?)\s+(on\s+|in\s+|of\s+|with\s+)?(a|the|some|any)\s+(point|statement|claim|view|opinion|thread|conversation|discussion|post|tweet|article|comment|reply|message|agreement|importance)\b',
+    r'^reacts?\s+with\s+\w+\s+emoji\b',
+    r'\bin\s+(a\s+)?(conversation|thread|discussion)\s*$',
+    r'\bwith\s+[\'"]?(yes|no|true|same|this|that|exactly)[\'"]?\s*$',
+    # Catch 'importance/significance/relevance of a [generic noun]' anywhere
+    r'\b(importance|significance|relevance|need|truth|value)\s+of\s+a\s+(point|statement|claim|view|opinion|comment|reply|message|tweet|post|thread)\b',
 ]
 _GENERIC_HEADLINE_RE = re.compile('|'.join(_GENERIC_HEADLINE_PATTERNS), re.IGNORECASE)
 
