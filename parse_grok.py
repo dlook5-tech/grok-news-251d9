@@ -84,6 +84,22 @@ def _has_intl_signal(s):
     return any(k in t for k in INTL_KW)
 
 
+# ---- M-025: Non-English detection ----
+# User mandate 2026-05-23 evening: "dont post anything not translated"
+# Heuristic: if >5% of alphabetic chars in body are non-ASCII letters, the
+# post is in a non-Latin/non-English script (Turkish ş/ğ/ü, Russian Cyrillic,
+# Chinese, Arabic, etc.). Drop it from shipping. Headlines are always English
+# (Grok writes summaries) so we only check the body.
+def _is_non_english(text):
+    if not text or len(text) < 20:
+        return False
+    letters = [c for c in text if c.isalpha()]
+    if len(letters) < 10:
+        return False
+    non_ascii = [c for c in letters if ord(c) > 127]
+    return (len(non_ascii) / len(letters)) > 0.05
+
+
 # ---- DELTA #2: SAS / Cowherd handle checks ----
 def _is_sas(s):
     h = (s.get('handle', '') or '').lower().lstrip('@')
@@ -1012,6 +1028,31 @@ if _score_jobs:
         list(_ex.map(_score_one, _score_jobs))
     _scored = sum(1 for j in _score_jobs if j.get('honesty'))
     print(f"[honesty-score] {_scored}/{len(_score_jobs)} items got valid 1-10 scores", file=sys.stderr)
+
+
+# ---- M-025: Drop non-English stories AND non-English perspectives ----
+# User mandate 2026-05-23 evening: "dont post anything not translated"
+# Applied AFTER all selection + scoring is done so we don't double-filter.
+for _l_tab, _l_container in list(output.items()):
+    if not isinstance(_l_container, dict): continue
+    _l_stories = _l_container.get('stories', []) or []
+    _l_kept = []
+    for _l_s in _l_stories:
+        if _is_non_english(_l_s.get('body', '') or ''):
+            print(f"[lang-filter] drop {_l_tab}: '{(_l_s.get('headline','') or '?')[:50]}' (non-English body)", file=sys.stderr)
+            continue
+        # Also filter perspectives inside the story
+        _l_persps = _l_s.get('perspectives', []) or []
+        if _l_persps:
+            _l_persps_kept = []
+            for _l_p in _l_persps:
+                if isinstance(_l_p, dict) and _is_non_english(_l_p.get('body', '') or _l_p.get('text', '') or ''):
+                    print(f"[lang-filter] drop perspective in {_l_tab}: @{_l_p.get('handle','?')} (non-English)", file=sys.stderr)
+                    continue
+                _l_persps_kept.append(_l_p)
+            _l_s['perspectives'] = _l_persps_kept
+        _l_kept.append(_l_s)
+    _l_container['stories'] = _l_kept
 
 
 # ---- Preserve user-managed tabs (freespeech, submit) ----

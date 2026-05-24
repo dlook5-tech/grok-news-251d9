@@ -88,6 +88,16 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-025 — Don't post anything not in English. Drop non-English stories AND perspectives.
+**Date:** 2026-05-23 evening
+**User said:** "dont post anything not translated"
+**Root cause:** @yunuspaksoy was shipping as a World story / Perspective with a Turkish-language body. Headline read English ("Trump praises Erdogan") but the embedded tweet was entirely in Turkish — unreadable to the user.
+**Enforcement:**
+- `parse_grok.py::_is_non_english(text)` — heuristic: if >5% of alphabetic chars in body are non-ASCII letters (Turkish ş/ğ/ü, Cyrillic, Arabic, Chinese, etc.), treat as non-English.
+- Final sweep before stories.json write: drop any shipped story where `_is_non_english(body)` is true. Drop any perspective inside surviving stories where its body is non-English.
+- Headlines NOT checked — Grok always writes English summaries even for foreign posts.
+- Future enhancement (NOT yet wired): auto-translate non-English bodies via xAI, attach as `translation` field, ship instead of dropping. Defer until user asks.
+
 ## M-024 — MSM tab: NEVER blank. No QC dedup. top_n bumped to 5. Low views are fine.
 **Date:** 2026-05-23 evening
 **User said:** "msm should not be blank, so many choices, low views makes sense, the opposite"

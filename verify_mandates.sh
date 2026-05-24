@@ -108,6 +108,10 @@ check  "M-023b:elon-not-in-dedup"      parse_grok.py  "'recipe','comedy'\]"     
 check  "M-024a:msm-not-in-dedup"       parse_grok.py  "'world','usa','top','business'" exists
 check  "M-024b:msm-top-n-5"            parse_grok.py  "'msm': 5"                       exists
 
+# M-025 — Drop non-English stories and perspectives
+check  "M-025a:non-english-fn"         parse_grok.py  "def _is_non_english"             exists
+check  "M-025b:lang-filter-applied"    parse_grok.py  "lang-filter"                     exists
+
 # M-002 — cron writes cron_report.md every run + workflow commits it
 check  "M-002a:report-written"           parse_grok.py    "cron_report\.md"                                          exists
 check  "M-002b:report-in-workflow"       .github/workflows/cron.yml  "cron_report\.md"                               exists
