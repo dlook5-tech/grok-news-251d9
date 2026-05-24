@@ -417,12 +417,17 @@ _GENERIC_HEADLINE_PATTERNS = [
     #   'Notes importance of a statement'
     #   'Emphasizes agreement in thread'
     #   'Reacts with target emoji to post'
-    r'^(agrees?|confirms?|denies?|emphasizes?|notes?|reacts?|expresses?|stresses?)\s+(on\s+|in\s+|of\s+|with\s+)?(a|the|some|any)\s+(point|statement|claim|view|opinion|thread|conversation|discussion|post|tweet|article|comment|reply|message|agreement|importance)\b',
+    r'^(strongly|fully|emphatically|exactly|absolutely|completely|totally|simply|just|even|deeply)?\s*(agrees?|confirms?|denies?|emphasizes?|notes?|reacts?|expresses?|stresses?|salutes?|supports?|opposes?|questions?|challenges?|defends?)\s+(on\s+|in\s+|of\s+|with\s+)?(a|the|some|any)\s+(point|statement|claim|view|opinion|thread|conversation|discussion|post|tweet|article|comment|reply|message|agreement|importance|achievement|topic|issue|matter|subject|take)\b',
     r'^reacts?\s+with\s+\w+\s+emoji\b',
     r'\bin\s+(a\s+)?(conversation|thread|discussion)\s*$',
     r'\bwith\s+[\'"]?(yes|no|true|same|this|that|exactly)[\'"]?\s*$',
     # Catch 'importance/significance/relevance of a [generic noun]' anywhere
     r'\b(importance|significance|relevance|need|truth|value)\s+of\s+a\s+(point|statement|claim|view|opinion|comment|reply|message|tweet|post|thread)\b',
+    # 2026-05-23 even later: cron #27 still missed adverb-prefixed forms and
+    # parallel constructions like 'achievement or statement', 'take on topic',
+    # 'point on key issue', 'restriction or prohibition'.
+    r'\b(take|point|view|opinion|comment|reply|message)\s+on\s+(a\s+|the\s+|some\s+|any\s+|key\s+|important\s+|critical\s+|main\s+|the\s+main\s+)?(topic|issue|matter|subject|point|statement)\b',
+    r'\b(achievement|statement|claim|view|opinion|restriction|prohibition|announcement|comment)\s+or\s+(achievement|statement|claim|view|opinion|restriction|prohibition|announcement|comment)\b',
 ]
 _GENERIC_HEADLINE_RE = re.compile('|'.join(_GENERIC_HEADLINE_PATTERNS), re.IGNORECASE)
 
@@ -665,9 +670,15 @@ for tab in tabs:
             with _cf_p.ThreadPoolExecutor(max_workers=6) as _ex:
                 elon_kept = list(_ex.map(_enrich_parent, elon_kept))
         # Now rewrite generic headlines using parent context if available.
+        # M-039: also trigger rewrite when body is short (<60 chars) — emoji
+        # replies and one-liners can't produce a meaningful headline on their
+        # own; the rewriter uses parent context. Don't wait for the regex to
+        # catch the headline — bias toward trying.
         for s in elon_kept:
             h = (s.get('headline') or '').strip()
-            if _is_generic_headline(h):
+            body = (s.get('body') or '').strip()
+            needs_rewrite = _is_generic_headline(h) or len(body) < 60
+            if needs_rewrite:
                 better = fetch_headline_for_post(
                     s.get('url',''), s.get('body',''),
                     parent_text=s.get('parent_text'), parent_handle=s.get('parent_handle'))
