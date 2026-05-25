@@ -88,6 +88,14 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-042 — Elon tab: 48h cap, ALL posts get parent fetch, hard rewrite-or-parent-extract for headlines.
+**Date:** 2026-05-24
+**User said:** "The Elon tab still looks problematic in that it doesn't seem to cover all of his posts, replies, and retweets. It should have them all. The newspaper teaser explanation header titles suck. Why is that the one that is so screwed up? Also, every one of his posts, if he's commenting on something, should have whatever he's commenting on embedded."
+**Three-part fix:**
+1. **48h age cap for Elon** (was 24h) — Elon's posting cadence is uneven; many posts hit 25-30h before next cron rotates them. 48h gives them a fair shot.
+2. **Unconditional parent fetch** — M-030 only fired when body <60 chars or starts with `@`. Quote-tweets with substantive bodies skipped parent fetch. Now EVERY Elon post calls `fetch_parent()`; original posts return None and move on. Cost: 9-16 extra xAI calls per cron, parallelized.
+3. **Newspaper-headline rewrite, hard fallback** — `fetch_headline_for_post` prompt strengthened with explicit ❌/✅ examples of reaction-style vs news-style. After xAI returns, if the result is STILL generic, fall back to extracting the first sentence of `parent_text` (truncated, validated). Better to ship the actual news verbatim than ship "Agrees with X."
+
 ## M-041 — Nested comments: every shipped PERSPECTIVE gets parent context fetched + embedded above its reply.
 **Date:** 2026-05-24
 **User said:** "I thought we were working on nesting comments so we know what context comments like these are speaking to. Otherwise, it's useless. No sense even posting stuff like this." (re: @AdamKinzinger perspective "If Foxnews admits it's bad, it's bad" — meaningless without the FoxNews/TreyYingst post he's replying to)

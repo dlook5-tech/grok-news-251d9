@@ -543,13 +543,19 @@ def fetch_headline_for_post(url, body, parent_text=None, parent_handle=None):
     if parent_text:
         ph = parent_handle or '?'
         parent_block = (
-            f"\nThis post is a REPLY or QUOTE-TWEET. The author is reacting to a "
-            f"post by @{ph} which said: {parent_text[:280]!r}\n"
-            f"The news hook is what THE PARENT POST is about — describe THAT, not "
-            f"the reaction. The author's role is secondary. Example: parent says "
-            f"'NYPD chief resigns over corruption'; this author replies '👀'. The "
-            f"headline should be 'NYPD chief resigns amid corruption probe' (the "
-            f"news), not 'Author reacts with eyes emoji' (the reaction).\n"
+            f"\n⚠️ CRITICAL: This post is a REPLY/QT to @{ph} who posted: {parent_text[:280]!r}\n"
+            f"The HEADLINE MUST DESCRIBE THE PARENT'S NEWS EVENT — not the reaction.\n"
+            f"NEVER write headlines like:\n"
+            f"  ❌ 'Agrees with post on X'\n"
+            f"  ❌ 'Reacts to X'\n"
+            f"  ❌ 'Endorses statement about Y'\n"
+            f"  ❌ 'Confirms Z is true'\n"
+            f"  ❌ '@author + verb + topic'\n"
+            f"ALWAYS write the actual news from the parent:\n"
+            f"  ✅ 'NYPD chief resigns amid corruption probe' (when parent says that)\n"
+            f"  ✅ 'Britain cleared slavery compensation debt before 2015' (extract the fact)\n"
+            f"  ✅ 'Police refuse to release Henry Nowak bodycam footage' (extract the news)\n"
+            f"Pretend the reply doesn't exist. Write the headline for the PARENT post alone.\n"
         )
     prompt = (
         f"Write ONE attention-grabbing NEWSPAPER HEADLINE (under 100 chars) for the X post at {url}.\n\n"
@@ -573,7 +579,14 @@ def fetch_headline_for_post(url, body, parent_text=None, parent_handle=None):
     if not result or not result.get('headline'):
         return None
     h = (result['headline'] or '').strip()
-    if _is_generic_headline(h): return None
+    # If rewrite STILL came back generic, fall back to the parent's first sentence
+    # (truncated to 100 chars). Better to ship the news verbatim than ship 'Agrees with X'.
+    if _is_generic_headline(h):
+        if parent_text:
+            first_sentence = re.split(r'[.!?\n]', parent_text.strip(), 1)[0].strip()
+            if first_sentence and len(first_sentence) >= 20 and not _is_generic_headline(first_sentence):
+                return first_sentence[:120]
+        return None
     return h[:120]
 
 
@@ -677,11 +690,10 @@ for tab in tabs:
         # like "Reacts with target emoji" instead of describing the actual news.
         import concurrent.futures as _cf_p
         def _enrich_parent(_s):
+            # M-042 strengthened: try parent fetch for EVERY Elon post, not just
+            # short ones. If the post is original, fetch_parent returns None and
+            # we move on. Cost: 9-16 extra xAI calls per cron, ~5s wall time.
             if _s.get('parent_url'):
-                return _s
-            body = (_s.get('body') or '').strip()
-            looks_like_reply = body.startswith('@') or (body and len(body) < 60)
-            if not looks_like_reply:
                 return _s
             try:
                 parent = fetch_parent(_s.get('url',''))
@@ -991,7 +1003,7 @@ for _tab, _container in list(output.items()):
 HARD_AGE_CAP_H = 24.0  # default for news tabs (daily content)
 PER_TAB_AGE_CAP = {
     # News tabs (daily content cadence) — strict 24h
-    # world, usa, top, business, msm, sports, pg6, comedy, elon = 24h default
+    # world, usa, top, business, msm, sports, pg6, comedy = 24h default
     # Slower-cadence tabs — loosened so they're not always empty:
     'pods': 48.0,        # podcasters drop clips every 1-3 days
     'allin': 48.0,       # billionaire-podcaster posts often 1-2 day cadence
@@ -999,6 +1011,7 @@ PER_TAB_AGE_CAP = {
     'recipe': 72.0,      # recipe content has long shelf life, posts less daily
     'science': 72.0,     # research/breakthrough posts spaced out
     'local': 72.0,       # SoCal/OC content sparse on X
+    'elon': 48.0,        # M-042: user mandate — show ALL Elon posts/replies/RTs
 }
 # M-026: BIG-VIEWS AGE EXCEPTION for World + USA.
 # User mandate 2026-05-23 evening: late-blooming viral stories (e.g. Barilla
