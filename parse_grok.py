@@ -315,7 +315,12 @@ def find_perspectives(story_url, story_headline):
         f"]}}"
     )
     result = _xai_call(prompt, timeout=120, max_tokens=5000)
-    if not result or 'perspectives' not in result:
+    if result is None:
+        # M-048: distinguish API failure from empty-but-valid response. None
+        # means _xai_call hit an exception (HTTP error, timeout, credits
+        # exhausted). Raise so the caller preserves prior perspectives.
+        raise RuntimeError('xAI call failed (None response) — likely API/credits issue')
+    if 'perspectives' not in result:
         return []
     persps = result.get('perspectives') or []
     if not isinstance(persps, list):
@@ -869,12 +874,25 @@ for tab in tabs:
         # collapses to ~10-15s wall time.
         import concurrent.futures as _cf
         def _enrich_one(_s):
+            # M-048: track whether the call ACTUALLY ran vs threw. If xAI is down
+            # or out of credits, find_perspectives raises and we should preserve
+            # the previous cron's perspectives (carried via apply_hold) rather
+            # than wiping them. Only wipe when Stage 2 actually ran and got 0.
+            _stage2_ran = True
             try:
                 persps = find_perspectives(_s.get('url',''), _s.get('headline',''))
             except Exception as _e:
                 print(f"[stage2-warn] {tab}: perspective fetch failed for "
-                      f"@{_s.get('handle','?')}: {_e}", file=sys.stderr)
+                      f"@{_s.get('handle','?')}: {_e} — keeping previous perspectives if any", file=sys.stderr)
                 persps = []
+                _stage2_ran = False
+            # If the call didn't fire successfully (xAI down) and we already
+            # have perspectives from the previous cron, keep them.
+            if not _stage2_ran and _s.get('perspectives'):
+                print(f"[stage2-preserve] {tab} @{_s.get('handle','?')}: "
+                      f"keeping {len(_s.get('perspectives',[]))} previous perspectives",
+                      file=sys.stderr)
+                return _s
 
             # M-043: if we got fewer than 2 perspectives, the first pass found a
             # one-sided take and stopped. Fire a targeted follow-up for each

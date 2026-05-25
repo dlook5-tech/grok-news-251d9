@@ -88,6 +88,15 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-048 — Preserve prior-cron perspectives when xAI is down/out-of-credits (don't wipe on API failure).
+**Date:** 2026-05-24 night
+**User said:** "where r conserv ind dem perspectives" — live World/USA shipped 0 perspectives across all stories.
+**Trace:** xAI is out of credits (`"Your team has either used all available credits or reached its monthly spending limit"`). `_xai_call` swallowed the HTTP error and returned None. `find_perspectives` treated None like a valid-but-empty response, returned []. `_enrich_one` then called `_s.pop('perspectives', None)` — wiping the perspectives that came along via apply_hold from previous cron.
+**Enforcement:**
+- `find_perspectives` now RAISES `RuntimeError` when `_xai_call` returns None (treating as API failure), instead of silently returning [].
+- `_enrich_one` tracks `_stage2_ran` flag: True only if the call returned without exception. On exception, if the story already has `perspectives` (from previous cron via apply_hold carry-over), keep them. Log `[stage2-preserve]`.
+- Net effect: when xAI hiccups (credit lapse, rate limit, transient 5xx), perspectives don't disappear — they ride along until the API recovers.
+
 ## M-046 — Post-oEmbed perspective backfill (when hallucinated URL drop leaves story with <2 perspectives).
 **Date:** 2026-05-24 night
 **User said:** "659K views and 1 perspective, not possible" (about FoxNews "US offering significant sanctions relief for serious Iranian nuclear deal" story shipping with only the Conservative perspective)
