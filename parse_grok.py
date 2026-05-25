@@ -844,11 +844,15 @@ for tab in tabs:
         held_qual = [h for h in held if _wu_qualified(h)]
         # M-026 fix: pass max_age_hours=999 so apply_hold does NOT pre-filter on
         # 24h. The per-tab age cap loop downstream applies 24h + the 500K-view
-        # bypass for late-bloomer viral stories. Without this, apply_hold's
-        # default 24h killed candidates before M-026 could evaluate them
-        # (e.g. WhiteHouse SAVE Act 695K views @ 33.7h was getting dropped).
+        # bypass for late-bloomer viral stories.
+        # M-044 fix: sort by RAW VIEWS (not velocity) for World/USA. Velocity
+        # returns -1 for stories >24h without views_at_save, dropping big
+        # late-bloomer stories to the bottom of the QC dedup queue where they
+        # get killed as dupes of lower-view fresher takes. With story_views,
+        # the 6.8M @WhiteHouse Trump-Iran story (31h old) wins QC over the
+        # 324K @spectatorindex story shipped first because of velocity sort.
         chosen = curation.apply_hold(held_qual, cleaned_qual, top_n=999,
-                                     sort_key=curation.story_velocity,
+                                     sort_key=curation.story_views,
                                      max_age_hours=999)
         chosen = [s for s in chosen if _wu_qualified(s)]
 

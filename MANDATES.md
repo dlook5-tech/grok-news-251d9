@@ -88,6 +88,14 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-044 — World/USA `apply_hold` sorts by RAW VIEWS, not velocity (so big late-bloomers win QC dedup ties).
+**Date:** 2026-05-24 night
+**User said:** "wheres my fucking report of the curated 8 world and USA ... the stories picked and posts chosen suck dick"
+**Root cause:** 6.8M @WhiteHouse Trump-Iran story (31h old) was M-026-bypassed for age, then KILLED by within-tab QC dedup. The QC iterated @spectatorindex (324K) FIRST, added `{iran, trump}` to seen, and the later 6.8M story matched as dupe. Why did 324K sort first? Because `curation.story_velocity` returns `-1.0` for stories >24h without `views_at_save` (a Ristretto carry-over field). Late-bloomer viral stories sort to the BOTTOM of velocity rankings.
+**Enforcement:**
+- World/USA `apply_hold` call now passes `sort_key=curation.story_views` instead of `story_velocity`. Raw view count rules — the 6.8M @WhiteHouse story sorts FIRST, QC adds it to seen first, lower-view duplicates get dropped against it.
+- Other tabs unchanged (still velocity).
+
 ## M-043 — When Stage 2 returns <2 perspectives on a >=100K-view story, fire a targeted opposing-view follow-up.
 **Date:** 2026-05-24
 **User said:** "In the World tab, how can you only have one view, the conservative view, for the first story? There have to be at least an independent and a Democrat view on that, especially if it has 315,000 views. Just look for the most viewed retweet with a different perspective criticizing it or critiquing it. That shouldn't be that hard."
