@@ -1307,7 +1307,21 @@ def _qc_llm_semantic_dedup(output_dict):
         print(f"[qc-llm] malformed dupes field — skipping", file=sys.stderr)
         return
 
+    # Helper: get the actual story dict from output for an item index
+    def _story_at(item):
+        tab, idx, handle, head = item
+        c = output_dict.get(tab, {})
+        sts = c.get('stories', []) or []
+        if 0 <= idx < len(sts):
+            return sts[idx]
+        return None
+    def _views(item):
+        s = _story_at(item)
+        try: return int((s.get('views') if s else 0) or 0)
+        except: return 0
+
     to_drop = {}  # (tab, idx_in_tab) -> (kept_label, drop_head, reason)
+    promotions = []  # M-045: (kept_tab, kept_idx, replacement_story_dict, dropped_label) — replace small kept story with big dropped story
     for entry in dupes:
         try:
             i, j = int(entry[0]), int(entry[1])
@@ -1321,13 +1335,44 @@ def _qc_llm_semantic_dedup(output_dict):
         a_rank = _DEDUP_ORDER.index(a_tab) if a_tab in _DEDUP_ORDER else 999
         b_rank = _DEDUP_ORDER.index(b_tab) if b_tab in _DEDUP_ORDER else 999
         if a_rank < b_rank:
-            drop_key = (b_tab, b_idx); kept_label = f"{a_tab}/{a_handle}"; drop_head = b_head
+            kept_item, drop_item = items[i], items[j]
         elif b_rank < a_rank:
-            drop_key = (a_tab, a_idx); kept_label = f"{b_tab}/{b_handle}"; drop_head = a_head
+            kept_item, drop_item = items[j], items[i]
         else:
-            drop_key = (b_tab, b_idx); kept_label = f"{a_tab}/{a_handle}"; drop_head = b_head
+            kept_item, drop_item = items[i], items[j]
+
+        kept_tab, kept_idx, kept_handle, kept_head = kept_item
+        drop_tab, drop_idx, drop_handle, drop_head = drop_item
+        kept_views = _views(kept_item)
+        drop_views = _views(drop_item)
+
+        # M-045: if the dropped-tab story has SIGNIFICANTLY more views than the
+        # kept-tab story, REPLACE the kept-tab story IN-PLACE with the bigger
+        # story, and drop the source. Threshold: 2x views AND >=500K.
+        if drop_views >= 2 * kept_views and drop_views >= 500_000:
+            drop_story = _story_at(drop_item)
+            if drop_story:
+                promotions.append((kept_tab, kept_idx, drop_story, drop_tab + '/' + drop_handle, reason, drop_views, kept_views))
+                # Only drop the SOURCE (drop_tab) — the kept_tab slot gets overwritten in-place
+                to_drop[(drop_tab, drop_idx)] = (f"promoted into {kept_tab}",
+                                                  drop_head, "M-045 source")
+                continue
+
+        drop_key = (drop_tab, drop_idx)
+        kept_label = f"{kept_tab}/{kept_handle}"
         if drop_key in to_drop: continue
         to_drop[drop_key] = (kept_label, drop_head, reason)
+
+    # Apply M-045 promotions FIRST (overwrite small kept-tab story with big
+    # dropped-tab story). drops happen AFTER, removing only the source.
+    for kept_tab, kept_idx, new_story, source_label, reason, drop_v, kept_v in promotions:
+        c = output_dict.get(kept_tab, {})
+        sts = c.get('stories', []) or []
+        if 0 <= kept_idx < len(sts):
+            print(f"[qc-llm-promote] {kept_tab}[{kept_idx}]: replaced ({kept_v:,}v) "
+                  f"with {source_label} ({drop_v:,}v) — {reason}", file=sys.stderr)
+            sts[kept_idx] = new_story
+        c['stories'] = sts
 
     if not to_drop:
         print(f"[qc-llm] reviewed {len(items)} stories; 0 semantic dupes flagged", file=sys.stderr)

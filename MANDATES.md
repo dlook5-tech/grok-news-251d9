@@ -88,6 +88,16 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-045 — LLM dedup PROMOTES the bigger story when cross-tab match has lopsided view counts.
+**Date:** 2026-05-24 night
+**User said:** [trace question] "we keep making same errors, when u tell me ur doing something do you write it into code or put it into suggested notes, why still whack a mole"
+**Trace finding:** 6.8M @WhiteHouse Trump-Iran story still dropping despite M-026 + M-044 because the FINAL gate (M-014 LLM semantic dedup) saw it as same event as World's @FoxNews (658K, carry-over from prior cron). LLM dropped the USA candidate but didn't promote the bigger story into World. Net result: tab keeps the smaller, older carry-over.
+**Enforcement:**
+- `parse_grok.py::_qc_llm_semantic_dedup` now checks view counts of both sides of any LLM-flagged dupe pair.
+- If the dropped-tab story has ≥2x the views AND ≥500K views, PROMOTE it: overwrite the kept-tab slot with the bigger story IN-PLACE, then drop only the original source.
+- Log `[qc-llm-promote]` shows each promotion with view counts.
+- Only fires for genuinely lopsided cases (2x + 500K floor) so small-view tabs don't keep getting their stories swapped.
+
 ## M-044 — World/USA `apply_hold` sorts by RAW VIEWS, not velocity (so big late-bloomers win QC dedup ties).
 **Date:** 2026-05-24 night
 **User said:** "wheres my fucking report of the curated 8 world and USA ... the stories picked and posts chosen suck dick"
