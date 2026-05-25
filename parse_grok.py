@@ -1563,6 +1563,60 @@ for _v_tab in _verify_news_tabs:
         _kept.append(_v_story)
     _v_container['stories'] = _kept
 
+# M-046: POST-OEMBED PERSPECTIVE BACKFILL.
+# When oEmbed dropped a perspective and the story is now <2 perspectives AND
+# views >= 100K, re-fire the M-043 opposing-view fallback for the missing label.
+# Without this, hallucinated Democrat perspectives leave World/USA stories
+# showing only the Conservative side (or vice versa). Story-level oEmbed kills
+# of the parent story aren't recovered — those are correct drops.
+import concurrent.futures as _cf_refill
+def _refill_one(_args):
+    _r_tab, _r_story = _args
+    if int(_r_story.get('views',0) or 0) < 100_000:
+        return _r_tab, _r_story
+    persps = _r_story.get('perspectives', []) or []
+    if len(persps) >= 2:
+        return _r_tab, _r_story
+    existing_labels = {p.get('label') for p in persps if isinstance(p, dict)}
+    for target in ('Democrat', 'Conservative', 'Independent'):
+        if target in existing_labels: continue
+        if len(persps) >= 2: break
+        try:
+            extra = find_opposing_perspective(
+                _r_story.get('url',''), _r_story.get('headline',''), persps, target)
+        except Exception as _e:
+            print(f"[oembed-refill-warn] {_r_tab}: {_e}", file=sys.stderr)
+            extra = None
+        if extra:
+            # Verify the refill URL too — don't re-introduce the hallucination problem
+            try:
+                if verify_url_handle(extra.get('url','')):
+                    persps.append(extra)
+                    print(f"[oembed-refill] {_r_tab} @{_r_story.get('handle','?')}: "
+                          f"backfilled {target} after oEmbed drop "
+                          f"(@{extra.get('handle','?')} {extra.get('views',0):,}v)",
+                          file=sys.stderr)
+                else:
+                    print(f"[oembed-refill-warn] {_r_tab}: refill candidate @{extra.get('handle','?')} "
+                          f"also hallucinated, skipping", file=sys.stderr)
+            except Exception:
+                pass
+    _r_story['perspectives'] = persps
+    return _r_tab, _r_story
+
+_refill_jobs = []
+for _v_tab in ('world','usa'):  # only World/USA care about perspective balance
+    _v_container = output.get(_v_tab, {})
+    if not isinstance(_v_container, dict): continue
+    for _v_story in _v_container.get('stories', []) or []:
+        if int(_v_story.get('views',0) or 0) >= 100_000 and len(_v_story.get('perspectives',[]) or []) < 2:
+            _refill_jobs.append((_v_tab, _v_story))
+
+if _refill_jobs:
+    print(f'[oembed-refill] {len(_refill_jobs)} stories qualify for post-oEmbed perspective backfill', file=sys.stderr)
+    with _cf_refill.ThreadPoolExecutor(max_workers=4) as _ex:
+        list(_ex.map(_refill_one, _refill_jobs))
+
 
 # ---- Preserve user-managed tabs (freespeech only — submit now cron-managed) ----
 # 'submit' was previously preserved from existing_full, but M-038 moves it to

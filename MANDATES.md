@@ -88,6 +88,16 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-046 — Post-oEmbed perspective backfill (when hallucinated URL drop leaves story with <2 perspectives).
+**Date:** 2026-05-24 night
+**User said:** "659K views and 1 perspective, not possible" (about FoxNews "US offering significant sanctions relief for serious Iranian nuclear deal" story shipping with only the Conservative perspective)
+**Trace:** Grok returned 2 perspectives (Conservative @MOSSADil, Democrat @MeidasTouch). @MeidasTouch URL was hallucinated → oEmbed correctly dropped it. The story shipped with just Conservative. M-043 fallback only fires DURING Stage 2, before oEmbed runs.
+**Enforcement:**
+- After the oEmbed verification sweep, scan World/USA stories. If a story has views >= 100K AND fewer than 2 perspectives, call `find_opposing_perspective` for the missing label(s).
+- Re-verify the refill candidate's URL via `verify_url_handle` BEFORE adding (don't re-introduce hallucinations).
+- Log `[oembed-refill]` for each successful backfill, `[oembed-refill-warn]` for refills that themselves failed oEmbed.
+- Parallelized via ThreadPoolExecutor(max_workers=4).
+
 ## M-045 — LLM dedup PROMOTES the bigger story when cross-tab match has lopsided view counts.
 **Date:** 2026-05-24 night
 **User said:** [trace question] "we keep making same errors, when u tell me ur doing something do you write it into code or put it into suggested notes, why still whack a mole"
