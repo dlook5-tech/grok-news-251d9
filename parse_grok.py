@@ -488,6 +488,12 @@ _GENERIC_HEADLINE_PATTERNS = [
     r'\bwith\s+[\'"]?(yes|no|true|same|this|that|exactly)[\'"]?\s*$',
     # Catch 'importance/significance/relevance of a [generic noun]' anywhere
     r'\b(importance|significance|relevance|need|truth|value)\s+of\s+a\s+(point|statement|claim|view|opinion|comment|reply|message|tweet|post|thread)\b',
+    # M-047 2026-05-24 night: meta-commentary about someone's social media isn't news.
+    # User: 'BBC analysis of Donald Trump's 2026 social media posts' — 'not a news story'
+    r'\b(analysis|review|breakdown|recap|roundup|summary|look)\s+of\s+\w+(\'s|s\')?\s+(social media|tweets?|posts?|threads?|x\s+posts?|twitter\s+posts?)\b',
+    r'\b(social media|tweet|post|thread)\s+(analysis|review|breakdown|recap|roundup)\b',
+    r'^(bbc|cnn|reuters|nyt|nytimes|wapo|fox news|abc|nbc|cbs|msnbc|guardian)\s+(analysis|review|breakdown|recap|reports? on|looks? at)\s+',
+    r'\b(reviews?|analyzes?|breaks?\s+down|recaps?)\s+(donald\s+trump|trump|biden|elon\s+musk)(\'s|s\')?\s+(social media|tweets?|posts?|threads?|year|day|week|month)\b',
     # 2026-05-23 even later: cron #27 still missed adverb-prefixed forms and
     # parallel constructions like 'achievement or statement', 'take on topic',
     # 'point on key issue', 'restriction or prohibition'.
