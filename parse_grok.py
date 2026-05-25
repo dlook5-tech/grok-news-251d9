@@ -194,6 +194,71 @@ _PERSPECTIVE_MIN_VIEWS = {
 }
 _PERSPECTIVE_MIN_FOLLOWERS = 1_000  # Quality floor: no "Yahoo accounts" per user
 
+def find_opposing_perspective(story_url, story_headline, existing_persps, target_label):
+    """M-043: When find_perspectives returns <2 perspectives for a story that
+    clearly has political controversy, fire a TARGETED follow-up xAI call
+    asking specifically for the opposing-side reaction. Grok often returns 1
+    when 3 exist; this nudge usually finds the others.
+
+    target_label: 'Democrat', 'Conservative', or 'Independent'.
+    existing_persps: list of perspectives already found (so we can describe
+    them to Grok and ask for the OPPOSING take).
+    Returns a single perspective dict or None.
+    """
+    if not story_url or '/status/' not in story_url:
+        return None
+    existing_desc = '. '.join(
+        f"{p.get('label','?')} @{p.get('handle','?')}: {(p.get('body','') or '')[:120]}"
+        for p in existing_persps[:2]
+    ) or 'no perspectives found yet'
+    prompt = (
+        f"For the X post at {story_url} (headline: {story_headline!r}), I already "
+        f"have: {existing_desc}.\n\n"
+        f"NOW FIND a {target_label} reaction that CRITIQUES or DISAGREES with the "
+        f"story (or with the existing perspective if shown above).\n\n"
+        f"Look in:\n"
+        f"  - Direct replies to {story_url}\n"
+        f"  - Quote-tweets sharing the URL with critical commentary\n"
+        f"  - Original posts within 24h on the SAME news event from {target_label}-aligned commentators\n\n"
+        f"Quality floors:\n"
+        f"  - Minimum 1,000 views\n"
+        f"  - Account ≥1K followers + real bio\n"
+        f"  - No vulgar slurs, no pure-emoji posts, no spam\n\n"
+        f"Pick the HIGHEST-VIEWED qualifying critique/disagreement. Return ONLY one "
+        f"perspective. If you genuinely cannot find any {target_label} critique with "
+        f">=1K views, return {{\"perspective\": null}}.\n\n"
+        f"Return ONLY a JSON object:\n"
+        f'{{"perspective":{{"label":"{target_label}","handle":"@user","url":"https://x.com/.../status/<id>",'
+        f'"body":"verbatim post text","views":<integer>}}}}'
+    )
+    try:
+        result = _xai_call(prompt, timeout=60, max_tokens=1000)
+    except Exception:
+        return None
+    if not result:
+        return None
+    p = result.get('perspective')
+    if not isinstance(p, dict):
+        return None
+    url = (p.get('url') or '').strip()
+    if '/status/' not in url or url == story_url:
+        return None
+    try:
+        views = int(p.get('views') or 0)
+    except (TypeError, ValueError):
+        views = 0
+    if views < 1_000:
+        return None
+    return {
+        'label': target_label,
+        'handle': p.get('handle','') or '',
+        'url': url,
+        'body': (p.get('body') or '')[:600],
+        'views': views,
+        'engagement': f"{views:,} views",
+    }
+
+
 def find_perspectives(story_url, story_headline):
     """STAGE 2: For a chosen World/USA story, search the REPLIES and
     QUOTE-TWEETS of the original story tweet itself, find:
@@ -800,13 +865,36 @@ for tab in tabs:
                 print(f"[stage2-warn] {tab}: perspective fetch failed for "
                       f"@{_s.get('handle','?')}: {_e}", file=sys.stderr)
                 persps = []
+
+            # M-043: if we got fewer than 2 perspectives, the first pass found a
+            # one-sided take and stopped. Fire a targeted follow-up for each
+            # MISSING side asking specifically for an opposing critique. Cheap
+            # nudge (~1-2 extra xAI calls per story).
+            if 0 < len(persps) < 2 and _s.get('views', 0) >= 100_000:
+                existing_labels = {p.get('label') for p in persps}
+                # Always at minimum try to get an opposing partisan take
+                for target in ('Democrat', 'Conservative', 'Independent'):
+                    if target in existing_labels: continue
+                    if len(persps) >= 2: break
+                    try:
+                        extra = find_opposing_perspective(
+                            _s.get('url',''), _s.get('headline',''), persps, target)
+                    except Exception as _e:
+                        print(f"[stage2-fallback-warn] {tab}: {_e}", file=sys.stderr)
+                        extra = None
+                    if extra:
+                        persps.append(extra)
+                        print(f"[stage2-fallback] {tab} @{_s.get('handle','?')}: "
+                              f"added {target} via opposing-view search "
+                              f"(@{extra.get('handle','?')} {extra.get('views',0):,}v)",
+                              file=sys.stderr)
+
             if persps:
                 _s['perspectives'] = persps
                 labels = [p.get('label') for p in persps]
                 print(f"[stage2] {tab} @{_s.get('handle','?')}: found {len(persps)} "
                       f"perspectives ({', '.join(labels)})", file=sys.stderr)
             else:
-                # Strip any stale perspectives field so we don't show old data
                 _s.pop('perspectives', None)
                 print(f"[stage2] {tab} @{_s.get('handle','?')}: 0 perspectives "
                       f"(ships as inline-embed block)", file=sys.stderr)

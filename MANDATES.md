@@ -88,6 +88,16 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-043 — When Stage 2 returns <2 perspectives on a >=100K-view story, fire a targeted opposing-view follow-up.
+**Date:** 2026-05-24
+**User said:** "In the World tab, how can you only have one view, the conservative view, for the first story? There have to be at least an independent and a Democrat view on that, especially if it has 315,000 views. Just look for the most viewed retweet with a different perspective criticizing it or critiquing it. That shouldn't be that hard."
+**Context:** "Gaza protesters storm JFK airport in NYC" had 315K views but only shipped a Conservative reaction. Grok's first-pass `find_perspectives` returned 1 of 3, and that was the end.
+**Enforcement:**
+- New `parse_grok.py::find_opposing_perspective(url, headline, existing, target_label)` — targeted second xAI call. Tells Grok "I already have a Conservative take from @X saying Y. NOW FIND a Democrat reaction that CRITIQUES or DISAGREES." Stricter, narrower, easier for Grok to satisfy than the broad 3-slot ask.
+- Wired into `_enrich_one`: if first pass returns 0<n<2 perspectives AND story has ≥100K views, iterate through missing labels (`Democrat`, `Conservative`, `Independent`) and call `find_opposing_perspective` for each missing one. Stop at 2 total.
+- Logged as `[stage2-fallback]` so the recovery is visible in cron logs.
+- Cost: 1-2 extra xAI calls per story missing perspectives. ~5-10 calls per cron tops.
+
 ## M-042 — Elon tab: 48h cap, ALL posts get parent fetch, hard rewrite-or-parent-extract for headlines.
 **Date:** 2026-05-24
 **User said:** "The Elon tab still looks problematic in that it doesn't seem to cover all of his posts, replies, and retweets. It should have them all. The newspaper teaser explanation header titles suck. Why is that the one that is so screwed up? Also, every one of his posts, if he's commenting on something, should have whatever he's commenting on embedded."
