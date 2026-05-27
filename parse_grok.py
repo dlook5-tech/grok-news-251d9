@@ -1959,6 +1959,21 @@ if _scrub_n:
     print(f"[parent-scrub] M-049: cleaned {_scrub_n} broken parent_url placeholders", file=sys.stderr)
 
 
+# ---- M-053 NORMALIZER: ensure every perspective has text=body ----
+# Perspectives added AFTER the per-tab loop's _body_to_text pass (M-046
+# oembed-refill, M-043 opposing-view fallback) ship with body but no text
+# field. Frontend renderWorldStory falls back to "View post" when text is
+# empty. Copy body→text wherever text is missing, idempotently.
+for _norm_tab, _norm_val in output.items():
+    if not isinstance(_norm_val, dict): continue
+    for _norm_s in (_norm_val.get('stories') or []):
+        if not isinstance(_norm_s, dict): continue
+        for _norm_p in (_norm_s.get('perspectives') or []):
+            if not isinstance(_norm_p, dict): continue
+            if not (_norm_p.get('text') or '').strip() and (_norm_p.get('body') or '').strip():
+                _norm_p['text'] = _norm_p['body']
+
+
 # ---- M-053 EMPTY-BLOCK GATE ----
 # User mandate 2026-05-27: "when ur rewriting block titles, im asssuming this
 # shoiuldnt get through: 'view'". renderWorldStory falls back to literal
