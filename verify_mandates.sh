@@ -162,6 +162,14 @@ check  "M-040b:oembed-call"            parse_grok.py  "publish\.twitter\.com/oem
 check  "M-040c:verify-sweep-wired"     parse_grok.py  "oembed-verify.*checking"        exists
 check  "M-040d:drop-mismatched"        parse_grok.py  "oembed-drop"                    exists
 
+# M-049 — fetch_parent rejects Grok template-echo placeholders ('unknown/status/unknown')
+# AND a pre-write scrubber strips stale broken parent_url from carry-overs.
+check  "M-049a:no-literal-placeholder" parse_grok.py  "<handle>/status/<id>"           absent
+check  "M-049b:prompt-says-no-guess"   parse_grok.py  "DO NOT invent or guess"         exists
+check  "M-049c:reject-unknown"         parse_grok.py  "parent-reject"                  exists
+check  "M-049d:scrubber-defined"       parse_grok.py  "_scrub_broken_parent"           exists
+check  "M-049e:scrubber-runs"          parse_grok.py  "M-049: cleaned"                 exists
+
 # M-041 — Nested comments: perspectives get parent context fetched + embedded
 check  "M-041a:persp-parent-fn"        parse_grok.py  "_enrich_persp_parent"           exists
 check  "M-041b:persp-parent-log"       parse_grok.py  "persp-parent"                   exists

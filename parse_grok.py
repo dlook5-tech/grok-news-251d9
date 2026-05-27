@@ -166,24 +166,54 @@ def _xai_call(prompt, timeout=45, max_tokens=800):
 
 def fetch_parent(url):
     """For a post URL, find the tweet it's replying to or quote-tweeting.
-    Returns {parent_url, parent_handle, parent_text} or None if original/not-found."""
+    Returns {parent_url, parent_handle, parent_text} or None if original/not-found.
+
+    M-049: hard-validate against Grok template-echo. The earlier prompt
+    included a literal placeholder URL as the shape example; Grok would echo
+    it back (substituting 'unknown' for the bracketed tokens) when it could
+    not actually verify the parent. That shipped junk like
+    'https://x.com/unknown/status/unknown' into stories.json. The new prompt
+    no longer shows a placeholder URL shape, and we reject any result whose
+    URL contains 'unknown' / angle brackets / example.com, plus require real
+    handle and text payloads."""
     if not url or '/status/' not in url:
         return None
     prompt = (
         f"For the X post at {url}, find the tweet it is replying to OR quote-tweeting. "
-        f"Return ONLY a JSON object: "
-        f'{{"parent_url":"https://x.com/<handle>/status/<id>","parent_handle":"@<handle>","parent_text":"verbatim text of the parent tweet (≤280 chars)"}}. '
-        f"If the post is original (not a reply, not a QT), return an empty object {{}}."
+        f"You MUST verify the parent post actually exists by reading it on X — do NOT guess. "
+        f"If you find the parent, return ONLY this JSON: "
+        f'{{"parent_url": "<the real X URL>", "parent_handle": "@<the real handle>", "parent_text": "<verbatim text, ≤280 chars>"}}. '
+        f"If you cannot verify the parent (post is original, deleted, or you do not have access), "
+        f"return an empty JSON object: {{}}. "
+        f"DO NOT invent or guess values. DO NOT return placeholder strings like 'unknown'. "
+        f"DO NOT return the literal template strings — return real values or {{}}."
     )
     result = _xai_call(prompt, timeout=30, max_tokens=400)
     if not result or not result.get('parent_url'):
         return None
-    if '/status/' not in (result.get('parent_url') or ''):
+    p_url = (result.get('parent_url') or '').strip()
+    p_handle = (result.get('parent_handle') or '').strip()
+    p_text = (result.get('parent_text') or '').strip()
+    # M-049 reject conditions — any one of these means Grok hallucinated:
+    if '/status/' not in p_url:
+        return None
+    low = p_url.lower()
+    if 'unknown' in low or '<' in p_url or '>' in p_url or 'example.com' in low or 'placeholder' in low:
+        print(f"[parent-reject] template-echo URL: {p_url!r}", file=sys.stderr)
+        return None
+    if not p_handle or p_handle.lower() in ('@unknown', '@<handle>', '@handle', '<handle>', 'unknown'):
+        print(f"[parent-reject] bad handle: {p_handle!r}", file=sys.stderr)
+        return None
+    if '<' in p_handle or '>' in p_handle:
+        print(f"[parent-reject] template-echo handle: {p_handle!r}", file=sys.stderr)
+        return None
+    if not p_text or '<' in p_text and '>' in p_text:
+        print(f"[parent-reject] empty/template parent_text for {p_url}", file=sys.stderr)
         return None
     return {
-        'parent_url': result['parent_url'],
-        'parent_handle': result.get('parent_handle', ''),
-        'parent_text': (result.get('parent_text') or '')[:280],
+        'parent_url': p_url,
+        'parent_handle': p_handle,
+        'parent_text': p_text[:280],
     }
 
 
@@ -424,15 +454,20 @@ def score_honesty(url, body, headline=''):
 
 def fetch_top_qt(url):
     """Find the highest-view QT/RT of a given post URL.
-    Returns {qt_url, qt_handle, qt_views} or None if no notable QT exists."""
+    Returns {qt_url, qt_handle, qt_views} or None if no notable QT exists.
+
+    M-049: same template-echo defense as fetch_parent. Reject Grok responses
+    that contain 'unknown', angle brackets, or empty handle."""
     if not url or '/status/' not in url:
         return None
     prompt = (
         f"Find the highest-view quote-tweet or retweet (with commentary) of the X post {url}. "
         f"Use x_search to find QTs/RTs that reference this URL. "
-        f"Return ONLY a JSON object: "
-        f'{{"qt_url":"https://x.com/<handle>/status/<id>","qt_handle":"@<handle>","qt_views":<integer>}}. '
-        f"If no notable QT exists with at least 5,000 views, return an empty object {{}}."
+        f"You MUST verify the QT/RT exists — do NOT guess. "
+        f"Return ONLY this JSON: "
+        f'{{"qt_url": "<the real X URL>", "qt_handle": "@<the real handle>", "qt_views": <integer>}}. '
+        f"If no notable QT exists with at least 5,000 verified views, return {{}}. "
+        f"DO NOT invent values. DO NOT return placeholder strings like 'unknown'."
     )
     result = _xai_call(prompt, timeout=45, max_tokens=400)
     if not result or not result.get('qt_url'):
@@ -443,9 +478,23 @@ def fetch_top_qt(url):
         return None
     if qt_views < 5000:
         return None
+    qt_url = (result.get('qt_url') or '').strip()
+    qt_handle = (result.get('qt_handle') or '').strip()
+    if '/status/' not in qt_url:
+        return None
+    low = qt_url.lower()
+    if 'unknown' in low or '<' in qt_url or '>' in qt_url or 'example.com' in low or 'placeholder' in low:
+        print(f"[qt-reject] template-echo URL: {qt_url!r}", file=sys.stderr)
+        return None
+    if not qt_handle or qt_handle.lower() in ('@unknown', '@<handle>', '@handle', '<handle>', 'unknown'):
+        print(f"[qt-reject] bad handle: {qt_handle!r}", file=sys.stderr)
+        return None
+    if '<' in qt_handle or '>' in qt_handle:
+        print(f"[qt-reject] template-echo handle: {qt_handle!r}", file=sys.stderr)
+        return None
     return {
-        'qt_url': result['qt_url'],
-        'qt_handle': result.get('qt_handle', ''),
+        'qt_url': qt_url,
+        'qt_handle': qt_handle,
         'qt_views': qt_views,
     }
 
@@ -1655,6 +1704,42 @@ for manual_tab in ('freespeech',):
 # forever (frontend already handles that side independently).
 _subs = pull_netlify_submissions()
 output['submit'] = {'stories': _subs, 'earlier': []}
+
+
+# ---- M-049 scrubber: strip broken parent_url placeholders BEFORE writing ----
+# Carry-overs from prior crons (via apply_hold) may still contain the old
+# 'https://x.com/unknown/status/unknown' / '@unknown' template-echo garbage.
+# Even though fetch_parent now rejects those, any record that already shipped
+# with them needs to be cleaned. Otherwise the next deploy reships the
+# placeholder embeds. The new fetch_parent will repopulate real values on the
+# next cron; until then, the frontend just doesn't render a parent block,
+# which is the correct degraded state.
+def _scrub_broken_parent(obj):
+    pu = (obj.get('parent_url') or '').lower()
+    ph = (obj.get('parent_handle') or '').lower()
+    if not pu and not ph: return False
+    if ('unknown' in pu or '<' in pu or '>' in pu or 'example.com' in pu
+            or 'placeholder' in pu or ph in ('@unknown', '@<handle>', '<handle>', 'unknown')):
+        obj.pop('parent_url', None)
+        obj.pop('parent_handle', None)
+        obj.pop('parent_text', None)
+        return True
+    return False
+
+_scrub_n = 0
+for _tab_key, _tab_val in output.items():
+    if not isinstance(_tab_val, dict): continue
+    for _s in (_tab_val.get('stories') or []):
+        if not isinstance(_s, dict): continue
+        if _scrub_broken_parent(_s):
+            _scrub_n += 1
+            print(f"[parent-scrub] {_tab_key} @{_s.get('handle','?')}: removed placeholder parent_url", file=sys.stderr)
+        for _p in (_s.get('perspectives') or []):
+            if isinstance(_p, dict) and _scrub_broken_parent(_p):
+                _scrub_n += 1
+                print(f"[parent-scrub] {_tab_key} persp @{_p.get('handle','?')}: removed placeholder parent_url", file=sys.stderr)
+if _scrub_n:
+    print(f"[parent-scrub] M-049: cleaned {_scrub_n} broken parent_url placeholders", file=sys.stderr)
 
 
 # ---- Write stories.json in eXpressO's top-level-tab-key shape ----

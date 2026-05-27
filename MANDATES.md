@@ -88,6 +88,16 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-049 — Reject Grok template-echo in `fetch_parent` ("https://x.com/unknown/status/unknown" placeholder).
+**Date:** 2026-05-27 5:16 PM PT
+**User said:** "what is this referring to i thought we wrote code to always have post it refers to" — screenshot of Elon "Interesting" reply to @edzitron with NO parent post embedded.
+**Trace:** `fetch_parent`'s prompt showed Grok the literal placeholder pattern `https://x.com/<handle>/status/<id>` and `@<handle>` as the JSON shape. When Grok couldn't actually find the parent, it echoed the template back with `<handle>`/`<id>` substituted as `unknown` → shipped `parent_url="https://x.com/unknown/status/unknown"`, `parent_handle="@unknown"` into stories.json. The pre-M-049 guard only checked `/status/` was in the URL, which the placeholder satisfies. Sweep of live stories.json: **5 of 14 parent_urls were broken placeholders, all Elon tab.**
+**Enforcement:**
+- `fetch_parent` prompt rewritten: no longer shows literal placeholder URLs; explicitly tells Grok "DO NOT return placeholder strings like 'unknown'", "DO NOT invent or guess", and "return {} if you cannot verify".
+- New validation block in `fetch_parent` rejects results where `parent_url` contains `unknown`, `<`, `>`, `example.com`, or `placeholder`; rejects `parent_handle` that is empty, `@unknown`, or contains angle brackets; requires non-empty `parent_text`. Logs `[parent-reject]` with the offending value.
+- Pre-write scrubber (`_scrub_broken_parent`) runs over `output` dict before `json.dump`: removes `parent_url`/`parent_handle`/`parent_text` from any story or perspective that still has the placeholder (e.g. stale carry-over from before this fix). Logs `[parent-scrub]` per record, `[parent-scrub] M-049: cleaned N` summary.
+- Net effect: no more "Interesting (replying to @unknown)" embeds. Either the real parent shows, or no parent block renders (graceful degradation).
+
 ## M-048 — Preserve prior-cron perspectives when xAI is down/out-of-credits (don't wipe on API failure).
 **Date:** 2026-05-24 night
 **User said:** "where r conserv ind dem perspectives" — live World/USA shipped 0 perspectives across all stories.
