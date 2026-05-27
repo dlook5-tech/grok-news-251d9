@@ -170,6 +170,13 @@ check  "M-049c:reject-unknown"         parse_grok.py  "parent-reject"           
 check  "M-049d:scrubber-defined"       parse_grok.py  "_scrub_broken_parent"           exists
 check  "M-049e:scrubber-runs"          parse_grok.py  "M-049: cleaned"                 exists
 
+# M-050 — final AP-newspaper tightening pass on every shipped headline.
+# Function + filler-prefix regex + pipeline integration must all be present.
+check  "M-050a:tighten-fn"             parse_grok.py  "def tighten_headline"           exists
+check  "M-050b:filler-prefix-regex"    parse_grok.py  "_TIGHTEN_FILLER_PREFIXES"       exists
+check  "M-050c:pipeline-wired"         parse_grok.py  "M-050 FINAL HEADLINE"           exists
+check  "M-050d:tighten-log"            parse_grok.py  "\[tighten\] M-050:"             exists
+
 # M-041 — Nested comments: perspectives get parent context fetched + embedded
 check  "M-041a:persp-parent-fn"        parse_grok.py  "_enrich_persp_parent"           exists
 check  "M-041b:persp-parent-log"       parse_grok.py  "persp-parent"                   exists

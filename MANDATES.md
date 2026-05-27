@@ -88,6 +88,18 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-050 — Final AP-newspaper tightening pass on every shipped headline.
+**Date:** 2026-05-27 5:17 PM PT
+**User said:** "clarifies / directs / point to are waste words. The best thing AI was good at originally was writing tight language. Write code to make sure every block for every tab has the best tightest newspaper title for each item after all stories are picked. The last editing step. This is one thing AI should be A+ at every time. I liken it to when I used to have to write bullet points for PowerPoints — I had to make the point with the fewest words, so I could maintain the largest text in one line."
+**Trace:** Elon tab shipped headlines like "Clarifies separation between Starlink civilian system and Starshield for US military", "Defends understanding of OpenAI founding challenges", "Corrects claim about Starshield use by drone company", "Points to drone maker not Pentagon for system misuse". M-037 newspaper-style rewrite handles GENERIC headlines, but verb-prefix filler from already-rewritten or upstream headlines slipped through. No final tightening pass existed.
+**Enforcement:**
+- New function `tighten_headline(current_headline, body, parent_text, parent_handle)` in parse_grok.py. Returns rewritten headline or original if rewrite fails validation.
+- New regex `_TIGHTEN_FILLER_PREFIXES` covers 40+ weak verb-prefixes (Clarifies, Defends, Notes, Points to, Corrects, Comments on, Discusses, Reacts, Addresses, Mentions, Expresses, Shares, Highlights, Stresses, Praises, Endorses, Confirms, Says, Reveals, Admits, Explains, Describes, Agrees with, etc).
+- Fast path: skips xAI call when headline is already ≤55 chars AND doesn't start with a filler prefix.
+- Validation rejects rewrites that are equal-or-longer than original, still start with filler, contain fewer than 3 words, or exceed 100 chars.
+- Pass runs AS THE LAST STEP before `stories.json` write — after QC dedup, oEmbed verification, M-046 backfill, M-049 scrubber. Loops over every story in every tab (skips `earlier`, `submit`, perspectives). Parallelized via ThreadPoolExecutor(max_workers=10). Logs `[tighten] tab: 'old' -> 'new'` per rewrite plus summary `[tighten] M-050: rewrote N, kept M unchanged`.
+- Net: every shipped headline gets one chance at AP-front-page tightness. No filler verb survives if a tighter version exists. If Grok can't improve it, original ships unchanged.
+
 ## M-049 — Reject Grok template-echo in `fetch_parent` ("https://x.com/unknown/status/unknown" placeholder).
 **Date:** 2026-05-27 5:16 PM PT
 **User said:** "what is this referring to i thought we wrote code to always have post it refers to" — screenshot of Elon "Interesting" reply to @edzitron with NO parent post embedded.

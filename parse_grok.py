@@ -715,6 +715,120 @@ def fetch_headline_for_post(url, body, parent_text=None, parent_handle=None):
     return h[:120]
 
 
+# ============================================================
+# M-050 — FINAL HEADLINE TIGHTENING PASS
+# User mandate 2026-05-27 5:17 PM PT: "Clarifies / directs / point to are
+# waste words. The best thing AI was good at originally was writing tight
+# language. Write code to make sure every block for every tab has the best
+# tightest newspaper title for each item after all stories are picked. The
+# last editing step. This is one thing AI should be A+ at every time."
+#
+# This pass runs LAST — after QC dedup, oEmbed verification, M-046 backfill,
+# M-049 scrubber — on every shipped story across every tab. It asks xAI to
+# rewrite the headline to AP-front-page tightness: strongest verb, fewest
+# words, one line, no filler prefixes. Validation rejects rewrites that are
+# longer, still filler, or empty.
+# ============================================================
+
+# Verb prefixes that signal a weak/filler headline. M-050 rewrites anything
+# starting with these — they describe the act of posting rather than the news.
+_TIGHTEN_FILLER_PREFIXES = re.compile(
+    r'^\s*('
+    r'clarif(?:ies|y|ied)|defend(?:s|ed|ing)?|note(?:s|d)?(?:\s+that)?|'
+    r'point(?:s|ed)?\s+(?:to|out)|correct(?:s|ed|ing)?|comment(?:s|ed|ing)?(?:\s+on)?|'
+    r'discuss(?:es|ed|ing)?|react(?:s|ed|ing)?(?:\s+to)?|mention(?:s|ed|ing)?|'
+    r'address(?:es|ed|ing)?|acknowledge(?:s|d|ing)?|talk(?:s|ed|ing)?\s+about|'
+    r'agree(?:s|d|ing)?(?:\s+(?:with|on|that))?|repl(?:ies|ying|ied)\s+to|'
+    r'respond(?:s|ed|ing)?\s+to|express(?:es|ed|ing)?|share(?:s|d|ing)?|'
+    r'cite(?:s|d|ing)?|reposts?|retweets?|note(?:s)?\s+how|'
+    r'highlight(?:s|ed|ing)?|emphasiz(?:es|ed|ing)|stress(?:es|ed|ing)?|'
+    r'praises?|criticiz(?:es|ed|ing)|mock(?:s|ed|ing)?|celebrate(?:s|d|ing)?|'
+    r'endorse(?:s|d|ing)?|backs?|supports?|confirms?|state(?:s|d)?|says?|'
+    r'announce(?:s|d|ing)?|hints?\s+at|teases?|jokes?\s+about|laughs?\s+at|'
+    r'weighs?\s+in|chimes?\s+in|reveals?|admits?|insists?|argues?|claims?|'
+    r'compares?|equates?|contrasts?|explains?|describes?'
+    r')\b',
+    re.IGNORECASE
+)
+
+
+def tighten_headline(current_headline, body='', parent_text=None, parent_handle=None):
+    """M-050: rewrite a headline to tightest AP-newspaper style.
+
+    Returns the rewritten string, or the original if the rewrite failed or
+    didn't improve. Skips xAI call entirely if the headline is already short
+    and lacks a filler prefix (fast path)."""
+    if not current_headline:
+        return current_headline
+    cur = current_headline.strip()
+    if not cur:
+        return current_headline
+    # Fast path: already-tight headlines (short + strong verb) don't need a call.
+    already_tight = len(cur) <= 55 and not _TIGHTEN_FILLER_PREFIXES.match(cur)
+    if already_tight:
+        return cur
+    parent_block = ''
+    if parent_text and parent_text.strip():
+        ph = parent_handle or '?'
+        parent_block = (
+            f"\nThis post is a reply/QT to {ph} who said: {parent_text[:280]!r}\n"
+            f"Use the PARENT's content as the news hook.\n"
+        )
+    body_snip = (body or '').strip()[:300]
+    prompt = (
+        f"Rewrite this headline to the tightest possible newspaper headline.\n\n"
+        f"Current headline: {cur!r}\n"
+        f"Post body: {body_snip!r}{parent_block}\n"
+        f"Rules — be ruthless:\n"
+        f"- Strong active verb early. NEVER start with filler verbs like:\n"
+        f"  Clarifies / Defends / Notes / Points to / Corrects / Comments on /\n"
+        f"  Discusses / Reacts / Addresses / Mentions / Expresses / Shares /\n"
+        f"  Highlights / Stresses / Praises / Endorses / Confirms / Says /\n"
+        f"  Reveals / Admits / Explains / Describes / Agrees with.\n"
+        f"- Fewest words possible to convey the ACTUAL news (target: 6-10 words).\n"
+        f"- Under 70 characters. One line. AP / NYT front-page style.\n"
+        f"- Concrete nouns and specific numbers; no hedging.\n"
+        f"- DO NOT start with the poster's name.\n"
+        f"- If the original is already as tight as it can be, return it unchanged.\n\n"
+        f"Examples of BAD → GOOD rewrites:\n"
+        f"  ❌ 'Clarifies separation between Starlink civilian system and Starshield for US military'\n"
+        f"  ✅ 'Starlink civilian and Starshield military are separate systems'\n"
+        f"  ❌ 'Defends understanding of OpenAI founding challenges'\n"
+        f"  ✅ 'Defends OpenAI founding story against critics'\n"
+        f"  ❌ 'Points to drone maker not Pentagon for system misuse'\n"
+        f"  ✅ 'Drone maker, not Pentagon, misused Starlink in Russia strike'\n"
+        f"  ❌ 'Corrects claim about Starshield use by drone company'\n"
+        f"  ✅ 'No, Starshield wasn\\'t used in Russia drone strike'\n\n"
+        f"Return ONLY a JSON object: {{\"headline\": \"<new tight headline>\"}}.\n"
+        f"If the original is genuinely already as tight as possible, return {{}}."
+    )
+    try:
+        result = _xai_call(prompt, timeout=20, max_tokens=200)
+    except Exception:
+        return cur
+    if not result or not result.get('headline'):
+        return cur
+    new = (result['headline'] or '').strip().strip('"').strip("'").strip()
+    # Take only the first line — defends against multi-line responses.
+    new = new.splitlines()[0].strip() if new else ''
+    if not new:
+        return cur
+    # Validation: reject rewrites that are equal, longer than original,
+    # still start with filler, too short, or too long absolute.
+    if new.lower() == cur.lower():
+        return cur
+    if len(new) > len(cur) + 5:
+        # Allow tiny growth (rounding) but not real growth.
+        return cur
+    if _TIGHTEN_FILLER_PREFIXES.match(new):
+        return cur
+    if len(new) < 15 or len(new.split()) < 3:
+        return cur
+    if len(new) > 100:
+        return cur
+    return new
+
+
 # ---- body→text rename for eXpressO frontend compat ----
 def _body_to_text(s):
     out = dict(s)
@@ -1740,6 +1854,59 @@ for _tab_key, _tab_val in output.items():
                 print(f"[parent-scrub] {_tab_key} persp @{_p.get('handle','?')}: removed placeholder parent_url", file=sys.stderr)
 if _scrub_n:
     print(f"[parent-scrub] M-049: cleaned {_scrub_n} broken parent_url placeholders", file=sys.stderr)
+
+
+# ---- M-050 FINAL HEADLINE TIGHTENING PASS ----
+# Last editing step before write. Every story on every tab gets its headline
+# rewritten to AP-newspaper tightness. Parent context is passed through so the
+# tightener can rewrite emoji-reply headlines using the parent's news instead
+# of the reaction. Skips perspectives — those render verbatim, not as headlines.
+# Parallelized with ThreadPoolExecutor; ~30-60s wall-time for a full cron.
+import concurrent.futures as _cf_tighten
+
+_tighten_jobs = []  # list of (story_dict, current_headline, body, parent_text, parent_handle)
+for _tab_key, _tab_val in output.items():
+    if _tab_key in ('earlier', 'submit', 'lastUpdated'):
+        continue
+    if not isinstance(_tab_val, dict):
+        continue
+    for _s in (_tab_val.get('stories') or []):
+        if not isinstance(_s, dict):
+            continue
+        _hl = _s.get('headline') or ''
+        if not _hl:
+            continue
+        _tighten_jobs.append((_tab_key, _s, _hl,
+                              _s.get('body') or _s.get('text') or '',
+                              _s.get('parent_text'),
+                              _s.get('parent_handle')))
+
+def _tighten_one(job):
+    _tab, _s, _hl, _body, _pt, _ph = job
+    try:
+        new_hl = tighten_headline(_hl, _body, _pt, _ph)
+    except Exception as _e:
+        return (_tab, _hl, _hl, str(_e))
+    return (_tab, _hl, new_hl, None)
+
+if _tighten_jobs:
+    print(f"[tighten] M-050: rewriting {len(_tighten_jobs)} headlines for AP-newspaper tightness...", file=sys.stderr)
+    _tighten_changed = 0
+    _tighten_skipped = 0
+    with _cf_tighten.ThreadPoolExecutor(max_workers=10) as _ex:
+        _results = list(_ex.map(_tighten_one, _tighten_jobs))
+    # Apply rewrites in second pass so the map doesn't mutate while iterating.
+    for (_, _s, _, _, _, _), (_tab, _orig, _new, _err) in zip(_tighten_jobs, _results):
+        if _err:
+            print(f"[tighten-warn] {_tab}: {_err}", file=sys.stderr)
+            continue
+        if _new and _new != _orig:
+            _s['headline'] = _new
+            _tighten_changed += 1
+            print(f"[tighten] {_tab}: {_orig!r} -> {_new!r}", file=sys.stderr)
+        else:
+            _tighten_skipped += 1
+    print(f"[tighten] M-050: rewrote {_tighten_changed}, kept {_tighten_skipped} unchanged", file=sys.stderr)
 
 
 # ---- Write stories.json in eXpressO's top-level-tab-key shape ----
