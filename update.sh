@@ -36,7 +36,7 @@ if ! bash verify_mandates.sh; then
 fi
 echo ""
 
-TABS=(world usa business top msm sports sas_cowherd elon pods pg6 recipe science local conspiracy comedy allin)
+TABS=(world usa business top msm sports sas_cowherd elon pods pg6 recipe science local conspiracy comedy allin follow)
 
 needs_perspectives() {
     # 2026-05-22: TEMPORARY — perspectives requirement removed from World/USA
@@ -254,7 +254,59 @@ PY
     echo "  [done] top (4 parallel subqueries merged)"
 }
 
-export -f call_grok call_grok_top_multi prompt_for needs_perspectives
+# M-051 — FOLLOW tab. Curated list of handles in follow_handles.json.
+# For each handle, find their HIGHEST-VIEW post in last 24h. Single Grok call
+# (the prompt is small enough — 22 handles fit easily). Sort by views desc.
+call_grok_follow() {
+    local today since
+    today=$(date -u +%Y-%m-%d)
+    since=$(date -u -v-2d +%Y-%m-%d 2>/dev/null || date -u -d "2 days ago" +%Y-%m-%d)
+
+    local handles_csv
+    handles_csv=$(python3 -c '
+import json, sys
+with open("follow_handles.json") as f:
+    cfg = json.load(f)
+print(", ".join("@" + h for h in cfg.get("handles", [])))
+' 2>/dev/null)
+    if [ -z "$handles_csv" ]; then
+        echo '{"error":"no follow handles configured"}' > /tmp/grok_raw_follow.json
+        echo "  [done] follow (empty — follow_handles.json missing or invalid)"
+        return
+    fi
+
+    local schema="STRICT RECENCY: use x_search since:${since}.
+Each item is one POST:
+{\"handle\":\"username (no @)\",\"url\":\"https://x.com/handle/status/<id>\",\"headline\":\"neutral one-line summary of what the post is about\",\"body\":\"actual post text verbatim\",\"engagement\":\"500K views\",\"views\":500000}
+URLs MUST be real X status URLs. Views = actual view count integer."
+
+    local user_prompt="For each of these X accounts, find their SINGLE HIGHEST-VIEW post (or reply or quote-tweet) in the past 24 hours:
+${handles_csv}
+
+Today is ${today}. Return ONLY a JSON array of post objects — one per handle, ordered by views descending. SKIP any handle that has no post in the past 24h (do not invent or back-fill). Do NOT cap the list — if all ${#handles_csv} handles posted, return them all.
+
+${schema}"
+
+    local payload
+    payload=$(python3 -c '
+import json, sys
+print(json.dumps({
+    "model": "grok-4.3",
+    "input": [{"role": "user", "content": sys.argv[1]}],
+    "tools": [{"type": "x_search"}],
+    "max_output_tokens": 10000
+}))
+' "$user_prompt")
+
+    curl -s --max-time 240 https://api.x.ai/v1/responses \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $XAI_API_KEY" \
+        -d "$payload" > /tmp/grok_raw_follow.json \
+      || echo '{"error":"curl failed"}' > /tmp/grok_raw_follow.json
+    echo "  [done] follow"
+}
+
+export -f call_grok call_grok_top_multi call_grok_follow prompt_for needs_perspectives
 export XAI_API_KEY
 # M-038 enforcement: parse_grok.py's pull_netlify_submissions() needs these.
 # Without exporting, the subprocess inherits nothing from `source .env`.
@@ -264,6 +316,8 @@ echo "Calling Grok for ${#TABS[@]} tabs in parallel..."
 for tab in "${TABS[@]}"; do
     if [ "$tab" = "top" ]; then
         call_grok_top_multi &
+    elif [ "$tab" = "follow" ]; then
+        call_grok_follow &
     else
         call_grok "$tab" &
     fi
@@ -276,7 +330,7 @@ python3 << 'PY' > /tmp/grok_raw.json
 import json, re, sys
 
 TABS = ['world','usa','business','top','msm','sports','elon','pods',
-        'pg6','recipe','science','local','conspiracy','comedy','allin','sas_cowherd']
+        'pg6','recipe','science','local','conspiracy','comedy','allin','sas_cowherd','follow']
 
 def extract_text(resp):
     if isinstance(resp.get('output'), list):

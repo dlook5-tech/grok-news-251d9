@@ -177,6 +177,19 @@ check  "M-050b:filler-prefix-regex"    parse_grok.py  "_TIGHTEN_FILLER_PREFIXES"
 check  "M-050c:pipeline-wired"         parse_grok.py  "M-050 FINAL HEADLINE"           exists
 check  "M-050d:tighten-log"            parse_grok.py  "\[tighten\] M-050:"             exists
 
+# M-051 — Follow tab. Curated handle list, top-viewed post per handle,
+# visitor suggestion form via Netlify, exempt from cross-tab dedup.
+check  "M-051a:handles-file"           follow_handles.json   '"handles"'                       exists
+check  "M-051b:update-sh-tabs"         update.sh             "TABS=.*follow"                   exists
+check  "M-051c:update-sh-fn"           update.sh             "call_grok_follow"                exists
+check  "M-051d:parse-grok-branch"      parse_grok.py         "M-051 FOLLOW tab"                exists
+check  "M-051e:follow-not-in-dedup"    parse_grok.py         "'world','usa','top','business','sports','pg6','science'"  exists
+check  "M-051f:suggestions-fn"         parse_grok.py         "def pull_follow_suggestions"     exists
+check  "M-051g:suggestions-wired"      parse_grok.py         "output\['follow_suggest'\]"      exists
+check  "M-051h:html-tab-button"        index.html            'id: "follow", label: "Follow"'   exists
+check  "M-051i:html-static-form"       index.html            'name="follow-suggest"'           exists
+check  "M-051j:html-handler"           index.html            "function handleFollowSuggest"    exists
+
 # M-041 — Nested comments: perspectives get parent context fetched + embedded
 check  "M-041a:persp-parent-fn"        parse_grok.py  "_enrich_persp_parent"           exists
 check  "M-041b:persp-parent-log"       parse_grok.py  "persp-parent"                   exists

@@ -1,0 +1,27 @@
+{
+  "_comment": "Handles for the FOLLOW tab. Each cron, Grok fetches each handle's TOP-VIEWED post in the past 24h and the Follow tab ranks them by view count. Edit this list to add or remove people. Visitor suggestions land in stories.json under 'follow_suggest' (24h public window) — review them and append the keepers here. Handles are case-insensitive on X, but keep the casing the account uses on X profile for display.",
+  "handles": [
+    "POTUS",
+    "realDonaldTrump",
+    "elonmusk",
+    "chamath",
+    "DavidSacks",
+    "friedberg",
+    "theallinpod",
+    "naval",
+    "pmarca",
+    "BillAckman",
+    "TuckerCarlson",
+    "PBDsPodcast",
+    "Timcast",
+    "Gutfeldfox",
+    "MattWalshBlog",
+    "ggreenwald",
+    "IanCarrollShow",
+    "SawyerMerritt",
+    "nickshirleyy",
+    "Tesla",
+    "MTSlive",
+    "NICKIMINAJ"
+  ]
+}

@@ -88,6 +88,18 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-051 — Follow tab: curated handle list, top-viewed post per handle in last 24h, ranked.
+**Date:** 2026-05-27 6:00 PM PT
+**User said:** "add a new tab called 'Follow' and make a block for the top viewed post in the last 24 hours of these people, rank 1st or place in order of the top viewed post. Add a place below for website users to add someone to follow, they think should be included." (Provided screenshots of their X Following list — 22 handles extracted.)
+**Why exempt from cross-tab dedup:** the whole point of Follow is showing the user's people in one place even if those posts also rank in elon/allin/world. Same logic that already exempts msm (M-024) and elon (M-023). Tabs are filters, not partitions.
+**Enforcement:**
+- New file `follow_handles.json` — editable list of handles (no code change to add/remove). Initial 22 handles seeded from the screenshots.
+- `update.sh`: new `call_grok_follow()` reads the JSON, asks Grok for ONE highest-view post per handle in past 24h, returns JSON array sorted by views desc. Wired into the parallel-tabs loop alongside `call_grok_top_multi`.
+- `parse_grok.py`: `follow` added to `tabs` list, `_HONESTY_NEWS_TABS`, `_verify_news_tabs`, and the cron-report table. NOT added to `_DEDUP_ORDER` (intentional overlap). Dedicated branch in the per-tab loop keeps at most one post per handle (highest-view tiebreak) and sorts by raw views descending — no QT boost, no per-tab cap.
+- `pull_follow_suggestions()`: pulls Netlify Forms submissions where `form_name == "follow-suggest"`, normalizes handles (strips @, URL extracts), 24h public window, deduped, marks each `already_followed: true` if the handle is already in the curated list. Writes to `output['follow_suggest']`.
+- `index.html`: Follow tab button between Elon and Pods. Render branch renders stories via `renderAutoEmbedBlock` (no perspectives), then a "Recent visitor suggestions" section showing pulled suggestions, then a Netlify form (`form-name="follow-suggest"`) with `handle` + `reason` fields. New `handleFollowSuggest()` AJAX-POSTs to Netlify Forms, normalizes the handle client-side too. Static off-screen form declaration so Netlify's build picks it up. New TAB_META entry for subtitle.
+- Suggestions DO NOT auto-add to `follow_handles.json` — owner reviews + manually appends. Keeps editorial control over who the tab follows.
+
 ## M-050 — Final AP-newspaper tightening pass on every shipped headline.
 **Date:** 2026-05-27 5:17 PM PT
 **User said:** "clarifies / directs / point to are waste words. The best thing AI was good at originally was writing tight language. Write code to make sure every block for every tab has the best tightest newspaper title for each item after all stories are picked. The last editing step. This is one thing AI should be A+ at every time. I liken it to when I used to have to write bullet points for PowerPoints — I had to make the point with the fewest words, so I could maintain the largest text in one line."

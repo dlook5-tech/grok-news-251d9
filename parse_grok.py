@@ -655,6 +655,74 @@ def pull_netlify_submissions():
     return out
 
 
+def pull_follow_suggestions():
+    """M-051: pull visitor-submitted handle suggestions for the Follow tab.
+    Same Netlify Forms API as M-038 post-replace, but filters for the
+    'follow-suggest' form. Returns the last 24h of suggestions, deduped on
+    normalized handle. Owner reviews them and manually appends approved handles
+    to follow_handles.json (suggestions never auto-add — keeps editorial control).
+    """
+    site_id = _os.environ.get('NETLIFY_SITE_ID', '')
+    auth = _os.environ.get('NETLIFY_AUTH_TOKEN', '')
+    if not site_id or not auth:
+        return []
+    api_url = f'https://api.netlify.com/api/v1/sites/{site_id}/submissions?per_page=100'
+    try:
+        req = _urlreq.Request(api_url, headers={'Authorization': f'Bearer {auth}'})
+        with _urlreq.urlopen(req, timeout=30) as r:
+            data = json.load(r)
+    except Exception as e:
+        print(f'[follow-suggest-pull] failed: {e}', file=sys.stderr)
+        return []
+    if not isinstance(data, list):
+        return []
+    # Load current handle list so we can mark suggestions already-followed.
+    try:
+        with open('follow_handles.json') as f:
+            current = {h.lower().lstrip('@') for h in json.load(f).get('handles', [])}
+    except Exception:
+        current = set()
+    now = datetime.datetime.now(datetime.timezone.utc)
+    out = []
+    seen_handles = set()
+    for s in data:
+        if not isinstance(s, dict): continue
+        if s.get('form_name') != 'follow-suggest': continue
+        d = s.get('data', {}) or {}
+        raw = (d.get('handle') or '').strip()
+        if not raw: continue
+        # Normalize: strip leading @, https://x.com/, etc. Take first alnum/_ run.
+        m = re.search(r'(?:x|twitter)\.com/([A-Za-z0-9_]+)', raw)
+        handle = m.group(1) if m else raw.lstrip('@').strip()
+        handle = re.sub(r'[^A-Za-z0-9_].*$', '', handle)  # cut at first non-handle char
+        if not handle or len(handle) > 30: continue
+        key = handle.lower()
+        if key in seen_handles: continue
+        reason = (d.get('reason') or '').strip()[:200]
+        created = s.get('created_at', '')
+        created_dt = None
+        for fmt in ('%Y-%m-%dT%H:%M:%S.%fZ', '%Y-%m-%dT%H:%M:%SZ'):
+            try:
+                created_dt = datetime.datetime.strptime(created, fmt).replace(tzinfo=datetime.timezone.utc)
+                break
+            except ValueError:
+                continue
+        if not created_dt: continue
+        age_h = (now - created_dt).total_seconds() / 3600
+        if age_h > 24: continue
+        seen_handles.add(key)
+        out.append({
+            'handle': handle,
+            'reason': reason,
+            'already_followed': key in current,
+            'submitted_at': created,
+            'age_hours': round(age_h, 1),
+        })
+    out.sort(key=lambda x: x.get('submitted_at', ''), reverse=True)
+    print(f'[follow-suggest-pull] {len(out)} handle suggestions in last 24h', file=sys.stderr)
+    return out
+
+
 def fetch_headline_for_post(url, body, parent_text=None, parent_handle=None):
     """For a post URL whose headline is generic ('Shares video link', etc.), fire
     an xAI call to write an ATTENTION-GRABBING NEWSPAPER HEADLINE.
@@ -866,7 +934,7 @@ previous = load_previous_stories()
 existing_full = load_existing_full()
 
 tabs = ['world', 'usa', 'business', 'top', 'msm', 'sports', 'elon', 'pods',
-        'pg6', 'recipe', 'science', 'local', 'conspiracy', 'comedy', 'allin']
+        'pg6', 'recipe', 'science', 'local', 'conspiracy', 'comedy', 'allin', 'follow']
 
 
 def _candidate_dump(cleaned, n=8):
@@ -1173,6 +1241,30 @@ for tab in tabs:
                 print(f"[parent-fetch] @{s.get('handle')}: found parent @{parent['parent_handle']}", file=sys.stderr)
 
         output[tab] = {'stories': [_body_to_text(s) for s in chosen],
+                       '_candidates': tab_candidates}
+        continue
+
+    # --- M-051 FOLLOW tab: editable handles file, one top post per author, ---
+    # ranked by views descending. No QT boost, no perspectives, no per-tab cap,
+    # no cross-tab dedup (intentional overlap with elon/allin/world/etc — the
+    # whole point is showing the user's people in one place even if they also
+    # rank in topical tabs). Just rank Grok's per-handle top-views response.
+    if tab == 'follow':
+        # Keep at most ONE post per handle (highest-view if Grok returned more).
+        _by_handle = {}
+        for c in cleaned:
+            h = (c.get('handle') or '').lstrip('@').lower()
+            if not h: continue
+            v = curation.story_views(c)
+            if h not in _by_handle or v > curation.story_views(_by_handle[h]):
+                _by_handle[h] = c
+        follow_chosen = sorted(_by_handle.values(),
+                               key=curation.story_views, reverse=True)
+        print(f"[follow] {len(follow_chosen)} handles posted in last 24h "
+              f"(top: @{(follow_chosen[0].get('handle','?') if follow_chosen else '?')} "
+              f"{(curation.story_views(follow_chosen[0]) if follow_chosen else 0):,}v)",
+              file=sys.stderr)
+        output[tab] = {'stories': [_body_to_text(s) for s in follow_chosen],
                        '_candidates': tab_candidates}
         continue
 
@@ -1587,7 +1679,7 @@ _qc_llm_semantic_dedup(output)
 # on the frontend anyway so no point scoring them.
 # ============================================================
 _HONESTY_NEWS_TABS = ['world','usa','top','msm','business','sports','pods','pg6',
-                      'science','local','conspiracy','allin']
+                      'science','local','conspiracy','allin','follow']
 import concurrent.futures as _cf_honesty
 
 _score_jobs = []  # list of (target_dict,) for each thing to score
@@ -1684,7 +1776,7 @@ def _url_age_h_earlier(url):
 
 for _e_tab, _e_container in list(output.items()):
     if not isinstance(_e_container, dict): continue
-    if _e_tab in ('freespeech', 'submit'): continue  # user-managed
+    if _e_tab in ('freespeech', 'submit', 'follow_suggest'): continue  # user-managed
     _e_current_urls = {s.get('url') for s in (_e_container.get('stories', []) or []) if s.get('url')}
     _e_prev = previous.get(_e_tab, []) or []
     _e_displaced = []
@@ -1712,7 +1804,7 @@ def _verify_one(item):
 
 _verify_jobs = []
 _verify_news_tabs = ['world','usa','top','msm','business','sports','elon','pods','pg6',
-                     'recipe','science','local','conspiracy','comedy','allin']
+                     'recipe','science','local','conspiracy','comedy','allin','follow']
 for _v_tab in _verify_news_tabs:
     _v_container = output.get(_v_tab, {})
     if not isinstance(_v_container, dict): continue
@@ -1819,6 +1911,11 @@ for manual_tab in ('freespeech',):
 _subs = pull_netlify_submissions()
 output['submit'] = {'stories': _subs, 'earlier': []}
 
+# M-051: pull visitor follow-handle suggestions from same Netlify Forms API.
+# These do NOT auto-add to follow_handles.json — owner reviews + appends manually.
+_follow_subs = pull_follow_suggestions()
+output['follow_suggest'] = {'suggestions': _follow_subs}
+
 
 # ---- M-049 scrubber: strip broken parent_url placeholders BEFORE writing ----
 # Carry-overs from prior crons (via apply_hold) may still contain the old
@@ -1866,7 +1963,7 @@ import concurrent.futures as _cf_tighten
 
 _tighten_jobs = []  # list of (story_dict, current_headline, body, parent_text, parent_handle)
 for _tab_key, _tab_val in output.items():
-    if _tab_key in ('earlier', 'submit', 'lastUpdated'):
+    if _tab_key in ('earlier', 'submit', 'lastUpdated', 'follow_suggest'):
         continue
     if not isinstance(_tab_val, dict):
         continue
@@ -2018,7 +2115,7 @@ for tab in ('world','usa'):
 # that's what I like; that's what we've been talking about. Leave it."
 _report_lines.append("| TAB        | N | Top Views | Age range  | Top Headline                                       |")
 _report_lines.append("|------------|---|-----------|------------|----------------------------------------------------|")
-for tab in ('world','usa','top','business','msm','sports','elon','pods','pg6',
+for tab in ('world','usa','top','business','msm','sports','elon','follow','pods','pg6',
             'recipe','science','local','conspiracy','comedy','allin'):
     sts = (final.get(tab,{}) or {}).get('stories',[]) or []
     if not sts:

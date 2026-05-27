@@ -213,6 +213,16 @@
   <input type="text" name="url" />
   <input type="text" name="note" />
 </form>
+<!-- M-051: same trick for follow-suggest — Netlify needs to see a static
+     declaration with the right field names at build time so the AJAX-submitted
+     form is accepted. The visible interactive copy lives inside renderContent
+     (Follow tab) and shares the same form-name + fields. -->
+<form name="follow-suggest" data-netlify="true" netlify-honeypot="bot-field" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;">
+  <input type="hidden" name="form-name" value="follow-suggest" />
+  <input type="text" name="bot-field" />
+  <input type="text" name="handle" />
+  <input type="text" name="reason" />
+</form>
 <header><div class="header-top"><div><div class="logo">e<svg viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;width:1.6em;height:1.6em;fill:#1c1410;margin:0 -2px;" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"></path></svg>press<svg viewBox="0 0 42 42" style="display:inline-block;vertical-align:middle;width:1.1em;height:1.1em;fill:#1c1410;margin:0 -1px;" aria-hidden="true"><path clip-rule="evenodd" d="M27.997 17.35l-11.1 8.19 15.9-15.963v.015L37.391 5c-.082.117-.165.23-.248.345-3.49 4.804-5.194 7.153-3.826 13.03l-.009-.008c.943 4.001-.065 8.438-3.322 11.693-4.106 4.107-10.677 5.02-16.087 1.324l3.772-1.745c3.454 1.355 7.232.76 9.947-1.954 2.716-2.714 3.325-6.666 1.96-9.956-.259-.623-1.037-.78-1.58-.378zm-13.292-2.574c-3.314 3.31-3.983 9.047-.1 12.755l-.003.003L4 37c.663-.913 1.485-1.776 2.306-2.639l.04-.042c2.346-2.464 4.67-4.906 3.25-8.357-1.903-4.622-.795-10.038 2.73-13.56 3.664-3.66 9.06-4.583 13.568-2.729.998.37 1.867.897 2.545 1.387l-3.764 1.737c-3.505-1.47-7.52-.47-9.97 1.98z" fill-rule="evenodd"></path></svg> news <svg viewBox="0 0 150 130" style="display:inline-block;vertical-align:middle;width:2.1em;height:1.8em;margin-left:4px;margin-bottom:-2px;" aria-label="latte art heart"><defs><radialGradient id="cg" cx="50%" cy="48%" r="50%"><stop offset="0%" stop-color="#d4a86a"/><stop offset="70%" stop-color="#b8894d"/><stop offset="100%" stop-color="#9a7040"/></radialGradient><radialGradient id="fg" cx="50%" cy="45%" r="42%"><stop offset="0%" stop-color="#f5ead8" stop-opacity="0.95"/><stop offset="60%" stop-color="#e8d5b8" stop-opacity="0.7"/><stop offset="100%" stop-color="#c9a067" stop-opacity="0"/></radialGradient></defs><path d="M121 56 C144 56 144 82 121 82" fill="none" stroke="#a89878" stroke-width="8" stroke-linecap="round"/><path d="M121 56 C144 56 144 82 121 82" fill="none" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round"/><ellipse cx="65" cy="68" rx="58" ry="54" fill="#e8e0d8"/><ellipse cx="65" cy="66" rx="56" ry="52" fill="#f5f0ea"/><circle cx="65" cy="64" r="46" fill="url(#cg)"/><circle cx="65" cy="64" r="42" fill="url(#fg)" opacity="0.5"/><path d="M65 43 C57 29 40 31 40 47 C40 63 65 85 65 85 C65 85 90 63 90 47 C90 31 73 29 65 43Z" fill="#fff" opacity="0.55"/><path d="M65 49 C59 37 46 39 46 51 C46 63 65 81 65 81 C65 81 84 63 84 51 C84 39 71 37 65 49Z" fill="#fff" opacity="0.7"/><path d="M65 55 C61 45 52 47 52 55 C52 63 65 77 65 77 C65 77 78 63 78 55 C78 47 69 45 65 55Z" fill="#fff" opacity="0.85"/><line x1="65" y1="57" x2="65" y2="89" stroke="#fff" stroke-width="2" opacity="0.6" stroke-linecap="round"/><ellipse cx="65" cy="64" r="46" fill="none" stroke="#c9a067" stroke-width="1.5" opacity="0.3"/></svg></div><div class="tagline">Grok AI Curated Tweets Honesty Scored 1-10</div></div><div><span class="date" id="currentDate"></span><span class="freshness-badge" id="freshnessBadge" onclick="hardRefresh()" title="Tap to fetch the latest stories now">checking…</span></div></div><nav id="nav"></nav></header>
 <main id="content"><div class="loading">Loading stories...</div></main>
 <footer>&copy; 2026 <strong>eXpressO News</strong> &mdash; Grok AI Curated Tweets Honesty Scored 1-10 | Trending on X Right Now</footer>
@@ -224,6 +234,7 @@ var TAB_META = {
   business: { title: "Top Business Story of the Day", subtitle: "Markets, money, and what\u2019s moving business today. Click block to view post." },
   sports:   { title: "Top Sports Story of the Day", subtitle: "Today\u2019s biggest sports moment. Click block to view post." },
   elon:     { title: "Elon\u2019s Latest Bangers", subtitle: "What\u2019s Elon posting. Click block to view post." },
+  follow:   { title: "Follow", subtitle: "Top-viewed post in the last 24 hours from the people we follow, ranked by views. Suggest someone to add at the bottom." },
   allin:    { title: "$age Insider", subtitle: "Billion-dollar wisdom \u2014 Elon, Thiel, Luckey, a16z, Chamath, Sacks, Friedberg & Jurvetson. Click block to view post." },
   top:      { title: "#1 Pop", subtitle: "The single most viral post on X right now. Click block to view post." },
   msm:      { title: "Not in MSM", subtitle: "Stories mainstream media is underreporting or ignoring. Click block to view post." },
@@ -242,7 +253,7 @@ var NEWS_DATA = { lastUpdated: "", _stale: false };
 
 // ---- Cache-busting version check (with loop guard) ----
 // Only reloads ONCE per server-version. Uses sessionStorage to prevent flashing if the cache remains stale.
-var THIS_VERSION = "20260523133557";
+var THIS_VERSION = "20260527174052";
 // Visible freshness badge top-right of the page. Tap = full hard refresh (bypass all cache).
 function hardRefresh() {
   try {
@@ -338,6 +349,7 @@ var TABS = [
   { id: "sports", label: "Sports" },
   { id: "top", label: "Trending" },
   { id: "elon", label: "Elon" },
+  { id: "follow", label: "Follow" },
   { id: "pods", label: "Pods" },
   { id: "allin", label: "$age" },
   { id: "msm", label: "<s>MSM</s>" },
@@ -1063,6 +1075,53 @@ function renderContent() {
     return;
   }
 
+  // ---- M-051 FOLLOW tab: top-viewed post per followed handle (24h), ranked. ----
+  // Includes a Netlify-form section at the bottom so visitors can suggest handles
+  // for the owner to add to follow_handles.json on review.
+  if (activeTab === "follow") {
+    var d = NEWS_DATA.follow || { stories: [] };
+    var meta = TAB_META.follow;
+    var h = '<div class="section-label">Follow &mdash; ' + today + '</div>' + renderTabArt('follow') + '<h1>' + meta.title + '</h1><p class="subtitle">' + meta.subtitle + '</p>' + staleBanner;
+    if (!d.stories || !d.stories.length) {
+      h += '<p style="color:#f0e6d6;font-size:0.9rem;margin-top:16px;">Nothing yet from any of the followed handles in the last 24h. Check back after the next update cycle.</p>';
+    } else {
+      d.stories.forEach(function(s) { h += renderAutoEmbedBlock(s); });
+    }
+
+    // Visitor suggestions pulled from Netlify Forms (M-051) — 24h public window.
+    var suggestions = (NEWS_DATA.follow_suggest && NEWS_DATA.follow_suggest.suggestions) || [];
+    if (suggestions.length) {
+      h += '<div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#b8860b;margin:28px 0 10px;font-weight:700;">Recent visitor suggestions (last 24h)</div>';
+      suggestions.forEach(function(g) {
+        var status = g.already_followed ? ' &mdash; <span style="color:#3a7d3a;">already followed</span>' : '';
+        var reason = g.reason ? '<div style="font-size:0.8rem;color:#a89478;margin-top:2px;">&ldquo;' + g.reason.replace(/[<>&]/g, function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];}) + '&rdquo;</div>' : '';
+        h += '<div style="padding:10px 12px;margin:6px 0;background:#fbf7ec;border:1px solid #d4b896;border-radius:6px;font-size:0.9rem;color:#3d3029;">';
+        h += '<a href="https://x.com/' + encodeURIComponent(g.handle) + '" target="_blank" rel="noopener" style="font-weight:600;color:#2980b9;text-decoration:none;">@' + g.handle.replace(/[<>&]/g, function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];}) + '</a>';
+        h += ' <span style="font-size:0.75rem;color:#a89478;">&middot; ' + g.age_hours + 'h ago</span>' + status;
+        h += reason;
+        h += '</div>';
+      });
+    }
+
+    // Suggestion form (Netlify Forms — backed by form_name="follow-suggest")
+    h += '<div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#b8860b;margin:28px 0 10px;font-weight:700;">Suggest a follow</div>';
+    h += '<form class="submit-form" id="followSuggestForm" name="follow-suggest" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleFollowSuggest(event)">';
+    h += '<input type="hidden" name="form-name" value="follow-suggest" />';
+    h += '<p style="display:none;"><label>Don\'t fill this out: <input name="bot-field" /></label></p>';
+    h += '<label for="followHandle">X handle to suggest</label>';
+    h += '<input type="text" id="followHandle" name="handle" placeholder="@someone (or https://x.com/someone)" required />';
+    h += '<label for="followReason">Why they should be included (optional)</label>';
+    h += '<textarea id="followReason" name="reason" rows="2" placeholder="A sentence on why this handle is worth following..."></textarea>';
+    h += '<button type="submit" class="submit-btn">Suggest handle</button>';
+    h += '<div id="followSuggestConfirm" style="display:none;margin-top:12px;padding:10px 14px;background:#e8f5e9;border-radius:6px;color:#2e7d32;font-size:0.85rem;font-weight:500;"></div>';
+    h += '</form>';
+    h += '<p style="font-size:0.75rem;color:#a89478;margin-top:8px;">Suggestions show here for 24h. The owner reviews and adds keepers to the curated list.</p>';
+
+    h += renderLastUpdated();
+    el.innerHTML = h;
+    return;
+  }
+
   // All other tabs
   var labels = { business: "Business", sports: "Sports", elon: "Elon", allin: "$age", top: "Trending", recipe: "Recipe", msm: "<s>MSM</s>", local: "Local", pods: "Pods", pg6: "Pg. 6", science: "Science", conspiracy: "Conspiracy", comedy: "Comedy", usa: "USA" };
   var d = NEWS_DATA[activeTab];
@@ -1154,6 +1213,49 @@ function handleSubmit(e) {
   c.style.display = 'block';
   c.textContent = found ? 'Upvoted! Posts with multiple votes get featured by Expresso.' : 'Submitted! If others submit the same post, it gets featured.';
   renderSubmissions();
+}
+
+// M-051: handler for the Follow-tab "suggest a handle" form. Mirrors the
+// post-replace pattern: AJAX POST to Netlify Forms, no page reload, confirm
+// inline. The cron picks up the submission via pull_follow_suggestions().
+function handleFollowSuggest(e) {
+  e.preventDefault();
+  var handleRaw = document.getElementById('followHandle').value.trim();
+  var reason = document.getElementById('followReason').value.trim();
+  if (!handleRaw) return;
+  // Normalize client-side too so the confirm message shows what got submitted.
+  var handle = handleRaw;
+  var m = handle.match(/(?:x|twitter)\.com\/([A-Za-z0-9_]+)/);
+  if (m) handle = m[1];
+  handle = handle.replace(/^@/, '').replace(/[^A-Za-z0-9_].*$/, '');
+  var c = document.getElementById('followSuggestConfirm');
+  if (!handle) {
+    if (c) { c.style.display = 'block'; c.textContent = "Couldn't read a valid X handle from that. Try @someone or the profile URL."; }
+    return;
+  }
+  try {
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'form-name': 'follow-suggest',
+        'bot-field': '',
+        'handle': handle,
+        'reason': reason,
+      }).toString()
+    }).then(function(r) {
+      if (r.ok) {
+        if (c) { c.style.display = 'block'; c.textContent = 'Suggested @' + handle + '. It will show in the list above on the next update and the owner will review.'; }
+      } else {
+        if (c) { c.style.display = 'block'; c.textContent = '⚠ Server submission failed (HTTP ' + r.status + ').'; }
+      }
+    }).catch(function(err) {
+      if (c) { c.style.display = 'block'; c.textContent = '⚠ Submission error: ' + err; }
+    });
+  } catch (err) {
+    if (c) { c.style.display = 'block'; c.textContent = '⚠ Submission threw: ' + err; }
+  }
+  document.getElementById('followSuggestForm').reset();
 }
 
 function renderSubmissions() {
