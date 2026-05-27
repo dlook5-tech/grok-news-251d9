@@ -88,6 +88,23 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-053 — Drop stories/perspectives that would render as bare "View post".
+**Date:** 2026-05-27 6:05 PM PT
+**User said:** "when ur rewriting block titles, im asssuming this shoiuldnt get through: 'view'" (screenshot of a perspective block in World tab showing literal "View post" as its title).
+**Trace:** `renderWorldStory` falls back to `'View post'` when a perspective has no `text` AND no `headline`. Same for `renderAutoEmbedBlock` with empty `headline+body`. M-050 tightener only operates on the `headline` field — empty-body perspectives slip past it. Whenever Grok returns a perspective without body content, the live page shows a "View post" block which conveys nothing.
+**Enforcement:**
+- New `_block_has_content(obj)` checks for ≥8 chars in any of `headline`/`body`/`text`/`engagement`. Sub-8 is "empty enough that the renderer would fall back to 'View post'".
+- Pre-write gate iterates `output.items()`: drops stories that fail the check, filters perspectives down to those that pass. If a story loses all its perspectives it still ships (it renders via `renderAutoEmbedBlock` with the headline only — no "View post" risk because the headline gate above already kept it).
+- Logs `[m053-drop-story]` / `[m053-drop-persp]` per drop and a summary line. Runs between the M-049 parent scrubber and the M-050 tightener, so the tightener never wastes an xAI call on a block that's about to ship.
+
+## M-052 — Top tab exempt from cross-tab dedup (so #1 most-viewed always shows even if it's also in World/USA/Elon).
+**Date:** 2026-05-27 5:58 PM PT
+**User said:** "#1 should be #1 posts, regardless of whether its in another tab" (chose option #1 of the trending-tab fix proposal).
+**Why:** The top tab's whole purpose is showing the absolute most-viewed posts of the day. Mega-viral posts almost always also rank in their categorical tab (Trump primaries in USA, an Elon banger in Elon, the World response to Iran in World). The cross-tab dedup was killing them out of Top because Top was 3rd in `_DEDUP_ORDER` — World/USA/Elon would claim them first and Top would inherit the leftovers. Same logic that already exempts MSM (M-024) and Elon (M-023).
+**Enforcement:**
+- `top` removed from `_DEDUP_ORDER` in parse_grok.py. The dedup loop no longer processes the top tab, so its stories are never checked against earlier tabs and are never recorded for later tabs to dedup against.
+- Within-tab dedup for top still works structurally because the LLM dedup pass and the URL-exact xtab-dedup (M-009) run separately. Verified: cron #41 should now show Top featuring the biggest viral post even if World/USA/Elon also have it.
+
 ## M-051 — Follow tab: curated handle list, top-viewed post per handle in last 24h, ranked.
 **Date:** 2026-05-27 6:00 PM PT
 **User said:** "add a new tab called 'Follow' and make a block for the top viewed post in the last 24 hours of these people, rank 1st or place in order of the top viewed post. Add a place below for website users to add someone to follow, they think should be included." (Provided screenshots of their X Following list — 22 handles extracted.)

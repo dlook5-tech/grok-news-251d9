@@ -1442,12 +1442,18 @@ for _tab, _container in list(output.items()):
 # Expanded stoplist drops common news verbs (signs/holds/calls/announces/etc) and
 # generic adjectives (massive/major/huge/big) so they don't count toward the 2.
 #
-# Priority (earlier wins): world > usa > top > msm > business > sports > pg6 ...
+# Priority (earlier wins): world > usa > business > sports > pg6 ...
 # Tabs EXCLUDED from dedup (because their content NATURALLY overlaps):
 #   - elon (M-023): his own multi-take threads should all ship
 #   - msm  (M-024): mainstream media's whole purpose is covering the same news
 #                   that's in World/USA — dedup was emptying the tab
-_DEDUP_ORDER = ['world','usa','top','business','sports','pg6','science',
+#   - top  (M-052): top tab IS "absolute most-viewed across the platform",
+#                   which by definition overlaps with World/USA/Elon. User:
+#                   "#1 should be #1 posts, regardless of whether its in
+#                   another tab" — same exemption logic as MSM.
+#   - follow (M-051): editable handles' top post shown even if it's also
+#                   the news of the day in another tab
+_DEDUP_ORDER = ['world','usa','business','sports','pg6','science',
                 'pods','allin','conspiracy','local','recipe','comedy']
 _QC_STOP = {
     # articles / pronouns / conjunctions
@@ -1951,6 +1957,56 @@ for _tab_key, _tab_val in output.items():
                 print(f"[parent-scrub] {_tab_key} persp @{_p.get('handle','?')}: removed placeholder parent_url", file=sys.stderr)
 if _scrub_n:
     print(f"[parent-scrub] M-049: cleaned {_scrub_n} broken parent_url placeholders", file=sys.stderr)
+
+
+# ---- M-053 EMPTY-BLOCK GATE ----
+# User mandate 2026-05-27: "when ur rewriting block titles, im asssuming this
+# shoiuldnt get through: 'view'". renderWorldStory falls back to literal
+# "View post" when a perspective has no body AND no headline. Same for
+# renderAutoEmbedBlock with empty story headline+body. Catch it at the data
+# layer — never ship a story or perspective that would render as bare
+# "View post". A useful block needs at least 8 chars of text.
+def _block_has_content(obj):
+    if not isinstance(obj, dict):
+        return False
+    for key in ('headline', 'body', 'text', 'engagement'):
+        v = (obj.get(key) or '').strip()
+        if len(v) >= 8:
+            return True
+    return False
+
+_drop_stories = 0
+_drop_persps = 0
+for _tab_key, _tab_val in output.items():
+    if not isinstance(_tab_val, dict): continue
+    stories = _tab_val.get('stories')
+    if not isinstance(stories, list): continue
+    _kept_stories = []
+    for _s in stories:
+        if not isinstance(_s, dict): continue
+        if not _block_has_content(_s):
+            _drop_stories += 1
+            print(f"[m053-drop-story] {_tab_key} @{_s.get('handle','?')}: empty headline+body", file=sys.stderr)
+            continue
+        # Filter perspectives down to the ones with actual content.
+        persps = _s.get('perspectives') or []
+        if persps:
+            _kept_p = []
+            for _p in persps:
+                if _block_has_content(_p):
+                    _kept_p.append(_p)
+                else:
+                    _drop_persps += 1
+                    print(f"[m053-drop-persp] {_tab_key} @{_s.get('handle','?')} {_p.get('label','?')} "
+                          f"@{_p.get('handle','?')}: empty body/headline", file=sys.stderr)
+            if _kept_p:
+                _s['perspectives'] = _kept_p
+            else:
+                _s.pop('perspectives', None)
+        _kept_stories.append(_s)
+    _tab_val['stories'] = _kept_stories
+if _drop_stories or _drop_persps:
+    print(f"[m053] M-053: dropped {_drop_stories} empty stories, {_drop_persps} empty perspectives", file=sys.stderr)
 
 
 # ---- M-050 FINAL HEADLINE TIGHTENING PASS ----

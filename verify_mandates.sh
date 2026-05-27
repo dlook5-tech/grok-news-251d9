@@ -183,12 +183,25 @@ check  "M-051a:handles-file"           follow_handles.json   '"handles"'        
 check  "M-051b:update-sh-tabs"         update.sh             "TABS=.*follow"                   exists
 check  "M-051c:update-sh-fn"           update.sh             "call_grok_follow"                exists
 check  "M-051d:parse-grok-branch"      parse_grok.py         "M-051 FOLLOW tab"                exists
-check  "M-051e:follow-not-in-dedup"    parse_grok.py         "'world','usa','top','business','sports','pg6','science'"  exists
+check  "M-051e:follow-not-in-dedup"    parse_grok.py         "'world','usa','business','sports','pg6','science'"        exists
 check  "M-051f:suggestions-fn"         parse_grok.py         "def pull_follow_suggestions"     exists
 check  "M-051g:suggestions-wired"      parse_grok.py         "output\['follow_suggest'\]"      exists
 check  "M-051h:html-tab-button"        index.html            'id: "follow", label: "Follow"'   exists
 check  "M-051i:html-static-form"       index.html            'name="follow-suggest"'           exists
 check  "M-051j:html-handler"           index.html            "function handleFollowSuggest"    exists
+
+# M-052 — TOP exempt from cross-tab dedup (so #1 most-viewed always shows).
+# The exemption is enforced by NOT having 'top' in _DEDUP_ORDER. The M-051e
+# check above already pins the exact _DEDUP_ORDER string, so this just adds
+# the inverse — confirms 'top' was actually removed.
+check  "M-052a:top-not-in-dedup"       parse_grok.py    "'world','usa','top','business','sports','pg6','science'"  absent
+check  "M-052b:mandate-comment"        parse_grok.py    "M-052"                                                    exists
+
+# M-053 — Drop empty stories/perspectives so "View post" never appears as a
+# block title. Catches Grok responses where body is missing for a perspective.
+check  "M-053a:gate-fn"                parse_grok.py    "def _block_has_content"                                   exists
+check  "M-053b:gate-applied"           parse_grok.py    "M-053 EMPTY-BLOCK GATE"                                   exists
+check  "M-053c:gate-log"               parse_grok.py    "\[m053\]"                                                  exists
 
 # M-041 — Nested comments: perspectives get parent context fetched + embedded
 check  "M-041a:persp-parent-fn"        parse_grok.py  "_enrich_persp_parent"           exists
