@@ -88,6 +88,16 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-055 — Expand QC dedup stoplist (political names + win/loss verbs) + within-tab threshold 2 → 3.
+**Date:** 2026-05-27 6:50 PM PT
+**User said:** "y no USA story # 5 there are no dups" (cron #41 USA tab capped at 4 stories with no obvious dupes).
+**Trace:** USA #5 `'Team Trump thanks Texas after Paxton wins Senate primary'` was dropped because it shared the tokens `['trump', 'wins']` with USA #1 `'Trump's 2026 endorsement scorecard shows strong wins for endorsed'`. Two completely different events — Paxton's Texas Senate win vs. Trump's overall 2026 endorsement scorecard — but they collided on common political vocabulary. Within-tab threshold was 2 tokens; political headlines have a tiny distinctive vocabulary, so 2 isn't enough.
+**Enforcement:**
+- Added to `_QC_STOP`: politician names (`trump`, `biden`, `harris`, `obama`, `clinton`, `desantis`, `newsom`, `paxton`, `kennedy`, `sanders`, `warren`, `schumer`, `pelosi`, `mccarthy`, `johnson`), win/loss verbs (`wins`, `loses`, `beats`, `defeats`, `endorses`, `endorsed`, `victory`), and government/party nouns (`primary`, `primaries`, `election`, `elections`, `elected`, `president`, `senate`, `house`, `governor`, `congress`, `republican`, `democrat`, `democratic`, `republicans`, `democrats`, `gop`, `dem`, `dems`).
+- Within-tab threshold bumped from 2 → 3 shared tokens (now matches cross-tab). The LLM semantic dedup (M-014) is the real backstop for same-event matches; the rule-based pass should stay conservative to avoid these false positives.
+- Report `_report_drop_reason` no longer claims "same event in another tab" for the catch-all qc-dropped case — that label was wrong for within-tab dupes. Now reads "(qc-dropped — within-tab or cross-tab dupe per dedup heuristic)".
+- Net: cron #42 should ship USA #5 (Paxton win) and any other political stories that previously false-collided on `trump`/`wins`/`primary`/etc.
+
 ## M-053 — Drop stories/perspectives that would render as bare "View post".
 **Date:** 2026-05-27 6:05 PM PT
 **User said:** "when ur rewriting block titles, im asssuming this shoiuldnt get through: 'view'" (screenshot of a perspective block in World tab showing literal "View post" as its title).

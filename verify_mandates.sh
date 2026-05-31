@@ -251,11 +251,19 @@ check  "M-008:local-is-socal"            update.sh        "Southern California|O
 check  "M-009a:xtab-url-dedup"           parse_grok.py    "CROSS-TAB DEDUP|xtab-dedup"                               exists
 check  "M-009b:qc-event-dedup"           parse_grok.py    "FINAL QC|qc-dupe"                                         exists
 
-# M-014 — cross-tab needs 3 tokens; LLM semantic backstop
+# M-014 — cross-tab dedup with LLM semantic backstop. M-014b superseded by
+# M-055: both within-tab and cross-tab now require 3 shared tokens.
 check  "M-014a:min-shared-kwarg"         parse_grok.py    "min_shared"                                               exists
-check  "M-014b:cross-tab-threshold"      parse_grok.py    "min_shared = 2 if _prev_tab == _qc_tab else 3"            exists
 check  "M-014c:llm-dedup-fn"             parse_grok.py    "_qc_llm_semantic_dedup"                                   exists
 check  "M-014d:llm-dedup-called"         parse_grok.py    "_qc_llm_semantic_dedup\(output\)"                         exists
+
+# M-055 — Expanded QC stoplist (political names + win/loss verbs) +
+# within-tab threshold bumped 2 → 3 (matches cross-tab) + honest report label
+check  "M-055a:political-names"          parse_grok.py    "'trump','biden','harris'"            exists
+check  "M-055b:win-verbs"                parse_grok.py    "'wins','loses','beats'"              exists
+check  "M-055c:threshold-3"              parse_grok.py    "min_shared = 3"                      exists
+check  "M-055d:old-2-threshold-gone"     parse_grok.py    "min_shared = 2 if _prev_tab"         absent
+check  "M-055e:report-label-honest"      parse_grok.py    "within-tab or cross-tab dupe"        exists
 
 # M-015 — World/USA tabs use direct-link block when no perspectives (clicks open X)
 check  "M-015a:world-uses-direct-link"   index.html       "renderAutoEmbedBlock\(s\)"                                exists

@@ -1477,6 +1477,17 @@ _QC_STOP = {
     'post','tweet','reply','people','person','public','media','press','event',
     # 2026-05-23: false-positive triggers seen on live data
     # ('real' + 'trump' was making any "real X" headline dupe with any Trump story)
+    # M-055 (2026-05-27): political names + win/loss verbs appear in nearly
+    # every political headline — they shouldn't count as distinctive dedup
+    # tokens. Live false-positive: USA #5 'Team Trump thanks Texas after
+    # Paxton wins Senate primary' deduped against USA #1 'Trump's 2026
+    # endorsement scorecard shows strong wins' on ['trump', 'wins'].
+    'trump','biden','harris','obama','clinton','desantis','newsom','paxton',
+    'kennedy','sanders','warren','schumer','pelosi','mccarthy','johnson',
+    'wins','loses','beats','defeats','endorses','endorsed','wins','victory',
+    'primary','primaries','election','elections','elected','president',
+    'senate','house','governor','congress','republican','democrat','democratic',
+    'republicans','democrats','gop','dem','dems',
 }
 
 _MONEY_RE = re.compile(r'\$\d+(?:\.\d+)?[mkbt]?', re.IGNORECASE)
@@ -1515,8 +1526,14 @@ for _qc_tab in _DEDUP_ORDER:
             _qc_kept.append(_qc_s); continue
         _qc_match = None
         for _prev_tab, _prev_t, _prev_m, _prev_h in _qc_seen:
-            # M-014: cross-tab needs 3+ shared tokens; within-tab keeps 2+.
-            min_shared = 2 if _prev_tab == _qc_tab else 3
+            # M-014 + M-055: both cross-tab and within-tab now require 3+
+            # shared tokens. Within-tab was previously 2, which false-matched
+            # unrelated political stories sharing common names/verbs (e.g.
+            # 'trump' + 'wins'). Names + win/loss verbs now in the stoplist
+            # (M-055), and the threshold-3 keeps the safety even when those
+            # words aren't stoplisted. LLM dedup (M-014) is the real same-
+            # event backstop.
+            min_shared = 3
             d = _qc_is_dupe(_qc_t, _qc_m, _prev_t, _prev_m, min_shared=min_shared)
             if d:
                 _qc_match = (_prev_tab, d, _prev_h); break
@@ -2128,7 +2145,11 @@ def _report_drop_reason(cand, shipped_urls, world_shipped_urls, usa_shipped_urls
                                    ('top', top_shipped_urls), ('msm', msm_shipped_urls)]:
         if url in other_urls:
             return f'(dup of {other_tab} tab)'
-    return '(qc-dropped — same event in another tab)'
+    # M-055 fix: previously labeled this catch-all as "same event in
+    # another tab" — but qc-dupe also fires within-tab. We can't reliably
+    # distinguish here without re-running the dedup logic, so be honest
+    # about the ambiguity.
+    return '(qc-dropped — within-tab or cross-tab dupe per dedup heuristic)'
 
 _report_lines = []
 # M-027: cron_report timestamp in Pacific Time (user mandate 2026-05-23).
