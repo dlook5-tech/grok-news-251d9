@@ -265,6 +265,22 @@ check  "M-055c:threshold-3"              parse_grok.py    "min_shared = 3"      
 check  "M-055d:old-2-threshold-gone"     parse_grok.py    "min_shared = 2 if _prev_tab"         absent
 check  "M-055e:report-label-honest"      parse_grok.py    "within-tab or cross-tab dupe"        exists
 
+# M-056 — Expanded tighten filler-prefix regex
+check  "M-056a:affirms-added"            parse_grok.py    "affirms\?\|affirmed"                exists
+check  "M-056b:demands-added"            parse_grok.py    "demand\(\?:s\|ed\|ing\)\?"          exists
+check  "M-056c:urges-added"              parse_grok.py    "urge\(\?:s\|d\|ing\)\?"             exists
+
+# M-057 — Image-only / no-content gate (engagement no longer counts)
+check  "M-057a:substantive-text-fn"      parse_grok.py    "def _substantive_text"              exists
+check  "M-057b:story-has-content-fn"     parse_grok.py    "def _story_has_content"             exists
+check  "M-057c:persp-has-content-fn"     parse_grok.py    "def _perspective_has_content"       exists
+check  "M-057d:drop-log-updated"         parse_grok.py    "no substantive text"                exists
+
+# M-058 — Mandatory counter-perspective regardless of view count
+check  "M-058a:min-views-param"          parse_grok.py    "min_views=1_000"                    exists
+check  "M-058b:refill-passes-100"        parse_grok.py    "min_views=100"                      exists
+check  "M-058c:100k-gate-gone"           parse_grok.py    "views < 100_000"                    absent
+
 # M-015 — World/USA tabs use direct-link block when no perspectives (clicks open X)
 check  "M-015a:world-uses-direct-link"   index.html       "renderAutoEmbedBlock\(s\)"                                exists
 check  "M-015b:world-perspective-guard"  index.html       "perspectives && s\.perspectives\.length"                  exists

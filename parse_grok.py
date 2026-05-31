@@ -224,15 +224,22 @@ _PERSPECTIVE_MIN_VIEWS = {
 }
 _PERSPECTIVE_MIN_FOLLOWERS = 1_000  # Quality floor: no "Yahoo accounts" per user
 
-def find_opposing_perspective(story_url, story_headline, existing_persps, target_label):
-    """M-043: When find_perspectives returns <2 perspectives for a story that
-    clearly has political controversy, fire a TARGETED follow-up xAI call
-    asking specifically for the opposing-side reaction. Grok often returns 1
-    when 3 exist; this nudge usually finds the others.
+def find_opposing_perspective(story_url, story_headline, existing_persps, target_label, min_views=1_000):
+    """M-043 + M-058: When find_perspectives returns <2 perspectives for a
+    story that clearly has political controversy, fire a TARGETED follow-up
+    xAI call asking specifically for the opposing-side reaction. Grok often
+    returns 1 when 3 exist; this nudge usually finds the others.
+
+    M-058 (2026-05-31): the post-oEmbed backfill pass now calls with
+    min_views=100 (instead of 1K) so sparse low-view World/USA stories
+    still get a counter-perspective. User: "Just find counter with most
+    views". The 1K default is kept for the in-Stage-2 fallback path so it
+    doesn't get noisier than necessary on the common case.
 
     target_label: 'Democrat', 'Conservative', or 'Independent'.
     existing_persps: list of perspectives already found (so we can describe
     them to Grok and ask for the OPPOSING take).
+    min_views: floor for the returned perspective's view count.
     Returns a single perspective dict or None.
     """
     if not story_url or '/status/' not in story_url:
@@ -251,12 +258,12 @@ def find_opposing_perspective(story_url, story_headline, existing_persps, target
         f"  - Quote-tweets sharing the URL with critical commentary\n"
         f"  - Original posts within 24h on the SAME news event from {target_label}-aligned commentators\n\n"
         f"Quality floors:\n"
-        f"  - Minimum 1,000 views\n"
+        f"  - Minimum {min_views:,} views\n"
         f"  - Account ≥1K followers + real bio\n"
         f"  - No vulgar slurs, no pure-emoji posts, no spam\n\n"
         f"Pick the HIGHEST-VIEWED qualifying critique/disagreement. Return ONLY one "
         f"perspective. If you genuinely cannot find any {target_label} critique with "
-        f">=1K views, return {{\"perspective\": null}}.\n\n"
+        f">={min_views:,} views, return {{\"perspective\": null}}.\n\n"
         f"Return ONLY a JSON object:\n"
         f'{{"perspective":{{"label":"{target_label}","handle":"@user","url":"https://x.com/.../status/<id>",'
         f'"body":"verbatim post text","views":<integer>}}}}'
@@ -277,7 +284,7 @@ def find_opposing_perspective(story_url, story_headline, existing_persps, target
         views = int(p.get('views') or 0)
     except (TypeError, ValueError):
         views = 0
-    if views < 1_000:
+    if views < min_views:
         return None
     return {
         'label': target_label,
@@ -800,6 +807,11 @@ def fetch_headline_for_post(url, body, parent_text=None, parent_handle=None):
 
 # Verb prefixes that signal a weak/filler headline. M-050 rewrites anything
 # starting with these — they describe the act of posting rather than the news.
+# M-056: expanded to catch leading filler verbs the user explicitly flagged:
+# "Affirms calls stresses demands" was a real shipped headline that slipped
+# the original regex (affirms/calls/demands weren't in the list). Plus other
+# generic news-verbs that show up as Elon-reaction filler (urges/vows/
+# proposes/etc). Each pattern keeps its inflections.
 _TIGHTEN_FILLER_PREFIXES = re.compile(
     r'^\s*('
     r'clarif(?:ies|y|ied)|defend(?:s|ed|ing)?|note(?:s|d)?(?:\s+that)?|'
@@ -814,7 +826,16 @@ _TIGHTEN_FILLER_PREFIXES = re.compile(
     r'endorse(?:s|d|ing)?|backs?|supports?|confirms?|state(?:s|d)?|says?|'
     r'announce(?:s|d|ing)?|hints?\s+at|teases?|jokes?\s+about|laughs?\s+at|'
     r'weighs?\s+in|chimes?\s+in|reveals?|admits?|insists?|argues?|claims?|'
-    r'compares?|equates?|contrasts?|explains?|describes?'
+    r'compares?|equates?|contrasts?|explains?|describes?|'
+    # M-056 additions:
+    r'affirms?|affirmed|affirming|calls?(?:\s+(?:for|on|out|to))?|'
+    r'demand(?:s|ed|ing)?|urge(?:s|d|ing)?|propose(?:s|d|ing)?|'
+    r'suggest(?:s|ed|ing)?|push(?:es|ed|ing)?(?:\s+(?:for|back))?|'
+    r'voice(?:s|d|ing)?|vow(?:s|ed|ing)?|pledge(?:s|d|ing)?|'
+    r'thank(?:s|ed|ing)?|congratulate(?:s|d|ing)?|decries?|denounce(?:s|d|ing)?|'
+    r'condemn(?:s|ed|ing)?|threaten(?:s|ed|ing)?|warn(?:s|ed|ing)?(?:\s+against)?|'
+    r'hails?|salutes?|honors?|remembers?|recalls?|recounts?|raises?(?:\s+concerns?)?|'
+    r'offer(?:s|ed|ing)?|deny(?:ing)?|denies|denied'
     r')\b',
     re.IGNORECASE
 )
@@ -1874,8 +1895,13 @@ for _v_tab in _verify_news_tabs:
 import concurrent.futures as _cf_refill
 def _refill_one(_args):
     _r_tab, _r_story = _args
-    if int(_r_story.get('views',0) or 0) < 100_000:
-        return _r_tab, _r_story
+    # M-058 (2026-05-31): user — "Can't send this partisan without counter
+    # comment even if few views. Just find counter with most views." The old
+    # 100K view threshold meant low-view World/USA stories shipped one-sided.
+    # Now we attempt a backfill on every World/USA story with <2 perspectives,
+    # regardless of view count. find_opposing_perspective drops its own floor
+    # to 100 views (was 1K) when called from this pass to make the search
+    # actually return something for sparse stories.
     persps = _r_story.get('perspectives', []) or []
     if len(persps) >= 2:
         return _r_tab, _r_story
@@ -1884,8 +1910,11 @@ def _refill_one(_args):
         if target in existing_labels: continue
         if len(persps) >= 2: break
         try:
+            # M-058: drop the floor to 100 views so sparse low-view World/USA
+            # stories still get a counter-perspective.
             extra = find_opposing_perspective(
-                _r_story.get('url',''), _r_story.get('headline',''), persps, target)
+                _r_story.get('url',''), _r_story.get('headline',''),
+                persps, target, min_views=100)
         except Exception as _e:
             print(f"[oembed-refill-warn] {_r_tab}: {_e}", file=sys.stderr)
             extra = None
@@ -1991,21 +2020,45 @@ for _norm_tab, _norm_val in output.items():
                 _norm_p['text'] = _norm_p['body']
 
 
-# ---- M-053 EMPTY-BLOCK GATE ----
-# User mandate 2026-05-27: "when ur rewriting block titles, im asssuming this
-# shoiuldnt get through: 'view'". renderWorldStory falls back to literal
-# "View post" when a perspective has no body AND no headline. Same for
-# renderAutoEmbedBlock with empty story headline+body. Catch it at the data
-# layer — never ship a story or perspective that would render as bare
-# "View post". A useful block needs at least 8 chars of text.
-def _block_has_content(obj):
+# ---- M-053 EMPTY-BLOCK GATE + M-057 IMAGE-ONLY STORY GATE ----
+# M-053 (2026-05-27): never ship blocks that would render as bare "View post"
+# (renderWorldStory and renderAutoEmbedBlock fall back to that string when
+# headline/body are both empty).
+#
+# M-057 (2026-05-31): user — "no tweets like this please on the follow page
+# ... eliminate anything like this that has no content. That's just a
+# picture." Original 8-char threshold passed image-only posts because their
+# engagement field had text ("100K views") even when there was no real text
+# to read. Tighter rules now:
+#   * Engagement no longer counts as content (just a metric).
+#   * URLs are stripped before measuring length (so "https://x.com/long…"
+#     captions don't masquerade as substance).
+#   * STORIES need ≥ 12 substantive chars in headline OR body. Below that
+#     the block has no informational value — it's just a photo.
+#   * PERSPECTIVES keep the looser 3-char floor — emoji-only reactions like
+#     "💯" or "True" are still meaningful as a signal of agreement.
+_URL_RE_M057 = re.compile(r'https?://\S+', re.IGNORECASE)
+def _substantive_text(s):
+    if not isinstance(s, str): return ''
+    return re.sub(r'\s+', ' ', _URL_RE_M057.sub('', s)).strip()
+
+def _story_has_content(obj):
     if not isinstance(obj, dict):
         return False
-    for key in ('headline', 'body', 'text', 'engagement'):
-        v = (obj.get(key) or '').strip()
-        if len(v) >= 8:
-            return True
-    return False
+    headline = _substantive_text(obj.get('headline') or '')
+    body = _substantive_text(obj.get('body') or obj.get('text') or '')
+    return len(headline) >= 12 or len(body) >= 12
+
+def _perspective_has_content(obj):
+    if not isinstance(obj, dict):
+        return False
+    headline = _substantive_text(obj.get('headline') or '')
+    body = _substantive_text(obj.get('body') or obj.get('text') or '')
+    return len(headline) >= 3 or len(body) >= 3
+
+# Back-compat alias still used by older call sites (e.g. mandate audit string)
+def _block_has_content(obj):
+    return _story_has_content(obj)
 
 _drop_stories = 0
 _drop_persps = 0
@@ -2016,21 +2069,22 @@ for _tab_key, _tab_val in output.items():
     _kept_stories = []
     for _s in stories:
         if not isinstance(_s, dict): continue
-        if not _block_has_content(_s):
+        if not _story_has_content(_s):
             _drop_stories += 1
-            print(f"[m053-drop-story] {_tab_key} @{_s.get('handle','?')}: empty headline+body", file=sys.stderr)
+            print(f"[m053-drop-story] {_tab_key} @{_s.get('handle','?')}: "
+                  f"no substantive text (image-only?)", file=sys.stderr)
             continue
-        # Filter perspectives down to the ones with actual content.
         persps = _s.get('perspectives') or []
         if persps:
             _kept_p = []
             for _p in persps:
-                if _block_has_content(_p):
+                if _perspective_has_content(_p):
                     _kept_p.append(_p)
                 else:
                     _drop_persps += 1
-                    print(f"[m053-drop-persp] {_tab_key} @{_s.get('handle','?')} {_p.get('label','?')} "
-                          f"@{_p.get('handle','?')}: empty body/headline", file=sys.stderr)
+                    print(f"[m053-drop-persp] {_tab_key} @{_s.get('handle','?')} "
+                          f"{_p.get('label','?')} @{_p.get('handle','?')}: "
+                          f"empty body/headline", file=sys.stderr)
             if _kept_p:
                 _s['perspectives'] = _kept_p
             else:
@@ -2038,7 +2092,8 @@ for _tab_key, _tab_val in output.items():
         _kept_stories.append(_s)
     _tab_val['stories'] = _kept_stories
 if _drop_stories or _drop_persps:
-    print(f"[m053] M-053: dropped {_drop_stories} empty stories, {_drop_persps} empty perspectives", file=sys.stderr)
+    print(f"[m053] M-053+M-057: dropped {_drop_stories} content-less stories, "
+          f"{_drop_persps} empty perspectives", file=sys.stderr)
 
 
 # ---- M-050 FINAL HEADLINE TIGHTENING PASS ----

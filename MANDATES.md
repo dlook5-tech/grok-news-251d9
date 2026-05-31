@@ -88,6 +88,33 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-058 — Mandatory counter-perspective on World/USA stories regardless of view count.
+**Date:** 2026-05-31 evening
+**User said:** "Can't send this partisan without counter comment even if few views. Just find counter with most views." (screenshot stack across IMG_1662–1665, IMG_1707)
+**Trace:** M-046 post-oEmbed backfill only fired on stories with views ≥ 100K, and `find_opposing_perspective` required the returned reply to have ≥ 1K views. So low-view World/USA stories shipped one-sided.
+**Enforcement:**
+- M-046 post-oEmbed refill loop's `views < 100K` gate removed. Now attempts a counter-perspective backfill on every World/USA story with <2 perspectives.
+- `find_opposing_perspective` gains a `min_views` keyword (default 1K to preserve Stage-2 fallback behavior). The M-046/M-058 backfill path calls with `min_views=100` so sparse stories can still get a counter view.
+- oEmbed verification still applies to refill candidates — no regression on the M-040 hallucination guard.
+
+## M-057 — Image-only / no-content gate (engagement no longer counts).
+**Date:** 2026-05-31 evening
+**User said:** "no tweets like this please on the follow page on the final edit run when we're doing a QC check eliminate anything like this that has no content. That's just a picture." (IMG_1702)
+**Trace:** Original M-053 `_block_has_content` allowed any of `headline/body/text/engagement` ≥ 8 chars. Image-only posts have engagement "N views" which always satisfies, so they shipped.
+**Enforcement:**
+- Two new gate functions: `_story_has_content` (≥ 12 substantive chars in headline OR body) and `_perspective_has_content` (≥ 3 — keeps emoji-only reactions like "💯").
+- New `_substantive_text` helper strips URLs before measuring length, so a post whose "body" is just an X URL doesn't count.
+- Engagement field no longer counts as content (it's metric data, not content).
+- Drop log relabeled `[m053-drop-story] ... no substantive text (image-only?)`.
+
+## M-056 — Expand tighten filler-prefix regex (catch "Affirms / Calls / Demands / Urges / …").
+**Date:** 2026-05-31 evening
+**User said:** "Affirms calls stresses demands ... come on what the fuck put the shedding code so it stops happening whack hole Central" (IMG_1697–1698). Plus earlier "Agrees true with post" (IMG_1666–1668) and "Jaxson who? Dart! write better titles" (IMG_1687–1688).
+**Trace:** `_TIGHTEN_FILLER_PREFIXES` regex was missing the leading verbs the user explicitly flagged. "Affirms" wasn't in the list at all — the headline "Affirms calls stresses demands…" passed the fast-path because Affirms wasn't recognized as filler. M-050 then skipped the xAI rewrite entirely.
+**Enforcement:**
+- Added to the regex: `affirms`, `calls(?: for|on|out|to)?`, `demands`, `urges`, `proposes`, `suggests`, `pushes(?: for|back)?`, `voices`, `vows`, `pledges`, `thanks`, `congratulates`, `decries`, `denounces`, `condemns`, `threatens`, `warns(?: against)?`, `hails`, `salutes`, `honors`, `remembers`, `recalls`, `recounts`, `raises(?: concerns)?`, `offers`, `denies`.
+- Headlines starting with any of these now trigger the M-050 xAI rewrite path. The rewrite prompt's BAD examples already cover these patterns.
+
 ## M-055 — Expand QC dedup stoplist (political names + win/loss verbs) + within-tab threshold 2 → 3.
 **Date:** 2026-05-27 6:50 PM PT
 **User said:** "y no USA story # 5 there are no dups" (cron #41 USA tab capped at 4 stories with no obvious dupes).
