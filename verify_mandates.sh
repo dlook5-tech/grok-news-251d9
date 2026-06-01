@@ -300,6 +300,24 @@ check  "M-060b:promo-weak-regex"         parse_grok.py    "_PROMO_WEAK"         
 check  "M-060c:is-promo-fn"              parse_grok.py    "def _is_promo"                      exists
 check  "M-060d:promo-log"                parse_grok.py    "M-060: dropped"                     exists
 
+# M-061 — Accept empty parent_text (image-only parents)
+check  "M-061a:relaxed-empty-guard"      parse_grok.py    "if p_text and '<' in p_text"        exists
+check  "M-061b:old-strict-gone"          parse_grok.py    "if not p_text or '<' in p_text"     absent
+
+# M-062 — Filter @grok-query perspectives
+check  "M-062a:grok-query-regex"         parse_grok.py    "_GROK_QUERY_RE"                     exists
+check  "M-062b:applied-in-content-fn"    parse_grok.py    "_GROK_QUERY_RE.match"               exists
+
+# M-063 — Drop partisan World/USA stories without counter perspective
+check  "M-063a:political-trigger-regex"  parse_grok.py    "_M063_POLITICAL_TRIGGERS"           exists
+check  "M-063b:is-political-fn"          parse_grok.py    "def _is_political"                  exists
+check  "M-063c:drop-log"                 parse_grok.py    "\[m063-drop\]"                       exists
+check  "M-063d:refill-no-100k-gate"      parse_grok.py    "views >= 100_000.*len.*perspectives" absent
+
+# M-064 — Top tab ships empty rather than no-floor garbage
+check  "M-064a:no-fallthrough"           parse_grok.py    "ships empty rather than garbage|EMPTY this cron"  exists
+check  "M-064b:old-fallthrough-gone"     parse_grok.py    "no floor.*hit TARGET_COUNT; lowest used"  absent
+
 # M-015 — World/USA tabs use direct-link block when no perspectives (clicks open X)
 check  "M-015a:world-uses-direct-link"   index.html       "renderAutoEmbedBlock\(s\)"                                exists
 check  "M-015b:world-perspective-guard"  index.html       "perspectives && s\.perspectives\.length"                  exists

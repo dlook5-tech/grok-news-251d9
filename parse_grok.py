@@ -207,13 +207,20 @@ def fetch_parent(url):
     if '<' in p_handle or '>' in p_handle:
         print(f"[parent-reject] template-echo handle: {p_handle!r}", file=sys.stderr)
         return None
-    if not p_text or '<' in p_text and '>' in p_text:
-        print(f"[parent-reject] empty/template parent_text for {p_url}", file=sys.stderr)
+    # M-061 (2026-06-01): EMPTY parent_text is OK — parent posts can legitimately
+    # be image-only / video-only with no caption. Only reject template-echo text
+    # ("<text>"). The X embed renders the image either way, and a missing parent
+    # was the silent root cause of "where is what he's commenting on?" complaints
+    # (IMG_1689–1690, IMG_1693–1696) AND the current @1327GT350 / @sethdillon
+    # cases — we were throwing away a real parent_url because the post happened
+    # to be image-only.
+    if p_text and '<' in p_text and '>' in p_text:
+        print(f"[parent-reject] template parent_text for {p_url}", file=sys.stderr)
         return None
     return {
         'parent_url': p_url,
         'parent_handle': p_handle,
-        'parent_text': p_text[:280],
+        'parent_text': (p_text or '')[:280],  # may be empty for image-only parents
     }
 
 
@@ -2059,13 +2066,71 @@ for _v_tab in ('world','usa'):  # only World/USA care about perspective balance
     _v_container = output.get(_v_tab, {})
     if not isinstance(_v_container, dict): continue
     for _v_story in _v_container.get('stories', []) or []:
-        if int(_v_story.get('views',0) or 0) >= 100_000 and len(_v_story.get('perspectives',[]) or []) < 2:
+        # M-058: removed the views >= 100K filter (was preventing low-view
+        # partisan stories like @MarioNawfal 66K from ever getting a
+        # counter-perspective). The user explicitly mandated: "Can't send
+        # this partisan without counter comment even if few views."
+        if len(_v_story.get('perspectives',[]) or []) < 2:
             _refill_jobs.append((_v_tab, _v_story))
 
 if _refill_jobs:
     print(f'[oembed-refill] {len(_refill_jobs)} stories qualify for post-oEmbed perspective backfill', file=sys.stderr)
     with _cf_refill.ThreadPoolExecutor(max_workers=4) as _ex:
         list(_ex.map(_refill_one, _refill_jobs))
+
+
+# ---- M-063 PARTISAN-WITHOUT-COUNTER DROP ----
+# User mandate 2026-06-01: "Story worth number two story on the site is
+# pure biased and doesn't even have a counteracting story on the other
+# side. My kindergarten wouldn't do this, let alone AI." (re: @MarioNawfal
+# Trump-Ukraine 66K views, World #2, 0 perspectives — M-058 backfill
+# couldn't find a counter).
+# Policy: if a World/USA story has <2 perspectives AFTER all backfill
+# attempts AND its headline contains political-trigger words, drop the
+# story. Better to ship 4 balanced stories than 5 with a one-sided take.
+_M063_POLITICAL_TRIGGERS = re.compile(
+    r'\b(?:'
+    # Politicians and family
+    r'trump|biden|harris|obama|clinton|desantis|newsom|paxton|vance|'
+    r'sanders|warren|schumer|pelosi|mccarthy|johnson|kennedy|warnock|'
+    r'pence|rfk|ramaswamy|haley|christie|aoc|cruz|hawley|cotton|'
+    # Conflicts / hot-button countries
+    r'ukraine|russia|putin|zelensky|zelenskyy|iran|israel|hamas|gaza|'
+    r'palestine|palestinian|china|taiwan|nato|brics|'
+    # Domestic political topics
+    r'antifa|maga|woke|wokeness|gop|dems?|democrat(?:ic)?|republican(?:s)?|'
+    r'liberal(?:s)?|conservative(?:s)?|leftist(?:s)?|right-?wing|'
+    r'election(?:s)?|primary|primaries|impeach(?:ment)?|'
+    r'abortion|second amendment|2a|deep state|globalist(?:s)?|'
+    # Government bodies (only when paired with another trigger via OR)
+    r'white house|senate|congress|supreme court|scotus|ice\b|doge|fbi'
+    r')\b',
+    re.IGNORECASE)
+def _is_political(s):
+    if not isinstance(s, dict):
+        return False
+    blob = ((s.get('headline','') or '') + ' ' + (s.get('body','') or '')).lower()
+    return bool(_M063_POLITICAL_TRIGGERS.search(blob))
+
+_m063_dropped = 0
+for _wu_tab in ('world', 'usa'):
+    _wu_container = output.get(_wu_tab, {})
+    if not isinstance(_wu_container, dict):
+        continue
+    _wu_kept = []
+    for _wu_s in _wu_container.get('stories', []) or []:
+        _n_persps = len(_wu_s.get('perspectives', []) or [])
+        if _n_persps < 2 and _is_political(_wu_s):
+            _m063_dropped += 1
+            print(f"[m063-drop] {_wu_tab} @{_wu_s.get('handle','?')} "
+                  f"{(_wu_s.get('headline','') or '')[:50]!r}: "
+                  f"partisan story with {_n_persps} perspectives "
+                  f"(needs 2+ for balance)", file=sys.stderr)
+            continue
+        _wu_kept.append(_wu_s)
+    _wu_container['stories'] = _wu_kept
+if _m063_dropped:
+    print(f"[m063] M-063: dropped {_m063_dropped} partisan one-sided World/USA stories", file=sys.stderr)
 
 
 # ---- Preserve user-managed tabs (freespeech only — submit now cron-managed) ----
@@ -2168,11 +2233,23 @@ def _story_has_content(obj):
     body = _substantive_text(obj.get('body') or obj.get('text') or '')
     return len(headline) >= 12 or len(body) >= 12
 
+# M-062 (2026-06-01): perspectives whose body is just a query to the @grok
+# X account (e.g. "@grok what is Senator Warnock's net worth?") are not
+# opinions or critiques — they're prompts to an AI. Drop them from
+# perspective slots. User: "Where is Gaurav's reply?" / "Referring to
+# what?" (cron #44 screenshots) — these @grok queries fooled the pipeline
+# into shipping them as Conservative/Democrat takes.
+_GROK_QUERY_RE = re.compile(r'^\s*@grok\b.*\?', re.IGNORECASE | re.DOTALL)
+
 def _perspective_has_content(obj):
     if not isinstance(obj, dict):
         return False
     headline = _substantive_text(obj.get('headline') or '')
     body = _substantive_text(obj.get('body') or obj.get('text') or '')
+    raw_body = (obj.get('body') or obj.get('text') or '').strip()
+    # M-062: kill @grok-query perspectives — they're not stances.
+    if _GROK_QUERY_RE.match(raw_body):
+        return False
     return len(headline) >= 3 or len(body) >= 3
 
 # Back-compat alias still used by older call sites (e.g. mandate audit string)
@@ -2253,20 +2330,35 @@ for _gp in _global_pool:
     _seen_urls.add(_u)
     _deduped_pool.append(_gp)
 _deduped_pool.sort(key=_top_views_of, reverse=True)
-# Pick the highest floor that still gives us TARGET_COUNT stories
+# M-064 (2026-06-01): NEVER fall through to "top-N regardless of views"
+# — that's how 2K-view trash got into Top (user: "2,000 views is the top
+# video on X? Come on."). Walk the floors top-down; the first floor that
+# yields ANY stories wins, even if fewer than TARGET_COUNT. Showing 3
+# legit mega-viral posts beats padding to 5 with K-pop low-view fillers.
 _picked_top = []
+_chosen_floor = None
 for _floor in _M054_VIEW_FLOORS:
-    _picked_top = [s for s in _deduped_pool if _top_views_of(s) >= _floor][:_M054_TARGET_COUNT]
-    if len(_picked_top) >= _M054_TARGET_COUNT:
-        print(f"[m054] Top tab populated with {len(_picked_top)} global-leaderboard "
-              f"stories at floor {_floor:,} views (pool size {len(_deduped_pool)})",
-              file=sys.stderr)
-        break
+    _candidates_at_floor = [s for s in _deduped_pool if _top_views_of(s) >= _floor]
+    if _candidates_at_floor:
+        _picked_top = _candidates_at_floor[:_M054_TARGET_COUNT]
+        _chosen_floor = _floor
+        if len(_picked_top) >= _M054_TARGET_COUNT:
+            break
+        # Otherwise fall through to next-lower floor to see if we can fill more,
+        # BUT only if the next floor strictly improves — never accept stories
+        # below the lowest configured floor.
+
+# If even at the lowest configured floor we have nothing, Top tab ships empty
+# rather than garbage. This is the "shitshow stops" guard.
+if _picked_top:
+    print(f"[m054] Top tab populated with {len(_picked_top)} global-leaderboard "
+          f"stories at floor {_chosen_floor:,} views (pool size {len(_deduped_pool)})",
+          file=sys.stderr)
 else:
-    # Even the lowest floor didn't give us enough — take top-N regardless of floor
-    _picked_top = _deduped_pool[:_M054_TARGET_COUNT]
-    print(f"[m054] Top tab populated with {len(_picked_top)} stories (no floor "
-          f"hit TARGET_COUNT; lowest used)", file=sys.stderr)
+    print(f"[m054] Top tab EMPTY this cron — no story across any tab cleared the "
+          f"lowest configured floor ({_M054_VIEW_FLOORS[-1]:,} views). "
+          f"Pool size {len(_deduped_pool)}. Shipping empty rather than garbage.",
+          file=sys.stderr)
 if _picked_top:
     output.setdefault('top', {})['stories'] = _picked_top
     for _pt in _picked_top:

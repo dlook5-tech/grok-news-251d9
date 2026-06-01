@@ -88,6 +88,39 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-064 — Top tab ships empty rather than fall through to no-floor garbage.
+**Date:** 2026-06-01 ("2,000 views is the top video on X? Come on. code now no more crons till the shit show stops.")
+**Trace:** M-054 had a final `else` branch that took `_deduped_pool[:N]` when no floor hit `TARGET_COUNT`. On sparse pools (or pre-M-054 cron data) that pulled 2K-view K-pop posts into Top.
+**Enforcement:**
+- Floors walk top-down (1M → 500K → 250K). First floor with any matches sets `_chosen_floor`; we ship 1-5 stories from that floor.
+- If even the lowest floor (250K) matches nothing, Top tab ships **empty** — no fallthrough.
+- Better to render "no top viral content this cycle" than 2K-view trash.
+
+## M-063 — Drop partisan World/USA stories that ship with <2 perspectives.
+**Date:** 2026-06-01 ("Story worth number two story on the site is pure biased and doesn't even have a counteracting story on the other side. My kindergarten wouldn't do this, let alone AI.")
+**Trace:** Live cron #44 shipped @MarioNawfal "Trump sabotages Ukraine deals in mental decline" (66K views) in World #2 with **0** perspectives. M-058 backfill couldn't find a counter at any view floor.
+**Enforcement:**
+- Removed a leftover `views >= 100_000` filter in the M-046 refill-job builder (was preventing low-view stories from even entering the backfill queue — same kind of bug as the original M-046).
+- New post-backfill pass scans World/USA stories. Any story with <2 perspectives whose headline matches `_M063_POLITICAL_TRIGGERS` (politicians, foreign conflicts, party labels, hot-button topics) gets **dropped**.
+- The political-trigger regex is broad on purpose — political coverage requires balance; if balance isn't achievable, the story shouldn't ship.
+- Logs `[m063-drop] ...` per drop and a summary line.
+
+## M-062 — Filter @grok-query perspectives.
+**Date:** 2026-06-01 ("Where is Gaurav's reply? Referring to what?")
+**Trace:** Cron #44 USA @SenatorWarnock story shipped a "Conservative" perspective whose body was literally `"@grok what is Senator Warnock's net worth?"` — a query to the @grok account, not an opinion.
+**Enforcement:**
+- New `_GROK_QUERY_RE = ^\s*@grok\b.*\?` regex.
+- `_perspective_has_content` returns False when the raw body matches → the M-053 gate drops it.
+- Cron-time effect: any perspective whose body opens "@grok …?" never makes it to the frontend.
+
+## M-061 — Accept empty parent_text (image-only parents are valid).
+**Date:** 2026-06-01 ("Where is what he's commenting on?" — recurring across IMG_1689–1690, IMG_1693–1696, plus current @1327GT350 and prior @sethdillon cases.)
+**Trace:** `fetch_parent`'s M-049 guard was `if not p_text or '<' in p_text and '>' in p_text: return None`. The `not p_text` branch threw away the entire parent record when the parent post was image-only / video-only (no text caption). Result: real `parent_url` + `parent_handle` got nulled out, the frontend had no parent to embed, the user saw replies with no context. Has been the silent root cause of "missing parent" complaints for a week.
+**Enforcement:**
+- Guard relaxed: `if p_text and '<' in p_text and '>' in p_text: return None`. Now only rejects literal template-echo text.
+- `parent_text` defaults to `''` (frontend already renders the X iframe which shows the image either way).
+- One-line root-cause fix that eliminates an entire category of complaints.
+
 ## M-060 — Promo/ad filter on Follow tab.
 **Date:** 2026-06-01
 **User said:** "On follow page or any page no promotions" (IMG_1668–1669).
