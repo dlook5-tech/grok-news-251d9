@@ -88,6 +88,17 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-065 — Rename Follow → iFollow, cap at 10 handles per cron, reshuffle UI.
+**Date:** 2026-06-01 noon
+**User said:** "The bottom of this page should have a suggestion URL and justification box for who else we should follow on this tab. It shouldn't be called 'Follow'. It should be called 'iFollow'. And maybe this box should follow 10 people and constantly be reshuffling who those people are based on suggestions and justification explanations. See in the title: To make this tab totally fair and balanced. Who should be followed on this tab?"
+**Enforcement:**
+- Tab label `"Follow"` → `"iFollow"` in `index.html` TABS list.
+- `TAB_META.follow.title` → `"iFollow"`; subtitle rewritten to "To make this tab totally fair and balanced — who should be followed on this tab? Top 10 most-viewed posts in the last 24 hours from a rotating set of accounts."
+- Suggestion form heading changed from "Suggest a follow" → "Who should be followed on this tab?" with a one-line lead-in explaining suggestions feed the rotation pool.
+- Form input labels emphasize the justification ("Why they should be included — keep it tight").
+- Backend caps `follow_chosen` to top 10 by views per cron (`_M065_CAP = 10`). Natural reshuffle: the 10 handles whose latest 24h post got most views surface; everyone else in `follow_handles.json` rotates in when they post something that trends.
+- Suggestions still surface above the form for 24h via the existing M-051 `pull_follow_suggestions` pipeline; owner promotes keepers into `follow_handles.json` manually.
+
 ## M-064 — Top tab ships empty rather than fall through to no-floor garbage.
 **Date:** 2026-06-01 ("2,000 views is the top video on X? Come on. code now no more crons till the shit show stops.")
 **Trace:** M-054 had a final `else` branch that took `_deduped_pool[:N]` when no floor hit `TARGET_COUNT`. On sparse pools (or pre-M-054 cron data) that pulled 2K-view K-pop posts into Top.

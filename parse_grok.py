@@ -1321,12 +1321,23 @@ for tab in tabs:
             v = curation.story_views(c)
             if h not in _by_handle or v > curation.story_views(_by_handle[h]):
                 _by_handle[h] = c
-        follow_chosen = sorted(_by_handle.values(),
-                               key=curation.story_views, reverse=True)
+        # M-065 (2026-06-01): user — "this box should follow 10 people and
+        # constantly be reshuffling who those people are based on suggestions
+        # and justification explanations". Cap at top 10 by views per cron.
+        # The natural reshuffle: each cron picks the 10 handles whose latest
+        # 24h post got the most views, so the visible set rotates as different
+        # people post / get traction. New suggestions get added to the pool
+        # (manually for now via follow_handles.json) and surface organically
+        # when those handles' posts trend.
+        _M065_CAP = 10
+        _all_ranked = sorted(_by_handle.values(),
+                             key=curation.story_views, reverse=True)
+        follow_chosen = _all_ranked[:_M065_CAP]
         if _promo_dropped:
             print(f"[follow] M-060: dropped {_promo_dropped} promo/ad posts",
                   file=sys.stderr)
-        print(f"[follow] {len(follow_chosen)} handles posted in last 24h "
+        print(f"[follow] M-065: showing top {len(follow_chosen)} of "
+              f"{len(_all_ranked)} handles that posted in 24h "
               f"(top: @{(follow_chosen[0].get('handle','?') if follow_chosen else '?')} "
               f"{(curation.story_views(follow_chosen[0]) if follow_chosen else 0):,}v)",
               file=sys.stderr)

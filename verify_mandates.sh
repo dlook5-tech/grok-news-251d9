@@ -188,7 +188,9 @@ check  "M-051d:parse-grok-branch"      parse_grok.py         "M-051 FOLLOW tab" 
 check  "M-051e:follow-not-in-dedup"    parse_grok.py         "'world','usa','business','sports','pg6','science'"        exists
 check  "M-051f:suggestions-fn"         parse_grok.py         "def pull_follow_suggestions"     exists
 check  "M-051g:suggestions-wired"      parse_grok.py         "output\['follow_suggest'\]"      exists
-check  "M-051h:html-tab-button"        index.html            'id: "follow", label: "Follow"'   exists
+# M-051h superseded by M-065a (label changed Follow → iFollow). Just check
+# the tab id is still wired in.
+check  "M-051h:html-tab-button"        index.html            'id: "follow"'                    exists
 check  "M-051i:html-static-form"       index.html            'name="follow-suggest"'           exists
 check  "M-051j:html-handler"           index.html            "function handleFollowSuggest"    exists
 
@@ -317,6 +319,14 @@ check  "M-063d:refill-no-100k-gate"      parse_grok.py    "views >= 100_000.*len
 # M-064 — Top tab ships empty rather than no-floor garbage
 check  "M-064a:no-fallthrough"           parse_grok.py    "ships empty rather than garbage|EMPTY this cron"  exists
 check  "M-064b:old-fallthrough-gone"     parse_grok.py    "no floor.*hit TARGET_COUNT; lowest used"  absent
+
+# M-065 — Rename Follow → iFollow + cap at 10 handles per cron
+check  "M-065a:html-tab-label"           index.html       'id: "follow", label: "iFollow"'      exists
+check  "M-065b:html-old-label-gone"      index.html       'id: "follow", label: "Follow"'       absent
+check  "M-065c:cap-defined"              parse_grok.py    "_M065_CAP"                            exists
+check  "M-065d:cap-applied"              parse_grok.py    "_all_ranked\[:_M065_CAP\]"            exists
+check  "M-065e:tab-meta-ifollow"         index.html       "iFollow"                              exists
+check  "M-065f:suggestion-form-rewrite"  index.html       "Who should be followed on this tab"   exists
 
 # M-015 — World/USA tabs use direct-link block when no perspectives (clicks open X)
 check  "M-015a:world-uses-direct-link"   index.html       "renderAutoEmbedBlock\(s\)"                                exists

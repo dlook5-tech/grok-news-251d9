@@ -234,7 +234,7 @@ var TAB_META = {
   business: { title: "Top Business Story of the Day", subtitle: "Markets, money, and what\u2019s moving business today. Click block to view post." },
   sports:   { title: "Top Sports Story of the Day", subtitle: "Today\u2019s biggest sports moment. Click block to view post." },
   elon:     { title: "Elon\u2019s Latest Bangers", subtitle: "What\u2019s Elon posting. Click block to view post." },
-  follow:   { title: "Follow", subtitle: "Top-viewed post in the last 24 hours from the people we follow, ranked by views. Suggest someone to add at the bottom." },
+  follow:   { title: "iFollow", subtitle: "To make this tab totally fair and balanced — who should be followed on this tab? Top 10 most-viewed posts in the last 24 hours from a rotating set of accounts. Suggest someone (with a one-line justification) at the bottom and they'll be considered for the next reshuffle." },
   allin:    { title: "$age Insider", subtitle: "Billion-dollar wisdom \u2014 Elon, Thiel, Luckey, a16z, Chamath, Sacks, Friedberg & Jurvetson. Click block to view post." },
   top:      { title: "#1 Pop", subtitle: "The single most viral post on X right now. Click block to view post." },
   msm:      { title: "Not in MSM", subtitle: "Stories mainstream media is underreporting or ignoring. Click block to view post." },
@@ -253,7 +253,7 @@ var NEWS_DATA = { lastUpdated: "", _stale: false };
 
 // ---- Cache-busting version check (with loop guard) ----
 // Only reloads ONCE per server-version. Uses sessionStorage to prevent flashing if the cache remains stale.
-var THIS_VERSION = "20260527183650";
+var THIS_VERSION = "20260531234630";
 // Visible freshness badge top-right of the page. Tap = full hard refresh (bypass all cache).
 function hardRefresh() {
   try {
@@ -349,7 +349,7 @@ var TABS = [
   { id: "sports", label: "Sports" },
   { id: "top", label: "Trending" },
   { id: "elon", label: "Elon" },
-  { id: "follow", label: "Follow" },
+  { id: "follow", label: "iFollow" },
   { id: "pods", label: "Pods" },
   { id: "allin", label: "$age" },
   { id: "msm", label: "<s>MSM</s>" },
@@ -1115,18 +1115,19 @@ function renderContent() {
     }
 
     // Suggestion form (Netlify Forms — backed by form_name="follow-suggest")
-    h += '<div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#b8860b;margin:28px 0 10px;font-weight:700;">Suggest a follow</div>';
+    h += '<div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#b8860b;margin:28px 0 10px;font-weight:700;">Who should be followed on this tab?</div>';
+    h += '<p style="font-size:0.85rem;color:#3d3029;margin:0 0 12px;">Suggest a handle plus a one-line justification. Good suggestions get added to the rotation pool, displacing accounts that no one is reading.</p>';
     h += '<form class="submit-form" id="followSuggestForm" name="follow-suggest" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleFollowSuggest(event)">';
     h += '<input type="hidden" name="form-name" value="follow-suggest" />';
     h += '<p style="display:none;"><label>Don\'t fill this out: <input name="bot-field" /></label></p>';
     h += '<label for="followHandle">X handle to suggest</label>';
     h += '<input type="text" id="followHandle" name="handle" placeholder="@someone (or https://x.com/someone)" required />';
-    h += '<label for="followReason">Why they should be included (optional)</label>';
-    h += '<textarea id="followReason" name="reason" rows="2" placeholder="A sentence on why this handle is worth following..."></textarea>';
+    h += '<label for="followReason">Why they should be included — keep it tight</label>';
+    h += '<textarea id="followReason" name="reason" rows="2" placeholder="One line on what perspective this account adds (left/right/independent/expert/etc)..."></textarea>';
     h += '<button type="submit" class="submit-btn">Suggest handle</button>';
     h += '<div id="followSuggestConfirm" style="display:none;margin-top:12px;padding:10px 14px;background:#e8f5e9;border-radius:6px;color:#2e7d32;font-size:0.85rem;font-weight:500;"></div>';
     h += '</form>';
-    h += '<p style="font-size:0.75rem;color:#a89478;margin-top:8px;">Suggestions show here for 24h. The owner reviews and adds keepers to the curated list.</p>';
+    h += '<p style="font-size:0.75rem;color:#a89478;margin-top:8px;">Suggestions appear above for 24h. The pool reshuffles every cron based on who is actually posting + visitor suggestions.</p>';
 
     h += renderLastUpdated();
     el.innerHTML = h;
