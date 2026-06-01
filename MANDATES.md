@@ -88,6 +88,37 @@ cannot quietly die in a future session.
 - This file referenced from `CLAUDE.md` as REQUIRED first read.
 - `verify_rules.sh` checks that every mandate's "Enforcement" code-point grep still passes.
 
+## M-060 — Promo/ad filter on Follow tab.
+**Date:** 2026-06-01
+**User said:** "On follow page or any page no promotions" (IMG_1668–1669).
+**Trace:** Follow tab handles include brand accounts (@Tesla, @TeamAriana) whose top 24h post is often promotional ("Out now!", "Available at", "link in bio"). Those were shipping unfiltered.
+**Enforcement:**
+- New `_PROMO_STRONG` regex matches explicit promo phrases (`preorder`, `available now`, `shop now`, `use code`, `link in bio`, etc).
+- `_PROMO_WEAK` regex matches softer marketing signals (`drops today`, `subscriber only`, `pre-save`, `free shipping`, etc); a post needs 2+ weak signals to count as promo.
+- Posts matching either rule get dropped from `cleaned` BEFORE the per-handle dedup pass — handle slots aren't wasted on ads.
+- Logs `[follow] M-060: dropped N promo/ad posts`. Conservative by design: a normal news post saying "available at the link" once won't trip the strong list and needs 2 weak matches.
+
+## M-059 — Translate non-English posts instead of dropping.
+**Date:** 2026-06-01
+**User said:** "No foreign language allowed please translate" (IMG_1674).
+**Trace:** Original M-025 lang-filter dropped any non-English body. Frontend already renders a `translation` field above the embed; we were never populating it.
+**Enforcement:**
+- New `_translate_to_english(text)` helper calls xAI for a ≤500-char English translation. Returns None if the model says the text is already English / untranslatable.
+- Replaced the M-025 drop loop with a translation pass: gather every non-English story body AND non-English perspective body, translate them in parallel (`ThreadPoolExecutor(max_workers=6)`), write the result into the `translation` field.
+- Items that fail to translate (returns None) still get dropped, marked via `__m059_drop__` sentinel and swept after the pass.
+- Logs `[m059] translated N, dropped untranslatable M`.
+
+## M-054 — Top tab global leaderboard (post-process across all tabs).
+**Date:** 2026-06-01
+**User said:** "these cant be top storries < 1M views, no way" (cron #41 screenshot). Picked option #1 from the trending-tab fix proposal: "#1 should be #1 posts, regardless of whether its in another tab".
+**Trace:** Grok's `call_grok_top_multi` (4 parallel "top viral" subqueries) consistently returned entertainment / K-pop accounts under 1M views while the Elon tab held 38M-view posts. Top tab capped at ~500K-900K views over 5 consecutive crons. M-052 already exempted Top from cross-tab dedup, but Grok's narrow prompt was the bottleneck.
+**Enforcement:**
+- New global-leaderboard pass runs between the M-053+M-057 content gate and the M-050 tightener. Pool = existing Top stories + every story from world / usa / business / msm / sports / elon / follow / pods / science / allin / comedy / pg6.
+- Dedupe by URL (within-pool only; M-052 already exempts cross-tab so the same story can appear in BOTH Top and its categorical tab).
+- Sort by views desc. Pick top 5 with a 1M floor; if fewer than 5 qualify, fall back to 500K, then 250K, then no floor.
+- Logs `[m054] Top tab populated with N global-leaderboard stories at floor X views`.
+- Net effect: cron #44 onwards, Top genuinely shows the absolute most-viewed posts on the platform, not just Grok's narrow "viral" search.
+
 ## M-058 — Mandatory counter-perspective on World/USA stories regardless of view count.
 **Date:** 2026-05-31 evening
 **User said:** "Can't send this partisan without counter comment even if few views. Just find counter with most views." (screenshot stack across IMG_1662–1665, IMG_1707)

@@ -1271,6 +1271,41 @@ for tab in tabs:
     # whole point is showing the user's people in one place even if they also
     # rank in topical tabs). Just rank Grok's per-handle top-views response.
     if tab == 'follow':
+        # M-060 (2026-06-01): user — "On follow page or any page no
+        # promotions" (IMG_1668–1669). Filter out marketing/ad posts before
+        # ranking. Detection is conservative: only drop posts that contain
+        # 2+ strong promo signals OR a single VERY explicit promo phrase.
+        # Both the body text and headline are checked.
+        _PROMO_STRONG = re.compile(
+            r'\b(?:preorder|pre-order|pre[- ]?save|available now|out now|'
+            r'shop now|buy now|order now|on sale now|limited time|'
+            r'limited edition|use code|promo code|discount code|coupon code|'
+            r'link in bio|tap link in bio|swipe up|click the link)\b',
+            re.IGNORECASE)
+        _PROMO_WEAK = re.compile(
+            r'\b(?:available at|drops? today|launches? today|new merch|'
+            r'official drop|free shipping|sale ends|exclusive offer|'
+            r'subscriber(?:s)? only|early access|membership|subscribe)\b',
+            re.IGNORECASE)
+        def _is_promo(s):
+            if not isinstance(s, dict):
+                return False
+            blob = ((s.get('body','') or '') + ' ' + (s.get('headline','') or '')).strip()
+            if not blob:
+                return False
+            if _PROMO_STRONG.search(blob):
+                return True
+            return len(_PROMO_WEAK.findall(blob)) >= 2
+
+        _promo_dropped = 0
+        _filtered = []
+        for c in cleaned:
+            if _is_promo(c):
+                _promo_dropped += 1
+                continue
+            _filtered.append(c)
+        cleaned = _filtered
+
         # Keep at most ONE post per handle (highest-view if Grok returned more).
         _by_handle = {}
         for c in cleaned:
@@ -1281,6 +1316,9 @@ for tab in tabs:
                 _by_handle[h] = c
         follow_chosen = sorted(_by_handle.values(),
                                key=curation.story_views, reverse=True)
+        if _promo_dropped:
+            print(f"[follow] M-060: dropped {_promo_dropped} promo/ad posts",
+                  file=sys.stderr)
         print(f"[follow] {len(follow_chosen)} handles posted in last 24h "
               f"(top: @{(follow_chosen[0].get('handle','?') if follow_chosen else '?')} "
               f"{(curation.story_views(follow_chosen[0]) if follow_chosen else 0):,}v)",
@@ -1777,29 +1815,110 @@ for _h_tab in _HONESTY_NEWS_TABS:
         _h_story['perspectives'] = _persps_kept
 
 
-# ---- M-025: Drop non-English stories AND non-English perspectives ----
-# User mandate 2026-05-23 evening: "dont post anything not translated"
-# Applied AFTER all selection + scoring is done so we don't double-filter.
+# ---- M-025 + M-059: Translate non-English bodies instead of dropping ----
+# M-025 (2026-05-23): "dont post anything not translated" — original
+# implementation dropped non-English stories outright.
+# M-059 (2026-06-01): "No foreign language allowed please translate"
+# (IMG_1674) — user wants translation, not deletion. The frontend already
+# renders a `translation` field above the embed (see renderAutoEmbedBlock
+# and renderWorldStory). So now we translate via xAI and keep the story.
+# Falls back to drop ONLY if the translation call fails or returns garbage.
+def _translate_to_english(text):
+    if not text or len(text.strip()) < 4:
+        return None
+    snippet = text.strip()[:600]
+    prompt = (
+        f"Translate this X post to English. Return ONLY a JSON object with one key:\n"
+        f'{{"translation": "<the English translation, ≤500 chars, preserve meaning>"}}\n\n'
+        f"If the text is ALREADY in English, return {{}}. If it's untranslatable "
+        f"(pure emoji, single symbol, etc.), return {{}}.\n\n"
+        f"Post text:\n{snippet!r}"
+    )
+    try:
+        result = _xai_call(prompt, timeout=20, max_tokens=400)
+    except Exception:
+        return None
+    if not isinstance(result, dict):
+        return None
+    t = (result.get('translation') or '').strip()
+    if not t or len(t) < 4:
+        return None
+    return t[:500]
+
+import concurrent.futures as _cf_translate
+
+# Gather every non-English block (story body OR perspective body) into a job
+# list, translate in parallel, then write back. Dropping only happens if the
+# translation comes back empty AND the body has < 8 substantive chars of
+# Latin-script content (so a single emoji '😂' still drops).
+_translate_jobs = []  # list of (target_dict, source_text_key)
+
 for _l_tab, _l_container in list(output.items()):
     if not isinstance(_l_container, dict): continue
-    _l_stories = _l_container.get('stories', []) or []
-    _l_kept = []
-    for _l_s in _l_stories:
-        if _is_non_english(_l_s.get('body', '') or ''):
-            print(f"[lang-filter] drop {_l_tab}: '{(_l_s.get('headline','') or '?')[:50]}' (non-English body)", file=sys.stderr)
-            continue
-        # Also filter perspectives inside the story
-        _l_persps = _l_s.get('perspectives', []) or []
-        if _l_persps:
-            _l_persps_kept = []
-            for _l_p in _l_persps:
-                if isinstance(_l_p, dict) and _is_non_english(_l_p.get('body', '') or _l_p.get('text', '') or ''):
-                    print(f"[lang-filter] drop perspective in {_l_tab}: @{_l_p.get('handle','?')} (non-English)", file=sys.stderr)
-                    continue
-                _l_persps_kept.append(_l_p)
-            _l_s['perspectives'] = _l_persps_kept
-        _l_kept.append(_l_s)
-    _l_container['stories'] = _l_kept
+    for _l_s in _l_container.get('stories', []) or []:
+        if not isinstance(_l_s, dict): continue
+        _body = _l_s.get('body') or ''
+        if _is_non_english(_body) and not _l_s.get('translation'):
+            _translate_jobs.append((_l_s, _body, _l_tab, 'story',
+                                    _l_s.get('handle','?'),
+                                    _l_s.get('headline','')[:50]))
+        for _l_p in _l_s.get('perspectives', []) or []:
+            if not isinstance(_l_p, dict): continue
+            _pb = _l_p.get('body') or _l_p.get('text') or ''
+            if _is_non_english(_pb) and not _l_p.get('translation'):
+                _translate_jobs.append((_l_p, _pb, _l_tab, 'perspective',
+                                        _l_p.get('handle','?'),
+                                        _l_p.get('label','?')))
+
+def _translate_one(job):
+    target, src, tab, kind, handle, label = job
+    t = _translate_to_english(src)
+    return target, t, tab, kind, handle, label
+
+_translated_n = 0
+_dropped_n = 0
+if _translate_jobs:
+    print(f"[m059] M-059: translating {len(_translate_jobs)} non-English bodies...",
+          file=sys.stderr)
+    with _cf_translate.ThreadPoolExecutor(max_workers=6) as _ex:
+        _results = list(_ex.map(_translate_one, _translate_jobs))
+    for target, t, tab, kind, handle, label in _results:
+        if t:
+            target['translation'] = t
+            _translated_n += 1
+            print(f"[m059] translated {kind} {tab}/@{handle} ({label[:40]!r})",
+                  file=sys.stderr)
+        else:
+            # Could not translate — fall back to drop. Mark target for removal
+            # by setting an attribute we sweep below.
+            target['__m059_drop__'] = True
+            _dropped_n += 1
+            print(f"[m059-drop] {kind} {tab}/@{handle}: untranslatable",
+                  file=sys.stderr)
+
+# Sweep: remove anything tagged for drop
+if _dropped_n:
+    for _l_tab, _l_container in list(output.items()):
+        if not isinstance(_l_container, dict): continue
+        _kept_s = []
+        for _l_s in _l_container.get('stories', []) or []:
+            if not isinstance(_l_s, dict): continue
+            if _l_s.get('__m059_drop__'):
+                continue
+            _kept_p = [
+                _p for _p in (_l_s.get('perspectives') or [])
+                if isinstance(_p, dict) and not _p.get('__m059_drop__')
+            ]
+            if _kept_p:
+                _l_s['perspectives'] = _kept_p
+            elif _l_s.get('perspectives'):
+                _l_s.pop('perspectives', None)
+            _kept_s.append(_l_s)
+        _l_container['stories'] = _kept_s
+
+if _translated_n or _dropped_n:
+    print(f"[m059] M-059: translated {_translated_n}, dropped untranslatable {_dropped_n}",
+          file=sys.stderr)
 
 
 # M-033: Restore EARLIER tab population (regression from Ristretto migration).
@@ -2094,6 +2213,66 @@ for _tab_key, _tab_val in output.items():
 if _drop_stories or _drop_persps:
     print(f"[m053] M-053+M-057: dropped {_drop_stories} content-less stories, "
           f"{_drop_persps} empty perspectives", file=sys.stderr)
+
+
+# ---- M-054 TOP TAB GLOBAL LEADERBOARD ----
+# User mandate 2026-05-27: "these cant be top storries < 1M views, no way"
+# (cron #41 Top showed only A24 at 916K while Elon-tab had 38M-view posts).
+# Grok's call_grok_top_multi is biased toward entertainment/K-pop accounts and
+# misses political/news/Elon mega-virals. Per M-052 Top is exempt from cross-
+# tab dedup, so the same story can appear in BOTH Top AND its categorical tab.
+# Make Top = global leaderboard of top-N viewed stories across all news tabs,
+# merged with Grok's own Top candidates so we don't lose unique entertainment
+# content the news tabs miss.
+def _top_views_of(s):
+    try:
+        return int(s.get('views', 0) or 0)
+    except (TypeError, ValueError):
+        return 0
+
+_M054_SOURCE_TABS = ('world', 'usa', 'business', 'msm', 'sports', 'elon',
+                     'follow', 'pods', 'science', 'allin', 'comedy', 'pg6')
+_M054_TARGET_COUNT = 5
+_M054_VIEW_FLOORS = (1_000_000, 500_000, 250_000)  # try tightest first, fall back
+
+_existing_top = (output.get('top', {}) or {}).get('stories', []) or []
+_global_pool = list(_existing_top)
+for _src_tab in _M054_SOURCE_TABS:
+    _src_stories = (output.get(_src_tab, {}) or {}).get('stories', []) or []
+    for _src_s in _src_stories:
+        if not isinstance(_src_s, dict):
+            continue
+        _global_pool.append(dict(_src_s))  # shallow copy — Top owns its slot
+# Dedupe by URL, keeping the first occurrence (which is Top's own pick if present)
+_seen_urls = set()
+_deduped_pool = []
+for _gp in _global_pool:
+    _u = _gp.get('url') or ''
+    if _u and _u in _seen_urls:
+        continue
+    _seen_urls.add(_u)
+    _deduped_pool.append(_gp)
+_deduped_pool.sort(key=_top_views_of, reverse=True)
+# Pick the highest floor that still gives us TARGET_COUNT stories
+_picked_top = []
+for _floor in _M054_VIEW_FLOORS:
+    _picked_top = [s for s in _deduped_pool if _top_views_of(s) >= _floor][:_M054_TARGET_COUNT]
+    if len(_picked_top) >= _M054_TARGET_COUNT:
+        print(f"[m054] Top tab populated with {len(_picked_top)} global-leaderboard "
+              f"stories at floor {_floor:,} views (pool size {len(_deduped_pool)})",
+              file=sys.stderr)
+        break
+else:
+    # Even the lowest floor didn't give us enough — take top-N regardless of floor
+    _picked_top = _deduped_pool[:_M054_TARGET_COUNT]
+    print(f"[m054] Top tab populated with {len(_picked_top)} stories (no floor "
+          f"hit TARGET_COUNT; lowest used)", file=sys.stderr)
+if _picked_top:
+    output.setdefault('top', {})['stories'] = _picked_top
+    for _pt in _picked_top:
+        print(f"  [m054-top] {_top_views_of(_pt):>12,}v @{_pt.get('handle','?')} "
+              f"{(_pt.get('headline','') or _pt.get('body','') or '?')[:60]}",
+              file=sys.stderr)
 
 
 # ---- M-050 FINAL HEADLINE TIGHTENING PASS ----

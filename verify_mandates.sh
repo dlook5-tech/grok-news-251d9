@@ -110,7 +110,9 @@ check  "M-024b:msm-top-n-5"            parse_grok.py  "'msm': 5"                
 
 # M-025 — Drop non-English stories and perspectives
 check  "M-025a:non-english-fn"         parse_grok.py  "def _is_non_english"             exists
-check  "M-025b:lang-filter-applied"    parse_grok.py  "lang-filter"                     exists
+# M-025b superseded by M-059: lang-filter is now translate-then-keep, with
+# untranslatable drops via __m059_drop__ sentinel. Check the new mechanism.
+check  "M-025b:non-english-handled"    parse_grok.py  "_is_non_english.*body"           exists
 
 # M-026 — Big-views age exception (World/USA only)
 check  "M-026a:bypass-tabs-defined"    parse_grok.py  "_BIG_VIEW_BYPASS_TABS"           exists
@@ -280,6 +282,23 @@ check  "M-057d:drop-log-updated"         parse_grok.py    "no substantive text" 
 check  "M-058a:min-views-param"          parse_grok.py    "min_views=1_000"                    exists
 check  "M-058b:refill-passes-100"        parse_grok.py    "min_views=100"                      exists
 check  "M-058c:100k-gate-gone"           parse_grok.py    "views < 100_000"                    absent
+
+# M-054 — Top tab global leaderboard
+check  "M-054a:pipeline-wired"           parse_grok.py    "M-054 TOP TAB GLOBAL LEADERBOARD"   exists
+check  "M-054b:source-tabs"              parse_grok.py    "_M054_SOURCE_TABS"                  exists
+check  "M-054c:view-floors"              parse_grok.py    "_M054_VIEW_FLOORS"                  exists
+check  "M-054d:log-line"                 parse_grok.py    "\[m054\]"                            exists
+
+# M-059 — Translate non-English instead of dropping
+check  "M-059a:translate-fn"             parse_grok.py    "def _translate_to_english"          exists
+check  "M-059b:parallel-jobs"            parse_grok.py    "_translate_jobs"                    exists
+check  "M-059c:translation-log"          parse_grok.py    "\[m059\]"                            exists
+
+# M-060 — Promo/ad filter on Follow tab
+check  "M-060a:promo-strong-regex"       parse_grok.py    "_PROMO_STRONG"                      exists
+check  "M-060b:promo-weak-regex"         parse_grok.py    "_PROMO_WEAK"                        exists
+check  "M-060c:is-promo-fn"              parse_grok.py    "def _is_promo"                      exists
+check  "M-060d:promo-log"                parse_grok.py    "M-060: dropped"                     exists
 
 # M-015 — World/USA tabs use direct-link block when no perspectives (clicks open X)
 check  "M-015a:world-uses-direct-link"   index.html       "renderAutoEmbedBlock\(s\)"                                exists
