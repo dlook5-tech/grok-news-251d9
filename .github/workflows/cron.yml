@@ -1,13 +1,16 @@
 name: eXpressO News Cron
 
 on:
-  schedule:
-    # 4 crons/day. Times shifted to :17 minutes past the hour because GitHub Actions
-    # scheduled workflows are heavily delayed at top-of-hour (high-load window).
-    # Mid-hour fires get scheduled within ~5 min instead of 30+ min.
-    # PDT (UTC-7, summer): 13:17, 17:17, 21:17, 01:17 UTC = ~6:17am, 10:17am, 2:17pm, 6:17pm PT
-    - cron: '17 1,13,17,21 * * *'
-  workflow_dispatch:  # Manual trigger from the Actions tab
+  # ───────────────────────────────────────────────────────────────────────────
+  # SCHEDULE DISABLED 2026-06-06 (David's call): X API spend control. The
+  # 4×/day automatic cron is OFF. eXpressO News should be IDLE — no fresh
+  # stories arrive on the live site unless someone manually fires this
+  # workflow from the GitHub Actions tab. Re-enable by uncommenting the
+  # `schedule:` block below.
+  # ───────────────────────────────────────────────────────────────────────────
+  # schedule:
+  #   - cron: '17 1,13,17,21 * * *'
+  workflow_dispatch:  # Manual trigger from the Actions tab (still on)
 
 # Prevent overlap if a previous run is still going
 concurrency:
